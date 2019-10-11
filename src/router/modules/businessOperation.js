@@ -3,6 +3,16 @@
 const accountList = () => import('@/views/businessOperation/channelAccount/account')
 // 账户资金
 const accountManage = () => import('@/views/businessOperation/channelAccount/accountManage')
+//活动计划模板
+const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
+//活动计划管理
+const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
+//活动执行管理
+const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
+//活动效果评估
+const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
+//模板预览
+const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
 
 export default [
   // {
@@ -14,6 +24,8 @@ export default [
   //     title: '路由说明'
   //   }
   // },
+
+  //渠道账户
   {
     path: 'businessOperation/accountList',
     name: 'accountList',
@@ -29,5 +41,47 @@ export default [
       title: '账户资金管理',
     },
     component: accountManage
-  }
+  },
+  //品牌与营销推广
+  {
+    path: 'brandMarketing/planTemplate',
+    name: 'planTemplate',
+    meta: {
+      title: '活动计划模板',
+    },
+    component: planTemplate,
+  },
+  {
+    path: 'brandMarketing/planManage',
+    name: 'planManage',
+    meta: {
+      title: '活动计划管理',
+    },
+    component: planManage
+  },
+  {
+    path: 'brandMarketing/executionManage',
+    name: 'executionManage',
+    meta: {
+      title: '活动执行管理',
+    },
+    component: executionManage
+  },
+  {
+    path: 'brandMarketing/activityResult',
+    name: 'activityResult',
+    meta: {
+      title: '活动效果评估',
+    },
+    component: activityResult
+  },
+  {
+    path: 'brandMarketing/previewTemplate',
+    name: 'previewTemplate',
+    meta: {
+      title: '预览模板',
+    },
+    component: previewTemplate,
+  },
+
 ]
