@@ -24,7 +24,7 @@
           </template>
       </el-table-column>
             <el-table-column prop="address" label="操作" show-overflow-tooltip>
-                     <el-link type="primary"  href="http://localhost:8082/#/home/systemManage/userList/userDestails">查看<span>|</span></el-link>
+                     <el-link type="primary"  href="http://localhost:8080/#/home/systemManage/userList/userDestails">查看<span>|</span></el-link>
                       <el-link type="primary">编缉<span>|</span></el-link>
                        <el-link type="primary">重置密码</el-link>
             </el-table-column>
