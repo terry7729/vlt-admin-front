@@ -60,12 +60,9 @@ export default [
           }
         ]
       },
+
       {
         icon: "el-icon-menu",
-<<<<<<< HEAD
-        name: "游戏发行管理",
-        url: 'gameReleaseManage'
-=======
         name: "渠道业务管理",
         url: 'channelBusinessManage',
         childResources: [
@@ -76,7 +73,6 @@ export default [
             url: 'channelList'
           }
         ],
->>>>>>> c8d81f83ea8dfdc50424363b921fe87984dcc5a4
       }
     ],
     icon: "el-icon-menu",
