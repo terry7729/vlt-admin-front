@@ -1,5 +1,5 @@
 <template>
-  <div class="pending-review">
+  <div class="vlt-card pending-review">
     <el-table :data="tableData" style="width: 100%" border>
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
       <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
@@ -10,8 +10,8 @@
       <el-table-column prop="process" label="当前步骤"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="edit(scope.row)">处理</el-button>
-          <el-button type="text" size="small" @click="moveRow(scope.row)">移交</el-button>
+          <el-button type="primary" size="mini" @click="edit(scope.row)">处理</el-button>
+          <el-button  size="mini" @click="moveRow(scope.row)">移交</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -148,45 +148,45 @@ export default {
   .el-table--group {
     border-color: #e0e0e0;
   }
-  .el-table {
-    td,
-    th.is-leaf {
-      border-color: #e0e0e0;
-    }
-    thead {
-      th {
-        background-color: #f2f2f2;
-        padding: 3px 0;
-      }
-      .cell {
-        font-size: 16px;
-        text-align: center;
-        color: #656565;
-      }
-    }
-    tbody {
-      tr {
-        td {
-          &:nth-child(1),
-          &:nth-child(2),
-          &:nth-child(3) {
-            .cell {
-              font-size: 12px;
-            }
-          }
-        }
-      }
-      td {
-        padding: 14px 0;
-      }
-      .cell {
-        text-align: center;
-      }
-      .el-button--text {
-        color: blue;
-      }
-    }
-  }
+  // .el-table {
+  //   td,
+  //   th.is-leaf {
+  //     border-color: #e0e0e0;
+  //   }
+  //   thead {
+  //     th {
+  //       background-color: #f2f2f2;
+  //       padding: 3px 0;
+  //     }
+  //     .cell {
+  //       font-size: 16px;
+  //       text-align: center;
+  //       color: #656565;
+  //     }
+  //   }
+  //   tbody {
+  //     tr {
+  //       td {
+  //         &:nth-child(1),
+  //         &:nth-child(2),
+  //         &:nth-child(3) {
+  //           .cell {
+  //             font-size: 12px;
+  //           }
+  //         }
+  //       }
+  //     }
+  //     td {
+  //       padding: 14px 0;
+  //     }
+  //     .cell {
+  //       text-align: center;
+  //     }
+  //     .el-button--text {
+  //       color: blue;
+  //     }
+  //   }
+  // }
   .el-pagination.is-background{
     margin-top: 20px;
     text-align: right;
