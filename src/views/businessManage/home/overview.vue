@@ -17,5 +17,4 @@ import message from '@/components/main/messages'
 </script>
 
 <style lang="less">
-@import './less/index.less';
 </style>

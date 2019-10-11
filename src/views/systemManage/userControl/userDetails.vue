@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 25px; margin:15px; background:#fff">
+    <div class="vlt-card">
         <div class="user-destail">
           
             <div class="user-list">

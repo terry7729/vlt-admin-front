@@ -1,7 +1,8 @@
 // 业务管理-左侧导航数据
 
 export default [{
-  childResources: [{
+  childResources: [
+    {
       childResources: [{
         childResources: [],
         icon: "el-icon-menu",

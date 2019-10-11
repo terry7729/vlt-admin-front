@@ -3,7 +3,22 @@
 const centerWatch = () => import('@/views/businessCharts/screenWatch/centerWatch')
 // 省级监控
 const provinceWatch = () => import('@/views/businessCharts/screenWatch/provinceWatch')
-
+//中央交易数据
+const centerDeal = () => import('@/views/businessCharts/dealData/centerDeal')
+//省级交易数据
+const provinceDeal = () => import('@/views/businessCharts/dealData/provinceDeal')
+//城市交易数据
+const cityDeal = () => import('@/views/businessCharts/dealData/cityDeal')
+//区域交易数据
+const areaDeal = () => import('@/views/businessCharts/dealData/areaDeal')
+//游戏交易监控
+const gameDeal = () => import('@/views/businessCharts/dealData/gameDeal')
+//销售厅账户监控
+const accountWatch = () => import('@/views/businessCharts/saleshallAccountWatch/saleshallAccountWatch')
+//销售厅设备监控
+const equipmentWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch/saleshallEquipmentWatch')
+//告警监控
+const warningWatch = () => import('@/views/businessCharts/warningWatch')
 export default [
   // {
   //   path: 'demo',
@@ -25,7 +40,7 @@ export default [
     path: 'businessCharts/centerWatch',
     name: 'centerWatch',
     meta: {
-      title: '中心监控',
+      title: '大屏监控',
     },
     component: centerWatch
   },
@@ -36,5 +51,68 @@ export default [
       title: '省级监控',
     },
     component: provinceWatch
+  },
+
+  {
+    path: 'businessCharts/centerDeal',
+    name: 'centerDeal',
+    meta: {
+      title: '中央交易数据',
+    },
+    component: centerDeal
+  },
+  {
+    path: 'businessCharts/provinceDeal',
+    name: 'provinceDeal',
+    meta: {
+      title: '省级交易数据',
+    },
+    component: provinceDeal
+  },
+  {
+    path: 'businessCharts/cityDeal',
+    name: 'cityDeal',
+    meta: {
+      title: '市级交易数据',
+    },
+    component: cityDeal
+  },  {
+    path: 'businessCharts/areaDeal',
+    name: 'areaDeal',
+    meta: {
+      title: '区域交易数据',
+    },
+    component: areaDeal
+  },  {
+    path: 'businessCharts/gameDeal',
+    name: 'gameDeal',
+    meta: {
+      title: '游戏交易数据',
+    },
+    component: gameDeal
+  },
+  {
+    path: 'businessCharts/accountWatch',
+    name: 'accountWatch',
+    meta: {
+      title: '销售厅账户监控',
+    },
+    component: accountWatch
+  },
+  {
+    path: 'businessCharts/equipmentWatch',
+    name: 'equipmentWatch',
+    meta: {
+      title: '销售厅设备监控',
+    },
+    component: equipmentWatch
+  },{
+    path: 'businessCharts/warningWatch',
+    name: 'warningWatch',
+    meta: {
+      title: '告警监控',
+    },
+    component: warningWatch
   }
+
 ]
