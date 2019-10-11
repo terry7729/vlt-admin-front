@@ -9,7 +9,6 @@ const editPendingReview = () => import('@/views/businessManage/gameStoreManage/e
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
 const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
-<<<<<<< HEAD
 // 游戏发行计划列表
 const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
 // 游戏配置管理
@@ -17,10 +16,8 @@ const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
 const check = () => import('@/views/businessManage/gameStoreManage/check')
 
-=======
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
->>>>>>> c8d81f83ea8dfdc50424363b921fe87984dcc5a4
 
 export default [
   // {
@@ -73,7 +70,6 @@ export default [
     component: gamePlanList
   },
   {
-<<<<<<< HEAD
     path: 'businessManage/gameLaunchPlan',
     name: 'gameLaunchPlan',
     meta: {
@@ -105,7 +101,7 @@ export default [
     },
     component: check
   },
-=======
+  {
     path: 'businessManage/channelList',
     name: 'channelList',
     meta: {
@@ -113,5 +109,4 @@ export default [
     },
     component: channelList
   }
->>>>>>> c8d81f83ea8dfdc50424363b921fe87984dcc5a4
 ]
