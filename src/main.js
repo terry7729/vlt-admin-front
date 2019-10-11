@@ -6,7 +6,9 @@ import store from './store'
 import api from './api/'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import commonComponents from './components/common/' // 通用组件引入
 
+Vue.use(commonComponents)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.$api = api
