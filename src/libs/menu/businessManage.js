@@ -1,7 +1,8 @@
 // 业务管理-左侧导航数据
 
 export default [{
-  childResources: [{
+  childResources: [
+    {
       childResources: [{
         childResources: [],
         icon: "el-icon-menu",
@@ -69,41 +70,8 @@ export default [{
           }
         ],
       },
-      {
-        icon: "el-icon-menu",
-        name: "游戏试玩计划管理",
-        url: 'gamePlanManage',
-        childResources: [{
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "游戏上市计划",
-            url: 'gameLaunchPlan'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "游戏配置管理",
-            url: 'gameConfigManage'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "游戏退市计划",
-            url: 'gameDelistPlan'
-          }
-        ]
-      },
-      {
-        icon: "el-icon-menu",
-        name: "渠道业务管理",
-        url: 'channelBusinessManage',
-        childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "渠道列表",
-          url: 'channelList'
-        }],
-      }
+      
+      
     ],
     icon: "el-icon-menu",
     name: "业务管理",
