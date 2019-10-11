@@ -143,7 +143,6 @@ export default {
 
 <style lang="less">
 .pending-review {
-  padding: 20px;
   .el-table--border,
   .el-table--group {
     border-color: #e0e0e0;
