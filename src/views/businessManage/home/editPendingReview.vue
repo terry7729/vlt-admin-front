@@ -35,7 +35,9 @@
           </el-collapse-item>
         </el-collapse>
       </el-tab-pane>
-      <el-tab-pane label="流程步骤设置" name="second">2</el-tab-pane>
+      <el-tab-pane label="流程步骤设置" name="second">
+        流程步骤 
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
