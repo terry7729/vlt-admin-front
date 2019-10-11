@@ -26,6 +26,8 @@ export default [
   //   }
   // },
   //渠道账户列表
+
+  //渠道账户
   {
     path: 'businessOperation/accountList',
     name: 'accountList',
