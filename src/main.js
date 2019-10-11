@@ -8,6 +8,20 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ElementUI)
+
+Vue.directive('prevent', {
+  inserted (el, binding) {
+    el.addEventListener('click', () => {
+      if (!el.disabled) {
+        el.disabled = true
+        setTimeout(() => {
+          el.disabled = false
+        }, binding.value || 2000)
+      }
+    })
+  }
+}),
+
 Vue.config.productionTip = false
 Vue.prototype.$api = api
 Vue.prototype.eventBus = new Vue();
