@@ -1,10 +1,10 @@
 // 业务管理系统路由配置
 // 首页概况
-const overview = () => import('@/views/businessManage/gameStoreManage/overview')
+const overview = () => import('@/views/businessManage/home/overview')
 // 待审核
-const pendingReview = () => import('@/views/businessManage/gameStoreManage/pendingReview')
+const pendingReview = () => import('@/views/businessManage/home/pendingReview')
 // 处理待审核
-const editPendingReview = () => import('@/views/businessManage/gameStoreManage/editPendingReview')
+const editPendingReview = () => import('@/views/businessManage/home/editPendingReview')
 // 游戏储备列表
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
