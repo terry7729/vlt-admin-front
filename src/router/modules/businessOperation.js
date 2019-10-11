@@ -1,6 +1,7 @@
 // 业务运营系统路由配置
 // 渠道账户列表
 const accountList = () => import('@/views/businessOperation/channelAccount/account')
+const accountListDetail = () => import('@/views/businessOperation/channelAccount/accountListDetail')
 // 账户资金
 const accountManage = () => import('@/views/businessOperation/channelAccount/accountManage')
 
@@ -14,6 +15,7 @@ export default [
   //     title: '路由说明'
   //   }
   // },
+  //渠道账户列表
   {
     path: 'businessOperation/accountList',
     name: 'accountList',
@@ -21,6 +23,14 @@ export default [
       title: '渠道账户列表',
     },
     component: accountList
+  },
+  {
+    path: 'businessOperation/accountList/accountListDetail',
+    name: 'accountListDetail',
+    meta: {
+      title: '渠道账户列表详情',
+    },
+    component: accountListDetail
   },
   {
     path: 'businessOperation/accountManage',
