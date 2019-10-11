@@ -7,7 +7,7 @@ const emailSetting = () => import('@/views/systemManage/settings/emailSetting')
 const dataDictionary = () => import('@/views/systemManage/dataDictionary/index')
 
 //业务流程
-const formManager = () => import('@/views/systemManage/businessProcess/formManager')
+const formManage = () => import('@/views/systemManage/businessProcess/formManage')
 //流程设置
 const processSet = () => import('@/views/systemManage/businessProcess/processSet')
 export default [
@@ -45,12 +45,12 @@ export default [
     component: emailSetting
   },
   {
-    path :'systemManage/formManager',
-    name:'formManager',
+    path :'systemManage/formManage',
+    name:'formManage',
     meta:{
       title:'表单管理',
     },
-    component:formManager
+    component:formManage
   },
   {
     path :'systemManage/processSet',
