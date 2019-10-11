@@ -1,5 +1,5 @@
 <template>
-  <div class="module-overview">
+  <div class="vlt-card module-overview">
     <overList></overList>
     <message></message>
   </div>
