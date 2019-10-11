@@ -25,12 +25,7 @@ export default [
   //     title: '路由说明'
   //   }
   // },
-<<<<<<< HEAD
   //渠道账户列表
-=======
-
-  //渠道账户
->>>>>>> 3fcbc15518b86e25385f4bb994f749812859e6ae
   {
     path: 'businessOperation/accountList',
     name: 'accountList',
