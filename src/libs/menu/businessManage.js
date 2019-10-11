@@ -2,7 +2,19 @@
 
 export default [
   {
-    childResources: [
+    childResources: [{
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "概况",
+          url: 'overview'
+        }
+      ],
+      icon: "el-icon-menu",
+      name: "首页",
+      url: 'overview'
+    },
       {
         icon: "el-icon-menu",
         name: "游戏储备管理",
