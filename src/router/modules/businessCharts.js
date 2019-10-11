@@ -3,14 +3,21 @@
 const centerWatch = () => import('@/views/businessCharts/screenWatch/centerWatch')
 // 省级监控
 const provinceWatch = () => import('@/views/businessCharts/screenWatch/provinceWatch')
-
+//中央交易数据
 const centerDeal = () => import('@/views/businessCharts/dealData/centerDeal')
+//省级交易数据
 const provinceDeal = () => import('@/views/businessCharts/dealData/provinceDeal')
+//城市交易数据
 const cityDeal = () => import('@/views/businessCharts/dealData/cityDeal')
+//区域交易数据
 const areaDeal = () => import('@/views/businessCharts/dealData/areaDeal')
+//游戏交易监控
 const gameDeal = () => import('@/views/businessCharts/dealData/gameDeal')
+//销售厅账户监控
 const accountWatch = () => import('@/views/businessCharts/saleshallAccountWatch/saleshallAccountWatch')
+//销售厅设备监控
 const equipmentWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch/saleshallEquipmentWatch')
+//告警监控
 const warningWatch = () => import('@/views/businessCharts/warningWatch')
 export default [
   // {
