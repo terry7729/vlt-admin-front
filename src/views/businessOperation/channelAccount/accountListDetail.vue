@@ -1,5 +1,5 @@
 <template>
-  <div class="account_detail" style="background-color: #fff;">
+  <div class="vlt-card account_detail">
     <div class="account_detail_data">
       <h3>账户资料</h3>
       <div class="account_detail_vessel">
