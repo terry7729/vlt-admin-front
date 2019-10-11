@@ -1,11 +1,20 @@
 <template>
-  <div class="account_detail" style="background-color: #fff;">
+  <div class="vlt-card account_detail">
     <div class="account_detail_data">
       <h3>账户资料</h3>
       <div class="account_detail_vessel">
         <div class="account_detail_classify" v-for="item in data" :key="item.id">
           <span>{{item.name}}:</span>
           <span></span>
+        </div>
+      </div>
+      <div class="account_detail_data">
+        <h3>账户资料</h3>
+        <div class="account_detail_vessel">
+          <div class="account_detail_classify" v-for="item in data" :key="item.id">
+            <span>{{item.name}}:</span>
+            <span></span>
+          </div>
         </div>
       </div>
     </div>
