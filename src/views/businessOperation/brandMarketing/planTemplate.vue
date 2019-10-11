@@ -39,7 +39,6 @@ export default {
 // @import "./less/index.less";
 .plan-template {
     padding: 25px;
-
     .box-card {
         width: 350px;
         display: inline-block;
