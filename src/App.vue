@@ -15,4 +15,5 @@ export default {
 
 <style lang="less">
 @import './assets/less/app.less';
+@import './assets/less/common.less';
 </style>

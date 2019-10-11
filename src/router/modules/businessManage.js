@@ -9,6 +9,8 @@ const editPendingReview = () => import('@/views/businessManage/gameStoreManage/e
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
 const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
+// 渠道业务管理
+const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 
 export default [
   // {
@@ -59,5 +61,13 @@ export default [
       title: '游戏试玩计划',
     },
     component: gamePlanList
+  },
+  {
+    path: 'businessManage/channelList',
+    name: 'channelList',
+    meta: {
+      title: '渠道业务管理',
+    },
+    component: channelList
   }
 ]
