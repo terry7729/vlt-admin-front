@@ -3,7 +3,13 @@
 const baseSetting = () => import('@/views/systemManage/settings/baseSetting')
 // 邮件设置
 const emailSetting = () => import('@/views/systemManage/settings/emailSetting')
+//数据字典
+const dataDictionary = () => import('@/views/systemManage/dataDictionary/index')
 
+//业务流程
+const formManager = () => import('@/views/systemManage/businessProcess/formManager')
+//流程设置
+const processSet = () => import('@/views/systemManage/businessProcess/processSet')
 export default [
   // {
   //   path: 'demo',
@@ -29,5 +35,29 @@ export default [
       title: '邮件设置',
     },
     component: emailSetting
-  }
+  },
+  {
+    path: 'systemManage/emailSetting',
+    name: 'emailSetting',
+    meta: {
+      title: '邮件设置',
+    },
+    component: emailSetting
+  },
+  {
+    path :'systemManage/formManager',
+    name:'formManager',
+    meta:{
+      title:'表单管理',
+    },
+    component:formManager
+  },
+  {
+    path :'systemManage/processSet',
+    name:'processSet',
+    meta:{
+      title:'流程设置',
+    },
+    component:processSet
+  },
 ]
