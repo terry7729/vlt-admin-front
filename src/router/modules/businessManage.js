@@ -9,6 +9,13 @@ const editPendingReview = () => import('@/views/businessManage/gameStoreManage/e
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
 const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
+// 游戏发行计划列表
+const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
+// 游戏配置管理
+const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
+const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
+const check = () => import('@/views/businessManage/gameStoreManage/check')
+
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 
@@ -61,6 +68,38 @@ export default [
       title: '游戏试玩计划',
     },
     component: gamePlanList
+  },
+  {
+    path: 'businessManage/gameLaunchPlan',
+    name: 'gameLaunchPlan',
+    meta: {
+      title: '游戏上市计划',
+    },
+    component: gameLaunchPlan
+  },
+  {
+    path: 'businessManage/gameConfigManage',
+    name: 'gameConfigManage',
+    meta: {
+      title: '游戏配置管理',
+    },
+    component: gameConfigManage
+  },
+  {
+    path: 'businessManage/gameDelistPlan',
+    name: 'gameDelistPlan',
+    meta: {
+      title: '游戏退市计划',
+    },
+    component: gameDelistPlan
+  },
+  {
+    path: 'businessManage/check',
+    name: 'check',
+    meta: {
+      title: '查看',
+    },
+    component: check
   },
   {
     path: 'businessManage/channelList',

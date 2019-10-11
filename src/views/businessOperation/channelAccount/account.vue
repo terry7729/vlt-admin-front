@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 25px; background-color:#fff" class="el_box">
+  <div class="vlt-card el_box">
     <el-alert class="el_alert_info" :closable="false" v-for="(item,index) in data" :key="index">
       <i :class="item.icon" style="color:#2d8cf0" class="el_icon"></i>
       <span>{{item.info}}</span>搜索
@@ -9,15 +9,15 @@
     </el-alert>
     <div class="el_table">
       <el-table :data="tableData" style="width: 100%" border>
-        <el-table-column prop="id" label="序号" width="104"></el-table-column>
+        <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="accountName" label="账户名称" width="100"></el-table-column>
         <el-table-column prop="accountNum" label="账号" width="130"></el-table-column>
         <el-table-column prop="accountType" label="账户类型" width="150"></el-table-column>
-        <el-table-column prop="principalName" label="负责人姓名" width="150"></el-table-column>
+        <el-table-column prop="principalName" label="负责人姓名" min-width="150"></el-table-column>
         <el-table-column prop="telephoneNum" label="手机号码" width="180"></el-table-column>
         <el-table-column prop="createDate" label="创建时间" width="180"></el-table-column>
         <el-table-column label="账户状态" width="140" prop="terminalStatus"></el-table-column>
-        <el-table-column label="操作" width="130" fixed="right">
+        <el-table-column label="操作" width="130">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="detail(scope.row.id)">详情</el-button>
           </template>

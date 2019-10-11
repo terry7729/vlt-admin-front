@@ -1,6 +1,3 @@
-// 分工模块页面样式
-.module-name {}
-
 //渠道账户列表样式
 .el_box {
     .el-alert--info.is-light {
@@ -33,45 +30,59 @@
     .el_table {
         margin-top: 10px;
         text-align: center;
+    // .el-alert--info.is-light {
+    //     padding: 4px 48px 8px 5px;
+    //     border: 1px solid #abdcff;
+    //     background-color: #f0faff;
+    //     color: #000
+    // }
 
-        .el-table th {
-            background: #f8f8f9;
-        }
+    // .el-alert--info .el-alert__description {
+    //     color: #000;
+    // }
 
-        .el-table .cell {
-            text-align: center;
+    // .el-table__header-wrapper {
+    //     background: #000;
+    // }
 
-        }
+    // .el-table__header {
+    //     background: #000;
+    // }
 
-        td:last-child {
-            color: rgb(0, 0, 255)
-        }
+    // .has-gutter {
+    //     background: #000;
+    // }
 
+    // .el_icon {
+    //     margin-right: 10px;
+    // }
 
-
-    }
 }
 
 //渠道账户列表详情样式
 .account_detail {
-    margin: 20px 20px 0 20px;
 
     &_data {
         padding: 20px 0 30px 20px;
-        border-bottom: 1px solid #ccc;
+
 
     }
 
     &_vessel {
         display: flex;
-        width: 50%;
+        width: 100%;
         flex-wrap: wrap;
-
+        border-bottom: 1px solid #ccc;
     }
 
     &_classify {
-        width: 200px;
+        width: 50%;
         margin-top: 20px;
+
+
     }
 
+    div:last-child {
+        margin-bottom: 20px;
+    }
 }
