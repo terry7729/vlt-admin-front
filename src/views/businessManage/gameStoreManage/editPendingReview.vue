@@ -1,5 +1,5 @@
 <template>
-  <div class="module-edit-pending-review">
+  <div class="vlt-card module-edit-pending-review">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="XXX业务信息" name="first">
         <el-collapse v-model="activeNames" @change="handleChange">
@@ -106,31 +106,31 @@ export default {
 
     .el-form {
       padding: 20px 30px;
-      .el-table__header-wrapper {
-        table {
-          tr {
-            td,th {
-              padding: 3px 0;
-              font-size: 12px;
-            }
-          }
-          thead {
-            tr {
-              th {
-                background-color: #fff;
-                div {
-                  color: #333333;
-                  font-weight: 400;
-                }
-              }
-            }
-          }
-        }
-      }
-      .el-table td {
-        padding: 3px 0;
-        font-size: 12px;
-      }
+      // .el-table__header-wrapper {
+      //   table {
+      //     tr {
+      //       td,th {
+      //         padding: 3px 0;
+      //         font-size: 12px;
+      //       }
+      //     }
+      //     thead {
+      //       tr {
+      //         th {
+      //           background-color: #fff;
+      //           div {
+      //             color: #333333;
+      //             font-weight: 400;
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+      // .el-table td {
+      //   padding: 3px 0;
+      //   font-size: 12px;
+      // }
     }
 
     .el-collapse-item__header {
