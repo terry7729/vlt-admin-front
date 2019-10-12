@@ -1,36 +1,15 @@
 <template>
-  <div>
-    <span class="box-spacing" style="margin:10px 20px 5px">
-      区域：
-      <el-select v-model="provinceCode" size="small" placeholder="请选择省" @change="getProvince()">
-        <el-option
-          v-for="item in provinceList"
-          :key="item.provinceCode"
-          :label="item.areaName"
-          :value="item.provinceCode"
-        ></el-option>
-      </el-select>
-
-      <el-select v-model="cityCode" size="small" placeholder="请选择市" >
-        <el-option
-          v-for="item in cityList"
-          :key="item.cityCode"
-          :label="item.cityName"
-          :value="item.cityCode"
-          @change="getCity()"
-        ></el-option>
-      </el-select>
-      <el-select v-model="poundage" size="small" placeholder="请选择销售厅">
-        <el-option
-          v-for="item in poundagefee"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </span>
+  <div class="vlt-card">
+    <search-bar
+      class="search-bar-demo"
+      @search="search"
+      :options="searchOptions"
+      :total="999"
+      labelWidth="80px"
+    ></search-bar>
+    
     <span>
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
     </span>
     <div class="tab-container">
       <el-table
@@ -48,13 +27,14 @@
         <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
         <el-table-column align="center" prop="name" label="省份"></el-table-column>
         <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="address" label="开卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="退卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="缴款"></el-table-column>
-        <el-table-column align="center" prop="address" label="充值"></el-table-column>
-        <el-table-column align="center" prop="address" label="提现"></el-table-column>
-        <el-table-column align="center" prop="address" label="账户余额"></el-table-column>
-        
+        <el-table-column align="center"  label="柜员机">
+             <el-table-column prop="address" align="center" label="柜员机数量" ></el-table-column>
+            <el-table-column prop="address" align="center" label="柜员机在线数量"></el-table-column>
+        </el-table-column>
+        <el-table-column align="center"  label="终端机">
+             <el-table-column prop="address" align="center" label="终端机数量" ></el-table-column>
+            <el-table-column prop="address" align="center" label="终端机在线数量"></el-table-column>
+        </el-table-column>       
       </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
@@ -84,9 +64,62 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "Page401",
+  name: "saleshallEquipmentWatch",
   data() {
     return {
+      searchOptions: [
+        {
+          type: "select",
+          prop: "province",
+          value: "",
+          title: "区域",
+          placeholder: "请选择省",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "select",
+          prop: "selectNam1",
+          value: "",
+          title: "",
+          placeholder: "请选择市",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "select",
+          prop: "selectName2",
+          value: "",
+          title: "",
+          placeholder: "请选择销售厅",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        }
+      ],
       //记录省市县
       provinceList: [],
       dataprovinceList: [],
@@ -126,7 +159,37 @@ export default {
           date: "2016-05-03",
           name: "王小虎",
           address: "100"
-        }
+        },,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        },,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        },
       ]
     };
   },
@@ -218,8 +281,12 @@ export default {
           "县：" +
           this.countryCode
       );
-    }
+    },
+     search(form) {
+      console.log('search', form)
+    },
   },
+  
   mounted() {
     this.showcity();
   }
@@ -227,19 +294,4 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.tab-container {
-  padding: 20px;
-  background-color: #fff;
-  margin-top: 10px;
-}
-
-
-.el-select {
-  margin-right: 20px; 
-}
-.box-spacing {
-  display: block;
-  margin-left: 20px;
-  float: left;
-}
 </style>
