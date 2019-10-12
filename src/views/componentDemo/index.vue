@@ -2,6 +2,8 @@
   <!--组件展示demo-->
   <div class="component-container">
     <h1 class="headling">组件展示</h1>
+
+
     <section class="comp-item">
       <h4 class="comp-title">搜索框</h4>
       <search-bar class="search-bar-demo"
@@ -12,6 +14,25 @@
       >
       </search-bar>
     </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">搜索框-拓展</h4>
+      <search-bar class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="80px"
+      >
+        <control-bar slot="extend-bar"></control-bar>
+      </search-bar>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">页面操作</h4>
+      <control-bar></control-bar>
+    </section>
+
+
   </div>
 </template>
 
