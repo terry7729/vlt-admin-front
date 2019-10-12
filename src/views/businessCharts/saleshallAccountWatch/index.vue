@@ -1,16 +1,16 @@
 <template>
   <div class="vlt-card">
-    <search-bar
-      class="search-bar-demo"
-      @search="search"
-      :options="searchOptions"
-      :total="999"
-      labelWidth="80px"
-    ></search-bar>
-    
-    <span>
-      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
-    </span>
+    <section class="comp-item">
+      <search-bar
+        class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="80px"
+      >
+      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      </search-bar>
+    </section>
     <div class="tab-container">
       <el-table
         :data="tableData"
@@ -118,6 +118,23 @@ export default {
             }
           ]
         }
+      ],
+      controlOptions: [
+       
+        {
+          type: "export",
+          change() {
+            alert("cliked");
+          }
+        },
+       
+        {
+          type: "refresh",
+          change() {
+            alert("cliked");
+          }
+        },
+        
       ],
       //记录省市县
       provinceList: [],
@@ -262,5 +279,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-
+.control-bar-comp{
+  text-align: right;
+}
 </style>

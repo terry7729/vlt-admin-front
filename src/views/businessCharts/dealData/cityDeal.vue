@@ -46,7 +46,7 @@
 
 <script>
 // import errGif from "@/assets/401_images/401.gif";
-import pagination from '@/components/common/pagination'
+// import pagination from '@/components/common/pagination'
 export default {
   name: "cityDeal",
   components:{pagination},
