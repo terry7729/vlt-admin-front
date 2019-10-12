@@ -1,12 +1,12 @@
 <template>
   <div class="vlt-card">
-    <div class="search">
+    <div class="search"><!--搜索栏 !-->
       <search-Bar :options="option" :total="999">
         <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-Bar>
     </div>
-    <div class="from">
-      <el-table
+    <div class="from"><!-- table表格!-->
+      <el-table    
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
