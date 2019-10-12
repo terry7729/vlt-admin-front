@@ -1,7 +1,7 @@
-<!-- 首页 - 我的申请 -->
+<!-- 首页 - 我的知会 -->
 <template>
   <div class="vlt-card">
-    我的申请
+    我的知会
   </div>
 </template>
 

@@ -1,17 +1,21 @@
-<!-- 首页 - 我的代办 -->
+<!-- 首页 - 我的待办 -->
 
 <template>
-  <div>
-
+  <div class="vlt-card">
+    我的待办
   </div>
 </template>
 
-<script>
-  export default {
-    
-  }
+<script type="text/javascript">
+export default {
+  name: "",
+  data() {
+    return {};
+  },
+  components: {},
+  methods: {}
+};
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="less" scoped>
 </style>

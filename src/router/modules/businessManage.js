@@ -1,6 +1,15 @@
 // 业务管理系统路由配置
 // 首页概况
 const overview = () => import('@/views/businessManage/home/overview')
+// 我的待办
+const myToDo = () => import('@/views/businessManage/home/myToDo')
+// 我的申请
+const myApplication = () => import('@/views/businessManage/home/myApplication')
+// 我的已办
+const myDone = () => import('@/views/businessManage/home/myDone')
+// 我的知会
+const myKnowledge = () => import('@/views/businessManage/home/myKnowledge')
+
 // 消息列表
 const messages = () => import('@/views/businessManage/home/messages')
 // 发布消息
@@ -56,6 +65,34 @@ export default [
       title: '首页',
     },
     component: overview
+  },{
+    path: 'businessManage/myToDo',
+    name: 'myToDo',
+    meta: {
+      title: '我的待办',
+    },
+    component: myToDo
+  }, {
+    path: 'businessManage/myApplication',
+    name: 'myApplication',
+    meta: {
+      title: '我的申请',
+    },
+    component: myApplication
+  }, {
+    path: 'businessManage/myDone',
+    name: 'myDone',
+    meta: {
+      title: '我的已办',
+    },
+    component: myDone
+  }, {
+    path: 'businessManage/myKnowledge',
+    name: 'myKnowledge',
+    meta: {
+      title: '我的知会',
+    },
+    component: myKnowledge
   },
   {
     path: 'businessManage/messages/:type',

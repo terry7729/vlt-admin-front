@@ -8,6 +8,26 @@ export default [{
         icon: "el-icon-menu",
         name: "概况",
         url: 'overview'
+      },{
+        childResources: [],
+        icon: "el-icon-menu",
+        name: "我的待办",
+        url: 'myToDo'
+      },{
+        childResources: [],
+        icon: "el-icon-menu",
+        name: "我的申请",
+        url: 'myApplication'
+      },{
+        childResources: [],
+        icon: "el-icon-menu",
+        name: "我的已办",
+        url: 'myDone'
+      },{
+        childResources: [],
+        icon: "el-icon-menu",
+        name: "我的知会",
+        url: 'myKnowledge'
       }],
       icon: "el-icon-menu",
       name: "首页",
