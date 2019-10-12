@@ -28,6 +28,11 @@
     </section>
 
     <section class="comp-item">
+      <h4 class="comp-title">提示条</h4>
+      <tips-line>温馨提示内容</tips-line>
+    </section>
+
+    <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
       <control-bar :options="controlOptions"></control-bar>
     </section>

@@ -1,62 +1,44 @@
 <template>
   <div class="vlt-card">
-    <div class="role-destail">
-      <el-col :span="24">
-        <div class="role-title">
-          <span>角色信息</span>
-        </div>
+    <div class="vlt-edit-single">
+      <h2 class="title">角色信息</h2>
+      <div class="vlt-edit-wrap">
+        <el-form ref="form" :model="roleform" label-position="right" label-width="90px">
+          <el-form-item label="用户角色">
+            <el-input v-model="roleform.rolename"></el-input>
+          </el-form-item>
 
-        <el-form ref="form" :model="roleform" :label-position="labelPosition" size="mini">
-          <div class="role-ifo">
-            <el-row :gutter="100">
-              <el-col :span="24" :gutter="1">
-                <el-col :span="10">
-                  <el-form-item label="用户角色">
-                    <el-input v-model="roleform.rolename"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                  <el-form-item label="角色类型">
-                    <el-input v-model="roleform.toletype"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                  <el-form-item label="角色状态">
-                    <el-input v-model="roleform.rolestatus"></el-input>
-                  </el-form-item>
-                </el-col>
+          <el-form-item label="角色类型">
+            <el-input v-model="roleform.toletype"></el-input>
+          </el-form-item>
 
-                <el-col :span="10">
-                  <el-form-item label="角色权限">
-                    <el-cascader
-                      :options="options"
-                      v-model="roleform.rolepower"
-                      :props="{ multiple: true,  checkStrictly: true }"
-                      clearable
-                    ></el-cascader>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="10">
-                  <el-form-item label="描述">
-                    <el-input
-                      type="textarea"
-                      :autosize="{ minRows: 2, maxRows: 4}"
-                      placeholder="请输入内容"
-                      v-model="roleform.desc"
-                    ></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-col>
-            </el-row>
-          </div>
-          <div style="padding-left:140px;margin-top:200px;">
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit(roleform)" size="mini">保存</el-button>
-              <el-button>取消</el-button>
-            </el-form-item>
-          </div>
+          <el-form-item label="角色状态">
+            <el-input v-model="roleform.rolestatus"></el-input>
+          </el-form-item>
+
+          <el-form-item label="角色权限">
+            <el-cascader
+              :options="options"
+              v-model="roleform.rolepower"
+              :props="{ multiple: true,  checkStrictly: true }"
+              clearable
+            ></el-cascader>
+          </el-form-item>
+
+          <el-form-item label="描述">
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 3, maxRows: 6}"
+              placeholder="请输入内容"
+              v-model="roleform.desc"
+            ></el-input>
+          </el-form-item>
+          <el-row class="el-form-item vlt-edit-btn">
+            <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
+            <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+          </el-row>
         </el-form>
-      </el-col>
+      </div>
     </div>
   </div>
 </template>
@@ -66,7 +48,6 @@
 export default {
   data() {
     return {
-      labelPosition: "top",
       roleform: {
         rolename: "",
         desc: "",
@@ -345,7 +326,7 @@ export default {
     };
   },
   methods: {
-    onSubmit(val) {
+    save(val) {
       console.log(val);
       console.log("submit!");
     }
