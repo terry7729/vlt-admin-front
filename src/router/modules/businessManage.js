@@ -40,6 +40,7 @@ const channelList = () => import('@/views/businessManage/channelBusinessManage/c
 const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
 
 export default [
   // {
@@ -210,5 +211,13 @@ export default [
       title: '年度发展计划',
     },
     component: developmentPlan
+  },
+  {
+    path: 'businessManage/createDevelopmentPlan',
+    name: 'createDevelopmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: createDevelopmentPlan
   }
 ]

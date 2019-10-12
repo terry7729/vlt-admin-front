@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card develop-plan">
-    <el-tabs tab-position="left" style="height: 200px;">
+    <el-tabs tab-position="left" style="height: auto;">
       <el-tab-pane label="计划列表">
         <search-bar class="search-bar-demo"
           @search="search"
@@ -8,15 +8,74 @@
           :total="999"
           labelWidth="80px"
         >
-        <control-bar slot="extend-bar" :options="options"></control-bar>
+          <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
         </search-bar>
+        <el-table :data="tableData" border>
+          <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+          <el-table-column label="渠道编号" prop="gameId"></el-table-column>
+          <el-table-column label="渠道类型" prop="gameName"></el-table-column>
+          <el-table-column label="所属机构" prop="gameCode"></el-table-column>
+          <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
+          <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
+          <el-table-column label="创建时间" prop="status"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+              <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-tab-pane>
       <el-tab-pane label="计划汇总（省）">
-        <div>
-          
-        </div>
+        <search-bar class="search-bar-demo"
+          @search="search"
+          :options="searchOptions"
+          :total="999"
+          labelWidth="80px"
+        >
+          <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
+        </search-bar>
+        <el-table :data="tableData" border>
+          <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+          <el-table-column label="渠道编号" prop="gameId"></el-table-column>
+          <el-table-column label="渠道类型" prop="gameName"></el-table-column>
+          <el-table-column label="所属机构" prop="gameCode"></el-table-column>
+          <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
+          <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
+          <el-table-column label="创建时间" prop="status"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+              <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-tab-pane>
-      <el-tab-pane label="计划汇总（地市）">计划汇总（地市）</el-tab-pane>
+      <el-tab-pane label="计划汇总（地市）">
+        <search-bar class="search-bar-demo"
+          @search="search"
+          :options="searchOptions"
+          :total="999"
+          labelWidth="80px"
+        >
+          <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
+        </search-bar>
+        <el-table :data="tableData" border>
+          <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+          <el-table-column label="渠道编号" prop="gameId"></el-table-column>
+          <el-table-column label="渠道类型" prop="gameName"></el-table-column>
+          <el-table-column label="所属机构" prop="gameCode"></el-table-column>
+          <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
+          <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
+          <el-table-column label="创建时间" prop="status"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+              <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -236,12 +295,21 @@ export default {
         {name: '导出', type: 'danger', icon: 'download'},   
         {name: '导出', type: 'success', icon: 'upload'},
         {name: '导出', type: 'warning', icon: 'download'},
+      ],
+      tableData: [
+        {gameId:'12',gameName: 'a',cycleType: 0,gameTypeName:'奖组型',status:'2019-09-12 09：00：00'}
       ]
     }
   },
   components: {
   },
   methods: {
+    search(val) {
+      console.log(val)
+    },
+    select(val) {
+      console.log(val)
+    }
   },
 }
 </script>

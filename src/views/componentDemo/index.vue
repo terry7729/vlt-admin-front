@@ -23,7 +23,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
 
@@ -37,6 +37,12 @@
       <control-bar :options="controlOptions"></control-bar>
     </section>
 
+    <section class="comp-item">
+      <h4 class="comp-title">无伸缩框</h4>
+      <cell title="彩票信息">
+        <base-info :infoList="infoList"></base-info>
+      </cell>
+    </section>
 
     <section class="comp-item">
       <h4 class="comp-title">展开框</h4>
@@ -507,6 +513,9 @@ export default {
     
   },
   methods: {
+    selectBtn(val) {
+      console.log(val)
+    },
     search(form) {
       console.log('search', form)
     },

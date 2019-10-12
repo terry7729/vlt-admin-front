@@ -4,7 +4,7 @@
       size="small" 
       v-for="(item, index) in options" 
       :key="index" :icon="`el-icon-${item.icon}`"
-      @click="item.change"
+      @click="select(item)"
       :type="item.type"
     >
       {{item.name}}
@@ -36,7 +36,9 @@
       };
     },
     methods: {
-      
+      select(val) {
+        this.$emit('select', val)
+      }
     }
   }
 </script>
