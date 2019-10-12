@@ -1,7 +1,6 @@
 <template>
-  <div style="padding: 25px;" class="game-search-list">
+  <div class="vlt-card game-search-list">
     <h1>游戏储备管理列表页</h1>
-    
     
     <el-table
     border
@@ -26,8 +25,8 @@
 
       <el-table-column label="操作" width="190">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click.native="detail(scope.row.date)">查看</el-button>
-          <el-button type="text" size="small" @click.native="deleteMsg(scope.row.id)">编辑</el-button>
+          <el-button type="primary" size="mini" @click.native="detail(scope.row.date)">查看</el-button>
+          <el-button  size="mini" @click.native="deleteMsg(scope.row.id)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>

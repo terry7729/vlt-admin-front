@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 25px;">
+  <div class="vlt-card">
     <h1>组织架构</h1>
     
   </div>
