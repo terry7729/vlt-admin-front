@@ -8,22 +8,14 @@
         <base-Info :infoList="moneyAccount"></base-Info>
       </panel>
       <div class="last_bottom_list">
-        <h3>拥有渠道列表</h3>
+        <h4>进度更新明细</h4>
         <el-table :data="tableData" border>
           <el-table-column prop="id" label="序号"></el-table-column>
-          <el-table-column prop="accountName" label="账户名称"></el-table-column>
-          <el-table-column prop="accountNum" label="账号"></el-table-column>
-          <el-table-column prop="accountType" label="账户类型"></el-table-column>
-          <el-table-column prop="principalName" label="负责人姓名"></el-table-column>
-          <el-table-column prop="telephoneNum" label="手机号码"></el-table-column>
-          <el-table-column prop="createDate" label="创建时间"></el-table-column>
-          <el-table-column label="账户状态" prop="createDate"></el-table-column>
-          <el-table-column prop="createDate" label="创建时间"></el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button type="primary" size="mini" @click="handelListDetail(scope.row.id)">详情</el-button>
-            </template>
-          </el-table-column>
+          <el-table-column prop="accountName" label="任务进度"></el-table-column>
+          <el-table-column prop="accountNum" label="任务说明"></el-table-column>
+          <el-table-column prop="accountType" label="使用终端"></el-table-column>
+          <el-table-column prop="principalName" label="更新人"></el-table-column>
+          <el-table-column prop="createDate" label="更新时间"></el-table-column>    
         </el-table>
       </div>
     </div>
@@ -36,24 +28,22 @@ export default {
     return {
       enter: 0,
       accountData: [
-        { title: "账户ID", value: "", prop: "accountID" },
-        { title: "账户名称", value: "", prop: "accountName" },
-        { title: "负责人", value: "", prop: "principal" },
-        { title: "手机号码", value: "", prop: "telephoneNum" },
-        { title: "账户状态", value: "", prop: "accountStatus" },
-        { title: "账户类型", value: "", prop: "accountType" },
-        { title: "所属区域", value: "", prop: "area" },
-        { title: "详细地址", value: "", prop: "detailAdress" },
-        { title: "创建时间", value: "", prop: "createDate" },
-        { title: "更新时间", value: "", prop: "pullDate" }
+        { title: "活动编号", value: "", prop: "accountID" },
+        { title: "活动名称", value: "", prop: "accountName" },
+        { title: "执行编号", value: "", prop: "principal" },
+        { title: "执行计划名称", value: "", prop: "telephoneNum" },
+        { title: "责任人", value: "", prop: "accountStatus" },
+        { title: "执行人", value: "", prop: "accountType" },
+        { title: "任务名称", value: "", prop: "area" },
+        { title: "任务描述", value: "", prop: "detailAdress" },
+        { title: "执行时间", value: "", prop: "createDate" },
+        { title: "截止时间", value: "", prop: "pullDate" },
+        { title: "状态", value: "", prop: "pullDate" }
       ],
       moneyAccount: [
-        { title: "资金账户ID", value: "", prop: "moneyAccountID" },
-        { title: "账户总额", value: "", prop: "accountTotal" },
-        { title: "总预交款", value: "", prop: "totalDeposit" },
-        { title: "授信总额度", value: "", prop: "totalMoney" },
-        { title: "创建时间", value: "", prop: "createDate" },
-        { title: "更新时间", value: "", prop: "pullDate" }
+        { title: "任务进度", value: "", prop: "moneyAccountID" },
+        { title: "任务说明", value: "", prop: "accountTotal" },
+        { title: "完成时间", value: "", prop: "totalDeposit" },
       ],
       tableData: [
         {

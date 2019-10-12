@@ -1,3 +1,6 @@
+.preview-template {
+  padding: 25px;
+}
 .preview-template h2 {
   height: 50px;
   background: white;
@@ -8,14 +11,8 @@
   font-size: 12px;
   position: relative;
 }
-.preview-template .coll-item .icon-txt {
-  color: blue;
-  font-size: 14px;
-  position: absolute;
-  top: 10px;
-  left: 1190px;
-}
 .preview-template .coll-item .coll-content {
+  margin-top: 20px;
   margin-left: 200px;
 }
 .preview-template .coll-item .coll-content .coll-form input {
@@ -83,8 +80,11 @@
   display: inline-block;
   width: 800px;
   position: relative;
-  top: -24px;
-  left: 65px;
+  top: -15px;
+  left: 60px;
+}
+.preview-template .coll-item .coll-content .index-check .item-check .el-checkbox {
+  padding-bottom: 10px;
 }
 .preview-template .coll-item .coll-content .upload-file {
   width: 600px;

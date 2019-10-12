@@ -52,7 +52,7 @@ export default {
             img {
                 float: left;
                 width: 50px;
-                height: 180px;
+                height: 80px;
             }
 
             span {

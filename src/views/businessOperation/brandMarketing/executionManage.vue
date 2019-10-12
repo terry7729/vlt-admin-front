@@ -1,8 +1,9 @@
 <template>
   <div class="vlt-card">
     <search-bar :options="options" :total="999"></search-bar>
+    
     <div class="create-btn">
-      <el-button type="primary" size="mini" @click="createActive">分配任务</el-button>
+      <el-button type="primary" size="mini" @click="allotTask">分配任务</el-button>
     </div>
     <div class="el_table">
       <el-table :data="tableData" border>
@@ -65,11 +66,20 @@ export default {
           title: "活动名称",
           placeholder: "请输入"
         }
+      ],
+      infoList: [
+        { title: "游戏编码", value: "", prop: "gameCode" },
+        { title: "周期类型", value: "", prop: "cycleType" },
+        { title: "游戏状态", value: "", prop: "gameStatus" },
+        { title: "游戏名称", value: "", prop: "gameName" },
+        { title: "游戏类型", value: "", prop: "officialEndSale" }
       ]
     };
   },
   methods: {
-    createActive() {},
+    allotTask() {
+      this.$router.push({ path: "allotTask" })
+    },
     detail(id) {
       this.$router.push({ path: "activityDetail", query: { id } });
     }

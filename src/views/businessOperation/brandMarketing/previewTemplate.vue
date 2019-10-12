@@ -1,19 +1,17 @@
 <template>
   <div class="vlt-card preview-template">
-    <h2>促销推广活动模板1</h2>
-    <el-collapse v-model="activeNames" @change="handleChange">
-      <el-collapse-item class="coll-item" title="基础信息" name="1">
+    <h2 class="comp-title">促销推广活动模板1</h2>
+    <section class="comp-item coll-item">
+      <panel title="基础信息" :show="true">
         <div class="coll-content">
-          <p class="icon-txt">收缩</p>
-
           <el-form class="coll-form" size="small" label-width="100px" :model="formLabelAlign">
             <el-form-item label="活动名称">
               <el-input v-model="formLabelAlign.name"></el-input>
             </el-form-item>
             <el-form-item label="活动类型">
               <el-select v-model="formLabelAlign.region" placeholder="请选择">
-                <el-option label="区域一" value='1'></el-option>
-                <el-option label="区域二" value='2'></el-option>
+                <el-option label="区域一" value="1"></el-option>
+                <el-option label="区域二" value="2"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="活动时间">
@@ -39,24 +37,25 @@
 
             <el-form-item label="活动组织方">
               <el-select v-model="formLabelAlign.region" placeholder="请选择">
-                <el-option label="区域一" value='5'></el-option>
-                <el-option label="区域二" value='6'></el-option>
+                <el-option label="区域一" value="5"></el-option>
+                <el-option label="区域二" value="6"></el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item label="适用群体" class="coll-check">
               <el-checkbox
                 :indeterminate="isIndeterminate"
-                v-model="allUser"
+                v-model="checkAll"
                 @change="handleCheckAllChange"
               >全选</el-checkbox>
 
-              <el-checkbox-group v-model="userLists" @change="handleCheckedCitiesChange">
-                <el-checkbox v-for="user in userLists" :label="user" :key="user">{{user}}</el-checkbox>
+              <el-checkbox-group v-model="checkedUser" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for="user in userList" :label="user" :key="user">{{user}}</el-checkbox>
               </el-checkbox-group>
+
               <el-select v-model="formLabelAlign.region" placeholder="请选择会员等级">
-                <el-option label="区域一" value='7'></el-option>
-                <el-option label="区域二" value='8'></el-option>
+                <el-option label="区域一" value="7"></el-option>
+                <el-option label="区域二" value="8"></el-option>
               </el-select>
             </el-form-item>
 
@@ -93,12 +92,12 @@
             </el-form-item>
           </el-form>
         </div>
-      </el-collapse-item>
+      </panel>
+    </section>
 
-      <el-collapse-item class="coll-item" title="附件上传" name="2">
+    <section class="comp-item coll-item">
+      <panel title="附件上传" :show="true">
         <div class="coll-content">
-          <p class="icon-txt">收缩</p>
-
           <div class="upload-file">
             <el-upload
               class="upload-demo"
@@ -117,7 +116,6 @@
               <div slot="tip" class="el-upload__tip">支持扩展名：.rar .zip .doc .docx .pdf .jpg...</div>
             </el-upload>
           </div>
-
           <div class="upload-img">
             <span>上传广告图：</span>
             <el-upload
@@ -153,11 +151,12 @@
             <img width="100%" :src="dialogImageUrl" alt />
           </el-dialog>
         </div>
-      </el-collapse-item>
+      </panel>
+    </section>
 
-      <el-collapse-item class="coll-item" title="活动规则" name="3">
+    <section class="comp-item coll-item">
+      <panel title="活动规则" :show="true">
         <div class="coll-content">
-          <p class="icon-txt">收缩</p>
           <el-form :model="formLabelAlign" class="coll-form active-rule">
             <el-form-item class="rule-item">
               <el-select></el-select>
@@ -171,7 +170,6 @@
               <label>活动期间累计充值:</label>
               <el-input class="last-rule"></el-input>
             </el-form-item>
-
             <el-form-item class="rule-item">
               <el-select></el-select>
               <el-input placeholder="审批人"></el-input>
@@ -186,11 +184,12 @@
             </el-form-item>
           </el-form>
         </div>
-      </el-collapse-item>
+      </panel>
+    </section>
 
-      <el-collapse-item class="coll-item" title="活动资金" name="4">
+    <section class="comp-item coll-item">
+      <panel title="活动资金" :show="true">
         <div class="coll-content">
-          <p class="icon-txt">收缩</p>
           <el-button type="primary" size="small">资金注入</el-button>
           <el-table :data="tableData" border style="width:650px">
             <el-table-column prop="date" label="序号" width="80"></el-table-column>
@@ -209,11 +208,36 @@
             <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
           </div>
         </div>
-      </el-collapse-item>
+      </panel>
+    </section>
 
-      <el-collapse-item class="coll-item" title="活动资源" name="5">
+    <section class="comp-item coll-item">
+      <panel title="活动资源" :show="true">
         <div class="coll-content">
-          <p class="icon-txt">收缩</p>
+          <el-button type="primary" size="small">资源选择</el-button>
+          <el-table :data="tableData" border style="width:650px">
+            <el-table-column prop="date" label="序号" width="80"></el-table-column>
+            <el-table-column prop="name" label="游戏编号" width="80"></el-table-column>
+            <el-table-column prop="address" label="游戏名称" width="80"></el-table-column>
+            <el-table-column prop="date" label="游戏所属机构" width="100"></el-table-column>
+            <el-table-column prop="name" label="注入方式" width="80"></el-table-column>
+            <el-table-column prop="address" label="注入金额" width="80"></el-table-column>
+            <el-table-column prop="date" label="操作" width="150">
+              <el-button type="primary" size="mini">修改</el-button>
+              <el-button type="danger" size="mini">删除</el-button>
+            </el-table-column>
+          </el-table>
+          <div class="remark">
+            <span>备注：</span>
+            <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
+          </div>
+        </div>
+      </panel>
+    </section>
+
+    <section class="comp-item coll-item">
+      <panel title="活动执行" :show="true">
+        <div class="coll-content">
           <el-button type="primary" size="small">资金注入</el-button>
           <el-table :data="tableData" border style="width:650px">
             <el-table-column prop="date" label="序号" width="80"></el-table-column>
@@ -232,40 +256,18 @@
             <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
           </div>
         </div>
-      </el-collapse-item>
+      </panel>
+    </section>
 
-      <el-collapse-item class="coll-item" title="活动执行" name="6">
+    <section class="comp-item coll-item">
+      <panel title="监控指标" :show="true">
         <div class="coll-content">
-          <p class="icon-txt">收缩</p>
-          <el-button type="primary" size="small">资金注入</el-button>
-          <el-table :data="tableData" border style="width:650px">
-            <el-table-column prop="date" label="序号" width="80"></el-table-column>
-            <el-table-column prop="name" label="游戏编号" width="80"></el-table-column>
-            <el-table-column prop="address" label="游戏名称" width="80"></el-table-column>
-            <el-table-column prop="date" label="游戏所属机构" width="100"></el-table-column>
-            <el-table-column prop="name" label="注入方式" width="80"></el-table-column>
-            <el-table-column prop="address" label="注入金额" width="80"></el-table-column>
-            <el-table-column prop="date" label="操作" width="150">
-              <el-button type="primary" size="mini">修改</el-button>
-              <el-button type="danger" size="mini">删除</el-button>
-            </el-table-column>
-          </el-table>
-          <div class="remark">
-            <span>备注：</span>
-            <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
-          </div>
-        </div>
-      </el-collapse-item>
-
-      <el-collapse-item class="coll-item" title="监控指标" name="7">
-        <div class="coll-content">
-          <p class="icon-txt">收缩</p>
-          <div>
+          <span>
             <span>维度选择：</span>
             <span>
               <el-checkbox v-for="item in checkList" :key="item">{{item}}</el-checkbox>
             </span>
-          </div>
+          </span>
           <div class="index-check">
             <p>指标选择：</p>
             <span class="item-check">
@@ -273,8 +275,8 @@
             </span>
           </div>
         </div>
-      </el-collapse-item>
-    </el-collapse>
+      </panel>
+    </section>
   </div>
 </template>
 
@@ -289,10 +291,11 @@ export default {
         region: "",
         type: ""
       },
-      strokeWidth:3,
-      isIndeterminate: "",
-      allUser: false,
-      userLists: ["游客", "新会员", "老会员"],
+      checkAll: false,
+      checkedUser: [],
+      userList: ["游客", "新会员", "老会员"],
+      isIndeterminate: true,
+      strokeWidth: 3,
       radio: "1",
       checked: true,
       dialogImageUrl: "",
@@ -327,11 +330,21 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    handleCheckedCitiesChange() {},
+
     beforeRemove() {},
     handleExceed() {},
-    handleCheckAllChange() {},
-    handlePreview() {}
+    handlePreview() {},
+
+    handleCheckAllChange(val) {
+      this.checkedUser = val ? userOptions : [];
+      this.isIndeterminate = false;
+    },
+    handleCheckedCitiesChange(value) {
+      let checkedCount = value.length;
+      this.checkAll = checkedCount === this.userList.length;
+      this.isIndeterminate =
+        checkedCount > 0 && checkedCount < this.userList.length;
+    }
   },
   computed: {},
   created() {},
@@ -341,6 +354,6 @@ export default {
 </script>
 
 
-<style lang="less" >
+<style lang="less" scoped >
 @import "./less/index.less";
 </style>

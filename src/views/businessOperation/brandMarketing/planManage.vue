@@ -84,7 +84,10 @@ export default {
   },
   methods: {
     createActive() {
-      this.$router.push({ path: "previewTemplate" });
+      this.$router.push({ path: "createActivity" });
+    },
+    detail(){
+      this.$router.push({ path: "planDetail" })
     }
   },
   computed: {},
