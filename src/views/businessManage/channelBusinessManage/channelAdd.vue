@@ -1,37 +1,31 @@
 <template>
   <div class="vlt-card">
-    <h1>组织架构</h1>
     
   </div>
 </template>
 
 <script>
 export default {
-  name: 'name',
+  name: 'channelList',
   data() {
     return {
-      
     }
-  },
-  computed: {
-
   },
   created() {
   
   },
-  mounted() {
-    
+  methods: {
+    add() {
+      console.log('a')
+    }
   },
   components: {
 
   },
-  methods:{
-    
-  }
 }
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 @import './less/index.less';
 </style>

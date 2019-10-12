@@ -1,3 +1,4 @@
+//组织架构
 const organizationChild = () => import('@/views/systemManage/organization/organization')
 
 
