@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 25px;">
+  <div vlt-card>
     <h1>游戏试玩计划列表页</h1>
   </div>
 </template>

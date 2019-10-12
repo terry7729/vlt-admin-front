@@ -1,10 +1,27 @@
 // 业务管理系统路由配置
 // 首页概况
 const overview = () => import('@/views/businessManage/home/overview')
+// 消息列表
+const messages = () => import('@/views/businessManage/home/messages')
+// 发布消息
+const sendMessage = () => import('@/views/businessManage/home/sendMessage')
+
 // 待审核
 const pendingReview = () => import('@/views/businessManage/home/pendingReview')
 // 处理待审核
-const editPendingReview = () => import('@/views/businessManage/home/editPendingReview')
+const pendingReviewEdit = () => import('@/views/businessManage/home/pendingReviewEdit')
+// 移交待审核
+const pendingReviewTransfer = () => import('@/views/businessManage/home/pendingReviewTransfer');
+
+// 已审核
+const audited = () => import('@/views/businessManage/home/audited');
+
+// 已申请
+const alreadyApplied = () => import('@/views/businessManage/home/alreadyApplied');
+
+// 待阅读
+const pendingReading = () => import('@/views/businessManage/home/pendingReading');
+
 // 游戏储备列表
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
@@ -15,6 +32,8 @@ const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/ga
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
 const check = () => import('@/views/businessManage/gameStoreManage/check')
+const edit = () => import('@/views/businessManage/gameStoreManage/edit')
+
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
@@ -39,6 +58,22 @@ export default [
     component: overview
   },
   {
+    path: 'businessManage/messages/:type',
+    name: 'messages',
+    meta: {
+      title: '更多消息',
+    },
+    component: messages
+  },
+  {
+    path: 'businessManage/sendMessage',
+    name: 'sendMessage',
+    meta: {
+      title: '发布消息',
+    },
+    component: sendMessage
+  },
+  {
     path: 'businessManage/pendingReview',
     name: 'pendingReview',
     meta: {
@@ -47,12 +82,44 @@ export default [
     component: pendingReview
   },
   {
-    path: 'businessManage/editPendingReview',
-    name: 'editPendingReview',
+    path: 'businessManage/pendingReviewEdit',
+    name: 'pendingReviewEdit',
     meta: {
       title: '待审核-处理',
     },
-    component: editPendingReview
+    component: pendingReviewEdit
+  },
+  {
+    path: 'businessManage/pendingReviewTransfer',
+    name: 'pendingReviewTransfer',
+    meta: {
+      title: '待审核-移交',
+    },
+    component: pendingReviewTransfer
+  },
+  {
+    path: 'businessManage/audited',
+    name: 'audited',
+    meta: {
+      title: '已审核',
+    },
+    component: audited
+  },
+  {
+    path: 'businessManage/alreadyApplied',
+    name: 'alreadyApplied',
+    meta: {
+      title: '已申请',
+    },
+    component: alreadyApplied
+  },
+  {
+    path: 'businessManage/pendingReading',
+    name: 'audipendingReadingted',
+    meta: {
+      title: '待阅读',
+    },
+    component: pendingReading
   },
   {
     path: 'businessManage/gameStoreList',
@@ -101,6 +168,14 @@ export default [
       title: '查看',
     },
     component: check
+  },
+  {
+    path: 'businessManage/edit',
+    name: 'edit',
+    meta: {
+      title: '编辑',
+    },
+    component: edit
   },
   {
     path: 'businessManage/channelList',

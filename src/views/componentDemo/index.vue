@@ -1,3 +1,4 @@
+
 <template>
   <!--组件展示demo-->
   <div class="component-container">
@@ -38,6 +39,7 @@
         <base-info :infoList="infoList"></base-info>
       </panel>
     </section>
+
     <section class="comp-item">
       <h4 class="comp-title">展开框-编辑</h4>
       <panel-edit title="彩票信息" :show="true">
