@@ -34,10 +34,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import SearchBar from "@/components/common/searchBar";
-=======
->>>>>>> 26fe3d38013d6c387088c968b4f5fd6d07b8e568
 import { mapState } from "vuex";
 export default {
   name: "name",
