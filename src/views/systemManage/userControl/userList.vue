@@ -1,15 +1,12 @@
 <template>
   <div class="vlt-card">
-    <div class="search">
-      <search-Bar :options="option" :total="999"></search-Bar>
+    <div class="search"><!--搜索栏 !-->
+      <search-Bar :options="option" :total="999">
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      </search-Bar>
     </div>
-    <div class="addlist">
-      <el-button type="primary" icon="el-icon-plus" @click="add()">新建用户</el-button>
-      <el-button>批量删除</el-button>
-    </div>
-
-    <div class="from">
-      <el-table
+    <div class="from"><!-- table表格!-->
+      <el-table    
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
@@ -37,9 +34,9 @@
         <el-table-column prop="address" label="操作" show-overflow-tooltip>
           <el-button type="text" @click="handelskip()">查看</el-button>
           <span>|</span>
-          <el-button type="text">编缉</el-button>
+          <el-button type="text" @click="handelifo()">编缉</el-button>
           <span>|</span>
-          <el-button type="text">重置密码</el-button>
+          <el-button type="text" @click="handelides()">重置密码</el-button>
         </el-table-column>
       </el-table>
       <div class="pagintion">
@@ -65,6 +62,11 @@ export default {
   name: "name",
   data() {
     return {
+         controlOptions: [
+           {type: 'add', change() {alert('cliked')}},
+          {type: 'delete', change() {alert('clicked')}},
+
+      ],
       currentPage4: 4,
       tableData: [
         {
@@ -177,7 +179,13 @@ export default {
       console.log(`当前页: ${val}`);
     },
     handelskip() {
-      this.$router.push("roleList/roleDestails");
+      // this.$router.push("roleList/roleDestails");
+    },
+    handelifo(){
+      this.$router.push('userList/userInformed')
+    },
+    handelides(){
+      this.$router.push('userList/userDestails')
     }
   }
 };

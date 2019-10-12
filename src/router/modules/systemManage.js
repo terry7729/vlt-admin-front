@@ -31,6 +31,8 @@ const roleList = () => import('@/views/systemManage/roleManagement/roleList')
 const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
 //组织架构
 const organizationChild = () => import('@/views/systemManage/organization/organization')
+//组织架构编缉页
+const organicompile = () =>import('@/views/systemManage/organization/organicompile')
 //菜单管理
 
 const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
@@ -171,6 +173,15 @@ export default [
     title: '组织架构',
   },
   component: organizationChild
+},
+{
+  path:'systemManage/organizationChild/organicompile',
+  name:"organicompile",
+  meta: {
+    title: '添加机构信息',
+  },
+  component: organicompile
+
 },
 {
   path: 'systemManage/menuManageMent',

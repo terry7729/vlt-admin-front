@@ -72,7 +72,18 @@ export default [{
       name: "销售厅设备监控",
       url: 'equipmentWatch',
       childResources: [
-        
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "设备数据监控",
+          url: 'equipmentDataWatch'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "设备硬件监控",
+          url: 'equipmentHardwareWatch'
+        }
       ],
 
     }, 

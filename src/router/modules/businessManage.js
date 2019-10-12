@@ -31,13 +31,17 @@ const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/ga
 // 游戏配置管理
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
-const check = () => import('@/views/businessManage/gameStoreManage/check')
-const edit = () => import('@/views/businessManage/gameStoreManage/edit')
+const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeCheck')
+const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
+const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
 
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
 
 export default [
   // {
@@ -162,20 +166,28 @@ export default [
     component: gameDelistPlan
   },
   {
-    path: 'businessManage/check',
-    name: 'check',
+    path: 'businessManage/storeCheck',
+    name: 'storeCheck',
     meta: {
       title: '查看',
     },
-    component: check
+    component: storeCheck
   },
   {
-    path: 'businessManage/edit',
-    name: 'edit',
+    path: 'businessManage/storeEdit',
+    name: 'storeEdit',
     meta: {
       title: '编辑',
     },
-    component: edit
+    component: storeEdit
+  },
+  {
+    path: 'businessManage/planCheck',
+    name: 'planCheck',
+    meta: {
+      title: '试玩查看',
+    },
+    component: planCheck
   },
   {
     path: 'businessManage/channelList',
@@ -192,5 +204,29 @@ export default [
       title: '新建渠道',
     },
     component: channelAdd
+  },
+  {
+    path: 'businessManage/channelDeal',
+    name: 'channelDeal',
+    meta: {
+      title: '业务办理',
+    },
+    component: channelDeal
+  },
+  {
+    path: 'businessManage/developmentPlan',
+    name: 'developmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: developmentPlan
+  },
+  {
+    path: 'businessManage/createDevelopmentPlan',
+    name: 'createDevelopmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: createDevelopmentPlan
   }
 ]

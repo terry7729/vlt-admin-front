@@ -1,10 +1,10 @@
 <template>
-  <div class="vlt-card game-search-list">
+  <div class="vlt-card game-store-list">
     <search-bar class="search-bar-demo"
         @search="search"
         :options="searchOptions"
         :total="999"
-        labelWidth="80px"
+        labelWidth="100px"
       >
     </search-bar>
     
@@ -44,7 +44,6 @@ export default {
     return {
       tableData: [
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -56,7 +55,6 @@ export default {
           state:"试玩",
         },
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -68,7 +66,6 @@ export default {
           state:"试玩",
         },
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -80,7 +77,6 @@ export default {
           state:"试玩",
         },
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -92,7 +88,6 @@ export default {
           state:"试玩",
         },
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -104,7 +99,6 @@ export default {
           state:"试玩",
         },
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -116,7 +110,6 @@ export default {
           state:"试玩",
         },
         {
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -127,7 +120,6 @@ export default {
           time:"2019-09-12 09:00:00",
           state:"试玩",
         },{
-          date: '1',
           id:"01",
           name: '开心一刻',
           type:'概率型',
@@ -209,13 +201,13 @@ export default {
       //查看页面跳转
       detail (id) {
         this.$router.push({
-          name: 'check',
+          name: 'storeCheck',
           query: {id}
         })
       },
       edit (id) {
         this.$router.push({
-          name: 'edit',
+          name: 'storeEdit',
           query: {id}
         })
       },
