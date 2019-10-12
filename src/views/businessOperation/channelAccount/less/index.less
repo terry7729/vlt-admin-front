@@ -72,61 +72,82 @@
 }
 
 //拥有渠道列表详情
-.list_Detail {
-  margin-bottom: 30px;
+.equipment_row {
+  display: flex;
 
-  &_title {
-    display: flex;
-    align-items: center;
-
-    margin-bottom: 20px;
-
-    .blue_block {
-      height: 20px;
-      width: 8px;
-      border-radius: 6px;
-      background: rgba(39, 122, 210, 1);
-      margin-right: 20px;
-    }
-  }
-
-  .organ_cace {
-    display: flex;
-    width: 60%;
-    margin-bottom: 30px;
-    align-items: center;
-
-    .demonstration {
-      width: 86px;
-    }
-  }
-
-  .demonnum {
-    display: flex;
-    align-items: center;
-    width: 290px;
-    margin-bottom: 30px;
-
-    &_title {
-      width: 116px;
-
-    }
-  }
-
-  .demonadress {
-    display: flex;
-    align-items: center;
-    width: 300px;
-    margin-bottom: 30px;
-
-    &_title {
-      width: 83px;
-    }
-
-  }
-
-  .demonadress_input {
-    margin-left: 80px;
-    width: 210px;
+  &_one {
+    margin-right: 10px;
   }
 }
+
+.send {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.show_case {
+  display: flex;
+  margin: 30px 0 0 100px;
+
+  .processed {
+    width: 50px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #409EFF;
+    color: #fff;
+    font-size: 12px;
+    margin-right: 15px;
+  }
+
+  .pending {
+    width: 50px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid rgba(255, 179, 175, 1);
+    border-radius: 4px;
+    background: rgba(254, 240, 239, 1);
+    color: #f5317f;
+    font-size: 12px;
+    margin-right: 15px;
+  }
+
+  .untreated {
+    width: 50px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+
+}
+
+.newchannel {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  &_first_case {
+    width: 50%;
+    margin-right: 80px;
+  }
+
+  &_data {
+    margin-top: 20px;
+
+
+  }
+
+  div:first-child {
+    margin-top: 0;
+  }
+}
+
+//账户列表样式
+// .money_Account_Manage {
+//   width: 100px;
+// }
