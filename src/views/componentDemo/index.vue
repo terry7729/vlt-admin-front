@@ -487,11 +487,13 @@ export default {
         textarea: '',
       },
       controlOptions: [
-        {type: 'delete', change() {alert('clicked')}},
-        {type: 'export', change() {alert('cliked')}},
-        {type: 'print', change() {alert('cliked')}},
-        {type: 'refresh', change() {alert('cliked')}},
-        {type: 'add', change() {alert('cliked')}},
+        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+        {name: '批量删除', type: '', icon: 'delete'},
+        {name: '刷新', type: '', icon: 'refresh-right'},
+        {name: '打印', type: 'primary', icon: 'printer'},
+        {name: '导出', type: 'danger', icon: 'download'},   
+        {name: '导出', type: 'success', icon: 'upload'},
+        {name: '导出', type: 'warning', icon: 'download'},
       ],
     }
   },

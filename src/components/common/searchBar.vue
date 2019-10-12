@@ -57,7 +57,7 @@
           </el-cascader>
         </el-form-item>
       </span>
-      <el-form-item>
+      <el-form-item class="btn-wrap">
         <el-button size="small" type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
         <el-button size="small" @click="reset">重置</el-button>
         <el-button size="small" type="text" @click="onDrop" v-if="options.length > 2">
@@ -165,6 +165,9 @@
         color: #57a3f3;
         border-color: transparent;
       }
+    }
+    .btn-wrap{
+      padding-left: 30px;
     }
     .el-button{
       margin: 0 5px;
