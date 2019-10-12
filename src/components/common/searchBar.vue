@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar-comp">
     <el-form :inline="true" :model="form" :label-width="labelWidth">
-      <span v-for="(formItem, itemIndex) in options" :key="itemIndex" class="form-item-line">
+      <span v-for="(formItem, itemIndex) in _options" :key="itemIndex" class="form-item-line">
         <el-form-item :label="formItem.title" v-if="formItem.type === 'input'">
           <el-input size="small" v-model="form[formItem.prop]" :placeholder="formItem.placeholder"></el-input>
         </el-form-item>
@@ -10,7 +10,7 @@
             <el-option :label="optionItem.label" :value="optionItem.value" v-for="(optionItem, optionIndex) in formItem.options" :key="optionIndex"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="formItem.title" v-if="formItem.type === 'datepicker'" v-show="!collapse">
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'datepicker'">
           <el-date-picker
             size="small"
             v-model="form[formItem.prop]"
@@ -19,7 +19,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item :label="formItem.title" v-if="formItem.type === 'datepicker-range'" v-show="!collapse">
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'datepicker-range'">
           <el-date-picker
             size="small"
             v-model="form[formItem.prop]"
@@ -29,7 +29,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item :label="formItem.title" v-if="formItem.type === 'datetime'" v-show="!collapse">
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'datetime'">
           <el-date-picker
             size="small"
             v-model="form[formItem.prop]"
@@ -38,7 +38,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item :label="formItem.title" v-if="formItem.type === 'datetime-range'" v-show="!collapse">
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'datetime-range'">
           <el-date-picker
             size="small"
             v-model="form[formItem.prop]"
@@ -48,7 +48,7 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item :label="formItem.title" v-if="formItem.type === 'cascader'" v-show="!collapse">
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'cascader'">
           <el-cascader
             size="small"
             v-model="form[formItem.prop]"
@@ -58,9 +58,9 @@
         </el-form-item>
       </span>
       <el-form-item>
-        <el-button size="small" type="danger" @click="onSubmit">查询</el-button>
+        <el-button size="small" type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
         <el-button size="small" @click="reset">重置</el-button>
-        <el-button size="small" type="primary" @click="onDrop">
+        <el-button size="small" type="text" @click="onDrop" v-if="options.length > 2">
           {{collapse ? '展开' : '收起'}}
           <i :class="[collapse ? 'el-icon-arrow-down' : 'el-icon-arrow-up']"></i>
         </el-button>
@@ -113,11 +113,13 @@
         form: {
           
         },
+        _options: [],
         collapse: true,
       };
     },
     created() {
       // 初始化
+      this._options = this.options.slice(0, 2);
       this.options.forEach(item => {
         this.$set(this.form, item.prop, item.value)
       })
@@ -132,6 +134,11 @@
       },
       onDrop() {
         this.collapse = !this.collapse;
+        if (!this.collapse) {
+          this._options = this.options;
+        } else {
+          this._options = this.options.slice(0, 2);
+        }
       },
       reset() {
         for (let key in this.form) {
