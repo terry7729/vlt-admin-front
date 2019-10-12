@@ -1,19 +1,8 @@
 <template>
   <div class="vlt-card account_detail">
     <div class="account_detail_box">
-      <div class="account_detail_data">
-        <div class="first_row">
-          <h3>账户资料</h3>
-          <div class="compile_datum" v-if="enter===0" @click="enterNum">编辑</div>
-          <div class="compile_datum" v-if="enter===1" @click="enterSave">保存</div>
-        </div>
-        <div class="account_detail_vessel">
-          <div class="account_detail_classify" v-for="item in data" :key="item.id">
-            <span>{{item.name}}:</span>
-            <span></span>
-          </div>
-        </div>
-      </div>
+      <panelEdit />
+
       <div class="account_detail_data">
         <h3>账户资料</h3>
         <div class="account_detail_vessel">
@@ -84,7 +73,7 @@ export default {
     },
     enterSave() {},
     handelListDetail(id) {
-      console.log(id);
+      this.$router.push({ path: "haveListDetail", query: { id } });
     }
   }
 };
