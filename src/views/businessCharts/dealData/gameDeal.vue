@@ -5,10 +5,10 @@
       @search="search"
       :options="searchOptions"
       :total="999"
-      labelWidth="40px"
+      labelWidth="80px"
     ></search-bar>
     <span>
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
     </span>
     <div class="tab-container">
       <el-table
@@ -61,7 +61,7 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "Page401",
+  name: "gameDeal",
   data() {
     return {
 

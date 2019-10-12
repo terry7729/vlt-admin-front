@@ -14,11 +14,13 @@ const areaDeal = () => import('@/views/businessCharts/dealData/areaDeal')
 //游戏交易监控
 const gameDeal = () => import('@/views/businessCharts/dealData/gameDeal')
 //销售厅账户监控
-const accountWatch = () => import('@/views/businessCharts/saleshallAccountWatch/saleshallAccountWatch')
+const accountWatch = () => import('@/views/businessCharts/saleshallAccountWatch')
 //销售厅设备监控
-const equipmentWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch/saleshallEquipmentWatch')
+const equipmentWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch')
 //告警监控
 const warningWatch = () => import('@/views/businessCharts/warningWatch')
+//报表管理
+const warningReport = () => import('@/views/businessCharts/warningReport')
 export default [
   // {
   //   path: 'demo',
@@ -113,6 +115,14 @@ export default [
       title: '告警监控',
     },
     component: warningWatch
+  },
+  {
+    path: 'businessCharts/warningReport',
+    name: 'warningReport',
+    meta: {
+      title: '告警监控',
+    },
+    component: warningReport
   }
 
 ]

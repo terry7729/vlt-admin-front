@@ -6,12 +6,12 @@
         @search="search"
         :options="searchOptions"
         :total="999"
-        labelWidth="60px"
+        labelWidth="80px"
       >
       </search-bar>
     </section>
     <span>
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
     </span>
     <div class="tab-container">
       <el-table
@@ -21,7 +21,7 @@
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >
-        <el-table-column align="center" label="序号" width="65">
+        <el-table-column align="center" fixed label="序号" width="65">
           <template slot-scope="scope">
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
@@ -34,7 +34,7 @@
         <el-table-column align="center" prop="address" label="告警历时"></el-table-column>
         <el-table-column align="center" prop="address" label="通知状态"></el-table-column>
         <el-table-column align="center" prop="address" label="处理状态"></el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" fixed="right" width="120px" align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click size="mini">详情</el-button>
             <el-button type="primary" @click size="mini">编辑</el-button>
@@ -68,7 +68,7 @@
 
 <script>
 export default {
-  name: "Page401",
+  name: "warningWatch",
   data() {
     return {
       searchOptions: [
