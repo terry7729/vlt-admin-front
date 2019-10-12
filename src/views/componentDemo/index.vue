@@ -3,7 +3,6 @@
   <div class="component-container">
     <h1 class="headling">组件展示</h1>
 
-
     <section class="comp-item">
       <h4 class="comp-title">搜索框</h4>
       <search-bar class="search-bar-demo"
@@ -23,13 +22,13 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
 
     <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
-      <control-bar></control-bar>
+      <control-bar :options="controlOptions"></control-bar>
     </section>
 
 
@@ -52,6 +51,7 @@
 export default {
   name: 'componentDemo',
   data() {
+    const self = this;
     return {
       // 搜索组件配置
       searchOptions: [
@@ -278,6 +278,13 @@ export default {
         {title: '游戏状态', value: '', prop: 'gameStatus'},
         {title: '游戏名称', value: '', prop: 'gameName'},
         {title: '游戏类型', value: '', prop: 'officialEndSale'}
+      ],
+      controlOptions: [
+        {type: 'delete', change() {alert('clicked')}},
+        {type: 'export', change() {alert('cliked')}},
+        {type: 'print', change() {alert('cliked')}},
+        {type: 'refresh', change() {alert('cliked')}},
+        {type: 'add', change() {alert('cliked')}},
       ],
     }
   },

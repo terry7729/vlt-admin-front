@@ -2,7 +2,7 @@
   <div class="base-info">
     <ul class="info-list">
       <li class="info-item" v-for="(item, index) in infoList" :key="index">
-        <span class="title gray">{{item.title}}：</span>
+        <span class="title">{{item.title}}：</span>
         <p class="content" v-html="(item.value === null ? '' : item.value) + (item.unit || '')"></p>
       </li>
     </ul>
