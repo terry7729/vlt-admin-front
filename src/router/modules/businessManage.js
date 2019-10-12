@@ -15,6 +15,8 @@ const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/ga
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
 const check = () => import('@/views/businessManage/gameStoreManage/check')
+const edit = () => import('@/views/businessManage/gameStoreManage/edit')
+
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
@@ -100,6 +102,14 @@ export default [
       title: '查看',
     },
     component: check
+  },
+  {
+    path: 'businessManage/edit',
+    name: 'edit',
+    meta: {
+      title: '编辑',
+    },
+    component: edit
   },
   {
     path: 'businessManage/channelList',

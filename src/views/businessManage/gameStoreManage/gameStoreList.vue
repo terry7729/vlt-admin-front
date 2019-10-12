@@ -1,7 +1,13 @@
 <template>
   <div class="vlt-card game-search-list">
-    <h1>游戏储备管理列表页</h1>
-
+    <search-bar class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="80px"
+      >
+    </search-bar>
+    
     <el-table
     border
     ref="multipleTable"
@@ -24,7 +30,7 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
-          <el-button  size="mini" v-prevent="2000" @click.native="deleteMsg(scope.row.id)">编辑</el-button>
+          <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -138,7 +144,52 @@ export default {
         ruleForm: {
           page: 1,
           limit: 10
-        }
+        },
+        searchOptions:[
+        {type: 'input', prop: 'inputName', value: '', title: '游戏ID', placeholder: '请输入'},
+        {type: 'input', prop: 'inputName2', value: '', title: '游戏名称', placeholder: '请输入'},
+        {
+          type: 'select', prop: 'selectName', value: '', title: '游戏类型', placeholder: '请选择',
+          options: [
+            {
+              label: '选项1',
+              value: 1
+            },
+            {
+              label: '选项2',
+              value: 2
+            }
+          ]
+        },
+        {
+          type: 'select', prop: 'selectName2', value: '', title: '游戏状态', placeholder: '请选择',
+          options: [
+            {
+              label: '选项1',
+              value: 1
+            },
+            {
+              label: '选项2',
+              value: 2
+            }
+          ]
+        },
+        {
+          type: 'select', prop: 'selectName3', value: '', title: '奖池类型', placeholder: '请选择',
+          options: [
+            {
+              label: '选项1',
+              value: 1
+            },
+            {
+              label: '选项2',
+              value: 2
+            }
+          ]
+        },
+        {type: 'datepicker-range', prop: 'date2', value: '', title: '最近更新时间', placeholder: ['开始日期', '结束日期']},
+          
+        ]
       }
     
   },
@@ -157,10 +208,19 @@ export default {
       },
       //查看页面跳转
       detail (id) {
-      this.$router.push({
-        name: 'check',
-        query: {id}
-      })
+        this.$router.push({
+          name: 'check',
+          query: {id}
+        })
+      },
+      edit (id) {
+        this.$router.push({
+          name: 'edit',
+          query: {id}
+        })
+      },
+      search(form) {
+      console.log('search', form)
     },
     },
   computed: {
