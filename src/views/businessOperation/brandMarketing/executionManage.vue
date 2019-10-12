@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 25px;">
+  <div class="vlt-card">
     <h1>活动执行管理</h1>
   </div>
 </template>

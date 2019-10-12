@@ -23,11 +23,18 @@ export default [
           {
             childResources: [],
             icon: "el-icon-menu",
-            name: "储备列表",
+            name: "游戏储备列表",
             url: 'gameStoreList'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "游戏试玩计划",
+            url: 'gamePlanList'
           }
         ]
       },
+
       {
         icon: "el-icon-menu",
         name: "游戏试玩计划管理",
@@ -36,8 +43,20 @@ export default [
           {
             childResources: [],
             icon: "el-icon-menu",
-            name: "计划列表",
-            url: 'gamePlanList'
+            name: "游戏上市计划",
+            url: 'gameLaunchPlan'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "游戏配置管理",
+            url: 'gameConfigManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "游戏退市计划",
+            url: 'gameDelistPlan'
           }
         ]
       },

@@ -1,12 +1,12 @@
 <template>
-  <div class="vlt-card">
-    <h1>活动计划管理</h1>
+  <div style="padding: 25px;">
+    <h1>游戏上市计划列表页</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'name',
+  name: 'gameLaunchPlan',
   data() {
     return {
       
