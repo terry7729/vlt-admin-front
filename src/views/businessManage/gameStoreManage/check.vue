@@ -1,10 +1,10 @@
 <template>
-    <div style="padding: 25px;" class="store-check">
-        <el-tabs  @tab-click="handleClick">
-            <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-            <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-            <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+    <div class="vlt-card store-check">
+        <el-tabs v-model="activeName"  @tab-click="handleClick">
+            <el-tab-pane label="游戏详情" name="first">游戏详情</el-tab-pane>
+            <el-tab-pane label="试玩记录" name="second">试玩记录</el-tab-pane>
+            <el-tab-pane label="上市记录" name="third">上市记录</el-tab-pane>
+            <el-tab-pane label="退市记录" name="fourth">退市记录</el-tab-pane>
             
         </el-tabs>
     </div>
@@ -15,7 +15,7 @@ export default {
     name:"check",
     data() {
         return {
-            
+            activeName: "first",
         }
     },
     methods: {
