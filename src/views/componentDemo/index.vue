@@ -23,7 +23,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
 
@@ -507,6 +507,9 @@ export default {
     
   },
   methods: {
+    selectBtn(val) {
+      console.log(val)
+    },
     search(form) {
       console.log('search', form)
     },
