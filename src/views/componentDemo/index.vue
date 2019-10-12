@@ -13,6 +13,18 @@
       >
       </search-bar>
     </section>
+    <section class="comp-item">
+      <h4 class="comp-title">展开框</h4>
+      <panel title="彩票信息" :show="true">
+        <base-info :infoList="infoList"></base-info>
+      </panel>
+    </section>
+    <section class="comp-item">
+      <h4 class="comp-title">展开框-编辑</h4>
+      <panel-edit title="彩票信息" :show="true">
+        <base-info :infoList="infoList" slot="info-content"></base-info>
+      </panel-edit>
+    </section>
   </div>
 </template>
 
@@ -239,6 +251,13 @@ export default {
             }]
           }]
         },
+      ],
+      infoList: [
+        {title: '游戏编码', value: '', prop: 'gameCode'},
+        {title: '周期类型', value: '', prop: 'cycleType'},
+        {title: '游戏状态', value: '', prop: 'gameStatus'},
+        {title: '游戏名称', value: '', prop: 'gameName'},
+        {title: '游戏类型', value: '', prop: 'officialEndSale'}
       ],
     }
   },

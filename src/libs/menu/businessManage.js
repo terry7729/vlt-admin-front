@@ -69,9 +69,7 @@ export default [{
             url: 'channelList'
           }
         ],
-      },
-      
-      
+      }
     ],
     icon: "el-icon-menu",
     name: "业务管理",

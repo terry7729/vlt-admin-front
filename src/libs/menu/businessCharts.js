@@ -1,5 +1,5 @@
 // 业务监控-左侧导航数据
-
+//no message
 export default [
   {
     icon: "el-icon-menu",
