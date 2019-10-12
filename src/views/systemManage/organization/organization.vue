@@ -59,8 +59,8 @@
                   <el-table-column property="address" label="部门负责人"></el-table-column>
                   <el-table-column property="address" label="负责人电话"></el-table-column>
                   <el-table-column property="address" label="状态">
-                    <template slot-scope="">
-                      <el-switch v-model="onoff" @change="change" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                    <template slot-scope="scope">
+                      <el-switch v-model="tableData[scope.$index].isShow" @change="change" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                     </template>
                   </el-table-column>
                   <el-table-column property="address" label="操作"></el-table-column>
@@ -83,27 +83,31 @@ export default {
   name: "name",
   data() {
     return {
-      onoff: '',
+      onoff: true,
       tableData: [
         {
           date: "2016-05-02",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          address: "上海市普陀区金沙江路 1518 弄",
+          isShow: true,
         },
         {
           date: "2016-05-04",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          address: "上海市普陀区金沙江路 1517 弄",
+          isShow: false,
         },
         {
           date: "2016-05-01",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          address: "上海市普陀区金沙江路 1519 弄",
+          isShow: false,
         },
         {
           date: "2016-05-03",
           name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          address: "上海市普陀区金沙江路 1516 弄",
+          isShow: true,
         }
       ],
       currentRow: null,
