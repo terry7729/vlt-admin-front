@@ -117,7 +117,7 @@ export default {
     },
     handelskip(){
       
-      this.$router.push('userList/userDestails')
+      this.$router.push('roleList/roleDestails')
     }
   }
 };
