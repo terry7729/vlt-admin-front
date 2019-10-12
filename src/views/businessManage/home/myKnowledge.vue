@@ -1,4 +1,4 @@
-<!-- 首页 - 概况 - 已审核 -->
+<!-- 首页 - 我的知会 -->
 <template>
   <div class="vlt-card pending-review">
     <search-bar
@@ -22,8 +22,6 @@
       <el-table-column fixed="right" label="操作" >
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="view(scope.row)">查看</el-button>
-          <el-button  size="mini" @click="urgent(scope.row)">催办</el-button>
-          <el-button  size="mini" @click="forcedEnd(scope.row)">强制结束</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -174,12 +172,6 @@ export default {
         name:'pendingReviewEdit',
         query: {id: row.id}
       })
-    },
-    urgent(row) {
-      console.log('催办',row);
-    },
-    forcedEnd(row) {
-      console.log('强制结束', row);
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
