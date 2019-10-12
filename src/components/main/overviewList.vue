@@ -33,19 +33,19 @@ const LIST_DATA = {
       id: 2,
       name: "已审核",
       number: 66,
-      url: 'http://baidu.com'
+      url: '/home/businessManage/audited'
     },
     {
       id: 3,
       name: "已申请",
       number: 54,
-      url: 'http://baidu.com'
+      url: '/home/businessManage/alreadyApplied'
     },
     {
       id: 4,
       name: "待阅读",
       number: 21,
-      url: 'http://baidu.com'
+      url: '/home/businessManage/pendingReading'
     }
   ]
 }
@@ -104,9 +104,9 @@ export default {
       align-items: center;
       .iconfont {
         display: block;
-        width: 80px;
-        height: 80px;
-        font-size: 64px;
+        width: 60px;
+        height: 60px;
+        font-size: 48px;
         text-align: center;
         color: #E60012;
         background: rgba(235, 235, 235, 1);
