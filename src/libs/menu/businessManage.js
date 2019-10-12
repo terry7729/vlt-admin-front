@@ -67,6 +67,18 @@ export default [{
             icon: "el-icon-menu",
             name: "渠道列表",
             url: 'channelList'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "业务办理",
+            url: 'channelDeal'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "渠道列表",
+            url: 'developmentPlan'
           }
         ],
       }

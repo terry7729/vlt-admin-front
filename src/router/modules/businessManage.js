@@ -38,6 +38,8 @@ const edit = () => import('@/views/businessManage/gameStoreManage/edit')
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
 
 export default [
   // {
@@ -192,5 +194,21 @@ export default [
       title: '新建渠道',
     },
     component: channelAdd
+  },
+  {
+    path: 'businessManage/channelDeal',
+    name: 'channelDeal',
+    meta: {
+      title: '业务办理',
+    },
+    component: channelDeal
+  },
+  {
+    path: 'businessManage/developmentPlan',
+    name: 'developmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: developmentPlan
   }
 ]
