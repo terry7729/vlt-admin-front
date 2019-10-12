@@ -17,6 +17,8 @@ const executionManage = () => import('@/views/businessOperation/brandMarketing/e
 const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
 //模板预览
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
+//活动执行管理详情
+const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
 
 export default [
   // {
@@ -104,5 +106,17 @@ export default [
     },
     component: previewTemplate,
   },
+  {
+    path: 'brandMarketing/activityDetail',
+    name: 'activityDetail',
+    meta: {
+      title: '活动执行详情',
+    },
+    component: activityDetail,
+  },
+
+
+
+  
 
 ]
