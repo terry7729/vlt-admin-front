@@ -6,7 +6,7 @@
       :total="999"
       labelWidth="80px"
     >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      <control-bar slot="extend-bar" @select="select" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table :data="tableData" border>
         <el-table-column label="序号"  type="index" width="80px"></el-table-column>
@@ -257,6 +257,12 @@ export default {
   
   },
   methods: {
+    search(val) {
+      console.log(val)
+    },
+    select(val) {
+      console.log(val)
+    },
     add() {
       console.log('a')
     }
