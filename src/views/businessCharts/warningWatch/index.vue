@@ -1,35 +1,15 @@
 <template>
-  <div>
-    <span class="box-spacing" style="margin:10px 20px 5px">
-      告警时间：
-      <el-date-picker
-        v-model="value"
-        type="daterange"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :default-time="['00:00:00', '23:59:59']"
-        class="timer"
-        size='small'
-      ></el-date-picker>
-      告警类别:
-      <el-select v-model="poundage" size="small" placeholder="请选择告警类别">
-        <el-option
-          v-for="item in poundagefee"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-      时间范围：
-      <el-select v-model="poundage" size="small" placeholder="请选择时间范围">
-        <el-option
-          v-for="item in poundagefee"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </span>
+  <div class="vlt-card">
+     <section class="comp-item">
+      <!-- <h4 class="comp-title">搜索框</h4> -->
+      <search-bar class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="60px"
+      >
+      </search-bar>
+    </section>
     <span>
       <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
     </span>
@@ -54,10 +34,10 @@
         <el-table-column align="center" prop="address" label="告警历时"></el-table-column>
         <el-table-column align="center" prop="address" label="通知状态"></el-table-column>
         <el-table-column align="center" prop="address" label="处理状态"></el-table-column>
-         <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="primary"  @click size='mini'>详情</el-button>
-          <el-button type="primary"  @click size='mini'>编辑</el-button>
+            <el-button type="primary" @click size="mini">详情</el-button>
+            <el-button type="primary" @click size="mini">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,6 +71,49 @@ export default {
   name: "Page401",
   data() {
     return {
+      searchOptions: [
+        {
+          type: "datetime-range",
+          prop: "date4",
+          value: "",
+          title: "日期时间",
+          placeholder: ["开始时间", "结束时间"]
+        },
+        {
+          type: "select",
+          prop: "selectName",
+          value: "",
+          title: "告警类别",
+          placeholder: "请选择",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "select",
+          prop: "selectName1",
+          value: "",
+          title: "时间范围",
+          placeholder: "请选择",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        }
+      ],
       value: "",
       //记录省市县
       provinceList: [],
@@ -136,6 +159,9 @@ export default {
     };
   },
   methods: {
+     search(form) {
+      console.log('search', form)
+    },
     back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
@@ -150,31 +176,11 @@ export default {
     handleCurrentChange(val) {
       this.listQuery.page = val;
       //   this.getList();
-    },
+    }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 
 <style  lang="less" scoped>
-.tab-container {
-  padding: 20px;
-  background-color: #fff;
-  margin-top: 10px;
-}
-
-.el-select {
-  margin-right: 20px;
-}
-.box-spacing {
-//   display: block;
-  margin-left: 20px;
-  float: left;
-//   width: 100%;
-}
-.timer {
-//   display: inline-block;
-  margin-right: 20px;
-}
 </style>
