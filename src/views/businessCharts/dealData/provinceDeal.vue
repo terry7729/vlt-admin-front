@@ -1,5 +1,5 @@
-<template>
-  <div>
+<template >
+  <div class="vlt-card">
     <span class="box-spacing">
       <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
     </span>
@@ -83,6 +83,9 @@ export default {
     };
   },
   methods: {
+     search(form) {
+      console.log('search', form)
+    },
     back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
@@ -101,9 +104,4 @@ export default {
 </script>
 
 <style rel="less" lang="less" scoped>
-.tab-container {
-  padding: 20px;
-  background-color: #fff;
-  margin-top: 10px;
-}
 </style>
