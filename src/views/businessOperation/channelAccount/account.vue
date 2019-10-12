@@ -1,51 +1,86 @@
 <template>
   <div class="vlt-card el_box">
-    <el-alert class="el_alert_info" :closable="false" v-for="(item,index) in data" :key="index">
-      <i :class="item.icon" style="color:#2d8cf0" class="el_icon"></i>
-      <span>{{item.info}}</span>搜索
-      <span>"{{item.name}}"</span>共搜索到
-      <span style="color:#2d8cf0">{{item.num}}</span>
-      项条数据
-    </el-alert>
+    <Search-Bar :options="options" :total="999"></Search-Bar>
+
     <div class="el_table">
-      <el-table :data="tableData" style="width: 100%" border>
-        <el-table-column prop="id" label="序号" width="100"></el-table-column>
-        <el-table-column prop="accountName" label="账户名称" width="100"></el-table-column>
-        <el-table-column prop="accountNum" label="账号" width="130"></el-table-column>
-        <el-table-column prop="accountType" label="账户类型" width="150"></el-table-column>
-        <el-table-column prop="principalName" label="负责人姓名" min-width="150"></el-table-column>
-        <el-table-column prop="telephoneNum" label="手机号码" width="180"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间" width="180"></el-table-column>
-        <el-table-column label="账户状态" width="140" prop="terminalStatus"></el-table-column>
-        <el-table-column label="操作" width="130">
+      <el-table :data="tableData" border>
+        <el-table-column prop="id" label="序号"></el-table-column>
+        <el-table-column prop="accountName" label="账户名称"></el-table-column>
+        <el-table-column prop="accountNum" label="账号"></el-table-column>
+        <el-table-column prop="accountType" label="账户类型"></el-table-column>
+        <el-table-column prop="principalName" label="负责人姓名"></el-table-column>
+        <el-table-column prop="telephoneNum" label="手机号码"></el-table-column>
+        <el-table-column prop="createDate" label="创建时间"></el-table-column>
+        <el-table-column label="账户状态">
+          <template>
+            <div>
+              <el-button type="primary" size="mini">启动</el-button>
+
+              <el-button type="danger" size="mini">禁止</el-button>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="detail(scope.row.id)">详情</el-button>
+            <el-button type="primary" size="mini" @click="detail(scope.row.id)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <div>
-      <el-pagination
-        background
-        @size-change="changeSize"
-        @current-change="changeCurrent"
-        :current-page.sync="currentPage"
-        :page-sizes="[10, 20]"
-        :page-size="10"
-        v-if="totalCount > pageSize"
-        layout="prev, pager, next, sizes, jumper"
-        :total="totalCount"
-      ></el-pagination>
+    <div class="table_paging">
+      <pagination class="table_paging_right"></pagination>
     </div>
   </div>
 </template>
 
 <script>
+import SearchBar from "@/components/common/searchBar";
+import Tag from "@/components/common/tag";
 import { mapState } from "vuex";
 export default {
   name: "name",
   data() {
     return {
+      options: [
+        {
+          type: "input",
+          prop: "channelName",
+          value: "",
+          title: "渠道名称",
+          placeholder: "请输入"
+        },
+        {
+          type: "input",
+          prop: "telephoneNum",
+          value: "",
+          title: "手机号码",
+          placeholder: "请输入"
+        },
+        {
+          type: "input",
+          prop: "telephoneNum",
+          value: "",
+          title: "手机号码",
+          placeholder: "请输入"
+        },
+        {
+          type: "select",
+          prop: "accountStatus",
+          value: "",
+          title: "账户状态",
+          placeholder: "请输入",
+          options: [
+            {
+              label: "启用",
+              value: 1
+            },
+            {
+              label: "冻结",
+              value: 2
+            }
+          ]
+        }
+      ],
       pageSize: 10,
       currentPage: 1,
       totalCount: 0,
@@ -59,7 +94,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-          terminalStatus: "启用 | 禁用",
+
           operation: "详情"
         },
         {
@@ -71,7 +106,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-          terminalStatus: "启用 | 禁用",
+
           operation: "详情"
         },
         {
@@ -83,7 +118,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-          terminalStatus: "启用 | 禁用",
+
           operation: "详情"
         },
         {
@@ -95,7 +130,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-          terminalStatus: "启用 | 禁用",
+
           operation: "详情"
         },
         {
@@ -107,7 +142,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-          terminalStatus: "启用 | 禁用",
+
           operation: "详情"
         }
       ]
@@ -118,7 +153,7 @@ export default {
   },
   created() {},
   mounted() {},
-  components: {},
+  components: { SearchBar, Tag },
   methods: {
     changeSize() {},
     changeCurrent() {},

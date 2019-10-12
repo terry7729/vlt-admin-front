@@ -1,7 +1,10 @@
 // 业务运营系统路由配置
 // 渠道账户列表
 const accountList = () => import('@/views/businessOperation/channelAccount/account')
+//渠道账户列表详情
 const accountListDetail = () => import('@/views/businessOperation/channelAccount/accountListDetail')
+//拥有渠道列表详情
+const haveListDetail = () => import('@/views/businessOperation/channelAccount/haveListDetail')
 // 账户资金
 const accountManage = () => import('@/views/businessOperation/channelAccount/accountManage')
 //活动计划模板

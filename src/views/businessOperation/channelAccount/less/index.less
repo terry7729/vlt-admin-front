@@ -3,45 +3,45 @@
 
 //渠道账户列表样式
 .el_box {
-    // .el-alert--info.is-light {
-    //     padding: 4px 48px 8px 5px;
-    //     border: 1px solid #abdcff;
-    //     background-color: #f0faff;
-    //     color: #000
-    // }
 
-    // .el-alert--info .el-alert__description {
-    //     color: #000;
-    // }
+    .el_alert_info {
+        margin-bottom: 20px;
+    }
 
-    // .el-table__header-wrapper {
-    //     background: #000;
-    // }
+    .table_paging {
+        display: flex; // position: absolute;
+        // right: 0;
+        // bottom: 0;
+        width: 100%;
+        margin-top: 20px;
+        justify-content: flex-end;
 
-    // .el-table__header {
-    //     background: #000;
-    // }
 
-    // .has-gutter {
-    //     background: #000;
-    // }
-
-    // .el_icon {
-    //     margin-right: 10px;
-    // }
+    }
 
 }
 
 //渠道账户列表详情样式
 .account_detail {
+    &_box {
+        padding: 20px 0 30px 10px;
+    }
 
     &_data {
-        padding: 20px 0 30px 20px;
+        .first_row {
+            height: 20px;
+            display: flex;
+            justify-content: space-between;
 
-
+            .compile_datum {
+                color: #409EFF;
+                font-size: 12px;
+            }
+        }
     }
 
     &_vessel {
+
         display: flex;
         width: 100%;
         flex-wrap: wrap;
@@ -49,7 +49,7 @@
     }
 
     &_classify {
-        width: 50%;
+        width: 350px;
         margin-top: 20px;
 
 
@@ -57,5 +57,11 @@
 
     div:last-child {
         margin-bottom: 20px;
+    }
+
+    .last_bottom_list {
+        h3 {
+            margin-bottom: 20px;
+        }
     }
 }
