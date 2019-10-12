@@ -62,7 +62,7 @@ export default {
     &-caret{
       font-size: 20px;
       margin-right: 3px;
-      color: #000A12;
+      color: #444444;
     }
     &-hd{
       padding: 0 15px 0 10px;
@@ -79,7 +79,7 @@ export default {
       .title{
         font-weight: normal;
         font-size: 14px;
-        color: #000A12;
+        color: #444444;
         flex: auto;
       }
       .tips{

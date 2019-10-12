@@ -4,6 +4,7 @@ import controlBar from './controlBar.vue'; // 页面操作
 import baseInfo from './baseInfo.vue'; // 详情列表
 import panel from './panel.vue'; // 展开框
 import panelEdit from './panelEdit.vue'; // 展开框-编辑
+import tipsLine from './tipsLine.vue'; // 提示条
 
 const commonComponents = {
   install:function(Vue) {
@@ -13,6 +14,7 @@ const commonComponents = {
     Vue.component('baseInfo', baseInfo)
     Vue.component('panel', panel)
     Vue.component('panelEdit', panelEdit)
+    Vue.component('tipsLine', tipsLine)
   }
 }
 
