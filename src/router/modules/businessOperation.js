@@ -48,6 +48,14 @@ export default [
     component: accountListDetail
   },
   {
+    path: 'businessOperation/accountList/haveListDetail',
+    name: 'haveListDetail',
+    meta: {
+      title: '拥有渠道列表详情',
+    },
+    component: haveListDetail
+  },
+  {
     path: 'businessOperation/accountManage',
     name: 'accountManage',
     meta: {

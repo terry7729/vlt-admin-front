@@ -55,7 +55,6 @@ export default {
     return {
       // 搜索组件配置
       searchOptions: [
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', placeholder: ['开始日期', '结束日期']},
         {type: 'input', prop: 'inputName', value: '', title: '输入框', placeholder: '请输入'},
         {
           type: 'select', prop: 'selectName', value: '', title: '选择框', placeholder: '请选择',
