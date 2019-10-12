@@ -46,7 +46,7 @@ export default {
     .title {
       float: left;
       min-width: 7em;
-      color: #2c3659;
+      color: #606266;
     }
     .content {
       overflow: hidden;

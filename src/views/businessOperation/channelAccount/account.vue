@@ -151,7 +151,6 @@ export default {
   },
   created() {},
   mounted() {},
-  components: {  },
   methods: {
     changeSize() {},
     changeCurrent() {},
