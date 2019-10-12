@@ -110,6 +110,8 @@ export default [{
       }]
     }
   ],
+  },
+  {
   icon: "el-icon-menu",
   name: "系统管理",
   url: '' // 前端路由名称
