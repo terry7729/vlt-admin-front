@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="searchBar">
-      <search-Bar :options="option"></search-Bar>
+      <search-Bar :options="option" :total="999"></search-Bar>
     </div>
     <el-table
       ref="multipleTable"
@@ -102,7 +102,6 @@ export default {
           address: "上海市普陀区金沙江路 1518 "
         }
       ],
-      
 
       option: [
         {
@@ -161,40 +160,4 @@ export default {
 </script>
 
 <style lang="less" >
-.pagintion {
-  margin: 20px;
-  .el-pagination {
-    position: relative;
-    .el-pagination__jump {
-      position: absolute;
-      right: 0;
-    }
-    .el-pagination__sizes {
-      position: absolute;
-      right: 94px;
-    }
-    .btn-prev {
-      position: absolute;
-      right: 599px;
-    }
-    .el-pager {
-      position: absolute;
-      right: 269px;
-    }
-    .btn-next {
-      position: absolute;
-      right: 220px;
-    }
-  }
-}
-
-.el-table th {
-  background: #f8f8f9;
-  padding: 8px 0;
-  text-align: center;
-}
-.el-table td {
-  padding: 10px 0;
-  text-align: center;
-}
 </style>

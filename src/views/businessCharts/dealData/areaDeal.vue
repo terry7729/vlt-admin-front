@@ -1,38 +1,16 @@
 <template>
-  <div>
-    <span class="box-spacing" style="margin:10px 20px 5px">
-      区域：
-      <el-select v-model="provinceCode" size="small" placeholder="请选择省" @change="getProvince()">
-        <el-option
-          v-for="item in provinceList"
-          :key="item.provinceCode"
-          :label="item.areaName"
-          :value="item.provinceCode"
-        ></el-option>
-      </el-select>
-
-      <el-select v-model="cityCode" size="small" placeholder="请选择市" >
-        <el-option
-          v-for="item in cityList"
-          :key="item.cityCode"
-          :label="item.cityName"
-          :value="item.cityCode"
-          @change="getCity()"
-        ></el-option>
-      </el-select>
-      <el-select v-model="poundage" size="small" placeholder="请选择销售厅">
-        <el-option
-          v-for="item in poundagefee"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </span>
+  <div class="vlt-card">
+    <search-bar
+      class="search-bar-demo"
+      @search="search"
+      :options="searchOptions"
+      :total="999"
+      labelWidth="80px"
+    ></search-bar>
     <span>
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
     </span>
-    <div class="tab-container">
+    <div class="">
       <el-table
         :data="tableData"
         border
@@ -83,16 +61,69 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "Page401",
+  name: "areaDeal",
   data() {
     return {
+      searchOptions: [
+        {
+          type: "select",
+          prop: "province",
+          value: "",
+          title: "区域",
+          placeholder: "请选择省",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "select",
+          prop: "selectNam1",
+          value: "",
+          title: "",
+          placeholder: "请选择市",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "select",
+          prop: "selectName2",
+          value: "",
+          title: "",
+          placeholder: "请选择销售厅",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        }
+      ],
       //记录省市县
       provinceList: [],
       dataprovinceList: [],
       provinceCode: "",
 
-      poundage:[],
-      poundagefee:[],
+      poundage: [],
+      poundagefee: [],
       cityList: [],
       datacityList: [],
       cityCode: "",
@@ -130,6 +161,9 @@ export default {
     };
   },
   methods: {
+    search(form) {
+      console.log("search", form);
+    },
     back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
@@ -155,10 +189,10 @@ export default {
       for (let i = 0; city.length > i; i++) {
         //循环获取省级单位
         for (var key in city[i]) {
-          let provinceCode = city[i].areaId;
-          let areaName = city[i].areaName;
+          let value = city[i].areaId;
+          let label = city[i].areaName;
           var cities = city[i].cities;
-          var pro = { provinceCode, areaName };
+          var pro = { label, value };
         }
         //循环获取市级单位
         for (var j = 0; cities.length > j; j++) {
@@ -180,6 +214,12 @@ export default {
         provinceArr.push(pro);
       }
       this.provinceList = provinceArr;
+      console.log(provinceArr);
+      this.searchOptions.forEach(v => {
+        if (v.prop === "province") {
+          v.options = provinceArr;
+        }
+      });
       this.cityList = cityArr;
       this.countryList = countryArr;
       this.dataprovinceList = provinceArr;
@@ -207,7 +247,6 @@ export default {
         this.cityList = cArrres;
         this.cityCode = this.cityList[0].cityCode;
         //回调自动获取当前选择的县区
-       
       }
       console.log(
         "省：" +
@@ -226,20 +265,18 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.tab-container {
-  padding: 20px;
-  background-color: #fff;
-  margin-top: 10px;
-}
+// .tab-container {
+//   padding: 20px;
+//   background-color: #fff;
+//   margin-top: 10px;
+// }
 
-
-.el-select {
-  margin-right: 20px; 
-}
-.box-spacing {
-  display: block;
-  margin-left: 20px;
-  float: left;
-}
-
+// .el-select {
+//   margin-right: 20px;
+// }
+// .box-spacing {
+//   display: block;
+//   margin-left: 20px;
+//   float: left;
+// }
 </style>
