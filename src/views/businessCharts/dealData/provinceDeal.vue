@@ -1,8 +1,8 @@
 <template >
   <div class="vlt-card">
-    <span class="box-spacing">
-      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
-    </span>
+    <section class="comp-item">
+      <control-bar :options="controlOptions"></control-bar>
+    </section>
     <div class="tab-container">
       <el-table
         :data="tableData"
@@ -53,6 +53,9 @@ export default {
   name: "provinceDeal",
   data() {
     return {
+       controlOptions: [  
+        {type: 'export', change() {alert('cliked')}},       
+      ],
       total: null,
       listQuery: {
         page: 1,

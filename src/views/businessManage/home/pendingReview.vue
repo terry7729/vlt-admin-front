@@ -1,6 +1,19 @@
+<!-- 首页 - 概况 - 待审核 -->
+
 <template>
   <div class="vlt-card pending-review">
-    <el-table :data="tableData" style="width: 100%" border>
+    <search-bar
+      class="search-bar-demo"
+      @search="search"
+      :options="searchOptions"
+      :total="999"
+      labelWidth="80px"
+    ></search-bar>
+    <el-row>
+      <el-button size="mini" @click="toPrint">打印</el-button>
+      <el-button  size="mini" @click="toExport">导出</el-button>
+    </el-row>
+    <el-table :data="tableData" style="width: 100%" border class="table-box">
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
       <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
       <el-table-column prop="type" label="业务类型" width="120"></el-table-column>
@@ -32,6 +45,40 @@ export default {
   name:'pending-review',
   data() {
     return {
+      // 搜索组件配置
+      searchOptions: [
+        {
+          type: "input",
+          prop: "inputName",
+          value: "",
+          title: "业务标题：",
+          placeholder: "请输入"
+        },
+        {
+          type: "select",
+          prop: "selectName",
+          value: "",
+          title: "业务类型：",
+          placeholder: "请选择",
+          options: [
+            {
+              label: "类型1",
+              value: 1
+            },
+            {
+              label: "类型2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "datepicker-range",
+          prop: "date2",
+          value: "",
+          title: "申请日期：",
+          placeholder: ["开始日期", "结束日期"]
+        }
+      ],
       tableData: [
         {
           id: 0,
@@ -118,22 +165,34 @@ export default {
     };
   },
   methods: {
+    search(form) {
+      console.log("search", form);
+    },
     edit(row) {
       const self = this;
       console.log(row);
       this.$router.push({
-        name:'editPendingReview',
+        name:'pendingReviewEdit',
         query: {id: row.id}
       })
     },
     moveRow(row) {
-      console.log(row);
+      const self = this;
+      this.$router.push({
+        name:'pendingReviewTransfer'
+      })
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+    },
+    toPrint () {
+      console.log('打印');
+    },
+    toExport () {
+      console.log('导出');
     }
   },
   components: {
@@ -147,47 +206,11 @@ export default {
   .el-table--group {
     border-color: #e0e0e0;
   }
-  // .el-table {
-  //   td,
-  //   th.is-leaf {
-  //     border-color: #e0e0e0;
-  //   }
-  //   thead {
-  //     th {
-  //       background-color: #f2f2f2;
-  //       padding: 3px 0;
-  //     }
-  //     .cell {
-  //       font-size: 16px;
-  //       text-align: center;
-  //       color: #656565;
-  //     }
-  //   }
-  //   tbody {
-  //     tr {
-  //       td {
-  //         &:nth-child(1),
-  //         &:nth-child(2),
-  //         &:nth-child(3) {
-  //           .cell {
-  //             font-size: 12px;
-  //           }
-  //         }
-  //       }
-  //     }
-  //     td {
-  //       padding: 14px 0;
-  //     }
-  //     .cell {
-  //       text-align: center;
-  //     }
-  //     .el-button--text {
-  //       color: blue;
-  //     }
-  //   }
-  // }
-  .el-pagination.is-background{
+  .table-box {
     margin-top: 20px;
+  }
+  .el-pagination.is-background{
+    margin-top: 40px;
     text-align: right;
     li {
       margin: 0 6px;

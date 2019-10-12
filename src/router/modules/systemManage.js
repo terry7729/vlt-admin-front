@@ -8,9 +8,16 @@ const dataDictionary = () => import('@/views/systemManage/dataDictionary/index')
 
 //业务流程
 const formManage = () => import('@/views/systemManage/businessProcess/formManage')
+const formCompile = () => import('@/views/systemManage/businessProcess/formCompile')
+
 //流程设置
 const processSet = () => import('@/views/systemManage/businessProcess/processSet')
-
+//流程设置详情
+const processSetDetail = () => import('@/views/systemManage/businessProcess/processSetDetail')
+//流程分类
+const processClassify = () => import('@/views/systemManage/businessProcess/processClassify')
+//流程分类修改
+const processClassifyModify = () => import('@/views/systemManage/businessProcess/processClassifyModify')
 
 //用户列表
 const userList = () => import('@/views/systemManage/userControl/userList')
@@ -24,6 +31,8 @@ const roleList = () => import('@/views/systemManage/roleManagement/roleList')
 const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
 //组织架构
 const organizationChild = () => import('@/views/systemManage/organization/organization')
+//组织架构编缉页
+const organicompile = () =>import('@/views/systemManage/organization/organicompile')
 //菜单管理
 
 const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
@@ -72,12 +81,44 @@ export default [
     component:formManage
   },
   {
+    path :'systemManage/formManage/formCompile',
+    name:'formCompile',
+    meta:{
+      title:'编辑',
+    },
+    component:formCompile
+  },
+  {
     path :'systemManage/processSet',
     name:'processSet',
     meta:{
       title:'流程设置',
     },
     component:processSet
+  },
+  {
+    path :'systemManage/processSet/processSetDetail',
+    name:'processSetDetail',
+    meta:{
+      title:'流程设置编辑',
+    },
+    component:processSetDetail
+  },
+  {
+    path :'systemManage/processClassify',
+    name:'processClassify',
+    meta:{
+      title:'流程分类',
+    },
+    component:processClassify
+  },
+  {
+    path :'systemManage/processClassify/processClassifyModify',
+    name:'processClassifyModify',
+    meta:{
+      title:'流程分类修改',
+    },
+    component:processClassifyModify
   },
   {
 
@@ -132,6 +173,15 @@ export default [
     title: '组织架构',
   },
   component: organizationChild
+},
+{
+  path:'systemManage/organizationChild/organicompile',
+  name:"organicompile",
+  meta: {
+    title: '添加机构信息',
+  },
+  component: organicompile
+
 },
 {
   path: 'systemManage/menuManageMent',

@@ -1,13 +1,14 @@
 <template>
   <div class="vlt-card">
-     <section class="comp-item">
-      <!-- <h4 class="comp-title">搜索框</h4> -->
-      <search-bar class="search-bar-demo"
+       <section class="comp-item">
+      <search-bar
+        class="search-bar-demo"
         @search="search"
         :options="searchOptions"
         :total="999"
         labelWidth="80px"
       >
+      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
     <span>
@@ -114,6 +115,23 @@ export default {
           ]
         }
       ],
+      controlOptions: [
+       
+        {
+          type: "export",
+          change() {
+            alert("cliked");
+          }
+        },
+       
+        {
+          type: "refresh",
+          change() {
+            alert("cliked");
+          }
+        },
+        
+      ],
       value: "",
       //记录省市县
       provinceList: [],
@@ -183,4 +201,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
+.control-bar-comp{
+  text-align: right;
+}
 </style>

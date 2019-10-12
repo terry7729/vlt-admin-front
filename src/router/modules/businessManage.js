@@ -1,10 +1,27 @@
 // 业务管理系统路由配置
 // 首页概况
 const overview = () => import('@/views/businessManage/home/overview')
+// 消息列表
+const messages = () => import('@/views/businessManage/home/messages')
+// 发布消息
+const sendMessage = () => import('@/views/businessManage/home/sendMessage')
+
 // 待审核
 const pendingReview = () => import('@/views/businessManage/home/pendingReview')
 // 处理待审核
-const editPendingReview = () => import('@/views/businessManage/home/editPendingReview')
+const pendingReviewEdit = () => import('@/views/businessManage/home/pendingReviewEdit')
+// 移交待审核
+const pendingReviewTransfer = () => import('@/views/businessManage/home/pendingReviewTransfer');
+
+// 已审核
+const audited = () => import('@/views/businessManage/home/audited');
+
+// 已申请
+const alreadyApplied = () => import('@/views/businessManage/home/alreadyApplied');
+
+// 待阅读
+const pendingReading = () => import('@/views/businessManage/home/pendingReading');
+
 // 游戏储备列表
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
@@ -14,11 +31,17 @@ const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/ga
 // 游戏配置管理
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
-const check = () => import('@/views/businessManage/gameStoreManage/check')
+const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeCheck')
+const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
+const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
+
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
 
 export default [
   // {
@@ -39,6 +62,22 @@ export default [
     component: overview
   },
   {
+    path: 'businessManage/messages/:type',
+    name: 'messages',
+    meta: {
+      title: '更多消息',
+    },
+    component: messages
+  },
+  {
+    path: 'businessManage/sendMessage',
+    name: 'sendMessage',
+    meta: {
+      title: '发布消息',
+    },
+    component: sendMessage
+  },
+  {
     path: 'businessManage/pendingReview',
     name: 'pendingReview',
     meta: {
@@ -47,12 +86,44 @@ export default [
     component: pendingReview
   },
   {
-    path: 'businessManage/editPendingReview',
-    name: 'editPendingReview',
+    path: 'businessManage/pendingReviewEdit',
+    name: 'pendingReviewEdit',
     meta: {
       title: '待审核-处理',
     },
-    component: editPendingReview
+    component: pendingReviewEdit
+  },
+  {
+    path: 'businessManage/pendingReviewTransfer',
+    name: 'pendingReviewTransfer',
+    meta: {
+      title: '待审核-移交',
+    },
+    component: pendingReviewTransfer
+  },
+  {
+    path: 'businessManage/audited',
+    name: 'audited',
+    meta: {
+      title: '已审核',
+    },
+    component: audited
+  },
+  {
+    path: 'businessManage/alreadyApplied',
+    name: 'alreadyApplied',
+    meta: {
+      title: '已申请',
+    },
+    component: alreadyApplied
+  },
+  {
+    path: 'businessManage/pendingReading',
+    name: 'audipendingReadingted',
+    meta: {
+      title: '待阅读',
+    },
+    component: pendingReading
   },
   {
     path: 'businessManage/gameStoreList',
@@ -95,12 +166,28 @@ export default [
     component: gameDelistPlan
   },
   {
-    path: 'businessManage/check',
-    name: 'check',
+    path: 'businessManage/storeCheck',
+    name: 'storeCheck',
     meta: {
       title: '查看',
     },
-    component: check
+    component: storeCheck
+  },
+  {
+    path: 'businessManage/storeEdit',
+    name: 'storeEdit',
+    meta: {
+      title: '编辑',
+    },
+    component: storeEdit
+  },
+  {
+    path: 'businessManage/planCheck',
+    name: 'planCheck',
+    meta: {
+      title: '试玩查看',
+    },
+    component: planCheck
   },
   {
     path: 'businessManage/channelList',
@@ -117,5 +204,29 @@ export default [
       title: '新建渠道',
     },
     component: channelAdd
+  },
+  {
+    path: 'businessManage/channelDeal',
+    name: 'channelDeal',
+    meta: {
+      title: '业务办理',
+    },
+    component: channelDeal
+  },
+  {
+    path: 'businessManage/developmentPlan',
+    name: 'developmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: developmentPlan
+  },
+  {
+    path: 'businessManage/createDevelopmentPlan',
+    name: 'createDevelopmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: createDevelopmentPlan
   }
 ]

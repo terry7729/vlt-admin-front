@@ -27,7 +27,7 @@
   }
   .el-table th>.cell{
     font-size: 12px;
-    color: #515a6e;
+    color: #444444;
     line-height: 1;
   }
   .el-table td{
@@ -36,7 +36,7 @@
   }
   .el-table td>.cell{
     font-size: 12px;
-    color: #515a6e;
+    color: #444444;
     line-height: 18px;
   }
 }
@@ -56,26 +56,39 @@
   padding: 7px 15px;
   line-height: 1.5;
 }
-.main-body .el-button:focus,
-.main-body .el-button:hover{
-  color: #57a3f3;
-  background-color: #fff;
-  border-color: #57a3f3;
-}
-.main-body .el-button--primary{
-  color: #fff;
-  background-color: #2d8cf0;
-  border-color: #2d8cf0;
-}
-.main-body .el-button--primary:hover{
-  color: #fff;
-  background-color: #57a3f3;
-  border-color: #57a3f3;
-}
+// .main-body .el-button:focus{
+//   background: #2d8cf0;
+//   border-color: #2d8cf0;
+//   color: #FFF;
+// }
+// .main-body .el-button:hover{
+//   color: #57a3f3;
+//   background-color: #fff;
+//   border-color: #57a3f3;
+// }
+// .main-body .el-button--primary{
+//   color: #fff;
+//   background-color: #2d8cf0;
+//   border-color: #2d8cf0;
+// }
+// .main-body .el-button--primary:hover{
+//   color: #fff;
+//   background-color: #57a3f3;
+//   border-color: #57a3f3;
+// }
+
 .mt20 {
   margin-top: 20px;
 }
-
+/*搜索按钮*/
+.search-bar-comp{
+  .el-button{
+    height: 34px;
+  }
+  .el-button--primary{
+    height: 32px;
+  }
+}
 /* 编辑 单个样式 */
 .vlt-edit-single{
   .vlt-edit-wrap{
@@ -89,19 +102,20 @@
     padding: 14px 16px;
     line-height: 20px;
     font-size: 14px;
-    color: #17233d;
+    color: #444444;
     font-weight: 700;
   }
   .el-form-item__label{
     font-size: 12px;
-    color: #515a6e;
+    color: #444444;
   }
   .el-input__inner{
     height: 36px;
     line-height: 36px;
     padding: 0 10px;
   }
-  .el-form-item__content{
+  .el-form-item__content,
+  .el-cascader{
     width: 400px;
   }
   .el-form-item{
@@ -135,7 +149,7 @@
     padding: 14px 16px;
     line-height: 20px;
     font-size: 14px;
-    color: #17233d;
+    color: #444444;
     font-weight: 700;
   }
   .el-form{
@@ -149,7 +163,7 @@
   }
   .el-form-item__label{
     font-size: 12px;
-    color: #515a6e;
+    color: #444444;
     line-height: 20px;
   }
   .el-form--label-top 
@@ -195,7 +209,7 @@
     padding: 14px 16px;
     line-height: 20px;
     font-size: 14px;
-    color: #17233d;
+    color: #444444;
     font-weight: 700;
   }
   .el-form{
@@ -212,7 +226,7 @@
   }
   .el-form-item__label{
     font-size: 12px;
-    color: #515a6e;
+    color: #444444;
     line-height: 20px;
   }
   .el-form--label-top 
@@ -240,5 +254,12 @@
   }
   .el-textarea__inner{
     padding: 5px 10px;
+  }
+}
+
+.develop-plan{
+  .el-tabs--left 
+  .el-tabs__item.is-left{
+    text-align: left;
   }
 }

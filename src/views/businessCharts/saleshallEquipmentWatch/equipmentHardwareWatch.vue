@@ -1,16 +1,16 @@
 <template>
   <div class="vlt-card">
-    <search-bar
-      class="search-bar-demo"
-      @search="search"
-      :options="searchOptions"
-      :total="999"
-      labelWidth="80px"
-    ></search-bar>
-    
-    <span>
-      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
-    </span>
+   <section class="comp-item">
+      <search-bar
+        class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="80px"
+      >
+      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      </search-bar>
+    </section>
     <div class="tab-container">
       <el-table
         :data="tableData"
@@ -24,17 +24,15 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="date" label="终端"></el-table-column>
         <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center"  label="柜员机">
-             <el-table-column prop="address" align="center" label="柜员机数量" ></el-table-column>
-            <el-table-column prop="address" align="center" label="柜员机在线数量"></el-table-column>
-        </el-table-column>
-        <el-table-column align="center"  label="终端机">
-             <el-table-column prop="address" align="center" label="终端机数量" ></el-table-column>
-            <el-table-column prop="address" align="center" label="终端机在线数量"></el-table-column>
-        </el-table-column>       
+        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="date" label="磁盘使用"></el-table-column>
+        <el-table-column align="center" prop="date" label="CPU使用"></el-table-column>     
+        <el-table-column align="center" prop="date" label="系统内存使用"></el-table-column>
+        <el-table-column align="center" prop="date" label="网络流量"></el-table-column>
+        <el-table-column align="center" prop="date" label="终端状态"></el-table-column>
+        <el-table-column align="center" prop="date" label="外设状态"></el-table-column>
       </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
@@ -119,6 +117,23 @@ export default {
             }
           ]
         }
+      ],
+      controlOptions: [
+       
+        {
+          type: "export",
+          change() {
+            alert("cliked");
+          }
+        },
+       
+        {
+          type: "refresh",
+          change() {
+            alert("cliked");
+          }
+        },
+        
       ],
       //记录省市县
       provinceList: [],
@@ -294,4 +309,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
+.control-bar-comp{
+  text-align: right;
+}
 </style>

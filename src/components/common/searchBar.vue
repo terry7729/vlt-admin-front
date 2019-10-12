@@ -57,7 +57,7 @@
           </el-cascader>
         </el-form-item>
       </span>
-      <el-form-item>
+      <el-form-item class="btn-wrap">
         <el-button size="small" type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
         <el-button size="small" @click="reset">重置</el-button>
         <el-button size="small" type="text" @click="onDrop" v-if="options.length > 2">
@@ -110,6 +110,7 @@
     },
     data() {
       return {
+        tipTxt: '',
         form: {
           
         },
@@ -154,20 +155,35 @@
     .el-form{
       padding: 15px 15px 0;
       background-color: #f7f7f7;
+      .el-button--text:hover {
+        background-color: transparent;
+        color: #57a3f3;
+        border-color: transparent;
+      }
+      .el-button--text:focus {
+        background-color: transparent;
+        color: #57a3f3;
+        border-color: transparent;
+      }
+    }
+    .btn-wrap{
+      padding-left: 30px;
     }
     .el-button{
       margin: 0 5px;
     }
     .tips-item{
-      height: 32px;
-      line-height: 32px;
-      background-color: rgba(230, 243, 252, 1);
-      border: 1px solid rgba(212, 240, 252, 1);
+      height: 34px;
+      line-height: 34px;
+      background-color: #f0faff;
+      border: 1px solid #abdcff;
       font-size: 12px;
       color: #515a6e;
       border-radius: 4px;
       padding: 0 10px;
       margin: 10px 0;
+      display: flex;
+      align-items: center;
       em{
         color: #2d8cf0;
         font-style: normal;
@@ -176,7 +192,7 @@
       i{
         vertical-align: middle;
         color: #2d8cf0;
-        padding-right: 5px;
+        margin-right: 5px;
       }
     }
     .form-item-line{
