@@ -34,9 +34,9 @@
         <el-table-column prop="address" label="操作" show-overflow-tooltip>
           <el-button type="text" @click="handelskip()">查看</el-button>
           <span>|</span>
-          <el-button type="text">编缉</el-button>
+          <el-button type="text" @click="handelifo()">编缉</el-button>
           <span>|</span>
-          <el-button type="text">重置密码</el-button>
+          <el-button type="text" @click="handelides()">重置密码</el-button>
         </el-table-column>
       </el-table>
       <div class="pagintion">
@@ -64,7 +64,7 @@ export default {
     return {
          controlOptions: [
            {type: 'add', change() {alert('cliked')}},
-        {type: 'delete', change() {alert('clicked')}},
+          {type: 'delete', change() {alert('clicked')}},
 
       ],
       currentPage4: 4,
@@ -179,7 +179,13 @@ export default {
       console.log(`当前页: ${val}`);
     },
     handelskip() {
-      this.$router.push("roleList/roleDestails");
+      // this.$router.push("roleList/roleDestails");
+    },
+    handelifo(){
+      this.$router.push('userList/userInformed')
+    },
+    handelides(){
+      this.$router.push('userList/userDestails')
     }
   }
 };
