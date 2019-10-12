@@ -151,11 +151,6 @@ export default {
   },
   created() {},
   mounted() {},
-<<<<<<< HEAD
-  components: { SearchBar },
-=======
-
->>>>>>> 26fe3d38013d6c387088c968b4f5fd6d07b8e568
   methods: {
     changeSize() {},
     changeCurrent() {},
