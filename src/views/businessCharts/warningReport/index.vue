@@ -2,6 +2,9 @@
   <div class="vlt-card">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="报告模板" name="first">
+        <section class="comp-item">
+          <control-bar :options="controlOptions"></control-bar>
+        </section>
         <div class="tab-container">
           <el-table
             :data="tableData"
@@ -20,7 +23,7 @@
             <el-table-column align="center" prop="name" label="警报等级"></el-table-column>
             <el-table-column label="操作" fixed="right" width="620px" align="center">
               <template slot-scope="scope">
-                  <el-button type="primary" @click size="medium ">生成报告</el-button>
+                <el-button type="primary" @click size="medium ">生成报告</el-button>
                 <el-button type="primary" @click size="medium ">编辑</el-button>
                 <el-button type="primary" @click size="medium ">删除</el-button>
               </template>
@@ -36,7 +39,7 @@
               :page-size="100"
               layout="total, sizes, prev, pager, next, jumper"
               :total="400"
-            ></el-pagination>           
+            ></el-pagination>
           </div>
         </div>
       </el-tab-pane>
@@ -62,18 +65,18 @@
             </template>
           </el-table-column>
         </el-table>
-          <div class="pagination-container" style="text-align:right;margin-top:30px">
-            <el-pagination
-              background
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="listQuery.page"
-              :page-sizes="[10,20,30, 50]"
-              :page-size="100"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="400"
-            ></el-pagination> 
-          </div> 
+        <div class="pagination-container" style="text-align:right;margin-top:30px">
+          <el-pagination
+            background
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="listQuery.page"
+            :page-sizes="[10,20,30, 50]"
+            :page-size="100"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400"
+          ></el-pagination>
+        </div>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -83,6 +86,9 @@
 export default {
   data() {
     return {
+      controlOptions: [  
+        {type: 'add', change() {alert('cliked')}},       
+      ],
       activeName: "first",
       total: null,
       listQuery: {
@@ -129,5 +135,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.control-bar-comp{
+  text-align: right;
+}
 </style>

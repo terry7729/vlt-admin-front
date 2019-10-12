@@ -53,7 +53,7 @@
 </template>
 
 <script>
-export default{
+export default {
   name: "name",
   data() {
     return {
@@ -102,31 +102,22 @@ export default{
   created() {},
   mounted() {},
   components: {},
-  
-    methods: {
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      },
-      handelskip() {
-        this.$router.push("roleList/roleDestails");
-      }
+  methods: {
+
+    handleSelectionChange(val) { //当前选择项目
+      console.log(val)
+      this.multipleSelection = val;
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    handelskip() {
+      this.$router.push("roleList/roleDestails");
     }
-  
+  }
 };
 </script>
 
