@@ -15,8 +15,10 @@ const areaDeal = () => import('@/views/businessCharts/dealData/areaDeal')
 const gameDeal = () => import('@/views/businessCharts/dealData/gameDeal')
 //销售厅账户监控
 const accountWatch = () => import('@/views/businessCharts/saleshallAccountWatch')
-//销售厅设备监控
-const equipmentWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch')
+//销售厅设备数据监控
+const equipmentDataWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch/equipmentDataWatch')
+//销售厅设备硬件监控
+const equipmentHardwareWatch = () => import('@/views/businessCharts/saleshallEquipmentWatch/equipmentHardwareWatch')
 //告警监控
 const warningWatch = () => import('@/views/businessCharts/warningWatch')
 //报表管理
@@ -102,27 +104,35 @@ export default [
     component: accountWatch
   },
   {
-    path: 'businessCharts/equipmentWatch',
-    name: 'equipmentWatch',
+    path: 'businessCharts/equipmentDataWatch',
+    name: 'equipmentDataWatch',
     meta: {
-      title: '销售厅设备监控',
+      title: '销售厅设备数据监控',
     },
-    component: equipmentWatch
+    component: equipmentDataWatch
   },{
+    path: 'businessCharts/equipmentHardwareWatch',
+    name: 'equipmentHardwareWatch',
+    meta: {
+      title: '销售厅设备硬件监控',
+    },
+    component: equipmentHardwareWatch
+  },
+  {
+    path: 'businessCharts/warningReport',
+    name: 'warningReport',
+    meta: {
+      title: '告警报告',
+    },
+    component: warningReport
+  },
+  {
     path: 'businessCharts/warningWatch',
     name: 'warningWatch',
     meta: {
       title: '告警监控',
     },
     component: warningWatch
-  },
-  {
-    path: 'businessCharts/warningReport',
-    name: 'warningReport',
-    meta: {
-      title: '告警监控',
-    },
-    component: warningReport
   }
 
 ]
