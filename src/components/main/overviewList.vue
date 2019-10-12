@@ -1,54 +1,55 @@
 <template>
   <el-row type="flex" :gutter="20" class="row-bg" justify="space-around">
     <el-col v-for="(item, index) in list" :key="index" :span="4">
-        <div class="grid-content bg-purple" @click="to(item.url)">
-          <i class="iconfont icon-B-fulicaipiao"></i>
-          <div class="overview-info">
-            <h2>{{item.number}}</h2>
-            <p>{{item.name}}</p>
-          </div>
+      <div class="grid-content bg-purple" @click="to(item.url)">
+        <i class="iconfont icon-B-fulicaipiao"></i>
+        <div class="overview-info">
+          <h2> <numberAdd :value="item.number"></numberAdd></h2>
+          <p>{{item.name}}</p>
         </div>
+      </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import numberAdd from  '@/components/common/numberAdd.vue'
 const LIST_DATA = {
   status: 200,
   data: [
     {
       id: 0,
       name: "总流程数",
-      number: 99,
-      url: ''
+      number: 99999,
+      url: ""
     },
 
     {
       id: 1,
       name: "待审核",
-      number: 21,
-      url: '/home/businessManage/pendingReview'
+      number: 888,
+      url: "/home/businessManage/pendingReview"
     },
     {
       id: 2,
       name: "已审核",
       number: 66,
-      url: '/home/businessManage/audited'
+      url: "/home/businessManage/audited"
     },
     {
       id: 3,
       name: "已申请",
       number: 54,
-      url: '/home/businessManage/alreadyApplied'
+      url: "/home/businessManage/alreadyApplied"
     },
     {
       id: 4,
       name: "待阅读",
       number: 21,
-      url: '/home/businessManage/pendingReading'
+      url: "/home/businessManage/pendingReading"
     }
   ]
-}
+};
 export default {
   data() {
     return {
@@ -57,6 +58,9 @@ export default {
   },
   created() {
     this.getPress();
+    
+  },
+  computed: {
   },
   methods: {
     getPress() {
@@ -76,10 +80,13 @@ export default {
       //     console.log(err);
       //   });
     },
-    to (url) {
+    to(url) {
       console.log(url);
-      this.$router.push({ path: `${url}` })
+      this.$router.push({ path: `${url}` });
     }
+  },
+  components: {
+    'numberAdd': numberAdd
   }
 };
 </script>
@@ -93,7 +100,7 @@ export default {
     background-color: rgba(255, 255, 255, 1);
     &.el-col-4 {
       padding: 20px !important;
-      &>div {
+      & > div {
         cursor: pointer;
       }
     }
@@ -108,7 +115,7 @@ export default {
         height: 60px;
         font-size: 48px;
         text-align: center;
-        color: #E60012;
+        color: #e60012;
         background: rgba(235, 235, 235, 1);
         border-radius: 50%;
       }

@@ -89,6 +89,44 @@ export default [{
             url: 'channelList'
           }
         ],
+      },
+
+      {
+        icon: "el-icon-menu",
+        name: "渠道终端管理",
+        url: 'channelTerminalManagement',
+        childResources: [
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "服务分析",
+            url: 'serviceAnalysis'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "维修管理",
+            url: 'maintenance'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "报表统计",
+            url: 'equipment'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "维护知识库",
+            url: 'knowledgeBase'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "配置管理",
+            url: 'configuration'
+          }
+        ]
       }
     ],
     icon: "el-icon-menu",
