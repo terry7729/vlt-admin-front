@@ -22,8 +22,8 @@
       <el-table-column fixed="right" label="操作" >
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="view(scope.row)">查看</el-button>
-          <el-button type="primary" size="mini" @click="urgent(scope.row)">催办</el-button>
-          <el-button type="primary" size="mini" @click="forcedEnd(scope.row)">强制结束</el-button>
+          <el-button  size="mini" @click="urgent(scope.row)">催办</el-button>
+          <el-button  size="mini" @click="forcedEnd(scope.row)">强制结束</el-button>
         </template>
       </el-table-column>
     </el-table>
