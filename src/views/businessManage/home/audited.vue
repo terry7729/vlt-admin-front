@@ -1,5 +1,4 @@
-<!-- 首页 - 概况 - 待审核 -->
-
+<!-- 首页 - 概况 - 已审核 -->
 <template>
   <div class="vlt-card pending-review">
     <search-bar
@@ -17,14 +16,14 @@
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
       <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
       <el-table-column prop="type" label="业务类型" width="120"></el-table-column>
-      <el-table-column prop="date" label="申请时间" width="180"></el-table-column>
-      <el-table-column prop="date" label="截止时间"></el-table-column>
-      <el-table-column prop="name" label="申请人"></el-table-column>
+      <el-table-column prop="date" label="处理时间" width="150"></el-table-column>
       <el-table-column prop="process" label="当前步骤"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column prop="name" label="当前处理人" width="150"></el-table-column>
+      <el-table-column fixed="right" label="操作" >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="edit(scope.row)">处理</el-button>
-          <el-button  size="mini" @click="moveRow(scope.row)">移交</el-button>
+          <el-button type="primary" size="mini" @click="view(scope.row)">查看</el-button>
+          <el-button type="primary" size="mini" @click="urgent(scope.row)">催办</el-button>
+          <el-button type="primary" size="mini" @click="forcedEnd(scope.row)">强制结束</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -35,7 +34,7 @@
       :current-page="currentPage"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="10"
-      layout="prev, pager, next, sizes,jumper"
+      layout="total, prev, pager, next, sizes,jumper"
       :total="100" background>
     </el-pagination>
   </div>
@@ -168,19 +167,19 @@ export default {
     search(form) {
       console.log("search", form);
     },
-    edit(row) {
+    view(row) {
       const self = this;
-      console.log(row);
+      console.log('查看',row);
       this.$router.push({
         name:'pendingReviewEdit',
         query: {id: row.id}
       })
     },
-    moveRow(row) {
-      const self = this;
-      this.$router.push({
-        name:'pendingReviewTransfer'
-      })
+    urgent(row) {
+      console.log('催办',row);
+    },
+    forcedEnd(row) {
+      console.log('强制结束', row);
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

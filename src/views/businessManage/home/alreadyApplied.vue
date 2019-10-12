@@ -1,5 +1,4 @@
-<!-- 首页 - 概况 - 待审核 -->
-
+<!-- 首页 - 概况 - 已申请 -->
 <template>
   <div class="vlt-card pending-review">
     <search-bar
@@ -17,14 +16,21 @@
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
       <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
       <el-table-column prop="type" label="业务类型" width="120"></el-table-column>
-      <el-table-column prop="date" label="申请时间" width="180"></el-table-column>
-      <el-table-column prop="date" label="截止时间"></el-table-column>
-      <el-table-column prop="name" label="申请人"></el-table-column>
+      <el-table-column prop="date" label="申请时间" width="150"></el-table-column>
+      <el-table-column prop="date2" label="完成时间" width="150"></el-table-column>
       <el-table-column prop="process" label="当前步骤"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column prop="name" label="当前处理人" width="150"></el-table-column>
+      <el-table-column fixed="right" label="操作" >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="edit(scope.row)">处理</el-button>
-          <el-button  size="mini" @click="moveRow(scope.row)">移交</el-button>
+            <el-button type="primary" size="mini" @click="toView(scope.row)">查看</el-button>
+
+            <el-button v-for="(item, index) in scope.row.operating" :key="index" v-show="item.isShow" size="mini" @click="operat(item.operat,scope.row)">{{item.name}}</el-button>
+          
+          
+           <!-- v-if="scope.row.operating.cEdit"
+           v-if="scope.row.operating.cDelete" -->
+          <!-- <el-button size="mini" @click="toEdit(scope.row)">修改</el-button>
+          <el-button size="mini"  @click="toDelete(scope.row)">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -35,7 +41,7 @@
       :current-page="currentPage"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="10"
-      layout="prev, pager, next, sizes,jumper"
+      layout="total, prev, pager, next, sizes,jumper"
       :total="100" background>
     </el-pagination>
   </div>
@@ -84,81 +90,106 @@ export default {
           id: 0,
           title: "【6000000】建厅申请",
           date: "2016-05-02",
+          date2: '2016-05-20',
           name: "王小虎",
           process: "地市审批",
-          type: "建厅申请"
+          type: "建厅申请",
+          operating:[
+             {
+              name: '修改',
+              isShow: true,
+              operat: 'toEdit'
+            },
+             {
+              name: '删除',
+              isShow: true,
+              operat: 'toDelete'
+            }
+          ]
         },
         {
           id: 1,
           date: "2016-05-04",
+          date2: '2016-05-20',
           title: "【6000000】建厅申请",
           name: "王小虎",
           process: "地市审批",
-          type: "建厅申请"
+          type: "建厅申请",
+          operating: [
+             {
+              name: '修改',
+              isShow: false,
+              operat: 'toEdit'
+            },
+             {
+              name: '删除',
+              isShow: false,
+              operat: 'toDelete'
+            }
+          ]
         },
         {
           id: 2,
           date: "2016-05-01",
+          date2: '2016-05-20',
           title: "【6000000】建厅申请",
           name: "王小虎",
           process: "地市审批",
-          type: "建厅申请"
+          type: "建厅申请",
+          operating: [
+             {
+              name: '修改',
+              isShow: false,
+              operat: 'toEdit'
+            },
+             {
+              name: '删除',
+              isShow: false,
+              operat: 'toDelete'
+            }
+          ]
         },
         {
           id: 3,
           date: "2016-05-03",
+          date2: '2016-05-20',
           title: "【6000000】建厅申请",
           name: "王小虎",
           process: "地市审批",
-          type: "建厅申请"
+          type: "建厅申请",
+          operating: [
+             {
+              name: '修改',
+              isShow: false,
+              operat: 'toEdit'
+            },
+             {
+              name: '删除',
+              isShow: false,
+              operat: 'toDelete'
+            }
+          ]
         },
         {
           id: 4,
           title: "【6000000】建厅申请",
           date: "2016-05-02",
+          date2: '2016-05-20',
           name: "王小虎",
           process: "地市审批",
-          type: "建厅申请"
-        },
-        {
-          id: 5,
-          date: "2016-05-04",
-          title: "【6000000】建厅申请",
-          name: "王小虎",
-          process: "地市审批",
-          type: "建厅申请"
-        },
-        {
-          id: 6,
-          date: "2016-05-01",
-          title: "【6000000】建厅申请",
-          name: "王小虎",
-          process: "地市审批",
-          type: "建厅申请"
-        },
-        {
-          id: 7,
-          date: "2016-05-03",
-          title: "【6000000】建厅申请",
-          name: "王小虎",
-          process: "地市审批",
-          type: "建厅申请"
-        },
-        {
-          id: 8,
-          title: "【6000000】建厅申请",
-          date: "2016-05-02",
-          name: "王小虎",
-          process: "地市审批",
-          type: "建厅申请"
-        },
-        {
-          id: 9,
-          date: "2016-05-04",
-          title: "【6000000】建厅申请",
-          name: "王小虎",
-          process: "地市审批",
-          type: "建厅申请"
+          type: "建厅申请",
+          operating: [
+             {
+              name: '修改',
+              isShow: false,
+              operat: 'toEdit'
+            },
+             {
+              name: '删除',
+              isShow: false,
+              operat: 'toDelete'
+            }
+          ]
         }
       ],
       currentPage: 1
@@ -168,20 +199,28 @@ export default {
     search(form) {
       console.log("search", form);
     },
-    edit(row) {
+    toView(row) {
       const self = this;
-      console.log(row);
+      console.log('查看',row);
       this.$router.push({
         name:'pendingReviewEdit',
         query: {id: row.id}
       })
     },
-    moveRow(row) {
-      const self = this;
-      this.$router.push({
-        name:'pendingReviewTransfer'
-      })
+    operat (el, row) {
+      if (el === 'toEdit') {
+        console.log('编辑', row);
+      } else if (el === 'toDelete'){
+        console.log('删除', row);
+      } 
     },
+
+    // toEdit(row) {
+    //   console.log('修改',row);
+    // },
+    // toDelete(row) {
+    //   console.log('删除', row);
+    // },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -209,6 +248,7 @@ export default {
   .table-box {
     margin-top: 20px;
   }
+
   .el-pagination.is-background{
     margin-top: 40px;
     text-align: right;

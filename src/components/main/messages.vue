@@ -2,7 +2,7 @@
   <div class="container-message">
     <p class="title">
       <img :src="icon" alt class="title-icon" /> <span>站内消息</span> 
-      <el-link type="primary" :underline="false">主要链接</el-link>
+      <el-link type="primary" :underline="false" @click="toLink">更多消息</el-link>
     </p>
     <ul class="msg-list">
       <li v-for="item in list" :key="item.id">
@@ -52,6 +52,16 @@ export default {
     this.$nextTick(() => {
       this.list = LIST.data
     })
+  },
+  methods: {
+    toLink () {
+      this.$router.push({
+        name: 'messages',
+        params: {
+          type: 'sent'
+        }
+      })
+    }
   }
 };
 </script>
