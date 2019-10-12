@@ -1,53 +1,92 @@
 <template>
-  <div class="vlt-card">
-    <search-bar class="search-bar-demo"
-      @search="search"
-      :options="searchOptions"
-      :total="999"
-      labelWidth="80px"
-    >
-      <control-bar slot="extend-bar" @select="select" :options="controlOptions"></control-bar>
-    </search-bar>
-    <el-table :data="tableData" border>
-        <el-table-column label="序号"  type="index" width="80px"></el-table-column>
-        <el-table-column label="渠道编号" prop="gameId"></el-table-column>
-        <el-table-column label="渠道类型" prop="gameName"></el-table-column>
-        <el-table-column label="所属机构" prop="gameCode"></el-table-column>
-        <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
-        <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
-        <el-table-column label="创建时间" prop="status"></el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+  <div class="vlt-card develop-plan">
+    <el-tabs tab-position="left" style="height: auto;">
+      <el-tab-pane label="计划列表">
+        <search-bar class="search-bar-demo"
+          @search="search"
+          :options="searchOptions"
+          :total="999"
+          labelWidth="80px"
+        >
+          <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
+        </search-bar>
+        <el-table :data="tableData" border>
+          <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+          <el-table-column label="渠道编号" prop="gameId"></el-table-column>
+          <el-table-column label="渠道类型" prop="gameName"></el-table-column>
+          <el-table-column label="所属机构" prop="gameCode"></el-table-column>
+          <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
+          <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
+          <el-table-column label="创建时间" prop="status"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+              <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane label="计划汇总（省）">
+        <search-bar class="search-bar-demo"
+          @search="search"
+          :options="searchOptions"
+          :total="999"
+          labelWidth="80px"
+        >
+          <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
+        </search-bar>
+        <el-table :data="tableData" border>
+          <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+          <el-table-column label="渠道编号" prop="gameId"></el-table-column>
+          <el-table-column label="渠道类型" prop="gameName"></el-table-column>
+          <el-table-column label="所属机构" prop="gameCode"></el-table-column>
+          <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
+          <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
+          <el-table-column label="创建时间" prop="status"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+              <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane label="计划汇总（地市）">
+        <search-bar class="search-bar-demo"
+          @search="search"
+          :options="searchOptions"
+          :total="999"
+          labelWidth="80px"
+        >
+          <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
+        </search-bar>
+        <el-table :data="tableData" border>
+          <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+          <el-table-column label="渠道编号" prop="gameId"></el-table-column>
+          <el-table-column label="渠道类型" prop="gameName"></el-table-column>
+          <el-table-column label="所属机构" prop="gameCode"></el-table-column>
+          <el-table-column label="渠道等级" prop="cycleType"></el-table-column>
+          <el-table-column label="负责人" prop="gameTypeName"></el-table-column>
+          <el-table-column label="创建时间" prop="status"></el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+              <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
-<script>
+<script type="text/javascript">
+
 export default {
-  name: 'channelList',
+  name: "",
   data() {
     return {
       searchOptions: [
-        {type: 'input', prop: 'inputName', value: '', title: '输入框', placeholder: '请输入'},
-        {
-          type: 'select', prop: 'selectName', value: '', title: '选择框', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择', placeholder: '请选择'},
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', placeholder: ['开始日期', '结束日期']},
-        {type: 'datetime', prop: 'date3', value: '', title: '日期时间', placeholder: '请选择'},
         {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', placeholder: ['开始时间', '结束时间']},
         {
           type: 'cascader', prop: 'cascader1', value: '', title: '级联选择', placeholder: '请选择',
@@ -248,13 +287,21 @@ export default {
           }]
         },
       ],
+      options: [
+        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+        {name: '批量删除', type: '', icon: 'delete'},
+        {name: '刷新', type: '', icon: 'refresh-right'},
+        {name: '打印', type: 'primary', icon: 'printer'},
+        {name: '导出', type: 'danger', icon: 'download'},   
+        {name: '导出', type: 'success', icon: 'upload'},
+        {name: '导出', type: 'warning', icon: 'download'},
+      ],
       tableData: [
         {gameId:'12',gameName: 'a',cycleType: 0,gameTypeName:'奖组型',status:'2019-09-12 09：00：00'}
       ]
     }
   },
-  created() {
-  
+  components: {
   },
   methods: {
     search(val) {
@@ -262,17 +309,10 @@ export default {
     },
     select(val) {
       console.log(val)
-    },
-    add() {
-      console.log('a')
     }
-  },
-  components: {
-
   },
 }
 </script>
-
 
 <style lang="less" scoped>
 @import './less/index.less';

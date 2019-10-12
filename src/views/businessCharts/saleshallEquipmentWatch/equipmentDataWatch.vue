@@ -1,12 +1,12 @@
 <template>
   <div class="vlt-card">
-     <section class="comp-item">
+   <section class="comp-item">
       <search-bar
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
         :total="999"
-        labelWidth="40px"
+        labelWidth="80px"
       >
       <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
@@ -24,15 +24,17 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="终端"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
+        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
         <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="address" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="address" label="销售额"></el-table-column>
-        <el-table-column align="center" prop="address" label="中奖金额"></el-table-column>
-        <el-table-column align="center" prop="address" label="小奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
+        <el-table-column align="center" prop="date" label="城市"></el-table-column>
+        <el-table-column align="center"  label="柜员机">
+             <el-table-column prop="address" align="center" label="柜员机数量" ></el-table-column>
+            <el-table-column prop="address" align="center" label="柜员机在线数量"></el-table-column>
+        </el-table-column>
+        <el-table-column align="center"  label="终端机">
+             <el-table-column prop="address" align="center" label="终端机数量" ></el-table-column>
+            <el-table-column prop="address" align="center" label="终端机在线数量"></el-table-column>
+        </el-table-column>       
       </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
@@ -62,10 +64,10 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "gameDeal",
+  name: "saleshallEquipmentWatch",
   data() {
     return {
-       searchOptions: [
+      searchOptions: [
         {
           type: "select",
           prop: "province",
@@ -74,8 +76,8 @@ export default {
           placeholder: "请选择省",
           options: [
             {
-              areaName: "选项1",
-              provinceCode: 1
+              label: "选项1",
+              value: 1
             },
             {
               label: "选项2",
@@ -85,7 +87,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "selectNam1",
           value: "",
           title: "",
           placeholder: "请选择市",
@@ -102,7 +104,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "selectName2",
           value: "",
           title: "",
           placeholder: "请选择销售厅",
@@ -116,42 +118,9 @@ export default {
               value: 2
             }
           ]
-        },
-        {
-          type: "select",
-          prop: "selectName",
-          value: "",
-          title: "",
-          placeholder: "请选择终端",
-          options: [
-            {
-              label: "选项1",
-              value: 1
-            },
-            {
-              label: "选项2",
-              value: 2
-            }
-          ]
-        },
-        {
-          type: "select",
-          prop: "selectName",
-          value: "",
-          title: "游戏",
-          placeholder: "请选择游戏",
-          options: [
-            {
-              label: "选项1",
-              value: 1
-            },
-            {
-              label: "选项2",
-              value: 2
-            }
-          ]
         }
-      ],  controlOptions: [
+      ],
+      controlOptions: [
        
         {
           type: "export",
@@ -191,30 +160,57 @@ export default {
         {
           date: "2016-05-02",
           name: "王小虎",
-          address: "  1518 弄"
+          address: "100"
         },
         {
           date: "2016-05-04",
           name: "王小虎",
-          address: "  1517 弄"
+          address: "100"
         },
         {
           date: "2016-05-01",
           name: "王小虎",
-          address: "  1519 弄"
+          address: "100"
         },
         {
           date: "2016-05-03",
           name: "王小虎",
-          address: "  1516 弄"
-        }
+          address: "100"
+        },,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        },,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        },
       ]
     };
   },
   methods: {
-     search(form) {
-      console.log('search', form)
-    },
     back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
@@ -224,11 +220,11 @@ export default {
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;
-    //   this.getList();
+      // this.getList();
     },
     handleCurrentChange(val) {
       this.listQuery.page = val;
-    //   this.getList();
+      // this.getList();
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -302,8 +298,12 @@ export default {
           "县：" +
           this.countryCode
       );
-    }
+    },
+     search(form) {
+      console.log('search', form)
+    },
   },
+  
   mounted() {
     this.showcity();
   }
