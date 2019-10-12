@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card el_box">
-    <Search-Bar :options="options" :total="999"></Search-Bar>
+    <search-bar :options="options" :total="999"></search-bar>
 
     <div class="el_table">
       <el-table :data="tableData" border>
@@ -34,8 +34,6 @@
 </template>
 
 <script>
-import SearchBar from "@/components/common/searchBar";
-import Tag from "@/components/common/tag";
 import { mapState } from "vuex";
 export default {
   name: "name",
@@ -153,7 +151,6 @@ export default {
   },
   created() {},
   mounted() {},
-  components: { SearchBar, Tag },
   methods: {
     changeSize() {},
     changeCurrent() {},

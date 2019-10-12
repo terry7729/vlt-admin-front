@@ -1,17 +1,12 @@
 <template>
   <div class="vlt-card account_detail">
     <div class="account_detail_box">
-      <panelEdit />
-
-      <div class="account_detail_data">
-        <h3>账户资料</h3>
-        <div class="account_detail_vessel">
-          <div class="account_detail_classify" v-for="item in data" :key="item.id">
-            <span>{{item.name}}:</span>
-            <span></span>
-          </div>
-        </div>
-      </div>
+      <panel-Edit title="账户资料" :show="true">
+        <base-Info :infoList="accountData" slot="info-content"></base-Info>
+      </panel-Edit>
+      <panel title="资金账户" :show="true">
+        <base-Info :infoList="moneyAccount"></base-Info>
+      </panel>
       <div class="last_bottom_list">
         <h3>拥有渠道列表</h3>
         <el-table :data="tableData" border>
@@ -40,17 +35,25 @@ export default {
   data() {
     return {
       enter: 0,
-      data: [
-        { id: 1, name: "账户ID" },
-        { id: 2, name: "账户名称" },
-        { id: 3, name: "负责人" },
-        { id: 4, name: "手机号码" },
-        { id: 5, name: "账户状态" },
-        { id: 6, name: "账户类型" },
-        { id: 7, name: "所属区域" },
-        { id: 8, name: "详细地址" },
-        { id: 9, name: "创建时间" },
-        { id: 10, name: "更新时间" }
+      accountData: [
+        { title: "账户ID", value: "", prop: "accountID" },
+        { title: "账户名称", value: "", prop: "accountName" },
+        { title: "负责人", value: "", prop: "principal" },
+        { title: "手机号码", value: "", prop: "telephoneNum" },
+        { title: "账户状态", value: "", prop: "accountStatus" },
+        { title: "账户类型", value: "", prop: "accountType" },
+        { title: "所属区域", value: "", prop: "area" },
+        { title: "详细地址", value: "", prop: "detailAdress" },
+        { title: "创建时间", value: "", prop: "createDate" },
+        { title: "更新时间", value: "", prop: "pullDate" }
+      ],
+      moneyAccount: [
+        { title: "资金账户ID", value: "", prop: "moneyAccountID" },
+        { title: "账户总额", value: "", prop: "accountTotal" },
+        { title: "总预交款", value: "", prop: "totalDeposit" },
+        { title: "授信总额度", value: "", prop: "totalMoney" },
+        { title: "创建时间", value: "", prop: "createDate" },
+        { title: "更新时间", value: "", prop: "pullDate" }
       ],
       tableData: [
         {
