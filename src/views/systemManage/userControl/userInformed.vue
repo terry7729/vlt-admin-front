@@ -79,6 +79,7 @@ export default {
     };
   },
   methods: {
+    //表单提交事件
     save(val) {
       console.log(val);
       console.log("submit!");

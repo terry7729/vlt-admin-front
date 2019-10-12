@@ -23,7 +23,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
 
@@ -37,6 +37,12 @@
       <control-bar :options="controlOptions"></control-bar>
     </section>
 
+    <section class="comp-item">
+      <h4 class="comp-title">无伸缩框</h4>
+      <cell title="彩票信息">
+        <base-info :infoList="infoList"></base-info>
+      </cell>
+    </section>
 
     <section class="comp-item">
       <h4 class="comp-title">展开框</h4>
@@ -51,8 +57,14 @@
         <base-info :infoList="infoList" slot="info-content"></base-info>
       </panel-edit>
     </section>
+
     <section class="comp-item">
-      <h4 class="comp-title">单行表单公共样式</h4>
+      <h4 class="comp-title">表格分页</h4>
+      <table-paging></table-paging>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">单列表单公共样式</h4>
       <div class="vlt-edit-single">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
@@ -61,7 +73,6 @@
             label-width="90px"
             :model="form"
             ref="form"
-            class="device-add"
           >
             <el-form-item label="单注金额">
               <el-input v-model="form.singleAmount"></el-input>
@@ -111,7 +122,7 @@
       </div>
     </section>
     <section class="comp-item">
-      <h4 class="comp-title">双行表单公共样式</h4>
+      <h4 class="comp-title">双列表单公共样式</h4>
       <div class="vlt-edit-double">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
@@ -120,7 +131,6 @@
             label-width="90px"
             :model="form"
             ref="form"
-            class="device-add"
           >
             <el-form-item label="单注金额">
               <el-input v-model="form.singleAmount"></el-input>
@@ -176,7 +186,7 @@
       </div>
     </section>
     <section class="comp-item">
-      <h4 class="comp-title">多行表单公共样式</h4>
+      <h4 class="comp-title">多列表单公共样式</h4>
       <div class="vlt-edit-over">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
@@ -185,7 +195,6 @@
             label-width="90px"
             :model="form"
             ref="form"
-            class="device-add"
           >
             <el-form-item label="单注金额">
               <el-input v-model="form.singleAmount"></el-input>
@@ -484,11 +493,13 @@ export default {
         textarea: '',
       },
       controlOptions: [
-        {type: 'delete', change() {alert('clicked')}},
-        {type: 'export', change() {alert('cliked')}},
-        {type: 'print', change() {alert('cliked')}},
-        {type: 'refresh', change() {alert('cliked')}},
-        {type: 'add', change() {alert('cliked')}},
+        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+        {name: '批量删除', type: '', icon: 'delete'},
+        {name: '刷新', type: '', icon: 'refresh-right'},
+        {name: '打印', type: 'primary', icon: 'printer'},
+        {name: '导出', type: 'danger', icon: 'download'},   
+        {name: '导出', type: 'success', icon: 'upload'},
+        {name: '导出', type: 'warning', icon: 'download'},
       ],
     }
   },
@@ -502,6 +513,9 @@ export default {
     
   },
   methods: {
+    selectBtn(val) {
+      console.log(val)
+    },
     search(form) {
       console.log('search', form)
     },

@@ -53,6 +53,9 @@ const maintenance = () => import('@/views/businessManage/channelTerminalManageme
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
 const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
 
 export default [
   // {
@@ -287,6 +290,30 @@ export default [
         component: configuration
       }
     ]
+  },
+  {
+    path: 'businessManage/channelDeal',
+    name: 'channelDeal',
+    meta: {
+      title: '业务办理',
+    },
+    component: channelDeal
+  },
+  {
+    path: 'businessManage/developmentPlan',
+    name: 'developmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: developmentPlan
+  },
+  {
+    path: 'businessManage/createDevelopmentPlan',
+    name: 'createDevelopmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: createDevelopmentPlan
   }
 
 ]
