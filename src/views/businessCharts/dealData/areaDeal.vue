@@ -8,7 +8,7 @@
       labelWidth="80px"
     ></search-bar>
     <span>
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
     </span>
     <div class="">
       <el-table
@@ -61,7 +61,7 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "Page401",
+  name: "areaDeal",
   data() {
     return {
       searchOptions: [

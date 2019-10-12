@@ -9,7 +9,7 @@
     ></search-bar>
     
     <span>
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
     </span>
     <div class="tab-container">
       <el-table
@@ -27,13 +27,14 @@
         <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
         <el-table-column align="center" prop="name" label="省份"></el-table-column>
         <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="address" label="开卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="退卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="缴款"></el-table-column>
-        <el-table-column align="center" prop="address" label="充值"></el-table-column>
-        <el-table-column align="center" prop="address" label="提现"></el-table-column>
-        <el-table-column align="center" prop="address" label="账户余额"></el-table-column>
-        
+        <el-table-column align="center"  label="柜员机">
+             <el-table-column prop="address" align="center" label="柜员机数量" ></el-table-column>
+            <el-table-column prop="address" align="center" label="柜员机在线数量"></el-table-column>
+        </el-table-column>
+        <el-table-column align="center"  label="终端机">
+             <el-table-column prop="address" align="center" label="终端机数量" ></el-table-column>
+            <el-table-column prop="address" align="center" label="终端机在线数量"></el-table-column>
+        </el-table-column>       
       </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
@@ -63,10 +64,10 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "Page401",
+  name: "saleshallEquipmentWatch",
   data() {
     return {
-       searchOptions: [
+      searchOptions: [
         {
           type: "select",
           prop: "province",
@@ -158,7 +159,37 @@ export default {
           date: "2016-05-03",
           name: "王小虎",
           address: "100"
-        }
+        },,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        },,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        },
       ]
     };
   },
@@ -255,6 +286,7 @@ export default {
       console.log('search', form)
     },
   },
+  
   mounted() {
     this.showcity();
   }
@@ -262,5 +294,4 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-
 </style>
