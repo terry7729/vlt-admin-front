@@ -8,6 +8,8 @@ const dataDictionary = () => import('@/views/systemManage/dataDictionary/index')
 
 //业务流程
 const formManage = () => import('@/views/systemManage/businessProcess/formManage')
+const formCompile = () => import('@/views/systemManage/businessProcess/formCompile')
+
 //流程设置
 const processSet = () => import('@/views/systemManage/businessProcess/processSet')
 export default [
@@ -53,6 +55,14 @@ export default [
     component:formManage
   },
   {
+    path :'systemManage/formManage/formCompile',
+    name:'formCompile',
+    meta:{
+      title:'编辑',
+    },
+    component:formCompile
+  },
+  {
     path :'systemManage/processSet',
     name:'processSet',
     meta:{
@@ -60,4 +70,5 @@ export default [
     },
     component:processSet
   },
+  
 ]

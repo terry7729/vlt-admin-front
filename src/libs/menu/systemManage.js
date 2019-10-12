@@ -52,7 +52,7 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "表单管理",
-          url: 'formManager'
+          url: 'formManage'
         },
         {
           childResources: [],

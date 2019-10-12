@@ -23,7 +23,7 @@ import Tabel from '../../../components/common/tabel'
 export default {
   name: "name",
   data() {
-    return {
+    return {   
       title:{
         title:'用户角色搜索“中心管理部门”',
         num:10
