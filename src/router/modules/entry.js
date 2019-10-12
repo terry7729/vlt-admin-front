@@ -4,19 +4,16 @@ import businessOperation from './businessOperation'
 import businessCharts from './businessCharts'
 import systemManage from './systemManage'
 
-import organization from './organization' //组织架构
-import userList from './userList' //用户管理列表
-import roleList from './roleList' //角色管理列表
-import menuManagement from './menuManagement'
+// import organization from './organization' //组织架构
+// import userList from './userList' //用户管理列表
+// import roleList from './roleList' //角色管理列表
+// import menuManagement from './menuManagement'
 
 export default [
   ...businessManage,
   ...businessOperation,
   ...businessCharts,
   ...systemManage,
-  ...organization,
-  ...userList,
-  ...roleList,
-  ...menuManagement
+  
 ];
 

@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <span class="box-spacing">
-      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click="excleExporrt()">导出</el-button>
+      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click="excleExporrt()">导出</el-button>
     </span>
     <div class="tab-container">
       <el-table
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-  name: "name",
+  name: "centerDeal",
   data() {
     return {
       exportLoading:false,

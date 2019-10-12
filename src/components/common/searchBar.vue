@@ -60,7 +60,7 @@
       <el-form-item>
         <el-button size="small" type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
         <el-button size="small" @click="reset">重置</el-button>
-        <el-button size="small" type="text" @click="onDrop">
+        <el-button size="small" type="text" @click="onDrop" v-if="options.length > 2">
           {{collapse ? '展开' : '收起'}}
           <i :class="[collapse ? 'el-icon-arrow-down' : 'el-icon-arrow-up']"></i>
         </el-button>

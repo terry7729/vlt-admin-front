@@ -35,6 +35,7 @@ const check = () => import('@/views/businessManage/gameStoreManage/check')
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
+const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
 
 export default [
   // {
@@ -173,5 +174,13 @@ export default [
       title: '渠道业务管理',
     },
     component: channelList
+  },
+  {
+    path: 'businessManage/channelAdd',
+    name: 'channelAdd',
+    meta: {
+      title: '新建渠道',
+    },
+    component: channelAdd
   }
 ]
