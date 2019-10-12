@@ -33,6 +33,18 @@
     </section>
 
 
+    <section class="comp-item">
+      <h4 class="comp-title">展开框</h4>
+      <panel title="彩票信息" :show="true">
+        <base-info :infoList="infoList"></base-info>
+      </panel>
+    </section>
+    <section class="comp-item">
+      <h4 class="comp-title">展开框-编辑</h4>
+      <panel-edit title="彩票信息" :show="true">
+        <base-info :infoList="infoList" slot="info-content"></base-info>
+      </panel-edit>
+    </section>
   </div>
 </template>
 
@@ -43,6 +55,7 @@ export default {
     return {
       // 搜索组件配置
       searchOptions: [
+        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', placeholder: ['开始日期', '结束日期']},
         {type: 'input', prop: 'inputName', value: '', title: '输入框', placeholder: '请输入'},
         {
           type: 'select', prop: 'selectName', value: '', title: '选择框', placeholder: '请选择',
@@ -259,6 +272,13 @@ export default {
             }]
           }]
         },
+      ],
+      infoList: [
+        {title: '游戏编码', value: '', prop: 'gameCode'},
+        {title: '周期类型', value: '', prop: 'cycleType'},
+        {title: '游戏状态', value: '', prop: 'gameStatus'},
+        {title: '游戏名称', value: '', prop: 'gameName'},
+        {title: '游戏类型', value: '', prop: 'officialEndSale'}
       ],
     }
   },

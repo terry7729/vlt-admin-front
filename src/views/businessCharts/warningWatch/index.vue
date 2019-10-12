@@ -1,0 +1,186 @@
+<template>
+  <div class="vlt-card">
+     <section class="comp-item">
+      <!-- <h4 class="comp-title">搜索框</h4> -->
+      <search-bar class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="60px"
+      >
+      </search-bar>
+    </section>
+    <span>
+      <el-button type="primary" style="margin:10px 20px 5px;float:right" @click>导出</el-button>
+    </span>
+    <div class="tab-container">
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%"
+        :header-cell-style="{background:'rgba(240,240,240,.5)'}"
+        :cell-style="{align:'center'}"
+      >
+        <el-table-column align="center" label="序号" width="65">
+          <template slot-scope="scope">
+            <div style="text-align:center;">{{scope.$index+1}}</div>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="date" label="告警源"></el-table-column>
+        <el-table-column align="center" prop="date" label="描述"></el-table-column>
+        <el-table-column align="center" prop="name" label="警报等级"></el-table-column>
+        <el-table-column align="center" prop="address" label="告警次数"></el-table-column>
+        <el-table-column align="center" prop="address" label="最新时间"></el-table-column>
+        <el-table-column align="center" prop="address" label="告警历时"></el-table-column>
+        <el-table-column align="center" prop="address" label="通知状态"></el-table-column>
+        <el-table-column align="center" prop="address" label="处理状态"></el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button type="primary" @click size="mini">详情</el-button>
+            <el-button type="primary" @click size="mini">编辑</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!-- :page-size="[10,20,30, 50]" -->
+      <div class="pagination-container" style="text-align:right;margin-top:30px">
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="listQuery.page"
+          :page-sizes="[10,20,30, 50]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        ></el-pagination>
+        <!-- <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage3"
+      :page-size="100"
+      layout="prev, pager, next, jumper"
+      :total="1000">
+        </el-pagination>-->
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Page401",
+  data() {
+    return {
+      searchOptions: [
+        {
+          type: "datetime-range",
+          prop: "date4",
+          value: "",
+          title: "日期时间",
+          placeholder: ["开始时间", "结束时间"]
+        },
+        {
+          type: "select",
+          prop: "selectName",
+          value: "",
+          title: "告警类别",
+          placeholder: "请选择",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        },
+        {
+          type: "select",
+          prop: "selectName1",
+          value: "",
+          title: "时间范围",
+          placeholder: "请选择",
+          options: [
+            {
+              label: "选项1",
+              value: 1
+            },
+            {
+              label: "选项2",
+              value: 2
+            }
+          ]
+        }
+      ],
+      value: "",
+      //记录省市县
+      provinceList: [],
+      dataprovinceList: [],
+      provinceCode: "",
+
+      poundage: [],
+      poundagefee: [],
+      cityList: [],
+      datacityList: [],
+      cityCode: "",
+
+      countryList: [],
+      datacountryList: [],
+      countryCode: "",
+      total: null,
+      listQuery: {
+        page: 1,
+        limit: 10
+      },
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "  1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "  1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "  1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "  1516 弄"
+        }
+      ]
+    };
+  },
+  methods: {
+     search(form) {
+      console.log('search', form)
+    },
+    back() {
+      if (this.$route.query.noGoBack) {
+        this.$router.push({ path: "/dashboard" });
+      } else {
+        this.$router.go(-1);
+      }
+    },
+    handleSizeChange(val) {
+      this.listQuery.limit = val;
+      //   this.getList();
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val;
+      //   this.getList();
+    }
+  },
+  mounted() {}
+};
+</script>
+
+<style  lang="less" scoped>
+</style>
