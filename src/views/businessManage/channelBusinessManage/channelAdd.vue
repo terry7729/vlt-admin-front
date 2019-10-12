@@ -12,7 +12,6 @@
           label-width="90px"
           :model="form"
           ref="form"
-          class="device-add"
         >
           <el-form-item label="单注金额">
             <el-input v-model="form.singleAmount"></el-input>
@@ -62,7 +61,6 @@
           label-width="90px"
           :model="form"
           ref="form"
-          class="device-add"
         >
           <el-form-item label="单注金额">
             <el-input v-model="form.singleAmount"></el-input>
