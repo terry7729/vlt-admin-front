@@ -2,6 +2,7 @@
   <!--组件展示demo-->
   <div class="component-container">
     <h1 class="headling">组件展示</h1>
+
     <section class="comp-item">
       <h4 class="comp-title">搜索框</h4>
       <search-bar class="search-bar-demo"
@@ -12,6 +13,25 @@
       >
       </search-bar>
     </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">搜索框-拓展</h4>
+      <search-bar class="search-bar-demo"
+        @search="search"
+        :options="searchOptions"
+        :total="999"
+        labelWidth="80px"
+      >
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      </search-bar>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">页面操作</h4>
+      <control-bar :options="controlOptions"></control-bar>
+    </section>
+
+
     <section class="comp-item">
       <h4 class="comp-title">展开框</h4>
       <panel title="彩票信息" :show="true">
@@ -220,6 +240,7 @@
 export default {
   name: 'componentDemo',
   data() {
+    const self = this;
     return {
       // 搜索组件配置
       searchOptions: [
@@ -454,7 +475,14 @@ export default {
         bet: '',
         logOff: '',
         textarea: '',
-      }
+      },
+      controlOptions: [
+        {type: 'delete', change() {alert('clicked')}},
+        {type: 'export', change() {alert('cliked')}},
+        {type: 'print', change() {alert('cliked')}},
+        {type: 'refresh', change() {alert('cliked')}},
+        {type: 'add', change() {alert('cliked')}},
+      ],
     }
   },
   computed: {

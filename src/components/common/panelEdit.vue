@@ -1,11 +1,11 @@
 <template>
   <!-- 带编辑可收缩面板 -->
-  <div class="collapse">
-    <div class="collapse-hd">
+  <div class="collapse-panel">
+    <div class="collapse-panel-hd">
       <i
         @click="toggle"
         :class="[showInfo?'el-icon-caret-bottom':'el-icon-caret-right']"
-        class="collapse-caret"
+        class="collapse-panel-caret"
       ></i>
       <h2 @click="toggle" class="title">{{title}}</h2>
       <span class="tips">{{tips}}</span>
@@ -16,7 +16,7 @@
         <i :class="[showInfo?'el-icon-arrow-down':'el-icon-arrow-up']"></i>
       </span>
     </div>
-    <div class="collapse-bd">
+    <div class="collapse-panel-bd">
       <el-collapse-transition>
         <div v-show="showInfo" class="info-content">
           <slot name="info-content">
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.collapse {
+.collapse-panel {
   border: 1px solid #e4e4e4;
   border-radius: 6px;
   &-caret {
