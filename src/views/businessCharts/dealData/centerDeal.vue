@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="vlt-card">
     <span class="box-spacing">
       <el-button type="primary" style="margin:10px 20px 5px;float:right" @click="excleExporrt()">导出</el-button>
     </span>
@@ -145,9 +145,5 @@ export default {
 
 
 <style lang="less">
-.tab-container {
- padding: 20px;
-  background-color: #fff;
-  margin-top: 10px;
-}
+
 </style>
