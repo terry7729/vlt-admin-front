@@ -4,7 +4,7 @@
       <div>
         <el-row type="flex" :gutter="50">
           <el-col :span="24">
-            <div class="organi-tree">
+            <div class="organi-tree"><!--树形结构 !-->
               <el-tree
                 :data="data"
                 show-checkbox
@@ -16,7 +16,7 @@
             </div>
           </el-col>
           <div class="organi-select">
-            <el-dropdown placement="bottom-start" @command="handele" >
+            <el-dropdown placement="bottom-start" @command="handele" > <!--下拉选择按钮 !-->
               <el-button size="mini">
                 选择操作
                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -38,13 +38,17 @@
             <section class="comp-item">
               <panel title="彩票信息" :show="true">
                 <base-info :infoList="infoList"></base-info>
+                <div style=" text-align: center;padding:10px;">
+                  <el-button size="small" type="primary" @click="jumptocompile">更改</el-button>
+                </div>
+               
               </panel>
             </section>
           </div>
           <div class="departmentinfo" style="margin:40px 0 40px 0; ">
             <section class="comp-item">
               <panel title="部门信息" :show="true">
-                
+                 <tips-line>共搜索到<span style="color:#57a3f3;padding:0 4px">{{num}}</span>条数据</tips-line> <!-- 提示信息!-->
                 <el-table
                   ref="singleTable"
                   :data="tableData"
@@ -65,10 +69,10 @@
                   </el-table-column>
                   <el-table-column property="address" label="操作"></el-table-column>
                 </el-table>
-                <div style="padding:10px 0;">
-                        <pagination></pagination> 
+                <div style="padding:10px 0 10px 200px;"> <!-- 分页!-->
+                   <tablePaging></tablePaging>
                 </div>
-                
+               
               </panel>
             </section>
           </div>
@@ -83,6 +87,7 @@ export default {
   name: "name",
   data() {
     return {
+      num:'50',
       onoff: true,
       tableData: [
         {
@@ -114,10 +119,17 @@ export default {
 
       infoList: [
         { title: "父机构", value: "", prop: "gameCode" },
-        { title: "周期类型", value: "", prop: "cycleType" },
-        { title: "游戏状态", value: "", prop: "gameStatus" },
-        { title: "游戏名称", value: "", prop: "gameName" },
-        { title: "游戏类型", value: "", prop: "officialEndSale" }
+        { title: "区域", value: "", prop: "cycleType" },
+        { title: "父机构编码", value: "", prop: "gameStatus" },
+        { title: "区域编码", value: "", prop: "gameName" },
+        { title: "机构名称", value: "", prop: "officialEndSale" },
+        { title: "机构状态", value: "", prop: "gameName" },
+        { title: "机构编码", value: "", prop: "gameName" },
+        { title: "备注", value: "", prop: "gameName" },
+        { title: "创建人", value: "", prop: "gameName" },
+        { title: "创建时间", value: "", prop: "gameName" },
+        { title: "修改人", value: "", prop: "gameName" },
+        { title: "创建时间", value: "", prop: "gameName" },
       ],
       options: [
         {
@@ -295,6 +307,9 @@ export default {
       },
       handele(val){
          this.$message('click on item ' + val);
+      },
+      jumptocompile(){
+        this.$router.push('organizationChild/organicompile')
       }
       
   }
@@ -312,5 +327,6 @@ export default {
   }
   .el-icon-arrow-down {
     font-size: 12px;
+  
   }
 </style>
