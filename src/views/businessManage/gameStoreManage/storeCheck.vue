@@ -5,7 +5,7 @@
                 <panel title="游戏信息" :show="true">
                     <base-info :infoList="gameInfoList"></base-info>
                 </panel>
-                <panel title="游戏信息" :show="true">
+                <panel title="开发商信息" :show="true">
                     <base-info :infoList="developerInfoList"></base-info>
                 </panel>
             </el-tab-pane>
@@ -56,7 +56,7 @@
 
 <script>
 export default {
-    name:"check",
+    name:"storeCheck",
     data() {
         return {
             activeName: "first",
@@ -156,7 +156,7 @@ export default {
 <style lang="less" scoped>
 .store-check{
     background: white;
-    margin:30px 20px;
+    margin:20px 20px;
     border-radius: 8px;
     
 }
