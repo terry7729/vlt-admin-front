@@ -10,27 +10,27 @@
           label-width="90px"
           :rules="rule"
         >
-          <el-form-item label="父机构" prop="name" required>
+          <el-form-item label="父机构" prop="organiunit" required>
             <el-input v-model="organiform.organiunit"></el-input>
           </el-form-item>
 
-          <el-form-item label="父机构编码" prop="region" required>
+          <el-form-item label="父机构编码" prop="coding" required>
             <el-input v-model="organiform.coding"></el-input>
           </el-form-item>
 
-          <el-form-item label="机构名称" prop="name" required>
+          <el-form-item label="机构名称" prop="organiname" required>
             <el-input v-model="organiform.organiname"></el-input>
           </el-form-item>
 
-          <el-form-item label="机构编码" prop="name" required>
+          <el-form-item label="机构编码" prop="organicode" required>
             <el-input v-model="organiform.organicode"></el-input>
           </el-form-item>
 
-          <el-form-item label="区域" prop="name" required>
+          <el-form-item label="区域" prop="organiarea" required>
             <el-input v-model="organiform.organiarea" prop="name"></el-input>
           </el-form-item>
 
-          <el-form-item label="区域编码" prop="name" required>
+          <el-form-item label="区域编码" prop="organiareacode" required>
             <el-input v-model="organiform.organiareacode" ></el-input>
           </el-form-item>
 
@@ -46,7 +46,7 @@
             ></el-input>
           </el-form-item>
           <el-row class="el-form-item vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="addagency(organiform)">提交并保存</el-button>
+            <el-button type="primary" v-prevent="1000" size="medium" @click="addagency([organiform,'form'])">提交并保存</el-button>
             <el-button size="medium" @click="resetForm">取消</el-button>
           </el-row>
         </el-form>
@@ -343,28 +343,23 @@ export default {
         }
       ],
       rule: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 10, message: "长度在 3 到10个字符", trigger: "blur" }
+        organiunit: [
+          { required: true, message: "请输入活动名称" },
+         
         ],
-        region: [
-          { required: true, validator:check.checkInstStr }
+        coding: [
+          { required: true, message: "请输入活动名称" },
         ],
         organiname: [
           {required: true, message: "请输入活动名称",}
         ],
-        type: [
-          {
-            type: "array",
-            required: true,
-            message: "请至少选择一个活动性质",
-            trigger: "change"
-          }
+        organicode: [
+           { required: true, validator:check.checkInstStr }
         ],
-        resource: [
-          { required: true, message: "请选择活动资源", trigger: "change" }
+        organiarea: [
+           {required: true, message: "区域不能为空",}
         ],
-        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
+        organiareacode: [{ required: true, message: "请填写活动形式" }]
       }
     };
   },
@@ -372,7 +367,7 @@ export default {
   methods: {
     addagency(val) {
       console.log(val);
-        this.$refs[val].validate((valid) => {
+        this.$refs[val[1]].validate((valid) => {
           if (valid) {
             alert('submit!');
           } else {
@@ -382,8 +377,8 @@ export default {
         });
     },
 
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetForm() {
+        this.$router.go(-1);
       }
   }
 };
