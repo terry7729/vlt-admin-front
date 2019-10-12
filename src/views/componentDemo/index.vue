@@ -52,7 +52,7 @@
       </panel-edit>
     </section>
     <section class="comp-item">
-      <h4 class="comp-title">单行表单公共样式</h4>
+      <h4 class="comp-title">单列表单公共样式</h4>
       <div class="vlt-edit-single">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
@@ -61,7 +61,6 @@
             label-width="90px"
             :model="form"
             ref="form"
-            class="device-add"
           >
             <el-form-item label="单注金额">
               <el-input v-model="form.singleAmount"></el-input>
@@ -111,7 +110,7 @@
       </div>
     </section>
     <section class="comp-item">
-      <h4 class="comp-title">双行表单公共样式</h4>
+      <h4 class="comp-title">双列表单公共样式</h4>
       <div class="vlt-edit-double">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
@@ -120,7 +119,6 @@
             label-width="90px"
             :model="form"
             ref="form"
-            class="device-add"
           >
             <el-form-item label="单注金额">
               <el-input v-model="form.singleAmount"></el-input>
@@ -176,7 +174,7 @@
       </div>
     </section>
     <section class="comp-item">
-      <h4 class="comp-title">多行表单公共样式</h4>
+      <h4 class="comp-title">多列表单公共样式</h4>
       <div class="vlt-edit-over">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
@@ -185,7 +183,6 @@
             label-width="90px"
             :model="form"
             ref="form"
-            class="device-add"
           >
             <el-form-item label="单注金额">
               <el-input v-model="form.singleAmount"></el-input>
