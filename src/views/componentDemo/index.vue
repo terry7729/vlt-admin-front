@@ -46,6 +46,12 @@
         <base-info :infoList="infoList" slot="info-content"></base-info>
       </panel-edit>
     </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">表格分页</h4>
+      <table-paging></table-paging>
+    </section>
+
     <section class="comp-item">
       <h4 class="comp-title">单行表单公共样式</h4>
       <div class="vlt-edit-single">

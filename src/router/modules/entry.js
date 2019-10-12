@@ -13,7 +13,6 @@ export default [
   ...businessManage,
   ...businessOperation,
   ...businessCharts,
-  ...systemManage,
-  
+  ...systemManage
 ];
 
