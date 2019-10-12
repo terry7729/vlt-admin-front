@@ -1,13 +1,10 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <search-Bar :options="option" :total="999"></search-Bar>
+      <search-Bar :options="option" :total="999">
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      </search-Bar>
     </div>
-    <div class="addlist">
-      <el-button type="primary" icon="el-icon-plus" @click="add()">新建用户</el-button>
-      <el-button>批量删除</el-button>
-    </div>
-
     <div class="from">
       <el-table
         ref="multipleTable"
@@ -65,6 +62,11 @@ export default {
   name: "name",
   data() {
     return {
+         controlOptions: [
+           {type: 'add', change() {alert('cliked')}},
+        {type: 'delete', change() {alert('clicked')}},
+
+      ],
       currentPage4: 4,
       tableData: [
         {
