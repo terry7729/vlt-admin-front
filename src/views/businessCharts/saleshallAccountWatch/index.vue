@@ -120,21 +120,7 @@ export default {
         }
       ],
       controlOptions: [
-       
-        {
-          type: "export",
-          change() {
-            alert("cliked");
-          }
-        },
-       
-        {
-          type: "refresh",
-          change() {
-            alert("cliked");
-          }
-        },
-        
+       { name: "导出", type: "primary", icon: "download" },
       ],
       //记录省市县
       provinceList: [],
