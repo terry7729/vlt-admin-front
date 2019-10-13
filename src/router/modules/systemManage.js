@@ -8,9 +8,16 @@ const dataDictionary = () => import('@/views/systemManage/dataDictionary/index')
 
 //业务流程
 const formManage = () => import('@/views/systemManage/businessProcess/formManage')
+const formCompile = () => import('@/views/systemManage/businessProcess/formCompile')
+
 //流程设置
 const processSet = () => import('@/views/systemManage/businessProcess/processSet')
-
+//流程设置详情
+const processSetDetail = () => import('@/views/systemManage/businessProcess/processSetDetail')
+//流程分类
+const processClassify = () => import('@/views/systemManage/businessProcess/processClassify')
+//流程分类修改
+const processClassifyModify = () => import('@/views/systemManage/businessProcess/processClassifyModify')
 
 //用户列表
 const userList = () => import('@/views/systemManage/userControl/userList')
@@ -20,8 +27,10 @@ const userDestails = () => import('@/views/systemManage/userControl/userDetails'
 const userInformed = () =>import('@/views/systemManage/userControl/userInformed')
 //角色管理
 const roleList = () => import('@/views/systemManage/roleManagement/roleList')
-//角色详情
+//角色编缉
 const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
+//角色详情
+const roleifometion = () =>import('@/views/systemManage/roleManagement/rolueifo')
 //组织架构
 const organizationChild = () => import('@/views/systemManage/organization/organization')
 //组织架构编缉页
@@ -74,12 +83,44 @@ export default [
     component:formManage
   },
   {
+    path :'systemManage/formManage/formCompile',
+    name:'formCompile',
+    meta:{
+      title:'编辑',
+    },
+    component:formCompile
+  },
+  {
     path :'systemManage/processSet',
     name:'processSet',
     meta:{
       title:'流程设置',
     },
     component:processSet
+  },
+  {
+    path :'systemManage/processSet/processSetDetail',
+    name:'processSetDetail',
+    meta:{
+      title:'流程设置编辑',
+    },
+    component:processSetDetail
+  },
+  {
+    path :'systemManage/processClassify',
+    name:'processClassify',
+    meta:{
+      title:'流程分类',
+    },
+    component:processClassify
+  },
+  {
+    path :'systemManage/processClassify/processClassifyModify',
+    name:'processClassifyModify',
+    meta:{
+      title:'流程分类修改',
+    },
+    component:processClassifyModify
   },
   {
 
@@ -123,9 +164,17 @@ export default [
   path: 'systemManage/roleList/roleDestails',
   name: 'roleDestails',
   meta: {
-    title: '角色信息',
+    title: '角色编缉',
   },
   component: roleDestails
+},
+{
+  path: 'systemManage/roleList/roleifometion',
+  name: 'roleifometion',
+  meta: {
+    title: '角色信息',
+  },
+  component: roleifometion
 },
 {
   path: 'systemManage/organizationChild',

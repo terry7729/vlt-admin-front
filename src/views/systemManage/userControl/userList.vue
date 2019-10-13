@@ -1,9 +1,14 @@
 <template>
   <div class="vlt-card">
     <div class="search"><!--搜索栏 !-->
-      <search-Bar :options="option" :total="999">
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
-      </search-Bar>
+         <search-bar class="search-bar-demo"
+        @search="search"
+        :options="option"
+        :total="999"
+        labelWidth="80px"
+      >
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+      </search-bar>
     </div>
     <div class="from"><!-- table表格!-->
       <el-table    
@@ -106,6 +111,11 @@ export default {
         }
       ],
       multipleSelection: [],
+        controlOptions: [
+        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+        {name: '批量删除', type: '', icon: 'delete'},
+     
+      ],
       option: [
         {
           title: "用户名称",

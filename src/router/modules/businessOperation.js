@@ -17,7 +17,14 @@ const executionManage = () => import('@/views/businessOperation/brandMarketing/e
 const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
 //模板预览
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
-
+//活动执行管理详情
+const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
+//计划详情
+const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
+//新建活动
+const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
+//分配任务
+const allotTask = () => import('@/views/businessOperation/brandMarketing/allotTask')
 export default [
   // {
   //   path: 'demo',
@@ -104,5 +111,45 @@ export default [
     },
     component: previewTemplate,
   },
+  {
+    path: 'brandMarketing/activityDetail',
+    name: 'activityDetail',
+    meta: {
+      title: '活动执行详情',
+    },
+    component: activityDetail,
+  },
+  {
+    path: 'brandMarketing/planDetail',
+    name: 'planDetail',
+    meta: {
+      title: '计划详情',
+    },
+    component: planDetail,
+  },
+  {
+    path: 'brandMarketing/createActivity',
+    name: 'createActivity',
+    meta: {
+      title: '新建活动',
+    },
+    component: createActivity,
+  },
+  {
+    path: 'brandMarketing/allotTask',
+    name: 'allotTask',
+    meta: {
+      title: '分配任务',
+    },
+    component: allotTask,
+  },
 
+
+
+  
+
+
+
+  
 ]
+

@@ -4,7 +4,6 @@
 .preview-template h2 {
   height: 50px;
   background: white;
-  padding: 25px;
   text-indent: 25px;
   line-height: 50px;
 }
@@ -12,15 +11,9 @@
   font-size: 12px;
   position: relative;
 }
-.preview-template .coll-item .icon-txt {
-  color: blue;
-  font-size: 14px;
-  position: absolute;
-  top: 10px;
-  left: 1190px;
-}
-.preview-template .coll-item .coll-content .coll-form {
-  margin-left: 150px;
+.preview-template .coll-item .coll-content {
+  margin-top: 20px;
+  margin-left: 200px;
 }
 .preview-template .coll-item .coll-content .coll-form input {
   width: 400px;
@@ -37,14 +30,87 @@
   left: 5px;
 }
 .preview-template .coll-item .coll-content .coll-form .active-lobby .el-input {
-  width: 100px;
+  width: 250px;
   display: inline-block;
 }
 .preview-template .coll-item .coll-content .coll-form .active-lobby .el-input input {
+  width: 250px;
+}
+.preview-template .coll-item .coll-content .coll-form .active-target .el-checkbox {
+  margin-right: 10px;
+}
+.preview-template .coll-item .coll-content .coll-form .active-target .el-input {
+  width: 250px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+.preview-template .coll-item .coll-content .coll-form .active-target .el-input input {
+  width: 250px;
+  margin-left: 18px;
+}
+.preview-template .coll-item .coll-content .active-rule .rule-item .el-select,
+.preview-template .coll-item .coll-content .active-rule .rule-item .el-input {
   width: 100px;
+  margin-right: 20px;
+  display: inline-block;
+}
+.preview-template .coll-item .coll-content .active-rule .rule-item .el-select input,
+.preview-template .coll-item .coll-content .active-rule .rule-item .el-input input {
+  width: 100px;
+}
+.preview-template .coll-item .coll-content .active-rule .rule-item .last-rule input {
+  width: 200px;
+}
+.preview-template .coll-item .coll-content .remark span {
+  display: inline-block;
+  height: 75px;
+}
+.preview-template .coll-item .coll-content .remark .el-textarea {
+  width: 500px;
+  display: inline-block;
+}
+.preview-template .coll-item .coll-content .remark .el-textarea textarea {
+  width: 500px;
+  margin-top: 10px;
+}
+.preview-template .coll-item .coll-content .index-check {
+  margin-top: 15px;
+}
+.preview-template .coll-item .coll-content .index-check .item-check {
+  display: inline-block;
+  width: 800px;
+  position: relative;
+  top: -15px;
+  left: 60px;
+}
+.preview-template .coll-item .coll-content .index-check .item-check .el-checkbox {
+  padding-bottom: 10px;
+}
+.preview-template .coll-item .coll-content .upload-file {
+  width: 600px;
+  margin-bottom: 20px;
+}
+.preview-template .coll-item .coll-content .upload-file .el-upload__tip {
+  font-size: 14px;
+  color: #aaa;
+  position: relative;
+  left: 65px;
+}
+.preview-template .coll-item .coll-content .upload-img {
+  margin-bottom: 20px;
+}
+.preview-template .coll-item .coll-content .upload-img .upload-box {
+  display: inline-block;
+}
+.preview-template .coll-item .coll-content .drag-upload {
+  position: relative;
+  left: 78px;
 }
 .preview-template .coll-item .el-collapse-item__header {
   font-size: 16px;
   font-weight: 600;
-  text-indent: 50px;
+  text-indent: 25px;
+}
+.preview-template .coll-item .el-progress {
+  width: 400px;
 }

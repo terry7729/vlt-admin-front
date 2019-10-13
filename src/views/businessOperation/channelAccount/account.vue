@@ -1,7 +1,6 @@
 <template>
   <div class="vlt-card el_box">
     <search-bar :options="options" :total="999"></search-bar>
-
     <div class="el_table">
       <el-table :data="tableData" border>
         <el-table-column prop="id" label="序号"></el-table-column>
@@ -13,11 +12,7 @@
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
         <el-table-column label="账户状态">
           <template>
-            <div>
-              <el-button type="primary" size="mini">启动</el-button>
-
-              <el-button type="danger" size="mini">禁止</el-button>
-            </div>
+            <el-switch v-model="accounttype" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -54,13 +49,7 @@ export default {
           title: "手机号码",
           placeholder: "请输入"
         },
-        {
-          type: "input",
-          prop: "telephoneNum",
-          value: "",
-          title: "手机号码",
-          placeholder: "请输入"
-        },
+
         {
           type: "select",
           prop: "accountStatus",
@@ -82,11 +71,12 @@ export default {
       pageSize: 10,
       currentPage: 1,
       totalCount: 0,
+      accounttype: true,
       tableData: [
         {
           id: 1,
           accountName: "广东省",
-          accountNum: "上海市普陀区金沙江路 1518 弄",
+
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -98,7 +88,7 @@ export default {
         {
           id: 2,
           accountName: "广东省",
-          accountNum: "上海市普陀区金沙江路 1518 弄",
+
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -110,7 +100,7 @@ export default {
         {
           id: 3,
           accountName: "广东省",
-          accountNum: "上海市普陀区金沙江路 1518 弄",
+
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -122,7 +112,7 @@ export default {
         {
           id: 4,
           accountName: "广东省",
-          accountNum: "上海市普陀区金沙江路 1518 弄",
+
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -134,7 +124,7 @@ export default {
         {
           id: 5,
           accountName: "广东省",
-          accountNum: "上海市普陀区金沙江路 1518 弄",
+
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",

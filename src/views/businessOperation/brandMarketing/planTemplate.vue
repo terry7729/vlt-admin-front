@@ -1,5 +1,5 @@
 <template>
-  <div class="plan-template">
+  <div class="vlt-card plan-template">
     <el-card class="box-card" v-for="card in cardList" :key="card.title">
       <div slot="header" class="clearfix">
         <img src="../../../assets/img/avatar.jpg"/>
@@ -18,7 +18,9 @@ export default {
     return {
       cardList: [
         { title: "促销推广活动模板1", text: "累计充值到指定额度获得奖励" },
-        { title: "促销推广活动模板2", text: "累计充值到指定额度获得奖励" }
+        { title: "促销推广活动模板2", text: "累计充值到指定额度获得奖励" },
+        { title: "促销推广活动模板3", text: "累计充值到指定额度获得奖励" },
+        { title: "促销推广活动模板4", text: "累计充值到指定额度获得奖励" }
       ]
     };
   },
@@ -36,14 +38,13 @@ export default {
 
 
 <style lang="less" scoped>
-// @import "./less/index.less";
+
 .plan-template {
     padding: 25px;
-
     .box-card {
         width: 350px;
         display: inline-block;
-        margin-left: 20px;
+        margin:0 20px 20px 0;
 
         .clearfix {
             height: 180px;
@@ -51,7 +52,7 @@ export default {
             img {
                 float: left;
                 width: 50px;
-                height: 180px;
+                height: 80px;
             }
 
             span {

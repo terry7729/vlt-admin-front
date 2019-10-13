@@ -27,9 +27,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="address" label="操作" show-overflow-tooltip>
-          <el-button type="text" @click="handelskip()">查看</el-button>
+          <el-button type="text" @click="handelifo">查看</el-button>
           <span>|</span>
-          <el-button type="text">编缉</el-button>
+          <el-button type="text" @click="handelskip">编缉</el-button>
           <span>|</span>
           <el-button type="text">重置密码</el-button>
         </el-table-column>
@@ -103,7 +103,9 @@ export default {
   mounted() {},
   components: {},
   methods: {
-
+    handelifo(){
+      this.$router.push('roleList/roleifometion')
+    },
     handleSelectionChange(val) { //当前选择项目
       console.log(val)
       this.multipleSelection = val;

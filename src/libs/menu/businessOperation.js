@@ -52,7 +52,7 @@ export default [
         icon: "el-icon-menu",
         name: "品牌与营销推广",
         url: ''
-      }
+      },
     ],
       icon: "el-icon-menu",
       name: "业务运营",
