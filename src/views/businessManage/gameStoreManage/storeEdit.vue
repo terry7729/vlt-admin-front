@@ -97,7 +97,7 @@
           </div>
         </el-form>
           <el-row class="vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
+            <el-button type="primary" v-prevent="1000" size="medium" @click="save('form')">提交并保存</el-button>
             <el-button size="medium" @click="editShow = !editShow">取消</el-button>
           </el-row>
         </div>
@@ -141,23 +141,61 @@ export default {
               },
             ],
             dialogImageUrl: '',
-            dialogVisible: false
+            dialogVisible: false,
+            fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
+             {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+
         }
     },
     methods:{
       onSubmit(){
           console.log(this.form)
       },
+      //上传文件
       handlePreview(file) {
       console.log(file);
       },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+
+      // 新增提示框
+      // openConfirm() {
+      //   this.$confirm(`确认新增渠道 "${this.form.channelName}"，新增渠道后请设置游戏信息！`, '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //     type: 'warning'
+      //   }).then(() => {
+      //     this.save();
+      //   }).catch(() => {
+      //     // 取消         
+      // });
+      //保存
+      save(formName){
+        const self = this;
+        self.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (self.editData && !self.editData.isAdd) {
+              self.save(self.editData.id);
+            } else {
+              self.openConfirm();
+            }
+          } else {
+            return false;
+          }
+        });
       }
+      
     }
 }
 </script>

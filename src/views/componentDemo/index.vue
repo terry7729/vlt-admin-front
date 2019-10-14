@@ -39,11 +39,95 @@
     </section>
 
     <section class="comp-item">
+      <h4 class="comp-title">分页</h4>
+      <table-paging
+        :current-page="1"
+        :page-size="10"
+        :total="100"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      >
+      </table-paging>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">表格行状态</h4>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%; margin-top: 10px;">
+        <el-table-column
+          prop="date"
+          label="日期"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="province"
+          label="省份"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="市区"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="地址"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="zip"
+          label="邮编"
+        >
+        </el-table-column>
+        <el-table-column
+          label="状态"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <table-row-status 
+              statusField="status" 
+              idField="id" 
+              :scope="scope"
+              :tableData="tableData"
+              :rowName="scope.row.name"
+              :option="{
+                'enable': {
+                  apiName: 'apiName', // 接口名称
+                  label: '启用', // 按钮文字
+                  value: 0 // 接口字段传值
+                },
+                'disable': {
+                  apiName: 'apiName',
+                  label: '冻结',
+                  value: 1
+                },
+                'logout': {
+                  apiName: 'apiName',
+                  label: '注销',
+                  value: -1
+                }
+              }"
+            >
+            </table-row-status>
+          </template>
+        </el-table-column>
+      </el-table>
+    </section>
+
+    <section class="comp-item">
       <h4 class="comp-title">无伸缩框</h4>
-      <cell title="彩票信息">
+      <cell title="彩票信息" style="margin-top: 10px;">
         <base-info :infoList="infoList"></base-info>
       </cell>
     </section>
+
     <section class="comp-item">
       <h4 class="comp-title">展开框</h4>
       <panel title="彩票信息" :show="true">
@@ -59,59 +143,36 @@
     </section>
 
     <section class="comp-item">
-      <h4 class="comp-title">表格分页</h4>
-      <table-paging></table-paging>
-    </section>
-
-    <section class="comp-item">
       <h4 class="comp-title">单列表单公共样式</h4>
       <div class="vlt-edit-single">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
-          <el-form label-position="right" label-width="90px" :model="form" ref="form">
-            <el-form-item label="单注金额">
-              <el-input v-model="form.singleAmount"></el-input>
-            </el-form-item>
-            <el-form-item label="最小倍数">
-              <el-input v-model="form.minMultiple"></el-input>
-            </el-form-item>
-            <el-form-item label="最小注数">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item label="投注权限" prop="bet">
-              <el-select v-model="form.bet" placeholder="请选择">
-                <el-option
-                  v-for="item in betOption"
-                  @click.native="changeBet(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="注销权限" prop="logOff">
-              <el-select v-model="form.logOff" placeholder="请选择">
-                <el-option
-                  v-for="item in logOffOption"
-                  @click.native="changeLogOff(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="兑奖权限" prop="cash">
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 2, maxRows: 4}"
-                placeholder="请输入内容"
-                v-model="form.textarea"
-              ></el-input>
+          <el-form
+            label-position="right"
+            label-width="90px"
+            :model="form"
+            ref="form"
+          >
+            <base-form :formData="data2" ref="baseForm" :rules="rules2" direction="right" @change="changeForm"></base-form>
+            <el-form-item label="上传文件">
+              <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                multiple
+                :limit="3"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload>
             </el-form-item>
           </el-form>
           <el-row class="vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
-            <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+            <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+            <el-button size="medium" @click="cancel">取消</el-button>
           </el-row>
         </div>
       </div>
@@ -121,55 +182,16 @@
       <div class="vlt-edit-double">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
-          <el-form label-position="top" label-width="90px" :model="form" ref="form">
-            <el-form-item label="单注金额">
-              <el-input v-model="form.singleAmount"></el-input>
-            </el-form-item>
-            <el-form-item label="最小倍数">
-              <el-input v-model="form.minMultiple"></el-input>
-            </el-form-item>
-            <el-form-item label="最小倍数">
-              <el-input v-model="form.minMultiple"></el-input>
-            </el-form-item>
-            <el-form-item label="最小注数">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item label="最小注数">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item label="投注权限" prop="bet">
-              <el-select v-model="form.bet" placeholder="请选择">
-                <el-option
-                  v-for="item in betOption"
-                  @click.native="changeBet(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="注销权限" prop="logOff">
-              <el-select v-model="form.logOff" placeholder="请选择">
-                <el-option
-                  v-for="item in logOffOption"
-                  @click.native="changeLogOff(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="兑奖权限" prop="cash">
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 2, maxRows: 4}"
-                placeholder="请输入内容"
-                v-model="form.textarea"
-              ></el-input>
-            </el-form-item>
+          <el-form
+            label-position="top"
+            label-width="90px"
+            :model="form"
+            ref="form"
+          >
+            <base-form :formData="data1" ref="baseForm" :rules="rules1" direction="top" @change="changeForm"></base-form>
             <el-row class="el-form-item vlt-edit-btn">
-              <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
-              <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button size="medium" @click="cancel">取消</el-button>
             </el-row>
           </el-form>
         </div>
@@ -180,56 +202,17 @@
       <div class="vlt-edit-over">
         <h2 class="title">编辑</h2>
         <div class="vlt-edit-wrap">
-          <el-form label-position="top" label-width="90px" :model="form" ref="form">
-            <el-form-item label="单注金额">
-              <el-input v-model="form.singleAmount"></el-input>
-            </el-form-item>
-            <el-form-item label="最小倍数">
-              <el-input v-model="form.minMultiple"></el-input>
-            </el-form-item>
-            <el-form-item label="最小倍数">
-              <el-input v-model="form.minMultiple"></el-input>
-            </el-form-item>
-            <el-form-item label="最小注数">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item label="最小注数">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item label="投注权限" prop="bet">
-              <el-select v-model="form.bet" placeholder="请选择">
-                <el-option
-                  v-for="item in betOption"
-                  @click.native="changeBet(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="注销权限" prop="logOff">
-              <el-select v-model="form.logOff" placeholder="请选择">
-                <el-option
-                  v-for="item in logOffOption"
-                  @click.native="changeLogOff(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="兑奖权限" prop="cash">
-              <el-input
-                type="textarea"
-                :autosize="{ minRows: 2, maxRows: 4}"
-                placeholder="请输入内容"
-                v-model="form.textarea"
-              ></el-input>
-            </el-form-item>
+          <el-form
+            label-position="top"
+            label-width="90px"
+            :model="form"
+            ref="form"
+          >
+            <base-form :formData="data1" ref="baseForm" :rules="rules1" direction="top" @change="changeForm"></base-form>
           </el-form>
           <el-row class="vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
-            <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+            <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+            <el-button size="medium" @click="cancel">取消</el-button>
           </el-row>
         </div>
       </div>
@@ -238,26 +221,261 @@
 </template>
 
 <script>
+import rules from '@/utils/rules.js';
+
 export default {
   name: "componentDemo",
   data() {
     const self = this;
     return {
+      params: {},
+      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      data1: [
+        {type: 'input', title: '姓名', prop: 'name'},
+        {type: 'select', title: '性别', prop: 'sex', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
+        {type: 'textarea', title: '备注', prop: 'remark'},
+        {title: '状态', type: 'select', prop: 'status', value: '', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
+        {title: '兑奖权限', type: 'switch', prop: 'isShow', value: ''},
+        {title: '日期选择', type: 'datepicker', prop: 'date', value: ''},
+        {title: '起止日期', type: 'datepicker-range', prop: '', value: '', option:['start', 'end']},
+        {title: '起止时间', type: 'datetime-range', prop: '', value: '', option:['startTime', 'endTime']},
+      ],
+      data2: [
+        {title: '单选',type: 'radio', prop: 'radio', value: '', options:[{key:1,value:'选项一'},{key:2,value:'选项二'}]},
+        {type: 'input', title: '测试', prop: 'test'},
+        {type: 'select', title: '状态', prop: 'status', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
+        {type: 'textarea', title: '说明', prop: 'all'},
+        {type: 'switch', title: '兑奖权限', prop: 'isShow'},
+        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择'},
+        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', option: ['start', 'end']},
+        {type: 'datetime', prop: 'date3', value: '', title: '日期时间'},
+        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', option: ['start', 'end']},
+        {
+          type: 'cascader', prop: 'cascader1', value: '', title: '级联选择', placeholder: '请选择',
+          options: [{
+            value: 'zhinan',
+            label: '指南',
+            children: [{
+              value: 'shejiyuanze',
+              label: '设计原则',
+              children: [{
+                value: 'yizhi',
+                label: '一致'
+              }, {
+                value: 'fankui',
+                label: '反馈'
+              }, {
+                value: 'xiaolv',
+                label: '效率'
+              }, {
+                value: 'kekong',
+                label: '可控'
+              }]
+            }, {
+              value: 'daohang',
+              label: '导航',
+              children: [{
+                value: 'cexiangdaohang',
+                label: '侧向导航'
+              }, {
+                value: 'dingbudaohang',
+                label: '顶部导航'
+              }]
+            }]
+          }, {
+            value: 'zujian',
+            label: '组件',
+            children: [{
+              value: 'basic',
+              label: 'Basic',
+              children: [{
+                value: 'layout',
+                label: 'Layout 布局'
+              }, {
+                value: 'color',
+                label: 'Color 色彩'
+              }, {
+                value: 'typography',
+                label: 'Typography 字体'
+              }, {
+                value: 'icon',
+                label: 'Icon 图标'
+              }, {
+                value: 'button',
+                label: 'Button 按钮'
+              }]
+            }, {
+              value: 'form',
+              label: 'Form',
+              children: [{
+                value: 'radio',
+                label: 'Radio 单选框'
+              }, {
+                value: 'checkbox',
+                label: 'Checkbox 多选框'
+              }, {
+                value: 'input',
+                label: 'Input 输入框'
+              }, {
+                value: 'input-number',
+                label: 'InputNumber 计数器'
+              }, {
+                value: 'select',
+                label: 'Select 选择器'
+              }, {
+                value: 'cascader',
+                label: 'Cascader 级联选择器'
+              }, {
+                value: 'switch',
+                label: 'Switch 开关'
+              }, {
+                value: 'slider',
+                label: 'Slider 滑块'
+              }, {
+                value: 'time-picker',
+                label: 'TimePicker 时间选择器'
+              }, {
+                value: 'date-picker',
+                label: 'DatePicker 日期选择器'
+              }, {
+                value: 'datetime-picker',
+                label: 'DateTimePicker 日期时间选择器'
+              }, {
+                value: 'upload',
+                label: 'Upload 上传'
+              }, {
+                value: 'rate',
+                label: 'Rate 评分'
+              }, {
+                value: 'form',
+                label: 'Form 表单'
+              }]
+            }, {
+              value: 'data',
+              label: 'Data',
+              children: [{
+                value: 'table',
+                label: 'Table 表格'
+              }, {
+                value: 'tag',
+                label: 'Tag 标签'
+              }, {
+                value: 'progress',
+                label: 'Progress 进度条'
+              }, {
+                value: 'tree',
+                label: 'Tree 树形控件'
+              }, {
+                value: 'pagination',
+                label: 'Pagination 分页'
+              }, {
+                value: 'badge',
+                label: 'Badge 标记'
+              }]
+            }, {
+              value: 'notice',
+              label: 'Notice',
+              children: [{
+                value: 'alert',
+                label: 'Alert 警告'
+              }, {
+                value: 'loading',
+                label: 'Loading 加载'
+              }, {
+                value: 'message',
+                label: 'Message 消息提示'
+              }, {
+                value: 'message-box',
+                label: 'MessageBox 弹框'
+              }, {
+                value: 'notification',
+                label: 'Notification 通知'
+              }]
+            }, {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [{
+                value: 'menu',
+                label: 'NavMenu 导航菜单'
+              }, {
+                value: 'tabs',
+                label: 'Tabs 标签页'
+              }, {
+                value: 'breadcrumb',
+                label: 'Breadcrumb 面包屑'
+              }, {
+                value: 'dropdown',
+                label: 'Dropdown 下拉菜单'
+              }, {
+                value: 'steps',
+                label: 'Steps 步骤条'
+              }]
+            }, {
+              value: 'others',
+              label: 'Others',
+              children: [{
+                value: 'dialog',
+                label: 'Dialog 对话框'
+              }, {
+                value: 'tooltip',
+                label: 'Tooltip 文字提示'
+              }, {
+                value: 'popover',
+                label: 'Popover 弹出框'
+              }, {
+                value: 'card',
+                label: 'Card 卡片'
+              }, {
+                value: 'carousel',
+                label: 'Carousel 走马灯'
+              }, {
+                value: 'collapse',
+                label: 'Collapse 折叠面板'
+              }]
+            }]
+          }, {
+            value: 'ziyuan',
+            label: '资源',
+            children: [{
+              value: 'axure',
+              label: 'Axure Components'
+            }, {
+              value: 'sketch',
+              label: 'Sketch Templates'
+            }, {
+              value: 'jiaohu',
+              label: '组件交互文档'
+            }]
+          }]
+        },
+      ],
+      rules1: {
+        name: [
+          { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        ],
+        sex: [
+          { required: true, validator: rules.checkEmpty, trigger: 'blur' }
+        ],
+        remark: [
+          { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        ]
+      },
+      rules2: {
+        test: [
+          { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        ],
+        status: [
+          { required: true, validator: rules.checkEmpty, trigger: 'blur' }
+        ],
+        all: [
+          { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        ]
+      },
       // 搜索组件配置
       searchOptions: [
+        {title: '姓名', type: 'input', prop: 'inputName', value: ''},
         {
-          type: "input",
-          prop: "inputName",
-          value: "",
-          title: "输入框",
-          placeholder: "请输入"
-        },
-        {
-          type: "select",
-          prop: "selectName",
-          value: "",
-          title: "选择框",
-          placeholder: "请选择",
+          title: '设备状态', type: 'select', prop: 'selectName', value: '',
           options: [
             {
               label: "选项1",
@@ -269,19 +487,207 @@ export default {
             }
           ]
         },
+        {title: '开售日期', type: 'datepicker', prop: 'date1', value: ''},
+        {title: '销售日期', type: 'datepicker-range', prop: 'date2', value: ''},
+        {title: '开售时间', type: 'datetime', prop: 'date3', value: ''},
+        {title: '销售时间', type: 'datetime-range', prop: 'date4', value: ''},
         {
-          type: "datepicker",
-          prop: "date1",
-          value: "",
-          title: "日期选择",
-          placeholder: "请选择"
-        },
-        {
-          type: "datepicker-range",
-          prop: "date2",
-          value: "",
-          title: "日期选择",
-          placeholder: ["开始日期", "结束日期"]
+          type: 'cascader', prop: 'cascader1', value: '', title: '所属机构', 
+          options: [{
+            value: 'zhinan',
+            label: '指南',
+            children: [{
+              value: 'shejiyuanze',
+              label: '设计原则',
+              children: [{
+                value: 'yizhi',
+                label: '一致'
+              }, {
+                value: 'fankui',
+                label: '反馈'
+              }, {
+                value: 'xiaolv',
+                label: '效率'
+              }, {
+                value: 'kekong',
+                label: '可控'
+              }]
+            }, {
+              value: 'daohang',
+              label: '导航',
+              children: [{
+                value: 'cexiangdaohang',
+                label: '侧向导航'
+              }, {
+                value: 'dingbudaohang',
+                label: '顶部导航'
+              }]
+            }]
+          }, {
+            value: 'zujian',
+            label: '组件',
+            children: [{
+              value: 'basic',
+              label: 'Basic',
+              children: [{
+                value: 'layout',
+                label: 'Layout 布局'
+              }, {
+                value: 'color',
+                label: 'Color 色彩'
+              }, {
+                value: 'typography',
+                label: 'Typography 字体'
+              }, {
+                value: 'icon',
+                label: 'Icon 图标'
+              }, {
+                value: 'button',
+                label: 'Button 按钮'
+              }]
+            }, {
+              value: 'form',
+              label: 'Form',
+              children: [{
+                value: 'radio',
+                label: 'Radio 单选框'
+              }, {
+                value: 'checkbox',
+                label: 'Checkbox 多选框'
+              }, {
+                value: 'input',
+                label: 'Input 输入框'
+              }, {
+                value: 'input-number',
+                label: 'InputNumber 计数器'
+              }, {
+                value: 'select',
+                label: 'Select 选择器'
+              }, {
+                value: 'cascader',
+                label: 'Cascader 级联选择器'
+              }, {
+                value: 'switch',
+                label: 'Switch 开关'
+              }, {
+                value: 'slider',
+                label: 'Slider 滑块'
+              }, {
+                value: 'time-picker',
+                label: 'TimePicker 时间选择器'
+              }, {
+                value: 'date-picker',
+                label: 'DatePicker 日期选择器'
+              }, {
+                value: 'datetime-picker',
+                label: 'DateTimePicker 日期时间选择器'
+              }, {
+                value: 'upload',
+                label: 'Upload 上传'
+              }, {
+                value: 'rate',
+                label: 'Rate 评分'
+              }, {
+                value: 'form',
+                label: 'Form 表单'
+              }]
+            }, {
+              value: 'data',
+              label: 'Data',
+              children: [{
+                value: 'table',
+                label: 'Table 表格'
+              }, {
+                value: 'tag',
+                label: 'Tag 标签'
+              }, {
+                value: 'progress',
+                label: 'Progress 进度条'
+              }, {
+                value: 'tree',
+                label: 'Tree 树形控件'
+              }, {
+                value: 'pagination',
+                label: 'Pagination 分页'
+              }, {
+                value: 'badge',
+                label: 'Badge 标记'
+              }]
+            }, {
+              value: 'notice',
+              label: 'Notice',
+              children: [{
+                value: 'alert',
+                label: 'Alert 警告'
+              }, {
+                value: 'loading',
+                label: 'Loading 加载'
+              }, {
+                value: 'message',
+                label: 'Message 消息提示'
+              }, {
+                value: 'message-box',
+                label: 'MessageBox 弹框'
+              }, {
+                value: 'notification',
+                label: 'Notification 通知'
+              }]
+            }, {
+              value: 'navigation',
+              label: 'Navigation',
+              children: [{
+                value: 'menu',
+                label: 'NavMenu 导航菜单'
+              }, {
+                value: 'tabs',
+                label: 'Tabs 标签页'
+              }, {
+                value: 'breadcrumb',
+                label: 'Breadcrumb 面包屑'
+              }, {
+                value: 'dropdown',
+                label: 'Dropdown 下拉菜单'
+              }, {
+                value: 'steps',
+                label: 'Steps 步骤条'
+              }]
+            }, {
+              value: 'others',
+              label: 'Others',
+              children: [{
+                value: 'dialog',
+                label: 'Dialog 对话框'
+              }, {
+                value: 'tooltip',
+                label: 'Tooltip 文字提示'
+              }, {
+                value: 'popover',
+                label: 'Popover 弹出框'
+              }, {
+                value: 'card',
+                label: 'Card 卡片'
+              }, {
+                value: 'carousel',
+                label: 'Carousel 走马灯'
+              }, {
+                value: 'collapse',
+                label: 'Collapse 折叠面板'
+              }]
+            }]
+          }, {
+            value: 'ziyuan',
+            label: '资源',
+            children: [{
+              value: 'axure',
+              label: 'Axure Components'
+            }, {
+              value: 'sketch',
+              label: 'Sketch Templates'
+            }, {
+              value: 'jiaohu',
+              label: '组件交互文档'
+            }]
+          }]
         },
         {
           type: "datetime",
@@ -596,21 +1002,54 @@ export default {
         { name: "导出", type: "danger", icon: "download" },
         { name: "导出", type: "success", icon: "upload" },
         { name: "导出", type: "warning", icon: "download" }
+      ],
+      tableData: [{
+          date: '2016-05-02',
+          name: '刘德华',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }
       ]
     };
   },
   computed: {},
   created() {},
   mounted() {},
-  computed: {},
-  created() {},
-  mounted() {},
   methods: {
+    submit() {},
+    cancel() {},
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    },
+    changeForm(val) {
+      Object.assign(this.params, val)
+      console.log('派发出来的参数', this.params)
+    },
+    changeSelect(val) {
+      console.log(this.form, val)
+    },
     selectBtn(val) {
       console.log(val);
     },
     search(form) {
       console.log("search", form);
+    },
+    pageSizeChange(pageSize) {
+      console.log('每页条数：', pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log('当前页：', currentPage);
     }
   },
   components: {}

@@ -98,7 +98,36 @@ export default [{
           url: 'warningWatch'
         },
         {
-          childResources: [],
+          childResources: [
+            {
+              childResources: [],
+              icon: "el-icon-menu",
+              name: "奖池风险指标",
+              url: 'pondRisk'
+            },
+            {
+              childResources: [],
+              icon: "el-icon-menu",
+              name: "城市风险指标",
+              url: 'cityRisk'
+            },
+            {
+              childResources: [],
+              icon: "el-icon-menu",
+              name: "城市游戏风险指标",
+              url: 'cityGameRisk'
+            },{
+              childResources: [],
+              icon: "el-icon-menu",
+              name: "告警通知",
+              url: 'warningNotice'
+            },{
+              childResources: [],
+              icon: "el-icon-menu",
+              name: "用户风险指标",
+              url: 'userRisk'
+            }
+          ],
           icon: "el-icon-menu",
           name: "告警规则",
           url: 'provinceWatch'
@@ -115,6 +144,11 @@ export default [{
           icon: "el-icon-menu",
           name: "告警报告",
           url: 'warningReport'
+        },{
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "demo",
+          url: 'demo'
         },
       ],
 

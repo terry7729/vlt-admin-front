@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card">
-       <section class="comp-item">
+    <section class="comp-item">
       <search-bar
         class="search-bar-demo"
         @search="search"
@@ -8,12 +8,9 @@
         :total="999"
         labelWidth="80px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
-    <span>
-      <el-button type="primary" style="margin:0px 0px 5px;float:right" @click>导出</el-button>
-    </span>
     <div class="tab-container">
       <el-table
         :data="tableData"
@@ -37,32 +34,14 @@
         <el-table-column align="center" prop="address" label="处理状态"></el-table-column>
         <el-table-column label="操作" fixed="right" width="120px" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" @click size="mini">详情</el-button>
-            <el-button type="primary" @click size="mini">编辑</el-button>
+            <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
+            <el-button type="primary" @click.native="edit(scope.row.id)" size="mini">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <!-- :page-size="[10,20,30, 50]" -->
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        ></el-pagination>
-        <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="100"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-        </el-pagination>-->
-      </div>
+      <section class="comp-item" style="text-align:right;margin-top:30px">
+        <table-paging></table-paging>
+      </section>
     </div>
   </div>
 </template>
@@ -115,23 +94,7 @@ export default {
           ]
         }
       ],
-      controlOptions: [
-       
-        {
-          type: "export",
-          change() {
-            alert("cliked");
-          }
-        },
-       
-        {
-          type: "refresh",
-          change() {
-            alert("cliked");
-          }
-        },
-        
-      ],
+      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       value: "",
       //记录省市县
       provinceList: [],
@@ -177,8 +140,21 @@ export default {
     };
   },
   methods: {
-     search(form) {
-      console.log('search', form)
+    //查看页面跳转
+    detail(id) {
+      this.$router.push({
+        name: "warningWatchDetail",
+        query: { id }
+      });
+    },
+    edit(id) {
+      this.$router.push({
+        name: "warningWatchEdit",
+        query: { id }
+      });
+    },
+    search(form) {
+      console.log("search", form);
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -201,7 +177,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>

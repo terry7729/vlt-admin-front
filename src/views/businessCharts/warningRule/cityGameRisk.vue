@@ -6,12 +6,12 @@
         @search="search"
         :options="searchOptions"
         :total="999"
-        labelWidth="80px"
+        labelWidth="40px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
-    <div class="tab-container">
+    <div class>
       <el-table
         :data="tableData"
         border
@@ -19,25 +19,24 @@
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >
-        <el-table-column align="center" label="序号" width="65">
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column align="center" prop="date" label="省份"></el-table-column>
+        <el-table-column align="center" prop="date" label="城市"></el-table-column>
+        <el-table-column align="center" prop="date" label="游戏"></el-table-column>
+        <el-table-column align="center" prop="name" label="最低返奖率"></el-table-column>
+        <el-table-column align="center" prop="name" label="最高返奖率"></el-table-column>
+        <el-table-column align="center" prop="address" label="状态"></el-table-column>
+        <el-table-column label="操作" fixed="right" width="220px" fit align="center">
           <template slot-scope="scope">
-            <div style="text-align:center;">{{scope.$index+1}}</div>
+            <!-- <el-button type="primary" @click size="small">审核</el-button> -->
+            <el-button type="primary" @click size="small">修改</el-button>
+            <el-button type="primary" @click size="small">删除</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="address" label="开卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="退卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="缴款"></el-table-column>
-        <el-table-column align="center" prop="address" label="充值"></el-table-column>
-        <el-table-column align="center" prop="address" label="提现"></el-table-column>
-        <el-table-column align="center" prop="address" label="账户余额"></el-table-column>
-        
       </el-table>
       <section class="comp-item" style="text-align:right;margin-top:30px">
-          <table-paging></table-paging>
-        </section>
+        <table-paging></table-paging>
+      </section>
     </div>
   </div>
 </template>
@@ -45,16 +44,16 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "saleshallAccountWatch",
+  name: "areaDeal",
   data() {
     return {
-       searchOptions: [
+      searchOptions: [
         {
           type: "select",
           prop: "province",
           value: "",
           title: "区域",
-          placeholder: "请选择省",
+          placeholder: "请选择省份",
           options: [
             {
               label: "选项1",
@@ -68,7 +67,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectNam1",
+          prop: "province",
           value: "",
           title: "",
           placeholder: "请选择市",
@@ -85,10 +84,10 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName2",
+          prop: "province",
           value: "",
-          title: "",
-          placeholder: "请选择销售厅",
+          title: "游戏",
+          placeholder: "请选择游戏",
           options: [
             {
               label: "选项1",
@@ -102,15 +101,17 @@ export default {
         }
       ],
       controlOptions: [
-       { name: "导出", type: "primary", icon: "download" },
+        { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "批量删除", type: "primary", icon: "delete" },
+        { name: "批量修改", type: "primary", icon: "edit" }
       ],
       //记录省市县
       provinceList: [],
       dataprovinceList: [],
       provinceCode: "",
 
-      poundage:[],
-      poundagefee:[],
+      poundage: [],
+      poundagefee: [],
       cityList: [],
       datacityList: [],
       cityCode: "",
@@ -127,27 +128,30 @@ export default {
         {
           date: "2016-05-02",
           name: "王小虎",
-          address: "100"
+          address: "  1518 弄"
         },
         {
           date: "2016-05-04",
           name: "王小虎",
-          address: "100"
+          address: "  1517 弄"
         },
         {
           date: "2016-05-01",
           name: "王小虎",
-          address: "100"
+          address: "  1519 弄"
         },
         {
           date: "2016-05-03",
           name: "王小虎",
-          address: "100"
+          address: "  1516 弄"
         }
       ]
     };
   },
   methods: {
+    search(form) {
+      console.log("search", form);
+    },
     back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
@@ -173,10 +177,10 @@ export default {
       for (let i = 0; city.length > i; i++) {
         //循环获取省级单位
         for (var key in city[i]) {
-          let provinceCode = city[i].areaId;
-          let areaName = city[i].areaName;
+          let value = city[i].areaId;
+          let label = city[i].areaName;
           var cities = city[i].cities;
-          var pro = { provinceCode, areaName };
+          var pro = { label, value };
         }
         //循环获取市级单位
         for (var j = 0; cities.length > j; j++) {
@@ -198,6 +202,12 @@ export default {
         provinceArr.push(pro);
       }
       this.provinceList = provinceArr;
+      console.log(provinceArr);
+      this.searchOptions.forEach(v => {
+        if (v.prop === "province") {
+          v.options = provinceArr;
+        }
+      });
       this.cityList = cityArr;
       this.countryList = countryArr;
       this.dataprovinceList = provinceArr;
@@ -225,7 +235,6 @@ export default {
         this.cityList = cArrres;
         this.cityCode = this.cityList[0].cityCode;
         //回调自动获取当前选择的县区
-       
       }
       console.log(
         "省：" +
@@ -235,10 +244,7 @@ export default {
           "县：" +
           this.countryCode
       );
-    },
-     search(form) {
-      console.log('search', form)
-    },
+    }
   },
   mounted() {
     this.showcity();
@@ -247,7 +253,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>
