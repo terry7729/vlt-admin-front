@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
     <div class>
@@ -19,21 +19,18 @@
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >
-        <el-table-column align="center" label="序号" width="65">
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column align="center" prop="date" label="游戏"></el-table-column>
+        <el-table-column align="center" prop="date" label="最高奖池金额"></el-table-column>
+        <el-table-column align="center" prop="name" label="最低奖池金额"></el-table-column>
+        <el-table-column align="center" prop="address" label="状态/审核"></el-table-column>
+         <el-table-column label="操作" fixed="right" width="120px" align="center">
           <template slot-scope="scope">
-            <div style="text-align:center;">{{scope.$index+1}}</div>
+            <el-button type="primary" @click size="mini">修改</el-button>
+            <el-button type="primary" @click size="mini">删除</el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="终端"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="address" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="address" label="销售额"></el-table-column>
-        <el-table-column align="center" prop="address" label="中奖金额"></el-table-column>
-        <el-table-column align="center" prop="address" label="小奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
-      </el-table>
+     </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <el-pagination
@@ -70,42 +67,8 @@ export default {
           type: "select",
           prop: "province",
           value: "",
-          title: "区域",
-          placeholder: "请选择省",
-          options: [
-            {
-              label: "选项1",
-              value: 1
-            },
-            {
-              label: "选项2",
-              value: 2
-            }
-          ]
-        },
-        {
-          type: "select",
-          prop: "selectNam1",
-          value: "",
-          title: "",
-          placeholder: "请选择市",
-          options: [
-            {
-              label: "选项1",
-              value: 1
-            },
-            {
-              label: "选项2",
-              value: 2
-            }
-          ]
-        },
-        {
-          type: "select",
-          prop: "selectName2",
-          value: "",
-          title: "",
-          placeholder: "请选择销售厅",
+          title: "游戏",
+          placeholder: "请选择游戏",
           options: [
             {
               label: "选项1",
@@ -119,9 +82,9 @@ export default {
         }
       ],
       controlOptions: [
-       
-       { name: "导出", type: "primary", icon: "download" },
-        
+        { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "批量删除", type: "primary", icon: "delete" },
+        { name: "批量修改", type: "primary", icon: "edit" }
       ],
       //记录省市县
       provinceList: [],
@@ -271,7 +234,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>

@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       controlOptions: [  
-        {type: 'export', change() {alert('cliked')}},       
+        { name: "导出", type: "primary", icon: "download" },       
       ],
       exportLoading:false,
       total: null,
