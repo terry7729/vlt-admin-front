@@ -1,7 +1,8 @@
 <template>
   <div class="vlt-card">
     <div class="role-search">
-          <search-bar class="search-bar-demo"
+      <search-bar
+        class="search-bar-demo"
         @search="search"
         :options="option"
         :total="999"
@@ -59,6 +60,7 @@
         </el-pagination>
       </div>
     </div>
+   
   </div>
 </template>
 
@@ -67,10 +69,15 @@ export default {
   name: "name",
   data() {
     return {
-        controlOptions: [//按钮组
-        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+     
+      controlOptions: [
+        //按钮组
+        { name: "新建计划", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
-       option: [ //搜索框组
+     
+
+      option: [
+        //搜索框组
         {
           title: "用户角色",
           prop: "userRole",
@@ -102,14 +109,14 @@ export default {
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
-          {
+        {
           type: "datetime-range",
           prop: "createTime",
           value: "",
           title: "创建时间",
           placeholder: ["开始时间", "结束时间"]
-        },
-        ],
+        }
+      ],
       currentPage4: 4,
       tableData: [
         {
@@ -156,11 +163,12 @@ export default {
   mounted() {},
   components: {},
   methods: {
-    handelifo(){
-      this.$router.push('roleList/roleifometion')
+    handelifo() {
+      this.$router.push("roleList/roleifometion");
     },
-    handleSelectionChange(val) { //当前选择项目
-      console.log(val)
+    handleSelectionChange(val) {
+      //当前选择项目
+      console.log(val);
       this.multipleSelection = val;
     },
     handleSizeChange(val) {
@@ -172,12 +180,15 @@ export default {
     handelskip() {
       this.$router.push("roleList/roleDestails");
     },
-        selectBtn(val){ //新增删除事件
-      console.log(val)
+    selectBtn(val) {
+      //新增删除事件
+      console.log(val);
     },
-    search(val){//搜索事件
-      console.log(val)
-    }
+    search(val) {
+      //搜索事件
+      console.log(val);
+    },
+    
   }
 };
 </script>
@@ -219,6 +230,9 @@ export default {
 }
 .el-table td {
   padding: 10px 0;
+  text-align: center;
+}
+.el-dialog__footer {
   text-align: center;
 }
 </style>

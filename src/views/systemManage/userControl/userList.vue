@@ -37,11 +37,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="address" label="操作" show-overflow-tooltip>
-          <el-button type="text" @click="handelskip()">查看</el-button>
+          <el-button type="text" @click="handelides()">查看</el-button>
           <span>|</span>
           <el-button type="text" @click="handelifo()">编缉</el-button>
           <span>|</span>
-          <el-button type="text" @click="handelides()">重置密码</el-button>
+          <el-button type="text"  @click="dialogFormVisible=true">重置密码</el-button>
         </el-table-column>
       </el-table>
       <div class="pagintion">
@@ -59,6 +59,26 @@
         </el-pagination>
       </div>
     </div>
+     <!-- 更改密码弹框-->
+    <div class="dialog">
+      <el-dialog title="重置密码" :visible.sync="dialogFormVisible" width="500px">
+        <el-form :model="restpaswordfrom" >
+          <el-form-item label="请选择你的操作" label-width="120px">
+            <el-radio-group v-model="restpaswordfrom.radio">
+              <el-radio :label="3">操作密码</el-radio>
+              <el-radio :label="6">登陆密码</el-radio>   
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item :label="restpaswordfrom.radio===3?'请输入操作密码':'请输入登陆密码'" label-width="120px">
+            <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisibleEnter">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -67,6 +87,11 @@ export default {
   name: "userList",
   data() {
     return {
+       restpaswordfrom: {
+        radio:3,
+        password:''
+      },
+       dialogFormVisible: false,
       currentPage4: 4,
       tableData: [
         {
@@ -219,6 +244,10 @@ export default {
     },
     search(val){//搜索事件
       console.log(val)
+    },
+    dialogFormVisibleEnter(){
+      console.log(this.restpaswordfrom)
+      this.dialogFormVisible = false;
     }
   }
 };
