@@ -74,7 +74,7 @@
             :model="form"
             ref="form"
           >
-            <base-form :formData="data2" :rules="rules2" direction="right" @change="changeForm"></base-form>
+            <base-form :formData="data2" ref="baseForm" :rules="rules2" direction="right" @change="changeForm"></base-form>
             <el-form-item label="上传文件">
               <el-upload
                 class="upload-demo"
@@ -109,7 +109,7 @@
             :model="form"
             ref="form"
           >
-            <base-form :formData="data1" :rules="rules1" direction="top" @change="changeForm"></base-form>
+            <base-form :formData="data1" ref="baseForm" :rules="rules1" direction="top" @change="changeForm"></base-form>
             <el-row class="el-form-item vlt-edit-btn">
               <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
               <el-button size="medium" @click="cancel">取消</el-button>
@@ -129,7 +129,7 @@
             :model="form"
             ref="form"
           >
-            <base-form :formData="data1" :rules="rules1" direction="top" @change="changeForm"></base-form>
+            <base-form :formData="data1" ref="baseForm" :rules="rules1" direction="top" @change="changeForm"></base-form>
           </el-form>
           <el-row class="vlt-edit-btn">
             <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
@@ -154,6 +154,11 @@ export default {
         {type: 'input', title: '姓名', prop: 'name'},
         {type: 'select', title: '性别', prop: 'sex', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
         {type: 'textarea', title: '备注', prop: 'remark'},
+        {title: '状态', type: 'select', prop: 'status', value: '', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
+        {title: '兑奖权限', type: 'switch', prop: 'isShow', value: ''},
+        {title: '日期选择', type: 'datepicker', prop: 'date', value: ''},
+        {title: '起止日期', type: 'datepicker-range', prop: '', value: '', option:['start', 'end']},
+        {title: '起止时间', type: 'datetime-range', prop: '', value: '', option:['startTime', 'endTime']},
       ],
       data2: [
         {type: 'input', title: '测试', prop: 'test'},
