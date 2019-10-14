@@ -64,14 +64,9 @@
 
 <script>
 export default {
-  name: "name",
+  name: "userList",
   data() {
     return {
-         controlOptions: [
-           {type: 'add', change() {alert('cliked')}},
-          {type: 'delete', change() {alert('clicked')}},
-
-      ],
       currentPage4: 4,
       tableData: [
         {
@@ -111,43 +106,28 @@ export default {
         }
       ],
       multipleSelection: [],
-        controlOptions: [
+        controlOptions: [//按钮组
         {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
-        {name: '批量删除', type: '', icon: 'delete'},
-     
+        {name: '批量删除', type: '', icon: 'delete'}   
       ],
-      option: [
+      option: [ //搜索框组
         {
-          title: "用户名称",
-          prop: "user",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "用户名称",
-          prop: "user",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "用户姓名",
+          title: "姓名",
           prop: "name",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
-          title: "用户姓别",
-          prop: "set",
+          title: "账号",
+          prop: "account",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
-          title: "用户名称",
-          prop: "select",
+          title: "所属机构",
+          prop: "organ",
           type: "select",
           options: [
             {
@@ -159,10 +139,47 @@ export default {
               label: "上海"
             }
           ],
-
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
-        }
+        },
+        {
+          title: "用户角色",
+          prop: "userrole",
+          type: "input",
+          value: "",
+          placeholder: "请输入" || ["请输入1", "请输入2"]
+        },
+        {
+          title: "手机号码",
+          prop: "phonecode",
+          type: "input",      
+          value: "",
+          placeholder: "请输入" || ["请输入1", "请输入2"]
+        },
+        {
+          title: "用户状态",
+          prop: "userstatus",
+          type: "select",
+          options: [
+            {
+              value: "beijing",
+              label: "北京"
+            },
+            {
+              value: "shanghai",
+              label: "上海"
+            }
+          ],
+          value: "",
+          placeholder: "请输入" || ["请输入1", "请输入2"]
+        },
+        {
+          type: "datetime-range",
+          prop: "date4",
+          value: "",
+          title: "创建时间",
+          placeholder: ["开始时间", "结束时间"]
+        },
       ]
     };
   },
@@ -196,6 +213,12 @@ export default {
     },
     handelides(){
       this.$router.push('userList/userDestails')
+    },
+    selectBtn(val){ //新增删除事件
+      console.log(val)
+    },
+    search(val){//搜索事件
+      console.log(val)
     }
   }
 };

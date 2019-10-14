@@ -1,5 +1,15 @@
 <template>
   <div class="vlt-card">
+    <div class="role-search">
+          <search-bar class="search-bar-demo"
+        @search="search"
+        :options="option"
+        :total="999"
+        labelWidth="80px"
+      >
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+      </search-bar>
+    </div>
     <div class="role-table">
       <el-table
         ref="multipleTable"
@@ -57,6 +67,49 @@ export default {
   name: "name",
   data() {
     return {
+        controlOptions: [//按钮组
+        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+      ],
+       option: [ //搜索框组
+        {
+          title: "用户角色",
+          prop: "userRole",
+          type: "input",
+          value: "",
+          placeholder: "请输入" || ["请输入1", "请输入2"]
+        },
+        {
+          title: "创建人",
+          prop: "createrMan",
+          type: "input",
+          value: "",
+          placeholder: "请输入" || ["请输入1", "请输入2"]
+        },
+        {
+          title: "角色状态",
+          prop: "rolueStatus",
+          type: "select",
+          options: [
+            {
+              value: "beijing",
+              label: "北京"
+            },
+            {
+              value: "shanghai",
+              label: "上海"
+            }
+          ],
+          value: "",
+          placeholder: "请输入" || ["请输入1", "请输入2"]
+        },
+          {
+          type: "datetime-range",
+          prop: "createTime",
+          value: "",
+          title: "创建时间",
+          placeholder: ["开始时间", "结束时间"]
+        },
+        ],
       currentPage4: 4,
       tableData: [
         {
@@ -118,6 +171,12 @@ export default {
     },
     handelskip() {
       this.$router.push("roleList/roleDestails");
+    },
+        selectBtn(val){ //新增删除事件
+      console.log(val)
+    },
+    search(val){//搜索事件
+      console.log(val)
     }
   }
 };
