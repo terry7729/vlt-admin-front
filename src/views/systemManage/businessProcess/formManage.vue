@@ -139,6 +139,9 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
+    add () {
+      this.$router.push("formManage/formCompile");
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },

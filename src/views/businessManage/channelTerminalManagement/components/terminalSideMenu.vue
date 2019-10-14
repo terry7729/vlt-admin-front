@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import menuTree from "./menuTree";
+import menuTree from "@/components/main/menuTree";
 import { sync } from "glob";
 // businessManageTrimimal
 export default {

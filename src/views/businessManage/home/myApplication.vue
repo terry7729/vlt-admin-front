@@ -7,11 +7,8 @@
       :options="searchOptions"
       :total="999"
       labelWidth="80px"
-    ></search-bar>
-    <el-row>
-      <el-button size="mini" @click="toPrint">打印</el-button>
-      <el-button  size="mini" @click="toExport">导出</el-button>
-    </el-row>
+    >
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar></search-bar>
     <el-table :data="tableData" style="width: 100%" border class="table-box">
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
       <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
@@ -84,6 +81,10 @@ export default {
           title: "申请日期：",
           placeholder: ["开始日期", "结束日期"]
         }
+      ],
+      controlOptions: [
+        { name: "打印", type: "primary", icon: "printer" },
+        { name: "导出", type: "danger", icon: "download" },
       ],
       tableData: [
         {
@@ -199,6 +200,9 @@ export default {
     search(form) {
       console.log("search", form);
     },
+    selectBtn() {
+      console.log('selectBtn');
+    },
     toView(row) {
       const self = this;
       console.log('查看',row);
@@ -226,12 +230,6 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-    },
-    toPrint () {
-      console.log('打印');
-    },
-    toExport () {
-      console.log('导出');
     }
   },
   components: {
