@@ -7,4 +7,5 @@ export default {
   /* 请务必注释每个接口所属名称 */
   // 例
   getTest: (options = {}) => ajax.post('/test', options),
+  getChannelTerminalMenu: (oprions = {}) => ajax.post('/getChannelTerminalMenu', options)
 }

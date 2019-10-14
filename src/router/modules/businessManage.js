@@ -53,7 +53,13 @@ const equipment = () => import('@/views/businessManage/channelTerminalManagement
 const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance')
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
-const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis')
+const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/serviceAnalysis')
+const maintenanceEfficiency = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/maintenanceEfficiency')
+const accessoryFault = () => import('../../views/businessManage/channelTerminalManagement/serviceAnalysis/accessoryFault')
+const equipmentFailure = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/equipmentFailure')
+const maintenanceStaff = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/maintenanceStaff')
+
+
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
 const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
@@ -247,58 +253,95 @@ export default [
       title: '新建渠道',
     },
     component: channelAdd
-  },  {
-    path: 'businessManage/channelTerminal',
-    name: 'channelTerminal',
+  }, 
+  //  {
+  //   path: 'businessManage/channelTerminal',
+  //   name: 'channelTerminal',
+  //   meta: {
+  //     title: '渠道终端管理',
+  //   },
+  //   component: channelTerminal,
+  //   children: []
+  // },
+  {
+    path: 'businessManage/channelTerminal/serviceAnalysis',
+    name: 'serviceAnalysis',
     meta: {
       title: '服务分析',
     },
-    component: channelTerminal,
+    component: serviceAnalysis,
     children: [
-      {
-        path: 'serviceAnalysis',
-        name: 'serviceAnalysis',
-        meta: {
-          title: '服务分析',
-        },
-        component: serviceAnalysis
-      }, {
-        path: 'maintenance',
-        name: 'maintenance',
-        meta: {
-          title: '维修管理',
-        },
-        component: maintenance
-      }, {
-        path: 'reportStatistics',
-        name: 'reportStatistics',
-        meta: {
-          title: '报表统计',
-        },
-        component: reportStatistics
-      }, {
-        path: 'equipment',
-        name: 'equipment',
-        meta: {
-          title: '设备管理',
-        },
-        component: equipment
-      }, {
-        path: 'knowledgeBase',
-        name: 'knowledgeBase',
-        meta: {
-          title: '维护知识库',
-        },
-        component: knowledgeBase
-      }, {
-        path: 'configuration',
-        name: 'configuration',
-        meta: {
-          title: '配置管理',
-        },
-        component: configuration
-      }
-    ]
+    {
+      path: '',
+      redirect: {
+        name: 'maintenanceEfficiency'
+      },
+      component: maintenanceEfficiency,
+    },
+    {
+      path: 'maintenanceEfficiency',
+      name: 'maintenanceEfficiency',
+      meta: {
+        title: '维修率分析',
+      },
+      component: maintenanceEfficiency,
+    },{
+      path: 'accessoryFault',
+      name: 'accessoryFault',
+      meta: {
+        title: '维修员排行',
+      },
+      component: accessoryFault,
+    },{
+      path: 'equipmentFailure',
+      name: 'equipmentFailure',
+      meta: {
+        title: '设备故障排行',
+      },
+      component: equipmentFailure,
+    },{
+      path: 'maintenanceStaff',
+      name: 'maintenanceStaff',
+      meta: {
+        title: '配件故障排行',
+      },
+      component: maintenanceStaff,
+    }]
+  }, {
+    path: 'businessManage/channelTerminal/maintenance',
+    name: 'maintenance',
+    meta: {
+      title: '维修管理',
+    },
+    component: maintenance
+  }, {
+    path: 'businessManage/channelTerminal/reportStatistics',
+    name: 'reportStatistics',
+    meta: {
+      title: '报表统计',
+    },
+    component: reportStatistics
+  }, {
+    path: 'businessManage/channelTerminal/equipment',
+    name: 'equipment',
+    meta: {
+      title: '设备管理',
+    },
+    component: equipment
+  }, {
+    path: 'businessManage/channelTerminal/knowledgeBase',
+    name: 'knowledgeBase',
+    meta: {
+      title: '维护知识库',
+    },
+    component: knowledgeBase
+  }, {
+    path: 'businessManage/channelTerminal/configuration',
+    name: 'configuration',
+    meta: {
+      title: '配置管理',
+    },
+    component: configuration
   },
   {
     path: 'businessManage/channelDeal',
