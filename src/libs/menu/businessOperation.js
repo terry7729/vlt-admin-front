@@ -1,11 +1,8 @@
 // 业务运营-左侧导航数据
 
-export default [
-  {
-    childResources: [
-      {
-        childResources: [
-          {
+export default [{
+    childResources: [{
+        childResources: [{
             childResources: [],
             icon: "el-icon-menu",
             name: "渠道账户列表",
@@ -14,7 +11,7 @@ export default [
           {
             childResources: [],
             icon: "el-icon-menu",
-            name: "账户管理",
+            name: "资金账户管理",
             url: 'accountManage'
           }
         ],
@@ -23,8 +20,7 @@ export default [
         url: 'screenWatch'
       },
       {
-        childResources: [
-          {
+        childResources: [{
             childResources: [],
             icon: "el-icon-menu",
             name: "活动计划模板",
@@ -54,11 +50,11 @@ export default [
         url: ''
       },
     ],
-      icon: "el-icon-menu",
-      name: "业务运营",
-      url: '' // 前端路由名称
-   
+    icon: "el-icon-menu",
+    name: "业务运营",
+    url: '' // 前端路由名称
+
   },
-  
+
 
 ]
