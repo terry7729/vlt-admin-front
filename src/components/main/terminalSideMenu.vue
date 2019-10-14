@@ -88,6 +88,7 @@ export default {
     }
   }
   .el-menu {
+    border-right: 0;
     .el-menu-item {
       height: 50px;
       line-height: 50px;

@@ -8,17 +8,12 @@
       :total="999"
       labelWidth="80px"
     ></search-bar>
-    <el-row>
-      <el-col>
-        <el-button type="primary" size="mini" @click="getList">查看列表</el-button>
-      </el-col>
-    </el-row>
-    <analysisCard :list="serviceList"></analysisCard>
+    <analysisCard :list="serviceList"  :tableDatas="datas"></analysisCard>
   </div>
 </template>
 
 <script type="text/javascript">
-import analysisCard from '@/components/main/analysisCard'
+import analysisCard from "@/views/businessManage/channelTerminalManagement/components/analysisCard";
 export default {
   name: "",
   data() {
@@ -29,14 +24,14 @@ export default {
           type: "input",
           prop: "inputName",
           value: "",
-          title: "姓名：",
+          title: "配件名称：",
           placeholder: "请输入"
         },
         {
           type: "select",
           prop: "selectName",
           value: "",
-          title: "所属机构：",
+          title: "配件型号：",
           placeholder: "请选择",
           options: [
             {
@@ -57,11 +52,11 @@ export default {
           placeholder: "按工单完成总量排行",
           options: [
             {
-              label: "完成总量排行",
+              label: "配件故障率排行",
               value: 1
             },
             {
-              label: "完成率排行",
+              label: "配件故障次数排行",
               value: 2
             },
             {
@@ -76,161 +71,247 @@ export default {
         dataList: [
           {
             id: 0,
-            avatar: require('@/assets/img/avatar.jpg'),
-            name: "张三",
-            tel: "13500001111",
-            address: "乌鲁木齐市",
+            avatar: require("@/assets/img/avatar.jpg"),
+            name: "主板-xx型",
+            device: "投注机-F01型",
+            failure: {
+              failureRate: "1%",
+              name: "故障率"
+            },
             descList: [
               {
                 id: 0,
-                name: "工单完成量",
-                number: "76"
+                name: "配件数量",
+                number: "3568"
               },
               {
                 id: 1,
-                name: "贡献知识库",
-                number: "39"
-              },
-              {
-                id: 2,
-                name: "平均响应时间",
-                number: "4h"
+                name: "维修次数",
+                number: "14"
               }
             ]
           },
           {
             id: 1,
-            avatar: require('@/assets/img/avatar.jpg'),
-            name: "张三",
-            tel: "13500001111",
-            address: "乌鲁木齐市",
+            avatar: require("@/assets/img/avatar.jpg"),
+            name: "主板-xx型",
+            device: "投注机-F01型",
+            failure: {
+              failureRate: "1%",
+              name: "故障率"
+            },
             descList: [
               {
                 id: 0,
-                name: "工单完成量",
-                number: "76"
+                name: "配件数量",
+                number: "3568"
               },
               {
                 id: 1,
-                name: "贡献知识库",
-                number: "39"
-              },
-              {
-                id: 2,
-                name: "平均响应时间",
-                number: "4h"
+                name: "维修次数",
+                number: "14"
               }
             ]
           },
           {
             id: 2,
-            avatar: require('@/assets/img/avatar.jpg'),
-            name: "张三",
-            tel: "13500001111",
-            address: "乌鲁木齐市",
+            avatar: require("@/assets/img/avatar.jpg"),
+            name: "主板-xx型",
+            device: "投注机-F01型",
+            failure: {
+              failureRate: "1%",
+              name: "故障率"
+            },
             descList: [
               {
                 id: 0,
-                name: "工单完成量",
-                number: "76"
+                name: "配件数量",
+                number: "3568"
               },
               {
                 id: 1,
-                name: "贡献知识库",
-                number: "39"
-              },
-              {
-                id: 2,
-                name: "平均响应时间",
-                number: "4h"
+                name: "维修次数",
+                number: "14"
               }
             ]
           },
           {
             id: 3,
-            avatar: require('@/assets/img/avatar.jpg'),
-            name: "张三",
-            tel: "13500001111",
-            address: "乌鲁木齐市",
+            avatar: require("@/assets/img/avatar.jpg"),
+            name: "主板-xx型",
+            device: "投注机-F01型",
+            failure: {
+              failureRate: "1%",
+              name: "故障率"
+            },
             descList: [
               {
                 id: 0,
-                name: "工单完成量",
-                number: "76"
+                name: "配件数量",
+                number: "3568"
               },
               {
                 id: 1,
-                name: "贡献知识库",
-                number: "39"
-              },
-              {
-                id: 2,
-                name: "平均响应时间",
-                number: "4h"
+                name: "维修次数",
+                number: "14"
               }
             ]
           },
           {
             id: 4,
-            avatar: require('@/assets/img/avatar.jpg'),
-            name: "张三",
-            tel: "13500001111",
-            address: "乌鲁木齐市",
+            avatar: require("@/assets/img/avatar.jpg"),
+            name: "主板-xx型",
+            device: "投注机-F01型",
+            failure: {
+              failureRate: "1%",
+              name: "故障率"
+            },
             descList: [
               {
                 id: 0,
-                name: "工单完成量",
-                number: "76"
+                name: "配件数量",
+                number: "3568"
               },
               {
                 id: 1,
-                name: "贡献知识库",
-                number: "39"
-              },
-              {
-                id: 2,
-                name: "平均响应时间",
-                number: "4h"
+                name: "维修次数",
+                number: "14"
               }
             ]
           },
           {
             id: 5,
-            avatar: require('@/assets/img/avatar.jpg'),
-            name: "张三",
-            tel: "13500001111",
-            address: "乌鲁木齐市",
+            avatar: require("@/assets/img/avatar.jpg"),
+            name: "主板-xx型",
+            device: "投注机-F01型",
+            failure: {
+              failureRate: "1%",
+              name: "故障率"
+            },
             descList: [
               {
                 id: 0,
-                name: "工单完成量",
-                number: "76"
+                name: "配件数量",
+                number: "3568"
               },
               {
                 id: 1,
-                name: "贡献知识库",
-                number: "39"
-              },
-              {
-                id: 2,
-                name: "平均响应时间",
-                number: "4h"
+                name: "维修次数",
+                number: "14"
               }
             ]
+          }
+        ]
+      },
+      datas: {
+        tableData: [
+          {
+            id: 0,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 1,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 2,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 3,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 4,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 5,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 6,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 7,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 8,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          },
+          {
+            id: 9,
+            model: "F01",
+            name: "投注机",
+            repairs: 1,
+            failureRate: "56"
+          }
+        ],
+        tableKey: [
+          {
+            label: "序号",
+            value: "id",
+            width: ''
+          },
+          {
+            label: "配件名称",
+            value: "name",
+            width: ''
+          },
+          {
+            label: "配件型号",
+            value: "model",
+            width: ''
+          },
+          {
+            label: "维修次数",
+            value: "repairs",
+            width: ''
+          },
+          {
+            label: "故障率",
+            value: "failureRate",
+            width: ''
           }
         ]
       }
     };
   },
   components: {
-   analysisCard
-   },
+    analysisCard
+  },
   methods: {
     search(form) {
       console.log("search", form);
-    },
-    getList() {
-      console.log("GetList");
     }
   }
 };

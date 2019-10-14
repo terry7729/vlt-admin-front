@@ -23,6 +23,20 @@ const equipmentHardwareWatch = () => import('@/views/businessCharts/saleshallEqu
 const warningWatch = () => import('@/views/businessCharts/warningWatch')
 //报表管理
 const warningReport = () => import('@/views/businessCharts/warningReport')
+
+//奖池风险
+const pondRisk = () => import('@/views/businessCharts/warningRule/pondRisk')
+
+//城市风险
+const cityRisk = () => import('@/views/businessCharts/warningRule/cityRisk')
+
+//城市游戏风险
+const cityGameRisk = () => import('@/views/businessCharts/warningRule/cityGameRisk')
+//告警通知
+const warningNotice=() => import('@/views/businessCharts/warningRule/warningNotice')
+
+//用户风险
+const userRisk=() => import('@/views/businessCharts/warningRule/userRisk')
 export default [
   // {
   //   path: 'demo',
@@ -133,6 +147,46 @@ export default [
       title: '告警监控',
     },
     component: warningWatch
+  },
+  {
+    path: 'businessCharts/pondRisk',
+    name: 'pondRisk',
+    meta: {
+      title: '奖池风险指标',
+    },
+    component: pondRisk
+  },
+  {
+    path: 'businessCharts/cityRisk',
+    name: 'cityRisk',
+    meta: {
+      title: '城市风险指标',
+    },
+    component: cityRisk
+  },
+  {
+    path: 'businessCharts/cityGameRisk',
+    name: 'cityGameRisk',
+    meta: {
+      title: '城市游戏风险指标',
+    },
+    component: cityGameRisk
+  },
+  {
+    path: 'businessCharts/warningNotice',
+    name: 'warningNotice',
+    meta: {
+      title: '城市游戏风险指标',
+    },
+    component: warningNotice
+  },
+  {
+    path: 'businessCharts/userRisk',
+    name: 'userRisk',
+    meta: {
+      title: '城市游戏风险指标',
+    },
+    component: userRisk
   }
 
 ]

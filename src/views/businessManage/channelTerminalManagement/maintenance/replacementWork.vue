@@ -1,7 +1,7 @@
-<!-- 渠道终端管理 - 维修管理 -->
+<!-- 置换工单 -->
 <template>
   <div class="vlt-card">
-    维修管理
+    置换工单
   </div>
 </template>
 

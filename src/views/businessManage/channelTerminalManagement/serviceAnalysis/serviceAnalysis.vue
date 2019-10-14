@@ -15,7 +15,7 @@
 </template>
 
 <script type="text/javascript">
-import terminalSideMenu from "@/components/main/terminalSideMenu";
+import terminalSideMenu from "@/views/businessManage/channelTerminalManagement/components/terminalSideMenu";
 export default {
   name: "",
   data() {
@@ -33,7 +33,7 @@ export default {
           id: 1,
           name: '维修员排行',
           active: false,
-          url: 'accessoryFault',
+          url: 'maintenanceStaff',
         },{
           id: 2,
           name: '设备故障排行',
@@ -43,7 +43,7 @@ export default {
           id: 3,
           name: '配件故障排行',
           active: false,
-          url: 'maintenanceStaff',
+          url: 'accessoryFault',
         }]
       }
     };
@@ -62,4 +62,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .vlt-card {
+    .el-main {
+          border-left: 1px solid #e6e6e6;
+    }
+  }
 </style>

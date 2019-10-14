@@ -3,10 +3,10 @@
     <el-form :inline="true" :model="form" :label-width="labelWidth">
       <span v-for="(formItem, itemIndex) in _options" :key="itemIndex" class="form-item-line">
         <el-form-item :label="formItem.title" v-if="formItem.type === 'input'">
-          <el-input size="small" v-model="form[formItem.prop]" :placeholder="formItem.placeholder"></el-input>
+          <el-input size="small" v-model="form[formItem.prop]" :placeholder="`请输入${formItem.title}`"></el-input>
         </el-form-item>
         <el-form-item :label="formItem.title" v-if="formItem.type === 'select'">
-          <el-select size="small" v-model="form[formItem.prop]" :placeholder="formItem.placeholder">
+          <el-select size="small" v-model="form[formItem.prop]" :placeholder="`请选择${formItem.title}`">
             <el-option :label="optionItem.label" :value="optionItem.value" v-for="(optionItem, optionIndex) in formItem.options" :key="optionIndex"></el-option>
           </el-select>
         </el-form-item>
@@ -15,7 +15,7 @@
             size="small"
             v-model="form[formItem.prop]"
             type="date"
-            :placeholder="formItem.placeholder"
+            :placeholder="`请选择${formItem.title}`"
           >
           </el-date-picker>
         </el-form-item>
@@ -24,8 +24,8 @@
             size="small"
             v-model="form[formItem.prop]"
             type="daterange"
-            :start-placeholder="formItem.placeholder[0]"
-            :end-placeholder="formItem.placeholder[1]"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
           >
           </el-date-picker>
         </el-form-item>
@@ -34,7 +34,7 @@
             size="small"
             v-model="form[formItem.prop]"
             type="datetime"
-            :placeholder="formItem.placeholder"
+            :placeholder="`请选择${formItem.title}`"
           >
           </el-date-picker>
         </el-form-item>
@@ -43,8 +43,8 @@
             size="small"
             v-model="form[formItem.prop]"
             type="datetimerange"
-            :start-placeholder="formItem.placeholder[0]"
-            :end-placeholder="formItem.placeholder[1]"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
           >
           </el-date-picker>
         </el-form-item>
@@ -53,6 +53,7 @@
             size="small"
             v-model="form[formItem.prop]"
             :options="formItem.options"
+            :placeholder="`请选择${formItem.title}`"
           >
           </el-cascader>
         </el-form-item>

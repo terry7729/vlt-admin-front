@@ -32,14 +32,17 @@ const pendingReading = () => import('@/views/businessManage/home/pendingReading'
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
 const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
-// 游戏发行计划列表
+// 游戏上市计划列表
 const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
 // 游戏配置管理
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
+//退市计划
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
 const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeCheck')
 const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
 const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
+const planEdit = () => import('@/views/businessManage/gameStoreManage/planEdit')
+
 
 
 // 渠道业务管理
@@ -50,14 +53,20 @@ const channelAdd = () => import('@/views/businessManage/channelBusinessManage/ch
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
 const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
 const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment')
-const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance')
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
+
+// 渠道终端管理 - 服务分析
 const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/serviceAnalysis')
 const maintenanceEfficiency = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/maintenanceEfficiency')
 const accessoryFault = () => import('../../views/businessManage/channelTerminalManagement/serviceAnalysis/accessoryFault')
 const equipmentFailure = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/equipmentFailure')
 const maintenanceStaff = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/maintenanceStaff')
+
+// 渠道终端管理 - 维修管理
+const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance/maintenance')
+const repairWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/repairWork')
+const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
 
 
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
@@ -239,6 +248,14 @@ export default [
     component: planCheck
   },
   {
+    path: 'businessManage/planEdit',
+    name: 'planEdit',
+    meta: {
+      title: '试玩编辑',
+    },
+    component: planEdit
+  },
+  {
     path: 'businessManage/channelList',
     name: 'channelList',
     meta: {
@@ -253,16 +270,7 @@ export default [
       title: '新建渠道',
     },
     component: channelAdd
-  }, 
-  //  {
-  //   path: 'businessManage/channelTerminal',
-  //   name: 'channelTerminal',
-  //   meta: {
-  //     title: '渠道终端管理',
-  //   },
-  //   component: channelTerminal,
-  //   children: []
-  // },
+  },
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
@@ -270,50 +278,67 @@ export default [
       title: '服务分析',
     },
     component: serviceAnalysis,
-    children: [
-    {
-      path: '',
-      redirect: {
-        name: 'maintenanceEfficiency'
+    children: [{
+        path: '',
+        redirect: {
+          name: 'maintenanceEfficiency'
+        },
+        component: maintenanceEfficiency,
       },
-      component: maintenanceEfficiency,
-    },
-    {
-      path: 'maintenanceEfficiency',
-      name: 'maintenanceEfficiency',
-      meta: {
-        title: '维修率分析',
-      },
-      component: maintenanceEfficiency,
-    },{
-      path: 'accessoryFault',
-      name: 'accessoryFault',
-      meta: {
-        title: '维修员排行',
-      },
-      component: accessoryFault,
-    },{
-      path: 'equipmentFailure',
-      name: 'equipmentFailure',
-      meta: {
-        title: '设备故障排行',
-      },
-      component: equipmentFailure,
-    },{
-      path: 'maintenanceStaff',
-      name: 'maintenanceStaff',
-      meta: {
-        title: '配件故障排行',
-      },
-      component: maintenanceStaff,
-    }]
+      {
+        path: 'maintenanceEfficiency',
+        name: 'maintenanceEfficiency',
+        meta: {
+          title: '维修率分析',
+        },
+        component: maintenanceEfficiency,
+      }, {
+        path: 'accessoryFault',
+        name: 'accessoryFault',
+        meta: {
+          title: '维修员排行',
+        },
+        component: accessoryFault,
+      }, {
+        path: 'equipmentFailure',
+        name: 'equipmentFailure',
+        meta: {
+          title: '设备故障排行',
+        },
+        component: equipmentFailure,
+      }, {
+        path: 'maintenanceStaff',
+        name: 'maintenanceStaff',
+        meta: {
+          title: '配件故障排行',
+        },
+        component: maintenanceStaff,
+      }
+    ]
   }, {
     path: 'businessManage/channelTerminal/maintenance',
     name: 'maintenance',
     meta: {
       title: '维修管理',
     },
-    component: maintenance
+    component: maintenance,
+    children: [{
+        path: 'repairWork',
+        name: 'repairWork',
+        meta: {
+          title: '维修工单',
+        },
+        component: repairWork,
+      },
+      {
+        path: 'replacementWork',
+        name: 'replacementWork',
+        meta: {
+          title: '置换工单',
+        },
+        component: replacementWork,
+      }
+    ]
   }, {
     path: 'businessManage/channelTerminal/reportStatistics',
     name: 'reportStatistics',

@@ -2,6 +2,7 @@
   <div class="vlt-card">
     <div class="searchBar">
       <search-Bar :options="option" :total="999"></search-Bar>
+      <el-button type="primary" icon="el-icon-plus" @click="add()">新建表单</el-button>
     </div>
     <el-table
       ref="multipleTable"
@@ -142,6 +143,9 @@ export default {
       } else {
         this.$refs.multipleTable.clearSelection();
       }
+    },
+    add () {
+      this.$router.push("formManage/formCompile");
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

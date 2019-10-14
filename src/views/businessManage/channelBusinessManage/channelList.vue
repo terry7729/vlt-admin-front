@@ -31,9 +31,9 @@ export default {
   data() {
     return {
       searchOptions: [
-        {type: 'input', prop: 'inputName', value: '', title: '输入框', placeholder: '请输入'},
+        {type: 'input', prop: 'inputName', value: '', title: '姓名'},
         {
-          type: 'select', prop: 'selectName', value: '', title: '选择框', placeholder: '请选择',
+          type: 'select', prop: 'selectName', value: '', title: '选择框',
           options: [
             {
               label: '选项1',
@@ -45,12 +45,12 @@ export default {
             }
           ]
         },
-        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择', placeholder: '请选择'},
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', placeholder: ['开始日期', '结束日期']},
-        {type: 'datetime', prop: 'date3', value: '', title: '日期时间', placeholder: '请选择'},
-        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', placeholder: ['开始时间', '结束时间']},
+        {type: 'datepicker', prop: 'date1', value: '', title: '计划日期'},
+        {type: 'datepicker-range', prop: 'date2', value: '', title: '销售日期'},
+        {type: 'datetime', prop: 'date3', value: '', title: '计划时间'},
+        {type: 'datetime-range', prop: 'date4', value: '', title: '起止时间'},
         {
-          type: 'cascader', prop: 'cascader1', value: '', title: '级联选择', placeholder: '请选择',
+          type: 'cascader', prop: 'cascader1', value: '', title: '所属机构',
           options: [{
             value: 'zhinan',
             label: '指南',
@@ -247,6 +247,15 @@ export default {
             }]
           }]
         },
+      ],
+      controlOptions: [
+        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+        {name: '批量删除', type: '', icon: 'delete'},
+        {name: '刷新', type: '', icon: 'refresh-right'},
+        {name: '打印', type: 'primary', icon: 'printer'},
+        {name: '导出', type: 'danger', icon: 'download'},   
+        {name: '导出', type: 'success', icon: 'upload'},
+        {name: '导出', type: 'warning', icon: 'download'},
       ],
       tableData: [
         {gameId:'12',gameName: 'a',cycleType: 0,gameTypeName:'奖组型',status:'2019-09-12 09：00：00'}
