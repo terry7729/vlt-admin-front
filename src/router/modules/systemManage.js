@@ -38,6 +38,16 @@ const organicompile = () =>import('@/views/systemManage/organization/organicompi
 //菜单管理
 
 const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
+//系统日志
+const systemOperationLog = () => import('@/views/systemManage/systemLog/systemLog')
+//系统开关
+const systemSwitch = () => import('@/views/systemManage/systemSwitch/systemSwitch')
+//假日参数管理
+const holidayParametersManagement = () => import('@/views/systemManage/holidayParametersManagement/holidayParametersManagement')
+//终端事件管理
+const TerminalEventControl = () => import('@/views/systemManage/TerminalEventManagement/TerminalEventManagement')
+//终端事件日志
+const TerminalEventLog = () => import('@/views/systemManage/TerminalEventManagement/TerminalEventLog')
 
 export default [
   // {
@@ -200,5 +210,45 @@ export default [
     title: '菜单管理',
   },
   component: menuManageMent
+},
+{
+  path: 'systemManage/systemOperationLog',
+  name: 'systemOperationLog',
+  meta: {
+    title: '系统操作日志',
+  },
+  component: systemOperationLog
+},
+{
+  path: 'systemManage/systemSwitch',
+  name: 'systemSwitch',
+  meta: {
+    title: '系统开关',
+  },
+  component: systemSwitch
+},
+{
+  path: 'systemManage/holidayParametersManagement',
+  name: 'holidayParametersManagement',
+  meta: {
+    title: '假日参数管理',
+  },
+  component: holidayParametersManagement
+},
+{
+  path: 'systemManage/TerminalEventControl',
+  name: 'TerminalEventControl',
+  meta: {
+    title: '终端事件控制',
+  },
+  component: TerminalEventControl
+},
+{
+  path: 'systemManage/TerminalEventLog',
+  name: 'TerminalEventLog',
+  meta: {
+    title: '终端事件控制',
+  },
+  component: TerminalEventLog
 }
 ]
