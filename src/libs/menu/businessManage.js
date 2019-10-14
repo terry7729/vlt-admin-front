@@ -53,7 +53,7 @@ export default [{
     },
       {
         icon: "el-icon-menu",
-        name: "游戏试玩计划管理",
+        name: "游戏发行管理",
         url: 'gamePlanManage',
         childResources: [
           {
