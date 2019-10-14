@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <search-bar :options="options" :total="999"></search-bar>
-    
+
     <div class="create-btn">
       <el-button type="primary" size="mini" @click="allotTask">分配任务</el-button>
     </div>
@@ -23,7 +23,7 @@
         <el-table-column label="操作" width="176">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="detail(scope.row.id)">查看</el-button>
-            <el-button type="primary" size="mini" @click="detail(scope.row.id)">进度更新</el-button>
+            <el-button type="primary" size="mini" @click="progressUpdate(scope.row.id)">进度更新</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -31,6 +31,27 @@
     <div class="table_paging">
       <pagination class="table_paging_right"></pagination>
     </div>
+
+    <el-dialog title="任务进度" :visible.sync="dialogFormVisible">
+      <section class="comp-item">
+        <cell title="基础信息">
+          <base-info :infoList="infoList"></base-info>
+        </cell>
+      </section>
+      <el-form :model="form">
+        <el-form-item label="任务进度" :label-width="formLabelWidth">
+          <el-input v-model="form.progress" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="任务进度" :label-width="formLabelWidth">
+          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="saveProgress">保存</el-button>
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+       
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -39,6 +60,8 @@ export default {
   name: "name",
   data() {
     return {
+      dialogFormVisible: false,
+      form: { progress: "", explain: "" },
       tableData: [
         {
           id: 1,
@@ -68,20 +91,33 @@ export default {
         }
       ],
       infoList: [
-        { title: "游戏编码", value: "", prop: "gameCode" },
-        { title: "周期类型", value: "", prop: "cycleType" },
-        { title: "游戏状态", value: "", prop: "gameStatus" },
-        { title: "游戏名称", value: "", prop: "gameName" },
-        { title: "游戏类型", value: "", prop: "officialEndSale" }
+        { title: "活动编号", value: "", prop: "accountID" },
+        { title: "活动名称", value: "", prop: "accountName" },
+        { title: "执行编号", value: "", prop: "principal" },
+        { title: "执行计划名称", value: "", prop: "telephoneNum" },
+        { title: "责任人", value: "", prop: "accountStatus" },
+        { title: "执行人", value: "", prop: "accountType" },
+        { title: "任务名称", value: "", prop: "area" },
+        { title: "任务描述", value: "", prop: "detailAdress" },
+        { title: "执行时间", value: "", prop: "createDate" },
+        { title: "截止时间", value: "", prop: "pullDate" },
+        { title: "状态", value: "", prop: "pullDate" }
       ]
     };
   },
   methods: {
     allotTask() {
-      this.$router.push({ path: "allotTask" })
+      this.$router.push({ path: "allotTask" });
     },
     detail(id) {
       this.$router.push({ path: "activityDetail", query: { id } });
+    },
+    progressUpdate(id) {
+      this.dialogFormVisible = true;
+    },
+    saveProgress(){
+      this.dialogFormVisible = false;
+     
     }
   },
   computed: {},
