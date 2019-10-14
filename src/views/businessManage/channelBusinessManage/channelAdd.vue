@@ -1,109 +1,19 @@
 <template>
   <div class="vlt-card">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="用户管理" name="first"></el-tab-pane>
-      <el-tab-pane label="配置管理" name="second"></el-tab-pane>
+      <el-tab-pane label="渠道新建" name="first"></el-tab-pane>
+      <el-tab-pane label="渠道新建流程图" name="second"></el-tab-pane>
     </el-tabs>
     <div class="vlt-edit-single">
       <h2 class="title">基本信息</h2>
       <div class="vlt-edit-wrap">
-        <el-form
-          label-position="right"
-          label-width="90px"
-          :model="form"
-          ref="form"
-        >
-          <el-form-item label="单注金额">
-            <el-input v-model="form.singleAmount"></el-input>
-          </el-form-item>
-          <el-form-item label="最小倍数">
-            <el-input v-model="form.minMultiple"></el-input>
-          </el-form-item>
-          <el-form-item label="最小注数">
-            <el-input v-model="form.mixBet"></el-input>
-          </el-form-item>
-          <el-form-item label="投注权限" prop="bet">
-            <el-select v-model="form.bet" placeholder="请选择">
-              <el-option
-                v-for="item in betOption"
-                @click.native="changeBet(item)"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="注销权限" prop="logOff">
-            <el-select v-model="form.logOff" placeholder="请选择">
-              <el-option
-                v-for="item in logOffOption"
-                @click.native="changeLogOff(item)"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="兑奖权限" prop="cash">
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 4}"
-              placeholder="请输入内容"
-              v-model="form.textarea"
-            ></el-input>
-          </el-form-item>
-        </el-form>
+        <base-form :formData="formData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
       </div>
       <h2 class="title">人员信息</h2>
       <div class="vlt-edit-wrap">
-        <el-form
-          label-position="right"
-          label-width="90px"
-          :model="form"
-          ref="form"
-        >
-          <el-form-item label="单注金额">
-            <el-input v-model="form.singleAmount"></el-input>
-          </el-form-item>
-          <el-form-item label="最小倍数">
-            <el-input v-model="form.minMultiple"></el-input>
-          </el-form-item>
-          <el-form-item label="最小注数">
-            <el-input v-model="form.mixBet"></el-input>
-          </el-form-item>
-          <el-form-item label="投注权限" prop="bet">
-            <el-select v-model="form.bet" placeholder="请选择">
-              <el-option
-                v-for="item in betOption"
-                @click.native="changeBet(item)"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="注销权限" prop="logOff">
-            <el-select v-model="form.logOff" placeholder="请选择">
-              <el-option
-                v-for="item in logOffOption"
-                @click.native="changeLogOff(item)"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="兑奖权限" prop="cash">
-            <el-input
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 4}"
-              placeholder="请输入内容"
-              v-model="form.textarea"
-            ></el-input>
-          </el-form-item>
-        </el-form>
+        <base-form :formData="formData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-row class="vlt-edit-btn">
-          <el-button type="primary" size="medium" @click="save">提交并保存</el-button>
+          <el-button type="primary" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="editShow = !editShow">取消</el-button>
         </el-row>
       </div>
@@ -117,19 +27,29 @@ export default {
   data() {
     return {
       activeName: "first",
-      form: {
-        singleAmount: "",
-        minMultiple: "",
-        mixBet: '',
-        bet: '',
-        logOff: '',
-        textarea: '',
+      formData: [
+        {title: '所属机构', type: 'cascader', prop: 'insCode', value: '',  options: []},
+        {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options:[{label:'自营厅',value:'1'},{label:'合作厅',value:'2'}]},
+        {title: '渠道编号', type: 'input', prop: 'channelCode', value: ''},
+        {title: '渠道地址', type: 'address', prop: 'address', value: '',options:[]}
+      ],
+      rules: {},
+      params: {
       }
     };
   },
   created() {},
   methods: {
     handleClick() {},
+    changeForm(val) {
+      Object.assign(this.params, val)
+      console.log('派发出来的参数', this.params)
+    },
+    submit() {
+      this.$refs.baseForm.validate((val)=>{
+        console.log(val)
+      });
+    },
     add() {
       console.log("a");
     }

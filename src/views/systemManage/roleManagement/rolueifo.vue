@@ -6,9 +6,9 @@
         
       </div>
     </div>-->
-    <cell title="彩票信息">
+    <panel-static title="彩票信息">
       <base-info :infoList="infoList"></base-info>
-    </cell>
+    </panel-static>
   </div>
 </template>
 
