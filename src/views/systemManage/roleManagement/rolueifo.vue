@@ -1,14 +1,14 @@
 <template>
-  <div class="vlt-card">
+  <div class="vlt-card" style="padding:16px 16px 66px 16px">
     <!-- <div class="vlt-edit-single">
       <h2 class="title">角色信息</h2>
       <div class="vlt-edit-wrap">
         
       </div>
     </div>-->
-    <cell title="彩票信息">
+    <panel-static title="彩票信息">
       <base-info :infoList="infoList"></base-info>
-    </cell>
+    </panel-static>
   </div>
 </template>
 
