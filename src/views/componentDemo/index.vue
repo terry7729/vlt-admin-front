@@ -149,6 +149,7 @@ export default {
   data() {
     const self = this;
     return {
+      params: {},
       fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       data1: [
         {type: 'input', title: '姓名', prop: 'name'},
@@ -161,14 +162,15 @@ export default {
         {title: '起止时间', type: 'datetime-range', prop: '', value: '', option:['startTime', 'endTime']},
       ],
       data2: [
+        {title: '单选',type: 'radio', prop: 'radio', value: '', options:[{key:1,value:'选项一'},{key:2,value:'选项二'}]},
         {type: 'input', title: '测试', prop: 'test'},
         {type: 'select', title: '状态', prop: 'status', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
         {type: 'textarea', title: '说明', prop: 'all'},
         {type: 'switch', title: '兑奖权限', prop: 'isShow'},
-        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择', placeholder: '请选择'},
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', placeholder: ['开始日期', '结束日期']},
-        {type: 'datetime', prop: 'date3', value: '', title: '日期时间', placeholder: '请选择'},
-        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', placeholder: ['开始时间', '结束时间']},
+        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择'},
+        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', option: ['start', 'end']},
+        {type: 'datetime', prop: 'date3', value: '', title: '日期时间'},
+        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', option: ['start', 'end']},
         {
           type: 'cascader', prop: 'cascader1', value: '', title: '级联选择', placeholder: '请选择',
           options: [{
