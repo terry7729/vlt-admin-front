@@ -7,24 +7,35 @@ const accountListDetail = () => import('@/views/businessOperation/channelAccount
 const haveListDetail = () => import('@/views/businessOperation/channelAccount/haveListDetail')
 // 账户资金
 const accountManage = () => import('@/views/businessOperation/channelAccount/accountManage')
+
+//品牌营销推广------
 //活动计划模板
 const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
-//活动计划管理
-const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
-//活动执行管理
-const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
-//活动效果评估
-const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
 //模板预览
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
-//活动执行管理详情
-const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
+
+
+//活动计划管理
+const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
 //计划详情
 const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
 //新建活动
 const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
+
+//活动执行管理
+const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
+//活动执行详情
+const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
 //分配任务
 const allotTask = () => import('@/views/businessOperation/brandMarketing/allotTask')
+
+
+//活动效果评估
+const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
+//开始评估
+const resultAssess = () => import('@/views/businessOperation/brandMarketing/resultAssess')
+
+
 export default [
   // {
   //   path: 'demo',
@@ -142,6 +153,14 @@ export default [
       title: '分配任务',
     },
     component: allotTask,
+  },
+  {
+    path: 'brandMarketing/resultAssess',
+    name: 'resultAssess',
+    meta: {
+      title: '效果评估',
+    },
+    component: resultAssess,
   },
 
 

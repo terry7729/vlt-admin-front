@@ -2,8 +2,8 @@
   <div class="vlt-card">
     <search-bar :options="options"></search-bar>
     <div class="create-btn">
-      <el-button type="primary" size="small" @click="allotTask">评估</el-button>
-      <el-button type="primary" size="small" @click="allotTask">下载</el-button>
+      <el-button type="primary" size="small" @click="assess">评估</el-button>
+      <el-button type="primary" size="small">下载</el-button>
     </div>
 
     <div class="el_table">
@@ -19,8 +19,6 @@
         <el-table-column prop="retionReport" label="定量报告"></el-table-column>
         <el-table-column prop="createPerson" label="创建人"></el-table-column>
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
-
-     
       </el-table>
     </div>
   </div>
@@ -63,6 +61,11 @@ export default {
       ]
     };
   },
+  methods: {
+    assess() {
+      this.$router.push({ path: "resultAssess" });
+    }
+  },
   computed: {},
   created() {},
   mounted() {},
@@ -72,5 +75,5 @@ export default {
 
 
 <style lang="less">
-@import "./less/index.less";
+
 </style>
