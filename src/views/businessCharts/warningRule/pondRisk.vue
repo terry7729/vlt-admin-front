@@ -24,34 +24,16 @@
         <el-table-column align="center" prop="date" label="最高奖池金额"></el-table-column>
         <el-table-column align="center" prop="name" label="最低奖池金额"></el-table-column>
         <el-table-column align="center" prop="address" label="状态/审核"></el-table-column>
-         <el-table-column label="操作" fixed="right" width="120px" align="center">
+        <el-table-column label="操作" fixed="right" width="120px" align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click size="mini">修改</el-button>
             <el-button type="primary" @click size="mini">删除</el-button>
           </template>
         </el-table-column>
-     </el-table>
-      <!-- :page-size="[10,20,30, 50]" -->
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        ></el-pagination>
-        <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="100"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-        </el-pagination>-->
-      </div>
+      </el-table>
+      <section class="comp-item" style="text-align:right;margin-top:30px">
+        <table-paging></table-paging>
+      </section>
     </div>
   </div>
 </template>
