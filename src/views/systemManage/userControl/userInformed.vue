@@ -53,7 +53,7 @@
         </el-form>
         <el-row class="el-form-item vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="save(form)">提交并保存</el-button>
-          <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+          <el-button size="medium" @click="cencle">取消</el-button>
         </el-row>
       </div>
     </div>
@@ -83,6 +83,9 @@ export default {
     save(val) {
       console.log(val);
       console.log("submit!");
+    },
+    cencle(){
+      this.$router.go(-1)
     }
   }
 };

@@ -1,11 +1,11 @@
 <template>
   <!-- 无收缩面板 -->
-  <div class="cell">
-    <div class="cell-hd">
-      <i class="el-icon-caret-bottom cell-caret"></i>
+  <div class="static">
+    <div class="static-hd">
+      <i class="el-icon-caret-bottom static-caret"></i>
       <h6 class="title">{{title}}</h6>
     </div>
-    <div class="cell-bd">
+    <div class="static-bd">
       <slot>
         <!-- 插入内容 -->
       </slot>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'cell',
+  name: 'panelStatic',
   props: {
     // 面板标题
     title: {
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.cell{
+.static{
   border: 1px solid #e4e4e4;
   border-radius: 6px;
   background-color: #fff;

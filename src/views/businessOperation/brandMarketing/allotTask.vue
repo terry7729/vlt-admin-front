@@ -98,6 +98,6 @@ export default {
 };
 </script>
 
-<style lang="less" >
-@import "./less/allotTask";
+<style lang="less" scoped >
+
 </style>

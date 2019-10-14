@@ -26,9 +26,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="table_paging">
-      <pagination class="table_paging_right"></pagination>
-    </div>
+  
   </div>
 </template>
 
