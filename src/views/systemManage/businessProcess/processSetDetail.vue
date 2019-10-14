@@ -16,11 +16,22 @@
           <span>节点信息</span>
         </template>
         <el-menu-item-group>
-          <el-form label-position="top" label-width="80px" :model="formLabelAlign">
+          <el-form label-position="right" label-width="80px" :model="formLabelAlign">
             <el-form-item label="名称">
               <el-input v-model="input" placeholder="游戏发行申请" style="width:200px"></el-input>
             </el-form-item>
             <el-form-item label="处理类型">
+              <el-select v-model="value" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                   placeholder="请输入内容"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="处理人">
               <el-select v-model="value" placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -42,7 +53,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="活动区域">
+            <el-form-item label="任务类型">
               <el-select v-model="value" placeholder="请选择">
                 <el-option
                   v-for="item in options"
@@ -53,21 +64,10 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="活动区域">
+            <el-form-item label="表单字段">
               <el-select v-model="value" placeholder="请选择">
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                   placeholder="请输入内容"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="活动区域">
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
+                  v-for="item in options" 
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -115,7 +115,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .el-form-item{
-    text-align: center
-  }
+  
 </style>
