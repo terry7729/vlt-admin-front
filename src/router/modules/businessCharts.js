@@ -23,16 +23,37 @@ const equipmentHardwareWatch = () => import('@/views/businessCharts/saleshallEqu
 const warningWatch = () => import('@/views/businessCharts/warningWatch')
 //报表管理
 const warningReport = () => import('@/views/businessCharts/warningReport')
+
+//奖池风险
+const pondRisk = () => import('@/views/businessCharts/warningRule/pondRisk')
+
+//城市风险
+const cityRisk = () => import('@/views/businessCharts/warningRule/cityRisk')
+
+//城市游戏风险
+const cityGameRisk = () => import('@/views/businessCharts/warningRule/cityGameRisk')
+//告警通知
+const warningNotice=() => import('@/views/businessCharts/warningRule/warningNotice')
+
+//用户风险
+const userRisk=() => import('@/views/businessCharts/warningRule/userRisk')
+//告警监控详情
+const warningWatchDetail=() => import('@/views/businessCharts/warningWatch/modules/warningWatchDetail')
+//告警监控编辑
+const warningWatchEdit=() => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
+//demo
+const demo=() => import('@/views/componentDemo')
+
 export default [
-  // {
-  //   path: 'demo',
-  //   name: 'demo',
-  //   component: demo,
-  //   meta: {
-  //     parentName: '', // 当左侧菜单匹配不到当前路由时(菜单无对应激活状态),请设置该属性值(菜单可激活的父级路由名称)
-  //     title: '路由说明'
-  //   }
-  // },
+  {
+    path: 'demo',
+    name: 'demo',
+    component: demo,
+    meta: {
+      parentName: '', // 当左侧菜单匹配不到当前路由时(菜单无对应激活状态),请设置该属性值(菜单可激活的父级路由名称)
+      title: '路由说明'
+    }
+  },
   {
     path: '/',
     name: 'businessCharts',
@@ -133,6 +154,62 @@ export default [
       title: '告警监控',
     },
     component: warningWatch
+  },
+  {
+    path: 'businessCharts/pondRisk',
+    name: 'pondRisk',
+    meta: {
+      title: '奖池风险指标',
+    },
+    component: pondRisk
+  },
+  {
+    path: 'businessCharts/cityRisk',
+    name: 'cityRisk',
+    meta: {
+      title: '城市风险指标',
+    },
+    component: cityRisk
+  },
+  {
+    path: 'businessCharts/cityGameRisk',
+    name: 'cityGameRisk',
+    meta: {
+      title: '城市游戏风险指标',
+    },
+    component: cityGameRisk
+  },
+  {
+    path: 'businessCharts/warningNotice',
+    name: 'warningNotice',
+    meta: {
+      title: '城市游戏风险指标',
+    },
+    component: warningNotice
+  },
+  {
+    path: 'businessCharts/userRisk',
+    name: 'userRisk',
+    meta: {
+      title: '城市游戏风险指标',
+    },
+    component: userRisk
+  },
+  {
+    path: 'businessCharts/warningWatchDetail',
+    name: 'warningWatchDetail',
+    meta: {
+      title: '告警监控详情',
+    },
+    component: warningWatchDetail
+  },
+  {
+    path: 'businessCharts/warningWatchEdit',
+    name: 'warningWatchEdit',
+    meta: {
+      title: '告警监控编辑',
+    },
+    component: warningWatchEdit
   }
 
 ]

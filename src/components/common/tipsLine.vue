@@ -31,13 +31,15 @@
   .tips-line-comp{
     height: 32px;
     line-height: 32px;
-    background-color: rgba(230, 243, 252, 1);
-    border: 1px solid rgba(212, 240, 252, 1);
+    background-color: #f0faff;
+    border: 1px solid #abdcff;
     font-size: 12px;
     color: #515a6e;
     border-radius: 4px;
     padding: 0 10px;
     margin: 10px 0;
+    display: flex;
+    align-items: center;
     p{
       display: inline;
     }
