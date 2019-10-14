@@ -3,13 +3,19 @@
 const baseSetting = () => import('@/views/systemManage/settings/baseSetting')
 // 邮件设置
 const emailSetting = () => import('@/views/systemManage/settings/emailSetting')
+//参数设置
+const paramSetting= () => import('@/views/systemManage/settings/paramSetting')
+//短信设置
+const noteSetting= () => import('@/views/systemManage/settings/noteSetting')
+
 //数据字典
-const dataDictionary = () => import('@/views/systemManage/dataDictionary/index')
+const dataDictionary = () => import('@/views/systemManage/dataDictionary/dataDictionary')
+//数据字典编辑
+const dataDictionaryEdit = () => import('@/views/systemManage/dataDictionary/dataDictionaryEdit')
 
 //业务流程
 const formManage = () => import('@/views/systemManage/businessProcess/formManage')
 const formCompile = () => import('@/views/systemManage/businessProcess/formCompile')
-
 //流程设置
 const processSet = () => import('@/views/systemManage/businessProcess/processSet')
 //流程设置详情
@@ -77,12 +83,20 @@ export default [
     component: emailSetting
   },
   {
-    path: 'systemManage/emailSetting',
-    name: 'emailSetting',
+    path: 'systemManage/paramSetting',
+    name: 'paramSetting',
     meta: {
-      title: '邮件设置',
+      title: '参数设置',
     },
-    component: emailSetting
+    component: paramSetting
+  },
+  {
+    path: 'systemManage/noteSetting',
+    name: 'noteSetting',
+    meta: {
+      title: '短信设置',
+    },
+    component:noteSetting
   },
   {
     path :'systemManage/formManage',
@@ -96,7 +110,7 @@ export default [
     path :'systemManage/formManage/formCompile',
     name:'formCompile',
     meta:{
-      title:'编辑',
+      title:'表单管理编辑',
     },
     component:formCompile
   },
@@ -131,6 +145,22 @@ export default [
       title:'流程分类修改',
     },
     component:processClassifyModify
+  },
+  {
+    path :'systemManage/dataDictionary',
+    name:'dataDictionary',
+    meta:{
+      title:'数据字典',
+    },
+    component:dataDictionary
+  },
+  {
+    path :'systemManage/dataDictionary/dataDictionaryEdit',
+    name:'dataDictionaryEdit',
+    meta:{
+      title:'数据字典编辑',
+    },
+    component:dataDictionaryEdit
   },
   {
 
