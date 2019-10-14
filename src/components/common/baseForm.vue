@@ -16,7 +16,7 @@
         v-model="form[item.prop]"
         @change="change"
         :active-text="switchText"
-        active-color="#13ce66"
+        active-color="#409EFF"
         inactive-color="">
       </el-switch>
       <el-date-picker size="small" type="date"
@@ -105,7 +105,9 @@ export default {
         this.$set(this.form, item.option[1], '')
         this.timeParam[item.type] = item.option;
         console.log('时间参数', this.timeParam)
-      }else {
+      }else if(item.type=='switch') {
+        this.$set(this.form, item.prop, true)
+      }else{
         this.$set(this.form, item.prop, '')
       }
     })
@@ -113,8 +115,23 @@ export default {
   components: {
   },
   methods: {
+    validate(callback) {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          console.log('校验通过')
+          // this.$emit('asset')
+          callback('true')
+        }else{
+          console.log('校验不通过')
+          callback('false');
+        }
+      })
+    },
     change(val) {
       this.switchText = val ? '开启' : '关闭'
+    },
+    changeSelect(val) {
+      console.log(val)
     }
   },
 }

@@ -34,6 +34,16 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :hide-on-single-page="false"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="10"
+      layout="total,prev, pager, next, sizes,jumper"
+      :total="100" background>
+    </el-pagination>
   </div>
 </template>
 
@@ -181,7 +191,8 @@ export default {
         },
         {type: 'datepicker-range', prop: 'date2', value: '', title: '最近更新时间', placeholder: ['开始日期', '结束日期']},
           
-        ]
+        ],
+        currentPage: 1
       }
     
   },
@@ -214,7 +225,13 @@ export default {
       search(form) {
       console.log('search', form)
     },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+  },
   computed: {
 
   },
