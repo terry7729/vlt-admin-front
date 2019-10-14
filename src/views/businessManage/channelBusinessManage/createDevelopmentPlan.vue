@@ -29,7 +29,7 @@ export default {
         {title: '市合作厅数量', type: 'input', prop: 'test', value: ''},
         {title: '市合作厅投注数量', type: 'input', prop: 'test', value: ''},
         {title: '发展预算', type: 'input', prop: 'test', value: ''},
-        {title: '计划说明',type: 'textarea', prop: 'all', value: ''},
+        {title: '计划说明',type: 'textarea', prop: 'all', value: ''}
       ],
       params: {
       },

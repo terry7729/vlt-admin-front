@@ -43,6 +43,12 @@
       </el-date-picker>
       <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="`请输入${item.title}`"></el-input>
       <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :options="item.options" :placeholder="`请选择${item.title}`"></el-cascader>
+      <el-radio-group v-if="item.type=='radio'" v-model="form[item.prop]">
+        <el-radio 
+        v-for="(list,index) in item.options"
+        :key="index"
+        :label="list.key">{{list.value}}</el-radio>
+      </el-radio-group>
     </el-form-item> 
   </el-form> 
 </template>
