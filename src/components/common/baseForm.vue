@@ -6,7 +6,7 @@
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop">
       <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="`请输入${item.title}`"></el-input> 
       <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="`请选择${item.title}`">
-        <el-option v-for="items in item.option" :key="items.value" :label="items.label"
+        <el-option v-for="(items,index) in item.option" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
         </el-option>

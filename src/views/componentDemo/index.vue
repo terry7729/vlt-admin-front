@@ -170,7 +170,7 @@ export default {
         {type: 'datetime', prop: 'date3', value: '', title: '日期时间', placeholder: '请选择'},
         {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', placeholder: ['开始时间', '结束时间']},
         {
-          type: 'cascader', prop: 'cascader1', value: '', title: '级联选择', placeholder: '请选择',
+          type: 'cascader', prop: 'cascader1', value: '', title: '级联选择',
           options: [{
             value: 'zhinan',
             label: '指南',

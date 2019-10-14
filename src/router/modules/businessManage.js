@@ -42,6 +42,7 @@ const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeChe
 const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
 const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
 const planEdit = () => import('@/views/businessManage/gameStoreManage/planEdit')
+const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 
 
 
@@ -178,6 +179,14 @@ export default [
       title: '游戏储备',
     },
     component: gameStoreList
+  },
+  {
+    path: 'businessManage/addGame',
+    name: 'addGame',
+    meta: {
+      title: '新建游戏',
+    },
+    component: addGame
   },
   {
     path: 'businessManage/gamePlanList',
