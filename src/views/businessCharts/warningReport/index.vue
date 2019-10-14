@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       controlOptions: [  
-        {type: 'add', change() {alert('cliked')}},       
+        { name: "新增", type: "primary", icon: "plus" },       
       ],
       activeName: "first",
       total: null,
