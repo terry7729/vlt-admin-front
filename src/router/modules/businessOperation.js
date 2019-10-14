@@ -23,6 +23,8 @@ const externalrevise = () => import('@/views/businessOperation/channelAccount/ex
 const externalbalance = () => import('@/views/businessOperation/channelAccount/externalbalance')
 //账户资金管理第三方支付明细
 const externaldetail = () => import('@/views/businessOperation/channelAccount/externaldetail')
+//客户账户列表
+const customerAccountList = () => import('@/views/businessOperation/customerAccount/customerAccount')
 //活动计划模板
 const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
 //活动计划管理
@@ -150,6 +152,15 @@ export default [
       title: '第三方支付明细',
     },
     component: externaldetail
+  },
+  //客户账户列表
+  {
+    path: 'businessOperation/customerAccountList',
+    name: 'customerAccountList',
+    meta: {
+      title: '客户账户列表',
+    },
+    component: customerAccountList
   },
 
   //品牌与营销推广

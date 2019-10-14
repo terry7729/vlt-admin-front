@@ -130,7 +130,7 @@ export default {
         { name: "新增", type: "primary", icon: "plus" },
         { name: "修改", type: "", icon: "edit" },
         { name: "删除", type: "", icon: "delete" },
-        { name: "导入", type: "success", icon: "leading" },
+        { name: "导入", type: "success", icon: "upload2" },
         { name: "导出", type: "danger", icon: "download" }
       ],
       banktableData: [

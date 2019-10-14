@@ -21,6 +21,16 @@ export default [{
       },
       {
         childResources: [{
+          icon: "el-icon-menu",
+          name: "客户账户列表",
+          url: 'customerAccountList'
+        }],
+        icon: "el-icon-menu",
+        name: "客户账户",
+        url: 'customerAccount'
+      },
+      {
+        childResources: [{
             childResources: [],
             icon: "el-icon-menu",
             name: "活动计划模板",
