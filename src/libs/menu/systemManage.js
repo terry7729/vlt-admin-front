@@ -21,7 +21,7 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "参数设置",
-          url: 'parameterSetting'
+          url: 'paramSetting'
         },
         {
           childResources: [],
