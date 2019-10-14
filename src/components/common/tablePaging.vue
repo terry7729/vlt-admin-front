@@ -1,14 +1,15 @@
 <template>
-  <div class="table-paging-comp">
+  <div class="table-paging-comp" v-if="PAGESIZE < TOTAL">
     <el-pagination
       background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :page-sizes="[10, 20, 30, 50]"
+      :current-page="CURRENTPAGE"
+      :page-size="PAGESIZE"
+      :total="TOTAL"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      >
     </el-pagination>
   </div>
 </template>
@@ -16,24 +17,35 @@
 <script>
   export default {
     name: 'tablePaging',
+    props: {
+      total: { // 总页数
+        type: Number,
+        default: 0
+      },
+      currentPage: { // 当前页
+        type: Number,
+        default: 1
+      },
+      pageSize: { // 每页显示条数
+        type: Number,
+        default: 10 // 默认10条
+      }
+    },
     data() {
       return {
-        currentPage: 1
+        CURRENTPAGE: this.currentPage,
+        TOTAL: this.total,
+        PAGESIZE: this.pageSize
       };
     },
     methods: {
       handleSizeChange(size) {
-        console.log(`每页 ${size} 条`);
-        const self = this;
-        self.currentPage = 1;
-        self.pageSize = size;
-        self.getList();
+        this.PAGESIZE = size
+        this.$emit('handleSizeChange', size)
       },
       handleCurrentChange(page) {
-        console.log(`当前页: ${page}`);
-        const self = this;
-        self.currentPage = page;
-        self.getList();
+        this.CURRENTPAGE = page
+        this.$emit('handleCurrentChange', page)
       }
     },
 

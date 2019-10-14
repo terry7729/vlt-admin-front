@@ -74,13 +74,13 @@ export default {
         // 菜单过滤
         (function filter(treeData) {
           for (let i = 0, len = treeData.length; i < len; i++) {
-            let children = treeData[i].childResources || [];
-            if (!children && children.length == 0) {
-              return;
-            }
             // 最顶层菜单添加class
             if (n === 0) {
               treeData.map(item => {item.className = 'top-menu-item'});
+            }
+            let children = treeData[i].childResources || [];
+            if (!children && children.length == 0) {
+              return;
             }
             n++;
             // 删除图标(最上级以下全部清除)
@@ -186,6 +186,14 @@ export default {
         background-color: #303750;
       }
     }
+    .top-menu-item .iconfont{
+      margin-right: 3px;
+      font-size: 18px;
+      color: rgba(255,255,255,0.6);
+      width: 24px;
+      text-align: center;
+      display: inline-block;
+    }
     .el-menu-item:focus{
       background-color: transparent;
     }
@@ -260,14 +268,6 @@ export default {
     }
 
     .el-submenu__title {
-      .iconfont{
-        font-size: 18px;
-        color: rgba(255,255,255,0.6);
-        width: 24px;
-        text-align: center;
-        display: inline-block;
-        margin-right: 3px;
-      }
       .el-submenu__icon-arrow{
         font-size: 14px;
         color: rgba(255,255,255,0.6);
