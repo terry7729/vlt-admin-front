@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card">
-   <section class="comp-item">
+    <section class="comp-item">
       <search-bar
         class="search-bar-demo"
         @search="search"
@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
     <div class="tab-container">
@@ -28,33 +28,15 @@
         <el-table-column align="center" prop="name" label="省份"></el-table-column>
         <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
         <el-table-column align="center" prop="date" label="磁盘使用"></el-table-column>
-        <el-table-column align="center" prop="date" label="CPU使用"></el-table-column>     
+        <el-table-column align="center" prop="date" label="CPU使用"></el-table-column>
         <el-table-column align="center" prop="date" label="系统内存使用"></el-table-column>
         <el-table-column align="center" prop="date" label="网络流量"></el-table-column>
         <el-table-column align="center" prop="date" label="终端状态"></el-table-column>
         <el-table-column align="center" prop="date" label="外设状态"></el-table-column>
       </el-table>
-      <!-- :page-size="[10,20,30, 50]" -->
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        ></el-pagination>
-        <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="100"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-        </el-pagination>-->
-      </div>
+      <section class="comp-item" style="text-align:right;margin-top:30px">
+        <table-paging></table-paging>
+      </section>
     </div>
   </div>
 </template>
@@ -118,16 +100,14 @@ export default {
           ]
         }
       ],
-      controlOptions: [
-       { name: "导出", type: "primary", icon: "download" },
-      ],
+      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       //记录省市县
       provinceList: [],
       dataprovinceList: [],
       provinceCode: "",
 
-      poundage:[],
-      poundagefee:[],
+      poundage: [],
+      poundagefee: [],
       cityList: [],
       datacityList: [],
       cityCode: "",
@@ -160,22 +140,8 @@ export default {
           date: "2016-05-03",
           name: "王小虎",
           address: "100"
-        },,
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "100"
         },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "100"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "100"
-        },,
+        ,
         {
           date: "2016-05-04",
           name: "王小虎",
@@ -191,6 +157,22 @@ export default {
           name: "王小虎",
           address: "100"
         },
+        ,
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "100"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "100"
+        }
       ]
     };
   },
@@ -272,7 +254,6 @@ export default {
         this.cityList = cArrres;
         this.cityCode = this.cityList[0].cityCode;
         //回调自动获取当前选择的县区
-       
       }
       console.log(
         "省：" +
@@ -283,11 +264,11 @@ export default {
           this.countryCode
       );
     },
-     search(form) {
-      console.log('search', form)
-    },
+    search(form) {
+      console.log("search", form);
+    }
   },
-  
+
   mounted() {
     this.showcity();
   }
@@ -295,7 +276,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>
