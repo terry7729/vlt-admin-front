@@ -64,26 +64,26 @@ export default {
         {
           title: "邮件发送",
           type: "radio",
-          prop: "userName",
+          prop: "emailSend",
           value: "",
           options: [{ key: 1, value: "开启" }, { key: 0, value: "关闭" }]
         },
-        { title: "SMTP服务器地址", type: "input", prop: "code", value: "" },
-        { title: "SMTP端口号", type: "input", prop: "code", value: "" },
-        { title: "SMTP用户名", type: "input", prop: "code", value: "" },
-        { title: "SMTP密码", type: "input", prop: "code", value: "" },
-        { title: "发信人地址", type: "input", prop: "code", value: "" },
-        { title: "发信人名称", type: "input", prop: "code", value: "" }
+        { title: "SMTP服务器地址", type: "input", prop: "serverSite", value: "" },
+        { title: "SMTP端口号", type: "input", prop: "portNumber", value: "" },
+        { title: "SMTP用户名", type: "input", prop: "userName", value: "" },
+        { title: "SMTP密码", type: "input", prop: "pwd", value: "" },
+        { title: "发信人地址", type: "input", prop: "senderSite", value: "" },
+        { title: "发信人名称", type: "input", prop: "senderName", value: "" }
       ],
       data2: [
-        { title: "发送内容", type: "select", prop: "code", value: "" },
-        { title: "接收人", type: "select", prop: "code", value: "" },
-        { title: "", type: "select", prop: "code", value: "" }
+        { title: "发送内容", type: "select", prop: "sendContent", value: "" },
+        { title: "接收人", type: "select", prop: "recipientDepartment", value: "" },
+        { title: "", type: "select", prop: "recipientStaff", value: "" }
       ],
       data3: [
-        { title: "", type: "select", prop: "code", value: "" },
-        { title: "接收人", type: "select", prop: "code", value: "" },
-        { title: "", type: "select", prop: "code", value: "" }
+        { title: "", type: "select", prop: "sendContent", value: "" },
+        { title: "接收人", type: "select", prop: "recipientDepartment", value: "" },
+        { title: "", type: "select", prop: "recipientStaff", value: "" }
       ],
       radio: "1",
       rules1: {}
