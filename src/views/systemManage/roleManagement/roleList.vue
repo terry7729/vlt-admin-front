@@ -12,69 +12,71 @@
       </search-bar>
     </div>
     <div class="role-table">
-      <el-table
-        ref="multipleTable"
-        :data="tableData"
-        tooltip-effect="dark"
-        style="width: 100%"
-        :border="true"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column label="日期" width="120">
-          <template slot-scope="scope">{{ scope.row.date }}</template>
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-        <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
-        <el-table-column prop="address" label="用户状态" show-overflow-tooltip>
-          <template>
-            <div>
-              <el-button type="text">启用</el-button>
-              <span>|</span>
-              <el-button type="text">冻结</el-button>
-              <span>|</span>
-              <el-button type="text">注销</el-button>
-            </div>
+      <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
+        <el-table-column type="index" prop="date" label="序号"></el-table-column>
+        <el-table-column prop="date" label="用户角色"></el-table-column>
+        <el-table-column prop="name" label="角色描述"></el-table-column>
+        <el-table-column prop="province" label="创建人"></el-table-column>
+        <el-table-column prop="city" label="角色类型"></el-table-column>
+        <el-table-column prop="address" label="创建时间"></el-table-column>
+
+        <el-table-column label="角色状态" align="center">
+          <template slot-scope="scope">
+            <table-row-status
+              statusField="status"
+              idField="id"
+              :scope="scope"
+              :tableData="tableData"
+              :rowName="scope.row.name"
+              :option="{
+                'enable': {
+                  apiName: 'apiName', // 接口名称
+                  label: '启用', // 按钮文字
+                  value: 0 // 接口字段传值
+                },
+                'disable': {
+                  apiName: 'apiName',
+                  label: '冻结',
+                  value: 1
+                },
+                'logout': {
+                  apiName: 'apiName',
+                  label: '注销',
+                  value: -1
+                }
+              }"
+            ></table-row-status>
           </template>
         </el-table-column>
-        <el-table-column prop="address" label="操作" show-overflow-tooltip>
-          <el-button type="text" @click="handelifo">查看</el-button>
-          <span>|</span>
-          <el-button type="text" @click="handelskip">编缉</el-button>
-          <span>|</span>
-          <el-button type="text">重置密码</el-button>
+        <el-table-column prop="zip" label="操作">
+          <template>
+            <el-button type="primary" size="mini" @click="handelifo">查看</el-button>
+            <el-button type="success" size="mini" @click="handelskip">编缉</el-button>
+          </template>
         </el-table-column>
       </el-table>
       <div class="pagintion">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper,slot"
-          :total="400"
-        >
-          <span style="color:#606266;font-weight: 400;">第 1 / 80 页</span>
-        </el-pagination>
+        <table-paging
+          :current-page="1"
+          :page-size="10"
+          :total="100"
+          @handleSizeChange="pageSizeChange"
+          @handleCurrentChange="pageCurrentChange"
+        ></table-paging>
       </div>
     </div>
-   
   </div>
 </template>
 
 <script>
 export default {
-  name: "name",
+  name: "roleList",
   data() {
     return {
-     
       controlOptions: [
         //按钮组
         { name: "新建计划", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
-     
 
       option: [
         //搜索框组
@@ -166,16 +168,13 @@ export default {
     handelifo() {
       this.$router.push("roleList/roleifometion");
     },
-    handleSelectionChange(val) {
-      //当前选择项目
+    pageSizeChange(val) {
+      //每页显示条数
       console.log(val);
-      this.multipleSelection = val;
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    pageCurrentChange(val) {
+      //当前显示页数
+      console.log(val);
     },
     handelskip() {
       this.$router.push("roleList/roleDestails");
@@ -187,8 +186,7 @@ export default {
     search(val) {
       //搜索事件
       console.log(val);
-    },
-    
+    }
   }
 };
 </script>
@@ -196,42 +194,7 @@ export default {
 
 <style lang="less">
 @import "./less/index.less";
-.pagintion {
-  margin: 20px;
-  .el-pagination {
-    position: relative;
-    .el-pagination__jump {
-      position: absolute;
-      right: 0;
-    }
-    .el-pagination__sizes {
-      position: absolute;
-      right: 94px;
-    }
-    .btn-prev {
-      position: absolute;
-      right: 599px;
-    }
-    .el-pager {
-      position: absolute;
-      right: 269px;
-    }
-    .btn-next {
-      position: absolute;
-      right: 220px;
-    }
-  }
-}
 
-.el-table th {
-  background: #f8f8f9;
-  padding: 8px 0;
-  text-align: center;
-}
-.el-table td {
-  padding: 10px 0;
-  text-align: center;
-}
 .el-dialog__footer {
   text-align: center;
 }

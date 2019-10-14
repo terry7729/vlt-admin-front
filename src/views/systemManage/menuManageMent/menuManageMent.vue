@@ -31,7 +31,7 @@
       </el-aside>
       <el-main style="border-left:1px solid #ccc;padding-left:100px;">
         <div class="vlt-edit-single">
-          <bounced-message :obj='ifo'></bounced-message>
+          <bounced-message :obj="ifo"></bounced-message>
           <!-- <div class="vlt-edit-wrap">
             <el-form
               label-position="right"
@@ -97,8 +97,13 @@
       </el-main>
     </el-container>
     <div class="bouncedMessage">
-      <el-dialog title="添加子节点" :visible.sync="dialogFormVisible">
-           <bounced-message ></bounced-message>
+      <el-dialog
+        title="添加子节点"
+        :visible.sync="dialogFormVisible"
+        width="500px"
+        custom-class="menuDialog"
+      >
+        <bounced-message></bounced-message>
       </el-dialog>
     </div>
   </div>
@@ -178,15 +183,15 @@ export default {
             id: 11,
             type: 0,
             label: "组织架构",
-            obj:{
-              type:'页面菜单',
-              name:'组织架构',
-              path:'XXXXXXX',
-              english:'organization',
-              icon:'el-icon-right',
-              sort:1,
-              switch:false,
-              switch2:false
+            obj: {
+              type: "页面菜单",
+              name: "组织架构",
+              path: "XXXXXXX",
+              english: "organization",
+              icon: "el-icon-right",
+              sort: 1,
+              switch: false,
+              switch2: false
             }
           },
           {
@@ -250,8 +255,8 @@ export default {
     ];
     return {
       slelectifo: "",
-      ifo:{},
-      dialogFormVisible:false,
+      ifo: {},
+      dialogFormVisible: false,
       controlOptions: [
         { name: "添加子节点", type: "primary", icon: "", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
         { name: "添加顶部菜单", type: "", icon: "", id: 2 },
@@ -328,28 +333,27 @@ export default {
       console.log(val);
       if (val.id === 1) {
         this.setchild = false;
-        this.dialogFormVisible =true;
+        this.dialogFormVisible = true;
         // this.open(); //触发弹框
       }
     },
     getnowNodeifo(val) {
       //获取当前点击节点信息
       this.slelectifo = val.label;
-      this.ifo={...val.obj}
+      this.ifo = { ...val.obj };
       console.log();
       console.log(val);
     },
     getCheckifo(...res) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
       console.log(res);
-    },
+    }
     //
-  
   }
 };
 </script>
 
-<style>
+<style lang="less">
 .custom-tree-node {
   flex: 1;
   display: flex;
@@ -358,7 +362,21 @@ export default {
   font-size: 14px;
   padding-right: 8px;
 }
-.el-message-box {
-  width: 500px;
+.menuDialog {
+  .el-row {
+    text-align: center;
+  }
 }
+/* .el-dialog{
+  width:600px;
+}
+.el-input{
+  width:400px;
+}
+.el-row{
+  text-align: center;
+}
+.el-form-item__label{
+  width:110px !important;
+} */
 </style>
