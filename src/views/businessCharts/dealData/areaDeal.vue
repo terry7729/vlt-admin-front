@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
     <div class>
@@ -36,16 +36,9 @@
       </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        ></el-pagination>
+        <section class="comp-item">
+          <table-paging></table-paging>
+        </section>
         <!-- <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -118,11 +111,7 @@ export default {
           ]
         }
       ],
-      controlOptions: [
-       
-       { name: "导出", type: "primary", icon: "download" },
-        
-      ],
+      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       //记录省市县
       provinceList: [],
       dataprovinceList: [],
@@ -271,7 +260,7 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>

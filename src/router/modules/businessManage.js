@@ -32,14 +32,17 @@ const pendingReading = () => import('@/views/businessManage/home/pendingReading'
 const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
 // 游戏试玩计划列表
 const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
-// 游戏发行计划列表
+// 游戏上市计划列表
 const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
 // 游戏配置管理
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
+//退市计划
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
 const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeCheck')
 const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
 const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
+const planEdit = () => import('@/views/businessManage/gameStoreManage/planEdit')
+
 
 
 // 渠道业务管理
@@ -231,6 +234,14 @@ export default [
       title: '试玩查看',
     },
     component: planCheck
+  },
+  {
+    path: 'businessManage/planEdit',
+    name: 'planEdit',
+    meta: {
+      title: '试玩编辑',
+    },
+    component: planEdit
   },
   {
     path: 'businessManage/channelList',

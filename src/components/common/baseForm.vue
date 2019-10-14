@@ -16,7 +16,7 @@
         v-model="form[item.prop]"
         @change="change"
         :active-text="switchText"
-        active-color="#13ce66"
+        active-color="#409EFF"
         inactive-color="">
       </el-switch>
       <el-date-picker size="small" type="date"
@@ -43,6 +43,12 @@
       </el-date-picker>
       <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="`请输入${item.title}`"></el-input>
       <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :options="item.options" :placeholder="`请选择${item.title}`"></el-cascader>
+      <el-radio-group v-if="item.type=='radio'" v-model="form[item.prop]">
+        <el-radio 
+        v-for="(list,index) in item.options"
+        :key="index"
+        :label="list.key">{{list.value}}</el-radio>
+      </el-radio-group>
     </el-form-item> 
   </el-form> 
 </template>
@@ -105,7 +111,9 @@ export default {
         this.$set(this.form, item.option[1], '')
         this.timeParam[item.type] = item.option;
         console.log('时间参数', this.timeParam)
-      }else {
+      }else if(item.type=='switch') {
+        this.$set(this.form, item.prop, true)
+      }else{
         this.$set(this.form, item.prop, '')
       }
     })
@@ -113,8 +121,23 @@ export default {
   components: {
   },
   methods: {
+    validate(callback) {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          console.log('校验通过')
+          // this.$emit('asset')
+          callback('true')
+        }else{
+          console.log('校验不通过')
+          callback('false');
+        }
+      })
+    },
     change(val) {
       this.switchText = val ? '开启' : '关闭'
+    },
+    changeSelect(val) {
+      console.log(val)
     }
   },
 }

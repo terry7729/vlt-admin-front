@@ -153,7 +153,7 @@
             :model="form"
             ref="form"
           >
-            <base-form :formData="data2" :rules="rules2" direction="right" @change="changeForm"></base-form>
+            <base-form :formData="data2" ref="baseForm" :rules="rules2" direction="right" @change="changeForm"></base-form>
             <el-form-item label="上传文件">
               <el-upload
                 class="upload-demo"
@@ -188,7 +188,7 @@
             :model="form"
             ref="form"
           >
-            <base-form :formData="data1" :rules="rules1" direction="top" @change="changeForm"></base-form>
+            <base-form :formData="data1" ref="baseForm" :rules="rules1" direction="top" @change="changeForm"></base-form>
             <el-row class="el-form-item vlt-edit-btn">
               <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
               <el-button size="medium" @click="cancel">取消</el-button>
@@ -208,7 +208,7 @@
             :model="form"
             ref="form"
           >
-            <base-form :formData="data1" :rules="rules1" direction="top" @change="changeForm"></base-form>
+            <base-form :formData="data1" ref="baseForm" :rules="rules1" direction="top" @change="changeForm"></base-form>
           </el-form>
           <el-row class="vlt-edit-btn">
             <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
@@ -228,21 +228,28 @@ export default {
   data() {
     const self = this;
     return {
+      params: {},
       fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
       data1: [
         {type: 'input', title: '姓名', prop: 'name'},
         {type: 'select', title: '性别', prop: 'sex', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
         {type: 'textarea', title: '备注', prop: 'remark'},
+        {title: '状态', type: 'select', prop: 'status', value: '', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
+        {title: '兑奖权限', type: 'switch', prop: 'isShow', value: ''},
+        {title: '日期选择', type: 'datepicker', prop: 'date', value: ''},
+        {title: '起止日期', type: 'datepicker-range', prop: '', value: '', option:['start', 'end']},
+        {title: '起止时间', type: 'datetime-range', prop: '', value: '', option:['startTime', 'endTime']},
       ],
       data2: [
+        {title: '单选',type: 'radio', prop: 'radio', value: '', options:[{key:1,value:'选项一'},{key:2,value:'选项二'}]},
         {type: 'input', title: '测试', prop: 'test'},
         {type: 'select', title: '状态', prop: 'status', option:[{label: '男',value: '0'},{label: '女',value: '1'},]},
         {type: 'textarea', title: '说明', prop: 'all'},
         {type: 'switch', title: '兑奖权限', prop: 'isShow'},
-        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择', placeholder: '请选择'},
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', placeholder: ['开始日期', '结束日期']},
-        {type: 'datetime', prop: 'date3', value: '', title: '日期时间', placeholder: '请选择'},
-        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', placeholder: ['开始时间', '结束时间']},
+        {type: 'datepicker', prop: 'date1', value: '', title: '日期选择'},
+        {type: 'datepicker-range', prop: 'date2', value: '', title: '日期选择', option: ['start', 'end']},
+        {type: 'datetime', prop: 'date3', value: '', title: '日期时间'},
+        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', option: ['start', 'end']},
         {
           type: 'cascader', prop: 'cascader1', value: '', title: '级联选择', placeholder: '请选择',
           options: [{
