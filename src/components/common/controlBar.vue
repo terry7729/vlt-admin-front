@@ -22,6 +22,7 @@
           return [
             // {
             //   type: 'delete', // 按钮类型
+            //   name: '按钮名称', // 按钮名称
             //   change() { // 点击执行
             //     console.log('clicked')
             //   }

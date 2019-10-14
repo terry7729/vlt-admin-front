@@ -6,7 +6,8 @@ import panelStatic from './panelStatic.vue'; // 无伸缩框
 import panel from './panel.vue'; // 展开框
 import panelEdit from './panelEdit.vue'; // 展开框-编辑
 import tipsLine from './tipsLine.vue'; // 提示条
-import baseForm from './baseForm.vue'; // 提示条
+import baseForm from './baseForm.vue'; // 基础表单
+import tableRowStatus from './tableRowStatus.vue'; // 表格行状态
 
 const commonComponents = {
   install:function(Vue) {
@@ -19,6 +20,7 @@ const commonComponents = {
     Vue.component('panelEdit', panelEdit)
     Vue.component('tipsLine', tipsLine)
     Vue.component('baseForm', baseForm)
+    Vue.component('tableRowStatus', tableRowStatus)
   }
 }
 

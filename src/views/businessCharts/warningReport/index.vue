@@ -29,18 +29,9 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="pagination-container" style="text-align:right;margin-top:30px">
-            <el-pagination
-              background
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="listQuery.page"
-              :page-sizes="[10,20,30, 50]"
-              :page-size="100"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="400"
-            ></el-pagination>
-          </div>
+          <section class="comp-item" style="text-align:right;margin-top:30px">
+            <table-paging></table-paging>
+          </section>
         </div>
       </el-tab-pane>
       <el-tab-pane label="已生成报告" name="second">
@@ -86,9 +77,7 @@
 export default {
   data() {
     return {
-      controlOptions: [  
-        { name: "新增", type: "primary", icon: "plus" },       
-      ],
+      controlOptions: [{ name: "新增", type: "primary", icon: "plus" }],
       activeName: "first",
       total: null,
       listQuery: {
@@ -136,7 +125,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>

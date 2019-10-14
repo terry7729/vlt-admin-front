@@ -23,27 +23,9 @@
         <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
         <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
       </el-table>
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <el-pagination
-          background
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="listQuery.page"
-          :page-sizes="[10,20,30, 50]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        ></el-pagination>
-        <!-- <pagination :total='100' ></pagination> -->
-        <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="100"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-        </el-pagination>-->
-      </div>
+      <section class="comp-item" style="text-align:right;margin-top:30px">
+          <table-paging></table-paging>
+        </section>
     </div>
   </div>
 </template>

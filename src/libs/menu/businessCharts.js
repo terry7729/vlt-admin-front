@@ -144,6 +144,11 @@ export default [{
           icon: "el-icon-menu",
           name: "告警报告",
           url: 'warningReport'
+        },{
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "demo",
+          url: 'demo'
         },
       ],
 
