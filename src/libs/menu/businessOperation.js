@@ -12,7 +12,7 @@ export default [{
             childResources: [],
             icon: "el-icon-menu",
             name: "资金账户管理",
-            url: 'accountManage'
+            url: 'accountMoneyManage'
           }
         ],
         icon: "el-icon-menu",
@@ -28,6 +28,22 @@ export default [{
         icon: "el-icon-menu",
         name: "客户账户",
         url: 'customerAccount'
+      },
+      {
+        childResources: [{
+            icon: "el-icon-menu",
+            name: "角色管理",
+            url: 'roleManage'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "账户管理",
+            url: 'operationAccountManage'
+          }
+        ],
+        icon: "el-icon-menu",
+        name: "渠道权限维护",
+        url: 'PermissionMaintain'
       },
       {
         childResources: [{

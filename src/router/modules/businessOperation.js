@@ -3,10 +3,13 @@
 const accountList = () => import('@/views/businessOperation/channelAccount/account')
 //渠道账户列表详情
 const accountListDetail = () => import('@/views/businessOperation/channelAccount/accountListDetail')
-//拥有渠道列表详情
+//拥有渠道列表详情(带编辑详情)
 const haveListDetail = () => import('@/views/businessOperation/channelAccount/haveListDetail')
+//拥有渠道列表详情(副本单详情)
+const haveListDetailTwo = () => import('@/views/businessOperation/channelAccount/haveListDetailTwo')
+
 // 账户资金管理
-const accountManage = () => import('@/views/businessOperation/channelAccount/accountManage')
+const accountMoneyManage = () => import('@/views/businessOperation/channelAccount/accountMoneyManage')
 //账户资金管理银行新增
 const bankadd = () => import('@/views/businessOperation/channelAccount/bankadd')
 //账户资金管理银行修改
@@ -23,8 +26,28 @@ const externalrevise = () => import('@/views/businessOperation/channelAccount/ex
 const externalbalance = () => import('@/views/businessOperation/channelAccount/externalbalance')
 //账户资金管理第三方支付明细
 const externaldetail = () => import('@/views/businessOperation/channelAccount/externaldetail')
+
 //客户账户列表
 const customerAccountList = () => import('@/views/businessOperation/customerAccount/customerAccount')
+//客户账户列表详情
+const customerAccountListdetail = () => import('@/views/businessOperation/customerAccount/customerAccountListdetail')
+
+//角色管理
+const roleManage = () => import('@/views/businessOperation/PermissionMaintain/roleManage')
+//角色管理新增
+const roleManageAdd = () => import('@/views/businessOperation/PermissionMaintain/roleManageAdd')
+//角色管理权限管理
+const roleManageAuthorityManage = () => import('@/views/businessOperation/PermissionMaintain/roleManageAuthorityManage')
+//角色管理查看
+const roleManageExamine = () => import('@/views/businessOperation/PermissionMaintain/roleManageExamine')
+
+//账户管理
+const operationAccountManage = () => import('@/views/businessOperation/PermissionMaintain/operationAccountManage')
+//账户管理新增
+const operationAccountAdd = () => import('@/views/businessOperation/PermissionMaintain/operationAccountAdd')
+//账户管理查看
+const operationAccountExamine = () => import('@/views/businessOperation/PermissionMaintain/operationAccountExamine')
+
 
 //品牌营销推广
 //活动计划模板
@@ -92,15 +115,27 @@ export default [
     component: haveListDetail
   },
   {
-    path: 'businessOperation/accountManage',
-    name: 'accountManage',
+    path: 'businessOperation/accountList/haveListDetailTwo',
+    name: 'haveListDetailTwo',
+    meta: {
+      title: '拥有渠道列表详情单详情',
+    },
+    component: haveListDetailTwo
+  },
+
+
+
+
+  {
+    path: 'businessOperation/accountMoneyManage',
+    name: 'accountMoneyManage',
     meta: {
       title: '账户资金管理',
     },
-    component: accountManage
+    component: accountMoneyManage
   },
   {
-    path: 'businessOperation/accountManage/bankadd',
+    path: 'businessOperation/accountMoneyManage/bankadd',
     name: 'bankadd',
     meta: {
       title: '银行新增',
@@ -108,7 +143,7 @@ export default [
     component: bankadd
   },
   {
-    path: 'businessOperation/accountManage/bankrevise',
+    path: 'businessOperation/accountMoneyManage/bankrevise',
     name: 'bankrevise',
     meta: {
       title: '银行修改',
@@ -117,7 +152,7 @@ export default [
   },
 
   {
-    path: 'businessOperation/accountManage/bankbalance',
+    path: 'businessOperation/accountMoneyManage/bankbalance',
     name: 'bankbalance',
     meta: {
       title: '银行余额',
@@ -125,7 +160,7 @@ export default [
     component: bankbalance
   },
   {
-    path: 'businessOperation/accountManage/bankdetail',
+    path: 'businessOperation/accountMoneyManage/bankdetail',
     name: 'bankdetail',
     meta: {
       title: '银行明细',
@@ -133,7 +168,7 @@ export default [
     component: bankdetail
   },
   {
-    path: 'businessOperation/accountManage/externaladd',
+    path: 'businessOperation/accountMoneyManage/externaladd',
     name: 'externaladd',
     meta: {
       title: '第三方支付新增',
@@ -141,7 +176,7 @@ export default [
     component: externaladd
   },
   {
-    path: 'businessOperation/accountManage/externalrevise',
+    path: 'businessOperation/accountMoneyManage/externalrevise',
     name: 'externalrevise',
     meta: {
       title: '第三方支付修改',
@@ -149,7 +184,7 @@ export default [
     component: externalrevise
   },
   {
-    path: 'businessOperation/accountManage/externalbalance',
+    path: 'businessOperation/accountMoneyManage/externalbalance',
     name: 'externalbalance',
     meta: {
       title: '第三方支付余额',
@@ -157,7 +192,7 @@ export default [
     component: externalbalance
   },
   {
-    path: 'businessOperation/accountManage/externaldetail',
+    path: 'businessOperation/accountMoneyManage/externaldetail',
     name: 'externaldetail',
     meta: {
       title: '第三方支付明细',
@@ -172,6 +207,71 @@ export default [
       title: '客户账户列表',
     },
     component: customerAccountList
+  },
+  {
+    path: 'businessOperation/customerAccountListdetail',
+    name: 'customerAccountListdetail',
+    meta: {
+      title: '客户账户列表详情',
+    },
+    component: customerAccountListdetail
+  },
+  {
+    path: 'businessOperation/roleManage',
+    name: 'roleManage',
+    meta: {
+      title: '角色管理',
+    },
+    component: roleManage
+  },
+  {
+    path: 'businessOperation/roleManageAdd',
+    name: 'roleManageAdd',
+    meta: {
+      title: '角色管理新增',
+    },
+    component: roleManageAdd
+  },
+  {
+    path: 'businessOperation/roleManageAuthorityManage',
+    name: 'roleManageAuthorityManage',
+    meta: {
+      title: '角色管理权限设置',
+    },
+    component: roleManageAuthorityManage
+  },
+  {
+    path: 'businessOperation/roleManageExamine',
+    name: 'roleManageExamine',
+    meta: {
+      title: '角色管理查看',
+    },
+    component: roleManageExamine
+  },
+
+  {
+    path: 'businessOperation/operationAccountManage',
+    name: 'operationAccountManage',
+    meta: {
+      title: '账户管理',
+    },
+    component: operationAccountManage
+  },
+  {
+    path: 'businessOperation/operationAccountAdd',
+    name: 'operationAccountAdd',
+    meta: {
+      title: '账户管理新增',
+    },
+    component: operationAccountAdd
+  },
+  {
+    path: 'businessOperation/operationAccountExamine',
+    name: 'operationAccountExamine',
+    meta: {
+      title: '账户管理查看',
+    },
+    component: operationAccountExamine
   },
 
   //品牌与营销推广

@@ -76,7 +76,8 @@ export default {
     },
     enterSave() {},
     handelListDetail(id) {
-      this.$router.push({ path: "haveListDetail", query: { id } });
+      // this.$router.push({ path: "haveListDetail", query: { id } });
+      this.$router.push({ path: "haveListDetailTwo", query: { id } });
     }
   }
 };
