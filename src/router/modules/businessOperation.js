@@ -5,10 +5,28 @@ const accountList = () => import('@/views/businessOperation/channelAccount/accou
 const accountListDetail = () => import('@/views/businessOperation/channelAccount/accountListDetail')
 //拥有渠道列表详情
 const haveListDetail = () => import('@/views/businessOperation/channelAccount/haveListDetail')
-// 账户资金
+// 账户资金管理
 const accountManage = () => import('@/views/businessOperation/channelAccount/accountManage')
+//账户资金管理银行新增
+const bankadd = () => import('@/views/businessOperation/channelAccount/bankadd')
+//账户资金管理银行修改
+const bankrevise = () => import('@/views/businessOperation/channelAccount/bankrevise')
+//账户资金管理银行余额
+const bankbalance = () => import('@/views/businessOperation/channelAccount/bankbalance')
+//账户资金管理银行明细
+const bankdetail = () => import('@/views/businessOperation/channelAccount/bankdetail')
+//账户资金管理第三方支付新增
+const externaladd = () => import('@/views/businessOperation/channelAccount/externaladd')
+//账户资金管理第三方支付修改
+const externalrevise = () => import('@/views/businessOperation/channelAccount/externalrevise')
+//账户资金管理第三方支付余额
+const externalbalance = () => import('@/views/businessOperation/channelAccount/externalbalance')
+//账户资金管理第三方支付明细
+const externaldetail = () => import('@/views/businessOperation/channelAccount/externaldetail')
+//客户账户列表
+const customerAccountList = () => import('@/views/businessOperation/customerAccount/customerAccount')
 
-//品牌营销推广------
+//品牌营销推广
 //活动计划模板
 const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
 //模板预览
@@ -81,6 +99,81 @@ export default [
     },
     component: accountManage
   },
+  {
+    path: 'businessOperation/accountManage/bankadd',
+    name: 'bankadd',
+    meta: {
+      title: '银行新增',
+    },
+    component: bankadd
+  },
+  {
+    path: 'businessOperation/accountManage/bankrevise',
+    name: 'bankrevise',
+    meta: {
+      title: '银行修改',
+    },
+    component: bankrevise
+  },
+
+  {
+    path: 'businessOperation/accountManage/bankbalance',
+    name: 'bankbalance',
+    meta: {
+      title: '银行余额',
+    },
+    component: bankbalance
+  },
+  {
+    path: 'businessOperation/accountManage/bankdetail',
+    name: 'bankdetail',
+    meta: {
+      title: '银行明细',
+    },
+    component: bankdetail
+  },
+  {
+    path: 'businessOperation/accountManage/externaladd',
+    name: 'externaladd',
+    meta: {
+      title: '第三方支付新增',
+    },
+    component: externaladd
+  },
+  {
+    path: 'businessOperation/accountManage/externalrevise',
+    name: 'externalrevise',
+    meta: {
+      title: '第三方支付修改',
+    },
+    component: externalrevise
+  },
+  {
+    path: 'businessOperation/accountManage/externalbalance',
+    name: 'externalbalance',
+    meta: {
+      title: '第三方支付余额',
+    },
+    component: externalbalance
+  },
+  {
+    path: 'businessOperation/accountManage/externaldetail',
+    name: 'externaldetail',
+    meta: {
+      title: '第三方支付明细',
+    },
+    component: externaldetail
+  },
+  //客户账户列表
+  {
+    path: 'businessOperation/customerAccountList',
+    name: 'customerAccountList',
+    meta: {
+      title: '客户账户列表',
+    },
+    component: customerAccountList
+  },
+
   //品牌与营销推广
   {
     path: 'brandMarketing/planTemplate',
@@ -165,10 +258,9 @@ export default [
 
 
 
-  
 
 
 
-  
+
+
 ]
-

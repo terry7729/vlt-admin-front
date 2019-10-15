@@ -24,7 +24,18 @@ const data = Mock.mock({
 })
 
 Mock.mock(/\/shoopList/,"get",function(options){
-  // console.log(options);
+  console.log(options);
+  // console.log(Json)
+  return data
+  
+})
+
+Mock.mock(/\/shoopList/,"post",function(options){
+
+  console.log(options.body);
+  let n = data.data.map(item=>{
+  
+  })
   // console.log(Json)
   return data
   

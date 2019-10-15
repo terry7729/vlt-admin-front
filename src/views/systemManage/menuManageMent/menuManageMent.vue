@@ -55,14 +55,17 @@ export default {
         id: 1,
         label: "业务管理",
         type: 0,
+         obj:{},
         children: [
           {
             id: 4,
             label: "二级 1-1",
             type: 0,
+             obj:{},
             children: [
               {
                 id: 9,
+                 obj:{},
                 label: "三级 1-1-1",
                 type: 0
               },
@@ -79,15 +82,18 @@ export default {
         id: 2,
         label: "业务运营",
         type: 0,
+         obj:{},
         children: [
           {
             id: 5,
             type: 0,
+             obj:{},
             label: "二级 2-1"
           },
           {
             id: 6,
             type: 0,
+             obj:{},
             label: "二级 2-2"
           }
         ]
@@ -95,16 +101,19 @@ export default {
       {
         id: 3,
         type: 0,
+         obj:{},
         label: "业务监控",
         children: [
           {
             id: 7,
+             obj:{},
             type: 0,
             label: "二级 3-1"
           },
           {
             id: 8,
             type: 0,
+            obj:{},
             label: "二级 3-2"
           }
         ]
@@ -113,6 +122,7 @@ export default {
         id: 4,
         type: 0,
         label: "系统管理",
+        obj:{},
         children: [
           {
             id: 11,
@@ -132,55 +142,67 @@ export default {
           {
             id: 12,
             type: 0,
+             obj:{},
             label: "组织部门"
           },
           {
             id: 13,
             type: 0,
+             obj:{},
             label: "角色管理"
           },
           {
             id: 14,
             type: 0,
+             obj:{},
             label: "权限管理"
           },
           {
             id: 15,
+             obj:{},
             type: 0,
             label: "用户管理"
           },
           {
             id: 16,
+             obj:{},
             type: 0,
             label: "数据字典"
           },
           {
             id: 17,
             type: 0,
+             obj:{},
             label: "菜单管理",
             children: [
               {
                 id: 20,
+                 obj:{},
                 label: "系统菜单详情"
               },
               {
                 id: 21,
+                 obj:{},
                 label: "系统菜单新增"
               },
               {
                 id: 22,
+                 obj:{},
                 label: "系统菜单编缉"
               },
               {
                 id: 23,
+                 obj:{},
                 label: "系统菜单删除"
               },
               {
                 id: 24,
+                 obj:{},
                 label: "系统菜单状态设置"
               },
               {
                 id: 25,
+                 obj:{},
                 label: "菜单查询"
               }
             ]
@@ -280,7 +302,10 @@ export default {
     getnowNodeifo(val) {
       //获取当前点击节点信息
       this.slelectifo = val.label;
-      this.ifo = { ...val.obj };
+      // if(val[obj]){
+        
+        this.ifo = { ...val.obj };
+      // }
       console.log();
       console.log(val);
     },

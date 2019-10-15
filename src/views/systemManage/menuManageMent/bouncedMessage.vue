@@ -33,13 +33,14 @@ export default {
       params: {},
       data2: [
         { title: "类型", type: "input", prop: "type", value: "" },
-        { type: "input", title: "名称", prop: "name" },
-        { type: "input", title: "路径", prop: "path" },
-        { type: "input", title: "路由英文名", prop: "english" },
+        { type: "input", title: "名称", prop: "name",value: ""  },
+        { type: "input", title: "路径", prop: "path" ,value: ""},
+        { type: "input", title: "路由英文名", prop: "english",value: "" },
         {
           type: "select",
           title: "图标",
           prop: "icon",
+          value: "",
           options: [
             { label: "图标一", value: "0" },
             { label: "图标二", value: "1" }

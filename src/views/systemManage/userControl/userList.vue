@@ -15,7 +15,7 @@
     <div class="role-table">
       <el-table :data="testlist" border style="width: 100%; margin-top: 10px;">
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column type="index" prop="date" label="序号"></el-table-column>
+        <el-table-column type="index" prop="id" label="序号"></el-table-column>
         <el-table-column prop="account" label="账号"></el-table-column>
         <el-table-column prop="subsidiaryOrgan" label="所属机构"></el-table-column>
         <el-table-column prop="department" label="部门"></el-table-column>
@@ -32,7 +32,7 @@
               statusField="status"
               idField="id"
               :scope="scope"
-              :tableData="tableData"
+              :tableData="testlist"
               :rowName="scope.row.name"
               :option="{
                 'enable': {
@@ -54,10 +54,10 @@
             ></table-row-status>
           </template>
         </el-table-column>
-        <el-table-column prop="zip" label="操作" width="200px">
-          <template>
+        <el-table-column prop="id" label="操作" width="200px">
+          <template  slot-scope="scope">
             <el-button type="primary" size="mini" @click="handelides">查看</el-button>
-            <el-button type="success" size="mini" @click="handelifo">编缉</el-button>
+            <el-button type="success" size="mini" @click="handelifo(scope.$index,scope.row)">编缉</el-button>
             <el-button type="success" size="mini" @click="dialogFormVisible=true">重置密码</el-button>
           </template>
         </el-table-column>
@@ -235,7 +235,7 @@ export default {
   computed: {},
   async created() {
    console.log(Post)
-    let n = await  Post.axios('/shoopList')
+    let n = await  Post.axios.get('/shoopList')
     this.test = n.data.data;
     this.num = Number(n.data.data.length);
     this.testlist = this.test.slice(0,10)
@@ -257,11 +257,18 @@ export default {
       console.log(val);
     },
     handelskip() {
-      // this.$router.push("roleList/roleDestails");
+      this.$router.push("roleList/roleDestails");
     },
-    handelifo() {
+    handelifo(val,obj) {
+      console.log(val,obj)
+        Post.axios.post('/shoopList',{...obj}).then(data=>{
+          console.log(val)
+        console.log(data,33)
+      })
+      //  
       this.$router.push("userList/userInformed");
     },
+
     handelides() {
       this.$router.push("userList/userDestails");
     },

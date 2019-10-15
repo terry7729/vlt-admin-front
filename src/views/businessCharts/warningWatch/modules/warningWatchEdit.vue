@@ -50,18 +50,11 @@
         <h2 class="title">告警监控基础信息</h2>
         <div class="vlt-edit-wrap">
           <el-form label-position="right" label-width="90px" :model="form" ref="form">
-            <base-form
-              :formData="data2"
-              ref="baseForm"
-              :rules="rules2"
-              direction="right"
-              @change="changeForm"
-            ></base-form>
-            
+            <base-form :formData="data2" ref="baseForm" :rules="rules2" direction="right" @change></base-form>
           </el-form>
           <el-row class="vlt-edit-btn">
             <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交</el-button>
-            <el-button size="medium" @click="cancel">取消</el-button>
+            <el-button size="medium" @click>取消</el-button>
           </el-row>
         </div>
       </div>
@@ -70,7 +63,7 @@
 </template>
 
 <script>
-import rules from '@/utils/rules.js';
+import rules from "@/utils/rules.js";
 export default {
   name: "warningWatchEdit",
   data() {
@@ -81,7 +74,11 @@ export default {
           type: "select",
           title: "警报等级",
           prop: "status",
-          option: [{ label: "普通", value: "0" }, { label: "严重", value: "1" },{ label: "重大", value: "1" }]
+          options: [
+            { label: "普通", value: "0" },
+            { label: "严重", value: "1" },
+            { label: "重大", value: "2" }
+          ]
         },
         { type: "textarea", title: "描述", prop: "all" },
         { type: "input", title: "告警次数", prop: "test" },
@@ -97,13 +94,22 @@ export default {
           type: "select",
           title: "通知状态",
           prop: "status",
-          option: [{ label: "已通知", value: "0" }, { label: "未通知", value: "1" },{ label: "通知失败", value: "1" }]
-        },{
+          options: [
+            { label: "已通知", value: "0" },
+            { label: "未通知", value: "1" },
+            { label: "通知失败", value: "2" }
+          ]
+        },
+        {
           type: "select",
           title: "处理状态",
           prop: "status",
-          option: [{ label: "已处理", value: "0" }, { label: "处理中", value: "1" },{ label: "未处理", value: "1" }]
-        },
+          options: [
+            { label: "已处理", value: "0" },
+            { label: "处理中", value: "1" },
+            { label: "未处理", value: "2" }
+          ]
+        }
       ],
       rules2: {
         test: [
@@ -157,14 +163,8 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
+    submit() {
       console.log(this.form);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -173,10 +173,10 @@ export default {
     save() {
       console.log(1);
     },
-      changeForm(val) {
-      Object.assign(this.params, val)
-      console.log('派发出来的参数', this.params)
-    },
+    changeForm(val) {
+      Object.assign(this.params, val);
+      console.log("派发出来的参数", this.params);
+    }
   }
 };
 </script>
@@ -191,6 +191,6 @@ export default {
 //   margin-top: 15px;
 // }
 .vlt-edit-btn {
-//   margin-left: 394px;
+  //   margin-left: 394px;
 }
 </style>
