@@ -290,7 +290,7 @@ export default {
     }
   },
   mounted() {
-    this.showcity();
+    // this.showcity();
   }
 };
 </script>

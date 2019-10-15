@@ -1,8 +1,26 @@
 <template>
   <div class="vlt-card">
-    <h3 class="headling">奖池风险指标新增</h3>
+    <h3 class="headling">城市游戏风险指标新增</h3>
     <div class="vlt-card select-box">
       <span>游戏</span>
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <span>省份</span>
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <span>城市</span>
       <el-select v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -40,7 +58,7 @@
           </div>
         </el-form-item>
         <div class="editfrom">
-          <el-form-item prop="date2" label="监控时间点">
+           <el-form-item prop="date2" label="监控时间点">
             <el-time-picker
               is-range
               v-model="value1"
@@ -78,8 +96,7 @@ import rules from "@/utils/rules.js";
 export default {
   data() {
     return {
-      value1: "",
-      //[new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)]
+      value1:'',
       options: [
         {
           value: "选项1",
@@ -106,7 +123,7 @@ export default {
       num: 10,
       type: null,
       showeditBox: false,
-      tableData: [{ type: "最高奖池金额" }, { type: "最低奖池金额" }],
+      tableData: [{ type: "最低返奖率" }, { type: "最高返奖率" }],
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
