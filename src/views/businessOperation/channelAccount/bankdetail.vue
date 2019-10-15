@@ -25,7 +25,7 @@
         <el-table-column label="操作" prop="principalName"></el-table-column>
       </el-table>
       <div class="table_paging">
-        <tablePaging class="table_paging_right"></tablePaging>
+        <tablePaging class="table_paging_right" :total="99" :currentPage="1" :pageSize="10"></tablePaging>
       </div>
     </div>
   </div>

@@ -8,15 +8,99 @@
           :options="operationManageAddbtn"
         ></controlBar>
       </searchBar>
+      <el-table :data="operationManageTableData" border style="width: 100%; margin-top: 10px">
+        <el-table-column prop="operationManageNum" label="序号"></el-table-column>
+        <el-table-column prop="operationManageBelong" label="所属渠道"></el-table-column>
+        <el-table-column prop="operationManageName" label="账户名"></el-table-column>
+        <el-table-column prop="operationManageID" label="账户ID"></el-table-column>
+        <el-table-column prop="operationManagetelephone" label="手机号"></el-table-column>
+        <el-table-column prop="operationManageRoleName" label="角色名称"></el-table-column>
+        <el-table-column prop="operationManageCreater" label="创建人"></el-table-column>
+        <el-table-column prop="operationManageCreateDate" label="创建时间"></el-table-column>
+        <el-table-column label="账户状态" min-width="120">
+          <template slot-scope="scope">
+            <tableRowStatus
+              :scope="scope"
+              :tableData="operationManageTableData"
+              idField="id"
+              statusField="status"
+              :rowName="scope.row.name"
+              :option="{
+                enable:{
+                  apiName:'apiName',
+                  label:'启用',
+                  value:0
+                },
+               disable:{
+                  apiName:'apiName',
+                  label:'冻结',
+                  value:1
+               },
+               logout:{
+                  apiName:'apiName',
+                  label:'注销',
+                  value:2
+               }
+              }"
+            ></tableRowStatus>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="140">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="operationManageWrite(scope.row.id)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="operationManageLook(scope.row.id)">查看</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <tablePaging :total="99" :currentPage="1" :pageSize="10"></tablePaging>
+      <el-dialog title="新增账号" :visible.sync="dialogFormVisible">
+        <div class="vlt-edit-single">
+          <el-form
+            label-position="right"
+            label-width="90px"
+            :model="operationManageWriteform"
+            ref="form"
+            class="device-add"
+          >
+            <base-form
+              :formData="operationManageWriteData"
+              ref="baseForm"
+              :rules="operationManageWriteRule"
+              direction="right"
+              @change="operationManageWritechangeForm"
+            ></base-form>
+          </el-form>
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">保 存</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
+import rules from "@/utils/rules.js";
 export default {
   name: "",
   data() {
     return {
+      dialogFormVisible: false,
+      operationManageWriteform: {},
+      operationManageTableData: [
+        {
+          operationManageNum: 1,
+          operationManageBelong: "广东省",
+          operationManageName: "上海市普陀区金沙江路 1518 弄",
+          operationManageID: "赵",
+          operationManagetelephone: "自营",
+          operationManageRoleName: "赵",
+          operationManageCreater: "13800131358",
+          operationManageCreateDate: "13800131358",
+          roleManageCreateDate: "13800131358"
+        }
+      ],
       operationManageoptions: [
         {
           type: "input",
@@ -69,12 +153,330 @@ export default {
           options: ["start", "end"]
         }
       ],
-      operationManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }]
+      operationManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
+      operationManageWriteRule: {
+        test: [
+          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        ],
+        status: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+      },
+      operationManageWriteData: [
+        {
+          type: "select",
+          title: "所属渠道",
+          prop: "operationManageBelong",
+          options: [
+            { label: "哈哈", value: "0" },
+            { label: "嘿嘿", value: "1" }
+          ]
+        },
+        { type: "input", title: "账户名称", prop: "accountname" },
+        {
+          type: "select",
+          title: "账户角色",
+          prop: "operationManageBelong",
+          options: [
+            { label: "哈哈", value: "0" },
+            { label: "嘿嘿", value: "1" }
+          ]
+        },
+        { type: "input", title: "手机号", prop: "accountname" },
+        { type: "input", title: "身份证号", prop: "accountname" },
+        { type: "input", title: "联系地址", prop: "accountname" },
+        { type: "input", title: "账户密码", prop: "accountname" },
+        {
+          type: "cascader-multiple",
+          prop: "accountauthority",
+          value: "",
+          title: "账号权限",
+          placeholder: "请选择",
+          options: [
+            {
+              value: "zhinan",
+              label: "指南",
+              children: [
+                {
+                  value: "shejiyuanze",
+                  label: "设计原则",
+                  children: [
+                    {
+                      value: "yizhi",
+                      label: "一致"
+                    },
+                    {
+                      value: "fankui",
+                      label: "反馈"
+                    },
+                    {
+                      value: "xiaolv",
+                      label: "效率"
+                    },
+                    {
+                      value: "kekong",
+                      label: "可控"
+                    }
+                  ]
+                },
+                {
+                  value: "daohang",
+                  label: "导航",
+                  children: [
+                    {
+                      value: "cexiangdaohang",
+                      label: "侧向导航"
+                    },
+                    {
+                      value: "dingbudaohang",
+                      label: "顶部导航"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              value: "zujian",
+              label: "组件",
+              children: [
+                {
+                  value: "basic",
+                  label: "Basic",
+                  children: [
+                    {
+                      value: "layout",
+                      label: "Layout 布局"
+                    },
+                    {
+                      value: "color",
+                      label: "Color 色彩"
+                    },
+                    {
+                      value: "typography",
+                      label: "Typography 字体"
+                    },
+                    {
+                      value: "icon",
+                      label: "Icon 图标"
+                    },
+                    {
+                      value: "button",
+                      label: "Button 按钮"
+                    }
+                  ]
+                },
+                {
+                  value: "form",
+                  label: "Form",
+                  children: [
+                    {
+                      value: "radio",
+                      label: "Radio 单选框"
+                    },
+                    {
+                      value: "checkbox",
+                      label: "Checkbox 多选框"
+                    },
+                    {
+                      value: "input",
+                      label: "Input 输入框"
+                    },
+                    {
+                      value: "input-number",
+                      label: "InputNumber 计数器"
+                    },
+                    {
+                      value: "select",
+                      label: "Select 选择器"
+                    },
+                    {
+                      value: "cascader",
+                      label: "Cascader 级联选择器"
+                    },
+                    {
+                      value: "switch",
+                      label: "Switch 开关"
+                    },
+                    {
+                      value: "slider",
+                      label: "Slider 滑块"
+                    },
+                    {
+                      value: "time-picker",
+                      label: "TimePicker 时间选择器"
+                    },
+                    {
+                      value: "date-picker",
+                      label: "DatePicker 日期选择器"
+                    },
+                    {
+                      value: "datetime-picker",
+                      label: "DateTimePicker 日期时间选择器"
+                    },
+                    {
+                      value: "upload",
+                      label: "Upload 上传"
+                    },
+                    {
+                      value: "rate",
+                      label: "Rate 评分"
+                    },
+                    {
+                      value: "form",
+                      label: "Form 表单"
+                    }
+                  ]
+                },
+                {
+                  value: "data",
+                  label: "Data",
+                  children: [
+                    {
+                      value: "table",
+                      label: "Table 表格"
+                    },
+                    {
+                      value: "tag",
+                      label: "Tag 标签"
+                    },
+                    {
+                      value: "progress",
+                      label: "Progress 进度条"
+                    },
+                    {
+                      value: "tree",
+                      label: "Tree 树形控件"
+                    },
+                    {
+                      value: "pagination",
+                      label: "Pagination 分页"
+                    },
+                    {
+                      value: "badge",
+                      label: "Badge 标记"
+                    }
+                  ]
+                },
+                {
+                  value: "notice",
+                  label: "Notice",
+                  children: [
+                    {
+                      value: "alert",
+                      label: "Alert 警告"
+                    },
+                    {
+                      value: "loading",
+                      label: "Loading 加载"
+                    },
+                    {
+                      value: "message",
+                      label: "Message 消息提示"
+                    },
+                    {
+                      value: "message-box",
+                      label: "MessageBox 弹框"
+                    },
+                    {
+                      value: "notification",
+                      label: "Notification 通知"
+                    }
+                  ]
+                },
+                {
+                  value: "navigation",
+                  label: "Navigation",
+                  children: [
+                    {
+                      value: "menu",
+                      label: "NavMenu 导航菜单"
+                    },
+                    {
+                      value: "tabs",
+                      label: "Tabs 标签页"
+                    },
+                    {
+                      value: "breadcrumb",
+                      label: "Breadcrumb 面包屑"
+                    },
+                    {
+                      value: "dropdown",
+                      label: "Dropdown 下拉菜单"
+                    },
+                    {
+                      value: "steps",
+                      label: "Steps 步骤条"
+                    }
+                  ]
+                },
+                {
+                  value: "others",
+                  label: "Others",
+                  children: [
+                    {
+                      value: "dialog",
+                      label: "Dialog 对话框"
+                    },
+                    {
+                      value: "tooltip",
+                      label: "Tooltip 文字提示"
+                    },
+                    {
+                      value: "popover",
+                      label: "Popover 弹出框"
+                    },
+                    {
+                      value: "card",
+                      label: "Card 卡片"
+                    },
+                    {
+                      value: "carousel",
+                      label: "Carousel 走马灯"
+                    },
+                    {
+                      value: "collapse",
+                      label: "Collapse 折叠面板"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              value: "ziyuan",
+              label: "资源",
+              children: [
+                {
+                  value: "axure",
+                  label: "Axure Components"
+                },
+                {
+                  value: "sketch",
+                  label: "Sketch Templates"
+                },
+                {
+                  value: "jiaohu",
+                  label: "组件交互文档"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     };
   },
   components: {},
   methods: {
-    operationManageAddclick() {}
+    operationManageAddclick() {
+      this.$router.push("operationAccountAdd");
+    },
+    operationManageWrite() {
+      this.dialogFormVisible = true;
+    },
+    operationManageLook() {
+      this.$router.push("operationAccountExamine");
+    },
+    operationManageWritechangeForm() {}
   }
 };
 </script>

@@ -19,16 +19,7 @@ export default [{
         name: "渠道账户",
         url: 'screenWatch'
       },
-      {
-        childResources: [{
-          icon: "el-icon-menu",
-          name: "客户账户列表",
-          url: 'customerAccountList'
-        }],
-        icon: "el-icon-menu",
-        name: "客户账户",
-        url: 'customerAccount'
-      },
+
       {
         childResources: [{
             icon: "el-icon-menu",

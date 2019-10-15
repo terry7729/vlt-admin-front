@@ -1,9 +1,9 @@
 <template>
   <div class="vlt-card account_detail">
     <div class="account_detail_box">
-      <panel-Edit title="账户资料" :show="true">
-        <base-Info :infoList="accountData" slot="info-content"></base-Info>
-      </panel-Edit>
+      <panel title="账户资料" :show="true">
+        <base-Info :infoList="accountData"></base-Info>
+      </panel>
       <panel title="资金账户" :show="true">
         <base-Info :infoList="moneyAccount"></base-Info>
       </panel>

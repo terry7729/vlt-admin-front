@@ -1,9 +1,9 @@
 <template>
   <div class="vlt-card">
     <div class="roleManageExamine">
-      <panel title="角色信息" :show="true">
+      <panel-static title="角色信息" :show="true">
         <base-Info :infoList="roleManageExamineData"></base-Info>
-      </panel>
+      </panel-static>
     </div>
   </div>
 </template>

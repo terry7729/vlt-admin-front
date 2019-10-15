@@ -2,7 +2,7 @@
   <div class="vlt-card">
     <div class="roleManageAdd">
       <div class="vlt-edit-double">
-        <h2 class="title">编辑</h2>
+        <h2 class="title">新增角色</h2>
         <div class="vlt-edit-wrap">
           <el-form label-position="top" label-width="90px" :model="roleManageAddForm" ref="form">
             <base-form

@@ -27,17 +27,12 @@ const externalbalance = () => import('@/views/businessOperation/channelAccount/e
 //账户资金管理第三方支付明细
 const externaldetail = () => import('@/views/businessOperation/channelAccount/externaldetail')
 
-//客户账户列表
-const customerAccountList = () => import('@/views/businessOperation/customerAccount/customerAccount')
-//客户账户列表详情
-const customerAccountListdetail = () => import('@/views/businessOperation/customerAccount/customerAccountListdetail')
 
 //角色管理
 const roleManage = () => import('@/views/businessOperation/PermissionMaintain/roleManage')
 //角色管理新增
 const roleManageAdd = () => import('@/views/businessOperation/PermissionMaintain/roleManageAdd')
-//角色管理权限管理
-const roleManageAuthorityManage = () => import('@/views/businessOperation/PermissionMaintain/roleManageAuthorityManage')
+
 //角色管理查看
 const roleManageExamine = () => import('@/views/businessOperation/PermissionMaintain/roleManageExamine')
 
@@ -199,23 +194,7 @@ export default [
     },
     component: externaldetail
   },
-  //客户账户列表
-  {
-    path: 'businessOperation/customerAccountList',
-    name: 'customerAccountList',
-    meta: {
-      title: '客户账户列表',
-    },
-    component: customerAccountList
-  },
-  {
-    path: 'businessOperation/customerAccountListdetail',
-    name: 'customerAccountListdetail',
-    meta: {
-      title: '客户账户列表详情',
-    },
-    component: customerAccountListdetail
-  },
+
   {
     path: 'businessOperation/roleManage',
     name: 'roleManage',
@@ -232,14 +211,7 @@ export default [
     },
     component: roleManageAdd
   },
-  {
-    path: 'businessOperation/roleManageAuthorityManage',
-    name: 'roleManageAuthorityManage',
-    meta: {
-      title: '角色管理权限设置',
-    },
-    component: roleManageAuthorityManage
-  },
+
   {
     path: 'businessOperation/roleManageExamine',
     name: 'roleManageExamine',

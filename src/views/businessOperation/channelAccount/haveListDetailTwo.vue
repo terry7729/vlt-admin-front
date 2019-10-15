@@ -1,11 +1,11 @@
 <template>
   <div class="vlt-card">
     <div class="haveListDetailTwo">
-      <panel title="基本信息" :show="true">
+      <panel title="基本信息" :show="true" style="margin-bottom:20px">
         <base-Info :infoList="haveListDetailTwoData"></base-Info>
       </panel>
-      <panel title="人员信息" :show="true">
-        <el-table :data="haveListDetailTwotableData" border>
+      <panel title="人员信息" :show="true" style="margin-bottom:20px">
+        <el-table :data="haveListDetailTwotableData" border style="padding:16px">
           <el-table-column prop="haveListDetailTwoid" label="序号"></el-table-column>
           <el-table-column prop="haveListDetailTwojob" label="职位"></el-table-column>
           <el-table-column prop="haveListDetailTwoName" label="姓名"></el-table-column>
@@ -20,14 +20,14 @@
         </el-table>
       </panel>
 
-      <panel title="财务信息" :show="true">
+      <panel title="财务信息" :show="true" style="margin-bottom:20px">
         <base-Info :infoList="haveListDetailTwofinance">
           <img :src="haveListDetailTwofileurl" alt />
         </base-Info>
       </panel>
 
-      <panel title="销售游戏" :show="true">
-        <el-table :data="haveListDetailTwotableDatagame" border>
+      <panel title="销售游戏" :show="true" style="margin-bottom:20px">
+        <el-table :data="haveListDetailTwotableDatagame" border style="padding:16px">
           <el-table-column prop="haveListDetailTwogameid" label="序号"></el-table-column>
           <el-table-column prop="haveListDetailTwogameName" label="游戏名称"></el-table-column>
           <el-table-column prop="haveListDetailTwogameauthority" label="投注权限"></el-table-column>
@@ -35,14 +35,14 @@
           <el-table-column prop="haveListDetailTwogamedate" label="销售时间"></el-table-column>
         </el-table>
       </panel>
-      <panel title="发放设备" :show="true">
-        <el-table :data="haveListDetailTwoDistributioneQuipment" border>
+      <panel title="发放设备" :show="true" style="margin-bottom:20px">
+        <el-table :data="haveListDetailTwoDistributioneQuipment" border style="padding:16px">
           <el-table-column prop="haveListDetailTwoDistributioneQuipmentid" label="设备1"></el-table-column>
           <el-table-column prop="haveListDetailTwoDistributioneQuipmentbet" label="投注机"></el-table-column>
           <el-table-column prop="haveListDetailTwoDistributioneQuipmentnum" label="型号"></el-table-column>
         </el-table>
       </panel>
-      <panel title="其他事项" :show="true">
+      <panel title="其他事项" :show="true" style="margin-bottom:20px">
         <img src="haveListDetailTwoDistributioneQuipmentImg" alt />
       </panel>
       <controlBar
