@@ -248,6 +248,10 @@ export default {
         }
       ],
       data1: [
+        {title: "日期", type: "datepicker-range", prop: "date4",value: "",options: ["start", "end"]},
+        {title: "日期5", type: "datepicker-range", prop: "date5",value: "",options: ["start5", "end5"]},
+        {title: "日期时间", type: "datetime-range", prop: "time4",value: "",options: ["time", "endTime"]},
+        {title: "日期时间5", type: "datetime-range", prop: "time5",value: "",options: ["time5", "endTime5"]},
         { type: "input", title: "姓名", prop: "name" },
         {
           type: "select",
