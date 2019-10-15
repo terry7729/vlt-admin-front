@@ -31,9 +31,17 @@
           </template>
         </el-table-column>
       </el-table>
-      <section class="comp-item" style="text-align:right;margin-top:30px">
-        <table-paging></table-paging>
-      </section>
+      <div class="pagination-container" style="text-align:right;margin-top:30px">
+        <section class="comp-item">
+          <table-paging
+            :current-page="1"
+            :page-size="10"
+            :total="100"
+            @handleSizeChange="pageSizeChange"
+            @handleCurrentChange="pageCurrentChange"
+          ></table-paging>
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -63,6 +71,7 @@ export default {
           ]
         }
       ],
+      
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
         { name: "批量删除", type: "primary", icon: "delete" },
@@ -112,6 +121,12 @@ export default {
     };
   },
   methods: {
+    pageSizeChange(pageSize) {
+      console.log('每页条数：', pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log('当前页：', currentPage);
+    },
     search(form) {
       console.log("search", form);
     },
@@ -210,7 +225,7 @@ export default {
     }
   },
   mounted() {
-    this.showcity();
+    // this.showcity();
   }
 };
 </script>

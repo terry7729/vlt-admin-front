@@ -33,19 +33,20 @@ const cityRisk = () => import('@/views/businessCharts/warningRule/cityRisk')
 //城市游戏风险
 const cityGameRisk = () => import('@/views/businessCharts/warningRule/cityGameRisk')
 //告警通知
-const warningNotice=() => import('@/views/businessCharts/warningRule/warningNotice')
+const warningNotice = () => import('@/views/businessCharts/warningRule/warningNotice')
 
 //用户风险
-const userRisk=() => import('@/views/businessCharts/warningRule/userRisk')
+const userRisk = () => import('@/views/businessCharts/warningRule/userRisk')
 //告警监控详情
-const warningWatchDetail=() => import('@/views/businessCharts/warningWatch/modules/warningWatchDetail')
+const warningWatchDetail = () => import('@/views/businessCharts/warningWatch/modules/warningWatchDetail')
 //告警监控编辑
-const warningWatchEdit=() => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
+const warningWatchEdit = () => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
 //demo
-const demo=() => import('@/views/componentDemo')
+const demo = () => import('@/views/componentDemo')
+//demo
+const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd')
 
-export default [
-  {
+export default [{
     path: 'demo',
     name: 'demo',
     component: demo,
@@ -101,14 +102,14 @@ export default [
       title: '市级交易数据',
     },
     component: cityDeal
-  },  {
+  }, {
     path: 'businessCharts/areaDeal',
     name: 'areaDeal',
     meta: {
       title: '区域交易数据',
     },
     component: areaDeal
-  },  {
+  }, {
     path: 'businessCharts/gameDeal',
     name: 'gameDeal',
     meta: {
@@ -131,7 +132,7 @@ export default [
       title: '销售厅设备数据监控',
     },
     component: equipmentDataWatch
-  },{
+  }, {
     path: 'businessCharts/equipmentHardwareWatch',
     name: 'equipmentHardwareWatch',
     meta: {
@@ -210,6 +211,14 @@ export default [
       title: '告警监控编辑',
     },
     component: warningWatchEdit
+  },
+  {
+    path: 'businessCharts/cityRiskAdd',
+    name: 'cityRiskAdd',
+    meta: {
+      title: '城市风险指标新增',
+    },
+    component: cityRiskAdd
   }
 
 ]
