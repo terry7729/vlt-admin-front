@@ -13,27 +13,50 @@ const accountManage = () => import('@/views/businessOperation/channelAccount/acc
 const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
 //模板预览
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
-
-
 //活动计划管理
 const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
 //计划详情
 const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
 //新建活动
 const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
-
 //活动执行管理
 const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
 //活动执行详情
 const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
 //分配任务
 const allotTask = () => import('@/views/businessOperation/brandMarketing/allotTask')
-
-
 //活动效果评估
 const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
 //开始评估
 const resultAssess = () => import('@/views/businessOperation/brandMarketing/resultAssess')
+
+//客户账户
+//客户账户列表
+const customerAccount = () => import('@/views/businessOperation/customerAccount/customerAccount')
+//客户账户详情
+const accountDetail = () => import('@/views/businessOperation/customerAccount/accountDetail')
+//投注卡详情
+const betcardDetail = () => import('@/views/businessOperation/customerAccount/betcardDetail')
+//会员权益详情
+const equityDetail = () => import('@/views/businessOperation/customerAccount/equityDetail')
+
+
+//账户记录
+//充值记录列表
+const rechargeRecord = () => import('@/views/businessOperation/accountRecord/rechargeRecord')
+//充值记录详情
+const rechargeDetail = () => import('@/views/businessOperation/accountRecord/rechargeDetail')
+
+//投注记录列表
+const bettingRecord = () => import('@/views/businessOperation/accountRecord/bettingRecord')
+//兑奖记录列表
+const cashRecord = () => import('@/views/businessOperation/accountRecord/cashRecord')
+//提现记录列表
+const withdrawalRecord = () => import('@/views/businessOperation/accountRecord/withdrawalRecord')
+//积分账户列表
+const integralRecord = () => import('@/views/businessOperation/accountRecord/integralRecord')
+//资金流水列表
+const fundsStatement = () => import('@/views/businessOperation/accountRecord/fundsStatement')
 
 
 export default [
@@ -162,13 +185,94 @@ export default [
     },
     component: resultAssess,
   },
+  {
+    path: 'accountRecord/rechargeRecord',
+    name: 'rechargeRecord',
+    meta: {
+      title: '充值记录',
+    },
+    component: rechargeRecord,
+  },
+  {
+    path: 'accountRecord/bettingRecord',
+    name: 'BettingRecord',
+    meta: {
+      title: '投注记录',
+    },
+    component: bettingRecord,
+  },
+  {
+    path: 'accountRecord/cashRecord',
+    name: 'cashRecord',
+    meta: {
+      title: '兑奖记录',
+    },
+    component: cashRecord,
+  },
+  {
+    path: 'accountRecord/withdrawalRecord',
+    name: 'withdrawalRecord',
+    meta: {
+      title: '提现记录',
+    },
+    component: withdrawalRecord,
+  },
+  {
+    path: 'accountRecord/integralRecord',
+    name: 'integralRecord',
+    meta: {
+      title: '积分账户',
+    },
+    component: integralRecord,
+  },
+  {
+    path: 'accountRecord/fundsStatement',
+    name: 'fundsStatement',
+    meta: {
+      title: '资金流水',
+    },
+    component: fundsStatement,
+  },
+  {
+    path: 'accountRecord/rechargeDetail',
+    name: 'rechargeDetail',
+    meta: {
+      title: '充值记录详情',
+    },
+    component: rechargeDetail,
+  },
+  {
+    path: 'customerAccount/customerAccount',
+    name: 'customerAccount',
+    meta: {
+      title: '客户账户列表',
+    },
+    component: customerAccount,
+  },
+  {
+    path: 'customerAccount/accountDetail',
+    name: 'accountDetail',
+    meta: {
+      title: '客户账户详情',
+    },
+    component: accountDetail,
+  },
+  {
+    path: 'customerAccount/betcardDetail',
+    name: 'betcardDetail',
+    meta: {
+      title: '投注卡详情',
+    },
+    component: betcardDetail,
+  },
+  {
+    path: 'customerAccount/equityDetail',
+    name: 'equityDetail',
+    meta: {
+      title: '会员权益详情',
+    },
+    component: equityDetail,
+  },
 
 
-
-  
-
-
-
-  
 ]
-

@@ -13,10 +13,14 @@
         <el-table-column prop="activeNum" label="活动编号"></el-table-column>
         <el-table-column prop="activeName" label="活动名称"></el-table-column>
         <el-table-column prop="reportName" label="报告名称"></el-table-column>
-        <el-table-column prop="reportType" label="定性报告"></el-table-column>
+        <el-table-column prop="reportType" label="定性报告">
+          <el-button type="primary" size="mini">下载</el-button>
+        </el-table-column>
         <el-table-column prop="Vdoing" label="所选维度"></el-table-column>
         <el-table-column prop="target" label="所选指标"></el-table-column>
-        <el-table-column prop="retionReport" label="定量报告"></el-table-column>
+        <el-table-column prop="retionReport" label="定量报告">
+           <el-button type="primary" size="mini">预览</el-button>
+        </el-table-column>
         <el-table-column prop="createPerson" label="创建人"></el-table-column>
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
       </el-table>
@@ -51,7 +55,7 @@ export default {
           activeNum: "007",
           activeName: "促销",
           reportName: "报告老板",
-          reportType: "下载",
+          // reportType: "下载",
           Vdoing: "省市区",
           target: "充值总额",
           retionReport: "预览",
