@@ -8,7 +8,12 @@
         :total="999"
         labelWidth="80px"
       >
-        <controlBar :options="externaldetaildata" @select="externaldetailbtn" slot="extend-bar"></controlBar>
+        <controlBar
+          :options="externaldetaildata"
+          @select="externaldetailbtn"
+          slot="extend-bar"
+          position="left"
+        ></controlBar>
       </searchBar>
 
       <base-Info :infoList="accountallname"></base-Info>

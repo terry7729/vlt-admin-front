@@ -8,9 +8,8 @@
         :total="999"
         labelWidth="80px"
       >
-        <controlBar :options="importdata" @select="importbtn" slot="extend-bar"></controlBar>
+        <controlBar :options="importdata" @select="importbtn" slot="extend-bar" position="left"></controlBar>
       </searchBar>
-
       <base-Info :infoList="accountallname"></base-Info>
       <el-table :data="tableData" border show-summary>
         <el-table-column prop="id" label="序号"></el-table-column>

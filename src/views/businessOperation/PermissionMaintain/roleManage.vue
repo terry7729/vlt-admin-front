@@ -2,7 +2,12 @@
   <div class="vlt-card">
     <div class="roleManage">
       <searchBar :options="roleManageoptions" :total="999">
-        <controlBar slot="extend-bar" @select="roleManageAddclick" :options="roleManageAddbtn"></controlBar>
+        <controlBar
+          slot="extend-bar"
+          @select="roleManageAddclick"
+          :options="roleManageAddbtn"
+          position="left"
+        ></controlBar>
       </searchBar>
       <el-table :data="roleManagetableData" border style="width: 100%; margin-top: 10px">
         <el-table-column prop="roleManageId" label="序号"></el-table-column>

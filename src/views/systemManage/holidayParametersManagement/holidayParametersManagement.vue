@@ -1,33 +1,39 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <search-Bar :options="option"></search-Bar>
+      <el-form :inline="true" :model="form" class="demo-form-inline">
+        <el-form-item label="假日名称">
+          <el-select v-model="form.name" placeholder="请选择" size="small">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button size="small" type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+        </el-form-item>
+      </el-form>
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </div>
     <div class="el_table">
       <el-table
         :data="tableData"
-        border
         style="width: 100%"
         :default-sort="{prop: 'date', order: 'descending'}"
       >
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="holidayName" label="假日名称" width="100"></el-table-column>
-        <el-table-column prop="startTime" label="开始时间" sortable></el-table-column>
-        <el-table-column prop="endTime" label="结束时间" sortable></el-table-column>
-        <el-table-column prop="abandonstartTime" label="弃奖开始日期" sortable width="110"></el-table-column>
-        <el-table-column prop="abandonendTime" label="弃奖结束日期 " sortable width="110"></el-table-column>
+        <el-table-column prop="startTime" label="开始时间" sortable width="190"></el-table-column>
+        <el-table-column prop="endTime" label="结束时间" sortable width="190"></el-table-column>
+        <el-table-column prop="abandonstartTime" label="弃奖开始日期" sortable width="130"></el-table-column>
+        <el-table-column prop="abandonendTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
 
         <el-table-column label="销售状态">
           <template>
-            <el-switch
-              style="display: block"
-              v-model="value2"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              active-text="停销"
-              inactive-text="不停销"
-            ></el-switch>
+            <el-switch v-model="value2" active-text="停销" inactive-text="不停销"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="启用状态">
@@ -43,42 +49,37 @@
 
 <script type="text/javascript">
 export default {
-  name: "",
   data() {
     return {
       value1: true,
       value2: true,
-      option: [
+      form: {
+        name: ""
+      },
+      options: [
         {
-          title: "假日名称",
-          prop: "select",
-          type: "select",
-          options: [
-            {
-              value: "beijing",
-              label: "春节"
-            },
-            {
-              value: "shanghai",
-              label: "国庆"
-            },
-            {
-              value: "beijing",
-              label: "中秋"
-            },
-            {
-              value: "beijing",
-              label: "清明"
-            },
-            {
-              value: "beijing",
-              label: "端午"
-            }
-          ],
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
+          value: "chunjie",
+          label: "春节"
+        },
+        {
+          value: "guoqing",
+          label: "国庆"
+        },
+        {
+          value: "zhongqiu",
+          label: "中秋"
+        },
+        {
+          value: "qingming",
+          label: "清明"
+        },
+        {
+          value: "duanwu",
+          label: "端午"
         }
       ],
+      value: "",
+
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" },
         { name: "保存", type: "success" }
@@ -129,7 +130,18 @@ export default {
     };
   },
   components: {},
-  methods: {}
+  methods: {
+    selectBtn(val) {
+      this.$emit("select", val);
+    },
+    onSubmit() {
+      let formData = {};
+      for (let key in this.form) {
+        if (this.form[key] !== "") formData[key] = this.form[key];
+      }
+      this.$emit("search", formData);
+    }
+  }
 };
 </script>
 

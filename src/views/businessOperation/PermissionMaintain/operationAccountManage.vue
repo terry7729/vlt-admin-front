@@ -6,6 +6,7 @@
           slot="extend-bar"
           @select="operationManageAddclick"
           :options="operationManageAddbtn"
+          position="left"
         ></controlBar>
       </searchBar>
       <el-table :data="operationManageTableData" border style="width: 100%; margin-top: 10px">

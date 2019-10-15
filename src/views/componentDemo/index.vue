@@ -24,7 +24,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
       </search-bar>
     </section>
 
@@ -35,12 +35,13 @@
 
     <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
-      <control-bar :options="controlOptions"></control-bar>
+      <control-bar :options="controlOptions" position="left"></control-bar>
     </section>
 
     <section class="comp-item">
       <h4 class="comp-title">表格分页</h4>
       <table-paging
+        position="left"
         :total="999"
         :currentPage="1"
         :pageSize="10"
@@ -247,6 +248,10 @@ export default {
         }
       ],
       data1: [
+        {title: "日期", type: "datepicker-range", prop: "date4",value: "",options: ["start", "end"]},
+        {title: "日期5", type: "datepicker-range", prop: "date5",value: "",options: ["start5", "end5"]},
+        {title: "日期时间", type: "datetime-range", prop: "time4",value: "",options: ["time", "endTime"]},
+        {title: "日期时间5", type: "datetime-range", prop: "time5",value: "",options: ["time5", "endTime5"]},
         { type: "input", title: "姓名", prop: "name" },
         {
           type: "select",

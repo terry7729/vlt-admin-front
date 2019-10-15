@@ -16,7 +16,7 @@
             :total="999"
             labelWidth="80px"
           >
-            <controlBar slot="extend-bar" @select="bankBtn" :options="options"></controlBar>
+            <controlBar slot="extend-bar" @select="bankBtn" :options="options" position="left"></controlBar>
           </search-bar>
 
           <div class="account_manage_bankmain">
@@ -57,7 +57,12 @@
               :total="999"
               labelWidth="80px"
             >
-              <controlBar slot="extend-bar" @select="threepayBtn" :options="options"></controlBar>
+              <controlBar
+                slot="extend-bar"
+                @select="threepayBtn"
+                :options="options"
+                position="left"
+              ></controlBar>
             </search-bar>
 
             <el-table
