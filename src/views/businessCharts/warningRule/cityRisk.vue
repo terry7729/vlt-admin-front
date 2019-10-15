@@ -8,10 +8,10 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions" @select="select" @click.native></control-bar>
       </search-bar>
     </section>
-    <div class>
+    <div>
       <el-table
         :data="tableData"
         border
@@ -36,9 +36,17 @@
           </template>
         </el-table-column>
       </el-table>
-      <section class="comp-item" style="text-align:right;margin-top:30px">
-        <table-paging></table-paging>
-      </section>
+      <div class="pagination-container" style="text-align:right;margin-top:30px">
+        <section class="comp-item">
+          <table-paging
+            :current-page="1"
+            :page-size="10"
+            :total="100"
+            @handleSizeChange="pageSizeChange"
+            @handleCurrentChange="pageCurrentChange"
+          ></table-paging>
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -87,8 +95,8 @@ export default {
       ],
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "批量删除", type: "primary", icon: "delete" },
-        { name: "批量修改", type: "primary", icon: "edit" }
+        { name: "批量删除", type: "", icon: "delete" },
+        { name: "批量修改", type: "", icon: "edit" }
       ],
       //记录省市县
       provinceList: [],
@@ -134,6 +142,12 @@ export default {
     };
   },
   methods: {
+    pageSizeChange(pageSize) {
+      console.log("每页条数：", pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log("当前页：", currentPage);
+    },
     search(form) {
       console.log("search", form);
     },
@@ -159,6 +173,7 @@ export default {
       var provinceArr = [];
       var cityArr = [];
       var countryArr = [];
+      // console.log(city)
       for (let i = 0; city.length > i; i++) {
         //循环获取省级单位
         for (var key in city[i]) {
@@ -168,19 +183,22 @@ export default {
           var pro = { label, value };
         }
         //循环获取市级单位
-        for (var j = 0; cities.length > j; j++) {
-          let cityName = cities[j].areaName;
-          let cityCode = cities[j].areaId;
-          var counties = cities[j].counties;
-          var citiesres = { cityName, cityCode };
-          cityArr.push(citiesres);
-          //循环获取县级单位
-          for (var n = 0; counties.length > n; n++) {
-            let countryName = counties[n].areaName;
-            let countryCode = counties[n].areaId;
-            var countiesres = { countryName, countryCode };
-            countryArr.push(countiesres);
+        if (cities.length) {
+          for (var j = 0; cities.length > j; j++) {
+            let cityName = cities[j].areaName;
+            let cityCode = cities[j].areaId;
+            var counties = cities[j].counties;
+            var citiesres = { cityName, cityCode };
+            cityArr.push(citiesres);
           }
+
+          //循环获取县级单位
+          // for (var n = 0; counties.length > n; n++) {
+          //   let countryName = counties[n].areaName;
+          //   let countryCode = counties[n].areaId;
+          //   var countiesres = { countryName, countryCode };
+          //   countryArr.push(countiesres);
+          // }
           //console.log(countiesres);
         }
 
@@ -203,36 +221,47 @@ export default {
       //console.log(this.countryList);
     },
     //省和市的联动,根据市/100的整数商进行遍历
-    getProvince() {
-      let _this = this;
-      //console.log(this.provinceCode)
-      this.cityList = this.datacityList;
-      if (this.provinceCode != 0) {
-        let cArray = this.cityList;
-        let cArrres = [];
-        console.log(cArray);
-        for (var i = 0; cArray.length > i; i++) {
-          if (parseInt(cArray[i].cityCode / 100) == this.provinceCode) {
-            cArrres.push(cArray[i]);
-          } else {
-          }
-        }
-        this.cityList = cArrres;
-        this.cityCode = this.cityList[0].cityCode;
-        //回调自动获取当前选择的县区
+    // getProvince() {
+    //   let _this = this;
+    //   //console.log(this.provinceCode)
+    //   this.cityList = this.datacityList;
+    //   if (this.provinceCode != 0) {
+    //     let cArray = this.cityList;
+    //     let cArrres = [];
+    //     console.log(cArray);
+    //     for (var i = 0; cArray.length > i; i++) {
+    //       if (parseInt(cArray[i].cityCode / 100) == this.provinceCode) {
+    //         cArrres.push(cArray[i]);
+    //       } else {
+    //       }
+    //     }
+    //     this.cityList = cArrres;
+    //     this.cityCode = this.cityList[0].cityCode;
+    //     //回调自动获取当前选择的县区
+    //   }
+    //   console.log(
+    //     "省：" +
+    //       this.provinceCode +
+    //       "市：" +
+    //       this.cityCode +
+    //       "县：" +
+    //       this.countryCode
+    //   );
+    // },
+    select(val) {
+      console.log(val);
+      if (val.name == "新增") {
+        this.goToAdd();
       }
-      console.log(
-        "省：" +
-          this.provinceCode +
-          "市：" +
-          this.cityCode +
-          "县：" +
-          this.countryCode
-      );
+    },
+    goToAdd() {
+      this.$router.push({
+        name: "cityRiskAdd"
+      });
     }
   },
   mounted() {
-    this.showcity();
+    // this.showcity();
   }
 };
 </script>
