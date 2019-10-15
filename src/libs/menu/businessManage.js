@@ -90,7 +90,12 @@ export default [{
           }
         ],
       },
-
+      // /cardBalance
+  // /cardGeneration
+  // /refillRules
+  // /winningRecord
+  // /withdrawalRecord
+  // /cardInformation
       {
         icon: "el-icon-menu",
         name: "渠道终端管理",
@@ -125,6 +130,48 @@ export default [{
             icon: "el-icon-menu",
             name: "配置管理",
             url: 'configuration'
+          }
+        ]
+      },{
+        icon: "el-icon-menu",
+        name: "投注卡管理",
+        url: 'bettingCardManage',
+        childResources: [
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡生成",
+            url: 'cardGeneration'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡信息",
+            url: 'cardInformation'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡余额",
+            url: 'cardBalance'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡中奖记录",
+            url: 'winningRecord'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡提现记录",
+            url: 'withdrawalRecord'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡充值规则",
+            url: 'refillRules'
           }
         ]
       }

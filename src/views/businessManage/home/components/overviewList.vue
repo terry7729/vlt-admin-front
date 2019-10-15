@@ -100,8 +100,12 @@ export default {
     background-color: rgba(255, 255, 255, 1);
     &.el-col-4 {
       padding: 20px !important;
-      & > div {
-        cursor: pointer;
+        & > div {
+          cursor: pointer;
+          &.grid-content {
+            height: 80px;
+            box-sizing: border-box;
+          }
       }
     }
     .grid-content {
