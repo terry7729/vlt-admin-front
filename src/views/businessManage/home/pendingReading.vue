@@ -8,10 +8,6 @@
       :total="999"
       labelWidth="80px"
     ></search-bar>
-    <el-row>
-      <el-button size="mini" @click="toPrint">打印</el-button>
-      <el-button  size="mini" @click="toExport">导出</el-button>
-    </el-row>
     <el-table :data="tableData" style="width: 100%" border class="table-box">
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
       <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
@@ -178,12 +174,6 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-    },
-    toPrint () {
-      console.log('打印');
-    },
-    toExport () {
-      console.log('导出');
     }
   },
   components: {

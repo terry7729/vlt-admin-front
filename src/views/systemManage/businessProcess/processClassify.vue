@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <el-row>
-      <el-col :span="6">
+      <el-col :span="6">    <!--树形结构-->
         <div class="grid-content bg-purple">
           <el-tree
             :data="data"
@@ -15,20 +15,25 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple-light">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </div>
+        <div class="organi-select">
+            <el-dropdown placement="bottom-start" @command="handele" > <!--下拉选择按钮 !-->
+              <el-button size="small">
+                选择操作
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command1="刷新">刷新</el-dropdown-item>
+                <el-dropdown-item command2="添加一级类别" >添加一级类别</el-dropdown-item>
+                <el-dropdown-item command="添加子类别" @click="modify">添加子类别</el-dropdown-item>
+                <el-dropdown-item command3="展开所有">展开所有</el-dropdown-item>
+               
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
       </el-col>
       <el-col :span="12">
         <div class="grid-content bg-purple" style="background: rgba(247, 247, 247, 1);">
-          <panel :title="title">
+          <panel :title="title" :show="true">
             <div id="p1">
               <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
                 <el-form-item>
@@ -44,7 +49,7 @@
                   <el-input v-model="formLabelAlign.type" style="width:250px"></el-input>
                 </el-form-item>
               </el-form>
-              <el-button type="primary" @click="modify(scope.row.id)">修改</el-button>
+              <el-button type="primary" @click="modify">修改</el-button>
               <el-button type="info">重置</el-button>
             </div>
           </panel>
@@ -130,18 +135,19 @@ export default {
           label: "刷新"
         },
         {
-          value: "选项4",
+          value: "选项2",
           label: "添加一级类别"
         },
         {
-          value: "选项5",
+          value: "选项3",
           label: "添加子类别"
         },
         {
-          value: "选项5",
+          value: "选项4",
           label: "展开所有"
-        }
+        },
       ],
+       value:"",
       labelPosition: "right",
       formLabelAlign: {
         name: "",
@@ -151,12 +157,16 @@ export default {
     };
   },
   methods: {
-    modify(id){
-      this.$router.push({
-        path:"processClassify/processClassifyModify",
-        query: {id}
-      })
-    }
+    modify(){
+      this.$router.push(
+        "processClassify/processClassifyModify",
+        )
+    },
+     handele(){
+         this.$router.push(
+        "processClassify/processClassifyModify",
+        )
+      },
   }
 };
 </script>
