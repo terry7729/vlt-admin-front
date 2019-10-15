@@ -1,5 +1,7 @@
 <template>
-  <div class="vlt-card">角色管理权限设置</div>
+  <div class="vlt-card">
+    <div class="roleManageAuthority"></div>
+  </div>
 </template>
 
 <script type="text/javascript">

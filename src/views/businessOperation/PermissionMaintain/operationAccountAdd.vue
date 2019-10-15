@@ -1,5 +1,5 @@
 <template>
-  <div class="vlt-card">账户管理新增</div>
+  <div class="vlt-card"></div>
 </template>
 
 <script type="text/javascript">
