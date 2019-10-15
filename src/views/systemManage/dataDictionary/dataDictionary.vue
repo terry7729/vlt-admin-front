@@ -4,7 +4,7 @@
       <search-Bar :options="option"></search-Bar>
     </div>
     <div class="addlist">
-      <el-button type="primary" icon="el-icon-plus" @click="edit()">新建流程</el-button>
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </div>
     <div>
       <tips-line>共搜索到8项数据</tips-line>
@@ -42,33 +42,27 @@ export default {
   name: "",
   data() {
     return {
+      controlOptions: [
+        //按钮组
+        { name: "新建流程", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "导出", type: "success", icon: "download" },
+        { name: "打印", type: "primary", icon: "printer" }
+      ],
       option: [
         {
-          title: "用户名称",
+          title: "字典名称",
           prop: "user",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
-
         {
-          title: "用户名称",
-          prop: "select",
-          type: "select",
-          options: [
-            {
-              value: "beijing",
-              label: "北京"
-            },
-            {
-              value: "shanghai",
-              label: "上海"
-            }
-          ],
-
+          title: "所属类别",
+          prop: "user",
+          type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
-        }
+        },  
       ],
       tableData: [
         {
