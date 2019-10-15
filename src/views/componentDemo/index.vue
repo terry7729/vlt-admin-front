@@ -24,7 +24,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
       </search-bar>
     </section>
 
@@ -35,12 +35,13 @@
 
     <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
-      <control-bar :options="controlOptions"></control-bar>
+      <control-bar :options="controlOptions" position="left"></control-bar>
     </section>
 
     <section class="comp-item">
       <h4 class="comp-title">表格分页</h4>
       <table-paging
+        position="left"
         :total="999"
         :currentPage="1"
         :pageSize="10"
