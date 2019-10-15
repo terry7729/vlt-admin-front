@@ -32,78 +32,12 @@
       <el-main style="border-left:1px solid #ccc;padding-left:100px;">
         <div class="vlt-edit-single">
           <bounced-message :obj="ifo"></bounced-message>
-          <!-- <div class="vlt-edit-wrap">
-            <el-form
-              label-position="right"
-              label-width="90px"
-              :model="form"
-              :rules="rules"
-              ref="form"
-            >
-              <el-form-item label="类型">
-                <el-input v-model="form.singleAmount" :disabled="true"></el-input>
-              </el-form-item>
-              <el-form-item label="名称" prop="minMultiple">
-                <el-input v-model="form.minMultiple"></el-input>
-              </el-form-item>
-              <el-form-item label="路径" prop="mixBet">
-                <el-input v-model="form.mixBet"></el-input>
-              </el-form-item>
-              <el-form-item label="路由英文名" prop="bet">
-                <el-input v-model="form.bet"></el-input>
-              </el-form-item>
-              <el-form-item label="图标" prop="logOff">
-                <el-select v-model="form.logOff" placeholder="请选择">
-                  <el-option
-                    v-for="item in logOffOption"
-                    @click.native="changeLogOff(item)"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="排序值" prop="cash">
-                <el-input placeholder="请输入内容" v-model="form.textarea"></el-input>
-              </el-form-item>
-              <el-form-item label="是否敏感操作">
-                <el-switch
-                  style="display: block"
-                  v-model="form.value1"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
-              </el-form-item>
-              <el-form-item label="是否启用">
-                <el-switch
-                  style="display: block"
-                  v-model="form.value2"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
-              </el-form-item>
-            </el-form>
-            <el-row class="vlt-edit-btn">
-              <el-button
-                type="primary"
-                v-prevent="1000"
-                size="medium"
-                @click="save(form,'form')"
-              >提交并保存</el-button>
-              <el-button size="medium" @click="resestFrom('form')">重置</el-button>
-            </el-row>
-          </div>-->
         </div>
       </el-main>
     </el-container>
     <div class="bouncedMessage">
-      <el-dialog
-        title="添加子节点"
-        :visible.sync="dialogFormVisible"
-        width="500px"
-        custom-class="menuDialog"
-      >
-        <bounced-message></bounced-message>
+      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog">
+        <bounced-message title="添加子节点" @closediaog="handelbounced"></bounced-message>
       </el-dialog>
     </div>
   </div>
@@ -114,20 +48,24 @@ import bouncedMessage from "./bouncedMessage";
 let id = 1000;
 
 export default {
+  created() {},
   data() {
     const data = [
       {
         id: 1,
         label: "业务管理",
         type: 0,
+         obj:{},
         children: [
           {
             id: 4,
             label: "二级 1-1",
             type: 0,
+             obj:{},
             children: [
               {
                 id: 9,
+                 obj:{},
                 label: "三级 1-1-1",
                 type: 0
               },
@@ -144,15 +82,18 @@ export default {
         id: 2,
         label: "业务运营",
         type: 0,
+         obj:{},
         children: [
           {
             id: 5,
             type: 0,
+             obj:{},
             label: "二级 2-1"
           },
           {
             id: 6,
             type: 0,
+             obj:{},
             label: "二级 2-2"
           }
         ]
@@ -160,16 +101,19 @@ export default {
       {
         id: 3,
         type: 0,
+         obj:{},
         label: "业务监控",
         children: [
           {
             id: 7,
+             obj:{},
             type: 0,
             label: "二级 3-1"
           },
           {
             id: 8,
             type: 0,
+            obj:{},
             label: "二级 3-2"
           }
         ]
@@ -178,6 +122,7 @@ export default {
         id: 4,
         type: 0,
         label: "系统管理",
+        obj:{},
         children: [
           {
             id: 11,
@@ -197,55 +142,67 @@ export default {
           {
             id: 12,
             type: 0,
+             obj:{},
             label: "组织部门"
           },
           {
             id: 13,
             type: 0,
+             obj:{},
             label: "角色管理"
           },
           {
             id: 14,
             type: 0,
+             obj:{},
             label: "权限管理"
           },
           {
             id: 15,
+             obj:{},
             type: 0,
             label: "用户管理"
           },
           {
             id: 16,
+             obj:{},
             type: 0,
             label: "数据字典"
           },
           {
             id: 17,
             type: 0,
+             obj:{},
             label: "菜单管理",
             children: [
               {
                 id: 20,
+                 obj:{},
                 label: "系统菜单详情"
               },
               {
                 id: 21,
+                 obj:{},
                 label: "系统菜单新增"
               },
               {
                 id: 22,
+                 obj:{},
                 label: "系统菜单编缉"
               },
               {
                 id: 23,
+                 obj:{},
                 label: "系统菜单删除"
               },
               {
                 id: 24,
+                 obj:{},
                 label: "系统菜单状态设置"
               },
               {
                 id: 25,
+                 obj:{},
                 label: "菜单查询"
               }
             ]
@@ -314,6 +271,11 @@ export default {
     bouncedMessage
   },
   methods: {
+    handelbounced(val) {
+      //弹框的取消按钮事件
+      console.log(val);
+      this.dialogFormVisible = val;
+    },
     save(val, formName) {
       console.log(val);
       this.$refs[formName].validate(valid => {
@@ -340,7 +302,10 @@ export default {
     getnowNodeifo(val) {
       //获取当前点击节点信息
       this.slelectifo = val.label;
-      this.ifo = { ...val.obj };
+      // if(val[obj]){
+        
+        this.ifo = { ...val.obj };
+      // }
       console.log();
       console.log(val);
     },
@@ -363,20 +328,12 @@ export default {
   padding-right: 8px;
 }
 .menuDialog {
+  border-radius: 20px;
+  .el-dialog__header {
+    padding: 0;
+  }
   .el-row {
     text-align: center;
   }
 }
-/* .el-dialog{
-  width:600px;
-}
-.el-input{
-  width:400px;
-}
-.el-row{
-  text-align: center;
-}
-.el-form-item__label{
-  width:110px !important;
-} */
 </style>

@@ -1,8 +1,14 @@
 // 业务管理-左侧导航数据
 
 export default [{
+  icon: "el-icon-menu",
+  name: "业务管理",
+  url: '', // 前端路由名称
   childResources: [
     {
+      icon: "el-icon-menu",
+      name: "首页",
+      url: 'overview',
       childResources: [{
         childResources: [],
         icon: "el-icon-menu",
@@ -28,10 +34,7 @@ export default [{
         icon: "el-icon-menu",
         name: "我的知会",
         url: 'myKnowledge'
-      }],
-      icon: "el-icon-menu",
-      name: "首页",
-      url: 'overview'
+      }]
     },
     {
       icon: "el-icon-menu",
@@ -83,10 +86,28 @@ export default [{
         url: 'channelBusinessManage',
         childResources: [
           {
-            childResources: [],
             icon: "el-icon-menu",
             name: "渠道列表",
-            url: 'channelList'
+            url: 'channelList',
+            childResources: []
+          },
+          {
+            icon: "el-icon-menu",
+            name: "业务办理",
+            url: 'channelDeal',
+            childResources: []
+          },
+          {
+            icon: "el-icon-menu",
+            name: "年度发展计划",
+            url: 'developmentPlan',
+            childResources: []
+          },
+          {
+            icon: "el-icon-menu",
+            name: "档案管理",
+            url: 'dossierManage',
+            childResources: []
           }
         ],
       },
@@ -165,10 +186,7 @@ export default [{
           }
         ]
       }
-    ],
-    icon: "el-icon-menu",
-    name: "业务管理",
-    url: '' // 前端路由名称
+    ]
   }
 ]
 

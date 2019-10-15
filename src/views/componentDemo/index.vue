@@ -24,7 +24,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
       </search-bar>
     </section>
 
@@ -35,7 +35,90 @@
 
     <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
-      <control-bar :options="controlOptions"></control-bar>
+      <control-bar :options="controlOptions" position="left"></control-bar>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">表格分页</h4>
+      <table-paging
+        position="left"
+        :total="999"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      >
+      </table-paging>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">表格状态</h4>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%; margin-top: 10px">
+        <el-table-column
+          prop="date"
+          label="日期"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="province"
+          label="省份"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="市区"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="地址"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="zip"
+          label="邮编"
+        >
+        </el-table-column>
+        <el-table-column
+          label="状态"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <table-row-status
+              :scope="scope"
+              idField="id"
+              statusField="status"
+              :rowName="scope.row.name"
+              :option="{
+                enable: {
+                  label: '启用',
+                  apiName: 'apiName',
+                  value: '0'
+                },
+                disable: {
+                  label: '冻结',
+                  apiName: 'apiName',
+                  value: '1'
+                },
+                logout: {
+                  label: '注销',
+                  apiName: 'apiName',
+                  value: '-1'
+                }
+              }"
+            >
+            </table-row-status>
+          </template>
+        </el-table-column>
+      </el-table>
     </section>
 
     <section class="comp-item">
@@ -56,11 +139,6 @@
       <panel-edit title="彩票信息" :show="true">
         <base-info :infoList="infoList" slot="info-content"></base-info>
       </panel-edit>
-    </section>
-
-    <section class="comp-item">
-      <h4 class="comp-title">表格分页</h4>
-      <table-paging></table-paging>
     </section>
 
     <section class="comp-item">
@@ -170,6 +248,10 @@ export default {
         }
       ],
       data1: [
+        {title: "日期", type: "datepicker-range", prop: "date4",value: "",options: ["start", "end"]},
+        {title: "日期5", type: "datepicker-range", prop: "date5",value: "",options: ["start5", "end5"]},
+        {title: "日期时间", type: "datetime-range", prop: "time4",value: "",options: ["time", "endTime"]},
+        {title: "日期时间5", type: "datetime-range", prop: "time5",value: "",options: ["time5", "endTime5"]},
         { type: "input", title: "姓名", prop: "name" },
         {
           type: "select",
@@ -1466,12 +1548,18 @@ export default {
         { name: "导出", type: "danger", icon: "download" },
         { name: "导出", type: "success", icon: "upload" },
         { name: "导出", type: "warning", icon: "download" }
+      ],
+      tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }
       ]
     };
   },
-  computed: {},
-  created() {},
-  mounted() {},
   computed: {},
   created() {},
   mounted() {},
@@ -1506,6 +1594,12 @@ export default {
     },
     search(form) {
       console.log("search", form);
+    },
+    handleSizeChange(pageSize) {
+      console.log(pageSize)
+    },
+    handleCurrentChange(currentPage) {
+      console.log(currentPage)
     }
   },
   components: {}

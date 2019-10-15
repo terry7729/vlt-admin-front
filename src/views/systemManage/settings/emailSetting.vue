@@ -13,38 +13,46 @@
         ></base-form>
       </div>
     </div>
-    <div class="vlt-edit-over">
-      <div class="vlt-edit-wrap">
-        <el-form label-position="right" label-width="90px" :model="form" ref="form">
-          <base-form
-            :formData="data2"
-            ref="baseForm"
-            :rules="rules1"
-            direction="right"
-            @change="changeForm"
-          ></base-form>
-          <el-button
-            type="primary"
-            v-prevent="1000"
-            size="medium"
-            @click="add"
-            style="margin:4px 0px 21px 30px"
-          >增加</el-button>
-          <base-form
-            :formData="data3"
-            ref="baseForm"
-            :rules="rules1"
-            direction="right"
-            @change="changeForm"
-          ></base-form>
-          <el-button
-            type="primary"
-            v-prevent="1000"
-            size="medium"
-            @click="add"
-            style="margin:4px 0px 21px 30px"
-          >增加</el-button>
-        </el-form>
+    <div>
+      <div>
+        <div >  
+          <el-form
+            :model="dynamicValidateForm"
+            ref="dynamicValidateForm"
+            label-width="100px"
+            class="demo-dynamic"
+          >
+            <el-form-item
+              prop="email"
+              label="邮箱"
+              :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+    ]"
+            >
+              <el-input v-model="dynamicValidateForm.email"></el-input>
+            </el-form-item>
+            <el-form-item
+              v-for="(domain, index) in dynamicValidateForm.domains"
+              :label="'域名' + index"
+              :key="domain.key"
+              :prop="'domains.' + index + '.value'"
+              :rules="{
+      required: true, message: '域名不能为空', trigger: 'blur'
+    }"
+            >
+              <el-input v-model="domain.value"></el-input>
+              <el-button @click.prevent="removeDomain(domain)">删除</el-button>
+            </el-form-item>
+            <el-form-item>
+              
+              <el-button @click="addDomain">新增域名</el-button>
+            
+            </el-form-item>
+          </el-form>
+        </div>
+        
+
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交</el-button>
           <el-button size="medium" @click="editShow = !editShow">取消</el-button>
@@ -54,6 +62,8 @@
   </div>
 </template>
 
+
+  
 <script type="text/javascript">
 export default {
   name: "",
@@ -68,7 +78,12 @@ export default {
           value: "",
           options: [{ key: 1, value: "开启" }, { key: 0, value: "关闭" }]
         },
-        { title: "SMTP服务器地址", type: "input", prop: "serverSite", value: "" },
+        {
+          title: "SMTP服务器地址",
+          type: "input",
+          prop: "serverSite",
+          value: ""
+        },
         { title: "SMTP端口号", type: "input", prop: "portNumber", value: "" },
         { title: "SMTP用户名", type: "input", prop: "userName", value: "" },
         { title: "SMTP密码", type: "input", prop: "pwd", value: "" },
@@ -77,16 +92,35 @@ export default {
       ],
       data2: [
         { title: "发送内容", type: "select", prop: "sendContent", value: "" },
-        { title: "接收人", type: "select", prop: "recipientDepartment", value: "" },
+        {
+          title: "接收人",
+          type: "select",
+          prop: "recipientDepartment",
+          value: ""
+        },
         { title: "", type: "select", prop: "recipientStaff", value: "" }
       ],
       data3: [
         { title: "", type: "select", prop: "sendContent", value: "" },
-        { title: "接收人", type: "select", prop: "recipientDepartment", value: "" },
+        {
+          title: "接收人",
+          type: "select",
+          prop: "recipientDepartment",
+          value: ""
+        },
         { title: "", type: "select", prop: "recipientStaff", value: "" }
       ],
       radio: "1",
-      rules1: {}
+      rules1: {},
+      workerData: {
+        region: ""
+      },
+       dynamicValidateForm: {
+          domains: [{
+            value: ''
+          }],
+          email: ''
+        }
     };
   },
   components: {},
@@ -99,7 +133,21 @@ export default {
       this.$refs.baseForm.validate(val => {
         console.log(val);
       });
-    }
+    },
+      
+      removeDomain(item) {
+        var index = this.dynamicValidateForm.domains.indexOf(item)
+        if (index !== -1) {
+          this.dynamicValidateForm.domains.splice(index, 1)
+        }
+      },
+      addDomain() {
+        this.dynamicValidateForm.domains.push({
+          value: '',
+          key: Date.now()
+        });
+      }
+   
   }
 };
 </script>
@@ -107,5 +155,8 @@ export default {
 <style lang="less" scoped>
 .vlt-edit-single .title {
   border-color: #fff;
+}
+.el-form-item {
+  width: 300px;
 }
 </style>

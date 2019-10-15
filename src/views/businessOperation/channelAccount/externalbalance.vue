@@ -6,7 +6,11 @@
         账面余额:人民币元
         <span></span>
       </div>
-      <controlBar :options="externalbalancegobackbtn" @select="externalbalancegoback"></controlBar>
+      <controlBar
+        :options="externalbalancegobackbtn"
+        @select="externalbalancegoback"
+        position="left"
+      ></controlBar>
     </div>
   </div>
 </template>

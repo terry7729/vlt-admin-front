@@ -11,6 +11,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
 
         <h2 class="title">记账本位币</h2>
@@ -20,6 +21,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          
         ></base-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交</el-button>
@@ -95,8 +97,6 @@ export default {
 .vlt-edit-single .title {
   border-color: #fff;
 }
+ 
 
-.el-input__inner {
-  width: 100px;
-}
 </style>

@@ -61,6 +61,13 @@ const equipmentDetail = () => import('@/views/businessManage/channelResourceMana
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //入库
 const putStore =  () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
+const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
+const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
+
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
 const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
@@ -81,9 +88,6 @@ const repairWork = () => import('@/views/businessManage/channelTerminalManagemen
 const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
 
 
-const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
-const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
-const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
 
 export default [
   // {
@@ -285,12 +289,12 @@ export default [
     component: channelList
   },
   {
-    path: 'businessManage/channelAdd',
-    name: 'channelAdd',
+    path: 'businessManage/channelCreate',
+    name: 'channelCreate',
     meta: {
       title: '新建渠道',
     },
-    component: channelAdd
+    component: channelCreate
   },
   {
     path: 'businessManage/channelResourceManage/inventoryManage',
@@ -465,6 +469,14 @@ export default [
     component: channelDeal
   },
   {
+    path: 'businessManage/channelSalesPermission',
+    name: 'channelSalesPermission',
+    meta: {
+      title: '销售权限',
+    },
+    component: channelSalesPermission
+  },
+  {
     path: 'businessManage/developmentPlan',
     name: 'developmentPlan',
     meta: {
@@ -473,12 +485,19 @@ export default [
     component: developmentPlan
   },
   {
-    path: 'businessManage/createDevelopmentPlan',
-    name: 'createDevelopmentPlan',
+    path: 'businessManage/developmentPlanCreate',
+    name: 'developmentPlanCreate',
     meta: {
-      title: '年度发展计划',
+      title: '新建年度发展计划',
     },
-    component: createDevelopmentPlan
+    component: developmentPlanCreate
+  },
+  {
+    path: 'businessManage/dossierManage',
+    name: 'dossierManage',
+    meta: {
+      title: '档案管理',
+    },
+    component: dossierManage
   }
-
 ]

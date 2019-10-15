@@ -1,15 +1,17 @@
 <template>
   <div class="vlt-card">
-    <cell title="用户信息">
+    <panel-static title="用户信息">
       <base-info :infoList="destail"></base-info>
-    </cell>
+    </panel-static>
   </div>
 </template>
 
 
 <script>
 export default {
+  name:'userDetails',
   data() {
+    
     return {
       destail: [
         {
