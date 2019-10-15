@@ -262,7 +262,7 @@ export default {
         }
       }else if(item.type=='switch') {
         if(!item.value) { // 数据回填
-          self.change(item.value)
+          self.changeSwitch(item.value)
           self.$set(self.form, item.prop, item.value)
         }else{
           self.$set(self.form, item.prop, true)
