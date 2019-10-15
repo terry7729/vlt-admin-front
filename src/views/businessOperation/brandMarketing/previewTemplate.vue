@@ -1,6 +1,9 @@
 <template>
   <div class="vlt-card preview-template">
-    <h2 class="comp-title">促销推广活动模板1</h2>
+    <slot name="header">
+      <h2 class="comp-title">促销推广活动模板1</h2>
+    </slot>
+
     <section class="comp-item coll-item">
       <panel title="基础信息" :show="true">
         <div class="coll-content">
@@ -9,9 +12,13 @@
               <el-input v-model="formLabelAlign.name"></el-input>
             </el-form-item>
             <el-form-item label="活动类型">
-              <el-select v-model="formLabelAlign.region" placeholder="请选择">
-                <el-option label="区域一" value="1"></el-option>
-                <el-option label="区域二" value="2"></el-option>
+              <el-select v-model="value" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="活动时间">
@@ -29,16 +36,24 @@
             </el-form-item>
 
             <el-form-item label="活动管理方">
-              <el-select v-model="formLabelAlign.region" placeholder="请选择">
-                <el-option label="区域一" value="3"></el-option>
-                <el-option label="区域二" value="4"></el-option>
+              <el-select v-model="value" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item label="活动组织方">
-              <el-select v-model="formLabelAlign.region" placeholder="请选择">
-                <el-option label="区域一" value="5"></el-option>
-                <el-option label="区域二" value="6"></el-option>
+              <el-select v-model="value" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
             </el-form-item>
 
@@ -53,9 +68,13 @@
                 <el-checkbox v-for="user in userList" :label="user" :key="user">{{user}}</el-checkbox>
               </el-checkbox-group>
 
-              <el-select v-model="formLabelAlign.region" placeholder="请选择会员等级">
-                <el-option label="区域一" value="7"></el-option>
-                <el-option label="区域二" value="8"></el-option>
+              <el-select v-model="value" placeholder="请选择会员等级">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
               </el-select>
             </el-form-item>
 
@@ -82,7 +101,7 @@
               </div>
               <div class="active-target">
                 <el-checkbox v-model="checked"></el-checkbox>
-                <label>活动期间累计充值</label>
+                <label>活动期间累计消费</label>
                 <el-input></el-input>
               </div>
             </el-form-item>
@@ -90,99 +109,131 @@
             <el-form-item label="活动预算">
               <el-input v-model="formLabelAlign.name"></el-input>
             </el-form-item>
+            <slot name="addForm"></slot>
           </el-form>
         </div>
       </panel>
     </section>
 
-    <section class="comp-item coll-item">
-      <panel title="附件上传" :show="true">
-        <div class="coll-content">
-          <div class="upload-file">
-            <el-upload
-              class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :before-remove="beforeRemove"
-              multiple
-              :limit="3"
-              :on-exceed="handleExceed"
-            >
-              <span>上传附件：</span>
-              <el-button size="small" type="primary">
-                <i class="el-icon-upload2"></i>上传文件
-              </el-button>
-              <div slot="tip" class="el-upload__tip">支持扩展名：.rar .zip .doc .docx .pdf .jpg...</div>
-            </el-upload>
-          </div>
-          <div class="upload-img">
-            <span>上传广告图：</span>
-            <el-upload
-              class="upload-box"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
-            >
-              <i class="el-icon-plus"></i>
-            </el-upload>
-          </div>
+    <slot name="upload-file">
+      <section class="comp-item coll-item">
+        <panel title="附件上传" :show="true">
+          <div class="coll-content">
+            <div class="upload-file">
+              <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :before-remove="beforeRemove"
+                multiple
+                :limit="3"
+                :on-exceed="handleExceed"
+              >
+                <span>上传附件：</span>
+                <el-button size="small" type="primary">
+                  <i class="el-icon-upload2"></i>上传文件
+                </el-button>
+                <div slot="tip" class="el-upload__tip">支持扩展名：.rar .zip .doc .docx .pdf .jpg...</div>
+              </el-upload>
+            </div>
+            <div class="upload-img">
+              <span>上传广告图：</span>
+              <el-upload
+                class="upload-box"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                list-type="picture-card"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+              >
+                <i class="el-icon-plus"></i>
+              </el-upload>
+            </div>
 
-          <div class="drag-upload">
-            <el-upload
-              class="upload-demo"
-              drag
-              action="https://jsonplaceholder.typicode.com/posts/"
-              multiple
-            >
-              <i class="el-icon-upload"></i>
-              <div class="el-upload__text">
-                将文件拖到此处，或
-                <em>点击上传</em>
-              </div>
-            </el-upload>
-            <el-progress :percentage="60" :stroke-width="strokeWidth"></el-progress>
-            <el-progress :percentage="70" :stroke-width="strokeWidth"></el-progress>
-            <el-progress :percentage="100" status="success" :strokewidth="strokeWidth"></el-progress>
-          </div>
+            <div class="drag-upload">
+              <el-upload
+                class="upload-demo"
+                drag
+                action="https://jsonplaceholder.typicode.com/posts/"
+                multiple
+              >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">
+                  将文件拖到此处，或
+                  <em>点击上传</em>
+                </div>
+              </el-upload>
+              <el-progress :percentage="60" :stroke-width="strokeWidth"></el-progress>
+              <el-progress :percentage="70" :stroke-width="strokeWidth"></el-progress>
+              <el-progress :percentage="100" status="success" :strokewidth="strokeWidth"></el-progress>
+            </div>
 
-          <el-dialog :visible.sync="dialogVisible" size="tiny">
-            <img width="100%" :src="dialogImageUrl" alt />
-          </el-dialog>
-        </div>
-      </panel>
-    </section>
+            <el-dialog :visible.sync="dialogVisible" size="tiny">
+              <img width="100%" :src="dialogImageUrl" alt />
+            </el-dialog>
+          </div>
+        </panel>
+      </section>
+    </slot>
 
     <section class="comp-item coll-item">
       <panel title="活动规则" :show="true">
         <div class="coll-content">
           <el-form :model="formLabelAlign" class="coll-form active-rule">
             <el-form-item class="rule-item">
-              <el-select></el-select>
+              <el-select v-model="value" placeholder="充值">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
               <el-input placeholder="审批人"></el-input>
-              <label>活动期间累计充值:</label>
+              <label>赠送:</label>
               <el-input class="last-rule"></el-input>
             </el-form-item>
             <el-form-item class="rule-item">
-              <el-select></el-select>
+              <el-select v-model="value" placeholder="消费">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
               <el-input placeholder="审批人"></el-input>
-              <label>活动期间累计充值:</label>
+              <label>赠送:</label>
               <el-input class="last-rule"></el-input>
             </el-form-item>
             <el-form-item class="rule-item">
-              <el-select></el-select>
+              <el-select v-model="value" placeholder="完成任务">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
               <el-input placeholder="审批人"></el-input>
-              <label>活动期间累计充值:</label>
+              <label>赠送:</label>
               <el-input class="last-rule"></el-input>
             </el-form-item>
             <el-form-item class="rule-item">
-              <el-select></el-select>
+              <el-select v-model="value" placeholder="完成任务">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
               <el-input placeholder="审批人"></el-input>
-              <label>活动期间累计充值:</label>
+              <label>赠送:</label>
               <el-input class="last-rule"></el-input>
             </el-form-item>
           </el-form>
+          <div class="add-rule">+新增规则</div>
         </div>
       </panel>
     </section>
@@ -277,6 +328,8 @@
         </div>
       </panel>
     </section>
+
+    <slot name="footer-btn"></slot>
   </div>
 </template>
 
@@ -316,24 +369,40 @@ export default {
         "每用户充值额",
         "用户数",
         "提现总额"
-      ]
+      ],
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕"
+        },
+        {
+          value: "选项2",
+          label: "双皮奶"
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎"
+        }
+      ],
+      value: ""
     };
   },
   methods: {
-    handleChange(val) {
-      console.log(val);
-    },
+    beforeRemove() {},
+    handleExceed() {},
+    handlePreview() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
+
+    handleChange(val) {
+      console.log(val);
+    },
+
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-
-    beforeRemove() {},
-    handleExceed() {},
-    handlePreview() {},
 
     handleCheckAllChange(val) {
       this.checkedUser = val ? userOptions : [];
@@ -354,6 +423,17 @@ export default {
 </script>
 
 
-<style lang="less" scoped >
+<style lang="less"  >
 @import "./less/index.less";
+.add-rule {
+  width: 472px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px dashed #aaa;
+}
+.coll-content {
+  padding-bottom: 20px;
+}
 </style>

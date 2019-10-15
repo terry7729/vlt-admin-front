@@ -1,7 +1,9 @@
 <template>
   <li>
     <template v-for="item in menuData">
-      <el-menu-item :index="item.url" :key="item.id" v-if="!item.childResources || !item.childResources.length" @click="to(item.url)">
+      <el-menu-item :index="item.url" :key="item.id" v-if="!item.childResources || !item.childResources.length" @click="to(item.url)"
+        :class="item.className"
+      >
         <i :class="[item.icon && 'iconfont', item.icon]"></i>
         <span slot="title">{{item.name}}</span>
       </el-menu-item>
