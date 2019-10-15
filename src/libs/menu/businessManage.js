@@ -90,6 +90,43 @@ export default [{
           }
         ],
       },
+      {
+        icon: "el-icon-menu",
+        name: "渠道资源管理",
+        url: 'channelResourceManage',
+        childResources: [
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "库存管理",
+            url: 'inventoryManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "出入库管理",
+            url: 'outPutManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "台账管理",
+            url: 'ledgerManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "仓库管理",
+            url: 'warehouseManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "基本信息管理",
+            url: 'basicInfoManage'
+          },
+        ],
+      },
 
       {
         icon: "el-icon-menu",

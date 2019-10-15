@@ -49,7 +49,18 @@ const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
-
+//渠道资源管理
+const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
+const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
+const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
+const warehouseManage = () => import('@/views/businessManage/channelResourceManage/warehouseManage/warehouseManage')
+const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
+//设备查看
+const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
+//盘点统计
+const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
+//入库
+const putStore =  () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
 const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
@@ -264,6 +275,7 @@ export default [
     },
     component: planEdit
   },
+
   {
     path: 'businessManage/channelList',
     name: 'channelList',
@@ -280,6 +292,73 @@ export default [
     },
     component: channelAdd
   },
+  {
+    path: 'businessManage/channelResourceManage/inventoryManage',
+    name: 'inventoryManage',
+    meta: {
+      title: '库存管理',
+    },
+    component: inventoryManage
+  },
+  {
+    path: 'businessManage/channelResourceManage/equipmentDetail',
+    name: 'equipmentDetail',
+    meta: {
+      title: '设备查看',
+    },
+    component: equipmentDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/inventoryStatistics',
+    name: 'inventoryStatistics',
+    meta: {
+      title: '盘点统计',
+    },
+    component: inventoryStatistics
+  },
+  
+  {
+    path: 'businessManage/channelResourceManage/outPutManage',
+    name: 'outPutManage',
+    meta: {
+      title: '出入库管理',
+    },
+    component: outPutManage
+  },
+  {
+    path: 'businessManage/channelResourceManage/putStore',
+    name: 'putStore',
+    meta: {
+      title: '入库',
+    },
+    component: putStore
+  },
+
+  {
+    path: 'businessManage/channelResourceManage/ledgerManage',
+    name: 'ledgerManage',
+    meta: {
+      title: '台账管理',
+    },
+    component: ledgerManage
+  },
+  {
+    path: 'businessManage/channelResourceManage/warehouseManage',
+    name: 'warehouseManage',
+    meta: {
+      title: '仓库管理',
+    },
+    component: warehouseManage
+  },
+  {
+    path: 'businessManage/channelResourceManage/basicInfoManage',
+    name: 'basicInfoManage',
+    meta: {
+      title: '基本信息管理',
+    },
+    component: basicInfoManage
+  },
+  
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
