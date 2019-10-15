@@ -1,12 +1,5 @@
 //渠道账户列表样式
 .el_box {
-
-  // .el-alert--info.is-light {
-  //     padding: 4px 48px 8px 5px;
-  //     border: 1px solid #abdcff;
-  //     background-color: #f0faff;
-  //     color: #000
-  // }
   .el_alert_info {
     margin-bottom: 20px;
   }
@@ -148,6 +141,69 @@
 }
 
 //账户列表样式
-// .money_Account_Manage {
-//   width: 100px;
-// }
+.money_Account_Manage {
+  .account_manage_firstrow_title {
+    display: flex;
+    padding: 0 20px;
+    justify-content: left;
+    align-items: center;
+    color: #000;
+    font-weight: 500;
+    //margin-bottom: 10px;
+    line-height: 52px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  .account_manage_tworow {
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    padding: 0 45px;
+  }
+
+  .account_manage_threerow {
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    padding: 0 45px;
+  }
+
+
+  .account_manage_bankmain {
+    &_headder {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+
+      &_center {
+        display: flex;
+
+        &_input {
+          margin: 0 20px 0 10px;
+
+        }
+      }
+    }
+  }
+
+  .table_paging {
+    display: flex; // position: absolute;
+    // right: 0;
+    // bottom: 0;
+    width: 100%;
+    margin-top: 20px;
+    justify-content: flex-end;
+
+
+  }
+}
+
+//资金账户管理银行余额样式

@@ -39,9 +39,17 @@
           </template>
         </el-table-column>
       </el-table>
-      <section class="comp-item" style="text-align:right;margin-top:30px">
-        <table-paging></table-paging>
-      </section>
+      <div class="pagination-container" style="text-align:right;margin-top:30px">
+        <section class="comp-item">
+          <table-paging
+            :current-page="1"
+            :page-size="10"
+            :total="100"
+            @handleSizeChange="pageSizeChange"
+            @handleCurrentChange="pageCurrentChange"
+          ></table-paging>
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -140,6 +148,12 @@ export default {
     };
   },
   methods: {
+    pageSizeChange(pageSize) {
+      console.log('每页条数：', pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log('当前页：', currentPage);
+    },
     //查看页面跳转
     detail(id) {
       this.$router.push({

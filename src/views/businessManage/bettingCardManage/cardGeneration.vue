@@ -1,20 +1,24 @@
 <template>
   <!-- 投注卡生成 -->
   <div class="vlt-card">
-    <section class="comp-item">
-      <h4 class="comp-title">搜索框-拓展</h4>
-      <search-bar
-        class="search-bar-demo"
-        @search="search"
-        :options="searchOptions"
-        :total="999"
-        labelWidth="100px"
-      >
-        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
-      </search-bar>
-    </section>
+    <search-bar
+      class="search-bar-demo"
+      @search="search"
+      :options="searchOptions"
+      :total="999"
+      labelWidth="100px"
+    >
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" ></control-bar>
+    </search-bar>
     <el-row class="card-table">
-      <el-table :data="tableDatas.tableData" border style="width: 100%" class="table-box">
+      <el-table
+        :data="tableDatas.tableData"
+        border
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+        class="table-box"
+      >
+        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column
           v-for="(item,key) in tableDatas.tableKey"
           :key="key"
@@ -22,16 +26,35 @@
           :label="item.label"
           :width="item.width"
         ></el-table-column>
+        <el-table-column fixed="right" label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
+            <el-button type="primary" size="mini">导出</el-button>
+            <el-button type="primary" size="mini">注销</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-row>
+
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"
+    ></table-paging>
+    <dialog-form :showForm="showdialog" @closeDia="hideDia"></dialog-form>
   </div>
 </template>
 
 <script type="text/javascript">
+import dialogForm from "@/views/businessManage/bettingCardManage/components/dialogForm";
 export default {
-  name: "",
+  name: "cardGeneration",
   data() {
     return {
+      showdialog: false,
       // 搜索组件配置
       searchOptions: [
         { title: "批次：", type: "input", prop: "inputName", value: "" },
@@ -217,99 +240,129 @@ export default {
         tableData: [
           {
             id: 0,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 1,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 2,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 3,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 4,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 5,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 6,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 7,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 8,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           },
           {
             id: 9,
-            model: "F01",
-            name: "投注机",
-            repairs: 1,
-            failureRate: "56"
+            ardType: "F01",
+            batch: 3,
+            cardsIssued: 1,
+            affiliation: "56",
+            date: "2019-09-08",
+            remarks: "sss"
           }
         ],
         tableKey: [
           {
             label: "序号",
             value: "id",
+            width: "80"
+          },
+          {
+            label: "批次",
+            value: "batch",
             width: ""
           },
           {
-            label: "配件名称",
-            value: "name",
+            label: "投注卡类型",
+            value: "ardType",
+            width: "100"
+          },
+          {
+            label: "所属机构",
+            value: "affiliation",
             width: ""
           },
           {
-            label: "配件型号",
-            value: "model",
+            label: "发卡数量",
+            value: "cardsIssued",
+            width: "80"
+          },
+          {
+            label: "有效日期",
+            value: "date",
             width: ""
           },
           {
-            label: "维修次数",
-            value: "repairs",
-            width: ""
-          },
-          {
-            label: "故障率",
-            value: "failureRate",
+            label: "备注",
+            value: "remarks",
             width: ""
           }
         ]
@@ -323,12 +376,30 @@ export default {
     },
     selectBtn(val) {
       console.log(val);
+      this.showdialog = true;
+    },
+    hideDia () {
+      console.log(111);
+      this.showdialog = false;
     },
     search(form) {
       console.log("search", form);
+    },
+    handleClick(row) {
+      console.log(row);
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    handleSizeChange(pageSize) {
+      console.log(pageSize);
+    },
+    handleCurrentChange(currentPage) {
+      console.log(currentPage);
     }
   },
   components: {
+    "dialog-form": dialogForm
   }
 };
 </script>

@@ -37,16 +37,14 @@
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
-          <table-paging></table-paging>
+          <table-paging
+            :current-page="1"
+            :page-size="10"
+            :total="100"
+            @handleSizeChange="pageSizeChange"
+            @handleCurrentChange="pageCurrentChange"
+          ></table-paging>
         </section>
-        <!-- <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="100"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-        </el-pagination>-->
       </div>
     </div>
   </div>
@@ -156,6 +154,12 @@ export default {
     };
   },
   methods: {
+    pageSizeChange(pageSize) {
+      console.log('每页条数：', pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log('当前页：', currentPage);
+    },
     search(form) {
       console.log("search", form);
     },
@@ -254,7 +258,7 @@ export default {
     }
   },
   mounted() {
-    this.showcity();
+    // this.showcity();
   }
 };
 </script>

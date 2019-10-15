@@ -49,6 +49,10 @@ const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
 const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
+const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
 
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
@@ -78,9 +82,6 @@ const withdrawalRecord = () => import('@/views/businessManage/bettingCardManage/
 const cardInformation = () => import('@/views/businessManage/bettingCardManage/cardInformation')
 
 
-const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
-const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
-const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
 
 export default [
   // {
@@ -405,7 +406,7 @@ export default [
     path: 'businessManage/createDevelopmentPlan',
     name: 'createDevelopmentPlan',
     meta: {
-      title: '年度发展计划',
+      title: '新建年度发展计划',
     },
     component: createDevelopmentPlan
   }, 
@@ -451,6 +452,13 @@ export default [
       title: '投注卡信息',
     },
     component: cardInformation
+  },
+  {
+    path: 'businessManage/dossierManage',
+    name: 'dossierManage',
+    meta: {
+      title: '档案管理',
+    },
+    component: dossierManage
   }
-
 ]

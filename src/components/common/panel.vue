@@ -1,7 +1,7 @@
 <template>
   <!-- 收缩面板 -->
   <div class="panel">
-    <div @click="toggle" class="panel-hd">
+    <div @click="toggle" class="panel-hd" :class="[isShow?'hd-btn':'']">
       <i :class="[isShow?'el-icon-caret-bottom':'el-icon-caret-right']" class="panel-caret"></i>
       <h2 class="title">{{title}}</h2>
       <span class="tips">{{tips}}</span>
@@ -56,9 +56,11 @@ export default {
 
 <style lang="less" scoped>
   .panel{
-    border: 1px solid #e4e4e4;
-    border-radius: 6px;
+    border-radius: 4px;
     background-color: #fff;
+    transition: all .2s ease-in-out;
+    border: 1px solid #dcdee2;
+    border-color: #e8eaec;
     &-caret{
       font-size: 20px;
       margin-right: 3px;
@@ -68,9 +70,8 @@ export default {
       padding: 0 15px 0 10px;
       height: 50px;
       background-color: #fff;
-      border-bottom: 1px solid #e4e4e4;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -81,6 +82,7 @@ export default {
         font-size: 14px;
         color: #444444;
         flex: auto;
+        font-weight: 700;
       }
       .tips{
         // flex: 1;
@@ -93,12 +95,19 @@ export default {
     }
     &-bd{
       background-color: #fff;
-      border-bottom-left-radius: 6px;
-      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
       .content{
         color: #666;
         font-size: 12px;
       }
     }
+  }
+  .panel:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+    border-color: #eee;
+  }
+  .hd-btn{
+    border-bottom: 1px solid #e8eaec;
   }
 </style>
