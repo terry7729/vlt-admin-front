@@ -461,7 +461,6 @@ export default [
       title: '投注卡信息',
     },
     component: cardInformation
-    component: developmentPlanCreate
   },
   {
     path: 'businessManage/dossierManage',
