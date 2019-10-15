@@ -69,10 +69,7 @@
           </el-form-item>
           <el-form-item prop="date2" label="监控时间点">
             <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-          </el-form-item>
-          <el-form-item prop="date2" label="监控时间点">
-            <el-time-picker placeholder="选择时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
-          </el-form-item>
+          </el-form-item>          
           <el-form-item prop="date2" label="监控频率">
             <el-input-number
               v-model="num"
