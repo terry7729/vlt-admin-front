@@ -16,7 +16,7 @@
             :total="999"
             labelWidth="80px"
           >
-            <controlBar slot="extend-bar" @select="bankBtn" :options="options"></controlBar>
+            <controlBar slot="extend-bar" @select="bankBtn" :options="options" position="left"></controlBar>
           </search-bar>
 
           <div class="account_manage_bankmain">
@@ -44,7 +44,7 @@
               </el-table-column>
             </el-table>
             <div class="table_paging">
-              <tablePaging class="table_paging_right"></tablePaging>
+              <tablePaging class="table_paging_right" :total="99" :currentPage="1" :pageSize="10"></tablePaging>
             </div>
           </div>
         </el-tab-pane>
@@ -57,7 +57,12 @@
               :total="999"
               labelWidth="80px"
             >
-              <controlBar slot="extend-bar" @select="threepayBtn" :options="options"></controlBar>
+              <controlBar
+                slot="extend-bar"
+                @select="threepayBtn"
+                :options="options"
+                position="left"
+              ></controlBar>
             </search-bar>
 
             <el-table
@@ -90,7 +95,7 @@
               </el-table-column>
             </el-table>
             <div class="table_paging">
-              <tablePaging class="table_paging_right"></tablePaging>
+              <tablePaging class="table_paging_right" :total="99" :currentPage="1" :pageSize="10"></tablePaging>
             </div>
           </div>
         </el-tab-pane>
@@ -192,17 +197,17 @@ export default {
     //银行按钮
     bankBtn(val) {
       if (val.name == "新增") {
-        this.$router.push("accountManage/bankadd");
+        this.$router.push("accountMoneyManage/bankadd");
       } else if (val.name == "修改") {
-        this.$router.push("accountManage/bankrevise");
+        this.$router.push("accountMoneyManage/bankrevise");
       }
     },
     //第三方支付按钮
     threepayBtn(val) {
       if (val.name == "新增") {
-        this.$router.push("accountManage/externaladd");
+        this.$router.push("accountMoneyManage/externaladd");
       } else if (val.name == "修改") {
-        this.$router.push("accountManage/externalrevise");
+        this.$router.push("accountMoneyManage/externalrevise");
       }
     },
     //第三方支付搜索
@@ -214,14 +219,14 @@ export default {
     //点击余额
     balance(id) {
       this.$router.push({
-        path: "accountManage/bankbalance",
+        path: "accountMoneyManage/bankbalance",
         query: { id }
       });
     },
     //点击明细
     detail(id) {
       this.$router.push({
-        path: "accountManage/bankdetail",
+        path: "accountMoneyManage/bankdetail",
         query: { id }
       });
     },
@@ -229,14 +234,14 @@ export default {
     //第三方支付页面点击余额
     threepaybalance(id) {
       this.$router.push({
-        path: "accountManage/externalbalance",
+        path: "accountMoneyManage/externalbalance",
         query: { id }
       });
     },
     //第三方支付页面点击明细
     threepaydetail(id) {
       this.$router.push({
-        path: "accountManage/externaldetail",
+        path: "accountMoneyManage/externaldetail",
         query: { id }
       });
     }

@@ -10,6 +10,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
         <h2 class="title">发送对象</h2>
         <base-form
@@ -19,6 +20,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
         <h2 class="title">消息内容格式</h2>
         <base-form
@@ -28,6 +30,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
         <h2 class="title">发送时间</h2>
         <base-form
@@ -152,7 +155,4 @@ export default {
   border-color: #fff;
 }
 
-.el-input__inner {
-  width: 100px;
-}
 </style>

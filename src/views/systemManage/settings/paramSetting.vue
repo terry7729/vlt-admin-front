@@ -11,6 +11,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
         <h2 class="title">上缴方式</h2>
         <base-form
@@ -20,6 +21,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
         <h2 class="title">财务参数</h2>
         <base-form
@@ -29,6 +31,7 @@
           :rules="rules1"
           direction="right"
           @change="changeForm"
+          style="border-bottom: 1px solid #e8eaec"
         ></base-form>
         <h2 class="title">税务参数</h2>
         <base-form
@@ -47,7 +50,6 @@
     </div>
   </div>
 </template>
-
 <script type="text/javascript">
 export default {
   name: "",
@@ -161,7 +163,4 @@ export default {
   border-color: #fff;
 }
 
-.el-input__inner {
-  width: 100px;
-}
 </style>

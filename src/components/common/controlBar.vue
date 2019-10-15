@@ -1,5 +1,5 @@
 <template>
-  <div class="control-bar-comp">
+  <div class="control-bar-comp" :class="'align-'+position">
     <el-button 
       size="small" 
       v-for="(item, index) in options" 
@@ -16,6 +16,10 @@
   export default {
     name: 'controlBar',
     props: {
+      // 位置
+      position: {
+        default: 'right'
+      },
       // 配置参数
       options: {
         default() {
@@ -49,6 +53,15 @@
     margin: 10px 0;
     .el-button{
       margin: 0 5px;
+    }
+    &.align-right{
+      text-align: right;
+    }
+    &.align-center{
+      text-align: center;
+    }
+    &.align-left{
+      text-align: left;
     }
   }
 </style>
