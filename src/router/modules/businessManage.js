@@ -87,6 +87,14 @@ const maintenance = () => import('@/views/businessManage/channelTerminalManageme
 const repairWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/repairWork')
 const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
 
+// 投注卡管理
+const cardBalance = () => import('@/views/businessManage/bettingCardManage/cardBalance')
+const cardGeneration = () => import('@/views/businessManage/bettingCardManage/cardGeneration')
+const refillRules = () => import('@/views/businessManage/bettingCardManage/refillRules')
+const winningRecord = () => import('@/views/businessManage/bettingCardManage/winningRecord')
+const withdrawalRecord = () => import('@/views/businessManage/bettingCardManage/withdrawalRecord')
+const cardInformation = () => import('@/views/businessManage/bettingCardManage/cardInformation')
+
 
 
 export default [
@@ -490,7 +498,50 @@ export default [
     meta: {
       title: '新建年度发展计划',
     },
-    component: developmentPlanCreate
+    component: createDevelopmentPlan
+  }, 
+  {
+    path: 'businessManage/cardBalance',
+    name: 'cardBalance',
+    meta: {
+      title: '投注卡余额',
+    },
+    component: cardBalance
+  },  {
+    path: 'businessManage/cardGeneration',
+    name: 'cardGeneration',
+    meta: {
+      title: '投注卡生成',
+    },
+    component: cardGeneration
+  },  {
+    path: 'businessManage/refillRules',
+    name: 'refillRules',
+    meta: {
+      title: '投注卡充值规则',
+    },
+    component: refillRules
+  },  {
+    path: 'businessManage/winningRecord',
+    name: 'winningRecord',
+    meta: {
+      title: '投注卡中奖记录',
+    },
+    component: winningRecord
+  },  {
+    path: 'businessManage/withdrawalRecord',
+    name: 'withdrawalRecord',
+    meta: {
+      title: '投注卡提现记录',
+    },
+    component: withdrawalRecord
+  },  {
+    path: 'businessManage/cardInformation',
+    name: 'cardInformation',
+    meta: {
+      title: '投注卡信息',
+    },
+    component: cardInformation
   },
   {
     path: 'businessManage/dossierManage',
