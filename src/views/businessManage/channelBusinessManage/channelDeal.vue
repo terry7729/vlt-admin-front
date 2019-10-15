@@ -63,7 +63,9 @@ export default {
   methods: {
     select(val) {
       if(val.title=='渠道新建') {
-        this.$router.push({path:'./channelAdd',query:{id:123}})
+        this.$router.push({path:'./channelCreate',query:{id:123}})
+      }else if(val.title=='销售权限') {
+        this.$router.push({path:'./channelSalesPermission',query:{id:123}})
       }
     }
   },

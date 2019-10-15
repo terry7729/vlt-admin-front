@@ -48,10 +48,11 @@ const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
-const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
 const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
-const createDevelopmentPlan = () => import('@/views/businessManage/channelBusinessManage/createDevelopmentPlan')
+const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
 const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
 
 // 渠道终端管理
@@ -274,12 +275,12 @@ export default [
     component: channelList
   },
   {
-    path: 'businessManage/channelAdd',
-    name: 'channelAdd',
+    path: 'businessManage/channelCreate',
+    name: 'channelCreate',
     meta: {
       title: '新建渠道',
     },
-    component: channelAdd
+    component: channelCreate
   },
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
@@ -387,6 +388,14 @@ export default [
     component: channelDeal
   },
   {
+    path: 'businessManage/channelSalesPermission',
+    name: 'channelSalesPermission',
+    meta: {
+      title: '销售权限',
+    },
+    component: channelSalesPermission
+  },
+  {
     path: 'businessManage/developmentPlan',
     name: 'developmentPlan',
     meta: {
@@ -395,12 +404,12 @@ export default [
     component: developmentPlan
   },
   {
-    path: 'businessManage/createDevelopmentPlan',
-    name: 'createDevelopmentPlan',
+    path: 'businessManage/developmentPlanCreate',
+    name: 'developmentPlanCreate',
     meta: {
       title: '新建年度发展计划',
     },
-    component: createDevelopmentPlan
+    component: developmentPlanCreate
   },
   {
     path: 'businessManage/dossierManage',

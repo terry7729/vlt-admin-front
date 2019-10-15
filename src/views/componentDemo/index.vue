@@ -142,20 +142,6 @@
     </section>
 
     <section class="comp-item">
-<<<<<<< HEAD
-      <h4 class="comp-title">表格分页</h4>
-        <table-paging
-          :current-page="1"
-          :page-size="10"
-          :total="100"
-          @handleSizeChange="pageSizeChange"
-          @handleCurrentChange="pageCurrentChange"
-        ></table-paging>
-    </section>
-
-    <section class="comp-item">
-=======
->>>>>>> 16cba0245fc28e08ff928f7c4d0592ad2dbf5af7
       <h4 class="comp-title">单列表单公共样式</h4>
       <div class="vlt-edit-single">
         <h2 class="title">编辑</h2>
