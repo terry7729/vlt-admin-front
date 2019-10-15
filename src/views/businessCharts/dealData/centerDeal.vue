@@ -24,9 +24,17 @@
         <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
         <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
       </el-table>
-      <section class="comp-item" style="text-align:right;margin-top:30px">
-          <table-paging></table-paging>
+      <div class="pagination-container" style="text-align:right;margin-top:30px">
+        <section class="comp-item">
+          <table-paging
+            :current-page="1"
+            :page-size="10"
+            :total="100"
+            @handleSizeChange="pageSizeChange"
+            @handleCurrentChange="pageCurrentChange"
+          ></table-paging>
         </section>
+      </div>
     </div>
   </div>
 </template>
@@ -36,10 +44,8 @@ export default {
   name: "centerDeal",
   data() {
     return {
-      controlOptions: [  
-        { name: "导出", type: "primary", icon: "download" },       
-      ],
-      exportLoading:false,
+      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
+      exportLoading: false,
       total: null,
       listQuery: {
         page: 1,
@@ -74,6 +80,12 @@ export default {
   mounted() {},
   components: {},
   methods: {
+    pageSizeChange(pageSize) {
+      console.log('每页条数：', pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log('当前页：', currentPage);
+    },
     handleSizeChange(val) {
       this.listQuery.limit = val;
       // this.getList();
@@ -112,7 +124,7 @@ export default {
             "orderNo",
             "remark"
           ];
-          alert(1)
+          alert(1);
           const data = this.formatJson(relationField, this.tableData);
           // 导出
           excel.export_json_to_excel({
@@ -132,7 +144,7 @@ export default {
 
 
 <style lang="less">
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>
