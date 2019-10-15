@@ -39,26 +39,6 @@
     </section>
 
     <section class="comp-item">
-      <h4 class="comp-title">无伸缩框</h4>
-      <panel-static title="彩票信息">
-        <base-info :infoList="infoList"></base-info>
-      </panel-static>
-    </section>
-    <section class="comp-item">
-      <h4 class="comp-title">展开框</h4>
-      <panel title="彩票信息" :show="true">
-        <base-info :infoList="infoList"></base-info>
-      </panel>
-    </section>
-
-    <section class="comp-item">
-      <h4 class="comp-title">展开框-编辑</h4>
-      <panel-edit title="彩票信息" :show="true">
-        <base-info :infoList="infoList" slot="info-content"></base-info>
-      </panel-edit>
-    </section>
-
-    <section class="comp-item">
       <h4 class="comp-title">表格分页</h4>
       <table-paging
         :total="999"
@@ -138,7 +118,26 @@
           </template>
         </el-table-column>
       </el-table>
-      
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">无伸缩框</h4>
+      <panel-static title="彩票信息">
+        <base-info :infoList="infoList"></base-info>
+      </panel-static>
+    </section>
+    <section class="comp-item">
+      <h4 class="comp-title">展开框</h4>
+      <panel title="彩票信息" :show="true">
+        <base-info :infoList="infoList"></base-info>
+      </panel>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">展开框-编辑</h4>
+      <panel-edit title="彩票信息" :show="true">
+        <base-info :infoList="infoList" slot="info-content"></base-info>
+      </panel-edit>
     </section>
 
     <section class="comp-item">
