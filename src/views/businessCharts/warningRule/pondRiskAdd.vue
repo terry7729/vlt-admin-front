@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card">
-    <h3 class="headling">城市风险指标新增</h3>
+    <h3 class="headling">奖池风险指标新增</h3>
     <div class="vlt-card select-box">
       <span>省份</span>
       <el-select v-model="value" placeholder="请选择">
@@ -12,6 +12,15 @@
         ></el-option>
       </el-select>
        <span>城市</span>
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+       <span>游戏</span>
       <el-select v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -119,11 +128,9 @@ export default {
       type: null,
       showeditBox: false,
       tableData: [
-        { type: "最高销量" },
-        { type: "最低销量" },
-        { type: "最低在线数量" },
-        { type: "最低开机律" },
-        { type: "最低单厅销量" }
+        { type: "最高奖池金额" },
+        { type: "最低奖池金额" },
+        
       ],
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标

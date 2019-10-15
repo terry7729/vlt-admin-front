@@ -43,8 +43,10 @@ const warningWatchDetail = () => import('@/views/businessCharts/warningWatch/mod
 const warningWatchEdit = () => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
 //demo
 const demo = () => import('@/views/componentDemo')
-//demo
+//城市风险指标新增
 const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd')
+//奖池风险指标新增
+const pondRiskAdd = () => import('@/views/businessCharts/warningRule/pondRiskAdd')
 
 export default [{
     path: 'demo',
@@ -219,6 +221,14 @@ export default [{
       title: '城市风险指标新增',
     },
     component: cityRiskAdd
+  },
+  {
+    path: 'businessCharts/pondRiskAdd',
+    name: 'pondRiskAdd',
+    meta: {
+      title: '奖池风险指标新增',
+    },
+    component: pondRiskAdd
   }
 
 ]

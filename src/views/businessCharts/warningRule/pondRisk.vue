@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select='select' :options="controlOptions"></control-bar>
       </search-bar>
     </section>
     <div class>
@@ -222,7 +222,16 @@ export default {
           "县：" +
           this.countryCode
       );
+    },select(val){
+      if(val.name==='新增'){
+        this.goToAdd()
+      }
+    },goToAdd() {
+      this.$router.push({
+        name: "pondRiskAdd"
+      });
     }
+
   },
   mounted() {
     // this.showcity();
