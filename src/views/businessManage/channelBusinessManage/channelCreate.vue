@@ -4,14 +4,14 @@
       <el-tab-pane label="渠道新建" name="first"></el-tab-pane>
       <el-tab-pane label="渠道新建流程图" name="second"></el-tab-pane>
     </el-tabs>
-    <panel title="填写基本信息" :show="true" style="margin-bottom:10px">
+    <panel title="基本信息" :show="true" style="margin-bottom:10px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
           <base-form :formData="formData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         </div>
       </div>
     </panel>
-    <panel title="录入人员信息" :show="true" style="margin-bottom:10px">
+    <panel title="人员信息" :show="true" style="margin-bottom:10px">
       <div class="vlt-edit-single" v-for="(item, index) in workerData" :key="index">
         <div v-if="index!==0" class="title-wrap">
           <h2 class="title">{{`人员信息(${index+1})`}}</h2>
@@ -66,7 +66,56 @@
         </el-table-column>
       </el-table>
     </panel>
-    <div>
+    <panel title="发放设备" :show="true" style="margin-bottom:10px">
+      <el-form label-position="right" label-width="90px" ref="form"
+        :model="formDevice"
+        :rules="rules"
+        class="device-form">
+        <el-form-item v-for="(item,index) in deviceData" :key="index" :label="`${item.title}${index+1}`">
+          <el-select v-model="item.type" placeholder="请选择设备类型" class="device-item">
+            <el-option
+              v-for="(list,index) in item.optionsType"
+              :key="index"
+              :label="list.label"
+              :value="list">
+            </el-option>
+          </el-select>
+          <el-select v-model="item.model" placeholder="请选择设备型号" class="device-item">
+            <el-option
+              v-for="(list, index) in item.optionsModel"
+              :key="index"
+              :label="list.label"
+              :value="list">
+            </el-option>
+          </el-select>
+          <el-button v-if="index!==0" type="text" class="delete" @click="deleteDevice(index)">删除</el-button>
+        </el-form-item>
+      </el-form>
+      <el-button class="addDevice" @click="addDevice" icon="el-icon-plus">添加设备</el-button>
+    </panel>
+    <panel title="其他附件" :show="true" style="margin-bottom:10px">
+      <el-form label-position="right" 
+        label-width="90px" 
+        ref="form"
+        class="device-form">
+        <el-form-item  label="附件上传">
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+            :file-list="fileList">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+    </panel>
+    <div class="submit-wrap">
       <el-row class="vlt-edit-btn">
         <el-button type="primary" size="medium" @click="submit">提交并保存</el-button>
         <el-button size="medium" @click="editShow = !editShow">取消</el-button>
@@ -103,6 +152,9 @@ export default {
         {title: '代销费费率', type: 'select', prop: 'workerType', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
         {title: '收款凭证', type: 'upload-drag', prop: 'idCardBack', value: ''}
       ],
+      deviceData: [
+        {title:'设备', propType: 'type', propModel: 'model', optionsType:[{label:'类型一',value:1},{label:'类型二',value:2}],optionsModel:[{label:'型号一',value:1},{label:'型号二',value:2}]}
+      ],
       rules: {},
       params: {
         workerList:[],
@@ -111,11 +163,22 @@ export default {
         {gameName:'a',bet: false,cash:true,time:''},
         {gameName:'b',bet: false,cash:true,time:''},
         {gameName:'c',bet: true,cash:false,time:''},
-      ]
+      ],
+      formDevice:{}
     };
   },
   created() {},
   methods: {
+    addDevice() {
+      let cloneData = JSON.parse(JSON.stringify(this.deviceData[0]))
+      cloneData.propType = `${cloneData.propType}${this.deviceData.length}`
+      cloneData.propModel = `${cloneData.propModel}${this.deviceData.length}`
+      this.$set(this.deviceData, this.deviceData.length, cloneData);
+    },
+    deleteDevice(index) {
+      this.deviceData.splice(index, 1)
+      console.log('删除', this.deviceData)
+    },
     changeSwitchBet(val) {
       // this.switchBetText = val ? '允许' : '禁止'
     },
@@ -164,10 +227,15 @@ export default {
 
 <style lang="less" scoped>
 @import "./less/index.less";
-.addMember{
+.addMember,
+.addDevice{
   width: 100%;
   max-width: 490px;
   margin: 0 0 30px 20px;
+}
+.addDevice{
+  max-width: 468px;
+  margin-left: 60px;
 }
 .vlt-card{
   margin-bottom: 10px;
@@ -180,8 +248,16 @@ export default {
 .delete{
   padding-right: 30px;
 }
-.table{
+.table, 
+.device-form{
   padding: 16px;
+}
+.device-item{
+  margin-right: 20px;
+}
+.submit-wrap{
+  text-align: right;
+  padding: 10px 0;
 }
 // .addMember:focus{
 //   background: #FFF;
