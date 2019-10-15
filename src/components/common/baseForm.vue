@@ -252,8 +252,8 @@ export default {
     self.formData.forEach((item)=>{
       if(item.type=='datepicker-range' || item.type=='datetime-range') {
         if(item.value!='') { // 数据回填
-          self.timeRange = item.value;
-          self.dateRange = item.value;
+          self.timeParam[item.prop] = item.value;
+          self.dateParam[item.prop] = item.value;
         } else {
           self.$set(self.form, item.options[0], '')
           self.$set(self.form, item.options[1], '')
