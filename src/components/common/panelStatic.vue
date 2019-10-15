@@ -39,36 +39,42 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.static{
-  border: 1px solid #e4e4e4;
-  border-radius: 6px;
-  background-color: #fff;
-  &-caret{
-    font-size: 20px;
-    margin-right: 3px;
-    color: #000a12;
-  }
-  &-hd{
-    display: flex;
-    align-items: center;
-    padding: 0 15px 0 10px;
-    height: 50px;
-    line-height: 50px;
-    background-color: #fff;
-    border-bottom: 1px solid #e4e4e4;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    .title{
-      font-weight: normal;
-      font-size: 14px;
-      color: #000A12;
-      flex: auto;
+  .static{
+      border-radius: 4px;
+      background-color: #fff;
+      transition: all .2s ease-in-out;
+      border: 1px solid #dcdee2;
+      border-color: #e8eaec;
+    &-caret{
+      font-size: 20px;
+      margin-right: 3px;
+      color: #000a12;
+    }
+    &-hd{
+      display: flex;
+      align-items: center;
+      padding: 0 15px 0 10px;
+      height: 50px;
+      line-height: 50px;
+      background-color: #fff;
+      border-bottom: 1px solid #e8eaec;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      .title{
+        font-weight: normal;
+        font-size: 14px;
+        color: #000A12;
+        flex: auto;
+      }
+    }
+    &-bd{
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      background-color: #fff;
     }
   }
-  &-bd{
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    background-color: #fff;
+  .static:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+    border-color: #eee;
   }
-}
 </style>
