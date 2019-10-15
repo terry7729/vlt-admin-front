@@ -34,9 +34,17 @@
         <el-table-column align="center" prop="date" label="终端状态"></el-table-column>
         <el-table-column align="center" prop="date" label="外设状态"></el-table-column>
       </el-table>
-      <section class="comp-item" style="text-align:right;margin-top:30px">
-        <table-paging></table-paging>
-      </section>
+      <div class="pagination-container" style="text-align:right;margin-top:30px">
+        <section class="comp-item">
+          <table-paging
+            :current-page="1"
+            :page-size="10"
+            :total="100"
+            @handleSizeChange="pageSizeChange"
+            @handleCurrentChange="pageCurrentChange"
+          ></table-paging>
+        </section>
+      </div>
     </div>
   </div>
 </template>
@@ -177,6 +185,12 @@ export default {
     };
   },
   methods: {
+    pageSizeChange(pageSize) {
+      console.log('每页条数：', pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log('当前页：', currentPage);
+    },
     back() {
       if (this.$route.query.noGoBack) {
         this.$router.push({ path: "/dashboard" });
@@ -270,7 +284,7 @@ export default {
   },
 
   mounted() {
-    this.showcity();
+    // this.showcity();
   }
 };
 </script>

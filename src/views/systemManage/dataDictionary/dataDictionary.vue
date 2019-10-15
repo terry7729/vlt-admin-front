@@ -32,7 +32,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <table-paging></table-paging>
+      <table-paging :total="total"></table-paging>
     </div>
   </div>
 </template>
@@ -125,7 +125,10 @@ export default {
           creater:"admin",
           createrdate: "2019-10-12 10:0:0",  
         }
-      ]
+      ],
+      total:100,
+      pageSize:20,
+      
     };
   },
   components: {},
