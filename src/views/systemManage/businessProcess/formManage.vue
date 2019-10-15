@@ -1,35 +1,37 @@
 <template>
   <div class="vlt-card">
     <div class="searchBar">
-      <search-Bar :options="option" :total="999"></search-Bar>
+      <search-Bar :options="option"></search-Bar>
     </div>
-    <el-table
-      ref="multipleTable"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      :border="true"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column prop="id" label="序号" width="120"></el-table-column>
-      <el-table-column label="日期" width="180">
-        <template slot-scope="scope">{{ scope.row.date }}</template>
-      </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="address" label="地址" show-overflow-tooltip width="200"></el-table-column>
-      <el-table-column prop="address" label="用户状态" show-overflow-tooltip width="200">
-        <template>
-          <div>
-            <el-button type="text">启用</el-button>
-            <span>|</span>
-            <el-button type="text">禁用</el-button>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="address" label="操作" show-overflow-tooltip width="200">
-        <el-button type="primary" size="mini" @click="compile()">编缉</el-button>
-      </el-table-column>
-    </el-table>
+    <div class="addlist">
+      <el-button type="primary" icon="el-icon-plus" @click="compile()">新建表单</el-button>
+    </div>
+    <div class="tipsline">
+      <tips-line>共搜索到8项数据</tips-line>
+    </div>
+    <div class="el_table">
+      <el-table :data="tableData" border>
+        <el-table-column prop="id" label="序号" width="100"></el-table-column>
+        <el-table-column prop="formname" label="表单名称 "></el-table-column>
+        <el-table-column prop="creatdate" label="创建时间"></el-table-column>
+        <el-table-column prop="note" label="备注描述" width="260"></el-table-column>
+
+        <el-table-column label="状态">
+          <template>
+            <div>
+              <el-button type="primary" size="mini">启动</el-button>
+
+              <el-button type="danger" size="mini">禁止</el-button>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" @click="compile(scope.row.id)">编辑</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>  
     <div class="pagintion">
       <el-pagination
         background
@@ -55,51 +57,45 @@ export default {
       tableData: [
         {
           id: 1,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         },
         {
           id: 2,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         },
         {
           id: 3,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         },
         {
           id: 4,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         },
         {
           id: 5,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         },
         {
           id: 6,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         },
         {
           id: 7,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
-        },
-        {
-          id: 8,
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 "
+          formname: "视频游戏A发行申请流程表单",
+          creatdate: "2019-10-12 10:0:0",
+          note: "视频游戏A发行申请的表单",
         }
       ],
 
@@ -143,6 +139,9 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
+    add () {
+      this.$router.push("formManage/formCompile");
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -152,8 +151,12 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-    compile() {
-      this.$router.push("formManage/formCompile");
+    compile(id) {
+      this.$router.push({
+        path:"formManage/formCompile",
+        query:{id}
+      });
+      
     }
   }
 };

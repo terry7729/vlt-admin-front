@@ -11,7 +11,7 @@ export default [{
           {
             childResources: [],
             icon: "el-icon-menu",
-            name: "账户管理",
+            name: "资金账户管理",
             url: 'accountManage'
           }
         ],

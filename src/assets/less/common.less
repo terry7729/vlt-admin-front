@@ -7,6 +7,10 @@
   border: 1px solid #dcdee2;
   border-color: #e8eaec;
   padding: 16px;
+  &.vc-plr0 {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .vlt-card:hover {
@@ -254,6 +258,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    width: 100%;
   }
 
   .el-form-item {
@@ -281,9 +286,6 @@
     padding: 0 10px;
   }
 
-  .el-form-item__content {
-    // width: 400px;
-  }
 
   .el-form-item {
     margin-bottom: 20px;
@@ -306,14 +308,57 @@
   }
 }
 
-.money_account .el-tabs--left .el-tabs__item.is-left {
-  width: 100px;
+.money_Account_Manage .el-tabs__header.is-left {
+  padding-top: 30px;
+  width: 122px;
+}
+
+.money_Account_Manage .el-tabs--left .el-tabs__item.is-left {
+  text-align: center;
+}
+
+// .money_Account_Manage .control-bar-comp {
+//   display: flex;
+//   justify-content: flex-end;
+// }
+.bankbalance .control-bar-comp {
+  margin: 20px 0 0 14px !important;
+}
+
+.bankdetail .table_paging {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.externalpayadd .el-form-item .el-form-item__label {
+  width: 120px !important;
+}
+
+.externalpayadd .el-form-item__content {
+  margin-left: 120px !important;
+}
+
+.externalpayadd .vlt-edit-single .vlt-edit-btn {
+  margin-left: 120px;
+}
+
+.externalbalance .control-bar-comp {
+  margin: 20px 0 0 14px !important;
+}
+
+.externaldetail .table_paging {
+  display: flex;
+  justify-content: flex-end;
+
 }
 
 .develop-plan {
   .el-tabs--left .el-tabs__item.is-left {
     text-align: left;
   }
+}
+.el-step__icon.is-text {
+  margin-bottom: 28px;
 }
 
 

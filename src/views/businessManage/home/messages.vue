@@ -8,10 +8,9 @@
       :options="searchOptions"
       :total="999"
       labelWidth="80px"
-    ></search-bar>
-    <el-row>
-      <el-button type="primary" size="small" icon="el-icon-plus" @click="toPush">发布消息</el-button>
-    </el-row>
+    >   
+    <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+    </search-bar>
     <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs">
       <el-tab-pane v-for="item in tabs" :key="item.id" :label="item.label" :name="item.name">
         <el-table :data="item.tableData" style="width: 100%" border>
@@ -158,6 +157,9 @@ export default {
           placeholder: ["开始日期", "结束日期"]
         }
       ],
+      controlOptions: [
+        { name: "发布消息", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+      ],
       currentPage: 1
     };
   },
@@ -172,6 +174,9 @@ export default {
   methods: {
     search(form) {
       console.log("search", form);
+    },
+    selectBtn() {
+      console.log('selectBtn');
     },
     handleClick(tab, event) {
       const index = tab.index;

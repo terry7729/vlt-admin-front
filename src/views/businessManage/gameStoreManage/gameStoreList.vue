@@ -6,6 +6,7 @@
         :total="999"
         labelWidth="100px"
       >
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     
     <el-table
@@ -52,6 +53,11 @@ export default {
   name: 'gameStoreManage',
   data() {
     return {
+      controlOptions: [
+        { name: "新建游戏", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "批量删除", type: "", icon: "delete" },
+        { name: "导出", type: "", icon: "download" }
+      ],
       tableData: [
         {
           id:"01",
@@ -197,6 +203,18 @@ export default {
     
   },
   methods: {
+    selectBtn(val) {
+      if(val.name == '新建游戏'){
+        this.$router.push({
+          name:'addGame',
+          query: {
+          // regionCode: data.regionCode,
+          // instId: data.id,
+          // instCode: data.insCode
+          }
+        })
+      }
+    },
       toggleSelection(rows) {
         if (rows) {
           rows.forEach(row => {

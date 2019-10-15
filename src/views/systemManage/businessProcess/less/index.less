@@ -1,0 +1,134 @@
+
+.drag-form-container {
+  position: relative;
+  // padding-top: 60px;
+  margin-top: 20px;
+ 
+}
+.preview-form-container,.drag-form-container,.mixin-form{
+  text-align: left;
+  
+  .ct-header{
+    border-bottom: 1px solid #dfdfdf;
+    background-color: #fff;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    box-sizing: border-box;
+    box-shadow: 0 -17px 5px 20px #eee;
+    padding: 8px;
+    text-align: right;
+  }
+  .left-col{
+    // position: absolute;
+    // left: 0;
+    // top: 50px;
+    // bottom: 0;
+    // width: 300px;
+    // min-height: 400px;
+    // max-height: 500px;
+    height: 500px;
+    overflow-y: auto;
+    border: 1px solid #797979;
+    box-sizing: border-box;
+    padding: 10px 5px;
+  }
+  .center-col{
+    // position: absolute;
+    // left: 300px;
+    // top: 0;
+    // bottom: 0;
+    // right: 0;
+    // min-height: 400px;
+    // max-height: 500px;
+    height: 500px;
+    z-index: 10;
+    overflow-y: auto;
+    border: 1px solid #797979;
+  }
+  .right-col{
+    // width: 300px;
+    // min-height: 400px;
+    // max-height: 500px;
+    height: 500px;
+    overflow-y: auto;
+    border: 1px solid #797979;
+  }
+
+  .form-option-list{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .el-form-item{
+      padding: 5px 10px 10px;
+      width: 48%;
+      box-sizing: border-box;
+      border: 1px dashed #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      margin: 0 1% 5px;
+    }
+  }
+  .form-option-item{
+    width: 50%;
+    margin: 0;
+  }
+  .el-form-item{
+    height: 100%;
+  }
+  .el-form-item{
+    cursor: move;
+  }
+
+  .preview-container{
+    padding-top: 50px;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  
+
+
+  /*element-ui表单调整*/
+  .el-form-item{
+    margin-bottom: 0;
+  }
+  .el-form-item__label{
+    line-height: 32px;
+    font-size: 12px;
+  }
+  .el-form--label-top .el-form-item__label{
+    padding: 0;
+  }
+  .el-form-item__content{
+    line-height: 32px;
+  }
+  .line{
+    text-align: center;
+    line-height: 32px;
+  }
+  .el-input__inner{
+    height: 32px;
+    line-height: 32px;
+    font-size: 12px;
+  }
+  .el-select{
+    display: block;
+  }
+  .el-checkbox{
+    vertical-align: top;
+  }
+  .el-input__icon,.el-radio{
+    line-height: 32px;
+  }
+  .el-checkbox__label, .el-radio__label{
+    font-size: 12px;
+  }
+  .el-input-number__decrease, .el-input-number{
+    line-height: 30px;
+    height: 30px;
+  }
+}

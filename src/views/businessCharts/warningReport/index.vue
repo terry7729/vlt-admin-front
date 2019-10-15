@@ -29,9 +29,17 @@
               </template>
             </el-table-column>
           </el-table>
-          <section class="comp-item" style="text-align:right;margin-top:30px">
-            <table-paging></table-paging>
+          <div class="pagination-container" style="text-align:right;margin-top:30px">
+          <section class="comp-item">
+            <table-paging
+              :current-page="1"
+              :page-size="10"
+              :total="100"
+              @handleSizeChange="pageSizeChange"
+              @handleCurrentChange="pageCurrentChange"
+            ></table-paging>
           </section>
+        </div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="已生成报告" name="second">
@@ -57,16 +65,15 @@
           </el-table-column>
         </el-table>
         <div class="pagination-container" style="text-align:right;margin-top:30px">
-          <el-pagination
-            background
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="listQuery.page"
-            :page-sizes="[10,20,30, 50]"
-            :page-size="100"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
-          ></el-pagination>
+          <section class="comp-item">
+            <table-paging
+              :current-page="1"
+              :page-size="10"
+              :total="100"
+              @handleSizeChange="pageSizeChange"
+              @handleCurrentChange="pageCurrentChange"
+            ></table-paging>
+          </section>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -109,6 +116,12 @@ export default {
     };
   },
   methods: {
+    pageSizeChange(pageSize) {
+      console.log("每页条数：", pageSize);
+    },
+    pageCurrentChange(currentPage) {
+      console.log("当前页：", currentPage);
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },

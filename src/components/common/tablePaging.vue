@@ -1,5 +1,5 @@
 <template>
-  <div class="table-paging-comp" v-if="PAGESIZE < TOTAL">
+  <div class="table-paging-comp" :class="'align-'+position" v-if="PAGESIZE < TOTAL">
     <el-pagination
       background
       @size-change="handleSizeChange"
@@ -18,6 +18,10 @@
   export default {
     name: 'tablePaging',
     props: {
+      // 位置
+      position: {
+        default: 'right'
+      },
       total: { // 总页数
         type: Number,
         default: 0
@@ -55,5 +59,14 @@
 <style lang="less" scoped>
   .table-paging-comp{
     margin: 10px 0;
+    &.align-right{
+      text-align: right;
+    }
+    &.align-center{
+      text-align: center;
+    }
+    &.align-left{
+      text-align: left;
+    }
   }
 </style>

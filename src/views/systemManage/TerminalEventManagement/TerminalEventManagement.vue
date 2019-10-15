@@ -1,18 +1,17 @@
-<!-- 渠道终端管理 - 维修管理 -->
 <template>
-  <div class="vlt-card">
-    维修管理
-  </div>
+ <div class="vlt-card">
+   <h1>终端事件管理</h1>
+ </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: "",
-  data() {
-   return {
+ name: "",
+ data() {
+ return {
 
-   }
-  },
+ }
+ },
  components: {
  },
  methods: {

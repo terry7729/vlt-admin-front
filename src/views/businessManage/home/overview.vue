@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import OverList from '@/components/main/overviewList'
-import message from '@/components/main/messages'
-import calendarSelect from '@/components/main/calendarSelect'
+import OverList from '@/views/businessManage/home/components/overviewList'
+import message from '@/views/businessManage/home/components/messages'
+import calendarSelect from '@/views/businessManage/home/components/calendarSelect'
   export default {
     components: {
       "overList": OverList,

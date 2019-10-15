@@ -21,7 +21,7 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "参数设置",
-          url: 'parameterSetting'
+          url: 'paramSetting'
         },
         {
           childResources: [],
@@ -107,6 +107,51 @@ export default [{
         icon: '',
         name: '菜单管理',
         url: 'menuManageMent'
+      }]
+    },
+    {
+      icon: 'el-icon-menu',
+      name: '系统日志',
+      url: 'systemLog',
+      childResources: [{
+        icon: '',
+        name: '系统操作日志',
+        url: 'systemOperationLog'
+      }]
+    },
+    {
+      icon: 'el-icon-menu',
+      name: '系统开关',
+      url: 'systemSwitch',
+      childResources: [{
+        icon: '',
+        name: '系统开关',
+        url: 'systemSwitch'
+      }]
+    },
+    {
+      icon: 'el-icon-menu',
+      name: '假日参数管理',
+      url: 'holidayParametersManagement',
+      childResources: [{
+        icon: '',
+        name: '假日参数管理',
+        url: 'holidayParametersManagement'
+      }]
+    },
+    {
+      icon: 'el-icon-menu',
+      name: '终端事件管理',
+      url: 'TerminalEventManagement',
+      childResources: [{
+        icon: '',
+        name: '终端事件控制',
+        url: 'TerminalEventControl'
+      },
+      {
+        icon: '',
+        name: '终端事件日志',
+        url: 'TerminalEventLog'
       }]
     }
   ],

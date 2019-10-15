@@ -23,7 +23,7 @@
       </el-table>
     </div>
     <div class="table_paging">
-      <pagination class="table_paging_right"></pagination>
+      <tablePaging class="table_paging_right"></tablePaging>
     </div>
   </div>
 </template>
