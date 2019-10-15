@@ -60,7 +60,85 @@
 
     <section class="comp-item">
       <h4 class="comp-title">表格分页</h4>
-      <table-paging></table-paging>
+      <table-paging
+        :total="999"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      >
+      </table-paging>
+    </section>
+
+    <section class="comp-item">
+      <h4 class="comp-title">表格状态</h4>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 100%; margin-top: 10px">
+        <el-table-column
+          prop="date"
+          label="日期"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="province"
+          label="省份"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="市区"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="地址"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="zip"
+          label="邮编"
+        >
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          align="center"
+        >
+          <template slot-scope="scope">
+            <table-row-status
+              :scope="scope"
+              idField="id"
+              statusField="status"
+              :rowName="scope.row.name"
+              :option="{
+                enable: {
+                  label: '启用',
+                  apiName: 'apiName',
+                  value: '0'
+                },
+                disable: {
+                  label: '冻结',
+                  apiName: 'apiName',
+                  value: '1'
+                },
+                logout: {
+                  label: '注销',
+                  apiName: 'apiName',
+                  value: '-1'
+                }
+              }"
+            >
+            </table-row-status>
+          </template>
+        </el-table-column>
+      </el-table>
+      
     </section>
 
     <section class="comp-item">
@@ -1466,12 +1544,18 @@ export default {
         { name: "导出", type: "danger", icon: "download" },
         { name: "导出", type: "success", icon: "upload" },
         { name: "导出", type: "warning", icon: "download" }
+      ],
+      tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }
       ]
     };
   },
-  computed: {},
-  created() {},
-  mounted() {},
   computed: {},
   created() {},
   mounted() {},
@@ -1506,6 +1590,12 @@ export default {
     },
     search(form) {
       console.log("search", form);
+    },
+    handleSizeChange(pageSize) {
+      console.log(pageSize)
+    },
+    handleCurrentChange(currentPage) {
+      console.log(currentPage)
     }
   },
   components: {}
