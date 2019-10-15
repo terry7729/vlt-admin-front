@@ -1,7 +1,9 @@
 <template>
   <div style>
+    <div class="vlt-edit-single">
+        <h2 class="title" v-if="title?true:false">{{title}}</h2>
     <div class="vlt-edit-wrap">
-      <el-form label-position="right" :rules="rules2" ref="form">
+      
         <base-form
           :formData="data2"
           ref="baseForm"
@@ -10,12 +12,13 @@
           @change="changeForm"
           labelWidth="110px"
         ></base-form>
-      </el-form>
+     
       <el-row class="vlt-edit-btn">
         <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
         <el-button size="medium" @click="resestFrom('form')">取消</el-button>
       </el-row>
       <!-- {{params}} -->
+    </div>
     </div>
   </div>
 </template>
@@ -24,7 +27,7 @@
 import rules from "@/utils/rules.js";
 export default {
   name: "bouncedMessage",
-  props: ["setchild", "obj"],
+  props: ["title", "obj"],
   data() {
     return {
       params: {},
@@ -37,7 +40,7 @@ export default {
           type: "select",
           title: "图标",
           prop: "icon",
-          option: [
+          options: [
             { label: "图标一", value: "0" },
             { label: "图标二", value: "1" }
           ]
@@ -68,7 +71,7 @@ export default {
   components: {},
   methods: {
     resestFrom(formName) {
-      this.$refs[formName].resetFields();
+      this.$emit('closediaog',false)
     },
     changeForm(val) {
       Object.assign(this.params, val);

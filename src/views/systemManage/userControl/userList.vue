@@ -13,19 +13,19 @@
       </search-bar>
     </div>
     <div class="role-table">
-      <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
+      <el-table :data="testlist" border style="width: 100%; margin-top: 10px;">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column type="index" prop="date" label="序号"></el-table-column>
-        <el-table-column prop="date" label="账号"></el-table-column>
-        <el-table-column prop="name" label="所属机构"></el-table-column>
-        <el-table-column prop="province" label="部门"></el-table-column>
-        <el-table-column prop="city" label="用户角色"></el-table-column>
-        <el-table-column prop="address" label="姓名"></el-table-column>
-        <el-table-column prop="address" label="手机号码"></el-table-column>
-        <el-table-column prop="address" label="最近登陆次数"></el-table-column>
-        <el-table-column prop="address" label="最近登录时间"></el-table-column>
-        <el-table-column prop="address" label="最近登陆IP"></el-table-column>
-        <el-table-column prop="address" label="创建时间"></el-table-column>
+        <el-table-column prop="account" label="账号"></el-table-column>
+        <el-table-column prop="subsidiaryOrgan" label="所属机构"></el-table-column>
+        <el-table-column prop="department" label="部门"></el-table-column>
+        <el-table-column prop="userRole" label="用户角色"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="phoneNumber" label="手机号码"></el-table-column>
+        <el-table-column prop="latelyFrequency" label="最近登陆次数"></el-table-column>
+        <el-table-column prop="latelyTime" label="最近登录时间"></el-table-column>
+        <el-table-column prop="latelyIP" label="最近登陆IP"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="用户状态" align="center" width="200">
           <template slot-scope="scope">
             <table-row-status
@@ -62,11 +62,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagintion">
+      <div class="pagintion" v-if="num">
         <table-paging
-          :current-page="1"
-          :page-size="10"
-          :total="100"
+          :currentPage="1"
+          :pageSize="i"
+          :total="num"
           @handleSizeChange="pageSizeChange"
           @handleCurrentChange="pageCurrentChange"
         ></table-paging>
@@ -75,7 +75,7 @@
 
     <!-- 更改密码弹框-->
     <div class="dialog">
-      <el-dialog title="重置密码" :visible.sync="dialogFormVisible" width="500px">
+      <el-dialog title="重置密码" :visible.sync="dialogFormVisible" width="500px"  custom-class="userDialog">
         <el-form :model="restpaswordfrom">
           <el-form-item label="请选择你的操作" label-width="120px">
             <el-radio-group v-model="restpaswordfrom.radio">
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import Post from '../../../utils/ajax'
 export default {
   name: "userList",
   data() {
@@ -105,6 +106,13 @@ export default {
         radio: 3,
         password: ""
       },
+      //测试数据
+      test:[],
+      testlist:[],
+      num: 0,
+      i:10,
+      n:1,
+      //
       dialogFormVisible: false,
       currentPage4: 4,
       tableData: [
@@ -225,15 +233,27 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  async created() {
+   console.log(Post)
+    let n = await  Post.axios('/shoopList')
+    this.test = n.data.data;
+    this.num = Number(n.data.data.length);
+    this.testlist = this.test.slice(0,10)
+    console.log(this.num)
+  },
   mounted() {},
   methods: {
     pageSizeChange(val) {
       //每页显示条数
+      this.i = val
+      this.testlist = this.test.slice((this.n-1)*val,this.n*val)
       console.log(val);
     },
     pageCurrentChange(val) {
       //当前显示页数
+      this.n= val;
+      this.testlist = this.test.slice((val-1)*this.i,val*this.i)
+      console.log(this.testlist)
       console.log(val);
     },
     handelskip() {
@@ -247,6 +267,9 @@ export default {
     },
     selectBtn(val) {
       //新增删除事件
+      if(val.name==='新建计划'){
+        this.$router.push("userList/userInformed");
+      }
       console.log(val);
     },
     search(val) {
@@ -264,40 +287,7 @@ export default {
 
 <style lang="less">
 @import "./less/index.less";
-.pagintion {
-  margin: 20px;
-  .el-pagination {
-    position: relative;
-    .el-pagination__jump {
-      position: absolute;
-      right: 0;
-    }
-    .el-pagination__sizes {
-      position: absolute;
-      right: 94px;
-    }
-    .btn-prev {
-      position: absolute;
-      right: 599px;
-    }
-    .el-pager {
-      position: absolute;
-      right: 269px;
-    }
-    .btn-next {
-      position: absolute;
-      right: 220px;
-    }
-  }
-}
-
-.el-table th {
-  background: #f8f8f9;
-  padding: 8px 0;
-  text-align: center;
-}
-.el-table td {
-  padding: 10px 0;
-  text-align: center;
+.userDialog{
+  border-radius: 20px;
 }
 </style>

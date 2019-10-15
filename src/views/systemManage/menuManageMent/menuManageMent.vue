@@ -32,78 +32,12 @@
       <el-main style="border-left:1px solid #ccc;padding-left:100px;">
         <div class="vlt-edit-single">
           <bounced-message :obj="ifo"></bounced-message>
-          <!-- <div class="vlt-edit-wrap">
-            <el-form
-              label-position="right"
-              label-width="90px"
-              :model="form"
-              :rules="rules"
-              ref="form"
-            >
-              <el-form-item label="类型">
-                <el-input v-model="form.singleAmount" :disabled="true"></el-input>
-              </el-form-item>
-              <el-form-item label="名称" prop="minMultiple">
-                <el-input v-model="form.minMultiple"></el-input>
-              </el-form-item>
-              <el-form-item label="路径" prop="mixBet">
-                <el-input v-model="form.mixBet"></el-input>
-              </el-form-item>
-              <el-form-item label="路由英文名" prop="bet">
-                <el-input v-model="form.bet"></el-input>
-              </el-form-item>
-              <el-form-item label="图标" prop="logOff">
-                <el-select v-model="form.logOff" placeholder="请选择">
-                  <el-option
-                    v-for="item in logOffOption"
-                    @click.native="changeLogOff(item)"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="排序值" prop="cash">
-                <el-input placeholder="请输入内容" v-model="form.textarea"></el-input>
-              </el-form-item>
-              <el-form-item label="是否敏感操作">
-                <el-switch
-                  style="display: block"
-                  v-model="form.value1"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
-              </el-form-item>
-              <el-form-item label="是否启用">
-                <el-switch
-                  style="display: block"
-                  v-model="form.value2"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                ></el-switch>
-              </el-form-item>
-            </el-form>
-            <el-row class="vlt-edit-btn">
-              <el-button
-                type="primary"
-                v-prevent="1000"
-                size="medium"
-                @click="save(form,'form')"
-              >提交并保存</el-button>
-              <el-button size="medium" @click="resestFrom('form')">重置</el-button>
-            </el-row>
-          </div>-->
         </div>
       </el-main>
     </el-container>
     <div class="bouncedMessage">
-      <el-dialog
-        title="添加子节点"
-        :visible.sync="dialogFormVisible"
-        width="500px"
-        custom-class="menuDialog"
-      >
-        <bounced-message></bounced-message>
+      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog">
+        <bounced-message title="添加子节点" @closediaog="handelbounced"></bounced-message>
       </el-dialog>
     </div>
   </div>
@@ -114,6 +48,7 @@ import bouncedMessage from "./bouncedMessage";
 let id = 1000;
 
 export default {
+  created() {},
   data() {
     const data = [
       {
@@ -314,6 +249,11 @@ export default {
     bouncedMessage
   },
   methods: {
+    handelbounced(val) {
+      //弹框的取消按钮事件
+      console.log(val);
+      this.dialogFormVisible = val;
+    },
     save(val, formName) {
       console.log(val);
       this.$refs[formName].validate(valid => {
@@ -363,20 +303,12 @@ export default {
   padding-right: 8px;
 }
 .menuDialog {
+  border-radius: 20px;
+  .el-dialog__header {
+    padding: 0;
+  }
   .el-row {
     text-align: center;
   }
 }
-/* .el-dialog{
-  width:600px;
-}
-.el-input{
-  width:400px;
-}
-.el-row{
-  text-align: center;
-}
-.el-form-item__label{
-  width:110px !important;
-} */
 </style>

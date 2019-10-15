@@ -60,7 +60,13 @@
 
     <section class="comp-item">
       <h4 class="comp-title">表格分页</h4>
-      <table-paging></table-paging>
+        <table-paging
+          :current-page="1"
+          :page-size="10"
+          :total="100"
+          @handleSizeChange="pageSizeChange"
+          @handleCurrentChange="pageCurrentChange"
+        ></table-paging>
     </section>
 
     <section class="comp-item">
