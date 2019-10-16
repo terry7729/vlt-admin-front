@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions" @select="select" @click.native></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions" @select="select" @click.native position="right"></control-bar>
       </search-bar>
     </section>
     <div>

@@ -29,20 +29,23 @@ const pendingReading = () => import('@/views/businessManage/home/pendingReading'
 
 
 // 游戏储备列表
-const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
+const gameList = () => import('@/views/businessManage/gameStoreManage/gameList')
+const gameDetail = () => import('@/views/businessManage/gameStoreManage/gameDetail')
+const gameEdit = () => import('@/views/businessManage/gameStoreManage/gameEdit')
+const gameCreate = () => import('@/views/businessManage/gameStoreManage/gameCreate')
 // 游戏试玩计划列表
-const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
+const trialPlanList = () => import('@/views/businessManage/gameStoreManage/trialPlanList')
+const trialPlanDetail = () => import('@/views/businessManage/gameStoreManage/trialPlanDetail')
+const trialPlanEdit = () => import('@/views/businessManage/gameStoreManage/trialPlanEdit')
+const trialPlanCreate = () => import('@/views/businessManage/gameStoreManage/trialPlanCreate')
 // 游戏上市计划列表
 const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
 // 游戏配置管理
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
 //退市计划
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
-const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeCheck')
-const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
-const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
-const planEdit = () => import('@/views/businessManage/gameStoreManage/planEdit')
-const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
+
+
 
 
 
@@ -60,20 +63,7 @@ const equipmentDetail = () => import('@/views/businessManage/channelResourceMana
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //入库
-const putStore =  () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
-//台账明细查看
-const detailLedger = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailLedger')
-//相关流程查看
-const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
-//仓库查看
-const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
-//新建仓库
-const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
-//基本信息类型查看
-const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
-//基本信息类型新增
-const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
-
+const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -221,28 +211,68 @@ export default [
     component: pendingReading
   },
   {
-    path: 'businessManage/gameStoreList',
-    name: 'gameStoreList',
+    path: 'businessManage/gameList',
+    name: 'gameList',
     meta: {
-      title: '游戏储备',
+      title: '游戏储备列表',
     },
-    component: gameStoreList
+    component: gameList
   },
   {
-    path: 'businessManage/addGame',
-    name: 'addGame',
+    path: 'businessManage/gameCreate',
+    name: 'gameCreate',
     meta: {
       title: '新建游戏',
     },
-    component: addGame
+    component: gameCreate
   },
   {
-    path: 'businessManage/gamePlanList',
-    name: 'gamePlanList',
+    path: 'businessManage/gameDetail',
+    name: 'gameDetail',
     meta: {
-      title: '游戏试玩计划',
+      title: '游戏详情',
     },
-    component: gamePlanList
+    component: gameDetail
+  },
+  {
+    path: 'businessManage/gameEdit',
+    name: 'gameEdit',
+    meta: {
+      title: '游戏编辑',
+    },
+    component: gameEdit
+  },
+  {
+    path: 'businessManage/trialPlanList',
+    name: 'trialPlanList',
+    meta: {
+      title: '游戏试玩计划列表',
+    },
+    component: trialPlanList
+  },
+  {
+    path: 'businessManage/trialPlanCreate',
+    name: 'trialPlanCreate',
+    meta: {
+      title: '创建游戏试玩计划',
+    },
+    component: trialPlanCreate
+  },
+  {
+    path: 'businessManage/trialPlanDetail',
+    name: 'trialPlanDetail',
+    meta: {
+      title: '试玩详情',
+    },
+    component: trialPlanDetail
+  },
+  {
+    path: 'businessManage/trialPlanEdit',
+    name: 'trialPlanEdit',
+    meta: {
+      title: '试玩计划编辑',
+    },
+    component: trialPlanEdit
   },
   {
     path: 'businessManage/gameLaunchPlan',
@@ -267,38 +297,6 @@ export default [
       title: '游戏退市计划',
     },
     component: gameDelistPlan
-  },
-  {
-    path: 'businessManage/storeCheck',
-    name: 'storeCheck',
-    meta: {
-      title: '查看',
-    },
-    component: storeCheck
-  },
-  {
-    path: 'businessManage/storeEdit',
-    name: 'storeEdit',
-    meta: {
-      title: '编辑',
-    },
-    component: storeEdit
-  },
-  {
-    path: 'businessManage/planCheck',
-    name: 'planCheck',
-    meta: {
-      title: '试玩查看',
-    },
-    component: planCheck
-  },
-  {
-    path: 'businessManage/planEdit',
-    name: 'planEdit',
-    meta: {
-      title: '试玩编辑',
-    },
-    component: planEdit
   },
 
   {
@@ -341,7 +339,7 @@ export default [
     },
     component: inventoryStatistics
   },
-  
+
   {
     path: 'businessManage/channelResourceManage/outPutManage',
     name: 'outPutManage',
@@ -415,24 +413,6 @@ export default [
     },
     component: basicInfoManage
   },
-  {
-    path: 'businessManage/channelResourceManage/typeCheck',
-    name: 'typeCheck',
-    meta: {
-      title: '基本信息管理类型查看',
-    },
-    component: typeCheck
-  },
-  {
-    path:'businessManage/channelResourceManage/addEquipment',
-    name:'addEquipment',
-    meta:{
-      title:'基本信息管理类型新增'
-    },
-    component:addEquipment
-  },
-
-  
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
@@ -561,7 +541,11 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
+<<<<<<< HEAD
   }, 
+=======
+  },
+>>>>>>> 165ec0d9ba745c3e319db1f057c3a422fb209181
   {
     path: 'businessManage/cardBalance',
     name: 'cardBalance',
@@ -569,35 +553,35 @@ export default [
       title: '投注卡余额',
     },
     component: cardBalance
-  },  {
+  }, {
     path: 'businessManage/cardGeneration',
     name: 'cardGeneration',
     meta: {
       title: '投注卡生成',
     },
     component: cardGeneration
-  },  {
+  }, {
     path: 'businessManage/refillRules',
     name: 'refillRules',
     meta: {
       title: '投注卡充值规则',
     },
     component: refillRules
-  },  {
+  }, {
     path: 'businessManage/winningRecord',
     name: 'winningRecord',
     meta: {
       title: '投注卡中奖记录',
     },
     component: winningRecord
-  },  {
+  }, {
     path: 'businessManage/withdrawalRecord',
     name: 'withdrawalRecord',
     meta: {
       title: '投注卡提现记录',
     },
     component: withdrawalRecord
-  },  {
+  }, {
     path: 'businessManage/cardInformation',
     name: 'cardInformation',
     meta: {

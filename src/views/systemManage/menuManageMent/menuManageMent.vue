@@ -7,17 +7,20 @@
         </div>
         <div class="menu-ipt">
           <div class="editorial">
-            <tips-line>
+            <tips-line style="white-space: nowrap;overflow: hidden;">
               当前选择编缉：
-              <span style="color:#40a9ff;font-size:14px;font-weight:700;padding:0 5px;">
+              <span
+                style="color:#40a9ff;font-size:14px;font-weight:700;padding:0 5px;   text-overflow: ellipsis"
+              >
                 {{slelectifo}}
-                <el-button type="text" style="font-size:12px;padding:0 5px;">取消选择</el-button>
+                <el-button type="text" style="font-size:12px;padding:0 5px;" @click="deselect">取消选择</el-button>
               </span>
             </tips-line>
           </div>
-          <div class="menu-tree">
+          <div class="menu-tree" v-if="date">
             <el-tree
-              :data="data"
+              ref="tree"
+              :data="date"
               show-checkbox
               node-key="id"
               :check-strictly="true"
@@ -31,187 +34,106 @@
       </el-aside>
       <el-main style="border-left:1px solid #ccc;padding-left:100px;">
         <div class="vlt-edit-single">
-          <bounced-message :obj="ifo"></bounced-message>
+          <bounced-message ref="bounde" :data="data2.slice(1,9)"></bounced-message>
         </div>
       </el-main>
     </el-container>
     <div class="bouncedMessage">
       <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog">
-        <bounced-message title="添加子节点" @closediaog="handelbounced"></bounced-message>
+        <bounced-message title="添加子节点" @closediaog="handelbounced" ref="bounde" :data="data2"></bounced-message>
+      </el-dialog>
+    </div>
+    <!--添加顶部菜单-->
+    <div class="topManu">
+      <el-dialog :visible.sync="dialogFormVisible2" width="600px" custom-class="menuDialog">
+        <div class="vlt-edit-single">
+          <h2 class="title">添加顶部菜单</h2>
+          <div class="vlt-edit-wrap">
+            <base-form
+              :formData="topMnu"
+              labelWidth="90px"
+              ref="baseForm"
+              :rules="rules"
+              direction="right"
+              @change="changeForm"
+            ></base-form>
+            <el-row class="vlt-edit-btn">
+              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button size="medium" @click="cancel">取消</el-button>
+            </el-row>
+          </div>
+        </div>
       </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
+import Post from "../../../utils/ajax";
 import bouncedMessage from "./bouncedMessage";
 let id = 1000;
 
 export default {
-  created() {},
+  async created() {
+    let n = await Post.axios("/menulist");
+    console.log(n);
+    this.date = n.data.data;
+  },
   data() {
-    const data = [
-      {
-        id: 1,
-        label: "业务管理",
-        type: 0,
-         obj:{},
-        children: [
-          {
-            id: 4,
-            label: "二级 1-1",
-            type: 0,
-             obj:{},
-            children: [
-              {
-                id: 9,
-                 obj:{},
-                label: "三级 1-1-1",
-                type: 0
-              },
-              {
-                id: 10,
-                type: 0,
-                label: "三级 1-1-2"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id: 2,
-        label: "业务运营",
-        type: 0,
-         obj:{},
-        children: [
-          {
-            id: 5,
-            type: 0,
-             obj:{},
-            label: "二级 2-1"
-          },
-          {
-            id: 6,
-            type: 0,
-             obj:{},
-            label: "二级 2-2"
-          }
-        ]
-      },
-      {
-        id: 3,
-        type: 0,
-         obj:{},
-        label: "业务监控",
-        children: [
-          {
-            id: 7,
-             obj:{},
-            type: 0,
-            label: "二级 3-1"
-          },
-          {
-            id: 8,
-            type: 0,
-            obj:{},
-            label: "二级 3-2"
-          }
-        ]
-      },
-      {
-        id: 4,
-        type: 0,
-        label: "系统管理",
-        obj:{},
-        children: [
-          {
-            id: 11,
-            type: 0,
-            label: "组织架构",
-            obj: {
-              type: "页面菜单",
-              name: "组织架构",
-              path: "XXXXXXX",
-              english: "organization",
-              icon: "el-icon-right",
-              sort: 1,
-              switch: false,
-              switch2: false
-            }
-          },
-          {
-            id: 12,
-            type: 0,
-             obj:{},
-            label: "组织部门"
-          },
-          {
-            id: 13,
-            type: 0,
-             obj:{},
-            label: "角色管理"
-          },
-          {
-            id: 14,
-            type: 0,
-             obj:{},
-            label: "权限管理"
-          },
-          {
-            id: 15,
-             obj:{},
-            type: 0,
-            label: "用户管理"
-          },
-          {
-            id: 16,
-             obj:{},
-            type: 0,
-            label: "数据字典"
-          },
-          {
-            id: 17,
-            type: 0,
-             obj:{},
-            label: "菜单管理",
-            children: [
-              {
-                id: 20,
-                 obj:{},
-                label: "系统菜单详情"
-              },
-              {
-                id: 21,
-                 obj:{},
-                label: "系统菜单新增"
-              },
-              {
-                id: 22,
-                 obj:{},
-                label: "系统菜单编缉"
-              },
-              {
-                id: 23,
-                 obj:{},
-                label: "系统菜单删除"
-              },
-              {
-                id: 24,
-                 obj:{},
-                label: "系统菜单状态设置"
-              },
-              {
-                id: 25,
-                 obj:{},
-                label: "菜单查询"
-              }
-            ]
-          }
-        ]
-      }
-    ];
     return {
-      slelectifo: "",
+      dialogFormVisible2: false,
+      topMnu: [//添加顶部菜单
+        { title: "类型", type: "input", prop: "type", value: "菜单页面", disabled: true },
+        { type: "input", title: "名称", prop: "name", value: "" },
+        { type: "input", title: "英文名", prop: "english", value: "" },
+        {
+          type: "select",
+          title: "图标",
+          prop: "icon",
+          value: "",
+          options: [
+            { label: "图标一", value: "0" },
+            { label: "图标二", value: "1" }
+          ]
+        },
+        { type: "input", prop: "sort", value: "", title: "排序值" },
+        { type: "switch", prop: "date3", value: "", title: "是否启用" }
+      ],
+      data2: [
+        {
+          title: "上级节点",
+          type: "input",
+          prop: "father",
+          value: "",
+          disabled: true
+        },
+        { title: "类型", type: "input", prop: "type", value: "" },
+        { type: "input", title: "名称", prop: "name", value: "" },
+        { type: "input", title: "路径", prop: "path", value: "" },
+        { type: "input", title: "路由英文名", prop: "english", value: "" },
+        {
+          type: "select",
+          title: "图标",
+          prop: "icon",
+          value: "",
+          options: [
+            { label: "图标一", value: "0" },
+            { label: "图标二", value: "1" }
+          ]
+        },
+        { type: "input", prop: "sort", value: "", title: "排序值" },
+        {
+          type: "switch",
+          prop: "date2",
+          value: "",
+          title: "是否敏感操作",
+          option: ["start", "end"]
+        },
+        { type: "switch", prop: "date3", value: "", title: "是否启用" }
+      ],
+      date: [],
+      slelectifo: "", //当前选中节点名称
+      parent: "",
       ifo: {},
       dialogFormVisible: false,
       controlOptions: [
@@ -263,14 +185,27 @@ export default {
       },
       logOffOption: [],
       betOption: [],
-      data: JSON.parse(JSON.stringify(data)),
-      data: JSON.parse(JSON.stringify(data))
+      parms:{}
     };
   },
   components: {
     bouncedMessage
   },
   methods: {
+    deselect() {
+      // alert(2)
+      this.slelectifo = "";
+      this.data2[0].value = this.slelectifo;
+    },
+    cancel(){//关闭弹窗
+      this.dialogFormVisible2 = false;
+    },
+    submit(){//表单提交
+
+    },
+    changeForm(val){
+      Object.assign(this.parms,val)
+    },
     handelbounced(val) {
       //弹框的取消按钮事件
       console.log(val);
@@ -294,20 +229,43 @@ export default {
       //按钮点击事件
       console.log(val);
       if (val.id === 1) {
-        this.setchild = false;
-        this.dialogFormVisible = true;
-        // this.open(); //触发弹框
+        if (this.slelectifo == "") {
+          this.open();
+        } else {
+          this.setchild = false;
+          this.dialogFormVisible = true;
+          this.data2[0].value = this.slelectifo;
+        }
       }
+      if (val.id === 2) {
+        this.dialogFormVisible2 = true;
+      }
+
+      //触发弹框
     },
-    getnowNodeifo(val) {
+    open() {
+      this.$alert("请选择要添加机构的上级节点！", "温馨提示！", {
+        confirmButtonText: "确定",
+        callback: action => {
+          close();
+        }
+      });
+    },
+
+    getnowNodeifo(val, s) {
       //获取当前点击节点信息
-      this.slelectifo = val.label;
-      // if(val[obj]){
-        
-        this.ifo = { ...val.obj };
-      // }
-      console.log();
       console.log(val);
+      this.slelectifo = val.label;
+
+      let n = Object.keys(val.obj);
+      let arr = this.data2;
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < n.length; j++) {
+          if (arr[i].prop == n[j]) {
+            arr[i].value = val.obj[n[j]];
+          }
+        }
+      }
     },
     getCheckifo(...res) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
@@ -331,9 +289,6 @@ export default {
   border-radius: 20px;
   .el-dialog__header {
     padding: 0;
-  }
-  .el-row {
-    text-align: center;
   }
 }
 </style>

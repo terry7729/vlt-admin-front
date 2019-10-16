@@ -1,6 +1,8 @@
 <template>
   <div class="vlt-card develop-plan">
     <el-tabs tab-position="left" style="height: auto;">
+      <el-tab-pane label="">
+      </el-tab-pane>
       <el-tab-pane label="计划列表">
         <search-bar class="search-bar-demo"
           @search="search"

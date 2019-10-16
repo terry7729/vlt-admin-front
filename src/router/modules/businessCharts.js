@@ -43,10 +43,15 @@ const warningWatchDetail = () => import('@/views/businessCharts/warningWatch/mod
 const warningWatchEdit = () => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
 //demo
 const demo = () => import('@/views/componentDemo')
+//demo1
+const demo1 = () => import('@/views/businessCharts/dealData/demo')
 //城市风险指标新增
 const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd')
 //奖池风险指标新增
 const pondRiskAdd = () => import('@/views/businessCharts/warningRule/pondRiskAdd')
+
+//城市游戏风险指标新增
+const gameRiskAdd = () => import('@/views/businessCharts/warningRule/gameRiskAdd')
 
 export default [{
     path: 'demo',
@@ -229,6 +234,22 @@ export default [{
       title: '奖池风险指标新增',
     },
     component: pondRiskAdd
+  },
+  {
+    path: 'businessCharts/gameRiskAdd',
+    name: 'gameRiskAdd',
+    meta: {
+      title: '城市游戏风险指标新增',
+    },
+    component: gameRiskAdd
+  },
+  {
+    path: 'businessCharts/demo1',
+    name: 'demo1',
+    meta: {
+      title: '城市游戏风险指标新增',
+    },
+    component: demo1
   }
 
 ]

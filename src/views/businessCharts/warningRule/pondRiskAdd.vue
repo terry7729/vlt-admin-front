@@ -2,25 +2,7 @@
   <div class="vlt-card">
     <h3 class="headling">奖池风险指标新增</h3>
     <div class="vlt-card select-box">
-      <span>省份</span>
-      <el-select v-model="value" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-       <span>城市</span>
-      <el-select v-model="value" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-       <span>游戏</span>
+      <span>游戏</span>
       <el-select v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -40,9 +22,6 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column align="center" prop="type" label="标准配置"></el-table-column>
       </el-table>
-      <div class="btn">
-        <el-button type="primary" @click="selectTypes" class="selectSure">确认</el-button>
-      </div>
     </div>
     <div class="vlt-card showbox" v-show="showeditBox">
       <el-form label-position="top" label-width="80px" ref="form" :model="form">
@@ -50,9 +29,6 @@
           <div v-for="item in type" class="editfrom">
             <el-form-item>
               <span slot="label">{{item.type}}</span>
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="普通">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="严重">
@@ -65,11 +41,15 @@
         </el-form-item>
         <div class="editfrom">
           <el-form-item prop="date2" label="监控时间点">
-            <el-time-picker placeholder="选择时间" v-model="form.date1" style="width: 100%;"></el-time-picker>
+            <el-time-picker
+              is-range
+              v-model="value1"
+              range-separator="至"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+              placeholder="选择时间范围"
+            ></el-time-picker>
           </el-form-item>
-          <el-form-item prop="date2" label="监控时间点">
-            <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-          </el-form-item>          
           <el-form-item prop="date2" label="监控频率">
             <el-input-number
               v-model="num"
@@ -98,6 +78,8 @@ import rules from "@/utils/rules.js";
 export default {
   data() {
     return {
+      value1: "",
+      //[new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)]
       options: [
         {
           value: "选项1",
@@ -124,11 +106,7 @@ export default {
       num: 10,
       type: null,
       showeditBox: false,
-      tableData: [
-        { type: "最高奖池金额" },
-        { type: "最低奖池金额" },
-        
-      ],
+      tableData: [{ type: "最高奖池金额" }, { type: "最低奖池金额" }],
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
@@ -175,19 +153,13 @@ export default {
       console.log("submit!");
     },
     selectChange(val) {
-      this.showeditBox = false;
+      // this.showeditBox = false;
       this.type = val;
-    },
-    select(val) {
-      if (val.name === "确认") {
-        this.selectTypes();
-      }
-    },
-    selectTypes() {
       if (this.type) {
         if (this.type.length > 0) {
           this.showeditBox = true;
-          console.log(this.type);
+        } else {
+          this.showeditBox = false;
         }
       }
     }
@@ -196,7 +168,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.el-select{
+.el-select {
   margin-right: 20px;
   margin-bottom: 20px;
   margin-left: 10px;

@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="40px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
       </search-bar>
     </section>
     <div class="tab-container">
@@ -290,7 +290,7 @@ export default {
     }
   },
   mounted() {
-    this.showcity();
+    // this.showcity();
   }
 };
 </script>

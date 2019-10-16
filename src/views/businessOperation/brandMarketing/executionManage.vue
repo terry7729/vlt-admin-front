@@ -28,9 +28,6 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="table_paging">
-      <pagination class="table_paging_right"></pagination>
-    </div>
 
     <el-dialog title="任务进度" :visible.sync="dialogFormVisible">
       <section class="comp-item">
@@ -49,7 +46,6 @@
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="saveProgress">保存</el-button>
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-       
       </div>
     </el-dialog>
   </div>
@@ -60,7 +56,9 @@ export default {
   name: "name",
   data() {
     return {
+      textarea: "",
       dialogFormVisible: false,
+      formLabelWidth: '400',
       form: { progress: "", explain: "" },
       tableData: [
         {
@@ -115,9 +113,8 @@ export default {
     progressUpdate(id) {
       this.dialogFormVisible = true;
     },
-    saveProgress(){
+    saveProgress() {
       this.dialogFormVisible = false;
-     
     }
   },
   computed: {},

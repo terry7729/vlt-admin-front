@@ -154,8 +154,8 @@
 <style lang="less">
   .search-bar-comp{
     .el-form{
-      padding: 15px 15px 0;
-      background-color: #f7f7f7;
+      padding-top: 6px;
+      background-color: #fff;
       .el-button--text:hover {
         background-color: transparent;
         color: #57a3f3;
@@ -169,9 +169,10 @@
     }
     .btn-wrap{
       padding-left: 30px;
+      margin-bottom: 10px;
     }
     .el-button{
-      margin: 0 5px;
+      margin: 0 8px 0 0;
     }
     .tips-item{
       height: 34px;

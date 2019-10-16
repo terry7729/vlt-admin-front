@@ -18,7 +18,7 @@
     props: {
       // 位置
       position: {
-        default: 'right'
+        default: 'left'
       },
       // 配置参数
       options: {
@@ -52,7 +52,7 @@
   .control-bar-comp{
     margin: 10px 0;
     .el-button{
-      margin: 0 5px;
+      margin: 0 8px 0 0;
     }
     &.align-right{
       text-align: right;

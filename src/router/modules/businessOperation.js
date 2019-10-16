@@ -43,33 +43,102 @@ const operationAccountAdd = () => import('@/views/businessOperation/PermissionMa
 //账户管理查看
 const operationAccountExamine = () => import('@/views/businessOperation/PermissionMaintain/operationAccountExamine')
 
+//彩票兑奖
+const lotteryTicket = () => import('@/views/businessOperation/LotteryManagement/lotteryTicket')
+//彩票兑奖详情
+const lotteryTicketDetail = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketDetail')
+//彩票兑奖打印
+const lotteryTicketPrint = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketPrint')
+//彩票兑奖补打
+const lotteryTicketReprint = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketReprint')
+
+
+//兑奖设置
+const expirySetting = () => import('@/views/businessOperation/LotteryManagement/expirySetting')
+//兑奖处管理
+const ticketOfficeManage = () => import('@/views/businessOperation/LotteryManagement/ticketOfficeManage')
+//中奖查询
+const winningCheck = () => import('@/views/businessOperation/LotteryManagement/winningCheck')
 
 //品牌营销推广
 //活动计划模板
 const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
 //模板预览
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
-
-
 //活动计划管理
 const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
 //计划详情
 const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
 //新建活动
 const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
-
 //活动执行管理
 const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
 //活动执行详情
 const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
 //分配任务
 const allotTask = () => import('@/views/businessOperation/brandMarketing/allotTask')
-
-
 //活动效果评估
 const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
 //开始评估
 const resultAssess = () => import('@/views/businessOperation/brandMarketing/resultAssess')
+
+//客户账户
+//客户账户列表
+const customerAccount = () => import('@/views/businessOperation/customerAccount/customerAccount')
+//客户账户详情
+const accountDetail = () => import('@/views/businessOperation/customerAccount/accountDetail')
+//投注卡详情
+const betcardDetail = () => import('@/views/businessOperation/customerAccount/betcardDetail')
+//会员权益详情
+const equityDetail = () => import('@/views/businessOperation/customerAccount/equityDetail')
+
+
+//账户记录
+//充值记录列表
+const rechargeRecord = () => import('@/views/businessOperation/accountRecord/rechargeRecord')
+//充值记录详情
+const rechargeDetail = () => import('@/views/businessOperation/accountRecord/rechargeDetail')
+//投注记录列表
+const bettingRecord = () => import('@/views/businessOperation/accountRecord/bettingRecord')
+//投注记录详情
+const betDetail = () => import('@/views/businessOperation/accountRecord/betDetail')
+//兑奖记录列表
+const cashRecord = () => import('@/views/businessOperation/accountRecord/cashRecord')
+//兑奖记录详情
+const cashDetail = () => import('@/views/businessOperation/accountRecord/cashDetail')
+//提现记录列表
+const withdrawalRecord = () => import('@/views/businessOperation/accountRecord/withdrawalRecord')
+//提现记录详情
+const withdrawalDetail = () => import('@/views/businessOperation/accountRecord/withdrawalDetail')
+//积分账户列表
+const integralRecord = () => import('@/views/businessOperation/accountRecord/integralRecord')
+//积分账户详情
+const integralDetail = () => import('@/views/businessOperation/accountRecord/integralDetail')
+//资金流水列表
+const fundsStatement = () => import('@/views/businessOperation/accountRecord/fundsStatement')
+//资金流水详情
+const fundsDetail = () => import('@/views/businessOperation/accountRecord/fundsDetail')
+
+//责任彩票
+//责任彩票列表
+const dutyLottery = () => import('@/views/businessOperation/dutyLottery/dutyLottery')
+//规则设置
+const ruleSet = () => import('@/views/businessOperation/dutyLottery/ruleSet')
+
+//公告信息发布
+//素材管理 
+const materialManage = () => import('@/views/businessOperation/noticeInfo/materialManage')
+//公告信息发布列表
+const bulletinList = () => import('@/views/businessOperation/noticeInfo/bulletinList')
+//公告信息详情
+const bulletinDetail = () => import('@/views/businessOperation/noticeInfo/bulletinDetail')
+//公告模板
+const bulletinTemplate = () => import('@/views/businessOperation/noticeInfo/bulletinTemplate')
+//模板详情 
+const templateDetail = () => import('@/views/businessOperation/noticeInfo/templateDetail')
+//消息推送
+const infoPush = () => import('@/views/businessOperation/noticeInfo/infoPush')
+
 
 
 export default [
@@ -245,6 +314,67 @@ export default [
     },
     component: operationAccountExamine
   },
+  {
+    path: 'businessOperation/lotteryTicket',
+    name: 'lotteryTicket',
+    meta: {
+      title: '彩票兑奖',
+    },
+    component: lotteryTicket
+  },
+  {
+    path: 'businessOperation/lotteryTicketDetail',
+    name: 'lotteryTicketDetail',
+    meta: {
+      title: '彩票兑奖详情',
+    },
+    component: lotteryTicketDetail
+  },
+  {
+    path: 'businessOperation/lotteryTicketPrint',
+    name: 'lotteryTicketPrint',
+    meta: {
+      title: '彩票兑奖打印',
+    },
+    component: lotteryTicketPrint
+  },
+  {
+    path: 'businessOperation/lotteryTicketReprint',
+    name: 'lotteryTicketReprint',
+    meta: {
+      title: '彩票兑奖打印',
+    },
+    component: lotteryTicketReprint
+  },
+
+  {
+    path: 'businessOperation/expirySetting',
+    name: 'expirySetting',
+    meta: {
+      title: '兑奖设置',
+    },
+    component: expirySetting
+  },
+  {
+    path: 'businessOperation/ticketOfficeManage',
+    name: 'ticketOfficeManage',
+    meta: {
+      title: '中奖处管理',
+    },
+    component: ticketOfficeManage
+  },
+  {
+    path: 'businessOperation/winningCheck',
+    name: 'winningCheck',
+    meta: {
+      title: '中奖查询',
+    },
+    component: winningCheck
+  },
+
+
+
+
 
   //品牌与营销推广
   {
@@ -328,11 +458,205 @@ export default [
     component: resultAssess,
   },
 
+  //账户记录
+  {
+    path: 'accountRecord/rechargeRecord',
+    name: 'rechargeRecord',
+    meta: {
+      title: '充值记录',
+    },
+    component: rechargeRecord,
+  },
+  {
+    path: 'accountRecord/rechargeDetail',
+    name: 'rechargeDetail',
+    meta: {
+      title: '充值记录详情',
+    },
+    component: rechargeDetail,
+  },
+  {
+    path: 'accountRecord/bettingRecord',
+    name: 'BettingRecord',
+    meta: {
+      title: '投注记录',
+    },
+    component: bettingRecord,
+  },
+  {
+    path: 'accountRecord/betDetail',
+    name: 'betDetail',
+    meta: {
+      title: '投注记录详情',
+    },
+    component: betDetail,
+  },
+  {
+    path: 'accountRecord/cashRecord',
+    name: 'cashRecord',
+    meta: {
+      title: '兑奖记录',
+    },
+    component: cashRecord,
+  },
+  {
+    path: 'accountRecord/cashDetail',
+    name: 'cashDetail',
+    meta: {
+      title: '兑奖记录详情',
+    },
+    component: cashDetail,
+  },
+  {
+    path: 'accountRecord/withdrawalRecord',
+    name: 'withdrawalRecord',
+    meta: {
+      title: '提现记录',
+    },
+    component: withdrawalRecord,
+  },
+  {
+    path: 'accountRecord/withdrawalDetail',
+    name: 'withdrawalDetail',
+    meta: {
+      title: '提现记录详情',
+    },
+    component: withdrawalDetail,
+  },
+  {
+    path: 'accountRecord/integralRecord',
+    name: 'integralRecord',
+    meta: {
+      title: '积分账户',
+    },
+    component: integralRecord,
+  },
+  {
+    path: 'accountRecord/integralDetail',
+    name: 'integralDetail',
+    meta: {
+      title: '积分账户详情',
+    },
+    component: integralDetail,
+  },
+  {
+    path: 'accountRecord/fundsStatement',
+    name: 'fundsStatement',
+    meta: {
+      title: '资金流水',
+    },
+    component: fundsStatement,
+  },
+  {
+    path: 'accountRecord/fundsDetail',
+    name: 'fundsDetail',
+    meta: {
+      title: '资金流水详情',
+    },
+    component: fundsDetail,
+  },
 
+  //客户账户
+  {
+    path: 'customerAccount/customerAccount',
+    name: 'customerAccount',
+    meta: {
+      title: '客户账户列表',
+    },
+    component: customerAccount,
+  },
+  {
+    path: 'customerAccount/accountDetail',
+    name: 'accountDetail',
+    meta: {
+      title: '客户账户详情',
+    },
+    component: accountDetail,
+  },
+  {
+    path: 'customerAccount/betcardDetail',
+    name: 'betcardDetail',
+    meta: {
+      title: '投注卡详情',
+    },
+    component: betcardDetail,
+  },
+  {
+    path: 'customerAccount/equityDetail',
+    name: 'equityDetail',
+    meta: {
+      title: '会员权益详情',
+    },
+    component: equityDetail,
+  },
 
+  //责任彩票
+  {
+    path: 'dutyLottery/dutyLottery',
+    name: 'dutyLottery',
+    meta: {
+      title: '责任彩票列表',
+    },
+    component: dutyLottery,
+  },
+  {
+    path: 'dutyLottery/ruleSet',
+    name: 'ruleSet',
+    meta: {
+      title: '规则设置',
+    },
+    component: ruleSet,
+  },
 
-
-
+  //公告信息发布
+  {
+    path: 'noticeInfo/materialManage',
+    name: 'materialManage',
+    meta: {
+      title: '素材管理',
+    },
+    component: materialManage,
+  },
+  {
+    path: 'noticeInfo/bulletinList',
+    name: 'bulletinList',
+    meta: {
+      title: '公告信息发布列表',
+    },
+    component: bulletinList,
+  },
+  {
+    path: 'noticeInfo/bulletinDetail',
+    name: 'bulletinDetail',
+    meta: {
+      title: '公告信息详情',
+    },
+    component: bulletinDetail,
+  },
+  {
+    path: 'noticeInfo/bulletinTemplate',
+    name: 'bulletinTemplate',
+    meta: {
+      title: '公告模板',
+    },
+    component: bulletinTemplate,
+  },
+  {
+    path: 'noticeInfo/templateDetail',
+    name: 'templateDetail',
+    meta: {
+      title: '模板详情',
+    },
+    component: templateDetail,
+  },
+  {
+    path: 'noticeInfo/infoPush',
+    name: 'infoPush',
+    meta: {
+      title: '消息推送',
+    },
+    component: infoPush,
+  },
 
 
 ]

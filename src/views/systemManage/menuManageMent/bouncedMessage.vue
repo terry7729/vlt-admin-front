@@ -3,21 +3,20 @@
     <div class="vlt-edit-single">
         <h2 class="title" v-if="title?true:false">{{title}}</h2>
     <div class="vlt-edit-wrap">
-      
         <base-form
-          :formData="data2"
+        v-if="data"
+          :formData="data"
           ref="baseForm"
           :rules="rules2"
           direction="right"
           @change="changeForm"
           labelWidth="110px"
         ></base-form>
-     
       <el-row class="vlt-edit-btn">
         <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
         <el-button size="medium" @click="resestFrom('form')">取消</el-button>
       </el-row>
-      <!-- {{params}} -->
+     
     </div>
     </div>
   </div>
@@ -25,37 +24,26 @@
 
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
+import { createSocket } from 'dgram';
 export default {
   name: "bouncedMessage",
-  props: ["title", "obj"],
+  // props: ["title", "obj"],
+  props:{
+
+    title:{
+      type:String,
+      default:''
+    },
+    data:{
+      type:Array,
+      default:''
+    }
+  },
   data() {
     return {
       params: {},
-      data2: [
-        { title: "类型", type: "input", prop: "type", value: "" },
-        { type: "input", title: "名称", prop: "name",value: ""  },
-        { type: "input", title: "路径", prop: "path" ,value: ""},
-        { type: "input", title: "路由英文名", prop: "english",value: "" },
-        {
-          type: "select",
-          title: "图标",
-          prop: "icon",
-          value: "",
-          options: [
-            { label: "图标一", value: "0" },
-            { label: "图标二", value: "1" }
-          ]
-        },
-        { type: "input", prop: "sort", value: "", title: "排序值" },
-        {
-          type: "switch",
-          prop: "date2",
-          value: "",
-          title: "是否敏感操作",
-          option: ["start", "end"]
-        },
-        { type: "switch", prop: "date3", value: "", title: "是否启用" }
-      ],
+      obj:{title: "上极节点", type: "input", prop: "type", value: "" },
+      falg:false,
       rules2: {
         type: [{ required: true, message: "类型不能为空", trigger: "blur" }],
         name: [{ required: true, message: "名称不能为空", trigger: "blur" }],
@@ -66,8 +54,15 @@ export default {
       }
     };
   },
-  updated(...res) {
- 
+  updated() {
+
+    
+  },
+  created(){
+    console.log(this) 
+   
+  
+    
   },
   components: {},
   methods: {
@@ -80,8 +75,10 @@ export default {
       console.log("派发出来的参数", this.params);
     },
     submit() {
+
       this.$refs.baseForm.validate(val => {
-        console.log(val);
+          //添加
+        console.log(this.params);
       });
     }
   }

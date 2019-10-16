@@ -15,54 +15,69 @@
     </div>
     <div>
       <div>
-        <div >  
+        <div>
           <el-form
-            :model="dynamicValidateForm"
-            ref="dynamicValidateForm"
-            label-width="100px"
-            class="demo-dynamic"
+            label-position="right"
+            label-width="90px"
+            ref="form"
+            :model="formDevice"
+            :rules="rules"
+            class="device-form"
           >
             <el-form-item
-              prop="email"
-              label="邮箱"
-              :rules="[
-      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-    ]"
+              v-for="(item,index) in deviceData"
+              :key="index"
+              :label="`${item.title}${index+1}`"
             >
-              <el-input v-model="dynamicValidateForm.email"></el-input>
+              <el-select v-model="item.type" placeholder="请选择一个报表" >
+                <el-option
+                  v-for="(list,index) in item.optionsType"
+                  :key="index"
+                  :label="list.label"
+                  :value="list"
+                ></el-option>
+              </el-select>
+              
             </el-form-item>
             <el-form-item
-              v-for="(domain, index) in dynamicValidateForm.domains"
-              :label="'域名' + index"
-              :key="domain.key"
-              :prop="'domains.' + index + '.value'"
-              :rules="{
-      required: true, message: '域名不能为空', trigger: 'blur'
-    }"
+              v-for="(item1,index) in deviceData1"
+              :key="index"
+              :label="`${item1.title}${index+1}`"
             >
-              <el-input v-model="domain.value"></el-input>
-              <el-button @click.prevent="removeDomain(domain)">删除</el-button>
+              <el-select v-model="item1.model" placeholder="请选择一个部门" >
+                <el-option
+                  v-for="(list, index) in item1.optionsModel"
+                  :key="index"
+                  :label="list.label"
+                  :value="list"
+                ></el-option>
+              </el-select>
+              <el-select v-model="item1.model" placeholder="请选择一个员工" >
+                <el-option
+                  v-for="(list, index) in item1.optionsStaff"
+                  :key="index"
+                  :label="list.label"
+                  :value="list"
+                ></el-option>
+              </el-select>
+              <el-button v-if="index!==0" type="text" class="delete" @click="deleteDevice(index)">删除</el-button>
             </el-form-item>
-            <el-form-item>
-              
-              <el-button @click="addDomain">新增域名</el-button>
             
-            </el-form-item>
           </el-form>
+          
+          <el-button class="addDevice" @click="addDevice" icon="el-icon-plus" style="margin-bottom:20px">添加</el-button>
         </div>
-        
-
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交</el-button>
           <el-button size="medium" @click="editShow = !editShow">取消</el-button>
         </el-row>
       </div>
-    </div>
+    </div>     
   </div>
 </template>
 
 
+              
   
 <script type="text/javascript">
 export default {
@@ -82,7 +97,7 @@ export default {
           title: "SMTP服务器地址",
           type: "input",
           prop: "serverSite",
-          value: ""
+          value: "" 
         },
         { title: "SMTP端口号", type: "input", prop: "portNumber", value: "" },
         { title: "SMTP用户名", type: "input", prop: "userName", value: "" },
@@ -90,37 +105,46 @@ export default {
         { title: "发信人地址", type: "input", prop: "senderSite", value: "" },
         { title: "发信人名称", type: "input", prop: "senderName", value: "" }
       ],
-      data2: [
-        { title: "发送内容", type: "select", prop: "sendContent", value: "" },
-        {
-          title: "接收人",
-          type: "select",
-          prop: "recipientDepartment",
-          value: ""
-        },
-        { title: "", type: "select", prop: "recipientStaff", value: "" }
-      ],
-      data3: [
-        { title: "", type: "select", prop: "sendContent", value: "" },
-        {
-          title: "接收人",
-          type: "select",
-          prop: "recipientDepartment",
-          value: ""
-        },
-        { title: "", type: "select", prop: "recipientStaff", value: "" }
-      ],
+      
       radio: "1",
       rules1: {},
+      rules: {},
       workerData: {
         region: ""
       },
-       dynamicValidateForm: {
-          domains: [{
-            value: ''
-          }],
-          email: ''
-        }
+      dynamicValidateForm: {
+        domains: [
+          {
+            value: ""
+          }
+        ],
+        email: ""
+      },
+      deviceData: [
+        {
+          title: "发送内容",
+          propType: "type",
+          optionsType: [
+            { label: "类型一", value: 1 },
+            { label: "类型二", value: 2 }
+          ],
+        },
+      ],
+      deviceData1: [
+        {
+          title: "接收人",
+          optionsModel: "model",
+          optionsStaff:"staff",
+          optionsModel: [
+            { label: "型号一", value: 1 },
+            { label: "型号二", value: 2 }
+          ],
+          optionsStaff:[
+            { label: "张三", value: 1 },
+            { label: "李四", value: 2 }
+          ]
+        },
+      ]
     };
   },
   components: {},
@@ -134,20 +158,21 @@ export default {
         console.log(val);
       });
     },
-      
-      removeDomain(item) {
-        var index = this.dynamicValidateForm.domains.indexOf(item)
-        if (index !== -1) {
-          this.dynamicValidateForm.domains.splice(index, 1)
-        }
-      },
-      addDomain() {
-        this.dynamicValidateForm.domains.push({
-          value: '',
-          key: Date.now()
-        });
-      }
-   
+    addDevice() {
+      let cloneData = JSON.parse(JSON.stringify(this.deviceData[0]));
+      cloneData.propType = `${cloneData.propType}${this.deviceData.length}`;
+      this.$set(this.deviceData, this.deviceData.length, cloneData);
+
+      let cloneData1 = JSON.parse(JSON.stringify(this.deviceData1[0]));
+      cloneData1.propModel = `${cloneData1.propModel}${this.deviceData1.length}`;
+      cloneData1.propStaff=`${cloneData1.propStaff}${this.deviceData1.length}`;
+      this.$set(this.deviceData1, this.deviceData1.length, cloneData1);
+    },
+    deleteDevice(index) {
+      this.deviceData.splice(index, 1);
+      this.deviceData1.splice(index, 1);
+      console.log("删除", this.deviceData);
+    }
   }
 };
 </script>
@@ -160,3 +185,7 @@ export default {
   width: 300px;
 }
 </style>
+
+
+
+
