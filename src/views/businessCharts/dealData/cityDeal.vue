@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <section class="comp-item">
-      <control-bar :options="controlOptions"></control-bar>
+      <control-bar :options="controlOptions" position="right"></control-bar>
     </section>
     <div class="tab-container">
       <el-table
