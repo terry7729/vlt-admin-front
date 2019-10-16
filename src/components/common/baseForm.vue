@@ -5,16 +5,16 @@
     class="base-form">
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop">
       <!-- 输入框 -->
-      <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="`请选择${item.title}`">
+      <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="items in item.options" :key="items.value" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
         </el-option>
       </el-select>
       <!-- 支持多选 -->
-      <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="`请选择${item.title}`">
+      <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="items in item.options" :key="items.value" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
@@ -33,7 +33,7 @@
       <el-date-picker size="small" type="date"
         v-if="item.type=='datepicker'"
         v-model="form[item.prop]"
-        :placeholder="`请选择${item.title}`">
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
       <!-- 起止日期选择 -->
       <el-date-picker size="small" type="daterange"
@@ -47,7 +47,7 @@
       <el-date-picker size="small" type="datetime"
         v-if="item.type=='datetime'"
         v-model="form[item.prop]"
-        :placeholder="`请选择${item.title}`">
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
       <!-- 两个时间选择 -->
       <el-date-picker size="small" type="datetimerange"
@@ -58,15 +58,16 @@
         end-placeholder="结束时间">
       </el-date-picker>
       <!-- 支持文本域 -->
-      <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="`请输入${item.title}`"></el-input>
+      <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
       <!-- 级联选择 -->
-      <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :options="item.options" :placeholder="`请选择${item.title}`"></el-cascader>
+      <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :options="item.options" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
       <!-- 级联选择（多选） -->
       <el-cascader
         v-if="item.type=='cascader-multiple'"
+        v-model="form[item.prop]"
         :options="item.options"
         :props="{ multiple: true, checkStrictly: true }"
-        :placeholder="`请选择${item.title}`"
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"
         clearable>
       </el-cascader>
       <!-- 单选 -->

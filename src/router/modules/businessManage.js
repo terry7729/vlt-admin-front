@@ -29,20 +29,23 @@ const pendingReading = () => import('@/views/businessManage/home/pendingReading'
 
 
 // 游戏储备列表
-const gameStoreList = () => import('@/views/businessManage/gameStoreManage/gameStoreList')
+const gameList = () => import('@/views/businessManage/gameStoreManage/gameList')
+const gameDetail = () => import('@/views/businessManage/gameStoreManage/gameDetail')
+const gameEdit = () => import('@/views/businessManage/gameStoreManage/gameEdit')
+const gameCreate = () => import('@/views/businessManage/gameStoreManage/gameCreate')
 // 游戏试玩计划列表
-const gamePlanList = () => import('@/views/businessManage/gameStoreManage/gamePlanList')
+const trialPlanList = () => import('@/views/businessManage/gameStoreManage/trialPlanList')
+const trialPlanDetail = () => import('@/views/businessManage/gameStoreManage/trialPlanDetail')
+const trialPlanEdit = () => import('@/views/businessManage/gameStoreManage/trialPlanEdit')
+const trialPlanCreate = () => import('@/views/businessManage/gameStoreManage/trialPlanCreate')
 // 游戏上市计划列表
 const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
 // 游戏配置管理
 const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
 //退市计划
 const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
-const storeCheck = () => import('@/views/businessManage/gameStoreManage/storeCheck')
-const storeEdit = () => import('@/views/businessManage/gameStoreManage/storeEdit')
-const planCheck = () => import('@/views/businessManage/gameStoreManage/planCheck')
-const planEdit = () => import('@/views/businessManage/gameStoreManage/planEdit')
-const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
+
+
 
 
 
@@ -187,28 +190,68 @@ export default [
     component: pendingReading
   },
   {
-    path: 'businessManage/gameStoreList',
-    name: 'gameStoreList',
+    path: 'businessManage/gameList',
+    name: 'gameList',
     meta: {
-      title: '游戏储备',
+      title: '游戏储备列表',
     },
-    component: gameStoreList
+    component: gameList
   },
   {
-    path: 'businessManage/addGame',
-    name: 'addGame',
+    path: 'businessManage/gameCreate',
+    name: 'gameCreate',
     meta: {
       title: '新建游戏',
     },
-    component: addGame
+    component: gameCreate
   },
   {
-    path: 'businessManage/gamePlanList',
-    name: 'gamePlanList',
+    path: 'businessManage/gameDetail',
+    name: 'gameDetail',
     meta: {
-      title: '游戏试玩计划',
+      title: '游戏详情',
     },
-    component: gamePlanList
+    component: gameDetail
+  },
+  {
+    path: 'businessManage/gameEdit',
+    name: 'gameEdit',
+    meta: {
+      title: '游戏编辑',
+    },
+    component: gameEdit
+  },
+  {
+    path: 'businessManage/trialPlanList',
+    name: 'trialPlanList',
+    meta: {
+      title: '游戏试玩计划列表',
+    },
+    component: trialPlanList
+  },
+  {
+    path: 'businessManage/trialPlanCreate',
+    name: 'trialPlanCreate',
+    meta: {
+      title: '创建游戏试玩计划',
+    },
+    component: trialPlanCreate
+  },
+  {
+    path: 'businessManage/trialPlanDetail',
+    name: 'trialPlanDetail',
+    meta: {
+      title: '试玩详情',
+    },
+    component: trialPlanDetail
+  },
+  {
+    path: 'businessManage/trialPlanEdit',
+    name: 'trialPlanEdit',
+    meta: {
+      title: '试玩计划编辑',
+    },
+    component: trialPlanEdit
   },
   {
     path: 'businessManage/gameLaunchPlan',
@@ -233,38 +276,6 @@ export default [
       title: '游戏退市计划',
     },
     component: gameDelistPlan
-  },
-  {
-    path: 'businessManage/storeCheck',
-    name: 'storeCheck',
-    meta: {
-      title: '查看',
-    },
-    component: storeCheck
-  },
-  {
-    path: 'businessManage/storeEdit',
-    name: 'storeEdit',
-    meta: {
-      title: '编辑',
-    },
-    component: storeEdit
-  },
-  {
-    path: 'businessManage/planCheck',
-    name: 'planCheck',
-    meta: {
-      title: '试玩查看',
-    },
-    component: planCheck
-  },
-  {
-    path: 'businessManage/planEdit',
-    name: 'planEdit',
-    meta: {
-      title: '试玩编辑',
-    },
-    component: planEdit
   },
   {
     path: 'businessManage/channelList',
