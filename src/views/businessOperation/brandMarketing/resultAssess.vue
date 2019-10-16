@@ -80,7 +80,7 @@ export default {
       startAssess: true,
       reportType: false,
       indexConfig: false,
-      activeStep: "",
+      activeStep:0,
       checked: true,
       checkList: ["中心", "省级", "市级", "厅级", "渠道", "大厅", "游戏终端"],
       checkList2: [

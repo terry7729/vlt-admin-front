@@ -68,17 +68,22 @@ export default {
 
   },
   methods: {
-    openConfirm() {
-      this.$confirm('是否退出登录?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.loginOut();
-      }).catch(() => {
-        // 取消         
-      });
+    openConfirm(){
+      this.$router.push({
+        path:'/login'
+      })
     },
+    // openConfirm() {
+    //   this.$confirm('是否退出登录?', '提示', {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     this.loginOut();
+    //   }).catch(() => {
+    //     // 取消         
+    //   });
+    // },
     async loginOut() {
       const self = this;
       const res = await self.$api.getLoginOut({

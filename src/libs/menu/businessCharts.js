@@ -150,6 +150,12 @@ export default [{
           name: "demo",
           url: 'demo'
         },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "demo1",
+          url: 'demo1'
+        },
       ],
 
     },
