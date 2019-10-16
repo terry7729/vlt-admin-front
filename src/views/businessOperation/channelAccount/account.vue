@@ -12,13 +12,19 @@
           <el-table-column prop="telephoneNum" label="手机号码"></el-table-column>
           <el-table-column prop="createDate" label="创建时间"></el-table-column>
           <el-table-column label="账户状态">
-            <template>
-              <el-switch v-model="accounttype" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.swich1"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                :active-value="1"
+                :inactive-value="0"
+              ></el-switch>
             </template>
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="mini" @click="detail(scope.row.id)">详情</el-button>
+              <el-button type="primary" size="mini" @click="detail(scope.row)">详情</el-button>
               <el-button type="primary" size="mini" @click="write(scope.row.id)">编辑</el-button>
             </template>
           </el-table-column>
@@ -61,6 +67,7 @@ export default {
   name: "name",
   data() {
     return {
+      // swich1: 0,
       accountWriteform: {},
       accountDialogFormVisible: false,
       accountWriteData: [
@@ -115,7 +122,7 @@ export default {
       pageSize: 10,
       currentPage: 1,
       totalCount: 0,
-      accounttype: true,
+      accounttype: false,
       tableData: [
         {
           id: 1,
@@ -126,7 +133,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-
+          swich1: 0,
           operation: "详情"
         },
         {
@@ -138,7 +145,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-
+          swich1: 0,
           operation: "详情"
         },
         {
@@ -150,7 +157,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-
+          swich1: 1,
           operation: "详情"
         },
         {
@@ -162,7 +169,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-
+          swich1: 1,
           operation: "详情"
         },
         {
@@ -174,7 +181,7 @@ export default {
           principalName: "赵",
           telephoneNum: "13800131358",
           createDate: "2019-02-25 01:50:06",
-
+          swich1: 1,
           operation: "详情"
         }
       ]
@@ -192,10 +199,10 @@ export default {
     accountWritechangeForm() {},
     changeSize() {},
     changeCurrent() {},
-    detail(id) {
+    detail(row) {
+      console.log(row);
       this.$router.push({
-        path: "accountList/accountListDetail",
-        query: { id }
+        path: "accountList/accountListDetail" + "?id" + "=" + row.id
       });
     }
   }

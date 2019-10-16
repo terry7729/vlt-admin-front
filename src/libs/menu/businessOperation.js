@@ -36,6 +36,36 @@ export default [{
         name: "渠道权限维护",
         url: 'PermissionMaintain'
       },
+
+      {
+        childResources: [{
+            icon: "el-icon-menu",
+            name: "彩票兑奖",
+            url: 'lotteryTicket'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "兑奖设置",
+            url: 'expirySetting'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "兑奖处管理",
+            url: 'ticketOfficeManage'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "中奖查询",
+            url: 'winningCheck'
+          }
+        ],
+        icon: "el-icon-menu",
+        name: "彩票兑奖管理",
+        url: 'LotteryManagement'
+      },
+
+
+
       {
         childResources: [{
             childResources: [],
