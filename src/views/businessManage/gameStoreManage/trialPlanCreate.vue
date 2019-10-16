@@ -6,24 +6,13 @@
       <el-step title="问卷调查配置" icon="el-icon-tickets"></el-step>
       <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
     </el-steps>
-    <div class="vlt-edit-single" v-show="active==1">
-      <base-info></base-info>
+    <!-- <div class="vlt-edit-single" v-show="active==1">
+      <base-info @next="next"></base-info>
+    </div> -->
+    <div class="vlt-edit-single" v-show="active==2">
+      <game-set @next="next" @prev="prev"></game-set>
     </div>
-    <!-- <div class="vlt-edit-single" v-show="active==2">
-      <div class="vlt-edit-wrap">
-        <el-form label-position="right" 
-          label-width="90px" 
-          ref="form"
-          class="soft-form">
-          <base-form :formData="softData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        </el-form>
-        <el-row class="vlt-edit-btn">
-          <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
-          <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
-        </el-row>
-      </div>
-    </div>
-    <div class="vlt-edit-single" v-show="active==3">
+    <!-- <div class="vlt-edit-single" v-show="active==3">
       <div class="vlt-edit-wrap">
         <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-row class="vlt-edit-btn">
@@ -46,22 +35,32 @@
 
 <script type="text/javascript">
 import BaseInfo from './trialPlanCreateBase'
+import GameSet from './trialPlanCreateSet'
 
 export default {
   name: "",
+  components: {
+    BaseInfo,
+    GameSet
+  },
   data() {
     return {
       appendixData: [
         {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
       ],
-      active: 1,
+      active: 2,
       rules: {}
     }
   },
-  components: {
-    BaseInfo
-  },
   methods: {
+    prev() {
+      // this.$refs.main.scrollTop = 0;
+      if (this.active-- < 1) this.active = 0;
+    },
+    next() {
+      // this.$refs.main.scrollTop = 0;
+      if (this.active++ > 2) this.active = 0;
+    },
     handlePreview() {},
     handleRemove() {},
     beforeRemove() {},

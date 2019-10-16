@@ -3,11 +3,11 @@
     :model="form"
     :rules="rules"
     class="base-form">
-    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop">
+    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
+      <el-select v-if="item.type=='select'" v-model="selectParam[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="items in item.options" :key="items.value" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
@@ -82,6 +82,10 @@
         <el-cascader size="small" v-model="citySelect" :props='cascaderProps' @change="changeCity" :options="cityData" placeholder="请选择省、市、区"></el-cascader>
         <el-input v-model="form[item.prop]" placeholder="填写详细地址"></el-input> 
       </div>
+      <!-- 最大值最小值 -->
+      <el-input v-if="item.type=='minMax'" v-model="form[item.options[0]]" @blur="checkNumber" type="text" placeholder="输入最小值"></el-input>
+      <span v-if="item.type=='minMax'" class="siding-flag">至</span>
+      <el-input v-if="item.type=='minMax'" v-model="form[item.options[1]]" @blur="checkNumber" type="text" placeholder="输入最大值"></el-input>
       <!-- 多选checkbox -->
       <el-checkbox-group v-if="item.type=='checkbox'" v-model="form[item.prop]">
         <el-checkbox 
@@ -182,6 +186,11 @@ export default {
   components: {
   },
   methods: {
+    checkNumber(val, flag) {
+      if(this.form[val] < 0) {
+        this.$message.warning(`${flag}须大于0`);
+      }
+    },
     success(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
@@ -246,56 +255,65 @@ export default {
     },
     changeSelect(val) {
       console.log(val)
+      this.form[val.prop] = this.selectParam[val.prop];
     },
     init() {
       const self = this;
-    self.formData.forEach((item)=>{
-      if(item.type=='datepicker-range' || item.type=='datetime-range') {
-        if(item.value!='') { // 数据回填
-          self.timeParam[item.prop] = item.value;
-          self.dateParam[item.prop] = item.value;
+      self.formData.forEach((item)=>{
+        if(item.type=='datepicker-range' || item.type=='datetime-range') {
+          if(item.value!='') { // 数据回填
+            self.timeParam[item.prop] = item.value;
+            self.dateParam[item.prop] = item.value;
+          } else {
+            self.$set(self.form, item.options[0], '')
+            self.$set(self.form, item.options[1], '')
+            // self.timeParam[item.type] = item.options; // 用于获取起止时间的字段名称
+            console.log('时间参数', self.timeParam)
+          }
+        }else if(item.type=='switch') {
+          if(!item.value) { // 数据回填
+            self.changeSwitch(item.value)
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, true)
+          }
+        }else if(item.type=='radio') {
+          if(item.value !='') { // 数据回填
+            self.$set(self.radioParam, item.prop , item.value);
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, '')
+            self.$set(self.radioParam, item.prop, '')
+          }
+        }else if(item.type=='address') {
+          if(item.value !='') { // 数据回填
+            self.citySelect = item.value;
+            self.$set(self.form, 'address', item.address)
+          } else {
+            self.$set(self.form, 'provinceId', '')
+            self.$set(self.form, 'provinceName', '')
+            self.$set(self.form, 'cityId', '')
+            self.$set(self.form, 'cityName', '')
+            self.$set(self.form, 'townId', '')
+            self.$set(self.form, 'townName', '')
+            self.$set(self.form, 'address', '')
+          }
+        }else if(item.type=='select') {
+          if(item.value !='') { // 数据回填
+            self.$set(self.selectParam, item.prop , item.value);
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, '')
+            self.$set(self.selectParam, item.prop, '')
+          }
         } else {
-          self.$set(self.form, item.options[0], '')
-          self.$set(self.form, item.options[1], '')
-          // self.timeParam[item.type] = item.options; // 用于获取起止时间的字段名称
-          console.log('时间参数', self.timeParam)
+          if(item.value !='') { // 数据回填
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, '')
+          }
         }
-      }else if(item.type=='switch') {
-        if(!item.value) { // 数据回填
-          self.changeSwitch(item.value)
-          self.$set(self.form, item.prop, item.value)
-        }else{
-          self.$set(self.form, item.prop, true)
-        }
-      }else if(item.type=='radio') {
-        if(item.value !='') { // 数据回填
-          self.$set(self.radioParam, item.prop , item.value);
-          self.$set(self.form, item.prop, item.value)
-        }else{
-          self.$set(self.form, item.prop, '')
-          self.$set(self.radioParam, item.prop, '')
-        }
-      }else if(item.type=='address') {
-        if(item.value !='') { // 数据回填
-          self.citySelect = item.value;
-          self.$set(self.form, 'address', item.address)
-        } else {
-          self.$set(self.form, 'provinceId', '')
-          self.$set(self.form, 'provinceName', '')
-          self.$set(self.form, 'cityId', '')
-          self.$set(self.form, 'cityName', '')
-          self.$set(self.form, 'townId', '')
-          self.$set(self.form, 'townName', '')
-          self.$set(self.form, 'address', '')
-        }
-      }else{
-        if(item.value !='') { // 数据回填
-          self.$set(self.form, item.prop, item.value)
-        }else{
-          self.$set(self.form, item.prop, '')
-        }
-      }
-    })
+      })
     }
   },
 }

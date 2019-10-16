@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       controlOptions: [
-        { name: "新建试玩计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "试玩计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
       tableData: [
         {

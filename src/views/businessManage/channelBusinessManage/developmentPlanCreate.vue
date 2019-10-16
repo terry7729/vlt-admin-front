@@ -299,8 +299,6 @@ export default {
         {title: '市合作厅投注数量', type: 'input', prop: 'test', value: ''},
         {title: '发展预算', type: 'input', prop: 'test', value: ''},
         {title: '计划说明',type: 'textarea', prop: 'all', value: ''},
-        {title: '多选',type: 'checkbox', prop: 'checkbox', value: '', options: [{key:'1',value:'苹果'},{key:'2',value:'香蕉'}]},
-        {title: '单选',type: 'radio', prop: 'radio', value: '', options: [{key:'1',value:'苹果'},{key:'2',value:'香蕉'}]}
       ],
       params: {
       },
