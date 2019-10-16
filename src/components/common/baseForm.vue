@@ -60,7 +60,7 @@
       <!-- 支持文本域 -->
       <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
       <!-- 级联选择 -->
-      <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :options="item.options" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
+      <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :value="item.value" :options="item.options" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
       <!-- 级联选择（多选） -->
       <el-cascader
         v-if="item.type=='cascader-multiple'"
