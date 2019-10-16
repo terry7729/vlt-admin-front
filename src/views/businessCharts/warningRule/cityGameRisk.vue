@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="40px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="select" :options="controlOptions"></control-bar>
       </search-bar>
     </section>
     <div class>
@@ -158,10 +158,10 @@ export default {
   },
   methods: {
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      console.log("每页条数：", pageSize);
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      console.log("当前页：", currentPage);
     },
     search(form) {
       console.log("search", form);
@@ -258,6 +258,16 @@ export default {
           "县：" +
           this.countryCode
       );
+    },
+    goToAdd() {
+      this.$router.push({
+        name: "gameRiskAdd"
+      });
+    },
+    select(val){
+      if(val.name==='新增'){
+        this.goToAdd()
+      }
     }
   },
   mounted() {

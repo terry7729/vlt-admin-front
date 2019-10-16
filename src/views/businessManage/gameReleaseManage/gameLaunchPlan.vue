@@ -138,13 +138,13 @@ export default {
       //查看页面跳转
       detail (id) {
         this.$router.push({
-          name: 'storeCheck',
+          path: './gameDetail',
           query: {id}
         })
       },
       edit (id) {
         this.$router.push({
-          name: 'storeEdit',
+          path: './gameEdit',
           query: {id}
         })
       },

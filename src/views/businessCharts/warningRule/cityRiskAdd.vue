@@ -11,7 +11,7 @@
           :value="item.value"
         ></el-option>
       </el-select>
-       <span>城市</span>
+      <span>城市</span>
       <el-select v-model="value" placeholder="请选择">
         <el-option
           v-for="item in options"
@@ -31,9 +31,6 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column align="center" prop="type" label="标准配置"></el-table-column>
       </el-table>
-      <div class="btn">
-        <el-button type="primary" @click="selectTypes" class="selectSure">确认</el-button>
-      </div>
     </div>
     <div class="vlt-card showbox" v-show="showeditBox">
       <el-form label-position="top" label-width="80px" ref="form" :model="form">
@@ -42,10 +39,7 @@
             <el-form-item>
               <span slot="label">{{item.type}}</span>
               <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="普通">
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
+            </el-form-item>          
             <el-form-item label="严重">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -64,16 +58,8 @@
           <el-form-item prop="date2" label="监控时间点">
             <el-time-picker placeholder="选择时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
           </el-form-item>
-          <el-form-item prop="date2" label="监控频率">
-            <el-input-number
-              v-model="num"
-              controls-position="right"
-              @change="handleChange"
-              :min="1"
-              :max="100"
-              :step="10"
-              size="medium"
-            ></el-input-number>
+          <el-form-item prop="date2" label="监控时间点">
+            <el-time-picker placeholder="选择时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
           </el-form-item>
         </div>
         <el-form-item>
@@ -171,19 +157,12 @@ export default {
       console.log("submit!");
     },
     selectChange(val) {
-      this.showeditBox = false;
       this.type = val;
-    },
-    select(val) {
-      if (val.name === "确认") {
-        this.selectTypes();
-      }
-    },
-    selectTypes() {
       if (this.type) {
         if (this.type.length > 0) {
           this.showeditBox = true;
-          console.log(this.type);
+        } else {
+          this.showeditBox = false;
         }
       }
     }
@@ -192,7 +171,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.el-select{
+.el-select {
   margin-right: 20px;
   margin-bottom: 20px;
   margin-left: 10px;

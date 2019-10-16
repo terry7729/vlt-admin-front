@@ -44,13 +44,13 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "游戏储备列表",
-          url: 'gameStoreList'
+          url: 'gameList'
         },
         {
           childResources: [],
           icon: "el-icon-menu",
           name: "游戏试玩计划",
-          url: 'gamePlanList'
+          url: 'trialPlanList'
         }
       ]
     },

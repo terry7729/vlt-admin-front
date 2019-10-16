@@ -491,9 +491,26 @@
   .tables-content .el-tabs__item.is-active {
     background: none;
   }
+ 
 }
 
+.centerWatch {
+  .el-table td, .el-table th.is-leaf {
+    border: none;
+  }
+  .el-table td > .cell {
+    color: #c5d5e6;
+  }
 
+  .el-table th > .cell {
+    color: #c5d5e6;
+  }
+
+  .el-table::before{
+    top: 50px;
+    background-color: #c5d5e6;
+  }
+}
 
 
 
@@ -523,5 +540,45 @@
     width: 300px;
     height: 170px;
     display: block;
+  }
+}
+.soft-form {
+  .gameIcon-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .gameIcon-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .gameIcon-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 140px;
+    height: 140px;
+    line-height: 140px;
+    text-align: center;
+  }
+  .gameIcon {
+    width: 140px;
+    height: 140px;
+    display: block;
+  }
+  .gameIcon-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+}
+// 区间input样式
+.siding .el-form-item__content{
+  display: flex;
+  .siding-flag{
+    margin: 0 15px;
+    color: #b1babf;
   }
 }

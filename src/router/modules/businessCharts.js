@@ -48,6 +48,9 @@ const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd
 //奖池风险指标新增
 const pondRiskAdd = () => import('@/views/businessCharts/warningRule/pondRiskAdd')
 
+//城市游戏风险指标新增
+const gameRiskAdd = () => import('@/views/businessCharts/warningRule/gameRiskAdd')
+
 export default [{
     path: 'demo',
     name: 'demo',
@@ -229,6 +232,14 @@ export default [{
       title: '奖池风险指标新增',
     },
     component: pondRiskAdd
+  },
+  {
+    path: 'businessCharts/gameRiskAdd',
+    name: 'gameRiskAdd',
+    meta: {
+      title: '城市游戏风险指标新增',
+    },
+    component: gameRiskAdd
   }
 
 ]
