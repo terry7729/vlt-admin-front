@@ -44,6 +44,7 @@ export default {
         this.form[key] = ''
       }
       this.load(val);
+      // console.log('config', this.config);
     }
   },
   created() {

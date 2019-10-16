@@ -68,7 +68,7 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        console.log('menu-data', res[self.entry.menuId].content[0].childResources);
+        // console.log('menu-data', res[self.entry.menuId].content[0].childResources);
         let n = 0;
         self.menuList = res[self.entry.menuId].content[0].childResources;
         // 菜单过滤

@@ -6,7 +6,7 @@
         账面余额:人民币元
         <span></span>
       </div>
-      <controlBar :options="gobackbtn" @select="goback"></controlBar>
+      <controlBar :options="gobackbtn" @select="goback" position="left"></controlBar>
     </div>
   </div>
 </template>

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import storage from '@/utils/storage'
 import sideMenu from '@/components/main/sideMenu'
 import adminHeader from '@/components/main/adminHeader'
 
@@ -30,7 +31,7 @@ export default {
     });
   },
   created () {
-    
+    this.initStorage();
   },
   mounted() {
     const self = this;
@@ -48,6 +49,14 @@ export default {
       const headHeight = document.querySelector('.header-container').offsetHeight;
       self.$refs.main.style.height = `${document.documentElement.clientHeight - headHeight}px`;
     },
+    // 页面进入是往stroage中插入一条创建表单的初始化数据
+    initStorage () {
+      let pc = storage.get('previewConfig');
+      if (!pc) {
+        let initConfig = {col:2,row:4,list:[{index:0}, {index: 1},{index:2},{index:3},{index:4},{index:5},{index:6},{index:7}]}
+        storage.set('previewConfig', JSON.stringify(initConfig));
+      } 
+    }
   },
   components: {
     sideMenu,

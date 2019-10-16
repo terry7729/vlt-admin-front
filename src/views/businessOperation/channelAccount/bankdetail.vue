@@ -8,9 +8,8 @@
         :total="999"
         labelWidth="80px"
       >
-        <controlBar :options="importdata" @select="importbtn" slot="extend-bar"></controlBar>
+        <controlBar :options="importdata" @select="importbtn" slot="extend-bar" position="left"></controlBar>
       </searchBar>
-
       <base-Info :infoList="accountallname"></base-Info>
       <el-table :data="tableData" border show-summary>
         <el-table-column prop="id" label="序号"></el-table-column>
@@ -25,7 +24,7 @@
         <el-table-column label="操作" prop="principalName"></el-table-column>
       </el-table>
       <div class="table_paging">
-        <tablePaging class="table_paging_right"></tablePaging>
+        <tablePaging class="table_paging_right" :total="99" :currentPage="1" :pageSize="10"></tablePaging>
       </div>
     </div>
   </div>

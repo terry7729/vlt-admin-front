@@ -2,8 +2,7 @@
   <el-form :label-position="direction" :label-width="labelWidth" ref="form"
     :model="form"
     :rules="rules"
-    class="base-form"
-  >
+    class="base-form">
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="`请输入${item.title}`"></el-input> 
