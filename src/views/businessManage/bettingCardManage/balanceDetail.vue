@@ -1,5 +1,5 @@
 <template>
-<!-- 投注卡余额 -->
+  <!-- 投注卡余额 - 明细 -->
   <div class="vlt-card">
     <search-bar
       class="search-bar-demo"
@@ -16,7 +16,6 @@
         @selection-change="handleSelectionChange"
         class="table-box"
       >
-        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column
           v-for="(item,key) in tableDatas.tableKey"
           :key="key"
@@ -24,12 +23,6 @@
           :label="item.label"
           :width="item.width"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
-            <el-button type="primary" size="mini" @click="activation(scope.row)">明细</el-button>
-          </template>
-        </el-table-column>
       </el-table>
     </el-row>
     <table-paging
@@ -45,7 +38,7 @@
 
 <script type="text/javascript">
 export default {
-  name: "cardBalance",
+  name: "balanceDetail",
   data() {
     return {
       // 搜索组件配置
@@ -95,93 +88,83 @@ export default {
         tableData: [
           {
             id: 0,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 1,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 2,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 3,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 4,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 5,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 6,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 7,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 8,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           },
           {
             id: 9,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
+            number: "100000011",
+            rechargeAmount: -200.00,
+            balance: 210.00,
+            FlowType: "消费",
+            date: "2019-02-25 01:50:06"
           }
         ],
         tableKey: [
@@ -191,59 +174,38 @@ export default {
             width: "80"
           },
           {
-            label: "编号",
+            label: "订单编号",
             value: "number",
             width: ""
           },
           {
-            label: "余额",
-            value: "balance",
+            label: "流水类型",
+            value: "FlowType",
             width: "100"
           },
           {
-            label: "累计消费",
-            value: "total",
+            label: "充值金额",
+            value: "rechargeAmount",
             width: ""
           },
           {
-            label: "状态",
-            value: "status",
+            label: "账户余额",
+            value: "balance",
             width: "80"
           },
           {
-            label: "过期日期",
+            label: "操作时间",
             value: "date",
-            width: ""
-          },
-          {
-            label: "最后消费时",
-            value: "lastConsumption",
             width: ""
           }
         ]
-      },
+      }
     };
   },
   components: {},
   methods: {
     search(form) {
       console.log("search", form);
-    },  handleClick(row) {
-      this.$router.push({
-        name: 'infoDetail',
-        query: {
-          id: row.id
-        }
-      })
-    },
-    activation (row) {
-      console.log(row);
-      this.$router.push({
-        name: 'balanceDetail',
-        query: {
-          id: row.id
-        }
-      })
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

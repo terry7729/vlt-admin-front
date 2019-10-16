@@ -8,7 +8,7 @@
       :total="999"
       labelWidth="80px"
     >
-      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
     </search-bar>
     <el-table :data="tableData" style="width: 100%" border class="table-box">
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
@@ -17,29 +17,27 @@
       <el-table-column prop="date" label="处理时间" width="150"></el-table-column>
       <el-table-column prop="process" label="当前步骤"></el-table-column>
       <el-table-column prop="name" label="当前处理人" width="150"></el-table-column>
-      <el-table-column fixed="right" label="操作" >
+      <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="view(scope.row)">查看</el-button>
-          <el-button  size="mini" @click="urgent(scope.row)">催办</el-button>
-          <el-button  size="mini" @click="forcedEnd(scope.row)">强制结束</el-button>
+          <el-button size="mini" @click="urgent(scope.row)">催办</el-button>
+          <el-button size="mini" @click="forcedEnd(scope.row)">强制结束</el-button>
         </template>
       </el-table-column>
     </el-table>
-     <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="total, prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"
+    ></table-paging>
   </div>
 </template>
 <script>
 export default {
-  name:'pending-review',
+  name: "audited",
   data() {
     return {
       // 搜索组件配置
@@ -78,7 +76,7 @@ export default {
       ],
       controlOptions: [
         { name: "打印", type: "primary", icon: "printer" },
-        { name: "导出", type: "danger", icon: "download" },
+        { name: "导出", type: "danger", icon: "download" }
       ],
       tableData: [
         {
@@ -162,7 +160,7 @@ export default {
           type: "建厅申请"
         }
       ],
-      currentPage: 1
+      // currentPage: 1
     };
   },
   methods: {
@@ -170,21 +168,21 @@ export default {
       console.log("search", form);
     },
     selectBtn() {
-      console.log('selectBtn');
+      console.log("selectBtn");
     },
     view(row) {
       const self = this;
-      console.log('查看',row);
+      console.log("查看", row);
       this.$router.push({
-        name:'pendingReviewEdit',
-        query: {id: row.id}
-      })
+        name: "pendingReviewEdit",
+        query: { id: row.id }
+      });
     },
     urgent(row) {
-      console.log('催办',row);
+      console.log("催办", row);
     },
     forcedEnd(row) {
-      console.log('强制结束', row);
+      console.log("强制结束", row);
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -193,8 +191,7 @@ export default {
       console.log(`当前页: ${val}`);
     }
   },
-  components: {
-  }
+  components: {}
 };
 </script>
 
@@ -207,23 +204,6 @@ export default {
   .table-box {
     margin-top: 20px;
   }
-  .el-pagination.is-background{
-    margin-top: 40px;
-    text-align: right;
-    li {
-      margin: 0 6px;
-      padding: 0;
-      box-sizing: border-box;
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-      &.active {
-        border-color: #409EFF;
-      }
-    }
-    .btn-prev,.btn-next {
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-    }
-  }
+
 }
 </style>

@@ -97,6 +97,18 @@ const refillRules = () => import('@/views/businessManage/bettingCardManage/refil
 const winningRecord = () => import('@/views/businessManage/bettingCardManage/winningRecord')
 const withdrawalRecord = () => import('@/views/businessManage/bettingCardManage/withdrawalRecord')
 const cardInformation = () => import('@/views/businessManage/bettingCardManage/cardInformation')
+// 投注卡基本信息
+const cardDetail = () => import('@/views/businessManage/bettingCardManage/cardDetail')
+// 投注卡详细信息
+const infoDetail = () => import('@/views/businessManage/bettingCardManage/infoDetail')
+// 余额明细
+const  balanceDetail = () => import('@/views/businessManage/bettingCardManage/balanceDetail')
+// 新建规则
+const newRule = () => import('@/views/businessManage/bettingCardManage/newRule')
+// 新建卡片
+const newCard = () => import('@/views/businessManage/bettingCardManage/newCard')
+// 导出卡片
+const exportCard = () => import('@/views/businessManage/bettingCardManage/exportCard')
 
 
 
@@ -596,5 +608,51 @@ export default [
       title: '档案管理',
     },
     component: dossierManage
+  },
+  {
+    path: 'businessManage/cardDetail',
+    name: 'cardDetail',
+    meta: {
+      title: '投注卡明细',
+    },
+    component: cardDetail
+  },
+  {
+    path: 'businessManage/balanceDetail',
+    name: 'balanceDetail',
+    meta: {
+      title: '投注卡明细',
+    },
+    component: balanceDetail
+  },
+  {
+    path: 'businessManage/infoDetail',
+    name: 'infoDetail',
+    meta: {
+      title: '详情信息',
+    },
+    component:infoDetail
+  },{
+    path: 'businessManage/newCard',
+    name:'newCard',
+    meta: {
+      title: '新建卡片'
+    },
+    component: newCard
+  },
+  {
+    path: 'businessManage/newRule',
+    name:'newRule',
+    meta: {
+      title: '新建规则'
+    },
+    component: newRule
+  },{
+    path: 'businessManage/exportCard',
+    name: 'exportCard',
+    meta: {
+      title: '导出卡片',
+    },
+    component: exportCard
   }
 ]

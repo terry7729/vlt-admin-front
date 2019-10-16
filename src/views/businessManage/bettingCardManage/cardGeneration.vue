@@ -8,7 +8,7 @@
       :total="999"
       labelWidth="100px"
     >
-      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" ></control-bar>
+      <control-bar slot="extend-bar" position="left" @select="selectBtn" :options="controlOptions" ></control-bar>
     </search-bar>
     <el-row class="card-table">
       <el-table
@@ -29,8 +29,8 @@
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
-            <el-button type="primary" size="mini">导出</el-button>
-            <el-button type="primary" size="mini">注销</el-button>
+            <el-button type="primary" size="mini" @click="selectBtn(scope.row)">导出</el-button>
+            <el-button type="danger" size="mini" @click="logout (scope.row) ">注销</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,7 +44,6 @@
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
-    <dialog-form :showForm="showdialog" @closeDia="hideDia"></dialog-form>
   </div>
 </template>
 
@@ -54,7 +53,6 @@ export default {
   name: "cardGeneration",
   data() {
     return {
-      showdialog: false,
       // 搜索组件配置
       searchOptions: [
         { title: "批次：", type: "input", prop: "inputName", value: "" },
@@ -369,24 +367,30 @@ export default {
       }
     };
   },
-  components: {},
   methods: {
     changeSelect(val) {
       console.log(this.form, val);
     },
     selectBtn(val) {
-      console.log(val);
-      this.showdialog = true;
-    },
-    hideDia () {
-      console.log(111);
-      this.showdialog = false;
+      // console.log(val);
+      // this.showdialog = true;
+      this.$router.push({
+        name: 'exportCard',
+        query: {
+          id: val.id
+        }
+      })
     },
     search(form) {
       console.log("search", form);
     },
     handleClick(row) {
-      console.log(row);
+      this.$router.push({
+        name: 'cardDetail',
+        query: {
+          id: row.id
+        }
+      })
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -396,6 +400,13 @@ export default {
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
+    },
+    changeForm(val) {
+      Object.assign(this.params, val);
+      console.log("派发出来的参数", this.params);
+    },
+    logout (row) {
+      console.log('注销', row);
     }
   },
   components: {
@@ -405,4 +416,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 </style>

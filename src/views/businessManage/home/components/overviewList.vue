@@ -51,6 +51,7 @@ const LIST_DATA = {
   ]
 };
 export default {
+  name: 'overviewList',
   data() {
     return {
       list: []

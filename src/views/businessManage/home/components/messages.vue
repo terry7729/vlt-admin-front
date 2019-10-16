@@ -42,6 +42,7 @@ const LIST = {
   ]
 }
 export default {
+  name: 'messages',
   data() {
     return {
       list: [],
