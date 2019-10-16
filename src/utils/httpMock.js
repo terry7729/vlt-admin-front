@@ -7,7 +7,7 @@ Mock.mock('/api/menu', 'post', menuData);
 const data = Mock.mock({
   "code":1,
   "mssage":"成功",
-  "data|50":[{
+  "data|1000":[{
       "id|+1":1,
       "account":"@ctitle(3,5)",
       "phoneNumber":/^1(5|3|7|8)[0-9]{9}$/,
