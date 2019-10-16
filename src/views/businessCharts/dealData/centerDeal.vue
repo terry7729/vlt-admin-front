@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <section class="comp-item">
-      <control-bar :options="controlOptions"></control-bar>
+      <control-bar :options="controlOptions" position="right"></control-bar>
     </section>
 
     <div class="tab-container">
@@ -17,19 +17,23 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="省份"></el-table-column>
-        <el-table-column align="center" prop="name" label="销售额"></el-table-column>
-        <el-table-column align="center" prop="address" label="中奖金额"></el-table-column>
-        <el-table-column align="center" prop="address" label="小奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
+        <el-table-column align="center" prop="province" label="省份">
+          <!-- <template slot-scope="scope">
+              <span>{{scope.row.province}}</span>
+            </template> -->
+        </el-table-column>
+        <el-table-column align="center" prop="saleAmount" label="销售额"></el-table-column>
+        <el-table-column align="center" prop="winningAmount" label="中奖金额"></el-table-column>
+        <el-table-column align="center" prop="smallAwardAmount" label="小奖中奖"></el-table-column>
+        <el-table-column align="center" prop="bigAwardAmount" label="大奖中奖"></el-table-column>
+        <el-table-column align="center" prop="grandPrize" label="大奖兑奖"></el-table-column>
       </el-table>
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -44,6 +48,7 @@ export default {
   name: "centerDeal",
   data() {
     return {
+      totalCount:10,
       controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       exportLoading: false,
       total: null,
@@ -83,16 +88,17 @@ export default {
   components: {},
   methods: {
      async getCenterDeal() {
-       alert(1)
       const self = this;
       const res = await self.$api.getCenterDeal({
         data: {
-          'pageNum': self.listQuery.page,
-          'pageSize':self.listQuery.limit
+          pageNum: self.listQuery.page,
+          pageSize:self.listQuery.limit
         }
       });
       if (res && res.code == 0) {       
-        console.log(res)
+        self.tableData=res.data.data.dataList
+        self.totalCount=res.data.data.totalRecord
+        console.log(self.totalCount)
       }
    
     },

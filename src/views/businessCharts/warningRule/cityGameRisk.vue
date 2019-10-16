@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="40px"
       >
-        <control-bar slot="extend-bar" @select="select" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" @select="select" :options="controlOptions" position="right"></control-bar>
       </search-bar>
     </section>
     <div class>
@@ -37,6 +37,7 @@
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
           <table-paging
+            position="right"
             :current-page="1"
             :page-size="10"
             :total="100"
@@ -264,9 +265,9 @@ export default {
         name: "gameRiskAdd"
       });
     },
-    select(val){
-      if(val.name==='新增'){
-        this.goToAdd()
+    select(val) {
+      if (val.name === "新增") {
+        this.goToAdd();
       }
     }
   },
