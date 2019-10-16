@@ -181,6 +181,9 @@ export default {
     },
     selectBtn(val) {
       //新增删除事件
+      if(val.name==='新建计划'){
+        this.$router.push("roleList/roleDestails");
+      }
       console.log(val);
     },
     search(val) {

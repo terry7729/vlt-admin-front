@@ -3,16 +3,16 @@
     <div class="top">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="表单名称">
-          <el-input size="small"  v-model="formInline.user" placeholder="请输入"></el-input>
+          <el-input size="small"  v-model="formInline.title" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="备注">
-          <el-input size="small"  v-model="formInline.user" placeholder="请输入"></el-input>
+          <el-input size="small"  v-model="formInline.remarks" placeholder="请输入"></el-input>
         </el-form-item>
         <el-switch v-model="value1" active-text="启动" inactive-text="禁用"></el-switch>
         <el-form-item>
-          <el-button size="small"  type="primary" @click="onSubmit">保存</el-button>
           <el-button type="primary" size="small" @click="showSettings = true">主屏设置</el-button>
           <el-button type="warning" size="small" @click="preview">预览</el-button>
+          <el-button size="small"  type="primary" @click="onSubmit">保存</el-button>
         </el-form-item>
       </el-form>
       <div class="el-icon-delete del-bar" :class="{show: showDel}"></div>
@@ -36,11 +36,6 @@
   <!-- new -->
 
   <el-row class="drag-form-container" :gutter="10">
-    <!-- <div class="ct-header">
-      <el-button type="primary" size="small" @click="showSettings = true">主屏设置</el-button>
-      <el-button type="danger" size="small"  @click="saveConfig">保存配置</el-button>
-      <el-button type="warning" size="small" @click="preview">预览</el-button>
-    </div> -->
     <el-col :span="6">
       <div class="left-col" >
       <el-form label-width="80px" label-position="top" class="form-option-list">
@@ -59,7 +54,16 @@
     </div>
     </el-col>
     <el-col :span="6">
-      <div class="right-col" ></div>
+      <div class="right-col" >
+          <!-- @confirm="confirmConfig"
+          @close="showFieldConfig = false" -->
+        <form-config 
+          :config="currentConfig"
+          :showDialog="showFieldConfig" 
+          @changeForm="updateForm"
+        >
+        </form-config>
+      </div>
     </el-col>
   </el-row>  
     <setting 
@@ -68,19 +72,23 @@
       @confirm="confirmSetting"
     >
     </setting>
+    <formPreview :dialogFormVisible="showPreview"  @emitClose="showPreview = false" ></formPreview>
   </div>
 </template>
 <script>
+import storage from '@/utils/storage'
 import formTypeList from '@/views/systemManage/businessProcess/components/dragForm/config/formTypeList'
 import formComponent from '@/views/systemManage/businessProcess/components/dragForm/formComponent'
 import dragView from '@/views/systemManage/businessProcess/components/dragForm/dragView'
 import setting from '@/views/systemManage/businessProcess/components/dragForm/setting'
+import formConfig from '@/views/systemManage/businessProcess/components/dragForm/formConfig'
+import formPreview from '@/views/systemManage/businessProcess/components/dragForm/formPreview'
 export default {
   data() {
     return {
       formInline: {
-        user: "",
-        region: ""
+        title: "",
+        remarks: ""
       },
       value1: true,
       showDel: false,
@@ -95,7 +103,11 @@ export default {
       // 表单渲染容器列表
       boxList: [],
       boxStyle: {},
-      fromDragIndex: '' // 当前容器里拖拽的index，用于与目标容器对换表单
+      fromDragIndex: '', // 当前容器里拖拽的index，用于与目标容器对换表单
+
+      showFieldConfig: false,
+      currentConfig: {},
+      showPreview:false
     };
   },
     created() {
@@ -105,7 +117,7 @@ export default {
     const self = this;
 
     // 预览重新编辑 --> 模板编辑初始化
-    const previewConfig = JSON.parse(localStorage.getItem('previewConfig')) || false;
+    const previewConfig = storage.get('previewConfig') || false;
     if (previewConfig) {
       this.init(previewConfig);
       this.boxList = previewConfig.list;
@@ -211,15 +223,26 @@ export default {
     },
     saveConfig() {
       this.$set(this.config, 'list', this.boxList);
-      localStorage.setItem('previewConfig', JSON.stringify(this.config));
+      this.config.formInfo = this.formLine;
+      this.$set(this.config, 'formLine', this.formLine)
+      storage.set('previewConfig', JSON.stringify(this.config));
     },
     // 预览
     preview() {
       this.saveConfig();
+      this.showPreview = true;
       // this.$router.push({name: 'preview'})
     },
+    // closePreview() {
+    //   this.showPreview = false;
+    // },
     // 更新渲染容器内表单配置
     updateConfig(config) {
+      console.log('这边更新',config);
+      this.$set(this.boxList, config.index, config);
+    },
+    updateForm (config) {
+      console.log('lala', config);
       this.$set(this.boxList, config.index, config);
     },
     // 查找元素以及它父级是否含有className
@@ -250,7 +273,9 @@ export default {
   components: {
     formComponent,
     dragView,
-    setting
+    setting,
+    formConfig,
+    formPreview
   }
 };
 </script>
