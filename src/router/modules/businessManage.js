@@ -48,12 +48,12 @@ const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
-const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+// const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
 //渠道资源管理
 const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
-const warehouseManage = () => import('@/views/businessManage/channelResourceManage/warehouseManage/warehouseManage')
+const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
@@ -61,6 +61,19 @@ const equipmentDetail = () => import('@/views/businessManage/channelResourceMana
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //入库
 const putStore =  () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
+//台账明细查看
+const detailLedger = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailLedger')
+//相关流程查看
+const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
+//仓库查看
+const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
+//新建仓库
+const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
+//基本信息类型查看
+const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
+//基本信息类型新增
+const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
+
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -355,12 +368,44 @@ export default [
     component: ledgerManage
   },
   {
-    path: 'businessManage/channelResourceManage/warehouseManage',
-    name: 'warehouseManage',
+    path: 'businessManage/channelResourceManage/detailLedger',
+    name: 'detailLedger',
+    meta: {
+      title: '台账明细',
+    },
+    component: detailLedger
+  },
+  {
+    path: 'businessManage/channelResourceManage/detailFlow',
+    name: 'detailFlow',
+    meta: {
+      title: '相关流程',
+    },
+    component: detailFlow
+  },
+  {
+    path: 'businessManage/channelResourceManage/storeManage',
+    name: 'storeManage',
     meta: {
       title: '仓库管理',
     },
-    component: warehouseManage
+    component: storeManage
+  },
+  {
+    path: 'businessManage/channelResourceManage/detail',
+    name: 'detail',
+    meta: {
+      title: '仓库查看',
+    },
+    component: detail
+  },
+  {
+    path: 'businessManage/channelResourceManage/addStore',
+    name: 'addStore',
+    meta: {
+      title: '新建仓库',
+    },
+    component: addStore
   },
   {
     path: 'businessManage/channelResourceManage/basicInfoManage',
@@ -370,6 +415,23 @@ export default [
     },
     component: basicInfoManage
   },
+  {
+    path: 'businessManage/channelResourceManage/typeCheck',
+    name: 'typeCheck',
+    meta: {
+      title: '基本信息管理类型查看',
+    },
+    component: typeCheck
+  },
+  {
+    path:'businessManage/channelResourceManage/addEquipment',
+    name:'addEquipment',
+    meta:{
+      title:'基本信息管理类型新增'
+    },
+    component:addEquipment
+  },
+
   
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
@@ -498,7 +560,7 @@ export default [
     meta: {
       title: '新建年度发展计划',
     },
-    component: createDevelopmentPlan
+    component: developmentPlanCreate
   }, 
   {
     path: 'businessManage/cardBalance',

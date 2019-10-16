@@ -5,7 +5,9 @@
     <el-tabs tab-position="left" style="height: 800px;">
         <el-tab-pane label="库存查询">
           <search-bar class="search-bar-demo" @search="search" :options="inventoryOptions" :total="999" labelWidth="80px"></search-bar>
-          <control-bar :options="controlOptions"></control-bar>
+          <!-- <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar> -->
+          <control-bar :options="controlOptions" position="left"></control-bar>
+
           <el-tabs v-model="activeName" @tab-click="handleClick" class="tables-content">
             <el-tab-pane label="设备" name="equipment">
               <el-table :data="equipmentData" border style="width: 100%">
@@ -37,7 +39,10 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='total' :currentPage="currentPage" :pageSize="pageSize"></table-paging>
+              <!-- <table-paging :total='total' :currentPage="currentPage" :pageSize="pageSize"></table-paging> -->
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+                </table-paging>
             </el-tab-pane>
             <el-tab-pane label="设施" name="facility">
               <el-table :data="facilityData" border style="width: 100%">
@@ -52,7 +57,10 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='facilityTotal' :currentPage="facilityCurrentPage" :pageSize="facilityPageSize"></table-paging>
+              <!-- <table-paging :total='facilityTotal' :currentPage="facilityCurrentPage" :pageSize="facilityPageSize"></table-paging> -->
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+                </table-paging>
             </el-tab-pane>
             <el-tab-pane label="耗材" name="consumable">
               <el-table :data="consumableData" border style="width: 100%">
@@ -67,7 +75,10 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='facilityTotal' :currentPage="facilityCurrentPage" :pageSize="facilityPageSize"></table-paging>
+              <!-- <table-paging :total='facilityTotal' :currentPage="facilityCurrentPage" :pageSize="facilityPageSize"></table-paging> -->
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+                </table-paging>
             </el-tab-pane>
             <el-tab-pane label="配件" name="mountings">
               <el-table :data="mountingsData" border style="width: 100%">
@@ -85,13 +96,16 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='facilityTotal' :currentPage="facilityCurrentPage" :pageSize="facilityPageSize"></table-paging>
+              <!-- <table-paging :total='facilityTotal' :currentPage="facilityCurrentPage" :pageSize="facilityPageSize"></table-paging> -->
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+                </table-paging>
             </el-tab-pane>
           </el-tabs>
         </el-tab-pane>
         <el-tab-pane label="盘点管理">
           <search-bar class="search-bar-demo" @search="search" :options="configOptions" :total="999" labelWidth="80px"></search-bar>
-          <control-bar :options="controlOptions"></control-bar>
+          <control-bar :options="controlOptions" position="left"></control-bar>
           <el-table :data="checkData" border style="width: 100%">
                 <el-table-column prop="id" label="序号" type="index"></el-table-column>
                 <el-table-column prop="storeName" label="仓库名称"></el-table-column>
@@ -106,7 +120,9 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='total' :currentPage="currentPage" :pageSize="pageSize"></table-paging>
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+              </table-paging>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -118,13 +134,13 @@ export default {
  name: "inventoryManage",
  data() {
  return {
-   total:100,
-   currentPage:5,
-   pageSize:10,
+  //  total:100,
+  //  currentPage:5,
+  //  pageSize:10,
 
-   facilityTotal:400,
-   facilityCurrentPage:1,
-   facilityPageSize:20,
+  //  facilityTotal:400,
+  //  facilityCurrentPage:1,
+  //  facilityPageSize:20,
    activeName: 'equipment',
    inventoryOptions: [
         { title: "物品名称", type: "input", prop: "goodsName", value: "" },
@@ -226,6 +242,22 @@ export default {
   },
   search(form) {
       console.log("search", form);
+  },
+  selectBtn(val) {
+      console.log(val);
+  },
+  handleCurrentChange(currentPage) {
+        // this.confirmSearch.page = val
+        // this.query()
+        console.log(currentPage)
+      },
+  handleSizeChange(pageSize) {
+    // this.pageSize = val
+    // this.confirmSearch.limit = val
+    // this.confirmSearch.page = 1
+    // this.currentPage = 1
+    // this.query()
+    console.log(pageSize)
   },
      
   //设备查看页面跳转

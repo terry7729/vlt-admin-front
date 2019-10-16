@@ -477,9 +477,29 @@
   .tables-content .el-tabs__item.is-active{
     background: none;
   }
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
+  }
 }
 
-}
+
 
 
 

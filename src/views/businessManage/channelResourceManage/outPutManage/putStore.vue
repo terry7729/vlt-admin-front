@@ -1,6 +1,6 @@
 <template>
  <div class="vlt-card">
-    <panel-static title="彩票信息" style="margin-bottom:10px;">
+    <panel-static title="基本信息" style="margin-bottom:10px;">
       <base-info :infoList="infoList"></base-info>
     </panel-static>
     <panel-static title="物品列表">

@@ -138,7 +138,7 @@ export default [{
             childResources: [],
             icon: "el-icon-menu",
             name: "仓库管理",
-            url: 'warehouseManage'
+            url: 'storeManage'
           },
           {
             childResources: [],
