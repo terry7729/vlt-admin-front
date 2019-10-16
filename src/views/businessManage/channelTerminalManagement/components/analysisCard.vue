@@ -2,7 +2,12 @@
   <div class="info-show">
     <el-row>
       <el-col>
-        <el-button type="primary" size="mini" @click="changeBtn" v-text="showList ? '查看列表' : '查看图形'"></el-button>
+        <el-button
+          type="primary"
+          size="mini"
+          @click="changeBtn"
+          v-text="showList ? '查看列表' : '查看图形'"
+        ></el-button>
       </el-col>
     </el-row>
     <!-- 列表形式 -->
@@ -51,17 +56,14 @@
           :width="item.width"
         ></el-table-column>
       </el-table>
-
-     <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="total, prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+      <table-paging
+        position="right"
+        :total="999"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></table-paging>
     </el-row>
   </div>
 </template>
@@ -82,8 +84,8 @@ export default {
   data() {
     return {
       showList: true,
-      btnName: "查看列表",
-      currentPage: 1
+      btnName: "查看列表"
+      // currentPage: 1
     };
   },
   components: {},
@@ -108,10 +110,6 @@ export default {
     margin-top: 20px;
     margin-bottom: 20px;
   }
-  .el-pagination.is-background {
-    margin-top: 40px;
-    text-align: right;
-  } 
 }
 .card-list {
   margin-top: 20px;

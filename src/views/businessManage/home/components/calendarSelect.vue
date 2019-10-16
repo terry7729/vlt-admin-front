@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  name: "calendarSelect",
   data() {
     return {
       value: new Date(),

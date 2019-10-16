@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 export default {
-  name: "",
+  name: "maintenanceEfficiency",
   data() {
    return {
 
