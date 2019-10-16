@@ -5,7 +5,7 @@
     class="base-form">
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop">
       <!-- 输入框 -->
-      <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="`请输入${item.title}`" :disabled="item.disabled?true:false"></el-input> 
       <!-- 支持单选 -->
       <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="`请选择${item.title}`">
         <el-option v-for="items in item.options" :key="items.value" :label="items.label"
@@ -64,9 +64,11 @@
       <!-- 级联选择（多选） -->
       <el-cascader
         v-if="item.type=='cascader-multiple'"
+        v-model="form[item.prop]"
         :options="item.options"
         :props="{ multiple: true, checkStrictly: true }"
         :placeholder="`请选择${item.title}`"
+        :value="item.value"
         clearable>
       </el-cascader>
       <!-- 单选 -->

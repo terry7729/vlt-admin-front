@@ -498,7 +498,7 @@ export default [
     meta: {
       title: '新建年度发展计划',
     },
-    component: createDevelopmentPlan
+    component: developmentPlanCreate
   }, 
   {
     path: 'businessManage/cardBalance',
