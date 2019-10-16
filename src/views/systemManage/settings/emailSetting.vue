@@ -72,7 +72,7 @@
           <el-button size="medium" @click="editShow = !editShow">取消</el-button>
         </el-row>
       </div>
-    </div>
+    </div>     
   </div>
 </template>
 

@@ -50,7 +50,7 @@
           <template slot-scope="scope">
             <el-date-picker size="small" type="datetime"
               v-model="scope.row.time"
-              placeholder="`请选择销售时间">
+              placeholder="`请选择生效时间">
             </el-date-picker>
           </template>
         </el-table-column>

@@ -43,6 +43,22 @@ const operationAccountAdd = () => import('@/views/businessOperation/PermissionMa
 //账户管理查看
 const operationAccountExamine = () => import('@/views/businessOperation/PermissionMaintain/operationAccountExamine')
 
+//彩票兑奖
+const lotteryTicket = () => import('@/views/businessOperation/LotteryManagement/lotteryTicket')
+//彩票兑奖详情
+const lotteryTicketDetail = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketDetail')
+//彩票兑奖打印
+const lotteryTicketPrint = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketPrint')
+//彩票兑奖补打
+const lotteryTicketReprint = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketReprint')
+
+
+//兑奖设置
+const expirySetting = () => import('@/views/businessOperation/LotteryManagement/expirySetting')
+//兑奖处管理
+const ticketOfficeManage = () => import('@/views/businessOperation/LotteryManagement/ticketOfficeManage')
+//中奖查询
+const winningCheck = () => import('@/views/businessOperation/LotteryManagement/winningCheck')
 
 //品牌营销推广
 //活动计划模板
@@ -245,6 +261,67 @@ export default [
     },
     component: operationAccountExamine
   },
+  {
+    path: 'businessOperation/lotteryTicket',
+    name: 'lotteryTicket',
+    meta: {
+      title: '彩票兑奖',
+    },
+    component: lotteryTicket
+  },
+  {
+    path: 'businessOperation/lotteryTicketDetail',
+    name: 'lotteryTicketDetail',
+    meta: {
+      title: '彩票兑奖详情',
+    },
+    component: lotteryTicketDetail
+  },
+  {
+    path: 'businessOperation/lotteryTicketPrint',
+    name: 'lotteryTicketPrint',
+    meta: {
+      title: '彩票兑奖打印',
+    },
+    component: lotteryTicketPrint
+  },
+  {
+    path: 'businessOperation/lotteryTicketReprint',
+    name: 'lotteryTicketReprint',
+    meta: {
+      title: '彩票兑奖打印',
+    },
+    component: lotteryTicketReprint
+  },
+
+  {
+    path: 'businessOperation/expirySetting',
+    name: 'expirySetting',
+    meta: {
+      title: '兑奖设置',
+    },
+    component: expirySetting
+  },
+  {
+    path: 'businessOperation/ticketOfficeManage',
+    name: 'ticketOfficeManage',
+    meta: {
+      title: '中奖处管理',
+    },
+    component: ticketOfficeManage
+  },
+  {
+    path: 'businessOperation/winningCheck',
+    name: 'winningCheck',
+    meta: {
+      title: '中奖查询',
+    },
+    component: winningCheck
+  },
+
+
+
+
 
   //品牌与营销推广
   {

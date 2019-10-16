@@ -76,10 +76,26 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  created() {
+    this.getCenterDeal();
+  },
   mounted() {},
   components: {},
   methods: {
+     async getCenterDeal() {
+       alert(1)
+      const self = this;
+      const res = await self.$api.getCenterDeal({
+        data: {
+          'pageNum': self.listQuery.page,
+          'pageSize':self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {       
+        console.log(res)
+      }
+   
+    },
     pageSizeChange(pageSize) {
       console.log('每页条数：', pageSize);
     },
