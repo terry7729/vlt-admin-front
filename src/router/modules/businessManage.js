@@ -48,7 +48,7 @@ const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
-const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+// const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
 //渠道资源管理
 const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
@@ -60,7 +60,7 @@ const equipmentDetail = () => import('@/views/businessManage/channelResourceMana
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //入库
-const putStore =  () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
+const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -328,7 +328,7 @@ export default [
     },
     component: inventoryStatistics
   },
-  
+
   {
     path: 'businessManage/channelResourceManage/outPutManage',
     name: 'outPutManage',
@@ -370,7 +370,7 @@ export default [
     },
     component: basicInfoManage
   },
-  
+
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
@@ -499,7 +499,7 @@ export default [
       title: '新建年度发展计划',
     },
     component: createDevelopmentPlan
-  }, 
+  },
   {
     path: 'businessManage/cardBalance',
     name: 'cardBalance',
@@ -507,35 +507,35 @@ export default [
       title: '投注卡余额',
     },
     component: cardBalance
-  },  {
+  }, {
     path: 'businessManage/cardGeneration',
     name: 'cardGeneration',
     meta: {
       title: '投注卡生成',
     },
     component: cardGeneration
-  },  {
+  }, {
     path: 'businessManage/refillRules',
     name: 'refillRules',
     meta: {
       title: '投注卡充值规则',
     },
     component: refillRules
-  },  {
+  }, {
     path: 'businessManage/winningRecord',
     name: 'winningRecord',
     meta: {
       title: '投注卡中奖记录',
     },
     component: winningRecord
-  },  {
+  }, {
     path: 'businessManage/withdrawalRecord',
     name: 'withdrawalRecord',
     meta: {
       title: '投注卡提现记录',
     },
     component: withdrawalRecord
-  },  {
+  }, {
     path: 'businessManage/cardInformation',
     name: 'cardInformation',
     meta: {
