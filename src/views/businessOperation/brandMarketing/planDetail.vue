@@ -4,10 +4,10 @@
       <h3>活动计划详情</h3>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="活动内容" name="activeContent">
-          <cell title="详细资料" style="margin-top: 10px;">
+          <panel-static title="详细资料" style="margin-top: 10px;">
             <base-info :infoList="infoList" class="base-data"></base-info>
-          </cell>
-          <cell title="活动规则">
+          </panel-static>
+          <panel-static title="活动规则">
             <el-form :inline="true" class="base-data">
               <el-form-item v-for="item in ruleList" :key="item.index" class="rule-form">
                 <el-select v-model="item.value" placeholder="充值">
@@ -23,8 +23,8 @@
                 <el-input v-model="item.award"></el-input>
               </el-form-item>
             </el-form>
-          </cell>
-          <cell title="活动资金">
+          </panel-static>
+          <panel-static title="活动资金">
             <div class="base-data">
               <el-table :data="tableData" border>
                 <el-table-column prop="data" label="序号"></el-table-column>
@@ -36,9 +36,9 @@
               </el-table>
               <p>备注：</p>
             </div>
-          </cell>
+          </panel-static>
 
-          <cell title="活动资源">
+          <panel-static title="活动资源">
             <div class="base-data">
               <el-table :data="tableData" border>
                 <el-table-column prop="data" label="序号"></el-table-column>
@@ -49,9 +49,9 @@
               </el-table>
               <p>备注：</p>
             </div>
-          </cell>
+          </panel-static>
 
-          <cell title="活动执行">
+          <panel-static title="活动执行">
             <div class="base-data">
               <el-table :data="tableData" border>
                 <el-table-column prop="data" label="执行编号"></el-table-column>
@@ -64,9 +64,9 @@
               </el-table>
               <p>备注：</p>
             </div>
-          </cell>
+          </panel-static>
 
-          <cell title="监控指标">
+          <panel-static title="监控指标">
             <div class="base-data" style="margin-bottom:100px;">
               <div class="dimension-check">
                 <span>维度选择：</span>
@@ -83,7 +83,7 @@
                 </div>
               </div>
             </div>
-          </cell>
+          </panel-static>
         </el-tab-pane>
 
         <el-tab-pane label="审核流程" name="auditProcess">
@@ -92,7 +92,7 @@
             <h3>正常</h3>
           </div>
 
-          <cell title="流程进度">
+          <panel-static title="流程进度">
             <el-steps :active="3" class="progress-bar">
               <el-step title="创建活动" description="李某2019-10-14"></el-step>
               <el-step title="部门初审" description="王某"></el-step>
@@ -115,7 +115,7 @@
                 <h2>流程图</h2>
               </el-tab-pane>
             </el-tabs>
-          </cell>
+          </panel-static>
         </el-tab-pane>
       </el-tabs>
     </div>

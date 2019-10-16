@@ -102,6 +102,53 @@ export default [{
         name: "账户记录",
         url: ''
       },
+
+//责任彩票
+      {
+        childResources: [{
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "责任彩票列表",
+          url: 'dutyLottery'
+        }],
+        icon: "el-icon-menu",
+        name: "责任彩票",
+        url: ''
+      },
+
+//公告信息发布
+      {
+        childResources: [{
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "素材管理",
+            url: 'materialManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "公告信息发布",
+            url: 'bulletinList'
+          },
+          {
+            childResources: [],      
+            icon: "el-icon-menu",
+            name: "公告模板",
+            url: 'bulletinTemplate'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "消息推送",
+            url: 'infoPush'
+          }
+        ],
+        icon: "el-icon-menu",
+        name: "公告信息发布",
+        url: ''
+      },
+
+
     ],
     icon: "el-icon-menu",
     name: "业务运营",

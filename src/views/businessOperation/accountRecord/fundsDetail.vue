@@ -14,22 +14,21 @@ export default {
   data() {
     return {
       infoList: [
-        { title: "订单编号", value: "", prop: "gameCode" },
+        { title: "流水ID", value: "", prop: "gameCode" },
         { title: "投注卡号", value: "", prop: "cycleType" },
         { title: "投注卡类型", value: "", prop: "gameStatus" },
         { title: "账户ID", value: "", prop: "gameName" },
-        { title: "联系人", value: "", prop: "officialEndSale" },
+        { title: "彩民", value: "", prop: "officialEndSale" },
         { title: "手机号码", value: "", prop: "gameCode" },
-        { title: "充值金额", value: "", prop: "cycleType" },
-        { title: "充值方式", value: "", prop: "gameStatus" },
         { title: "账户余额", value: "", prop: "gameName" },
+        { title: "变动金额", value: "", prop: "cycleType" },
+        { title: "变动前余额", value: "", prop: "cycleType" },
+        { title: "结算单位", value: "", prop: "cycleType" },
+        { title: "流水类型", value: "", prop: "gameStatus" },
+        { title: "变更时间", value: "", prop: "gameStatus" },
         { title: "设备编号", value: "", prop: "officialEndSale" },
         { title: "交易厅名称", value: "", prop: "gameName" },
-        { title: "所属区域", value: "", prop: "officialEndSale" },
-        { title: "操作人ID", value: "", prop: "gameCode" },
-        { title: "操作人姓名", value: "", prop: "cycleType" },
-        { title: "操作时间", value: "", prop: "gameStatus" },
-        { title: "交易描述", value: "", prop: "gameName" }
+        { title: "所属机构", value: "", prop: "officialEndSale" }
       ]
     };
   },
