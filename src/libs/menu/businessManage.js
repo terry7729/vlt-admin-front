@@ -44,13 +44,13 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "游戏储备列表",
-          url: 'gameStoreList'
+          url: 'gameList'
         },
         {
           childResources: [],
           icon: "el-icon-menu",
           name: "游戏试玩计划",
-          url: 'gamePlanList'
+          url: 'trialPlanList'
         }
       ]
     },
@@ -111,6 +111,43 @@ export default [{
           }
         ],
       },
+      {
+        icon: "el-icon-menu",
+        name: "渠道资源管理",
+        url: 'channelResourceManage',
+        childResources: [
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "库存管理",
+            url: 'inventoryManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "出入库管理",
+            url: 'outPutManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "台账管理",
+            url: 'ledgerManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "仓库管理",
+            url: 'warehouseManage'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "基本信息管理",
+            url: 'basicInfoManage'
+          },
+        ],
+      },
 
       {
         icon: "el-icon-menu",
@@ -146,6 +183,48 @@ export default [{
             icon: "el-icon-menu",
             name: "配置管理",
             url: 'configuration'
+          }
+        ]
+      },{
+        icon: "el-icon-menu",
+        name: "投注卡管理",
+        url: 'bettingCardManage',
+        childResources: [
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡生成",
+            url: 'cardGeneration'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡信息",
+            url: 'cardInformation'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡余额",
+            url: 'cardBalance'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡中奖记录",
+            url: 'winningRecord'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡提现记录",
+            url: 'withdrawalRecord'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "投注卡充值规则",
+            url: 'refillRules'
           }
         ]
       }

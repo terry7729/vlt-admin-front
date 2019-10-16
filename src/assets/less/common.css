@@ -255,6 +255,95 @@
   display: flex;
   justify-content: flex-end;
 }
+.preview-template .coll-item .coll-form .active-target .el-checkbox {
+  margin-right: 10px;
+}
+.preview-template .coll-item .coll-form .active-target .el-input {
+  width: 250px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+.preview-template .coll-item .coll-form .active-target .el-input input {
+  width: 250px;
+  margin-left: 18px;
+}
+.preview-template .coll-item .coll-form .active-lobby .el-input {
+  width: 250px;
+  display: inline-block;
+}
+.preview-template .coll-item .coll-form .active-lobby .el-input input {
+  width: 250px;
+}
+.preview-template .coll-item .active-rule .rule-item .el-select,
+.preview-template .coll-item .active-rule .rule-item .el-input {
+  width: 100px;
+  margin-right: 20px;
+  display: inline-block;
+}
+.preview-template .coll-item .active-rule .rule-item .el-select input,
+.preview-template .coll-item .active-rule .rule-item .el-input input {
+  width: 100px;
+}
+.preview-template .coll-item .active-rule .rule-item .last-rule input {
+  width: 200px;
+isp}
+.preview-template .coll-item .remark .el-textarea {
+   d width: 500px;
+.result-assess .index-config .check .el-checkbox {
+  padding-bottom: 20px;
+}
+.allot-task .formTime input {
+  width: 400px;
+}
+.create-active .header-box .el-form-item__label {
+  width: 145px !important;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+}
+.create-active .addForm-box .add-form :nth-child(1) .el-form-item__label {
+  width: 100px !important;
+}
+.create-active .addForm-box .add-form .add-textarea {
+  margin-left: 20px;
+}
+.create-active .process-content .el-header {
+  height: 110px !important;
+}
+.preview-template .coll-item .coll-form {
+  margin-left: 200px;
+  padding: 20px;
+.haveListDetailTwo .control-bar-comp {
+  display: flex;
+  justify-content: flex-end;
+}
+.Customeraccountlist .table_paging {
+  display: flex;
+  justify-content: flex-end;
+}
+.roleManage .table-paging-comp {
+  display: flex;
+  justify-content: flex-end;
+}
+.operationManage .table-paging-comp {
+  display: flex;
+  justify-content: flex-end;
+}
+.operationManage .el-dialog {
+  width: 38%;
+}
+.roleManage .el-dialog {
+  width: 38%;
+}
+.el_box .el-dialog {
+  width: 38%;
+}
+.lotteryTicket .el-dialog {
+  width: 38%;
+}
+.expirySetting .el-dialog {
+  width: 38%;
+}
 .develop-plan .el-tabs--left .el-tabs__item.is-left {
   text-align: left;
 }
@@ -326,76 +415,4 @@
 }
 .preview-template .coll-item .remark .el-textarea {
   width: 500px;
-  display: inline-block;
-}
-.preview-template .coll-item .remark .el-textarea textarea {
-  width: 500px;
-  margin-top: 10px;
-}
-.preview-template .coll-item .item-check .el-checkbox {
-  padding-bottom: 10px;
-}
-.preview-template .coll-item .el-collapse-item__header {
-  font-size: 16px;
-  font-weight: 600;
-  text-indent: 25px;
-}
-.preview-template .coll-item .el-progress {
-  width: 400px;
-}
-.preview-template .coll-item .upload-file {
-  width: 600px;
-  margin-bottom: 20px;
-}
-.preview-template .coll-item .upload-file .el-upload__tip {
-  font-size: 14px;
-  color: #aaa;
-  position: relative;
-  left: 65px;
-}
-.preview-template .coll-item .upload-img {
-  margin-bottom: 20px;
-}
-.preview-template .coll-item .upload-img .upload-box {
-  display: inline-block;
-}
-.preview-template .coll-item .drag-upload {
-  position: relative;
-  left: 78px;
-}
-.preview-template .coll-item .index-check {
-  margin-top: 15px;
-}
-.preview-template .coll-item .index-check .item-check {
-  display: inline-block;
-  width: 800px;
-  position: relative;
-  top: -15px;
-  left: 60px;
-}
-.preview-template .coll-item .add-rule {
-  width: 472px;
-  height: 60px;
-  line-height: 60px;
-  margin: -10px 0 20px 220px;
-  text-align: center;
-  font-size: 14px;
-  border: 1px dashed #aaa;
-}
-.account-detail .equity-title {
-  margin-left: 32px;
-  margin-top: 5px;
-}
-.account-detail .equity-title span {
-  display: inline-block;
-  margin-right: 400px;
-}
-.plan-detail .base-data .rule-form .el-select {
-  width: 210px;
-}
-.plan-detail .base-data .rule-form .el-input {
-  width: 210px;
-}
-.plan-detail .base-data .rule-form .el-input input {
-  width: 200px;
-}
+  disp

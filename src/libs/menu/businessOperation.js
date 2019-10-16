@@ -12,13 +12,60 @@ export default [{
             childResources: [],
             icon: "el-icon-menu",
             name: "资金账户管理",
-            url: 'accountManage'
+            url: 'accountMoneyManage'
           }
         ],
         icon: "el-icon-menu",
         name: "渠道账户",
         url: 'screenWatch'
       },
+
+      {
+        childResources: [{
+            icon: "el-icon-menu",
+            name: "角色管理",
+            url: 'roleManage'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "账户管理",
+            url: 'operationAccountManage'
+          }
+        ],
+        icon: "el-icon-menu",
+        name: "渠道权限维护",
+        url: 'PermissionMaintain'
+      },
+
+      {
+        childResources: [{
+            icon: "el-icon-menu",
+            name: "彩票兑奖",
+            url: 'lotteryTicket'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "兑奖设置",
+            url: 'expirySetting'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "兑奖处管理",
+            url: 'ticketOfficeManage'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "中奖查询",
+            url: 'winningCheck'
+          }
+        ],
+        icon: "el-icon-menu",
+        name: "彩票兑奖管理",
+        url: 'LotteryManagement'
+      },
+
+
+
       {
         childResources: [{
             childResources: [],
