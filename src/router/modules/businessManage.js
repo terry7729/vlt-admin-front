@@ -48,7 +48,7 @@ const addGame = () => import('@/views/businessManage/gameStoreManage/addGame')
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
-const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+// const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
 //渠道资源管理
 const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
