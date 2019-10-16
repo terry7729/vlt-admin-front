@@ -99,7 +99,7 @@ export default {
   },
   components: {},
   methods: {
-    // 修改table tr行的背景色
+    // 修改table tr行的背景色 
     tableRowStyle({ row, column, rowIndex, columnIndex }) {
       return "background-color: #02142c;color:red";
     },
