@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main centerWatch">
     <main>
       <section class="left">
         <div class="one">
@@ -42,12 +42,12 @@
               :header-cell-style="tableHeaderColor"
             >
               >
-              <el-table-column prop="date" label="大厅编号"></el-table-column>
-              <el-table-column prop="name" label="所属省份"></el-table-column>
-              <el-table-column prop="name" label="销售金额" sortable width="120"></el-table-column>
-              <el-table-column prop="name" label="中奖金额" sortable width="120"></el-table-column>
-              <el-table-column prop="name" label="兑奖金额" sortable width="120"></el-table-column>
-              <el-table-column prop="name" label="状态"></el-table-column>
+              <el-table-column align="center" prop="date" label="大厅编号"></el-table-column>
+              <el-table-column align="center" prop="name" label="所属省份"></el-table-column>
+              <el-table-column align="center" prop="name" label="销售金额" sortable width="120"></el-table-column>
+              <el-table-column align="center" prop="name" label="中奖金额" sortable width="120"></el-table-column>
+              <el-table-column align="center" prop="name" label="兑奖金额" sortable width="120"></el-table-column>
+              <el-table-column align="center" prop="name" label="状态"></el-table-column>
             </el-table>
           </div>
         </div>
@@ -99,13 +99,13 @@ export default {
   },
   components: {},
   methods: {
-    // 修改table tr行的背景色 
+    // 修改table tr行的背景色
     tableRowStyle({ row, column, rowIndex, columnIndex }) {
-      return "background-color: #02142c;color:red";
+      return "color:red;align:center;background-color: #02142c;";
     },
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
-        return "background-color: #02142c;color:#c5d6ea;font-weight: 500;";
+        return "background-color: #02142c;color:#c5d6ea;font-weight: 500;align:center;";
       }
     },
     formatter(row, column) {
@@ -518,7 +518,7 @@ export default {
         [6, 23, 6]
       ];
 
-     let option = {
+      let option = {
         tooltip: {
           position: "top"
         },
@@ -558,7 +558,7 @@ export default {
       echarts.util.each(data, function(dataItem) {
         option.series[dataItem[0]].data.push([dataItem[1], dataItem[2]]);
       });
-       myChart.setOption(option);
+      myChart.setOption(option);
       //建议加上以下这一行代码，不加的效果图如下（当浏览器窗口缩小的时候）。超过了div的界限（红色边框）
       window.addEventListener("resize", function() {
         myChart.resize();
@@ -576,10 +576,11 @@ main {
   display: flex;
   padding: 20px;
   .title {
-    flex: 10%;
+    height: 40px;
     color: #fff;
-    padding: 15px 0 0 5px;
+    line-height: 40px;
     background: linear-gradient(to right, #1868a9, #010c1b);
+    padding-left: 5px;
   }
   > .left {
     flex: 20%;
@@ -652,6 +653,10 @@ main {
   }
   > .center {
     flex: 45%;
+    border: 1px solid #267ca6;
+    border-radius: 3px;
+    margin: 0 20px;
+    height: 81.5%;
   }
   > .right {
     flex: 35%;
@@ -682,7 +687,7 @@ main {
     }
   }
 }
-/deep/ .main-body .el-table .el-table td > .cell {
+/deep/ .main-body .el-table td > .cell {
   color: #fff !important;
 }
 </style>
