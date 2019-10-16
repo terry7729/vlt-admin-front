@@ -6,7 +6,7 @@
 
     <section class="comp-item coll-item">
       <panel title="基础信息" :show="true">
-        <div class="coll-content">
+        <div>
           <el-form class="coll-form" size="small" label-width="100px" :model="formLabelAlign">
             <el-form-item label="活动名称">
               <el-input v-model="formLabelAlign.name"></el-input>
@@ -117,8 +117,8 @@
 
     <slot name="upload-file">
       <section class="comp-item coll-item">
-        <panel title="附件上传" :show="true">
-          <div class="coll-content">
+        <panel title="附件上传" :show="true" >
+          <div class="coll-form">
             <div class="upload-file">
               <el-upload
                 class="upload-demo"
@@ -165,7 +165,7 @@
               </el-upload>
               <el-progress :percentage="60" :stroke-width="strokeWidth"></el-progress>
               <el-progress :percentage="70" :stroke-width="strokeWidth"></el-progress>
-              <el-progress :percentage="100" status="success" :strokewidth="strokeWidth"></el-progress>
+              <el-progress :percentage="100" status="success" :stroke-width="strokeWidth"></el-progress>
             </div>
 
             <el-dialog :visible.sync="dialogVisible" size="tiny">
@@ -178,7 +178,7 @@
 
     <section class="comp-item coll-item">
       <panel title="活动规则" :show="true">
-        <div class="coll-content">
+        <div>
           <el-form :model="formLabelAlign" class="coll-form active-rule">
             <el-form-item class="rule-item">
               <el-select v-model="value" placeholder="充值">
@@ -239,8 +239,8 @@
     </section>
 
     <section class="comp-item coll-item">
-      <panel title="活动资金" :show="true">
-        <div class="coll-content">
+      <panel title="活动资金" :show="true" >
+        <div class="coll-form">
           <el-button type="primary" size="small">资金注入</el-button>
           <el-table :data="tableData" border style="width:650px">
             <el-table-column prop="date" label="序号" width="80"></el-table-column>
@@ -263,8 +263,8 @@
     </section>
 
     <section class="comp-item coll-item">
-      <panel title="活动资源" :show="true">
-        <div class="coll-content">
+      <panel title="活动资源" :show="true" >
+        <div class="coll-form">
           <el-button type="primary" size="small">资源选择</el-button>
           <el-table :data="tableData" border style="width:650px">
             <el-table-column prop="date" label="序号" width="80"></el-table-column>
@@ -288,7 +288,7 @@
 
     <section class="comp-item coll-item">
       <panel title="活动执行" :show="true">
-        <div class="coll-content">
+        <div class="coll-form">
           <el-button type="primary" size="small">资金注入</el-button>
           <el-table :data="tableData" border style="width:650px">
             <el-table-column prop="date" label="序号" width="80"></el-table-column>
@@ -312,7 +312,7 @@
 
     <section class="comp-item coll-item">
       <panel title="监控指标" :show="true">
-        <div class="coll-content">
+        <div class="coll-form">
           <span>
             <span>维度选择：</span>
             <span>
@@ -423,17 +423,29 @@ export default {
 </script>
 
 
-<style lang="less"  >
-@import "./less/index.less";
-.add-rule {
-  width: 472px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  font-size: 14px;
-  border: 1px dashed #aaa;
+<style lang="less" scoped >
+.preview-template {
+  h2 {
+    height: 50px;
+    background: white;
+    text-indent: 25px;
+    line-height: 50px;
+  }
+
+  .coll-item {
+    position: relative;
+    .coll-form {
+      .icon-local {
+        position: relative;
+
+        i {
+          position: absolute;
+          top: 8px;
+          left: 5px;
+        }
+      }
+    }
+  }
 }
-.coll-content {
-  padding-bottom: 20px;
-}
+
 </style>

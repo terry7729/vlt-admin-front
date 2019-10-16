@@ -1,21 +1,19 @@
 <template>
   <div class="vlt-card game-store-list">
     <search-bar class="search-bar-demo"
-        @search="search"
-        :options="searchOptions"
-        :total="999"
-        labelWidth="100px"
-      >
+      @search="search"
+      :options="searchOptions"
+      :total="999"
+      labelWidth="86px">
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
-    
     <el-table
-    border
-    ref="multipleTable"
-    :data="tableData"
-    tooltip-effect="dark"
-    style="width: 100%"
-    @selection-change="handleSelectionChange">
+      border
+      ref="multipleTable"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" fixed="left"></el-table-column>
       <el-table-column label="序号" type="index" width="55"></el-table-column>
       <el-table-column prop="id" label="游戏ID" ></el-table-column>
@@ -27,7 +25,6 @@
       <el-table-column prop="developer" label="游戏开发商"></el-table-column>
       <el-table-column prop="time" label="最近更新时间"></el-table-column>
       <el-table-column prop="state" label="游戏状态"></el-table-column>
-
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
@@ -154,7 +151,7 @@ export default {
           limit: 10
         },
         searchOptions:[
-        {type: 'input', prop: 'inputName', value: '', title: '游戏ID', placeholder: '请输入'},
+        {type: 'input', prop: 'inputName', value: '', title: '游戏编码', placeholder: '请输入'},
         {type: 'input', prop: 'inputName2', value: '', title: '游戏名称', placeholder: '请输入'},
         {
           type: 'select', prop: 'selectName', value: '', title: '游戏类型', placeholder: '请选择',
@@ -206,7 +203,7 @@ export default {
     selectBtn(val) {
       if(val.name == '新建游戏'){
         this.$router.push({
-          name:'addGame',
+          path:'./gameCreate',
           query: {
           // regionCode: data.regionCode,
           // instId: data.id,
@@ -230,13 +227,13 @@ export default {
       //查看页面跳转
       detail (id) {
         this.$router.push({
-          name: 'storeCheck',
+          path: './gameDetail',
           query: {id}
         })
       },
       edit (id) {
         this.$router.push({
-          name: 'storeEdit',
+          path: './gameEdit',
           query: {id}
         })
       },

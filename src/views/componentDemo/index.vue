@@ -266,6 +266,7 @@ export default {
           value: "",
           options: [{ label: "男", value: "0" }, { label: "女", value: "1" }]
         },
+        {title: '投注金额', prop: 'minMax', type: 'minMax', value: '', options:['betMoneyMin', 'betMoneyMax']},
         { title: "兑奖权限", type: "switch", prop: "isShow", value: "" },
         { title: "日期选择", type: "datepicker", prop: "date", value: "" },
         {

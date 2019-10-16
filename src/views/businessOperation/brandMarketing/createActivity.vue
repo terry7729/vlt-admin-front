@@ -1,5 +1,5 @@
 <template>
-  <div class="vlt-card create-active" ref="wrap">
+  <div class="vlt-card create-active">
     <el-steps :active="activeStep" finish-status="success" simple style="margin-top: 20px">
       <el-step title="模板选择"></el-step>
       <el-step title="模板预览"></el-step>
