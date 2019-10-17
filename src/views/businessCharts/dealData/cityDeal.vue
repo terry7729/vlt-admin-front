@@ -30,7 +30,7 @@
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -44,7 +44,7 @@
 // import errGif from "@/assets/401_images/401.gif";
 // import pagination from '@/components/common/pagination'
 export default {
-  totalAount: 0,
+  totalCount: 0,
   name: "cityDeal",
   data() {
     return {

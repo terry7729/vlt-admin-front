@@ -30,7 +30,6 @@
             :current-page="1"
             :page-size="10"
             :total="totalCount"
-            v-if="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>

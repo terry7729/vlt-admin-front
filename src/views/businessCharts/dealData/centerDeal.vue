@@ -30,7 +30,7 @@
       </el-table>
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
-          <table-paging v-if="totalCount"
+          <table-paging
             :current-page="1"
             :page-size="10"
             :total="totalCount"
