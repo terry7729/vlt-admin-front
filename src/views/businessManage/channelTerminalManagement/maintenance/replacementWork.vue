@@ -7,7 +7,7 @@
 
 <script type="text/javascript">
 export default {
-  name: "",
+  name: "replacementWork",
   data() {
    return {
 

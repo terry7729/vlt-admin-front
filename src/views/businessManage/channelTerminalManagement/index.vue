@@ -16,7 +16,7 @@
 <script type="text/javascript">
 import terminalSideMenu from "@/components/main/terminalSideMenu";
 export default {
-  name: "",
+  name: "channelTerminalManagement",
   data() {
     return {};
   },

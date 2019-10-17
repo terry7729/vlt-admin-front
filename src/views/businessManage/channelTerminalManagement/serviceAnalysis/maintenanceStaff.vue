@@ -15,7 +15,7 @@
 <script type="text/javascript">
 import analysisCard from "@/views/businessManage/channelTerminalManagement/components/analysisCard";
 export default {
-  name: "",
+  name: "maintenanceStaff",
   data() {
     return {
       // 搜索组件配置

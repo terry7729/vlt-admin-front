@@ -9,7 +9,7 @@
       :total="999"
       labelWidth="80px"
     >   
-    <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+    <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left" ></control-bar>
     </search-bar>
     <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs">
       <el-tab-pane v-for="item in tabs" :key="item.id" :label="item.label" :name="item.name">
@@ -28,18 +28,15 @@
       </el-tab-pane>
       <!-- <el-tab-pane label="接收消息" name="first">接收消息</el-tab-pane>
       <el-tab-pane label="已发消息" name="second">配置管理</el-tab-pane>-->
-
-      <el-pagination
-        :hide-on-single-page="false"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="10"
-        layout="prev, pager, next, sizes,jumper"
-        :total="50"
-        background
-      ></el-pagination>
+      <table-paging
+        position="right"
+        :total="999"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      >
+      </table-paging>
     </el-tabs>
   </div>
 </template>
@@ -126,6 +123,7 @@ const tabsList = [
   }
 ];
 export default {
+  name: 'messages',
   data() {
     return {
       tabs: [],
@@ -159,8 +157,7 @@ export default {
       ],
       controlOptions: [
         { name: "发布消息", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-      ],
-      currentPage: 1
+      ]
     };
   },
   created() {
@@ -177,6 +174,9 @@ export default {
     },
     selectBtn() {
       console.log('selectBtn');
+      this.$router.push({
+        name: 'sendMessage'
+      })
     },
     handleClick(tab, event) {
       const index = tab.index;
@@ -220,25 +220,5 @@ export default {
 <style lang="less" scoped>
 .el-tabs {
   margin-top: 20px;
-
-  .el-pagination.is-background {
-    margin-top: 20px;
-    text-align: right;
-    li {
-      margin: 0 6px;
-      padding: 0;
-      box-sizing: border-box;
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-      &.active {
-        border-color: #409eff;
-      }
-    }
-    .btn-prev,
-    .btn-next {
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-    }
-  }
 }
 </style>

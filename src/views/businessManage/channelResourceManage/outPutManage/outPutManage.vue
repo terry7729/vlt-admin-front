@@ -4,10 +4,12 @@
      <h3>出入库管理</h3>
      <el-tabs tab-position="left" style="height: 800px;">
        <search-bar class="search-bar-demo" @search="search" :options="outPutOptions" :total="999" labelWidth="80px"></search-bar>
-       <control-bar :options="controlOptions"></control-bar>
+       <!-- <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar> -->
+       <control-bar :options="controlOptions" position="left"></control-bar>
+
        <el-tab-pane label="入库管理">
         <!-- <search-bar class="search-bar-demo" @search="search" :options="outPutOptions" :total="999" labelWidth="80px"></search-bar>
-        <control-bar :options="controlOptions"></control-bar> -->
+        <control-bar :options="controlOptions" position="left"></control-bar> -->
           <el-tabs v-model="activeName" @tab-click="handleClick" class="tables-content">
             <el-tab-pane label="待入库" name="stayPut">
               <el-table :data="stayPutData" border style="width: 100%">
@@ -24,7 +26,9 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='total' :currentPage="currentPage" :pageSize="pageSize"></table-paging>
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+                </table-paging>
             </el-tab-pane>
             <el-tab-pane label="已入库" name="alreadyPut">
               <el-table :data="alreadyPutData" border style="width: 100%">
@@ -37,9 +41,7 @@
                 <el-table-column prop="remark" label="备注"></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <!-- <el-button @click="facilityDetail(scope.row.id)" type="primary" v-prevent="2000" size="mini"></el-button> -->
-                    <el-button type="primary" v-prevent="2000" size="mini" @click="dialogFormVisible = true">详情</el-button>
-                      
+                    <el-button @click="detail(scope.row.id)" type="primary" v-prevent="2000" size="mini">详情</el-button>
                     <el-dialog title="基本信息" :visible.sync="dialogFormVisible">
                       <div class="vlt-edit-single">
                         <base-form :formData="data2" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right" @change="changeForm" ></base-form>
@@ -52,7 +54,9 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <table-paging :total='total' :currentPage="currentPage" :pageSize="pageSize"></table-paging>
+              <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
+                @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+              </table-paging>
             </el-tab-pane>
           </el-tabs>
        </el-tab-pane>
@@ -129,6 +133,26 @@ export default {
    search(form) {
     console.log("search", form);
   },
+  selectBtn(val) {
+      console.log(val);
+    },
+  detail(id){
+    this.dialogFormVisible = true;
+    console.log(id)
+  },
+  handleCurrentChange(currentPage) {
+        // this.confirmSearch.page = val
+        // this.query()
+        console.log(currentPage)
+      },
+  handleSizeChange(pageSize) {
+    // this.pageSize = val
+    // this.confirmSearch.limit = val
+    // this.confirmSearch.page = 1
+    // this.currentPage = 1
+    // this.query()
+    console.log(pageSize)
+  },
   putStore(id){
     this.$router.push({
       name: 'putStore',
@@ -143,9 +167,28 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 h3{margin-bottom: 20px}
 .tabs-content{
-  padding: 16px 30px
+  padding: 16px 30px;
+  .el-tabs__nav{
+    margin-right: 100px;
+  }
+  .el-tabs__item.is-active{
+    background: rgb(230, 247, 255);
+  }
+  .el-tabs--left .el-tabs__active-bar.is-left, .el-tabs--left .el-tabs__nav-wrap.is-left::after{
+    left:194px;
+    margin-right: 10px;
+  }
+  .el-tabs--left .el-tabs__nav-wrap.is-left{
+    margin-right: -60px;
+  }
+  .el-tabs__item{
+    padding: 0 70px;
+  }
+  .tables-content .el-tabs__item.is-active{
+    background: none;
+  }
 }
 </style>

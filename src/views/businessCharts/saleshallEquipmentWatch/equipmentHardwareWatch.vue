@@ -18,28 +18,77 @@
         style="width: 100%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
+        :cell-class-name="addClass"
+        @cell-click="clicks"
       >
         <el-table-column align="center" label="序号" width="65">
           <template slot-scope="scope">
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="终端"></el-table-column>
-        <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="date" label="磁盘使用"></el-table-column>
-        <el-table-column align="center" prop="date" label="CPU使用"></el-table-column>
-        <el-table-column align="center" prop="date" label="系统内存使用"></el-table-column>
-        <el-table-column align="center" prop="date" label="网络流量"></el-table-column>
-        <el-table-column align="center" prop="date" label="终端状态"></el-table-column>
-        <el-table-column align="center" prop="date" label="外设状态"></el-table-column>
+        <el-table-column align="center" prop="terminalName" label="终端"></el-table-column>
+        <el-table-column align="center" prop="province" label="省份"></el-table-column>
+        <el-table-column align="center" prop="city" label="城市"></el-table-column>
+        <el-table-column align="center" prop="hallName" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="disk" label="磁盘使用"></el-table-column>
+        <el-table-column align="center" prop="cpu" label="CPU使用"></el-table-column>
+        <el-table-column align="center" prop="memory" label="系统内存使用"></el-table-column>
+        <el-table-column align="center" prop="networkFlux" label="网络流量"></el-table-column>
+        <el-table-column align="center" prop="terminalStatus" label="终端状态">
+          <template slot-scope="scope">
+            <span v-if="scope.row.terminalStatus === 0">在线</span>
+            <span v-if="scope.row.terminalStatus === 1">离线</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="peripheralStatus"
+          label="外设状态"
+          class-name="peripheralStatus"
+        >
+          <template slot-scope="scope">
+            <span v-if="scope.row.terminalStatus === 0">正常</span>
+            <span v-if="scope.row.terminalStatus === 1">异常</span>
+          </template>
+        </el-table-column>
       </el-table>
+      <el-dialog title="外设状态" :visible.sync="dialogTableVisible">
+        <el-table :data="gridData">
+          <el-table-column property="terminalName" label="终端机"></el-table-column>
+          <el-table-column property="cardReaderStatus" label="读卡器">
+            <template slot-scope="scope">
+              <span v-if="scope.row.cardReaderStatus===0">正常</span>
+              <span v-if="scope.row.cardReaderStatus===1">异常</span>
+            </template>
+          </el-table-column>
+          <el-table-column property="keyboardStatus" label="键盘状态">
+            <template slot-scope="scope">
+              <span v-if="scope.row.keyboardStatus===0">正常</span>
+              <span v-if="scope.row.keyboardStatus===1">异常</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column property="soundboxStatus" label="音响状态">
+            <template slot-scope="scope">
+              <span v-if="scope.row.soundboxStatus===0">正常</span>
+              <span v-if="scope.row.soundboxStatus===1">异常</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column property="infraredStatus" label="红外设备状态">
+            <template slot-scope="scope">
+              <span v-if="scope.row.infraredStatus===0">正常</span>
+              <span v-if="scope.row.infraredStatus===1">异常</span>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-dialog>
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -55,6 +104,9 @@ export default {
   name: "saleshallEquipmentWatch",
   data() {
     return {
+      gridData: [],
+      dialogTableVisible: false,
+      totalCount: 0,
       searchOptions: [
         {
           type: "select",
@@ -185,11 +237,39 @@ export default {
     };
   },
   methods: {
+    clicks(row, column, cell, event) {
+      this.gridData = [];
+      if (column.label == "外设状态") {
+        this.dialogTableVisible = true;
+        this.gridData.push(row.allPeripheralStatus);
+      }
+    },
+    addClass({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 10) {
+        return "cell-blue";
+      }
+    },
+    //销售厅设备硬件信息列表
+    async getHallEqHardware() {
+      const self = this;
+      const res = await self.$api.getHallEqHardware({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.data.dataList;
+        self.totalCount = res.data.data.totalRecord;
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      this.listQuery.limit = pageSize;
+      this.getHallEqHardware();
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      this.listQuery.page = currentPage;
+      this.getHallEqHardware();
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -197,14 +277,6 @@ export default {
       } else {
         this.$router.go(-1);
       }
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -285,6 +357,9 @@ export default {
 
   mounted() {
     // this.showcity();
+  },
+  created() {
+    this.getHallEqHardware();
   }
 };
 </script>
@@ -292,5 +367,27 @@ export default {
 <style  lang="less" scoped>
 .control-bar-comp {
   text-align: right;
+}
+.main-body .el-table {
+  /deep/ td.peripheralStatus > .cell {
+    color: blue;
+    cursor: pointer;
+  }
+}
+/deep/ .el-dialog {
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*height:600px;*/
+  max-height: calc(100% - 30px);
+  max-width: calc(100% - 30px);
+}
+/deep/ .el-dialog .el-dialog__body {
+  flex: 1;
+  overflow: auto;
 }
 </style>

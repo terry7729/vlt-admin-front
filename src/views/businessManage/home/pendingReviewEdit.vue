@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: "editPendingReview",
+  name: "pendingReviewEdit",
   data() {
     return {
       rowData: {},

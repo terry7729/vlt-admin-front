@@ -56,14 +56,30 @@ const channelList = () => import('@/views/businessManage/channelBusinessManage/c
 const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
-const warehouseManage = () => import('@/views/businessManage/channelResourceManage/warehouseManage/warehouseManage')
+const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
+
+
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
+
+
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
+//台账明细
+const detailLedger = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailLedger')
+//相关流程查看
+const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
+//基础信息类型管理新增
+const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
+// 类型管理查看
+const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
 //入库
 const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
+//仓库管理新增仓库
+const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
+const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
+
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -97,6 +113,18 @@ const refillRules = () => import('@/views/businessManage/bettingCardManage/refil
 const winningRecord = () => import('@/views/businessManage/bettingCardManage/winningRecord')
 const withdrawalRecord = () => import('@/views/businessManage/bettingCardManage/withdrawalRecord')
 const cardInformation = () => import('@/views/businessManage/bettingCardManage/cardInformation')
+// 投注卡基本信息
+const cardDetail = () => import('@/views/businessManage/bettingCardManage/cardDetail')
+// 投注卡详细信息
+const infoDetail = () => import('@/views/businessManage/bettingCardManage/infoDetail')
+// 余额明细
+const balanceDetail = () => import('@/views/businessManage/bettingCardManage/balanceDetail')
+// 新建规则
+const newRule = () => import('@/views/businessManage/bettingCardManage/newRule')
+// 新建卡片
+const newCard = () => import('@/views/businessManage/bettingCardManage/newCard')
+// 导出卡片
+const exportCard = () => import('@/views/businessManage/bettingCardManage/exportCard')
 
 
 
@@ -366,12 +394,44 @@ export default [
     component: ledgerManage
   },
   {
-    path: 'businessManage/channelResourceManage/warehouseManage',
-    name: 'warehouseManage',
+    path: 'businessManage/channelResourceManage/detailLedger',
+    name: 'detailLedger',
+    meta: {
+      title: '台账明细',
+    },
+    component: detailLedger
+  },
+  {
+    path: 'businessManage/channelResourceManage/detailFlow',
+    name: 'detailFlow',
+    meta: {
+      title: '相关流程',
+    },
+    component: detailFlow
+  },
+  {
+    path: 'businessManage/channelResourceManage/storeManage',
+    name: 'storeManage',
     meta: {
       title: '仓库管理',
     },
-    component: warehouseManage
+    component: storeManage
+  },
+  {
+    path: 'businessManage/channelResourceManage/detail',
+    name: 'detail',
+    meta: {
+      title: '仓库查看',
+    },
+    component: detail
+  },
+  {
+    path: 'businessManage/channelResourceManage/addStore',
+    name: 'addStore',
+    meta: {
+      title: '新建仓库',
+    },
+    component: addStore
   },
   {
     path: 'businessManage/channelResourceManage/basicInfoManage',
@@ -381,7 +441,22 @@ export default [
     },
     component: basicInfoManage
   },
-
+  {
+    path: 'businessManage/channelResourceManage/addEquipment',
+    name: 'addEquipment',
+    meta: {
+      title: '基本信息类型管理新增',
+    },
+    component: addEquipment
+  },
+  {
+    path: 'businessManage/channelResourceManage/typeCheck',
+    name: 'typeCheck',
+    meta: {
+      title: '基本信息类型管理查看',
+    },
+    component: typeCheck
+  },
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
@@ -561,5 +636,51 @@ export default [
       title: '档案管理',
     },
     component: dossierManage
+  },
+  {
+    path: 'businessManage/cardDetail',
+    name: 'cardDetail',
+    meta: {
+      title: '投注卡明细',
+    },
+    component: cardDetail
+  },
+  {
+    path: 'businessManage/balanceDetail',
+    name: 'balanceDetail',
+    meta: {
+      title: '投注卡明细',
+    },
+    component: balanceDetail
+  },
+  {
+    path: 'businessManage/infoDetail',
+    name: 'infoDetail',
+    meta: {
+      title: '详情信息',
+    },
+    component: infoDetail
+  }, {
+    path: 'businessManage/newCard',
+    name: 'newCard',
+    meta: {
+      title: '新建卡片'
+    },
+    component: newCard
+  },
+  {
+    path: 'businessManage/newRule',
+    name: 'newRule',
+    meta: {
+      title: '新建规则'
+    },
+    component: newRule
+  }, {
+    path: 'businessManage/exportCard',
+    name: 'exportCard',
+    meta: {
+      title: '导出卡片',
+    },
+    component: exportCard
   }
 ]
