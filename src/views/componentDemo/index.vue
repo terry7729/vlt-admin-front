@@ -41,7 +41,7 @@
       <h4 class="comp-title">表格分页</h4>
       <table-paging
         position="left"
-        :total="999"
+        :total="total"
         :currentPage="1"
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
@@ -233,6 +233,7 @@ export default {
   data() {
     const self = this;
     return {
+      total: 100,
       params: {},
       fileList: [
         {
