@@ -1,47 +1,72 @@
 <!-- 首页 - 概况 - 移交 -->
-
 <template>
   <div class="vlt-card pading-review-transfer">
-    <h3>移交[中心出库]步骤</h3>
-      <el-row >
-        <el-col :span="8" :offset="2">
-          <el-form ref="form" :model="form" label-position="right" label-width="120px" size="small">
-            <el-form-item label="步骤移交人：">
-              <el-input v-model="form.name" placeholder="请输入步骤移交人"></el-input>
-            </el-form-item>
-            <el-form-item label="填写处理意见：">
-              <el-input type="textarea"  v-model="form.content" placeholder="请输入处理意见"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" size="small" @click="onSubmit" :loading="submitLoad">提交</el-button>
-              <el-button size="small">取消</el-button>
-            </el-form-item>
-           </el-form>
-
-        </el-col>
-      </el-row>
+    <div class="vlt-edit-single">
+      <h3 class="title">移交[中心出库]步骤</h3>
+      <div class="vlt-edit-wrap">
+        <base-form
+          :formData="formDatas"
+          labelWidth="140px"
+          ref="baseForm"
+          :rules="rule"
+          direction="right"
+          @change="changeForm"
+        ></base-form>
+        <el-row class="vlt-edit-btn">
+          <el-button type="primary" size="medium" @click="onSubmit" :loading="submitLoad">提交</el-button>
+          <el-button size="medium">取消</el-button>
+        </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'pendingReviewTransfer',
-    data () {
-      return {
-        submitLoad: false,
-        form: {
-          name: '',
-          content: ''
-        }
+import rules from "@/utils/rules.js";
+export default {
+  name: "pendingReviewTransfer",
+  data() {
+    return {
+      submitLoad: false,
+      form: {
+        name: "",
+        content: ""
+      },
+      params: {},
+      formDatas: [
+        {
+          title: "步骤移交人",
+          type: "input",
+          prop: "name"
+        },
+        { type: "textarea", title: "填写处理意见：", prop: "all" }
+      ],
+      rule: {
+        name: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }]
       }
+    };
+  },
+  methods: {
+    changeForm(val) {
+      Object.assign(this.params, val);
+      // console.log("change", this.params);
     },
-    methods: {
-      onSubmit () {
-        this.submitLoad = true;
-        console.log(this.form);
-      }
+    handleClose() {
+      console.log("close");
+    },
+    close() {
+      this.$router.back();
+    },
+    onSubmit() {
+      this.submitLoad = true;
+      console.log("formData", this.params);
+      setTimeout(() => {
+        this.submitLoad = false;
+        this.close();
+      }, 1000);
     }
   }
+};
 </script>
 
 <style lang="less">
