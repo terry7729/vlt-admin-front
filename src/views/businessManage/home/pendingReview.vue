@@ -9,38 +9,36 @@
       :total="999"
       labelWidth="80px"
     >
-      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
     </search-bar>
     <el-table :data="tableData" style="width: 100%" border class="table-box">
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
-      <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
-      <el-table-column prop="type" label="业务类型" width="120"></el-table-column>
-      <el-table-column prop="date" label="申请时间" width="180"></el-table-column>
+      <el-table-column prop="title" label="业务标题" ></el-table-column>
+      <el-table-column prop="type" label="业务类型" ></el-table-column>
+      <el-table-column prop="date" label="申请时间" ></el-table-column>
       <el-table-column prop="date" label="截止时间"></el-table-column>
       <el-table-column prop="name" label="申请人"></el-table-column>
       <el-table-column prop="process" label="当前步骤"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column fixed="right" label="操作" >
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="edit(scope.row)">处理</el-button>
-          <el-button  size="mini" @click="moveRow(scope.row)">移交</el-button>
+          <el-button size="mini" @click="moveRow(scope.row)">移交</el-button>
         </template>
       </el-table-column>
     </el-table>
-     <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"
+    ></table-paging>
   </div>
 </template>
 <script>
 export default {
-  name:'pending-review',
+  name: "pendingReview",
   data() {
     return {
       // 搜索组件配置
@@ -79,7 +77,7 @@ export default {
       ],
       controlOptions: [
         { name: "打印", type: "primary", icon: "printer" },
-        { name: "导出", type: "danger", icon: "download" },
+        { name: "导出", type: "danger", icon: "download" }
       ],
       tableData: [
         {
@@ -162,8 +160,8 @@ export default {
           process: "地市审批",
           type: "建厅申请"
         }
-      ],
-      currentPage: 1
+      ]
+      // currentPage: 1
     };
   },
   methods: {
@@ -171,21 +169,21 @@ export default {
       console.log("search", form);
     },
     selectBtn() {
-      console.log('selectBtn');
+      console.log("selectBtn");
     },
     edit(row) {
       const self = this;
       console.log(row);
       this.$router.push({
-        name:'pendingReviewEdit',
-        query: {id: row.id}
-      })
+        name: "pendingReviewEdit",
+        query: { id: row.id }
+      });
     },
     moveRow(row) {
       const self = this;
       this.$router.push({
-        name:'pendingReviewTransfer'
-      })
+        name: "pendingReviewTransfer"
+      });
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -194,8 +192,7 @@ export default {
       console.log(`当前页: ${val}`);
     }
   },
-  components: {
-  }
+  components: {}
 };
 </script>
 
@@ -207,24 +204,6 @@ export default {
   }
   .table-box {
     margin-top: 20px;
-  }
-  .el-pagination.is-background{
-    margin-top: 40px;
-    text-align: right;
-    li {
-      margin: 0 6px;
-      padding: 0;
-      box-sizing: border-box;
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-      &.active {
-        border-color: #409EFF;
-      }
-    }
-    .btn-prev,.btn-next {
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-    }
   }
 }
 </style>

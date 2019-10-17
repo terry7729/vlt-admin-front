@@ -3,7 +3,6 @@
   <!--组件展示demo-->
   <div class="component-container">
     <h1 class="headling">组件展示</h1>
-
     <section class="comp-item">
       <h4 class="comp-title">搜索框</h4>
       <search-bar

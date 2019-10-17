@@ -8,11 +8,11 @@
       :total="999"
       labelWidth="80px"
     >
-      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar></search-bar>
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar></search-bar>
     <el-table :data="tableData" style="width: 100%" border class="table-box">
       <el-table-column prop="id" label="序号" width="60"></el-table-column>
-      <el-table-column prop="title" label="业务标题" width="180"></el-table-column>
-      <el-table-column prop="type" label="业务类型" width="120"></el-table-column>
+      <el-table-column prop="title" label="业务标题" ></el-table-column>
+      <el-table-column prop="type" label="业务类型" ></el-table-column>
       <el-table-column prop="date" label="处理时间" width="150"></el-table-column>
       <el-table-column prop="process" label="当前步骤"></el-table-column>
       <el-table-column prop="name" label="当前处理人" width="150"></el-table-column>
@@ -24,21 +24,19 @@
         </template>
       </el-table-column>
     </el-table>
-     <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="total, prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"
+    ></table-paging>
   </div>
 </template>
 <script>
 export default {
-  name:'pending-review',
+  name:'myDone',
   data() {
     return {
       // 搜索组件配置
@@ -161,7 +159,7 @@ export default {
           type: "建厅申请"
         }
       ],
-      currentPage: 1
+      // currentPage: 1
     };
   },
   methods: {
@@ -205,24 +203,6 @@ export default {
   }
   .table-box {
     margin-top: 20px;
-  }
-  .el-pagination.is-background{
-    margin-top: 40px;
-    text-align: right;
-    li {
-      margin: 0 6px;
-      padding: 0;
-      box-sizing: border-box;
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-      &.active {
-        border-color: #409EFF;
-      }
-    }
-    .btn-prev,.btn-next {
-      border: 1px solid #d9d9d9;
-      background-color: #fff;
-    }
   }
 }
 </style>

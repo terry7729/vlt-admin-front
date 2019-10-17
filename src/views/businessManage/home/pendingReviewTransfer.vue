@@ -25,6 +25,7 @@
 
 <script>
   export default {
+    name: 'pendingReviewTransfer',
     data () {
       return {
         submitLoad: false,
