@@ -18,7 +18,7 @@
         <el-table-column prop="area" label="所在区域"></el-table-column>
         <el-table-column prop="money" label="原积分"></el-table-column>
         <el-table-column label="现积分">
-          <template scope="scope">{{scope.row.money+scope.row.change}}</template>
+          <template slot-scope="scope">{{scope.row.money+scope.row.change}}</template>
         </el-table-column>
         <el-table-column prop="change" label="变动积分">
           <template slot-scope="scope">{{'+'+scope.row.change}}</template>
