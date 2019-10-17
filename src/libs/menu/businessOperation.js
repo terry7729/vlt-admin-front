@@ -64,6 +64,79 @@ export default [{
         url: 'LotteryManagement'
       },
 
+      {
+        childResources: [{
+            icon: "el-icon-menu",
+            name: "会员等级管理",
+            url: 'MemberGradeManagement'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "会员权益管理",
+            url: 'MemberEquityManagement'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "会员积分管理",
+            url: 'MemberIntegralManagement'
+          },
+        ],
+        icon: "el-icon-menu",
+        name: "会员管理",
+        url: 'MemberManagement'
+      },
+
+      {
+        childResources: [{
+            icon: "el-icon-menu",
+            name: "资金日结算报表",
+            url: 'financialStatementDaySettle'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金日分配报表",
+            url: 'financialStatementDayAllocation'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金日流向报表",
+            url: 'financialStatementDayFlow'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金月结算报表",
+            url: 'financialStatementMonthSettle'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金月分配报表",
+            url: 'financialStatementMonthAllocation'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金月流向报表",
+            url: 'financialStatementMonthFlow'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金年结算报表",
+            url: 'financialStatementYearSettle'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金年分配报表",
+            url: 'financialStatementYearAllocation'
+          },
+          {
+            icon: "el-icon-menu",
+            name: "资金年流向报表",
+            url: 'financialStatementYearFlow'
+          },
+        ],
+        icon: "el-icon-menu",
+        name: "财务报表",
+        url: 'financialStatement'
+      },
 
 
       {
@@ -150,7 +223,7 @@ export default [{
         url: ''
       },
 
-//责任彩票
+      //责任彩票
       {
         childResources: [{
           childResources: [],
@@ -163,7 +236,7 @@ export default [{
         url: ''
       },
 
-//公告信息发布
+      //公告信息发布
       {
         childResources: [{
             childResources: [],
@@ -178,7 +251,7 @@ export default [{
             url: 'bulletinList'
           },
           {
-            childResources: [],      
+            childResources: [],
             icon: "el-icon-menu",
             name: "公告模板",
             url: 'bulletinTemplate'

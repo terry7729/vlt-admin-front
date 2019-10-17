@@ -14,7 +14,7 @@
             @search="banksearch"
             :options="banksearchOptions"
             :total="999"
-            labelWidth="80px"
+            labelWidth="60px"
           >
             <controlBar slot="extend-bar" @select="bankBtn" :options="options" position="left"></controlBar>
           </search-bar>
@@ -55,7 +55,7 @@
               @search="threepaysearch"
               :options="threepaysearchOptions"
               :total="999"
-              labelWidth="80px"
+              labelWidth="60px"
             >
               <controlBar
                 slot="extend-bar"
