@@ -8,5 +8,9 @@ export default {
   // 例
   getTest: (options = {}) => ajax.post('/test', options),
   // 中央交易数据列表
-  getCenterDeal:(options={})=>ajax.post('monitor/deal/central',options)
+  getCenterDeal:(options={})=>ajax.post('monitor/deal/central',options),
+  // 省级交易数据列表
+  getProvinceDeal:(options={})=>ajax.post('monitor/deal/province',options),
+  // 市级交易数据列表
+  getCityDeal:(options={})=>ajax.post('monitor/deal/city',options)
 }
