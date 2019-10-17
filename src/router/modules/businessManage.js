@@ -553,11 +553,7 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
-<<<<<<< HEAD
-  }, 
-=======
   },
->>>>>>> 165ec0d9ba745c3e319db1f057c3a422fb209181
   {
     path: 'businessManage/cardBalance',
     name: 'cardBalance',
