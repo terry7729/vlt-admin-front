@@ -962,6 +962,8 @@ export default {
         },
         { title: "开售时间", type: "datetime", prop: "date3", value: "" },
         { title: "销售时间", type: "datetime-range", prop: "date4", value: "" },
+        { title: "年份", type: "year", prop: "year", value: "" },
+        { title: "月份", type: "month", prop: "month", value: "" },
         {
           type: "cascader",
           prop: "cascader1",
