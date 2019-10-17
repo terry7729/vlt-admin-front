@@ -34,13 +34,11 @@ const userInformed = () =>import('@/views/systemManage/userControl/userInformed'
 //角色管理
 const roleList = () => import('@/views/systemManage/roleManagement/roleList')
 //角色编缉
-const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
+// const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
 //角色详情
 const roleifometion = () =>import('@/views/systemManage/roleManagement/rolueifo')
 //组织架构
 const organizationChild = () => import('@/views/systemManage/organization/organization')
-//组织架构编缉页
-const organicompile = () =>import('@/views/systemManage/organization/organicompile')
 //菜单管理
 
 const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
@@ -201,14 +199,6 @@ export default [
     component: roleList
 },
 {
-  path: 'systemManage/roleList/roleDestails',
-  name: 'roleDestails',
-  meta: {
-    title: '角色编缉',
-  },
-  component: roleDestails
-},
-{
   path: 'systemManage/roleList/roleifometion',
   name: 'roleifometion',
   meta: {
@@ -223,15 +213,6 @@ export default [
     title: '组织架构',
   },
   component: organizationChild
-},
-{
-  path:'systemManage/organizationChild/organicompile',
-  name:"organicompile",
-  meta: {
-    title: '添加机构信息',
-  },
-  component: organicompile
-
 },
 {
   path: 'systemManage/menuManageMent',
