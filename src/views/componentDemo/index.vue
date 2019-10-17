@@ -321,7 +321,7 @@ export default {
           title: "渠道地址",
           type: "address",
           prop: "address",
-          value: ["130000", "130200", "130203"],
+          value: ["北京", "广东省", "福田区"],
           address: "天安数码城"
         }
       ],

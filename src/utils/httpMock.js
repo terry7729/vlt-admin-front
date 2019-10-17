@@ -37,7 +37,7 @@ const data2 = Mock.mock({
       "path": '@province' + '@city' + '@county',
       "english": "@title",
       "icon": "el-icon-right",
-      "icon2":"sdsdssdsdds",
+    
       "sort": /^[1-9]$/,
       "date2|1": true,
       "date3|1-3": true
@@ -52,7 +52,7 @@ const data2 = Mock.mock({
           "path": '@province' + '@city' + '@county',
           "english": "@title",
           "icon": "el-icon-right",
-          "icon2":"sdsdssdsdds",
+  
           "sort": /^[1-9]$/,
           "date2|1": true,
           "date3|1-3": true
@@ -66,7 +66,7 @@ const data2 = Mock.mock({
             "path": '@province' + '@city' + '@county',
             "english": "@title",
             "icon": "el-icon-right",
-            "icon2":"sdsdssdsdds",
+       
             "sort": /^[1-9]$/,
             "date2|1": true,
             "date3|1-3": true
@@ -91,7 +91,7 @@ const data3 = Mock.mock({
       "parentEncoding": /^4[385][1-9]\d{8}/,
       "regionalCode": /^1[385][1-9]\d{3}/,
       "organizationName": "@ctitle(3,5)",
-      "organizationStatus": "@ctitle(1,3)",
+      "organizationStatus|1": true,
       "organizationCode": /^3[385][1-9]\d{4}/,
       "remark": "@ctitle(3,8)",
       "create": "@name(2,4)",
@@ -100,12 +100,12 @@ const data3 = Mock.mock({
       "createTimeTwo": '@date("yyyy-MM-dd HH:mm:ss")',
       "department|40":[
         { 
-          "superiorDepartment":"@ctitle(3,5)",
-         "departmentName":"@ctitle(2,6)",
-         "departmentPrincipal":"@name(2,4)",
-         "principalPhone":/^1[385][1-9]\d{9}/,
-         "status|1":true,
-         "remark":"@ctitle(3,15)"
+          "prevSection":"@ctitle(3,5)",
+          "section":"@ctitle(2,6)",
+          "departmentPrincipal":"@name(2,4)",
+          "principalPhone":/^1[385][1-9]\d{9}/,
+          "status|1":true,
+          "remark":"@ctitle(3,15)"
          }
        ],
     },
@@ -119,7 +119,7 @@ const data3 = Mock.mock({
           "parentEncoding": /^4[385][1-9]\d{8}/,
           "regionalCode": /^1[385][1-9]\d{3}/,
           "organizationName": "@ctitle(3,5)",
-          "organizationStatus": "@ctitle(1,3)",
+          "organizationStatus|1": true,
           "organizationCode": /^3[385][1-9]\d{4}/,
           "remark": "@ctitle(3,8)",
           "create": "@name(2,4)",
@@ -128,8 +128,8 @@ const data3 = Mock.mock({
           "createTimeTwo": '@date("yyyy-MM-dd HH:mm:ss")',
           "department|40":[
             { 
-              "superiorDepartment":"@ctitle(3,5)",
-             "departmentName":"@ctitle(2,6)",
+              "prevSection":"@ctitle(3,5)",
+             "section":"@ctitle(2,6)",
              "departmentPrincipal":"@name(2,4)",
              "principalPhone":/^1[385][1-9]\d{9}/,
              "status|1":true,
@@ -146,7 +146,7 @@ const data3 = Mock.mock({
             "parentEncoding": /^4[385][1-9]\d{8}/,
             "regionalCode": /^1[385][1-9]\d{3}/,
             "organizationName": "@ctitle(3,5)",
-            "organizationStatus": "@ctitle(1,3)",
+            "organizationStatus|1": true,
             "organizationCode": /^3[385][1-9]\d{4}/,
             "remark": "@ctitle(3,8)",
             "create": "@name(2,4)",
@@ -155,12 +155,12 @@ const data3 = Mock.mock({
             "createTimeTwo": '@date("yyyy-MM-dd HH:mm:ss")',
             "department|40":[
              { 
-               "superiorDepartment":"@ctitle(3,5)",
-              "departmentName":"@ctitle(2,6)",
-              "departmentPrincipal":"@name(2,4)",
-              "principalPhone":/^1[385][1-9]\d{9}/,
-              "status|1":true,
-              "remark":"@ctitle(3,15)"
+              "prevSection":"@ctitle(3,5)",
+             "section":"@ctitle(2,6)",
+             "departmentPrincipal":"@name(2,4)",
+             "principalPhone":/^1[385][1-9]\d{9}/,
+             "status|1":true,
+             "remark":"@ctitle(3,15)"
               }
             ],
           }

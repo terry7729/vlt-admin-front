@@ -3,6 +3,7 @@
     <el-container>
       <el-aside class="tree-list" style="padding:20px;width:380px">
         <div class="menu-btn">
+          <!--顶部按钮-->
           <control-bar :options="controlOptions" @select="selectBtn"></control-bar>
         </div>
         <div class="menu-ipt">
@@ -18,6 +19,7 @@
             </tips-line>
           </div>
           <div class="menu-tree" v-if="date">
+             <!--树形结构-->
             <el-tree
               ref="tree"
               :data="date"
@@ -34,13 +36,77 @@
       </el-aside>
       <el-main style="border-left:1px solid #ccc;padding-left:100px;">
         <div class="vlt-edit-single">
-          <bounced-message ref="bounde" :data="data2.slice(1,9)"></bounced-message>
+          <div class="vlt-edit-wrap">
+             <!--右侧表单-->
+            <el-form>
+              <el-form-item label="类型" label-width="110px">
+                <el-select v-model="menuType" placeholder="请选择" @change="handel">
+                  <el-option
+                    v-for="item in option"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <base-form
+              v-if="menuType==0"
+              :formData="data2.slice(1,9)"
+              ref="baseForm"
+              :rules="rules"
+              direction="right"
+              @change="changeForm"
+              labelWidth="110px"
+            ></base-form>
+            <base-form v-else
+              :formData="data3"
+              ref="baseForm"
+              :rules="rules"
+              direction="right"
+              @change="changeForm"
+              labelWidth="110px"
+            ></base-form>
+            <el-row class="vlt-edit-btn">
+              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button size="medium" @click="cancel">取消</el-button>
+            </el-row>
+          </div>
         </div>
       </el-main>
     </el-container>
-    <div class="bouncedMessage">
+    <div class="bouncedMessage"> 
+      <!--添加子节点弹框-->
       <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog">
-        <bounced-message title="添加子节点" @closediaog="handelbounced" ref="bounde" :data="data2"></bounced-message>
+        <div class="vlt-edit-single">
+          <h2 class="title">添加子节点</h2>
+          <div class="vlt-edit-wrap">
+            <el-form>
+              <el-form-item label="类型" label-width="110px">
+                <el-select v-model="menuType" placeholder="请选择">
+                  <el-option
+                    v-for="item in option"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+            <base-form
+              :formData="menuType==='1'?data3:data2"
+              ref="baseForm"
+              :rules="rules"
+              direction="right"
+              @change="changeForm"
+              labelWidth="110px"
+            ></base-form>
+            <el-row class="vlt-edit-btn">
+              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button size="medium" @click="cancel">取消</el-button>
+            </el-row>
+          </div>
+        </div>
       </el-dialog>
     </div>
     <!--添加顶部菜单-->
@@ -70,20 +136,28 @@
 
 <script>
 import Post from "../../../utils/ajax";
-import bouncedMessage from "./bouncedMessage";
 let id = 1000;
-
 export default {
   async created() {
     let n = await Post.axios("/menulist");
-    console.log(n);
     this.date = n.data.data;
+  },
+  mounted() {
+
   },
   data() {
     return {
-      dialogFormVisible2: false,
-      topMnu: [//添加顶部菜单
-        { title: "类型", type: "input", prop: "type", value: "菜单页面", disabled: true },
+     
+      option: [//类型选择
+        { label: "菜单", value: "0" },
+        { label: "按钮", value: "1" }
+      ],
+      controlOptions: [//顶部按钮
+        { name: "添加子节点", type: "primary", icon: "", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "添加顶部菜单", type: "", icon: "", id: 2 },
+        { name: "批量删除", type: "", icon: "", id: 3 }
+      ],
+      topMnu: [//添加顶部菜单表单
         { type: "input", title: "名称", prop: "name", value: "" },
         { type: "input", title: "英文名", prop: "english", value: "" },
         {
@@ -99,7 +173,7 @@ export default {
         { type: "input", prop: "sort", value: "", title: "排序值" },
         { type: "switch", prop: "date3", value: "", title: "是否启用" }
       ],
-      data2: [
+      data2: [//类别为菜单时的表单对象
         {
           title: "上级节点",
           type: "input",
@@ -107,24 +181,13 @@ export default {
           value: "",
           disabled: true
         },
-        { title: "类型", type: "input", prop: "type", value: "" },
         { type: "input", title: "名称", prop: "name", value: "" },
-        { type: "input", title: "路径", prop: "path", value: "" },
+
         { type: "input", title: "路由英文名", prop: "english", value: "" },
         {
           type: "select",
           title: "图标",
           prop: "icon",
-          value: "",
-          options: [
-            { label: "图标一", value: "0" },
-            { label: "图标二", value: "1" }
-          ]
-        },
-          {
-          type: "select",
-          title: "图标",
-          prop: "icon2",
           value: "",
           options: [
             { label: "图标一", value: "0" },
@@ -141,27 +204,23 @@ export default {
         },
         { type: "switch", prop: "date3", value: "", title: "是否启用" }
       ],
-      date: [],
-      slelectifo: "", //当前选中节点名称
-      parent: "",
-      ifo: {},
-      dialogFormVisible: false,
-      controlOptions: [
-        { name: "添加子节点", type: "primary", icon: "", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "添加顶部菜单", type: "", icon: "", id: 2 },
-        { name: "批量删除", type: "", icon: "", id: 3 }
+      data3: [//类型为按钮时的表单对象
+        {
+          title: "名称",
+          type: "input",
+          prop: "type",
+          value: "按钮"
+        },
+        {
+          type: "switch",
+          prop: "date2",
+          value: "",
+          title: "是否敏感操作",
+          option: ["start", "end"]
+        },
+        { type: "switch", prop: "date3", value: "", title: "是否启用" }
       ],
-      form: {
-        singleAmount: "",
-        minMultiple: "",
-        mixBet: "",
-        bet: "",
-        logOff: "",
-        textarea: "",
-        value1: true,
-        value2: true
-      },
-      rules: {
+      rules: {//验证对象
         minMultiple: [
           {
             required: true,
@@ -193,33 +252,65 @@ export default {
           }
         ]
       },
-      logOffOption: [],
-      betOption: [],
-      parms:{}
+      date: [],
+      slelectifo: "", //当前选中节点名称
+      parent: "",
+      menuType: "0", // 0 菜单 1 按钮
+      dialogFormVisible: false, //弹框控制
+      dialogFormVisible2: false,
+      parms: {},
+      parms2: {},
+      val: {}, //节点对象
+      addStatus: "", //表单提交状态
+      falg:false
     };
   },
-  components: {
-    bouncedMessage
-  },
+  components: {},
   methods: {
+    handel(val){
+      this.menuType = val;
+    },
     deselect() {
       // alert(2)
       this.slelectifo = "";
       this.data2[0].value = this.slelectifo;
     },
-    cancel(){//关闭弹窗
+    cancel() {
+      //关闭弹窗
+      this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
-    submit(){//表单提交
-        console.log(this.parms)
+    submit() {
+      //表单提交
+      // if (this.menuType === "0") {
+      //   if (this.addStatus === "添加子节点") {
+      //     this.parms.created = "添加子节点";
+      //     console.log(this.parms)
+      //   } else {
+      //     this.parms.created = "修改节点信息";
+      //     console.log(this.parms)
+      //   }
+      // } else {
+      //   if (this.addStatus === "添加子节点") {
+      //     this.parms2.created = "添加子节点按钮";
+      //       console.log('按钮', this.parms2)
+      //   } else {
+      //     this.parms2.created = "修改节点按钮信息";
+      //     console.log('按钮', this.parms2)
+      //   }
+      // }
+
+   
     },
-    changeForm(val){
-      Object.assign(this.parms,val)
-    },
-    handelbounced(val) {
-      //弹框的取消按钮事件
-      console.log(val);
-      this.dialogFormVisible = val;
+    changeForm(val) {
+      
+      if (this.menuType === "0") {
+        Object.assign(this.parms, val);
+      } else {
+        console.log(val)
+        Object.assign(this.parms2)
+       
+      }
     },
     save(val, formName) {
       console.log(val);
@@ -232,9 +323,6 @@ export default {
         }
       });
     },
-    resestFrom(formName) {
-      this.$refs[formName].resetFields();
-    },
     selectBtn(val) {
       //按钮点击事件
       console.log(val);
@@ -242,6 +330,8 @@ export default {
         if (this.slelectifo == "") {
           this.open();
         } else {
+          this.clearIput(this.data2||data3)
+          this.addStatus = "添加子节点";
           this.setchild = false;
           this.dialogFormVisible = true;
           this.data2[0].value = this.slelectifo;
@@ -250,7 +340,6 @@ export default {
       if (val.id === 2) {
         this.dialogFormVisible2 = true;
       }
-
       //触发弹框
     },
     open() {
@@ -261,12 +350,10 @@ export default {
         }
       });
     },
-
     getnowNodeifo(val, s) {
       //获取当前点击节点信息
-      console.log(val);
+      this.val = val;
       this.slelectifo = val.label;
-
       let n = Object.keys(val.obj);
       let arr = this.data2;
       for (var i = 0; i < arr.length; i++) {
@@ -280,8 +367,22 @@ export default {
     getCheckifo(...res) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
       console.log(res);
+    },
+     clearIput(val){
+      for(var i = 0 ; i < val.length ; i++){
+        val[i].value = ''
+      }
     }
     //
+  },
+  watch: {
+    val: {
+      handler: function(val, oldval) {
+        this.$refs.tree.setChecked(val, true);
+        this.$refs.tree.setChecked(oldval, false);
+      },
+      deep: true // 对象内部的属性监听，也叫深度监听
+    }
   }
 };
 </script>
