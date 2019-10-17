@@ -489,7 +489,6 @@ export default {
       //更改机构信息
       this.dialogFormVisible2 = true;
       this.addOrChange = 0;
-      // this.$router.push("organizationChild/organicompile");
     },
     derparModifine(val) {
       this.dialogFormVisible = true;

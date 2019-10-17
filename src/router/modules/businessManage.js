@@ -14,6 +14,8 @@ const myKnowledge = () => import('@/views/businessManage/home/myKnowledge')
 const messages = () => import('@/views/businessManage/home/messages')
 // 发布消息
 const sendMessage = () => import('@/views/businessManage/home/sendMessage')
+// 查看消息
+const messagesDetail = () => import('@/views/businessManage/home/messagesDetail');
 // 待审核
 const pendingReview = () => import('@/views/businessManage/home/pendingReview')
 // 处理待审核
@@ -57,7 +59,11 @@ const inventoryManage = () => import('@/views/businessManage/channelResourceMana
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
 const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
+
+
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
+
+
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //设备履历
@@ -124,7 +130,7 @@ const cardDetail = () => import('@/views/businessManage/bettingCardManage/cardDe
 // 投注卡详细信息
 const infoDetail = () => import('@/views/businessManage/bettingCardManage/infoDetail')
 // 余额明细
-const  balanceDetail = () => import('@/views/businessManage/bettingCardManage/balanceDetail')
+const balanceDetail = () => import('@/views/businessManage/bettingCardManage/balanceDetail')
 // 新建规则
 const newRule = () => import('@/views/businessManage/bettingCardManage/newRule')
 // 新建卡片
@@ -187,6 +193,14 @@ export default [
       title: '更多消息',
     },
     component: messages
+  },
+  {
+    path: 'businessManage/messagesDetail',
+    name: 'messagesDetail',
+    meta: {
+      title: '查看消息',
+    },
+    component: messagesDetail
   },
   {
     path: 'businessManage/sendMessage',
@@ -705,10 +719,10 @@ export default [
     meta: {
       title: '详情信息',
     },
-    component:infoDetail
-  },{
+    component: infoDetail
+  }, {
     path: 'businessManage/newCard',
-    name:'newCard',
+    name: 'newCard',
     meta: {
       title: '新建卡片'
     },
@@ -716,12 +730,12 @@ export default [
   },
   {
     path: 'businessManage/newRule',
-    name:'newRule',
+    name: 'newRule',
     meta: {
       title: '新建规则'
     },
     component: newRule
-  },{
+  }, {
     path: 'businessManage/exportCard',
     name: 'exportCard',
     meta: {

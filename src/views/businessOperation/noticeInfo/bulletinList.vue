@@ -45,7 +45,7 @@
                 :formData="dialogData"
                 labelWidth="140px"
                 ref="baseForm"
-                :rules='rule2'
+                :rules="rule2"
                 direction="right"
                 @change="changeForm"
               ></base-form>
@@ -55,7 +55,7 @@
       </section>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="postBulletin">提交</el-button>
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary" @click="saveForm">保存</el-button>
         <el-button @click="dialogFormVisible = false">取消</el-button>
       </div>
     </el-dialog>
@@ -67,18 +67,11 @@ export default {
   name: "",
   data() {
     return {
-      rule2:{rule:''},
+      rule2: { rule: "" },
       dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
+      form: {},
       dialogData: [
-        { type: "input", title: "公告名称", prop: "test" },
+        { type: "input", title: "公告名称", prop: "name" },
         {
           type: "select",
           title: "公告模板",
@@ -98,11 +91,9 @@ export default {
         {
           type: "select",
           title: "管理层级",
+          value: "",
           prop: "tier",
-          options: [
-            { label: "全国", value: "2" },
-            { label: "广东省", value: "3" }
-          ]
+          options: [{ label: "全国", value: 2 }, { label: "广东省", value: 3 }]
         },
         {
           type: "select",
@@ -215,15 +206,18 @@ export default {
     addBulletin() {
       this.dialogFormVisible = true;
     },
+    saveForm() {
+      // console.log(this.dialogData);
+    },
     postBulletin() {
       this.dialogFormVisible = false;
     },
     bulletinDetail(name) {
       this.$router.push({ path: "bulletinDetail", query: name });
     },
-    changeForm() {
-      // Object.assign(this.params, val);
-      // console.log("派发出来的参数", this.params);
+    changeForm(val) {
+      //  Object.assign(this.params, val);
+      console.log("派发出来的参数", val);
     },
     search() {},
     pageSizeChange(size) {},

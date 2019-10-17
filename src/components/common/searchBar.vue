@@ -48,6 +48,24 @@
           >
           </el-date-picker>
         </el-form-item>
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'year'">
+          <el-date-picker
+            size="small"
+            v-model="form[formItem.prop]"
+            type="year"
+            :placeholder="`请选择${formItem.title}`"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item :label="formItem.title" v-if="formItem.type === 'month'">
+          <el-date-picker
+            size="small"
+            v-model="form[formItem.prop]"
+            type="month"
+            :placeholder="`请选择${formItem.title}`"
+          >
+          </el-date-picker>
+        </el-form-item>
         <el-form-item :label="formItem.title" v-if="formItem.type === 'cascader'">
           <el-cascader
             size="small"

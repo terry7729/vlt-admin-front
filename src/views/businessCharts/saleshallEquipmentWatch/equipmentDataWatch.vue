@@ -24,16 +24,16 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
+        <el-table-column align="center" prop="hallName" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="province" label="省份"></el-table-column>
+        <el-table-column align="center" prop="city" label="城市"></el-table-column>
         <el-table-column align="center"  label="柜员机">
-             <el-table-column prop="address" align="center" label="柜员机数量" ></el-table-column>
-            <el-table-column prop="address" align="center" label="柜员机在线数量"></el-table-column>
+             <el-table-column prop="tellerMachineTotal" align="center" label="柜员机数量" ></el-table-column>
+            <el-table-column prop="tellerMachineOnlineTotal" align="center" label="柜员机在线数量"></el-table-column>
         </el-table-column>
         <el-table-column align="center"  label="终端机">
-             <el-table-column prop="address" align="center" label="终端机数量" ></el-table-column>
-            <el-table-column prop="address" align="center" label="终端机在线数量"></el-table-column>
+             <el-table-column prop="terminalsTotal" align="center" label="终端机数量" ></el-table-column>
+            <el-table-column prop="terminalsOnlineTotal" align="center" label="终端机在线数量"></el-table-column>
         </el-table-column>       
       </el-table>
      <div class="pagination-container" style="text-align:right;margin-top:30px">
@@ -41,7 +41,7 @@
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -57,6 +57,7 @@ export default {
   name: "saleshallEquipmentWatch",
   data() {
     return {
+      totalCount:0,
       searchOptions: [
         {
           type: "select",
@@ -187,11 +188,27 @@ export default {
     };
   },
   methods: {
+    async getHallEqData(){
+      const self = this;
+      const res = await self.$api.getHallEqData({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.data.dataList;
+        self.totalCount = res.data.data.totalRecord;
+        console.log(self.totalCount);
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      this.listQuery.limit=pageSize
+      this.getHallEqData()
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      this.listQuery.page=currentPage
+      this.getHallEqData()
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -288,7 +305,9 @@ export default {
   
   mounted() {
     // this.showcity();
-  }
+  },created() {
+    this.getHallEqData();
+  },
 };
 </script>
 
