@@ -62,8 +62,20 @@ const basicInfoManage = () => import('@/views/businessManage/channelResourceMana
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
+//台账明细
+const detailLedger = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailLedger')
+//相关流程查看
+const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
+//基础信息类型管理新增
+const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
+// 类型管理查看
+const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
 //入库
 const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
+//仓库管理新增仓库
+const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
+const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
+
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -426,6 +438,22 @@ export default [
     component: basicInfoManage
   },
   {
+    path: 'businessManage/channelResourceManage/addEquipment',
+    name: 'addEquipment',
+    meta: {
+      title: '基本信息类型管理新增',
+    },
+    component: addEquipment
+  },
+  {
+    path: 'businessManage/channelResourceManage/typeCheck',
+    name: 'typeCheck',
+    meta: {
+      title: '基本信息类型管理查看',
+    },
+    component: typeCheck
+  },
+  {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
     meta: {
@@ -553,11 +581,7 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
-<<<<<<< HEAD
-  }, 
-=======
   },
->>>>>>> 165ec0d9ba745c3e319db1f057c3a422fb209181
   {
     path: 'businessManage/cardBalance',
     name: 'cardBalance',
