@@ -60,6 +60,8 @@ const storeManage = () => import('@/views/businessManage/channelResourceManage/s
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
+//设备履历
+const equRecordCheck = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equRecordCheck')
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //台账明细
@@ -70,8 +72,16 @@ const detailFlow = () => import('@/views/businessManage/channelResourceManage/le
 const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
 // 类型管理查看
 const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
+//型号管理查看
+const modelCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelCheck')
+//类型管理新增
+const modelAdd = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelAdd')
 //入库
 const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
+//入库详情
+const alreadyPutDetail =  () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyPutDetail')
+//出库
+const outStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/outStore')
 //仓库管理新增仓库
 const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
@@ -356,6 +366,14 @@ export default [
     component: equipmentDetail
   },
   {
+    path: 'businessManage/channelResourceManage/equRecordCheck',
+    name: 'equRecordCheck',
+    meta: {
+      title: '设备履历',
+    },
+    component: equRecordCheck
+  },
+  {
     path: 'businessManage/channelResourceManage/inventoryStatistics',
     name: 'inventoryStatistics',
     meta: {
@@ -379,6 +397,22 @@ export default [
       title: '入库',
     },
     component: putStore
+  },
+  {
+    path: 'businessManage/channelResourceManage/alreadyPutDetail',
+    name: 'alreadyPutDetail',
+    meta: {
+      title: '已入库详情',
+    },
+    component: alreadyPutDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/outStore',
+    name: 'outStore',
+    meta: {
+      title: '出库',
+    },
+    component: outStore
   },
 
   {
@@ -452,6 +486,22 @@ export default [
       title: '基本信息类型管理查看',
     },
     component: typeCheck
+  },
+  {
+    path: 'businessManage/channelResourceManage/modelCheck',
+    name: 'modelCheck',
+    meta: {
+      title: '基本信息型号管理查看',
+    },
+    component: modelCheck
+  },
+  {
+    path: 'businessManage/channelResourceManage/modelAdd',
+    name: 'modelAdd',
+    meta: {
+      title: '基本信息型号管理新增',
+    },
+    component: modelAdd
   },
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
