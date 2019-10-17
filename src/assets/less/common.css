@@ -319,61 +319,69 @@
 .create-active .process-content .el-header {
   height: 110px !important;
 }
-.create-active input {
-  width: 400px;
+.create-active .tabs-content .el-tabs__nav {
+  margin-right: 100px;
 }
-.create-active .el-tabs--left .el-tabs__nav-wrap.is-left {
+.create-active .tabs-content .el-tabs__item.is-active {
+  background: #e6f7ff;
+}
+.create-active .tabs-content .el-tabs--left .el-tabs__active-bar.is-left,
+.create-active .tabs-content .el-tabs--left .el-tabs__nav-wrap.is-left::after {
+  left: 194px;
+  margin-right: 10px;
+}
+.create-active .tabs-content .el-tabs--left .el-tabs__nav-wrap.is-left {
   margin-right: -60px;
 }
-.create-active .el-tabs__item {
+.create-active .tabs-content .el-tabs__item {
   padding: 0 70px;
 }
-.create-active .tables-content .el-tabs__item.is-active {
+.create-active .tabs-content .tables-content .el-tabs__item.is-active {
   background: none;
 }
-.create-active .switchStyle .el-switch__label {
+.create-active .tabs-content .switchStyle .el-switch__label {
   position: absolute;
   display: none;
   color: #fff;
 }
-.create-active .switchStyle .el-switch__label--left {
+.create-active .tabs-content .switchStyle .el-switch__label--left {
   z-index: 9;
   left: 6px;
 }
-.create-active .switchStyle .el-switch__label--right {
+.create-active .tabs-content .switchStyle .el-switch__label--right {
   z-index: 9;
   left: -14px;
 }
-.create-active .switchStyle .el-switch__label.is-active {
+.create-active .tabs-content .switchStyle .el-switch__label.is-active {
   display: block;
 }
-.create-active .switchStyle.el-switch .el-switch__core,
-.create-active .el-switch .el-switch__label {
+.create-active .tabs-content .switchStyle.el-switch .el-switch__core,
+.create-active .tabs-content .el-switch .el-switch__label {
   width: 50px !important;
 }
-input {
+.create-active input {
   width: 400px;
 }
-.el-textarea__inner {
+.create-active .el-textarea__inner {
   width: 400px;
 }
-.active-target .el-checkbox {
+.create-active .active-target .el-checkbox {
   margin-right: 10px;
 }
-.active-target .el-input {
+.create-active .active-target .el-input {
   width: 250px;
   margin-bottom: 5px;
   display: inline-block;
 }
-.active-target .el-input input {
+.create-active .active-target .el-input input {
   width: 250px;
   margin-left: 18px;
 }
-.active-lobby .el-input {
+.create-active .active-lobby .el-input {
   width: 250px;
   display: inline-block;
 }
-.active-lobby .el-input input {
+.create-active .active-lobby .el-input input {
   width: 250px;
 }
 .el-collapse-item__header {
