@@ -1,220 +1,66 @@
 <template>
   <div class="vlt-card">
-    <div class="operationManage">
-      <searchBar :options="operationManageoptions" :total="999">
-        <controlBar
+    <div class="FinancialSettle">
+      <search-bar :options="FinancialSettleOptions" :total="999">
+        <control-bar
           slot="extend-bar"
-          @select="operationManageAddclick"
-          :options="operationManageAddbtn"
+          @select="FinancialSettleSelectBtn"
+          :options="FinancialSettleOptionsBtn"
           position="left"
-        ></controlBar>
-      </searchBar>
-      <el-table :data="operationManageTableData" border style="width: 100%; margin-top: 10px">
-        <el-table-column prop="operationManageNum" label="序号"></el-table-column>
-        <el-table-column prop="operationManageBelong" label="所属渠道"></el-table-column>
-        <el-table-column prop="operationManageName" label="账户名"></el-table-column>
-        <el-table-column prop="operationManageID" label="账户ID"></el-table-column>
-        <el-table-column prop="operationManagetelephone" label="手机号"></el-table-column>
-        <el-table-column prop="operationManageRoleName" label="角色名称"></el-table-column>
-        <el-table-column prop="operationManageCreater" label="创建人"></el-table-column>
-        <el-table-column prop="operationManageCreateDate" label="创建时间"></el-table-column>
-        <el-table-column label="账户状态" min-width="140" prop="operationManageStatus">
-          <template slot-scope="scope">
-            <tableRowStatus
-              :scope="scope"
-              :tableData="operationManageTableData"
-              idField="id"
-              statusField="status"
-              :rowName="scope.row.name"
-              :option="{
-                enable:{
-                  apiName:'apiName',
-                  label:'启用',
-                  value:0
-                },
-               disable:{
-                  apiName:'apiName',
-                  label:'冻结',
-                  value:1
-               },
-               logout:{
-                  apiName:'apiName',
-                  label:'注销',
-                  value:2
-               }
-              }"
-            ></tableRowStatus>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" min-width="140">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="operationManageWrite(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="operationManageLook(scope.row)">查看</el-button>
-          </template>
-        </el-table-column>
+        ></control-bar>
+      </search-bar>
+      <el-table :data="FinancialSettleTableData" border>
+        <el-table-column prop="SettleArea" label="区域"></el-table-column>
+        <el-table-column prop="SettleSellMoney" label="售卡金额"></el-table-column>
+        <el-table-column prop="SettleReturnMoney" label="退卡金额"></el-table-column>
+        <el-table-column prop="SettleTopUp" label="奖金充值"></el-table-column>
+        <el-table-column prop="SettleCashMoney" label="兑付奖金"></el-table-column>
+        <el-table-column prop="SettleSale" label="销售额"></el-table-column>
+        <el-table-column prop="SettleProvincialMoney" label="省级发行经费"></el-table-column>
+        <el-table-column prop="SettlePrefectureMoney" label="地级发行经费"></el-table-column>
+        <el-table-column prop="SettleWelfareMoney" label="公益金"></el-table-column>
+        <el-table-column prop="SettleReceivable" label="应收(缴)金额"></el-table-column>
       </el-table>
-      <tablePaging :total="99" :currentPage="1" :pageSize="10"></tablePaging>
-      <el-dialog title="新增账号" :visible.sync="dialogFormVisible">
-        <div class="vlt-edit-single">
-          <base-form
-            :formData="operationManageWriteData"
-            ref="baseForm"
-            :rules="operationManageWriteRule"
-            direction="right"
-            @change="operationManageWritechangeForm"
-          ></base-form>
-        </div>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">保 存</el-button>
-        </div>
-      </el-dialog>
+      <div class="table_paging">
+        <tablePaging class="table_paging_right" :total="99" :currentPage="1" :pageSize="10"></tablePaging>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
-import rules from "@/utils/rules.js";
 export default {
   name: "",
   data() {
     return {
-      dialogFormVisible: false,
-      operationManageTableData: [
+      //表格数据
+      FinancialSettleTableData: [
         {
-          operationManageNum: 1,
-          operationManageBelong: "广东省",
-          operationManageName: "上海市普陀区金沙江路 1518 弄",
-          operationManageID: "赵",
-          operationManagetelephone: "自营",
-          operationManageRoleName: "赵",
-          operationManageCreater: "13800131358",
-          operationManageCreateDate: "13800131358",
-          roleManageCreateDate: "13800131358"
-        },
-        {
-          operationManageNum: 2,
-          operationManageBelong: "广东省",
-          operationManageName: "上海市普陀区金沙江路 1518 弄",
-          operationManageID: "赵",
-          operationManagetelephone: "自营",
-          operationManageRoleName: "赵",
-          operationManageCreater: "13800131358",
-          operationManageCreateDate: "13800131358",
-          roleManageCreateDate: "13800131358"
+          SettleArea: "哈哈",
+          SettleSellMoney: "哈哈",
+          SettleReturnMoney: "哈哈",
+          SettleTopUp: "哈哈",
+          SettleCashMoney: "哈哈",
+          SettleSale: "哈哈",
+          SettleProvincialMoney: "哈哈",
+          SettlePrefectureMoney: "哈哈",
+          SettleWelfareMoney: "哈哈",
+          SettleReceivable: "哈哈"
         }
       ],
-      operationManageoptions: [
+      //搜索框类型
+      FinancialSettleOptions: [
         {
-          type: "input",
-          prop: "roleManageID",
-          value: "",
-          title: "账户ID",
-          placeholder: "请输入"
-        },
-        {
-          type: "input",
-          prop: "roleManageRoleName",
-          value: "",
-          title: "角色名称",
-          placeholder: "请输入"
-        },
-        {
-          type: "select",
-          prop: "roleManageStatus",
-          value: "",
-          title: "账户状态",
-          placeholder: "请输入",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
-        },
-        {
-          type: "select",
-          prop: "roleManageUsername",
-          value: "",
-          title: "用户角色",
-          placeholder: "请输入",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
-        },
-        {
-          type: "input",
-          prop: "roleManageCreater",
-          value: "",
-          title: "创建人",
-          placeholder: "请输入"
-        },
-        {
-          type: "datetime-range",
-          prop: "roleManageCreateDate",
-          value: "",
-          title: "创建时间",
-          options: ["start", "end"]
-        }
-      ],
-      operationManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
-      operationManageWriteRule: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
-        ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
-      },
-      operationManageWriteData: [
-        {
-          type: "select",
-          title: "所属渠道",
-          prop: "operationManageBelong",
-          value: "",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
-        },
-        {
-          type: "input",
-          title: "账户名称",
-          prop: "operationManageName",
+          title: "选择日期",
+          type: "datepicker",
+          prop: "FinancialSettleDate",
           value: ""
         },
         {
-          type: "select",
-          title: "账户角色",
-          prop: "operationManageRoleName",
+          type: "cascader",
+          prop: "FinancialSettleArea",
           value: "",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
-        },
-        {
-          type: "input",
-          title: "手机号",
-          value: "",
-          prop: "operationManagetelephone"
-        },
-        { type: "input", title: "身份证号", value: "", prop: "accountname" },
-        { type: "input", title: "联系地址", value: "", prop: "accountname" },
-        {
-          type: "input",
-          title: "账户密码",
-          value: "",
-          prop: "accountname",
-          disabled: true,
-          placeholder: "初始密码为123456"
-        },
-        {
-          type: "cascader-multiple",
-          prop: "accountauthority",
-          value: "",
-          title: "账号权限",
-          placeholder: "请选择",
+          title: "区域",
           options: [
             {
               value: "zhinan",
@@ -484,38 +330,19 @@ export default {
             }
           ]
         }
+      ],
+      //打印按钮类型选择
+      FinancialSettleOptionsBtn: [
+        { name: "打印", type: "primary", icon: "printer" },
+        { name: "导出", type: "danger", icon: "download" }
       ]
     };
   },
   components: {},
+
   methods: {
-    operationManageAddclick() {
-      this.$router.push("operationAccountAdd");
-    },
-    //点击编辑
-    operationManageWrite(row) {
-      this.dialogFormVisible = true;
-      // row = this.operationManageWriteData[0].prop;
-      let n = Object.keys(row);
-      let arr = this.operationManageWriteData;
-      //console.log(n);
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < n.length; j++) {
-          if (arr[i].prop === n[j]) {
-            arr[i].value = row[n[j]];
-          }
-        }
-      }
-      //console.log(this.operationManageWriteData[0]);
-    },
-    //点击查看
-    operationManageLook(row) {
-      let id = row.operationManageNum;
-      this.$router.push({ path: "operationAccountExamine", query: { id } });
-      //console.log(row);
-      this.eventBus.$emit("send", row);
-    },
-    operationManageWritechangeForm() {}
+    //点击按钮选择哪个
+    FinancialSettleSelectBtn() {}
   }
 };
 </script>

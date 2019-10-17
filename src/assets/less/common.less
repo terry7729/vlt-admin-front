@@ -394,6 +394,18 @@
   width: 38%;
 }
 
+.MemberGrade .el-dialog {
+  width: 38%;
+}
+
+.memberEquity .el-dialog {
+  width: 38%;
+}
+
+.MemberIntegral .el-dialog {
+  width: 38%;
+}
+
 .develop-plan {
   .el-tabs--left .el-tabs__item.is-left {
     text-align: left;
@@ -401,9 +413,6 @@
 }
 
 
-// .el-step__icon.is-text {
-//   margin-bottom: 28px;
-// }
 
 
 .result-assess {
@@ -445,14 +454,20 @@
 
   .addForm-box {
     .add-form {
+      margin-left: 95px;
+
       :nth-child(1) {
         .el-form-item__label {
           width: 100px !important;
         }
       }
 
-      .add-textarea {
+      .el-checkbox-group {
+        display: inline-block;
+        width: 400px;
+        margin-top: -40px;
         margin-left: 20px;
+
       }
 
     }
@@ -464,95 +479,92 @@
     }
   }
 
-  
-      input {
-        width: 400px;
-      }
 
-      .el-textarea__inner {
-        width: 400px;
-      }
+  .el-tabs--left .el-tabs__nav-wrap.is-left {
+    margin-right: -60px;
+  }
 
-      .active-target {
-        .el-checkbox {
-          margin-right: 10px;
-        }
+  .el-tabs__item {
+    padding: 0 70px;
+  }
 
-        .el-input {
-          width: 250px;
-          margin-bottom: 5px;
-          display: inline-block;
+  .tables-content .el-tabs__item.is-active {
+    background: none;
+  }
 
-          input {
-            width: 250px;
-            margin-left: 18px;
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
 
-          }
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
 
-        }
-      }
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
 
-      .active-lobby {
-        .el-input {
-          width: 250px;
-          display: inline-block;
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
 
-          input {
-            width: 250px;
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
+  }
+}
 
-          }
+input {
+  width: 400px;
+}
 
-        }
+.el-textarea__inner {
+  width: 400px;
+}
 
-      }
-    }
+.active-target {
+  .el-checkbox {
+    margin-right: 10px;
+  }
 
-    .active-rule {
-      .rule-item {
+  .el-input {
+    width: 250px;
+    margin-bottom: 5px;
+    display: inline-block;
 
-        .el-select,
-        .el-input {
-          width: 100px;
-          margin-right: 20px;
-          display: inline-block;
-
-          input {
-            width: 100px;
-          }
-        }
-
-        .last-rule {
-          input {
-            width: 200px;
-          }
-
-        }
-      }
-    }
-
-    .remark {
-      .el-textarea {
-        width: 500px;
-        display: inline-block;
-
-        textarea {
-          width: 500px;
-          margin-top: 10px;
-
-        }
-
-      }
+    input {
+      width: 250px;
+      margin-left: 18px;
 
     }
 
-    .item-check {
+  }
+}
 
+.active-lobby {
+  .el-input {
+    width: 250px;
+    display: inline-block;
 
-      .el-checkbox {
-        padding-bottom: 10px;
-      }
+    input {
+      width: 250px;
 
     }
+
+    .item-check {}
+
+    .el-checkbox {
+      padding-bottom: 10px;
+    }
+
+
+
+
+
 
     .el-collapse-item__header {
       font-size: 16px;
@@ -560,98 +572,157 @@
       text-indent: 25px;
     }
 
-    .el-progress {
-      width: 400px;
-    }
 
-    .upload-file {
-      width: 600px;
-      margin-bottom: 20px;
+    .preview-template {
+      .upload-img {
+        margin: 20px 0;
 
-      .el-upload__tip {
+        .upload-box {
+          display: inline-block;
+        }
+      }
 
-        font-size: 14px;
-        color: #aaa;
+      .drag-upload {
+        margin-bottom: 20px;
         position: relative;
-        left: 65px;
+        left: 75px;
       }
 
-    }
+      .active-rule {
+        .rule-item {
 
-    .upload-img {
-      margin-bottom: 20px;
+          .el-select,
+          .el-input {
+            width: 100px;
+            margin-right: 20px;
+            display: inline-block;
 
-      .upload-box {
-        display: inline-block;
-      }
-    }
+            input {
+              width: 100px;
+            }
+          }
 
-    .drag-upload {
-      position: relative;
-      left: 78px;
-    }
+          .last-rule {
+            input {
+              width: 200px;
+            }
 
-    .index-check {
-      margin-top: 15px;
-
-      .item-check {
-        display: inline-block;
-        width: 800px;
-        position: relative;
-        top: -15px;
-        left: 60px;
-
-
+          }
+        }
       }
 
-    }
+      .remark {
+        .el-textarea {
+          width: 500px;
+          display: inline-block;
 
-    .add-rule {
-      width: 472px;
-      height: 60px;
-      line-height: 60px;
-      margin: -10px 0 20px 220px;
-      text-align: center;
-      font-size: 14px;
-      border: 1px dashed #aaa;
-    }
+          textarea {
+            width: 500px;
+            margin-top: 10px;
 
-    .tables-content .el-tabs__item.is-active {
-      background: none;
-    }
+          }
 
-  
+          .add-rule {
+            width: 472px;
+            height: 60px;
+            line-height: 60px;
+            margin: -10px 0 20px 220px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px dashed #aaa;
+          }
+
+        }
+
+        .item-check {
+
+          .el-checkbox {
+            padding-bottom: 10px;
+          }
+
+        }
+
+
+      }
 
 
 
+      .tables-content .el-tabs__item.is-active {
+        background: none;
+      }
 
-.account-detail {
-  .equity-title {
-    margin-left: 32px;
-    margin-top: 5px;
+      .account-detail {
+        .equity-title {
+          margin-left: 32px;
+          margin-top: 5px;
 
-    span {
-      display: inline-block;
-      margin-right: 400px;
+          span {
+            display: inline-block;
+            margin-right: 400px;
+          }
+        }
+      }
+
     }
   }
 }
 
-.plan-detail {
-  .base-data {
-    .rule-form {
-      .el-select {
-        width: 210px;
-      }
+//登录页面input框尺寸
+.login-container.vlt-card{
+  .vlt-edit-single .el-input__inner{
+    width:368px;
+    height:46px;
+    border-radius:4px
+  }
+      .plan-detail {
+        .base-data {
+          width: 60%;
+          margin-top: 20px;
+          margin-left: 150px;
 
-      .el-input {
-        width: 210px;
+          .rule-form {
+            width: 100%;
 
-        input {
-          width: 200px;
+            .el-select {
+              width: 160px;
+            }
+
+            .el-input {
+              width: 150px;
+
+              input {
+                width: 150px;
+              }
+            }
+
+          }
+        }
+
+        .ration-target {
+          margin-top: 20px;
+
+          .ration-check {
+            margin-left: 70px;
+            margin-top: -16px;
+
+            .el-checkbox {
+              margin-bottom: 20px;
+            }
+          }
+        }
+
+        .progress-bar {
+          width: 800px;
+          margin: 20px 150px;
+        }
+
+        .state-inform {
+          position: absolute;
+          left: 900px;
+          top: 12px;
+          text-align: right;
         }
       }
-
     }
   }
 }
