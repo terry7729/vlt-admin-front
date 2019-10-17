@@ -196,9 +196,49 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 h3{margin-bottom: 20px}
 .tabs-content{
-  padding: 16px 30px
+  padding: 16px 30px;
+   .el-tabs__nav{
+    margin-right: 100px;
+  }
+  .el-tabs__item.is-active{
+    background: rgb(230, 247, 255);
+  }
+  .el-tabs--left .el-tabs__active-bar.is-left, .el-tabs--left .el-tabs__nav-wrap.is-left::after{
+    left:194px;
+    margin-right: 10px;
+  }
+  .el-tabs--left .el-tabs__nav-wrap.is-left{
+    margin-right: -60px;
+  }
+  .el-tabs__item{
+    padding: 0 70px;
+  }
+  .tables-content .el-tabs__item.is-active{
+    background: none;
+  }
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
+  }
 }
+
 </style>

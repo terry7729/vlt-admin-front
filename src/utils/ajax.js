@@ -2,7 +2,7 @@
 import axios from 'axios'
 import qs from 'qs'
 axios.defaults.timeout = 60000;
-axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
 switch(process.env.VUE_APP_MODE) {
   // 生产环境
@@ -24,7 +24,7 @@ switch(process.env.VUE_APP_MODE) {
 const request = (method, url, options) => {
   const runRequest = async () => {
     const data = options.data || {};
-    const formatData = options.payLoad ? data : qs.stringify(data);
+    const formatData = data;
     try {
       const res = await axios[method](url, method === 'get' ? {params: formatData} : formatData);
       return res.data;

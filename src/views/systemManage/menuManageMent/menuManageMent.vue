@@ -90,7 +90,7 @@ export default {
           type: "select",
           title: "图标",
           prop: "icon",
-          value: "",
+          value: "ddd",
           options: [
             { label: "图标一", value: "0" },
             { label: "图标二", value: "1" }
@@ -115,6 +115,16 @@ export default {
           type: "select",
           title: "图标",
           prop: "icon",
+          value: "",
+          options: [
+            { label: "图标一", value: "0" },
+            { label: "图标二", value: "1" }
+          ]
+        },
+          {
+          type: "select",
+          title: "图标",
+          prop: "icon2",
           value: "",
           options: [
             { label: "图标一", value: "0" },
@@ -201,7 +211,7 @@ export default {
       this.dialogFormVisible2 = false;
     },
     submit(){//表单提交
-
+        console.log(this.parms)
     },
     changeForm(val){
       Object.assign(this.parms,val)
