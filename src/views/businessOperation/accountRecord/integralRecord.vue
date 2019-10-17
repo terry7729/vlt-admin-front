@@ -21,7 +21,7 @@
           <template scope="scope">{{scope.row.money+scope.row.change}}</template>
         </el-table-column>
         <el-table-column prop="change" label="变动积分">
-          <template scope="scope">{{'+'+scope.row.change}}</template>
+          <template slot-scope="scope">{{'+'+scope.row.change}}</template>
         </el-table-column>
         <el-table-column prop="time" label="变更时间"></el-table-column>
         <el-table-column label="操作" align="center">
