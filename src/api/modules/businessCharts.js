@@ -8,5 +8,19 @@ export default {
   // 例
   getTest: (options = {}) => ajax.post('/test', options),
   // 中央交易数据列表
-  getCenterDeal:(options={})=>ajax.post('monitor/deal/central',options)
+  getCenterDeal:(options={})=>ajax.post('monitor/deal/central',options),
+  // 省级交易数据列表
+  getProvinceDeal:(options={})=>ajax.post('monitor/deal/province',options),
+  // 市级交易数据列表
+  getCityDeal:(options={})=>ajax.post('monitor/deal/city',options),
+  //区域交易数据列表
+  getAreaDeal: (options = {}) => ajax.post('monitor/deal/area', options),
+  // 游戏交易数据列表
+  getGameDeal:(options={})=>ajax.post('monitor/deal/game',options),
+  // 销售厅账户监控列表
+  getHallAccount:(options={})=>ajax.post('monitor/hall/account',options),
+  // 销售厅设备统计数据监控列表
+  getHallEqData:(options={})=>ajax.post('monitor/hall/terminal/count',options),
+   // 销售厅设备硬件监控列表
+   getHallEqHardware:(options={})=>ajax.post('monitor/hall/terminal/hardware',options)
 }

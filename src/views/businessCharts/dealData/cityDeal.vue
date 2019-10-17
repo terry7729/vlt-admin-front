@@ -16,19 +16,21 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="省份"></el-table-column>
-        <el-table-column align="center" prop="name" label="销售额"></el-table-column>
-        <el-table-column align="center" prop="address" label="中奖金额"></el-table-column>
-        <el-table-column align="center" prop="address" label="小奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
+        <el-table-column align="center" prop="hallName" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="province" label="省份"></el-table-column>
+        <el-table-column align="center" prop="city" label="城市"></el-table-column>
+        <el-table-column align="center" prop="saleAmount" label="销售额"></el-table-column>
+        <el-table-column align="center" prop="winningAmount" label="中奖金额"></el-table-column>
+        <el-table-column align="center" prop="smallAwardAmount" label="小奖中奖"></el-table-column>
+        <el-table-column align="center" prop="bigAwardAmount" label="大奖中奖"></el-table-column>
+        <el-table-column align="center" prop="grandPrize" label="大奖兑奖"></el-table-column>
       </el-table>
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -42,12 +44,11 @@
 // import errGif from "@/assets/401_images/401.gif";
 // import pagination from '@/components/common/pagination'
 export default {
+  totalCount: 0,
   name: "cityDeal",
   data() {
     return {
-      controlOptions: [
-        { name: "导出", type: "primary", icon: "download" },
-      ],
+      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       total: null,
       listQuery: {
         page: 1,
@@ -78,11 +79,28 @@ export default {
     };
   },
   methods: {
+    //获取市级交易数据列表
+    async getCityDeal() {
+      const self = this;
+      const res = await self.$api.getCityDeal({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.data.dataList;
+        self.totalCount = res.data.data.totalRecord;
+        console.log(self.totalCount);
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      this.listQuery.limit = pageSize;
+      this.getCityDeal();
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      this.listQuery.page = currentPage;
+      this.getCityDeal();
     },
     search(form) {
       console.log("search", form);
@@ -93,14 +111,6 @@ export default {
       } else {
         this.$router.go(-1);
       }
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
     },
     excleExporrt() {
       // 导出数据
@@ -145,12 +155,14 @@ export default {
         }
       });
     }
-  }
+  },created() {
+    this.getCityDeal();
+  },
 };
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>

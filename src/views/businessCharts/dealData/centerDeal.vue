@@ -20,7 +20,7 @@
         <el-table-column align="center" prop="province" label="省份">
           <!-- <template slot-scope="scope">
               <span>{{scope.row.province}}</span>
-            </template> -->
+          </template>-->
         </el-table-column>
         <el-table-column align="center" prop="saleAmount" label="销售额"></el-table-column>
         <el-table-column align="center" prop="winningAmount" label="中奖金额"></el-table-column>
@@ -37,6 +37,7 @@
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
+         
         </section>
       </div>
     </div>
@@ -48,34 +49,45 @@ export default {
   name: "centerDeal",
   data() {
     return {
-      totalCount:10,
+      totalCount: 0,
       controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       exportLoading: false,
-      total: null,
       listQuery: {
         page: 1,
         limit: 10
       },
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "  1518 弄"
+          province: "2016-05-02",
+          saleAmount: "王小虎",
+          winningAmount: "  1518 弄",
+          smallAwardAmount: "2016-05-02",
+          bigAwardAmount: "王小虎",
+          grandPrize: "  1518 弄"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "  1517 弄"
+           province: "2016-05-02",
+          saleAmount: "王小虎",
+          winningAmount: "  1518 弄",
+          smallAwardAmount: "2016-05-02",
+          bigAwardAmount: "王小虎",
+          grandPrize: "  1518 弄"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "  1519 弄"
+           province: "2016-05-02",
+          saleAmount: "王小虎",
+          winningAmount: "  1518 弄",
+          smallAwardAmount: "2016-05-02",
+          bigAwardAmount: "王小虎",
+          grandPrize: "  1518 弄"
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "  1516 弄"
+           province: "2016-05-02",
+          saleAmount: "王小虎",
+          winningAmount: "  1518 弄",
+          smallAwardAmount: "2016-05-02",
+          bigAwardAmount: "王小虎",
+          grandPrize: "  1518 弄"
         }
       ]
     };
@@ -83,39 +95,36 @@ export default {
   computed: {},
   created() {
     this.getCenterDeal();
+    // this.getlist();
   },
-  mounted() {},
+  mounted() {
+
+  },
   components: {},
   methods: {
-     async getCenterDeal() {
+    //获取中央交易数据列表
+    async getCenterDeal() {
       const self = this;
       const res = await self.$api.getCenterDeal({
         data: {
           pageNum: self.listQuery.page,
-          pageSize:self.listQuery.limit
+          pageSize: self.listQuery.limit
         }
       });
-      if (res && res.code == 0) {       
-        self.tableData=res.data.data.dataList
-        self.totalCount=res.data.data.totalRecord
-        console.log(self.totalCount)
+      if (res && res.code == 0) {
+        self.tableData = res.data.data.dataList;
+        self.totalCount = res.data.data.totalRecord;
+        console.log(self.totalCount);
       }
-   
     },
-    pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+    pageSizeChange(pageSize) {    
+      this.listQuery.limit = pageSize;
+      this.getCenterDeal();
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
-    },
+      this.listQuery.page = currentPage;
+      this.getCenterDeal();
+    },  
     excleExporrt() {
       // 导出数据
       import("@/libs/map/Export2Excel.js").then(excel => {
