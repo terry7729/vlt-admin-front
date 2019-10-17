@@ -140,7 +140,8 @@ const templateDetail = () => import('@/views/businessOperation/noticeInfo/templa
 const createTemplate = () => import('@/views/businessOperation/noticeInfo/createTemplate')
 //消息推送
 const infoPush = () => import('@/views/businessOperation/noticeInfo/infoPush')
-
+//消息推送编辑
+const infoEdit = () => import('@/views/businessOperation/noticeInfo/infoEdit')
 
 
 export default [
@@ -666,6 +667,14 @@ export default [
       title: '消息推送',
     },
     component: infoPush,
+  },
+  {
+    path: 'noticeInfo/infoEdit',
+    name: 'infoEdit',
+    meta: {
+      title: '消息推送',
+    },
+    component: infoEdit,
   },
 
 

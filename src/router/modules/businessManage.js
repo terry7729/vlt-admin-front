@@ -57,11 +57,10 @@ const inventoryManage = () => import('@/views/businessManage/channelResourceMana
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
 const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
-const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
-const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
+
+
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
-const detailLedger = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailLedger')
-const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
+
 
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')

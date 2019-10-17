@@ -9,7 +9,7 @@
         <el-tab-pane label="推送列表">
           <search-bar @search="infoSearch" :options="listOptions" :total="999" labelWidth="80px"></search-bar>
           <el-button type="primary" size="mini">
-            <i class="el-icon-plus">发布推送</i>
+            <i class="el-icon-plus" @click="infoEdit">发布推送</i>
           </el-button>
           <el-table ref="multipleTable" :data="pushList" border>
             <el-table-column prop="num" label="序号"></el-table-column>
@@ -21,7 +21,7 @@
             <el-table-column prop="remark" label="备注内容"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="pushDetail(scope.row.id)">查看详情</el-button>
+                <el-button type="primary" size="mini" @click="pushDetail(scope.row.num)">查看详情</el-button>
                 <el-button type="primary" size="mini" v-if="scope.row.state=='推送中'">停用</el-button>
               </template>
             </el-table-column>
@@ -50,7 +50,7 @@
             <el-table-column prop="remark" label="推送内容"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="templateDetail(scope.row.id)">查看详情</el-button>
+                <el-button type="primary" size="mini" @click="templateDetail(scope.row.num)">查看详情</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -205,7 +205,12 @@ export default {
     templateSearch(params) {
       console.log("params2:", params);
     },
-    pushDetail(id) {},
+    infoEdit() {
+      this.$router.push({ path: "infoEdit" });
+    },
+    pushDetail(num) {
+      this.$router.push({ path: "infoEdit", query: { id: num } });
+    },
     templateDetail(id) {}
   }
 };
