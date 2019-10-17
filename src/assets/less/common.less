@@ -413,9 +413,6 @@
 }
 
 
-// .el-step__icon.is-text {
-//   margin-bottom: 28px;
-// }
 
 
 .result-assess {
@@ -457,14 +454,20 @@
 
   .addForm-box {
     .add-form {
+      margin-left: 95px;
+
       :nth-child(1) {
         .el-form-item__label {
           width: 100px !important;
         }
       }
 
-      .add-textarea {
+      .el-checkbox-group {
+        display: inline-block;
+        width: 400px;
+        margin-top: -40px;
         margin-left: 20px;
+
       }
 
     }
@@ -477,14 +480,70 @@
   }
 
 
-  input {
-    width: 250px;
-    margin-left: 18px;
-
+  .el-tabs--left .el-tabs__nav-wrap.is-left {
+    margin-right: -60px;
   }
 
+  .el-tabs__item {
+    padding: 0 70px;
+  }
+
+  .tables-content .el-tabs__item.is-active {
+    background: none;
+  }
+
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
+
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
+
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
+
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
+
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
+  }
 }
 
+input {
+  width: 400px;
+}
+
+.el-textarea__inner {
+  width: 400px;
+}
+
+.active-target {
+  .el-checkbox {
+    margin-right: 10px;
+  }
+
+  .el-input {
+    width: 250px;
+    margin-bottom: 5px;
+    display: inline-block;
+
+    input {
+      width: 250px;
+      margin-left: 18px;
+
+    }
+
+  }
+}
 
 .active-lobby {
   .el-input {
@@ -496,156 +555,163 @@
 
     }
 
-  }
+    .item-check {}
 
-}
-
-
-.active-rule {
-  .rule-item {
-
-    .el-select,
-    .el-input {
-      width: 100px;
-      margin-right: 20px;
-      display: inline-block;
-
-      input {
-        width: 100px;
-      }
+    .el-checkbox {
+      padding-bottom: 10px;
     }
 
-    .last-rule {
-      input {
-        width: 200px;
-      }
 
-    }
-  }
-}
 
-.remark {
-  .el-textarea {
-    width: 500px;
-    display: inline-block;
 
-    textarea {
-      width: 500px;
-      margin-top: 10px;
 
+
+    .el-collapse-item__header {
+      font-size: 16px;
+      font-weight: 600;
+      text-indent: 25px;
     }
 
-  }
 
-}
+    .preview-template {
+      .upload-img {
+        margin: 20px 0;
 
-.item-check {
-
-
-  .el-checkbox {
-    padding-bottom: 10px;
-  }
-
-}
-
-.el-collapse-item__header {
-  font-size: 16px;
-  font-weight: 600;
-  text-indent: 25px;
-}
-
-.el-progress {
-  width: 400px;
-}
-
-.upload-file {
-  width: 600px;
-  margin-bottom: 20px;
-
-  .el-upload__tip {
-
-    font-size: 14px;
-    color: #aaa;
-    position: relative;
-    left: 65px;
-  }
-
-}
-
-.upload-img {
-  margin-bottom: 20px;
-
-  .upload-box {
-    display: inline-block;
-  }
-}
-
-.drag-upload {
-  position: relative;
-  left: 78px;
-}
-
-.index-check {
-  margin-top: 15px;
-
-  .item-check {
-    display: inline-block;
-    width: 800px;
-    position: relative;
-    top: -15px;
-    left: 60px;
-
-
-  }
-
-}
-
-.add-rule {
-  width: 472px;
-  height: 60px;
-  line-height: 60px;
-  margin: -10px 0 20px 220px;
-  text-align: center;
-  font-size: 14px;
-  border: 1px dashed #aaa;
-}
-
-.tables-content .el-tabs__item.is-active {
-  background: none;
-}
-
-
-
-
-
-
-.account-detail {
-  .equity-title {
-    margin-left: 32px;
-    margin-top: 5px;
-
-    span {
-      display: inline-block;
-      margin-right: 400px;
-    }
-  }
-}
-
-.plan-detail {
-  .base-data {
-    .rule-form {
-      .el-select {
-        width: 210px;
-      }
-
-      .el-input {
-        width: 210px;
-
-        input {
-          width: 200px;
+        .upload-box {
+          display: inline-block;
         }
       }
 
+      .drag-upload {
+        margin-bottom: 20px;
+        position: relative;
+        left: 75px;
+      }
+
+      .active-rule {
+        .rule-item {
+
+          .el-select,
+          .el-input {
+            width: 100px;
+            margin-right: 20px;
+            display: inline-block;
+
+            input {
+              width: 100px;
+            }
+          }
+
+          .last-rule {
+            input {
+              width: 200px;
+            }
+
+          }
+        }
+      }
+
+      .remark {
+        .el-textarea {
+          width: 500px;
+          display: inline-block;
+
+          textarea {
+            width: 500px;
+            margin-top: 10px;
+
+          }
+
+          .add-rule {
+            width: 472px;
+            height: 60px;
+            line-height: 60px;
+            margin: -10px 0 20px 220px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px dashed #aaa;
+          }
+
+        }
+
+        .item-check {
+
+          .el-checkbox {
+            padding-bottom: 10px;
+          }
+
+        }
+
+
+      }
+
+
+
+      .tables-content .el-tabs__item.is-active {
+        background: none;
+      }
+
+      .account-detail {
+        .equity-title {
+          margin-left: 32px;
+          margin-top: 5px;
+
+          span {
+            display: inline-block;
+            margin-right: 400px;
+          }
+        }
+      }
+
+      .plan-detail {
+        .base-data {
+          width: 60%;
+          margin-top: 20px;
+          margin-left: 150px;
+
+          .rule-form {
+            width: 100%;
+
+            .el-select {
+              width: 160px;
+            }
+
+            .el-input {
+              width: 150px;
+
+              input {
+                width: 150px;
+              }
+            }
+
+          }
+        }
+
+        .ration-target {
+          margin-top: 20px;
+
+          .ration-check {
+            margin-left: 70px;
+            margin-top: -16px;
+
+            .el-checkbox {
+              margin-bottom: 20px;
+            }
+          }
+        }
+
+        .progress-bar {
+          width: 800px;
+          margin: 20px 150px;
+        }
+
+        .state-inform {
+          position: absolute;
+          left: 900px;
+          top: 12px;
+          text-align: right;
+        }
+      }
     }
   }
 }

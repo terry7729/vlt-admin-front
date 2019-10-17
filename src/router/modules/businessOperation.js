@@ -165,9 +165,12 @@ const bulletinDetail = () => import('@/views/businessOperation/noticeInfo/bullet
 const bulletinTemplate = () => import('@/views/businessOperation/noticeInfo/bulletinTemplate')
 //模板详情 
 const templateDetail = () => import('@/views/businessOperation/noticeInfo/templateDetail')
+//新建模板
+const createTemplate = () => import('@/views/businessOperation/noticeInfo/createTemplate')
 //消息推送
 const infoPush = () => import('@/views/businessOperation/noticeInfo/infoPush')
-
+//消息推送编辑
+const infoEdit = () => import('@/views/businessOperation/noticeInfo/infoEdit')
 
 
 export default [
@@ -798,6 +801,14 @@ export default [
     component: bulletinTemplate,
   },
   {
+    path: 'noticeInfo/createTemplate',
+    name: 'createTemplate',
+    meta: {
+      title: '新建模板',
+    },
+    component: createTemplate,
+  },
+  {
     path: 'noticeInfo/templateDetail',
     name: 'templateDetail',
     meta: {
@@ -812,6 +823,14 @@ export default [
       title: '消息推送',
     },
     component: infoPush,
+  },
+  {
+    path: 'noticeInfo/infoEdit',
+    name: 'infoEdit',
+    meta: {
+      title: '消息推送',
+    },
+    component: infoEdit,
   },
 
 

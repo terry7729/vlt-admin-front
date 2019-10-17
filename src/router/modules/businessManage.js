@@ -57,7 +57,11 @@ const inventoryManage = () => import('@/views/businessManage/channelResourceMana
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
 const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
+
+
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
+
+
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //盘点统计
@@ -114,7 +118,7 @@ const cardDetail = () => import('@/views/businessManage/bettingCardManage/cardDe
 // 投注卡详细信息
 const infoDetail = () => import('@/views/businessManage/bettingCardManage/infoDetail')
 // 余额明细
-const  balanceDetail = () => import('@/views/businessManage/bettingCardManage/balanceDetail')
+const balanceDetail = () => import('@/views/businessManage/bettingCardManage/balanceDetail')
 // 新建规则
 const newRule = () => import('@/views/businessManage/bettingCardManage/newRule')
 // 新建卡片
@@ -655,10 +659,10 @@ export default [
     meta: {
       title: '详情信息',
     },
-    component:infoDetail
-  },{
+    component: infoDetail
+  }, {
     path: 'businessManage/newCard',
-    name:'newCard',
+    name: 'newCard',
     meta: {
       title: '新建卡片'
     },
@@ -666,12 +670,12 @@ export default [
   },
   {
     path: 'businessManage/newRule',
-    name:'newRule',
+    name: 'newRule',
     meta: {
       title: '新建规则'
     },
     component: newRule
-  },{
+  }, {
     path: 'businessManage/exportCard',
     name: 'exportCard',
     meta: {
