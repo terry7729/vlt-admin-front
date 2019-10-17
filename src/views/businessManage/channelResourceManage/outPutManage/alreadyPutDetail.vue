@@ -1,5 +1,5 @@
 <template>
- <div class="vlt-card putStore-page"> 
+ <div class="vlt-card alreadyPut-detail"> 
     <panel-static title="基本信息" style="margin-bottom:10px;">
       <base-info :infoList="infoList"></base-info>
     </panel-static>
@@ -20,7 +20,7 @@
       <span>合计金额：<el-input v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
     </div>
     <el-row class="putStore">
-      <el-button type="primary" class="mainBtn" @click="putStore">入库</el-button>
+      <el-button type="primary" class="mainBtn" @click="putStoreClick">确定</el-button>
       <el-button @click="cancel">取消</el-button>
     </el-row>
  </div>
@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
 export default {
- name: "putStore",
+ name: "alreadyPutDetail",
  data() {
  return {
    totalMoney:'',
@@ -51,7 +51,7 @@ export default {
  components: {
  },
  methods: {
-   putStore(){
+   putStoreClick(){
      console.log(32123)
    },
    cancel(){
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="less">
-.putStore-page{
+.alreadyPut-detail{
   .inp-total{
   margin-top: 20px;
   margin-left: 20px;
@@ -80,7 +80,7 @@ export default {
     margin-bottom: 150px
   }
 }
-  
+
 }
 
 </style>

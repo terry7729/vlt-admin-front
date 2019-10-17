@@ -198,7 +198,7 @@ export default {
     detail(row) {
       console.log(row);
       this.$router.push({
-        name: 'sendMessage',
+        name: 'messagesDetail',
         query: {id: row.id}
       })
     },

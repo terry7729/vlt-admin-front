@@ -22,7 +22,7 @@
                   <template slot-scope="scope">
                     <el-button @click="equipmentDetail(scope.row.id)" type="primary" v-prevent="2000" size="mini">查看</el-button>
                     <!-- <el-button size="mini" v-prevent="2000" @click.native="equipmentEdit(scope.row.id)">履历</el-button> -->
-                    <el-button type="mini" v-prevent="2000" @click="dialogFormVisible = true">履历</el-button>
+                    <el-button type="mini" v-prevent="2000" @click= equRecordCheck(scope.row.id)>履历</el-button>
 
                       <el-dialog title="履历" :visible.sync="dialogFormVisible">
                         <el-steps direction="vertical" :active="1">
@@ -267,6 +267,13 @@ export default {
       query: {id}
     })
   },
+  //设备履历页面跳转
+  equRecordCheck(id){
+    this.$router.push({
+      name:'equRecordCheck',
+      query:{id}
+    })
+  },
   //设备编辑页面跳转
   equipmentEdit (id) {        
     this.$router.push({
@@ -276,10 +283,10 @@ export default {
   },
   //设施查看
   facilityDetail(id){
-    console.log()
+    console.log(id)
   },
   consumableDetail(id){
-    consoel.log()
+    console.log(id)
   },
   //履历弹框
   

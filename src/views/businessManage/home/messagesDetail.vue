@@ -1,4 +1,4 @@
-<!-- 首页 - 概况 - 发布消息 -->
+<!-- 首页 - 概况 - 查看消息 -->
 <template>
   <div class="vlt-card">
     <div class="vlt-edit-single">
@@ -19,7 +19,7 @@
             size="medium"
             @click="onSubmit"
             :loading="submitLoad"
-          >发布</el-button>
+          >确认</el-button>
           <el-button size="medium" @click="close">取 消</el-button>
         </el-row>
       </div>
@@ -44,7 +44,7 @@ export default {
         {
           type: "select",
           title: "收件人",
-          prop: "status",
+          prop: "recipient",
           options: [
             { label: "收件人1", value: "0" },
             { label: "收件人2", value: "1" }
@@ -59,10 +59,30 @@ export default {
         status: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
+      },
+      datas: {
+        name: '张三',
+        recipient: '李四',
+        all: '消息内容'
       }
     };
   },
+  created  () {
+    this.init();
+  },
   methods: {
+    init() {
+      let _item = this.formDatas;
+      let arr = Object.keys(this.datas);
+      for (let i = 0; i < _item.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+          if (_item[i].prop == arr[j]) {
+            _item[i].value = this.datas[arr[j]];
+          }
+        }
+      }
+      console.log(_item);
+    },
     changeForm(val) {
       Object.assign(this.params, val);
       // console.log("change", this.params);
