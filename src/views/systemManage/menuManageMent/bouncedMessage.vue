@@ -71,7 +71,7 @@ export default {
     },
     changeForm(val) {
       Object.assign(this.params, val);
-
+      console.log(val)
       console.log("派发出来的参数", this.params);
     },
     submit() {
