@@ -41,7 +41,7 @@
       <h4 class="comp-title">表格分页</h4>
       <table-paging
         position="left"
-        :total="999"
+        :total="total"
         :currentPage="1"
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
@@ -233,6 +233,7 @@ export default {
   data() {
     const self = this;
     return {
+      total: 100,
       params: {},
       fileList: [
         {
@@ -961,6 +962,8 @@ export default {
         },
         { title: "开售时间", type: "datetime", prop: "date3", value: "" },
         { title: "销售时间", type: "datetime-range", prop: "date4", value: "" },
+        { title: "年份", type: "year", prop: "year", value: "" },
+        { title: "月份", type: "month", prop: "month", value: "" },
         {
           type: "cascader",
           prop: "cascader1",

@@ -36,8 +36,8 @@ export default {
       input2:"",
       rules1: {},
       data1:[
-        { type: "input", title: "", prop: "userName",value: "",placeholder:'请输入用户名' },
-        { type: "input", title: "", prop: "pwd",value: "" ,placeholder:'请输入用户名'},
+        { type: "input", title: "", prop: "userName",value: "",placeholder:'请输入用户账号',},
+        { type: "input", title: "", prop: "pwd",value: "" ,placeholder:'请输入用户密码',},
       ]
     };
   },
@@ -104,7 +104,7 @@ export default {
         .register {
           position: absolute;
           top: 150px;
-          left: 240px;
+          left: 250px;
           font-size: 14px;
           font-family: MicrosoftYaHei;
           color: rgba(43, 43, 43, 1);
@@ -113,7 +113,7 @@ export default {
         .forgetPwd {
           position: absolute;
           top: 150px;
-          left: 300px;
+          left: 310px;
           font-size: 14px;
           font-family: MicrosoftYaHei;
           color: rgba(43, 43, 43, 1);

@@ -1,5 +1,5 @@
 <template>
-  <div class="vlt-card plan-dedail">
+  <div class="vlt-card plan-detail">
     <div>
       <h3>活动计划详情</h3>
       <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -19,7 +19,7 @@
                   ></el-option>
                 </el-select>
                 <el-input v-model="item.condition"></el-input>
-                <span style="margin-right:0 5px;">赠送:</span>
+                <span style="margin-right:0 5px;">&nbsp;赠送:&nbsp;</span>
                 <el-input v-model="item.award"></el-input>
               </el-form-item>
             </el-form>
@@ -210,38 +210,14 @@ export default {
   },
   components: {},
   methods: {
-     handleClick(tab, event) {
-        console.log(tab, event);
-      }
+    handleClick(tab, event) {
+      console.log(tab, event);
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.plan-dedail {
-  .base-data {
-    width: 60%;
-    margin: 20px 0 20px 150px;
-  }
-  .ration-target {
-    margin-top: 20px;
-    .ration-check {
-      margin-left: 70px;
-      margin-top: -16px;
-      .el-checkbox {
-        margin-bottom: 20px;
-      }
-    }
-  }
-  .progress-bar {
-    width: 800px;
-    margin: 20px 150px;
-  }
-  .state-inform{
-    position: absolute;
-    left:900px;
-    top: 12px;
-    text-align: right;
-  }
-}
+
+
 </style>

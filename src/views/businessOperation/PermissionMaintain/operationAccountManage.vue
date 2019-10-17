@@ -18,7 +18,7 @@
         <el-table-column prop="operationManageRoleName" label="角色名称"></el-table-column>
         <el-table-column prop="operationManageCreater" label="创建人"></el-table-column>
         <el-table-column prop="operationManageCreateDate" label="创建时间"></el-table-column>
-        <el-table-column label="账户状态" min-width="120">
+        <el-table-column label="账户状态" min-width="140" prop="operationManageStatus">
           <template slot-scope="scope">
             <tableRowStatus
               :scope="scope"
@@ -48,29 +48,21 @@
         </el-table-column>
         <el-table-column label="操作" min-width="140">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="operationManageWrite(scope.row.id)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="operationManageLook(scope.row.id)">查看</el-button>
+            <el-button type="primary" size="mini" @click="operationManageWrite(scope.row)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="operationManageLook(scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
       <tablePaging :total="99" :currentPage="1" :pageSize="10"></tablePaging>
       <el-dialog title="新增账号" :visible.sync="dialogFormVisible">
         <div class="vlt-edit-single">
-          <el-form
-            label-position="right"
-            label-width="90px"
-            :model="operationManageWriteform"
-            ref="form"
-            class="device-add"
-          >
-            <base-form
-              :formData="operationManageWriteData"
-              ref="baseForm"
-              :rules="operationManageWriteRule"
-              direction="right"
-              @change="operationManageWritechangeForm"
-            ></base-form>
-          </el-form>
+          <base-form
+            :formData="operationManageWriteData"
+            ref="baseForm"
+            :rules="operationManageWriteRule"
+            direction="right"
+            @change="operationManageWritechangeForm"
+          ></base-form>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -88,10 +80,20 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
-      operationManageWriteform: {},
       operationManageTableData: [
         {
           operationManageNum: 1,
+          operationManageBelong: "广东省",
+          operationManageName: "上海市普陀区金沙江路 1518 弄",
+          operationManageID: "赵",
+          operationManagetelephone: "自营",
+          operationManageRoleName: "赵",
+          operationManageCreater: "13800131358",
+          operationManageCreateDate: "13800131358",
+          roleManageCreateDate: "13800131358"
+        },
+        {
+          operationManageNum: 2,
           operationManageBelong: "广东省",
           operationManageName: "上海市普陀区金沙江路 1518 弄",
           operationManageID: "赵",
@@ -169,25 +171,44 @@ export default {
           type: "select",
           title: "所属渠道",
           prop: "operationManageBelong",
+          value: "",
           options: [
             { label: "哈哈", value: "0" },
             { label: "嘿嘿", value: "1" }
           ]
         },
-        { type: "input", title: "账户名称", prop: "accountname" },
+        {
+          type: "input",
+          title: "账户名称",
+          prop: "operationManageName",
+          value: ""
+        },
         {
           type: "select",
           title: "账户角色",
-          prop: "operationManageBelong",
+          prop: "operationManageRoleName",
+          value: "",
           options: [
             { label: "哈哈", value: "0" },
             { label: "嘿嘿", value: "1" }
           ]
         },
-        { type: "input", title: "手机号", prop: "accountname" },
-        { type: "input", title: "身份证号", prop: "accountname" },
-        { type: "input", title: "联系地址", prop: "accountname" },
-        { type: "input", title: "账户密码", prop: "accountname" },
+        {
+          type: "input",
+          title: "手机号",
+          value: "",
+          prop: "operationManagetelephone"
+        },
+        { type: "input", title: "身份证号", value: "", prop: "accountname" },
+        { type: "input", title: "联系地址", value: "", prop: "accountname" },
+        {
+          type: "input",
+          title: "账户密码",
+          value: "",
+          prop: "accountname",
+          disabled: true,
+          placeholder: "初始密码为123456"
+        },
         {
           type: "cascader-multiple",
           prop: "accountauthority",
@@ -471,11 +492,28 @@ export default {
     operationManageAddclick() {
       this.$router.push("operationAccountAdd");
     },
-    operationManageWrite() {
+    //点击编辑
+    operationManageWrite(row) {
       this.dialogFormVisible = true;
+      // row = this.operationManageWriteData[0].prop;
+      let n = Object.keys(row);
+      let arr = this.operationManageWriteData;
+      //console.log(n);
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < n.length; j++) {
+          if (arr[i].prop === n[j]) {
+            arr[i].value = row[n[j]];
+          }
+        }
+      }
+      //console.log(this.operationManageWriteData[0]);
     },
-    operationManageLook() {
-      this.$router.push("operationAccountExamine");
+    //点击查看
+    operationManageLook(row) {
+      let id = row.operationManageNum;
+      this.$router.push({ path: "operationAccountExamine", query: { id } });
+      //console.log(row);
+      this.eventBus.$emit("send", row);
     },
     operationManageWritechangeForm() {}
   }

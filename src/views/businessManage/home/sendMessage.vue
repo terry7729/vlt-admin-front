@@ -1,63 +1,89 @@
 <!-- 首页 - 概况 - 发布消息 -->
 <template>
   <div class="vlt-card">
-    <h3 class="title">基本信息</h3>
-    <el-row class="form-box">
-      <el-col :span="8" :offset="3">
-        <el-form ref="form" :model="form" label-position="left" label-width="100px" size="small">
-          <el-form-item label="标题*：">
-            <el-input v-model="form.name" placeholder="请输入标题"></el-input>
-          </el-form-item>
-          <el-form-item label="收件人*：">
-            <el-row :span="24">
-              <el-col>
-            <el-select v-model="form.region" placeholder="请选择">
-              <el-option label="张三" value="张三"></el-option>
-              <el-option label="李四" value="李四"></el-option>
-            </el-select>
-            </el-col>
-          </el-row>
-          </el-form-item>
-          <el-form-item label="消息内容：">
-            <el-input type="textarea"  v-model="form.desc" placeholder="请输入参与活动的规则、要求等"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" size="small" @click="onSubmit" :loading="submitLoad">发布</el-button>
-            <el-button size="small">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+    <div class="vlt-edit-single">
+      <h3 class="title">基本信息</h3>
+      <div class="vlt-edit-wrap">
+        <base-form
+          :formData="formDatas"
+          labelWidth="140px"
+          ref="baseForm"
+          :rules="rule"
+          direction="right"
+          @change="changeForm"
+        ></base-form>
+        <el-row class="vlt-edit-btn">
+          <el-button
+            type="primary"
+            v-prevent="1000"
+            size="medium"
+            @click="onSubmit"
+            :loading="submitLoad"
+          >发布</el-button>
+          <el-button size="medium" @click="close">取 消</el-button>
+        </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import rules from "@/utils/rules.js";
 export default {
-  name: 'sendMessage',
+  name: "sendMessage",
   data() {
     return {
       submitLoad: false,
-      form: {
-        name: "",
-        region: "",
-        desc: ""
+      params: {},
+      formDatas: [
+        {
+          title: "标题",
+          type: "input",
+          prop: "name"
+        },
+        {
+          type: "select",
+          title: "收件人",
+          prop: "status",
+          options: [
+            { label: "收件人1", value: "0" },
+            { label: "收件人2", value: "1" }
+          ]
+        },
+        { type: "textarea", title: "消息内容", prop: "all" }
+      ],
+      rule: {
+        name: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        status: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ]
       }
     };
   },
   methods: {
+    changeForm(val) {
+      Object.assign(this.params, val);
+      // console.log("change", this.params);
+    },
+    handleClose() {
+      console.log("close");
+    },
+    close() {
+      this.$router.back();
+    },
     onSubmit() {
       this.submitLoad = true;
-      console.log(this.form);
+      console.log("formData", this.params);
+      setTimeout(() => {
+        this.submitLoad = false;
+        this.close();
+      }, 1000);
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.form-box {
-  margin-top: 40px;
-  .el-select {
-    width: 100%;
-  }
-}
 </style>
