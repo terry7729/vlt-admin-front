@@ -14,6 +14,8 @@ const myKnowledge = () => import('@/views/businessManage/home/myKnowledge')
 const messages = () => import('@/views/businessManage/home/messages')
 // 发布消息
 const sendMessage = () => import('@/views/businessManage/home/sendMessage')
+// 查看消息
+const messagesDetail = () => import('@/views/businessManage/home/messagesDetail');
 // 待审核
 const pendingReview = () => import('@/views/businessManage/home/pendingReview')
 // 处理待审核
@@ -177,6 +179,14 @@ export default [
       title: '更多消息',
     },
     component: messages
+  },
+  {
+    path: 'businessManage/messagesDetail',
+    name: 'messagesDetail',
+    meta: {
+      title: '查看消息',
+    },
+    component: messagesDetail
   },
   {
     path: 'businessManage/sendMessage',

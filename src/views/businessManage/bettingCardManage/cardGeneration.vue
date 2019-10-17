@@ -29,7 +29,7 @@
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
-            <el-button type="primary" size="mini" @click="selectBtn(scope.row)">导出</el-button>
+            <el-button type="primary" size="mini" @click="toExport(scope.row)">导出</el-button>
             <el-button type="danger" size="mini" @click="logout (scope.row) ">注销</el-button>
           </template>
         </el-table-column>
@@ -375,10 +375,7 @@ export default {
       // console.log(val);
       // this.showdialog = true;
       this.$router.push({
-        name: 'exportCard',
-        query: {
-          id: val.id
-        }
+        name: 'newCard',
       })
     },
     search(form) {
@@ -391,6 +388,15 @@ export default {
           id: row.id
         }
       })
+    },
+    toExport (val) {
+      this.$router.push({
+        name: 'exportCard',
+        query: {
+          id: val.id
+        }
+      })
+
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
