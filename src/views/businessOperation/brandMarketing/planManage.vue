@@ -2,7 +2,9 @@
   <div class="vlt-card">
     <search-bar :options="options" :total="999"></search-bar>
     <div class="create-btn">
-      <el-button type="primary" size="mini" @click="createActive">新建活动</el-button>
+      <el-button type="primary" size="mini" @click="createActive">
+        <i class="el-icon-plus"></i> 新建活动
+      </el-button>
       <el-button size="mini">批量撤销</el-button>
     </div>
     <div class="el_table">
@@ -19,14 +21,13 @@
 
         <el-table-column label="操作" width="200">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="detail(scope.row.id)">查看</el-button>
-            <el-button type="primary" size="mini" @click="detail(scope.row.id)">复用</el-button>
-            <el-button type="primary" size="mini" @click="detail(scope.row.id)">撤销</el-button>
+            <el-button type="primary" size="mini" @click="planDetail(scope.row.id)">查看</el-button>
+            <el-button type="primary" size="mini" @click="reuse(scope.row.id)">复用</el-button>
+            <el-button type="danger" size="mini">撤销</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-  
   </div>
 </template>
 
@@ -74,8 +75,7 @@ export default {
           prop: "accountStatus",
           value: "",
           title: "结束时间",
-          placeholder: "请选择",
-        
+          placeholder: "请选择"
         }
       ]
     };
@@ -84,8 +84,11 @@ export default {
     createActive() {
       this.$router.push({ path: "createActivity" });
     },
-    detail(){
-      this.$router.push({ path: "planDetail" })
+    planDetail() {
+      this.$router.push({ path: "planDetail" });
+    },
+    reuse() {
+      this.$router.push({ path: "createActivity" });
     }
   },
   computed: {},

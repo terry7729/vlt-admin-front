@@ -42,6 +42,11 @@
         PAGESIZE: this.pageSize
       };
     },
+    watch: {
+      total(val) {
+        this.TOTAL = val;
+      }
+    },
     methods: {
       handleSizeChange(size) {
         this.PAGESIZE = size

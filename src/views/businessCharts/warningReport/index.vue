@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="报告模板" name="first">
         <section class="comp-item">
-          <control-bar :options="controlOptions"></control-bar>
+          <control-bar :options="controlOptions" position="right"></control-bar>
         </section>
         <div class="tab-container">
           <el-table

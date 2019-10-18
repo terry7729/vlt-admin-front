@@ -108,6 +108,13 @@ export default {
             { label: "嘿嘿", value: "1" }
           ]
         },
+        {
+          title: "兑奖金额",
+          prop: "WriteSection",
+          type: "minMax",
+          value: "",
+          options: ["betMoneyMin", "betMoneyMax"]
+        },
         { type: "textarea", title: "说明", prop: "AddArea" }
       ],
       //编辑弹框表单类型
@@ -121,6 +128,13 @@ export default {
             { label: "哈哈", value: "0" },
             { label: "嘿嘿", value: "1" }
           ]
+        },
+        {
+          title: "兑奖金额",
+          prop: "WriteSection",
+          type: "minMax",
+          value: "",
+          options: ["betMoneyMin", "betMoneyMax"]
         },
         { type: "textarea", title: "说明", prop: "WriteArea" }
       ],

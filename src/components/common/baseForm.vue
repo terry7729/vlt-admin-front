@@ -5,21 +5,21 @@
     class="base-form">
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
-      <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 密码 -->
       <el-input v-if="item.type=='password'" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 带icon-->
       <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" v-model="selectParam[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
-        <el-option v-for="items in item.options" :key="items.value" :label="items.label"
+      <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
+        <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
         </el-option>
       </el-select>
       <!-- 支持多选 -->
       <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
-        <el-option v-for="items in item.options" :key="items.value" :label="items.label"
+        <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
         </el-option>
@@ -260,6 +260,7 @@ export default {
     changeSelect(val) {
       console.log(val)
       this.form[val.prop] = this.selectParam[val.prop];
+      console.log(this.selectParam)
     },
     init() {
       const self = this;

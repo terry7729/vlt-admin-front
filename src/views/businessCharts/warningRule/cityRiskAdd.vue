@@ -23,7 +23,6 @@
       <el-table
         :data="tableData"
         border
-        style="width: 30%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
         @selection-change="selectChange"
@@ -39,7 +38,7 @@
             <el-form-item>
               <span slot="label">{{item.type}}</span>
               <el-input v-model="form.name"></el-input>
-            </el-form-item>          
+            </el-form-item>
             <el-form-item label="严重">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -70,6 +69,58 @@
         </el-form-item>
       </el-form>
     </div>
+    <div>
+      <el-table
+        :data="tableData1"
+        border
+        style="width: 70%"
+        :header-cell-style="{background:'rgba(240,240,240,.5)'}"
+        :cell-style="{align:'center'}"
+        @selection-change="selectChange"
+      >
+        <el-table-column align="center" prop="warningLevel" label="告警等级"></el-table-column>
+        <el-table-column align="center" prop="type" label="通知方式" width="360">
+          <template slot-scope="scope">
+            <div v-if="scope.row.warningLevel==='普通'">
+              <el-checkbox-group v-model="checkList">
+                <el-checkbox label="站内" border size="medium" disabled></el-checkbox>
+
+                <el-checkbox label="邮件" border size="medium" disabled></el-checkbox>
+                <el-checkbox label="短信" border size="medium" disabled></el-checkbox>
+              </el-checkbox-group>
+            </div>
+            <div v-if="scope.row.warningLevel==='严重'">
+              <el-checkbox-group v-model="checkList1">
+                <el-checkbox label="站内" border size="medium" disabled></el-checkbox>
+
+                <el-checkbox label="邮件" border size="medium" disabled></el-checkbox>
+                <el-checkbox label="短信" border size="medium" disabled></el-checkbox>
+              </el-checkbox-group>
+            </div>
+            <div v-if="scope.row.warningLevel==='重大'">
+              <el-checkbox-group v-model="checkList2">
+                <el-checkbox label="站内" border size="medium" disabled></el-checkbox>
+
+                <el-checkbox label="邮件" border size="medium" disabled></el-checkbox>
+                <el-checkbox label="短信" border size="medium" disabled></el-checkbox>
+              </el-checkbox-group>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="type" label="通知对象 " width="400"></el-table-column>
+        <el-table-column align="center" prop="warningLevel" label="告警频率">
+          <el-input-number
+            v-model="num"
+            controls-position="right"
+            @change="handleChange"
+            :min="1"
+            :max="100"
+            :step="10"
+            size="mini"
+          ></el-input-number>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -78,6 +129,22 @@ import rules from "@/utils/rules.js";
 export default {
   data() {
     return {
+      num: 10,
+      checked3: false,
+      checkList: ["站内"],
+      checkList1: ["站内", "短信"],
+      checkList2: ["站内", "短信", "邮件"],
+       tableData1: [
+        {
+          warningLevel: "普通"
+        },
+        {
+          warningLevel: "严重"
+        },
+        {
+          warningLevel: "重大"
+        }
+      ],
       options: [
         {
           value: "选项1",
@@ -111,6 +178,8 @@ export default {
         { type: "最低开机律" },
         { type: "最低单厅销量" }
       ],
+     
+
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
@@ -181,13 +250,14 @@ export default {
 }
 .select-box {
   margin-bottom: 20px;
-  width: 60%;
+  width: 70%;
   /deep/ .el-table {
     width: 100% !important;
   }
 }
 .showbox {
-  width: 60%;
+  width: 70%;
+  margin-bottom: 20px;
 }
 .btn {
   text-align: right;

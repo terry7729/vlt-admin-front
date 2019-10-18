@@ -7,7 +7,7 @@
 
 <script type="text/javascript">
 export default {
-  name: "",
+  name: "equipment",
   data() {
    return {
 

@@ -1,6 +1,6 @@
 <template>
- <div class="vlt-card">
-    <panel-static title="彩票信息" style="margin-bottom:10px;">
+ <div class="vlt-card putStore-page"> 
+    <panel-static title="基本信息" style="margin-bottom:10px;">
       <base-info :infoList="infoList"></base-info>
     </panel-static>
     <panel-static title="物品列表">
@@ -61,8 +61,9 @@ export default {
 }
 </script>
 
-<style lang="less" scop-ed>
-.inp-total{
+<style lang="less">
+.putStore-page{
+  .inp-total{
   margin-top: 20px;
   margin-left: 20px;
   .el-input{
@@ -79,4 +80,7 @@ export default {
     margin-bottom: 150px
   }
 }
+  
+}
+
 </style>

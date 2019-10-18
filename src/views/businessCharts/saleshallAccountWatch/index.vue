@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+        <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
       </search-bar>
     </section>
     <div class="tab-container">
@@ -24,23 +24,22 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="address" label="开卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="退卡"></el-table-column>
-        <el-table-column align="center" prop="address" label="缴款"></el-table-column>
-        <el-table-column align="center" prop="address" label="充值"></el-table-column>
-        <el-table-column align="center" prop="address" label="提现"></el-table-column>
-        <el-table-column align="center" prop="address" label="账户余额"></el-table-column>
-        
+        <el-table-column align="center" prop="hallName" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="province" label="省份"></el-table-column>
+        <el-table-column align="center" prop="city" label="城市"></el-table-column>
+        <el-table-column align="center" prop="cardOpenTotal" label="开卡"></el-table-column>
+        <el-table-column align="center" prop="cardWithdrawalTotal" label="退卡"></el-table-column>
+        <el-table-column align="center" prop="paymentAmount" label="缴款"></el-table-column>
+        <el-table-column align="center" prop="rechargeAmount" label="充值"></el-table-column>
+        <el-table-column align="center" prop="withdraw" label="提现"></el-table-column>
+        <el-table-column align="center" prop="accountBalance" label="账户余额"></el-table-column>
       </el-table>
       <div class="pagination-container" style="text-align:right;margin-top:30px">
         <section class="comp-item">
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -56,7 +55,8 @@ export default {
   name: "saleshallAccountWatch",
   data() {
     return {
-       searchOptions: [
+      totalCount: 0,
+      searchOptions: [
         {
           type: "select",
           prop: "province",
@@ -109,16 +109,14 @@ export default {
           ]
         }
       ],
-      controlOptions: [
-       { name: "导出", type: "primary", icon: "download" },
-      ],
+      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       //记录省市县
       provinceList: [],
       dataprovinceList: [],
       provinceCode: "",
 
-      poundage:[],
-      poundagefee:[],
+      poundage: [],
+      poundagefee: [],
       cityList: [],
       datacityList: [],
       cityCode: "",
@@ -156,11 +154,27 @@ export default {
     };
   },
   methods: {
+    //获取销售厅账户数据列表
+    async getHallAccount() {
+      const self = this;
+      const res = await self.$api.getHallAccount({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.data.dataList;
+        self.totalCount = res.data.data.totalRecord;
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      this.listQuery.limit = pageSize;
+      this.getHallAccount();
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      this.listQuery.page = currentPage;
+      this.getHallAccount();
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -239,7 +253,6 @@ export default {
         this.cityList = cArrres;
         this.cityCode = this.cityList[0].cityCode;
         //回调自动获取当前选择的县区
-       
       }
       console.log(
         "省：" +
@@ -250,18 +263,20 @@ export default {
           this.countryCode
       );
     },
-     search(form) {
-      console.log('search', form)
-    },
+    search(form) {
+      console.log("search", form);
+    }
   },
   mounted() {
     // this.showcity();
-  }
+  },created() {
+    this.getHallAccount();
+  },
 };
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
+.control-bar-comp {
   text-align: right;
 }
 </style>

@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="40px"
       >
-      <control-bar slot="extend-bar" :options="controlOptions"></control-bar>
+      <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
       </search-bar>
     </section>
     <div class="tab-container">
@@ -24,15 +24,16 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="终端"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="name" label="省份"></el-table-column>
-        <el-table-column align="center" prop="address" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="address" label="销售额"></el-table-column>
-        <el-table-column align="center" prop="address" label="中奖金额"></el-table-column>
-        <el-table-column align="center" prop="address" label="小奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖中奖"></el-table-column>
-        <el-table-column align="center" prop="address" label="大奖兑奖"></el-table-column>
+         <el-table-column align="center" prop="gameName" label="游戏"></el-table-column>
+        <el-table-column align="center" prop="terminalName" label="终端"></el-table-column>
+        <el-table-column align="center" prop="city" label="城市"></el-table-column>
+        <el-table-column align="center" prop="province" label="省份"></el-table-column>
+        <el-table-column align="center" prop="hallName" label="销售厅"></el-table-column>
+        <el-table-column align="center" prop="saleAmount" label="销售额"></el-table-column>
+        <el-table-column align="center" prop="winningAmount" label="中奖金额"></el-table-column>
+        <el-table-column align="center" prop="smallAwardAmount" label="小奖中奖"></el-table-column>
+        <el-table-column align="center" prop="bigAwardAmount" label="大奖中奖"></el-table-column>
+        <el-table-column align="center" prop="grandPrize" label="大奖兑奖"></el-table-column>
       </el-table>
       <!-- :page-size="[10,20,30, 50]" -->
       <div class="pagination-container" style="text-align:right;margin-top:30px">
@@ -40,7 +41,7 @@
           <table-paging
             :current-page="1"
             :page-size="10"
-            :total="100"
+            :total="totalCount"
             @handleSizeChange="pageSizeChange"
             @handleCurrentChange="pageCurrentChange"
           ></table-paging>
@@ -56,6 +57,7 @@ export default {
   name: "gameDeal",
   data() {
     return {
+      totalCount:0,
        searchOptions: [
         {
           type: "select",
@@ -191,11 +193,28 @@ export default {
     };
   },
   methods: {
+    //获取中央交易数据列表
+    async getGameDeal() {
+      const self = this;
+      const res = await self.$api.getGameDeal({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.data.dataList;
+        self.totalCount = res.data.data.totalRecord;
+        console.log(self.totalCount);
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      this.listQuery.limit=pageSize
+      this.getGameDeal()
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      this.listQuery.page=currentPage
+      this.getGameDeal()
     },
      search(form) {
       console.log('search', form)
@@ -291,7 +310,10 @@ export default {
   },
   mounted() {
     // this.showcity();
-  }
+  },
+  created() {
+    this.getGameDeal();
+  },
 };
 </script>
 

@@ -17,7 +17,7 @@
 <script type="text/javascript">
 import terminalSideMenu from "@/views/businessManage/channelTerminalManagement/components/terminalSideMenu";
 export default {
-  name: "",
+  name: "serviceAnalysis",
   data() {
     return {
       menuData: {

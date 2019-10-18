@@ -9,14 +9,14 @@
       :total="999"
       labelWidth="80px"
     >
-    <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+    <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
   </search-bar>
   </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: "",
+  name: "repairWork",
   data() {
    return {
       // 搜索组件配置
