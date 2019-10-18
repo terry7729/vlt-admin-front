@@ -4,6 +4,8 @@ import menuData from '@/libs/menu/'
 Mock.mock('/api/menu', 'post', menuData);
 
 
+ 
+//系统管理模拟数据
 
 //系统管理模拟数据 
 // const data = Mock.mock({
@@ -37,7 +39,7 @@ Mock.mock('/api/menu', 'post', menuData);
 //       "path": '@province' + '@city' + '@county',
 //       "english": "@title",
 //       "icon": "el-icon-right",
-    
+
 //       "sort": /^[1-9]$/,
 //       "date2|1": true,
 //       "date3|1-3": true
@@ -52,7 +54,7 @@ Mock.mock('/api/menu', 'post', menuData);
 //           "path": '@province' + '@city' + '@county',
 //           "english": "@title",
 //           "icon": "el-icon-right",
-  
+
 //           "sort": /^[1-9]$/,
 //           "date2|1": true,
 //           "date3|1-3": true
@@ -66,14 +68,6 @@ Mock.mock('/api/menu', 'post', menuData);
 //             "path": '@province' + '@city' + '@county',
 //             "english": "@title",
 //             "icon": "el-icon-right",
-       
-//             "sort": /^[1-9]$/,
-//             "date2|1": true,
-//             "date3|1-3": true
-//           }
-//         }]
-//       }]
-
 
 
 
@@ -173,6 +167,7 @@ Mock.mock('/api/menu', 'post', menuData);
 //   }]
 // })
 
+// <<<<<<< HEAD
 // Mock.mock(/\/shoopList/, "get", function (options) {
 //   console.log(options);
 //   // console.log(Json)
@@ -195,4 +190,26 @@ Mock.mock('/api/menu', 'post', menuData);
 //   return data3
 
 // })
+
+// =======
+// Mock.mock(/\/shoopList/, "get", function (options) {
+//   console.log(options);
+//   // console.log(Json)
+//   return data
+
+// })
+
+// Mock.mock(/\/menulist/, "get", function (options) {
+
+
+//   // console.log(Json)
+//   return data2
+
+// })
+
+// Mock.mock(/\/organilist/, "get", function (options) {
+
+
+//   // console.log(Json)
+//   return data3
 

@@ -52,6 +52,24 @@ export default {
   components: {
     "terminal-sideMenu": terminalSideMenu
   },
+  watch: {
+    $route (val) {
+      // console.log(val);
+      if (val.name == "serviceAnalysis") {
+        this.$router.push({
+          name: 'maintenanceEfficiency'
+        })
+      }
+    }
+  },
+  beforeCreate () {
+    if (this.$router.history.current.name ==  "serviceAnalysis") {
+        this.$router.push({
+        name: 'maintenanceEfficiency'
+      })
+    }
+    // console.log(this.$router);
+  },
   created () {
     // this.$router.push({
     //   name: 'maintenanceEfficiency'

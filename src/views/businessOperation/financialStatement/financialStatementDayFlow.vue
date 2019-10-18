@@ -9,7 +9,7 @@
           position="left"
         ></control-bar>
       </search-bar>
-      <el-table :data="FinancialFlowTableData" border show-summary>
+      <el-table :data="FinancialFlowTableData" border show-summary ref="print">
         <el-table-column prop="FinancialFlowName" label="省份名称"></el-table-column>
         <el-table-column label="收入项">
           <el-table-column prop="FinancialFlowSell" label="售卡金额"></el-table-column>
@@ -341,7 +341,11 @@ export default {
   components: {},
   methods: {
     ////点击按钮选择哪个
-    FinancialFlowSelectBtn() {}
+    FinancialFlowSelectBtn(val) {
+      if (val.name == "打印") {
+        this.$router.push("PrintDayFlow");
+      }
+    }
   }
 };
 </script>

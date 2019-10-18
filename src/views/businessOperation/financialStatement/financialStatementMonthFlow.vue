@@ -342,7 +342,11 @@ export default {
   components: {},
   methods: {
     //按钮类型选择
-    FinancialMonthSelectBtn() {}
+    FinancialMonthSelectBtn(val) {
+      if (val.name == "打印") {
+        this.$router.push("PrintMonthFlow");
+      }
+    }
   }
 };
 </script>

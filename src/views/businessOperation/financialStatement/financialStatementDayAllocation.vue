@@ -345,7 +345,11 @@ export default {
   components: {},
   methods: {
     //按钮类型选择
-    FinancialAllocationSelectBtn() {}
+    FinancialAllocationSelectBtn(val) {
+      if (val.name == "打印") {
+        this.$router.push("PrintDayAllocation");
+      }
+    }
   }
 };
 </script>

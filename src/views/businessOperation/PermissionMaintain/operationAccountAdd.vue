@@ -4,30 +4,23 @@
       <div class="vlt-edit-double">
         <h2 class="title">新增账号</h2>
         <div class="vlt-edit-wrap">
-          <el-form
-            label-position="top"
-            label-width="90px"
-            :model="operationAccountAddForm"
-            ref="form"
-          >
-            <base-form
-              :formData="operationAccountAddData"
-              ref="baseForm"
-              labelWidth="140px"
-              :rules="operationAccountAddRules"
-              direction="top"
-              @change="operationAccountAddChangeForm"
-            ></base-form>
-            <el-row class="el-form-item vlt-edit-btn">
-              <el-button
-                type="primary"
-                v-prevent="1000"
-                size="medium"
-                @click="operationAccountAddSubmit"
-              >提交并保存</el-button>
-              <el-button size="medium" @click="operationAccountAddCancel">取消</el-button>
-            </el-row>
-          </el-form>
+          <base-form
+            :formData="operationAccountAddData"
+            ref="baseForm"
+            labelWidth="140px"
+            :rules="operationAccountAddRules"
+            direction="top"
+            @change="operationAccountAddChangeForm"
+          ></base-form>
+          <el-row class="el-form-item vlt-edit-btn">
+            <el-button
+              type="primary"
+              v-prevent="1000"
+              size="medium"
+              @click="operationAccountAddSubmit"
+            >提交并保存</el-button>
+            <el-button size="medium" @click="operationAccountAddCancel">取消</el-button>
+          </el-row>
         </div>
       </div>
     </div>
@@ -40,13 +33,12 @@ export default {
   name: "",
   data() {
     return {
-      operationAccountAddForm: {},
       operationAccountAddData: [
         {
           type: "select",
           title: "所属渠道",
-          prop: "operationBelong",
-          option: [
+          prop: "operationManageBelong",
+          options: [
             {
               label: "专用存款账户",
               value: "0"
@@ -57,13 +49,13 @@ export default {
             }
           ]
         },
-        { type: "input", title: "账户名称", prop: "operationName" },
+        { type: "input", title: "账户名称", prop: "operationManageName" },
 
         {
           type: "select",
           title: "账户角色",
-          prop: "operationRole",
-          option: [
+          prop: "operationManageRoleName",
+          options: [
             {
               label: "专用存款账户",
               value: "0"
@@ -74,13 +66,13 @@ export default {
             }
           ]
         },
-        { type: "input", title: "手机号", prop: "operationTelephone" },
-        { type: "input", title: "身份证号", prop: "operationIDCard" },
-        { type: "input", title: "联系地址", prop: "operationAddress" },
-        { type: "input", title: "账户密码", prop: "operationPassword" },
+        { type: "input", title: "手机号", prop: "operationManagetelephone" },
+        { type: "input", title: "身份证号", prop: "operationManageIDCard" },
+        { type: "input", title: "联系地址", prop: "operationManageAdress" },
+        { type: "input", title: "账户密码", prop: "operationManageLimit" },
         {
           type: "cascader-multiple",
-          prop: "operationAuthority",
+          prop: "operationManageLimit",
           value: "",
           title: "账号权限",
           placeholder: "请选择",
@@ -355,13 +347,32 @@ export default {
         }
       ],
       operationAccountAddRules: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        operationManageBelong: [
+          { required: true, message: "请选择所属渠道", trigger: "change" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        operationManageName: [
+          { required: true, message: "请输入账户名称", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        operationManageRoleName: [
+          { required: true, message: "请选择账户角色", trigger: "change" }
+        ],
+        operationManagetelephone: [
+          { required: true, message: "请输入手机号", trigger: "blur" }
+        ],
+        operationManageIDCard: [
+          { required: true, message: "请输入身份证号", trigger: "blur" }
+        ],
+        operationManageAdress: [
+          { required: true, message: "请输入联系地址", trigger: "blur" }
+        ],
+        operationManageLimit: [
+          {
+            type: "array",
+            required: true,
+            message: "请选择账号权限",
+            trigger: "change"
+          }
+        ]
       }
     };
   },

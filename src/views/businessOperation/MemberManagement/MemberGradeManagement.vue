@@ -108,7 +108,9 @@ export default {
     //编辑按钮
     MemberGradeWrite() {
       this.MemberGradeWriteVisible = true;
-    }
+    },
+    //表格的change事件
+    MemberGradeChange() {}
   }
 };
 </script>
