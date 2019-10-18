@@ -14,14 +14,14 @@
       <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items">
+          :value="items.value">
         </el-option>
       </el-select>
       <!-- 支持多选 -->
       <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items">
+          :value="items.value">
         </el-option>
       </el-select>
       <!-- 开关 -->
@@ -63,7 +63,12 @@
       <!-- 支持文本域 -->
       <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
       <!-- 级联选择 -->
-      <el-cascader  v-if="item.type=='cascader'" size="small" v-model="form[item.prop]" :value="item.value" :options="item.options" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
+      <el-cascader  v-if="item.type=='cascader'" size="small" 
+        v-model="form[item.prop]" 
+        :value="item.value" 
+        :options="item.options" 
+        :props="item.setProps"
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
       <!-- 级联选择（多选） -->
       <el-cascader
         v-if="item.type=='cascader-multiple'"
@@ -185,7 +190,7 @@ export default {
     },
   },
   created() {
-    this.init()
+    this.init(this.formData)
   },
   components: {
   },

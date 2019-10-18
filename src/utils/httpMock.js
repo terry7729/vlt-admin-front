@@ -25,60 +25,60 @@ Mock.mock('/api/menu', 'post', menuData);
 //   }]
 // })
 
-const data2 = Mock.mock({
-  "code": 1,
-  "mssage": "成功",
-  "data|2": [{
-    "id|+1": 1,
-    "label": "@province",
-    "obj": {
-      "type": "@ctitle(3,5)",
-      "name": "@ctitle(3,5)",
-      "path": '@province' + '@city' + '@county',
-      "english": "@title",
-      "icon": "el-icon-right",
+// const data2 = Mock.mock({
+//   "code": 1,
+//   "mssage": "成功",
+//   "data|2": [{
+//     "id|+1": 1,
+//     "label": "@province",
+//     "obj": {
+//       "type": "@ctitle(3,5)",
+//       "name": "@ctitle(3,5)",
+//       "path": '@province' + '@city' + '@county',
+//       "english": "@title",
+//       "icon": "el-icon-right",
     
-      "sort": /^[1-9]$/,
-      "date2|1": true,
-      "date3|1-3": true
-    },
-    "children|10": [
-      {
-        "id|+1": 222,
-        "label": "@city",
-        "obj": {
-          "type": "@ctitle(3,5)",
-          "name": "@ctitle(3,5)",
-          "path": '@province' + '@city' + '@county',
-          "english": "@title",
-          "icon": "el-icon-right",
+//       "sort": /^[1-9]$/,
+//       "date2|1": true,
+//       "date3|1-3": true
+//     },
+//     "children|10": [
+//       {
+//         "id|+1": 222,
+//         "label": "@city",
+//         "obj": {
+//           "type": "@ctitle(3,5)",
+//           "name": "@ctitle(3,5)",
+//           "path": '@province' + '@city' + '@county',
+//           "english": "@title",
+//           "icon": "el-icon-right",
   
-          "sort": /^[1-9]$/,
-          "date2|1": true,
-          "date3|1-3": true
-        },
-        "children|15": [{
-          "id|+1": 1111,
-          "label": "@county",
-          "obj": {
-            "type": "@ctitle(3,5)",
-            "name": "@ctitle(3,5)",
-            "path": '@province' + '@city' + '@county',
-            "english": "@title",
-            "icon": "el-icon-right",
+//           "sort": /^[1-9]$/,
+//           "date2|1": true,
+//           "date3|1-3": true
+//         },
+//         "children|15": [{
+//           "id|+1": 1111,
+//           "label": "@county",
+//           "obj": {
+//             "type": "@ctitle(3,5)",
+//             "name": "@ctitle(3,5)",
+//             "path": '@province' + '@city' + '@county',
+//             "english": "@title",
+//             "icon": "el-icon-right",
        
-            "sort": /^[1-9]$/,
-            "date2|1": true,
-            "date3|1-3": true
-          }
-        }]
-      }]
+//             "sort": /^[1-9]$/,
+//             "date2|1": true,
+//             "date3|1-3": true
+//           }
+//         }]
+//       }]
 
 
 
 
-  }]
-})
+//   }]
+// })
 // const data3 = Mock.mock({
 //   "code": 1,
 //   "mssage": "成功",
@@ -180,13 +180,13 @@ const data2 = Mock.mock({
 
 // })
 
-Mock.mock(/\/menulist/, "get", function (options) {
+// Mock.mock(/\/menulist/, "get", function (options) {
 
 
-  // console.log(Json)
-  return data2
+//   // console.log(Json)
+//   return data2
 
-})
+// })
 
 // Mock.mock(/\/organilist/, "get", function (options) {
 
