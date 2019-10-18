@@ -111,7 +111,6 @@ const dossierManage = () => import('@/views/businessManage/channelBusinessManage
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
 const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
-const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment')
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
 
@@ -126,6 +125,21 @@ const maintenanceStaff = () => import('@/views/businessManage/channelTerminalMan
 const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance/maintenance')
 const repairWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/repairWork')
 const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
+
+// 渠道终端管理 - 设备管理 
+const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipment')
+const accessoriesList = () => import('@/views/businessManage/channelTerminalManagement/equipment/accessoriesList')
+const equipmentList = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentList')
+const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
+const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
+
+// 资金结算管理
+const fundParameter = () => import('@/views/businessManage/fundSettlement/fundParameter')
+// 资金参数管理 详情
+const fundParameterDetail = () => import('@/views/businessManage/fundSettlement/fundParameterDetail')
+// 资金参数管理 编辑
+const fundParameterEdit = () => import('@/views/businessManage/fundSettlement/fundParameterEdit')
+
 
 // 投注卡管理
 const cardBalance = () => import('@/views/businessManage/bettingCardManage/cardBalance')
@@ -678,8 +692,38 @@ export default [
     meta: {
       title: '设备管理',
     },
-    component: equipment
+    component: equipment,
+    children: [{
+      path: 'equipmentList',
+      name: 'equipmentList',
+      meta: {
+        title: '设备列表',
+      },
+      component: equipmentList,
+      
+    },{
+      path: 'accessoriesList',
+      name: 'accessoriesList',
+      meta: {
+        title: '配件列表',
+      },
+      component: accessoriesList,
+    }]
   }, {
+    path: 'businessManage/channelTerminal/equipmentDesc',
+    name: 'equipmentDesc',
+    meta: {
+      title: '配件详情',
+    },
+    component: equipmentDesc,
+  }, {
+    path: 'businessManage/channelTerminal/equipmentResume',
+    name: 'equipmentResume',
+    meta: {
+      title: '配件详情',
+    },
+    component: equipmentResume,
+  },{
     path: 'businessManage/channelTerminal/knowledgeBase',
     name: 'knowledgeBase',
     meta: {
@@ -725,6 +769,30 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
+  },
+  {
+    path: 'businessManage/fundParameter',
+    name: 'fundParameter',
+    meta: {
+      title: '资金参数管理',
+    },
+    component: fundParameter
+  },
+  {
+    path: 'businessManage/fundParameterDetail',
+    name: 'fundParameterDetail',
+    meta: {
+      title: '资金参数管理详情',
+    },
+    component: fundParameterDetail
+  },
+  {
+    path: 'businessManage/fundParameterEdit',
+    name: 'fundParameterEdit',
+    meta: {
+      title: '资金参数管理编辑',
+    },
+    component: fundParameterEdit
   },
   {
     path: 'businessManage/cardBalance',

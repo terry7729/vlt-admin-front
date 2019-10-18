@@ -14,7 +14,7 @@
       <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items">
+          :value="items.value">
         </el-option>
       </el-select>
       <!-- 支持多选 -->
@@ -78,7 +78,7 @@
         <el-radio 
         v-for="(list,index) in item.options"
         :key="index"
-        :label="list.key">{{list.value}}</el-radio>
+        :label="list.value">{{list.label}}</el-radio>
       </el-radio-group>
       <!-- 地址栏 -->
       <div v-if="item.type=='address'">
@@ -185,7 +185,7 @@ export default {
     },
   },
   created() {
-    this.init()
+    this.init(this.formData)
   },
   components: {
   },
@@ -241,6 +241,9 @@ export default {
           })
         }
       })
+    },
+    resetForm() {
+      this.$refs.form.resetFields();
     },
     validate(callback) {
       this.$refs.form.validate((valid) => {

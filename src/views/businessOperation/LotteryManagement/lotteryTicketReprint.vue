@@ -86,11 +86,63 @@ export default {
   },
   components: {},
   methods: {
-    Reprint() {}
+    Reprint() {
+      this.$print(this.$refs.print); // 使用
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
-@import "./less/index.less";
+.print {
+  &-content {
+    padding: 0 100px;
+
+    .tr {
+      text-align: right;
+    }
+    .tc {
+      text-align: center;
+    }
+    .tl {
+      text-align: left;
+    }
+    td {
+      font-size: 14px;
+      padding-bottom: 20px;
+    }
+    .pt {
+      padding: 20px 0 40px;
+      border-top: 1px dashed black;
+    }
+    .dashed {
+      border-bottom: 1px dashed black;
+    }
+    .pt20 {
+      padding-top: 20px;
+    }
+    .time {
+      padding: 30px 20px;
+    }
+  }
+  &-title {
+    padding: 30px 0 20px;
+    font-size: 18px;
+    text-align: center;
+  }
+  &-table {
+    width: 100%;
+    // padding-left: 20px;
+  }
+}
+.btn-print {
+  text-align: center;
+  padding: 20px 0 40px;
+  .el-button {
+    padding: 8px 30px;
+  }
+}
+.text {
+  word-break: break-all;
+}
 </style>

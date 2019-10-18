@@ -7,25 +7,27 @@ import api from './api/'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import commonComponents from './components/common/' // 通用组件引入
+import Print from "@/utils/print";
 
 
 Vue.use(commonComponents)
 Vue.use(ElementUI)
+Vue.use(Print); // 注册
 
 Vue.directive('prevent', {
-  inserted (el, binding) {
-    el.addEventListener('click', () => {
-      if (!el.disabled) {
-        el.disabled = true
-        setTimeout(() => {
-          el.disabled = false
-        }, binding.value || 1000)
-      }
-    })
-  }
-}),
+    inserted(el, binding) {
+      el.addEventListener('click', () => {
+        if (!el.disabled) {
+          el.disabled = true
+          setTimeout(() => {
+            el.disabled = false
+          }, binding.value || 1000)
+        }
+      })
+    }
+  }),
 
-Vue.config.productionTip = false
+  Vue.config.productionTip = false
 Vue.prototype.$api = api
 Vue.prototype.eventBus = new Vue();
 

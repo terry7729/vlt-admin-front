@@ -72,22 +72,48 @@ const MemberIntegralManagementDetail = () => import('@/views/businessOperation/M
 
 //资金日结算报表
 const financialStatementDaySettle = () => import('@/views/businessOperation/financialStatement/financialStatementDaySettle')
+//资金日结算报表打印
+const PrintDaySettle = () => import('@/views/businessOperation/financialStatement/PrintDaySettle')
+
 //资金日分配报表
 const financialStatementDayAllocation = () => import('@/views/businessOperation/financialStatement/financialStatementDayAllocation')
+//资金日分配报表打印
+const PrintDayAllocation = () => import('@/views/businessOperation/financialStatement/PrintDayAllocation')
+
 //资金日流向报表
 const financialStatementDayFlow = () => import('@/views/businessOperation/financialStatement/financialStatementDayFlow')
+//资金日流向报表打印
+const PrintDayFlow = () => import('@/views/businessOperation/financialStatement/PrintDayFlow')
+
 //资金月结算报表
 const financialStatementMonthSettle = () => import('@/views/businessOperation/financialStatement/financialStatementMonthSettle')
+//资金月结算报表打印
+const PrintMonthSettle = () => import('@/views/businessOperation/financialStatement/PrintMonthSettle')
+
 //资金月分配报表
 const financialStatementMonthAllocation = () => import('@/views/businessOperation/financialStatement/financialStatementMonthAllocation')
+//资金月分配报表打印
+const PrintMonthAllocation = () => import('@/views/businessOperation/financialStatement/PrintMonthAllocation')
+
 //资金月流向报表
 const financialStatementMonthFlow = () => import('@/views/businessOperation/financialStatement/financialStatementMonthFlow')
+//资金月流向报表打印
+const PrintMonthFlow = () => import('@/views/businessOperation/financialStatement/PrintMonthFlow')
+
 //资金年结算报表
 const financialStatementYearSettle = () => import('@/views/businessOperation/financialStatement/financialStatementYearSettle')
+//资金年结算报表打印
+const PrintYearSettle = () => import('@/views/businessOperation/financialStatement/PrintYearSettle')
+
 //资金年结算报表
 const financialStatementYearAllocation = () => import('@/views/businessOperation/financialStatement/financialStatementYearAllocation')
+//资金年结算报表打印
+const PrintYearAllocation = () => import('@/views/businessOperation/financialStatement/PrintYearAllocation')
+
 //资金年流向报表
 const financialStatementYearFlow = () => import('@/views/businessOperation/financialStatement/financialStatementYearFlow')
+//资金年流向报表打印
+const PrintYearFlow = () => import('@/views/businessOperation/financialStatement/PrintYearFlow')
 
 //品牌营销推广
 //活动计划模板
@@ -473,6 +499,16 @@ export default [
     component: financialStatementDaySettle
   },
   {
+    path: 'businessOperation/PrintDaySettle',
+    name: 'PrintDaySettle',
+    meta: {
+      title: '资金日结算报表打印',
+    },
+    component: PrintDaySettle
+  },
+
+
+  {
     path: 'businessOperation/financialStatementDayAllocation',
     name: 'financialStatementDayAllocation',
     meta: {
@@ -480,6 +516,15 @@ export default [
     },
     component: financialStatementDayAllocation
   },
+  {
+    path: 'businessOperation/PrintDayAllocation',
+    name: 'PrintDayAllocation',
+    meta: {
+      title: '资金日分配报表打印',
+    },
+    component: PrintDayAllocation
+  },
+
   {
     path: 'businessOperation/financialStatementDayFlow',
     name: 'financialStatementDayFlow',
@@ -489,6 +534,15 @@ export default [
     component: financialStatementDayFlow
   },
   {
+    path: 'businessOperation/PrintDayFlow',
+    name: 'PrintDayFlow',
+    meta: {
+      title: '资金日流向报表打印',
+    },
+    component: PrintDayFlow
+  },
+
+  {
     path: 'businessOperation/financialStatementMonthSettle',
     name: 'financialStatementMonthSettle',
     meta: {
@@ -496,6 +550,15 @@ export default [
     },
     component: financialStatementMonthSettle
   },
+  {
+    path: 'businessOperation/PrintMonthSettle',
+    name: 'PrintMonthSettle',
+    meta: {
+      title: '资金月结算报表打印',
+    },
+    component: PrintMonthSettle
+  },
+
   {
     path: 'businessOperation/financialStatementMonthAllocation',
     name: 'financialStatementMonthAllocation',
@@ -505,6 +568,15 @@ export default [
     component: financialStatementMonthAllocation
   },
   {
+    path: 'businessOperation/PrintMonthAllocation',
+    name: 'PrintMonthAllocation',
+    meta: {
+      title: '资金月分配报表打印',
+    },
+    component: PrintMonthAllocation
+  },
+
+  {
     path: 'businessOperation/financialStatementMonthFlow',
     name: 'financialStatementMonthFlow',
     meta: {
@@ -512,6 +584,15 @@ export default [
     },
     component: financialStatementMonthFlow
   },
+  {
+    path: 'businessOperation/PrintMonthFlow',
+    name: 'PrintMonthFlow',
+    meta: {
+      title: '资金月流向报表打印',
+    },
+    component: PrintMonthFlow
+  },
+
   {
     path: 'businessOperation/financialStatementYearSettle',
     name: 'financialStatementYearSettle',
@@ -521,6 +602,15 @@ export default [
     component: financialStatementYearSettle
   },
   {
+    path: 'businessOperation/PrintYearSettle',
+    name: 'PrintYearSettle',
+    meta: {
+      title: '资金年结算报表打印',
+    },
+    component: PrintYearSettle
+  },
+
+  {
     path: 'businessOperation/financialStatementYearAllocation',
     name: 'financialStatementYearAllocation',
     meta: {
@@ -529,6 +619,15 @@ export default [
     component: financialStatementYearAllocation
   },
   {
+    path: 'businessOperation/PrintYearAllocation',
+    name: 'PrintYearAllocation',
+    meta: {
+      title: '资金年分配报表打印',
+    },
+    component: PrintYearAllocation
+  },
+
+  {
     path: 'businessOperation/financialStatementYearFlow',
     name: 'financialStatementYearFlow',
     meta: {
@@ -536,6 +635,15 @@ export default [
     },
     component: financialStatementYearFlow
   },
+  {
+    path: 'businessOperation/PrintYearFlow',
+    name: 'PrintYearFlow',
+    meta: {
+      title: '资金年流向报表打印',
+    },
+    component: PrintYearFlow
+  },
+
 
 
   //品牌与营销推广

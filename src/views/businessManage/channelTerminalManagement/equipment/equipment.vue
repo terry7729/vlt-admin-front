@@ -1,4 +1,4 @@
-<!-- 渠道终端管理 - 维修管理 -->
+<!-- 渠道终端管理 - 设备管理 -->
 <template>
   <div class="vlt-card vc-plr0">
     <el-container>
@@ -22,18 +22,18 @@ export default {
     return {
       menuData: {
         id: 0,
-        title: '维修管理',
+        title: '设备管理',
         icon: '',
         list: [{
           id: 0,
-          name: '维修工单',
+          name: '设备列表',
           active: true,
-          url: 'repairWork',
+          url: 'equipmentList',
         },{
           id: 1,
-          name: '置换工单',
+          name: '配件列表',
           active: false,
-          url: 'replacementWork',
+          url: 'accessoriesList',
         }]
       }
     };
@@ -45,21 +45,25 @@ export default {
   watch: {
     $route (val) {
       // console.log(val);
-      if (val.name == "maintenance") {
+      if (val.name == "equipment") {
         this.$router.push({
-          name: 'repairWork'
+          name: 'equipmentList'
         })
       }
     }
   },
   beforeCreate () {
-    if (this.$router.history.current.name ==  "maintenance") {
+    if (this.$router.history.current.name ==  "equipment") {
         this.$router.push({
-        name: 'repairWork'
+        name: 'equipmentList'
       })
     }
   },
-  created () {},
+  created () {
+    // this.$router.push({
+    //   name: 'maintenanceEfficiency'
+    // })
+  },
   methods: {}
 };
 </script>
