@@ -28,8 +28,7 @@
       <el-switch
         v-if="item.type=='switch'"
         v-model="form[item.prop]"
-        @change="changeSwitch"
-        :active-text="switchText"
+        :active-text="form[item.prop]?'开启':'关闭'"
         active-color="#409EFF"
         inactive-color="">
       </el-switch>
