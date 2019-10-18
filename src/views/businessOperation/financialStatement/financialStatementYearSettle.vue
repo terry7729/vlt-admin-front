@@ -341,7 +341,11 @@ export default {
   components: {},
   methods: {
     //按钮类型选择
-    YearSettleSelectBtn() {}
+    YearSettleSelectBtn(val) {
+      if (val.name == "打印") {
+        this.$router.push("PrintYearSettle");
+      }
+    }
   }
 };
 </script>

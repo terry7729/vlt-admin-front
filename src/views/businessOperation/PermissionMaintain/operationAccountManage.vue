@@ -66,7 +66,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">保 存</el-button>
+          <el-button :plain="true" type="primary" @click="save">保 存</el-button>
         </div>
       </el-dialog>
     </div>
@@ -79,7 +79,9 @@ export default {
   name: "",
   data() {
     return {
+      //编辑弹框默认为false
       dialogFormVisible: false,
+      // 表格数据
       operationManageTableData: [
         {
           operationManageNum: 1,
@@ -104,6 +106,7 @@ export default {
           roleManageCreateDate: "13800131358"
         }
       ],
+      //搜索框类型
       operationManageoptions: [
         {
           type: "input",
@@ -156,16 +159,37 @@ export default {
           options: ["start", "end"]
         }
       ],
+      //按钮类型
       operationManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
       operationManageWriteRule: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        operationManageBelong: [
+          { required: true, message: "请选择所属渠道", trigger: "change" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        operationManageName: [
+          { required: true, message: "请输入账户名称", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        operationManageRoleName: [
+          { required: true, message: "请选择账户角色", trigger: "change" }
+        ],
+        operationManagetelephone: [
+          { required: true, message: "请输入手机号", trigger: "blur" }
+        ],
+        operationManageIDCard: [
+          { required: true, message: "请输入身份证号", trigger: "blur" }
+        ],
+        operationManageAdress: [
+          { required: true, message: "请输入联系地址", trigger: "blur" }
+        ],
+        operationManageLimit: [
+          {
+            type: "array",
+            required: true,
+            message: "请选择账号权限",
+            trigger: "change"
+          }
+        ]
       },
+      // 编辑弹框表单类型
       operationManageWriteData: [
         {
           type: "select",
@@ -199,19 +223,29 @@ export default {
           value: "",
           prop: "operationManagetelephone"
         },
-        { type: "input", title: "身份证号", value: "", prop: "accountname" },
-        { type: "input", title: "联系地址", value: "", prop: "accountname" },
+        {
+          type: "input",
+          title: "身份证号",
+          value: "",
+          prop: "operationManageIDCard"
+        },
+        {
+          type: "input",
+          title: "联系地址",
+          value: "",
+          prop: "operationManageAdress"
+        },
         {
           type: "input",
           title: "账户密码",
           value: "",
-          prop: "accountname",
+          prop: "operationManagePassword",
           disabled: true,
           placeholder: "初始密码为123456"
         },
         {
           type: "cascader-multiple",
-          prop: "accountauthority",
+          prop: "operationManageLimit",
           value: "",
           title: "账号权限",
           placeholder: "请选择",
@@ -515,7 +549,11 @@ export default {
       //console.log(row);
       this.eventBus.$emit("send", row);
     },
-    operationManageWritechangeForm() {}
+    operationManageWritechangeForm() {},
+    //点击保存
+    save() {
+      this.dialogFormVisible = false;
+    }
   }
 };
 </script>

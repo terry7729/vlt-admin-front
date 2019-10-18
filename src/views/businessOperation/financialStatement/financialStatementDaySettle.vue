@@ -342,7 +342,11 @@ export default {
 
   methods: {
     //点击按钮选择哪个
-    FinancialSettleSelectBtn() {}
+    FinancialSettleSelectBtn(val) {
+      if (val.name == "打印") {
+        this.$router.push("PrintDaySettle");
+      }
+    }
   }
 };
 </script>

@@ -344,6 +344,7 @@ export default {
     //点击按钮选择哪个
     MonthSettleSelectBtn(val) {
       if (val.name == "打印") {
+        this.$router.push("PrintMonthSettle");
       } else if (val.name == "导出") {
       }
     }

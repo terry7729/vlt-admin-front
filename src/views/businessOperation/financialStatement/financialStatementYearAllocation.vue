@@ -345,7 +345,11 @@ export default {
   components: {},
   methods: {
     //按钮类型选择
-    YearAllocationSelectBtn() {}
+    YearAllocationSelectBtn(val) {
+      if (val.name == "打印") {
+        this.$router.push("PrintYearAllocation");
+      }
+    }
   }
 };
 </script>
