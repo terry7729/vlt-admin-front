@@ -2,11 +2,24 @@
   <div class="vlt-card store-check">
     <el-tabs v-model="activeName"  @tab-click="handleClick">
       <el-tab-pane label="游戏详情" name="first">
-        <panel title="游戏信息" :show="true">
-          <base-info :infoList="gameInfoList"></base-info>
+        <panel title="基本信息" :show="true">
+          <base-info :infoList="baseInfo"></base-info>
         </panel>
         <panel title="游戏开发商" :show="true">
-          <base-info :infoList="developerInfoList"></base-info>
+          <base-info :infoList="developerInfo"></base-info>
+        </panel>
+        <panel title="版本信息" :show="true">
+          <base-info :infoList="editionInfo"></base-info>
+        </panel>
+        <panel title="游戏附件" :show="true">
+          <div class="base-info">
+            <ul class="info-list">
+              <li class="info-item" v-for="(item, index) in appendixInfo" :key="index">
+                <span class="title">{{item.title}}：</span>
+                <el-button type="text" class="text" v-html="(item.value === null ? '' : item.value) + (item.unit || '')"></el-button>
+              </li>
+            </ul>
+          </div>
         </panel>
       </el-tab-pane>
       <el-tab-pane label="试玩记录" name="second">
@@ -118,7 +131,7 @@ export default {
   data() {
     return {
       activeName: "first",
-      gameInfoList: [
+      baseInfo: [
         {title: '游戏ID', value: '', prop: 'gameCode'},
         {title: '游戏名称', value: '', prop: 'gameName'},
         {title: '游戏类型', value: '', prop: 'officialEndSale'},
@@ -126,6 +139,20 @@ export default {
         {title:"游戏版权",value:'',prop:'gamesCopyright'},
         {title:"游戏奖池",value:'',prop:'gamesPond'},
         {title:"游戏简介",value:'',prop:'gamesAbout'},
+        {title:"创建人",value:'',prop:'softwareName'},
+        {title:"创建时间",value:'',prop:'softwareSize'},
+        {title:"更新人",value:'',prop:'softwareVersions'},
+        {title:"更新时间",value:'',prop:'Versions'},
+      ],
+      developerInfo: [
+        {title:'开发商名称',value:'',prop:'developerName'},
+        {title:'联系人',value:'',prop:'contacts'},
+        {title:'手机号码',value:'',prop:'phoneNumber'},
+        {title:'电子邮箱',value:'',prop:'email'},
+        {title:'传真电话',value:'',prop:'phototelephony'},
+        {title:'详细地址',value:'',prop:'address'},
+      ],
+      editionInfo: [
         {title:"软件名称",value:'',prop:'softwareName'},
         {title:"软件大小",value:'',prop:'softwareSize'},
         {title:"软件版本",value:'',prop:'softwareVersions'},
@@ -134,13 +161,8 @@ export default {
         {title:"软件描述",value:'',prop:'softwareDescribe'},
         {title:"新版特性",value:'',prop:'newCharacter'},
       ],
-      developerInfoList: [
-        {title:'开发商名称',value:'',prop:'developerName'},
-        {title:'联系人',value:'',prop:'contacts'},
-        {title:'手机号码',value:'',prop:'phoneNumber'},
-        {title:'电子邮箱',value:'',prop:'email'},
-        {title:'传真电话',value:'',prop:'phototelephony'},
-        {title:'详细地址',value:'',prop:'address'},
+      appendixInfo: [
+        {title:"文档一.doc",value:'下载',prop:'newCharacter'},
       ],
       //试玩列表
       demoList:[
@@ -221,5 +243,10 @@ export default {
 }
 .panel{
     margin-bottom: 15px;
+}
+.base-info .info-list .text{
+  font-size: 12px;
+  overflow: hidden;
+  word-break: break-all;
 }
 </style>
