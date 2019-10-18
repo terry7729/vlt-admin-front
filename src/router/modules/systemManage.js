@@ -191,12 +191,13 @@ export default [
 
   },
   {
-    path: 'systemManage/roleList',
+    path: 'systemManage/roleList/',
     name: 'roleList',
     meta: {
       title: '角色列表',
     },
-    component: roleList
+    component: roleList,
+    props:true
 },
 {
   path: 'systemManage/roleList/roleifometion',

@@ -25,7 +25,6 @@
               :data="date"
               show-checkbox
               node-key="id"
-              :check-strictly="true"
               @node-click="getnowNodeifo"
               @check-change="getCheckifo"
               :default-expanded-keys="[1, 2]"
@@ -52,7 +51,7 @@
             </el-form>
             <base-form
               v-if="menuType==0"
-              :formData="data2.slice(1,9)"
+              :formData="data2"
               ref="baseForm"
               :rules="rules"
               direction="right"
@@ -95,7 +94,7 @@
               </el-form-item>
             </el-form>
             <base-form
-              :formData="menuType==='1'?data3:data2"
+              :formData="menuType==='1'?data3:data4"
               ref="baseForm"
               :rules="rules"
               direction="right"
@@ -180,6 +179,32 @@ export default {
         { type: "switch", prop: "date3", value: "", title: "是否启用" }
       ],
       data2: [
+        //类别为菜单时的表单对象
+       
+        { type: "input", title: "名称", prop: "name", value: "" },
+
+        { type: "input", title: "路由英文名", prop: "english", value: "" },
+        {
+          type: "select",
+          title: "图标",
+          prop: "icon",
+          value: "",
+          options: [
+            { label: "图标一", value: "0" },
+            { label: "图标二", value: "1" }
+          ]
+        },
+        { type: "input", prop: "sort", value: "", title: "排序值" },
+        {
+          type: "switch",
+          prop: "date2",
+          value: "",
+          title: "是否敏感操作",
+          option: ["start", "end"]
+        },
+        { type: "switch", prop: "date3", value: "", title: "是否启用" }
+      ],
+       data4: [
         //类别为菜单时的表单对象
         {
           title: "上级节点",
