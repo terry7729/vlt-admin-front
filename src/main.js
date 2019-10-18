@@ -8,26 +8,32 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import commonComponents from './components/common/' // 通用组件引入
 import echarts from 'echarts'
+import Print from "@/utils/print";
 
 
 Vue.use(commonComponents)
 Vue.use(ElementUI)
+Vue.use(Print); // 注册
 
 Vue.directive('prevent', {
-  inserted (el, binding) {
-    el.addEventListener('click', () => {
-      if (!el.disabled) {
-        el.disabled = true
-        setTimeout(() => {
-          el.disabled = false
-        }, binding.value || 1000)
-      }
-    })
-  }
-}),
+    inserted(el, binding) {
+      el.addEventListener('click', () => {
+        if (!el.disabled) {
+          el.disabled = true
+          setTimeout(() => {
+            el.disabled = false
+          }, binding.value || 1000)
+        }
+      })
+    }
+  }),
 
+<<<<<<< HEAD
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts;
+=======
+  Vue.config.productionTip = false
+>>>>>>> 205d555d458ef1562e180f867aeb721e68ed1194
 Vue.prototype.$api = api
 Vue.prototype.eventBus = new Vue();
 

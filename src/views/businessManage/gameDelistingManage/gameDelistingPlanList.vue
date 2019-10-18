@@ -1,13 +1,12 @@
 <template>
   <div class="vlt-card game-launch-list">
     <search-bar class="search-bar-demo"
-        @search="search"
-        :options="searchOptions"
-        :total="999"
-        labelWidth="100px"
-      >
+      @search="search"
+      :options="searchOptions"
+      :total="999"
+      labelWidth="86px">
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
-    
     <el-table
     border
     ref="multipleTable"
@@ -17,16 +16,14 @@
     @selection-change="handleSelectionChange">
       <!-- <el-table-column ty-pe="selection" width="55" fixed="left"></el-table-column> -->
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="code" label="上市计划编号" ></el-table-column>
-      <el-table-column prop="planName" label="上市计划名称"></el-table-column>
+      <el-table-column prop="code" label="退市计划编号" ></el-table-column>
+      <el-table-column prop="planName" label="退市计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
-      <el-table-column prop="sellRang" label="销售范围"></el-table-column>
+      <el-table-column prop="sellRang" label="退市范围"></el-table-column>
       <el-table-column prop="planState" label="计划状态"></el-table-column>
-      <el-table-column prop="startTime" label="开始销售时间"></el-table-column>
-      <el-table-column prop="endTime" label="结束销售时间 "></el-table-column>
-      <el-table-column prop="initiator" label="发起人"></el-table-column>
-      <el-table-column prop="initiateTime" label="发起时间"></el-table-column>
-
+      <el-table-column prop="startTime" label="退市时间" width="160"></el-table-column>
+      <el-table-column prop="initiator" label="创建人"></el-table-column>
+      <el-table-column prop="initiateTime" label="创建时间" width="160"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
@@ -34,25 +31,26 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="total,prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange">
+    </table-paging>
   </div>
   
 </template>
 
 <script>
 export default {
-  name: 'gameStoreManage',
+  name: 'gameDelistingPlanList',
   data() {
     return {
+      controlOptions: [
+        { name: "新建退市计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+      ],
       tableData: [
         {
           id:"01",
@@ -67,13 +65,13 @@ export default {
           initiateTime:"2017-9-23 01:55:45",
         },
       ],
-        multipleSelection: [],
-        totalCount:0,
-        ruleForm: {
-          page: 1,
-          limit: 10
-        },
-        searchOptions:[
+      multipleSelection: [],
+      totalCount:0,
+      ruleForm: {
+        page: 1,
+        limit: 10
+      },
+      searchOptions:[
         {type: 'input', prop: 'inputName', value: '', title: '游戏ID', placeholder: '请输入'},
         {type: 'input', prop: 'inputName2', value: '', title: '游戏名称', placeholder: '请输入'},
         {
@@ -117,38 +115,40 @@ export default {
         },
         {type: 'datepicker-range', prop: 'date2', value: '', title: '上市时间', placeholder: ['开始日期', '结束日期']},
           
-        ],
-        currentPage: 1
-      }
-    
+      ],
+      currentPage: 1
+    }
   },
   methods: {
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-      //查看页面跳转
-      detail (id) {
-        this.$router.push({
-          path: './gameDetail',
-          query: {id}
-        })
-      },
-      edit (id) {
-        this.$router.push({
-          path: './gameEdit',
-          query: {id}
-        })
-      },
-      search(form) {
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    //查看页面跳转
+    detail (id) {
+      this.$router.push({
+        path: './gameDelistingPlanDetail',
+        query: {id}
+      })
+    },
+    selectBtn() {
+      this.$router.push({path: './gameDelistingPlanCreate'})
+    },
+    edit (id) {
+      this.$router.push({
+        path: './gameDelistingPlanEdit',
+        query: {id}
+      })
+    },
+    search(form) {
       console.log('search', form)
     },
     handleSizeChange(val) {
@@ -173,6 +173,5 @@ export default {
 </script>
 
 
-<style lang="less">
-@import './less/index.less';
+<style lang="less" scoped>
 </style>

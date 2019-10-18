@@ -115,7 +115,7 @@ export default {
   components: {},
   methods: {
     accountDetail(account) {
-      this.$router.push({ path: "accountDetail", query: account });
+      this.$router.push({ name: "accountDetail", params: {id:account} });
     },
     search() {},
     pageSizeChange(size) {

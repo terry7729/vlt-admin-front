@@ -179,6 +179,7 @@ export default {
     expirySettingWrite() {
       this.lotteryTicketFormWriteVisible = true;
     },
+    expirySettingChange() {},
     //编辑弹框表单change事件
     lotteryTicketWritechangeForm() {},
     //新增弹框表单change事件

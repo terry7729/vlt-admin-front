@@ -286,8 +286,53 @@
 .expirySetting .el-dialog {
   width: 38%;
 }
+.el-collapse-item__header {
+  font-size: 16px;
+  font-weight: 600;
+  text-indent: 25px;
+}
 .develop-plan .el-tabs--left .el-tabs__item.is-left {
   text-align: left;
+}
+.tabs-content .el-tabs__nav {
+  margin-right: 100px;
+}
+.tabs-content .el-tabs__item.is-active {
+  background: #e6f7ff;
+}
+.tabs-content .el-tabs--left .el-tabs__active-bar.is-left,
+.tabs-content .el-tabs--left .el-tabs__nav-wrap.is-left::after {
+  left: 194px;
+  margin-right: 10px;
+}
+.tabs-content .el-tabs--left .el-tabs__nav-wrap.is-left {
+  margin-right: -60px;
+}
+.tabs-content .el-tabs__item {
+  padding: 0 70px;
+}
+.tabs-content .tables-content .el-tabs__item.is-active {
+  background: none;
+}
+.tabs-content .switchStyle .el-switch__label {
+  position: absolute;
+  display: none;
+  color: #fff;
+}
+.tabs-content .switchStyle .el-switch__label--left {
+  z-index: 9;
+  left: 6px;
+}
+.tabs-content .switchStyle .el-switch__label--right {
+  z-index: 9;
+  left: -14px;
+}
+.tabs-content .switchStyle .el-switch__label.is-active {
+  display: block;
+}
+.tabs-content .switchStyle.el-switch .el-switch__core,
+.tabs-content .el-switch .el-switch__label {
+  width: 50px !important;
 }
 .result-assess .vlt-edit-wrap {
   margin: 50px 0 20px 350px;
@@ -298,142 +343,43 @@
 .allot-task .formTime input {
   width: 400px;
 }
-.create-active .header-box .el-form-item__label {
-  width: 145px !important;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
-}
-.create-active .addForm-box .add-form {
-  margin-left: 95px;
-}
-.create-active .addForm-box .add-form :nth-child(1) .el-form-item__label {
-  width: 100px !important;
-}
-.create-active .addForm-box .add-form .el-checkbox-group {
-  display: inline-block;
-  width: 400px;
-  margin-top: -40px;
-  margin-left: 20px;
-}
-.create-active .process-content .el-header {
-  height: 110px !important;
-}
-.create-active .tabs-content .el-tabs__nav {
-  margin-right: 100px;
-}
-.create-active .tabs-content .el-tabs__item.is-active {
-  background: #e6f7ff;
-}
-.create-active .tabs-content .el-tabs--left .el-tabs__active-bar.is-left,
-.create-active .tabs-content .el-tabs--left .el-tabs__nav-wrap.is-left::after {
-  left: 194px;
-  margin-right: 10px;
-}
-.create-active .tabs-content .el-tabs--left .el-tabs__nav-wrap.is-left {
-  margin-right: -60px;
-}
-.create-active .tabs-content .el-tabs__item {
-  padding: 0 70px;
-}
-.create-active .tabs-content .tables-content .el-tabs__item.is-active {
-  background: none;
-}
-.create-active .tabs-content .switchStyle .el-switch__label {
-  position: absolute;
-  display: none;
-  color: #fff;
-}
-.create-active .tabs-content .switchStyle .el-switch__label--left {
-  z-index: 9;
-  left: 6px;
-}
-.create-active .tabs-content .switchStyle .el-switch__label--right {
-  z-index: 9;
-  left: -14px;
-}
-.create-active .tabs-content .switchStyle .el-switch__label.is-active {
-  display: block;
-}
-.create-active .tabs-content .switchStyle.el-switch .el-switch__core,
-.create-active .tabs-content .el-switch .el-switch__label {
-  width: 50px !important;
-}
-.create-active input {
-  width: 400px;
-}
-.create-active .el-textarea__inner {
-  width: 400px;
-}
-.create-active .active-target .el-checkbox {
-  margin-right: 10px;
-}
-.create-active .active-target .el-input {
-  width: 250px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-.create-active .active-target .el-input input {
-  width: 250px;
-  margin-left: 18px;
-}
-.create-active .active-lobby .el-input {
-  width: 250px;
-  display: inline-block;
-}
-.create-active .active-lobby .el-input input {
-  width: 250px;
-}
-.el-collapse-item__header {
-  font-size: 16px;
-  font-weight: 600;
-  text-indent: 25px;
-}
-.preview-template .upload-img {
+.active-plan .upload-img {
   margin: 20px 0;
 }
-.preview-template .upload-img .upload-box {
+.active-plan .upload-img .upload-box {
   display: inline-block;
 }
-.preview-template .drag-upload {
+.active-plan .drag-upload {
   margin-bottom: 20px;
   position: relative;
   left: 75px;
 }
-.preview-template .active-rule .rule-item .el-select,
-.preview-template .active-rule .rule-item .el-input {
+.active-plan .active-rule .rule-item .el-select,
+.active-plan .active-rule .rule-item .el-input {
   width: 100px;
   margin-right: 20px;
   display: inline-block;
 }
-.preview-template .active-rule .rule-item .el-select input,
-.preview-template .active-rule .rule-item .el-input input {
+.active-plan .active-rule .rule-item .el-select input,
+.active-plan .active-rule .rule-item .el-input input {
   width: 100px;
 }
-.preview-template .active-rule .rule-item .last-rule input {
+.active-plan .active-rule .rule-item .last-rule input {
   width: 200px;
 }
-.preview-template .remark .el-textarea {
+.active-plan .remark .el-textarea {
   width: 500px;
   display: inline-block;
 }
-.preview-template .remark .el-textarea textarea {
+.active-plan .remark .el-textarea textarea {
   width: 500px;
   margin-top: 10px;
 }
-.preview-template .item-check .el-checkbox {
-  padding-bottom: 10px;
+.active-plan .item-check {
+  margin-bottom: 50px;
 }
-.tables-content .el-tabs__item.is-active {
-  background: none;
-}
-.account-detail .equity-title {
-  margin-left: 32px;
-  margin-top: 5px;
-}
-.account-detail .equity-title span {
-  display: inline-block;
-  margin-right: 400px;
+.active-plan .item-check .el-checkbox {
+  padding-bottom: 20px;
 }
 .plan-detail .base-data {
   width: 60%;
@@ -452,6 +398,10 @@
 .plan-detail .base-data .rule-form .el-input input {
   width: 150px;
 }
+.plan-detail .progress-bar {
+  width: 70%;
+  margin: 20px 150px;
+}
 .plan-detail .ration-target {
   margin-top: 20px;
 }
@@ -462,13 +412,35 @@
 .plan-detail .ration-target .ration-check .el-checkbox {
   margin-bottom: 20px;
 }
-.plan-detail .progress-bar {
-  width: 800px;
-  margin: 20px 150px;
+.tables-content .el-tabs__item.is-active {
+  background: none;
 }
-.plan-detail .state-inform {
-  position: absolute;
-  left: 900px;
-  top: 12px;
-  text-align: right;
+.login-container.vlt-card .vlt-edit-single .el-input__inner {
+  width: 368px;
+  height: 46px;
+  border-radius: 4px;
+}
+.eachBet-form {
+  padding: 16px;
+}
+.eachBet-form .el-form-item__content {
+  width: 400px;
+  display: flex;
+  align-items: center;
+}
+.eachBet-form .el-form-item:first-child .el-form-item__content {
+  width: 350px;
+}
+.eachBet-form .el-form-item__label {
+  font-size: 12px;
+  color: #444444;
+  line-height: 20px;
+}
+.eachBet-form .el-form--label-top .el-form-item__label {
+  padding: 0 0 7px;
+}
+.eachBet-form .el-input__inner {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 10px;
 }

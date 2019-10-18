@@ -228,7 +228,8 @@ export default {
   methods: {
     search(form) {
       console.log("search", form);
-    },  handleClick(row) {
+    },  
+    handleClick(row) {
       this.$router.push({
         name: 'infoDetail',
         query: {

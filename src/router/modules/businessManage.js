@@ -35,17 +35,26 @@ const gameList = () => import('@/views/businessManage/gameStoreManage/gameList')
 const gameDetail = () => import('@/views/businessManage/gameStoreManage/gameDetail')
 const gameEdit = () => import('@/views/businessManage/gameStoreManage/gameEdit')
 const gameCreate = () => import('@/views/businessManage/gameStoreManage/gameCreate')
+const gameTypeList = () => import('@/views/businessManage/gameStoreManage/gameTypeList')
 // 游戏试玩计划列表
 const trialPlanList = () => import('@/views/businessManage/gameStoreManage/trialPlanList')
 const trialPlanDetail = () => import('@/views/businessManage/gameStoreManage/trialPlanDetail')
 const trialPlanEdit = () => import('@/views/businessManage/gameStoreManage/trialPlanEdit')
 const trialPlanCreate = () => import('@/views/businessManage/gameStoreManage/trialPlanCreate')
 // 游戏上市计划列表
-const gameLaunchPlan = () => import('@/views/businessManage/gameReleaseManage/gameLaunchPlan')
+const gameMarketPlanList = () => import('@/views/businessManage/gameMarketManage/gameMarketPlanList')
+const gameMarketPlanDetail = () => import('@/views/businessManage/gameMarketManage/gameMarketPlanDetail')
+const gameMarketPlanEdit = () => import('@/views/businessManage/gameMarketManage/gameMarketPlanEdit')
+const gameMarketPlanCreate = () => import('@/views/businessManage/gameMarketManage/gameMarketPlanCreate')
 // 游戏配置管理
-const gameConfigManage = () => import('@/views/businessManage/gameReleaseManage/gameConfigManage')
+const gameMarketList = () => import('@/views/businessManage/gameChangeManage/gameMarketList')
+const gameMarketDetail = () => import('@/views/businessManage/gameChangeManage/gameMarketDetail')
+const gameChangePlanList = () => import('@/views/businessManage/gameChangeManage/gameChangePlanList')
+const gameChangePlanDetail = () => import('@/views/businessManage/gameChangeManage/gameChangePlanDetail')
+const gameChangePlanEdit = () => import('@/views/businessManage/gameChangeManage/gameChangePlanEdit')
+const gameChangePlanCreate = () => import('@/views/businessManage/gameChangeManage/gameChangePlanCreate')
 //退市计划
-const gameDelistPlan = () => import('@/views/businessManage/gameReleaseManage/gameDelistPlan')
+const gameDelistingPlanList = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanList')
 
 
 
@@ -110,7 +119,6 @@ const dossierManage = () => import('@/views/businessManage/channelBusinessManage
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
 const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
-const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment')
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
 
@@ -125,6 +133,21 @@ const maintenanceStaff = () => import('@/views/businessManage/channelTerminalMan
 const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance/maintenance')
 const repairWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/repairWork')
 const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
+
+// 渠道终端管理 - 设备管理 
+const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipment')
+const accessoriesList = () => import('@/views/businessManage/channelTerminalManagement/equipment/accessoriesList')
+const equipmentList = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentList')
+const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
+const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
+
+// 资金结算管理
+const fundParameter = () => import('@/views/businessManage/fundSettlement/fundParameter')
+// 资金参数管理 详情
+const fundParameterDetail = () => import('@/views/businessManage/fundSettlement/fundParameterDetail')
+// 资金参数管理 编辑
+const fundParameterEdit = () => import('@/views/businessManage/fundSettlement/fundParameterEdit')
+
 
 // 投注卡管理
 const cardBalance = () => import('@/views/businessManage/bettingCardManage/cardBalance')
@@ -299,6 +322,14 @@ export default [
     component: gameEdit
   },
   {
+    path: 'businessManage/gameTypeList',
+    name: 'gameTypeList',
+    meta: {
+      title: '游戏类型管理',
+    },
+    component: gameTypeList
+  },
+  {
     path: 'businessManage/trialPlanList',
     name: 'trialPlanList',
     meta: {
@@ -331,30 +362,93 @@ export default [
     component: trialPlanEdit
   },
   {
-    path: 'businessManage/gameLaunchPlan',
-    name: 'gameLaunchPlan',
+    path: 'businessManage/gameMarketPlanList',
+    name: 'gameMarketPlanList',
     meta: {
       title: '游戏上市计划',
     },
-    component: gameLaunchPlan
+    component: gameMarketPlanList
   },
   {
-    path: 'businessManage/gameConfigManage',
-    name: 'gameConfigManage',
+    path: 'businessManage/gameMarketPlanCreate',
+    name: 'gameMarketPlanCreate',
     meta: {
-      title: '游戏配置管理',
+      title: '创建上市计划',
     },
-    component: gameConfigManage
+    component: gameMarketPlanCreate
   },
   {
-    path: 'businessManage/gameDelistPlan',
-    name: 'gameDelistPlan',
+    path: 'businessManage/gameMarketPlanDetail',
+    name: 'gameMarketPlanDetail',
     meta: {
-      title: '游戏退市计划',
+      title: '上市计划详情',
     },
-    component: gameDelistPlan
+    component: gameMarketPlanDetail
   },
-
+  {
+    path: 'businessManage/gameMarketPlanEdit',
+    name: 'gameMarketPlanEdit',
+    meta: {
+      title: '上市计划编辑',
+    },
+    component: gameMarketPlanEdit
+  },
+  {
+    path: 'businessManage/gameMarketList',
+    name: 'gameMarketList',
+    meta: {
+      title: '上市游戏列表',
+    },
+    component: gameMarketList
+  },
+  {
+    path: 'businessManage/gameMarketDetail',
+    name: 'gameMarketDetail',
+    meta: {
+      title: '上市游戏详情',
+    },
+    component: gameMarketDetail
+  },
+  {
+    path: 'businessManage/gameChangePlanList',
+    name: 'gameChangePlanList',
+    meta: {
+      title: '游戏变更计划',
+    },
+    component: gameChangePlanList
+  },
+  {
+    path: 'businessManage/gameChangePlanCreate',
+    name: 'gameChangePlanCreate',
+    meta: {
+      title: '创建变更计划',
+    },
+    component: gameChangePlanCreate
+  },
+  {
+    path: 'businessManage/gameChangePlanDetail',
+    name: 'gameChangePlanDetail',
+    meta: {
+      title: '变更计划详情',
+    },
+    component: gameChangePlanDetail
+  },
+  {
+    path: 'businessManage/gameChangePlanEdit',
+    name: 'gameChangePlanEdit',
+    meta: {
+      title: '变更计划编辑',
+    },
+    component: gameChangePlanEdit
+  },
+  {
+    path: 'businessManage/gameDelistingPlanList',
+    name: 'gameDelistingPlanList',
+    meta: {
+      title: '退市计划列表',
+    },
+    component: gameDelistingPlanList
+  },
   {
     path: 'businessManage/channelList',
     name: 'channelList',
@@ -638,8 +732,38 @@ export default [
     meta: {
       title: '设备管理',
     },
-    component: equipment
+    component: equipment,
+    children: [{
+      path: 'equipmentList',
+      name: 'equipmentList',
+      meta: {
+        title: '设备列表',
+      },
+      component: equipmentList,
+      
+    },{
+      path: 'accessoriesList',
+      name: 'accessoriesList',
+      meta: {
+        title: '配件列表',
+      },
+      component: accessoriesList,
+    }]
   }, {
+    path: 'businessManage/channelTerminal/equipmentDesc',
+    name: 'equipmentDesc',
+    meta: {
+      title: '配件详情',
+    },
+    component: equipmentDesc,
+  }, {
+    path: 'businessManage/channelTerminal/equipmentResume',
+    name: 'equipmentResume',
+    meta: {
+      title: '配件详情',
+    },
+    component: equipmentResume,
+  },{
     path: 'businessManage/channelTerminal/knowledgeBase',
     name: 'knowledgeBase',
     meta: {
@@ -685,6 +809,30 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
+  },
+  {
+    path: 'businessManage/fundParameter',
+    name: 'fundParameter',
+    meta: {
+      title: '资金参数管理',
+    },
+    component: fundParameter
+  },
+  {
+    path: 'businessManage/fundParameterDetail',
+    name: 'fundParameterDetail',
+    meta: {
+      title: '资金参数管理详情',
+    },
+    component: fundParameterDetail
+  },
+  {
+    path: 'businessManage/fundParameterEdit',
+    name: 'fundParameterEdit',
+    meta: {
+      title: '资金参数管理编辑',
+    },
+    component: fundParameterEdit
   },
   {
     path: 'businessManage/cardBalance',
