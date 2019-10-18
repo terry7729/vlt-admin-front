@@ -174,7 +174,8 @@ export default {
     },
     formData: {
       handler(newValue, oldValue) {
-        this.init()
+        this.form = {};
+        this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
       deep: true
@@ -258,9 +259,9 @@ export default {
       this.form[val.prop] = this.selectParam[val.prop];
       console.log(this.selectParam)
     },
-    init() {
+    init(data) {
       const self = this;
-      self.formData.forEach((item)=>{
+      data&&data.forEach((item)=>{
         if(item.type=='datepicker-range' || item.type=='datetime-range') {
           if(item.value!='') { // 数据回填
             self.timeParam[item.prop] = item.value;
