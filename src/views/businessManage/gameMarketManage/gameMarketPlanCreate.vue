@@ -3,7 +3,6 @@
     <el-steps :active="active" align-center class="step-wrap">
       <el-step title="基础信息" icon="el-icon-edit"></el-step>
       <el-step title="游戏配置" icon="el-icon-setting"></el-step>
-      <el-step title="问卷调查配置" icon="el-icon-tickets"></el-step>
       <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
     </el-steps>
     <div class="vlt-edit-single" v-show="active==1">
@@ -12,10 +11,7 @@
     <div v-show="active==2">
       <game-set @next="next" @prev="prev"></game-set>
     </div>
-    <div class="vlt-edit-single" v-show="active==3">
-      <question @next="next" @prev="prev"></question>
-    </div>
-    <div class="vlt-edit-single appendix" v-show="active==4">
+    <div class="vlt-edit-single appendix" v-show="active==3">
       <div class="vlt-edit-wrap">
         <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-row class="vlt-edit-btn">
@@ -28,16 +24,14 @@
 </template>
 
 <script type="text/javascript">
-import BaseInfo from './trialPlanCreateBase'
-import GameSet from './trialPlanCreateControl'
-import Question from './trialPlanCreateQuestion'
+import BaseInfo from './gameMarketPlanCreateBase'
+import GameSet from './gameMarketPlanCreateControl'
 
 export default {
   name: "",
   components: {
     BaseInfo,
     GameSet,
-    Question
   },
   data() {
     return {
@@ -83,18 +77,14 @@ export default {
       margin: 0 50px 0 180px;
     }
   }
-  .vlt-edit-wrap{
-    width: 100%;
-    margin: 30px auto;
-  }
   .appendix{
     .vlt-edit-wrap{
-      width: 900px;
-      margin: 0 auto;
+      max-width: 850px;
+      margin: 30px auto;
     }
     .vlt-edit-btn{
       .cancel{
-        margin: 0 50px 0 130px;
+        margin: 0 30px 0 130px;
       }
     }
   }

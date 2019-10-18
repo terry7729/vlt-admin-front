@@ -6,11 +6,15 @@
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <!-- 输入框 密码 -->
+      <el-input v-if="item.type=='password'" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <!-- 输入框 带icon-->
+      <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
       <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items">
+          :value="items.value">
         </el-option>
       </el-select>
       <!-- 支持多选 -->
@@ -24,8 +28,7 @@
       <el-switch
         v-if="item.type=='switch'"
         v-model="form[item.prop]"
-        @change="changeSwitch"
-        :active-text="switchText"
+        :active-text="form[item.prop]?'开启':'关闭'"
         active-color="#409EFF"
         inactive-color="">
       </el-switch>
@@ -75,7 +78,7 @@
         <el-radio 
         v-for="(list,index) in item.options"
         :key="index"
-        :label="list.key">{{list.value}}</el-radio>
+        :label="list.value">{{list.label}}</el-radio>
       </el-radio-group>
       <!-- 地址栏 -->
       <div v-if="item.type=='address'">
@@ -174,14 +177,15 @@ export default {
     },
     formData: {
       handler(newValue, oldValue) {
-        this.init()
+        this.form = {};
+        this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
       deep: true
     },
   },
   created() {
-    this.init()
+    this.init(this.formData)
   },
   components: {
   },
@@ -238,6 +242,9 @@ export default {
         }
       })
     },
+    resetForm() {
+      this.$refs.form.resetFields();
+    },
     validate(callback) {
       this.$refs.form.validate((valid) => {
         if (valid) {
@@ -258,9 +265,9 @@ export default {
       this.form[val.prop] = this.selectParam[val.prop];
       console.log(this.selectParam)
     },
-    init() {
+    init(data) {
       const self = this;
-      self.formData.forEach((item)=>{
+      data&&data.forEach((item)=>{
         if(item.type=='datepicker-range' || item.type=='datetime-range') {
           if(item.value!='') { // 数据回填
             self.timeParam[item.prop] = item.value;

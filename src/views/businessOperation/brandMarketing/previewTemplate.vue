@@ -136,11 +136,11 @@
           <el-form :model="createRule">
             <el-form-item v-for="item in createRule" :key="item.num" class="rule-item">
               <el-select v-model="item.value" placeholder="充值">
-                <el-option v-for="option in item.options" :key="option.index" :value="option"></el-option>
+                <el-option v-for="option in ruleSelect" :key="option.index" :value="option"></el-option>
               </el-select>
-              <el-input v-model="createRule.target" placeholder="输入目标金额"></el-input>
+              <el-input v-model="item.target" placeholder="输入目标金额"></el-input>
               <span>赠送:&nbsp;</span>
-              <el-input v-model="createRule.give" placeholder="输入赠送金额" class="last-rule"></el-input>
+              <el-input v-model="item.give" placeholder="输入赠送金额" class="last-rule"></el-input>
             </el-form-item>
           </el-form>
           <div class="add-rule">+新增规则</div>
@@ -288,29 +288,31 @@ export default {
         payTarget: "",
         budget: ""
       },
-      createRule: [
-        {
+      ruleSelect: ["充值", "消费", "完成任务"],
+      createRule: {
+        one: {
           num: "1",
-          options: ["充值", "消费", "完成任务"],
+
           target: "",
           give: "",
           value: ""
         },
-        {
+        two: {
           num: "2",
-          options: ["充值", "消费", "完成任务"],
+
           target: "",
           give: "",
           value: ""
         },
-        {
+        three: {
           num: "3",
-          options: ["充值", "消费", "完成任务"],
+
           target: "",
           give: "",
           value: ""
         }
-      ],
+      },
+      // createRule: [],
       checkAll: false,
       checkedUser: [],
 

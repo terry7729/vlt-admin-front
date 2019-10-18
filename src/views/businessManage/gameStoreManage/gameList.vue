@@ -23,7 +23,7 @@
       <el-table-column prop="versions" label="游戏版本"></el-table-column>
       <el-table-column prop="icon" label="游戏图标"></el-table-column>
       <el-table-column prop="developer" label="游戏开发商"></el-table-column>
-      <el-table-column prop="time" label="最近更新时间"></el-table-column>
+      <el-table-column prop="time" label="最近更新时间" width="160"></el-table-column>
       <el-table-column prop="state" label="游戏状态"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
@@ -32,16 +32,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="total,prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange">
+    </table-paging>
   </div>
 </template>
 
