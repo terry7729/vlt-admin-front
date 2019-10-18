@@ -96,10 +96,13 @@ const planTemplate = () => import('@/views/businessOperation/brandMarketing/plan
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
 //活动计划管理
 const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
-//计划详情
-const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
+//新建活动计划
+const activityPlan = () => import('@/views/businessOperation/brandMarketing/activityPlan')
 //新建活动
 const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
+//计划详情
+const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
+
 //活动执行管理
 const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
 //活动执行详情
@@ -591,6 +594,14 @@ export default [
       title: '计划详情',
     },
     component: planDetail,
+  },
+  {
+    path: 'brandMarketing/activityPlan',
+    name: 'activityPlan',
+    meta: {
+      title: '新建活动计划',
+    },
+    component: activityPlan,
   },
   {
     path: 'brandMarketing/createActivity',

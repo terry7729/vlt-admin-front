@@ -343,86 +343,43 @@
 .allot-task .formTime input {
   width: 400px;
 }
-.create-active .header-box .el-form-item__label {
-  width: 145px !important;
-  color: black;
-  font-size: 18px;
-  font-weight: bold;
-}
-.create-active .addForm-box .add-form {
-  margin-left: 95px;
-}
-.create-active .addForm-box .add-form :nth-child(1) .el-form-item__label {
-  width: 100px !important;
-}
-.create-active .addForm-box .add-form .el-checkbox-group {
-  display: inline-block;
-  width: 400px;
-  margin-top: -40px;
-  margin-left: 20px;
-}
-.create-active .process-content .el-header {
-  height: 110px !important;
-}
-.create-active input {
-  width: 400px;
-}
-.create-active .el-textarea__inner {
-  width: 400px;
-}
-.create-active .active-target .el-checkbox {
-  margin-right: 10px;
-}
-.create-active .active-target .el-input {
-  width: 250px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-.create-active .active-target .el-input input {
-  width: 250px;
-  margin-left: 18px;
-}
-.create-active .active-lobby .el-input {
-  width: 250px;
-  display: inline-block;
-}
-.create-active .active-lobby .el-input input {
-  width: 250px;
-}
-.preview-template .upload-img {
+.active-plan .upload-img {
   margin: 20px 0;
 }
-.preview-template .upload-img .upload-box {
+.active-plan .upload-img .upload-box {
   display: inline-block;
 }
-.preview-template .drag-upload {
+.active-plan .drag-upload {
   margin-bottom: 20px;
   position: relative;
   left: 75px;
 }
-.preview-template .active-rule .rule-item .el-select,
-.preview-template .active-rule .rule-item .el-input {
+.active-plan .active-rule .rule-item .el-select,
+.active-plan .active-rule .rule-item .el-input {
   width: 100px;
   margin-right: 20px;
   display: inline-block;
 }
-.preview-template .active-rule .rule-item .el-select input,
-.preview-template .active-rule .rule-item .el-input input {
+.active-plan .active-rule .rule-item .el-select input,
+.active-plan .active-rule .rule-item .el-input input {
   width: 100px;
 }
-.preview-template .active-rule .rule-item .last-rule input {
+.active-plan .active-rule .rule-item .last-rule input {
   width: 200px;
 }
-.preview-template .remark .el-textarea {
+.active-plan .remark .el-textarea {
   width: 500px;
   display: inline-block;
 }
-.preview-template .remark .el-textarea textarea {
+.active-plan .remark .el-textarea textarea {
   width: 500px;
   margin-top: 10px;
 }
-.preview-template .item-check .el-checkbox {
-  padding-bottom: 10px;
+.active-plan .item-check {
+  margin-bottom: 50px;
+}
+.active-plan .item-check .el-checkbox {
+  padding-bottom: 20px;
 }
 .plan-detail .base-data {
   width: 60%;
