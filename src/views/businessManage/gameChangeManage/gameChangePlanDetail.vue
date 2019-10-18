@@ -46,7 +46,7 @@
 </template>
 <script type="text/javascript">
 export default {
-  name: "planCheck",
+  name: "gameMarketPlanDetail",
   data() {
     return { 
       planData:[

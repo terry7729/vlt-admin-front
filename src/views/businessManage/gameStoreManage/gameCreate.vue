@@ -135,5 +135,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.vlt-edit-wrap{
+  width: 580px;
+  margin: 30px auto;
+}
+.vlt-edit-btn{
+  text-align: center;
+  margin: 60px 0 30px;
+  .el-button{
+    width: 120px;
+  }
+  .cancel{
+    margin: 0 50px 0 0px;
+  }
+}
 </style>

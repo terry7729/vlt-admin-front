@@ -32,16 +32,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :hide-on-single-page="false"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="10"
-      layout="total,prev, pager, next, sizes,jumper"
-      :total="100" background>
-    </el-pagination>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange">
+    </table-paging>
   </div>
 </template>
 

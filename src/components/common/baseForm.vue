@@ -6,6 +6,10 @@
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <!-- 输入框 密码 -->
+      <el-input v-if="item.type=='password'" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <!-- 输入框 带icon-->
+      <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
       <el-select v-if="item.type=='select'" v-model="selectParam[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="items in item.options" :key="items.value" :label="items.label"

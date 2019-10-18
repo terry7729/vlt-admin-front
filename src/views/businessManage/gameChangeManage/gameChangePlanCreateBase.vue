@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       baseData: [
-        {title: '试玩计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
+        {title: '计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
         {title: '试玩时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
         {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
         {title: '试玩游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
@@ -356,7 +356,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import './less/index.less';
   .vlt-edit-wrap{
     width: 100%;
     margin: 0 30px;

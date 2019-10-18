@@ -48,7 +48,7 @@
       <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm" class="appendix-wrap"></base-form>
     </panel>
     <div class="submit-wrap">
-    <el-row class="vlt-edit-btn">
+      <el-row class="vlt-edit-btn">
         <el-button type="primary" size="medium" @click="submit">提交并保存</el-button>
         <el-button size="medium" @click="editShow = !editShow">取消</el-button>
       </el-row>
