@@ -31,9 +31,9 @@
 
     <el-dialog title="任务进度" :visible.sync="dialogFormVisible">
       <section class="comp-item">
-        <cell title="基础信息">
+        <panel-static title="基础信息">
           <base-info :infoList="infoList"></base-info>
-        </cell>
+        </panel-static>
       </section>
       <el-form :model="form">
         <el-form-item label="任务进度" :label-width="formLabelWidth">

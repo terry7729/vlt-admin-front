@@ -259,13 +259,12 @@ export default {
 }
 .process-content {
   margin-left: 100px;
+
   .state-inform {
     text-align: right;
     height: 20px;
-    padding: 10px;
-    margin-top: 20px;
-    margin-right: 500px;
-    
+    margin-top: 10px;
+    margin-right: 33%;
   }
   .process-form {
     margin-left: 80px;

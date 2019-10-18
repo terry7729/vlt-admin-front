@@ -441,6 +441,10 @@
 .plan-detail .base-data .rule-form .el-input input {
   width: 150px;
 }
+.plan-detail .progress-bar {
+  width: 70%;
+  margin: 20px 150px;
+}
 .plan-detail .ration-target {
   margin-top: 20px;
 }
@@ -451,29 +455,35 @@
 .plan-detail .ration-target .ration-check .el-checkbox {
   margin-bottom: 20px;
 }
-.progress-bar {
-  width: 800px;
-  margin: 20px 150px;
-}
-.state-inform {
-  position: absolute;
-  left: 900px;
-  top: 12px;
-  text-align: right;
-}
 .tables-content .el-tabs__item.is-active {
   background: none;
-}
-.account-detail .equity-title {
-  margin-left: 32px;
-  margin-top: 5px;
-}
-.account-detail .equity-title span {
-  display: inline-block;
-  margin-right: 400px;
 }
 .login-container.vlt-card .vlt-edit-single .el-input__inner {
   width: 368px;
   height: 46px;
   border-radius: 4px;
+}
+.eachBet-form {
+  padding: 16px;
+}
+.eachBet-form .el-form-item__content {
+  width: 400px;
+  display: flex;
+  align-items: center;
+}
+.eachBet-form .el-form-item:first-child .el-form-item__content {
+  width: 350px;
+}
+.eachBet-form .el-form-item__label {
+  font-size: 12px;
+  color: #444444;
+  line-height: 20px;
+}
+.eachBet-form .el-form--label-top .el-form-item__label {
+  padding: 0 0 7px;
+}
+.eachBet-form .el-input__inner {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 10px;
 }

@@ -72,20 +72,20 @@
         :rules="rules"
         class="device-form">
         <el-form-item v-for="(item,index) in deviceData" :key="index" :label="`${item.title}${index+1}`">
-          <el-select v-model="item.type" placeholder="请选择设备类型" class="device-item">
+          <el-select v-model="deviceParam[index][item.propType]" placeholder="请选择设备类型" class="device-item">
             <el-option
               v-for="(list,index) in item.optionsType"
               :key="index"
               :label="list.label"
-              :value="list">
+              :value="list.value">
             </el-option>
           </el-select>
-          <el-select v-model="item.model" placeholder="请选择设备型号" class="device-item">
+          <el-select v-model="deviceParam[index][item.propModel]" placeholder="请选择设备型号" class="device-item">
             <el-option
               v-for="(list, index) in item.optionsModel"
               :key="index"
               :label="list.label"
-              :value="list">
+              :value="list.value">
             </el-option>
           </el-select>
           <el-button v-if="index!==0" type="text" class="delete" @click="deleteDevice(index)">删除</el-button>
@@ -129,31 +129,32 @@ export default {
   name: "channelList",
   data() {
     return {
+      fileList: [],
       activeName: "first",
       formData: [
         {title: '所属机构', type: 'cascader', prop: 'insCode', value: '',  options: []},
         {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options:[{label:'自营厅',value:'1'},{label:'合作厅',value:'2'}]},
         {title: '渠道编号', type: 'input', prop: 'channelCode', value: ''},
         {title: '经营场所属性', type: 'select', prop: 'addressType', value: '', options:[{label:'自有',value:'1'},{label:'租赁',value:'2'}]},
-        {title: '渠道面积', type: 'input', prop: 'channelCode', value: ''},
+        {title: '渠道面积', type: 'input', prop: 'abc', value: ''},
         {title: '渠道地址', type: 'address', prop: 'address', value: '',options:[]},
       ],
       workerData: [
         [{title: '职位类别', type: 'select', prop: 'workerType', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
         {title: '姓名', type: 'input', prop: 'name', value: ''},
-        {title: '性别', type: 'radio', prop: 'sex', value: 1, options: [{ key: 1, value: "男" }, { key: 2, value: "女" }]},
+        {title: '性别', type: 'radio', prop: 'sex', value: '2', options: [{ label: '男', value: "1" }, { label: '女', value: "2" }]},
         {title: '手机号码', type: 'input', prop: 'mobile', value: ''},
         {title: '身份证号码', type: 'input', prop: 'idCard', value: ''},
         {title: '身份证照正面', type: 'upload', prop: 'idCardPre', value: ''},
         {title: '身份证照背面', type: 'upload', prop: 'idCardBack', value: ''}]
       ],
       financeData: [
-        {title: '销售保证金', type: 'select', prop: 'workerType', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
-        {title: '代销费费率', type: 'select', prop: 'workerType', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
-        {title: '收款凭证', type: 'upload-drag', prop: 'idCardBack', value: ''}
+        {title: '销售保证金', type: 'select', prop: 'ss', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
+        {title: '代销费费率', type: 'select', prop: 'bb', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
+        {title: '收款凭证', type: 'upload-drag', prop: 'cc', value: ''}
       ],
       deviceData: [
-        {title:'设备', propType: 'type', propModel: 'model', optionsType:[{label:'类型一',value:1},{label:'类型二',value:2}],optionsModel:[{label:'型号一',value:1},{label:'型号二',value:2}]}
+        {title:'设备', propType: 'type', propModel: 'model', optionsType:[{label:'类型一',value:1},{label:'类型二',value:2}],optionsModel:[{label:'型号三',value:3},{label:'型号四',value:4}]}
       ],
       rules: {},
       params: {
@@ -164,19 +165,38 @@ export default {
         {gameName:'b',bet: false,cash:true,time:''},
         {gameName:'c',bet: true,cash:false,time:''},
       ],
-      formDevice:{}
+      formDevice:{},
+      deviceParam: [{type:'',model:''}], // 用于保存设备的参数
+      memberArray: [], // 用于保存人员信息数据
     };
   },
   created() {},
   methods: {
+    handleExceed() {},
+    handleRemove() {},
+    handlePreview() {},
+    beforeRemove() {},
     addDevice() {
       let cloneData = JSON.parse(JSON.stringify(this.deviceData[0]))
       cloneData.propType = `${cloneData.propType}${this.deviceData.length}`
       cloneData.propModel = `${cloneData.propModel}${this.deviceData.length}`
+      let obj = {}
+      obj[cloneData.propType] = '';
+      obj[cloneData.propModel] = '';
       this.$set(this.deviceData, this.deviceData.length, cloneData);
+      this.$set(this.deviceParam, this.deviceData.length-1, obj);
+      // this.deviceData.forEach((item)=>{
+      //   let obj = {};
+      //   obj[item.propType]
+      //   this.$set(this.formDevice, item.propType, this.formDevice[item.propType])
+      //   this.$set(this.formDevice, item.propModel, this.formDevice[item.propModel])
+      // })
+      console.log('this.deviceData', this.deviceData)
+      console.log('this.DeviceParam', this.deviceParam)
     },
     deleteDevice(index) {
       this.deviceData.splice(index, 1)
+      this.deviceParam.splice(index, 1);
       console.log('删除', this.deviceData)
     },
     changeSwitchBet(val) {
@@ -187,12 +207,17 @@ export default {
     },
     deleteMember(index) {
       this.workerData.splice(index, 1)
-      console.log('删除', this.workerData)
+      this.memberArray.splice(index, 1)
+      console.log('删除', this.memberArray)
     },
-    addMember() {
+    addMember() { // 添加成员
       let cloneData = JSON.parse(JSON.stringify(this.workerData[0]))
       cloneData.forEach((item)=>{
         item.prop = `${item.prop}${this.workerData.length}`
+        item.value = ''; // 数据要情空
+        if(item.type=='radio') {
+          item.value = '1' // 默认为男
+        }
       })
       this.$set(this.workerData, this.workerData.length, cloneData);
     },
@@ -200,7 +225,7 @@ export default {
     changeForm(val) {
       this.params = Object.assign(this.params, val)
       console.log('派发出来的参数', this.params)
-      let array = [] // 用于传参（人员信息数组列表）给后台
+      let array = []// 用于传参（人员信息数组列表）给后台
       this.workerData.forEach((item)=>{
         let obj = {};
         item.forEach((list)=>{
@@ -210,11 +235,12 @@ export default {
         })
         array.push(obj)
       })
+      this.memberArray = array;
       console.log('array', array)
-      
-      console.log('workerData', this.workerData)
+      console.log('member', this.memberArray)
     },
     submit() {
+      console.log('设备参数', this.deviceParam)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
       });
