@@ -394,9 +394,69 @@
   width: 38%;
 }
 
+.el-collapse-item__header {
+  font-size: 16px;
+  font-weight: 600;
+  text-indent: 25px;
+}
+
+
 .develop-plan {
   .el-tabs--left .el-tabs__item.is-left {
     text-align: left;
+  }
+}
+
+.tabs-content {
+  .el-tabs__nav {
+    margin-right: 100px;
+  }
+
+  .el-tabs__item.is-active {
+    background: rgb(230, 247, 255);
+  }
+
+  .el-tabs--left .el-tabs__active-bar.is-left,
+  .el-tabs--left .el-tabs__nav-wrap.is-left::after {
+    left: 194px;
+    margin-right: 10px;
+  }
+
+  .el-tabs--left .el-tabs__nav-wrap.is-left {
+    margin-right: -60px;
+  }
+
+  .el-tabs__item {
+    padding: 0 70px;
+  }
+
+  .tables-content .el-tabs__item.is-active {
+    background: none;
+  }
+
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
+
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
+
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
+
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
+
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
   }
 }
 
@@ -468,58 +528,6 @@
   }
 
 
-  .tabs-content {
-    .el-tabs__nav {
-      margin-right: 100px;
-    }
-
-    .el-tabs__item.is-active {
-      background: rgb(230, 247, 255);
-    }
-
-    .el-tabs--left .el-tabs__active-bar.is-left,
-    .el-tabs--left .el-tabs__nav-wrap.is-left::after {
-      left: 194px;
-      margin-right: 10px;
-    }
-
-    .el-tabs--left .el-tabs__nav-wrap.is-left {
-      margin-right: -60px;
-    }
-
-    .el-tabs__item {
-      padding: 0 70px;
-    }
-
-    .tables-content .el-tabs__item.is-active {
-      background: none;
-    }
-
-    .switchStyle .el-switch__label {
-      position: absolute;
-      display: none;
-      color: #fff;
-    }
-
-    .switchStyle .el-switch__label--left {
-      z-index: 9;
-      left: 6px;
-    }
-
-    .switchStyle .el-switch__label--right {
-      z-index: 9;
-      left: -14px;
-    }
-
-    .switchStyle .el-switch__label.is-active {
-      display: block;
-    }
-
-    .switchStyle.el-switch .el-switch__core,
-    .el-switch .el-switch__label {
-      width: 50px !important;
-    }
-  }
 
   input {
     width: 400px;
@@ -562,18 +570,6 @@
 
   }
 }
-
-
-
-
-
-
-.el-collapse-item__header {
-  font-size: 16px;
-  font-weight: 600;
-  text-indent: 25px;
-}
-
 
 .preview-template {
   .upload-img {
@@ -639,33 +635,6 @@
 
 }
 
-
-
-.tables-content .el-tabs__item.is-active {
-  background: none;
-}
-
-.account-detail {
-  .equity-title {
-    margin-left: 32px;
-    margin-top: 5px;
-
-    span {
-      display: inline-block;
-      margin-right: 400px;
-    }
-  }
-}
-
-//登录页面input框尺寸
-.login-container.vlt-card{
-  .vlt-edit-single .el-input__inner{
-    width:368px;
-    height:46px;
-    border-radius:4px
-  }
-} 
-
 .plan-detail {
   .base-data {
     width: 60%;
@@ -703,14 +672,67 @@
     }
   }
 }
-  .progress-bar {
-    width: 800px;
-    margin: 20px 150px;
-  }
 
-  .state-inform {
-    position: absolute;
-    left: 900px;
-    top: 12px;
-    text-align: right;
+.progress-bar {
+  width: 800px;
+  margin: 20px 150px;
+}
+
+.state-inform {
+  position: absolute;
+  left: 900px;
+  top: 12px;
+  text-align: right;
+}
+
+.tables-content .el-tabs__item.is-active {
+  background: none;
+}
+
+.account-detail {
+  .equity-title {
+    margin-left: 32px;
+    margin-top: 5px;
+
+    span {
+      display: inline-block;
+      margin-right: 400px;
+    }
   }
+}
+
+//登录页面input框尺寸
+.login-container.vlt-card {
+  .vlt-edit-single .el-input__inner {
+    width: 368px;
+    height: 46px;
+    border-radius: 4px
+  }
+}
+.eachBet-form{
+  padding: 16px;
+  .el-form-item__content{
+    width: 400px;
+    display: flex;
+    align-items: center;
+  }
+  .el-form-item:first-child {
+    .el-form-item__content{
+      width: 350px;
+    }
+  }
+  .el-form-item__label {
+    font-size: 12px;
+    color: #444444;
+    line-height: 20px;
+  }
+  .el-form--label-top .el-form-item__label {
+    padding: 0 0 7px;
+  }
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+  }
+}
+
