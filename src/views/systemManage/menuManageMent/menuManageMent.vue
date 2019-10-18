@@ -205,11 +205,11 @@ export default {
         {
           type: "switch",
           prop: "date2",
-          value: "",
+          value: true,
           title: "是否敏感操作",
           option: ["start", "end"]
         },
-        { type: "switch", prop: "date3", value: "", title: "是否启用" }
+        { type: "switch", prop: "date3", value: false, title: "是否启用" }
       ],
       data3: [
         //类型为按钮时的表单对象
@@ -222,11 +222,11 @@ export default {
         {
           type: "switch",
           prop: "date2",
-          value: "",
+          value: true,
           title: "是否敏感操作",
           option: ["start", "end"]
         },
-        { type: "switch", prop: "date3", value: "", title: "是否启用" }
+        { type: "switch", prop: "date3", value: false, title: "是否启用" }
       ],
       rules: {
         //验证对象
