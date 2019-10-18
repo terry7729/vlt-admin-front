@@ -42,6 +42,9 @@
         </el-table-column>
       </el-table>
     </panel>
+    <panel title="上市信息发布" :show="true">
+      <base-info :infoList="publishData"></base-info>
+    </panel>
   </div>
 </template>
 <script type="text/javascript">
@@ -128,6 +131,12 @@ export default {
       tableData: [
         {id: 'a',name:'b',type:'c',pond: 'd',time:'2019-09-12 09:00:00'}
       ],
+      publishData: [
+        {title:'发布标题',value:'',prop:'awardSetting'},
+        {title:'发布机构',value:'',prop:'awardSetting'},
+        {title:'发布时间',value:'',prop:'awardSetting'},
+        {title:'发布内容',value:'',prop:'playingMethod'},
+      ]
     }
   },
   methods: {

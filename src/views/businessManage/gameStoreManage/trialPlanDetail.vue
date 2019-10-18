@@ -27,7 +27,7 @@
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
-        style="width: 100%"
+        style="width: 100%;padding:16px;"
         @selection-change="handleSelectionChange">
         <el-table-column prop="id" label="问卷标题" ></el-table-column>
         <el-table-column prop="name" label="题目分类"></el-table-column>
