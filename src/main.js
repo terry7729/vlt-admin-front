@@ -7,6 +7,7 @@ import api from './api/'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import commonComponents from './components/common/' // 通用组件引入
+import echarts from 'echarts'
 
 
 Vue.use(commonComponents)
@@ -26,6 +27,7 @@ Vue.directive('prevent', {
 }),
 
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts;
 Vue.prototype.$api = api
 Vue.prototype.eventBus = new Vue();
 
