@@ -1,13 +1,13 @@
 <template>
   <div class="vlt-card account-detail">
     <section class="comp-item">
-      <cell title="账户资料" style="margin-top: 10px;">
+      <panel-static title="账户资料" style="margin-top: 10px;">
         <base-info :infoList="infoList"></base-info>
-      </cell>
-      <cell title="资金账户" style="margin-top: 10px;">
+      </panel-static>
+      <panel-static title="资金账户" style="margin-top: 10px;">
         <base-info :infoList="infoList2"></base-info>
-      </cell>
-      <cell title="钱包列表" style="margin-top: 10px;">
+      </panel-static>
+      <panel-static title="钱包列表" style="margin-top: 10px;">
         <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
           <el-table-column prop="num" label="序号"></el-table-column>
           <el-table-column prop="cardNum" label="投注卡号"></el-table-column>
@@ -26,9 +26,9 @@
             </template>
           </el-table-column>
         </el-table>
-      </cell>
+      </panel-static>
 
-      <cell title="会员权益" style="margin-top: 10px; margin-bottom:200px">
+      <panel-static title="会员权益" style="margin-top: 10px; margin-bottom:200px">
         <div class="equity-title">
           <span>会员卡号</span>
           <span>会员等级</span>
@@ -46,7 +46,7 @@
             </template>
           </el-table-column>
         </el-table>
-      </cell>
+      </panel-static>
     </section>
   </div>
 </template>
@@ -104,7 +104,6 @@ export default {
       this.$router.push({ path: "betcardDetail", query: cardNum });
     },
     equityDetail(cardNum) {
-   
       this.$router.push({ path: "equityDetail", query: cardNum });
     }
   },
@@ -112,11 +111,21 @@ export default {
     for (let item of this.infoList) {
       item.value = "1";
     }
+    this.infoList[0].value = this.$route.params.id;
   }
 };
 </script>
 
 <style lang="less" scoped>
-
+.account-detail {
+  .equity-title {
+    margin-left: 32px;
+    margin-top: 5px;
+    span {
+      display: inline-block;
+      margin-right: 400px;
+    }
+  }
+}
 </style>
 

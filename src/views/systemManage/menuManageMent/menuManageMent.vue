@@ -25,6 +25,7 @@
               :data="date"
               show-checkbox
               node-key="id"
+              :check-on-click-node="true"
               @check="hadnelCheck"
               @node-click="getnowNodeifo"
               @check-change="getCheckifo"
@@ -372,8 +373,10 @@ export default {
       //更改信息表单提交
       if (this.menuType === "0") {
         this.parms.created = "更改子节点";
-        console.log(this.$refs.baseForm)
-        console.log(this.parms);
+      let arr =  JSON.parse(JSON.stringify(this.parms));
+        // console.log(this.$refs.baseForm)
+        this.$refs.baseForm.resetForm()
+        console.log(arr);
       } else {
         this.parms2.created = "更改子节点按钮";
         console.log(this.parms2);
@@ -383,10 +386,10 @@ export default {
     addChangeForm(val) {
       console.log(val, "添加节点change事件");
       if (this.menuType === "0") {
-        console.log("菜单");
+        // console.log("菜单");
         Object.assign(this.parms, val);
       } else {
-        console.log("按钮");
+        // console.log("按钮");
         Object.assign(this.parms2, val);
       }
     },
@@ -430,9 +433,9 @@ export default {
         }
       });
     },
-    selectBtn(val) {
+  async selectBtn(val) {
       //按钮点击事件
-      console.log(val);
+      // console.log(val);
       if (val.id === 1) {
         if (this.slelectifo == "") {
           this.open();
@@ -449,9 +452,12 @@ export default {
       }
       if(val.name === "批量删除"){
         // alert(2)
-        // let arr =  this.$refs.tree.getCurrentNode()
-
-        console.log(this.codeId)
+        // let data=[];
+        let arr =  this.$refs.tree.getCheckedNodes()
+     
+       let data = arr.map(item=>{return{moduleId:item.id}})
+        let reslt = await this.$api.delectMenu({data})
+        console.log(reslt)
       }
       //触发弹框
     },

@@ -1,12 +1,12 @@
 <template>
   <div class="vlt-card">
     <section class="comp-item">
-      <cell title="基本信息" style="margin-top: 10px;">
+      <panel-static title="基本信息" style="margin-top: 10px;">
         <base-info :infoList="infoList"></base-info>
-      </cell>
-      <cell title="客户信息" style="margin-top: 10px;">
+      </panel-static>
+      <panel-static title="客户信息" style="margin-top: 10px;">
         <base-info :infoList="infoList2"></base-info>
-      </cell>
+      </panel-static>
     </section>
   </div>
 </template>

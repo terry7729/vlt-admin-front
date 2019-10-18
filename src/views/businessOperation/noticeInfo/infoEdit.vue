@@ -38,12 +38,9 @@ export default {
       rule: { rule: "" },
       activeName: "template",
       disabled: true,
+      title:123,
       form: {
-        title: "",
-        template: "",
-        organ: "",
-        time: "",
-        all: ""
+      
       },
       baseInfo: [
         { type: "input", title: "推送标题", prop: "title", disabled: false },
@@ -51,7 +48,7 @@ export default {
           type: "select",
           title: "选择模板",
           prop: "template",
-          disabled: true ,
+          disabled: true,
           options: [
             { label: "模板1", value: "0" },
             { label: "模板2", value: "1" }
@@ -61,7 +58,7 @@ export default {
           type: "select",
           title: "选择机构",
           prop: "organ",
-          disabled: false ,
+          disabled: false,
           options: [
             { label: "全国", value: "2" },
             { label: "广东省", value: "3" }
@@ -72,24 +69,28 @@ export default {
           prop: "time",
           value: "",
           title: "发布时间",
-          disabled: false ,
+          disabled: false,
           options: ["start", "end"]
         },
 
-        { type: "textarea", title: "备注内容", prop: "all" ,disabled: false }
+        { type: "textarea", title: "备注内容", prop: "all", disabled: false }
       ]
     };
   },
   components: {},
   methods: {
-    changeForm() {},
+    changeForm(val) {
+      this.form=val;
+      console.log(this.form)
+    },
     handleClick() {}
   },
   created() {
     if (this.$route.query.id) {
-   for(let item of this.baseInfo){
-    item.disabled = true;
-   }
+      for (let item of this.baseInfo) {
+        item.disabled = true;
+     
+      }
     }
   }
 };
