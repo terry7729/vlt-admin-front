@@ -6,6 +6,8 @@ Mock.mock('/api/menu', 'post', menuData);
 
  
 //系统管理模拟数据
+
+//系统管理模拟数据 
 // const data = Mock.mock({
 //   "code": 1,
 //   "mssage": "成功",
@@ -37,7 +39,15 @@ Mock.mock('/api/menu', 'post', menuData);
 //       "path": '@province' + '@city' + '@county',
 //       "english": "@title",
 //       "icon": "el-icon-right",
+<<<<<<< HEAD
     
+=======
+<<<<<<< HEAD
+
+=======
+    
+>>>>>>> 4cfe348107d23c0447a85d7d0eff567536940dd5
+>>>>>>> 47b24fd25180306dfb8441a1fd13fc7261f09ed9
 //       "sort": /^[1-9]$/,
 //       "date2|1": true,
 //       "date3|1-3": true
@@ -52,7 +62,15 @@ Mock.mock('/api/menu', 'post', menuData);
 //           "path": '@province' + '@city' + '@county',
 //           "english": "@title",
 //           "icon": "el-icon-right",
+<<<<<<< HEAD
   
+=======
+<<<<<<< HEAD
+
+=======
+  
+>>>>>>> 4cfe348107d23c0447a85d7d0eff567536940dd5
+>>>>>>> 47b24fd25180306dfb8441a1fd13fc7261f09ed9
 //           "sort": /^[1-9]$/,
 //           "date2|1": true,
 //           "date3|1-3": true
@@ -66,7 +84,15 @@ Mock.mock('/api/menu', 'post', menuData);
 //             "path": '@province' + '@city' + '@county',
 //             "english": "@title",
 //             "icon": "el-icon-right",
+<<<<<<< HEAD
        
+=======
+<<<<<<< HEAD
+
+=======
+       
+>>>>>>> 4cfe348107d23c0447a85d7d0eff567536940dd5
+>>>>>>> 47b24fd25180306dfb8441a1fd13fc7261f09ed9
 //             "sort": /^[1-9]$/,
 //             "date2|1": true,
 //             "date3|1-3": true
@@ -173,6 +199,7 @@ Mock.mock('/api/menu', 'post', menuData);
 //   }]
 // })
 
+<<<<<<< HEAD
 Mock.mock(/\/shoopList/, "get", function (options) {
   console.log(options);
   // console.log(Json)
@@ -196,3 +223,32 @@ Mock.mock(/\/organilist/, "get", function (options) {
 
 })
 
+=======
+// Mock.mock(/\/shoopList/, "get", function (options) {
+//   console.log(options);
+//   // console.log(Json)
+//   return data
+
+// })
+
+// Mock.mock(/\/menulist/, "get", function (options) {
+
+
+//   // console.log(Json)
+//   return data2
+
+// })
+
+// Mock.mock(/\/organilist/, "get", function (options) {
+
+
+//   // console.log(Json)
+//   return data3
+
+<<<<<<< HEAD
+// })
+=======
+// })
+
+>>>>>>> 4cfe348107d23c0447a85d7d0eff567536940dd5
+>>>>>>> 47b24fd25180306dfb8441a1fd13fc7261f09ed9

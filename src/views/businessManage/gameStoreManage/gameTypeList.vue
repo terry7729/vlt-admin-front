@@ -16,7 +16,7 @@
       @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" fixed="left"></el-table-column>
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="id" label="游戏类型名称" ></el-table-column>
+      <el-table-column prop="name" label="游戏类型名称" ></el-table-column>
       <el-table-column label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -27,12 +27,12 @@
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="type" label="说明"></el-table-column>
+      <el-table-column prop="remark" label="说明"></el-table-column>
       <el-table-column prop="pond" label="创建人"></el-table-column>
       <el-table-column prop="time" label="创建时间" width="160px"></el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
+          <el-button type="primary" size="mini" v-prevent="2000" @click.native="edit(scope.row)">编辑</el-button>
           <!-- <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button> -->
         </template>
       </el-table-column>
@@ -76,7 +76,8 @@ export default {
         {title: '类型状态', type: 'select', prop: "typeStatus", value:'', options:[{label:'启用',value:'0'},{label:'关闭',value:'1'}]}
       ],
       tableData: [
-        {id:'a',status: true,type:'c',pond:'3',time:'2019-09-12 09:00:00'}
+        {name:'概率型',status: false, remark:'拼手气的游戏',pond:'李明',time:'2019-09-12 09:00:00'},
+        {name:'奖组型',status: true, remark:'拼手气游戏',pond:'李明',time:'2019-09-12 09:00:00'}
       ],
       isShow: false,
       typeData: [
@@ -89,12 +90,24 @@ export default {
     }
   },
   methods: {
-    edit() {
+    edit(val) {
+      
       this.isShow = true;
-      this.dialogTitle = '编辑类型'
+      this.dialogTitle = '编辑类型';
+      this.typeData.forEach((item)=>{
+        
+        item.value = val[item.prop];
+        
+      })
+      console.log(this.typeData)
     },
+    search() {},
+    handleSelectionChange() {},
     sure() {
-
+      this.$refs.baseForm.validate((val)=>{
+        console.log(val)
+      });
+      this.$refs.baseForm.resetForm()
     },
     changeCurrent() {
 
@@ -106,10 +119,17 @@ export default {
       if(item.name=='新增类型') {
         this.dialogTitle = '新增类型'
         this.isShow = true;
+        this.typeData.forEach((item)=>{
+          item.value = '';
+          if(item.type=='switch') {
+            item.value = false;
+          }
+        })
       }
     },
-    changeForm() {
-
+    changeSwitchBet() {},
+    changeForm(val) {
+      console.log('监听的参数', val)
     }
   },
 }

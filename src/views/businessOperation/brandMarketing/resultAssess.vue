@@ -51,12 +51,12 @@
       <section class="comp-item">
         <div class="check-index">
           <span>维度选择：</span>
-          <el-checkbox :checked="checked" v-for="item in checkList" :key="item">{{item}}</el-checkbox>
+          <el-checkbox :checked="checked" v-for="item in checkList" :key="item.index">{{item}}</el-checkbox>
         </div>
         <div class="check-index">
           <span>定量指标：</span>
           <div class="check">
-            <el-checkbox :checked="checked" v-for="item in checkList2" :key="item">{{item}}</el-checkbox>
+            <el-checkbox :checked="checked" v-for="item in checkList2" :key="item.index">{{item}}</el-checkbox>
           </div>
         </div>
       </section>
