@@ -24,6 +24,7 @@
               ref="baseForm"
               labelWidth="140px"
               direction="top"
+              :rules='rule'
               @change="changeForm"
             ></base-form>
             <el-row class="el-form-item vlt-edit-btn">
@@ -43,6 +44,7 @@ export default {
   data() {
     return {
       form: {},
+      rule:{rule:''},
       formData: [
         {
           type: "select",

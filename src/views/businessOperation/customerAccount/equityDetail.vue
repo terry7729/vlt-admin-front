@@ -1,9 +1,9 @@
 <template>
   <div class="vlt-card">
     <section class="comp-item">
-      <cell title="会员权益详情" style="margin-top: 10px;">
+      <panel-static title="会员权益详情" style="margin-top: 10px;">
         <base-info :infoList="infoList"></base-info>
-      </cell>
+      </panel-static>
     </section>
   </div>
 </template>
