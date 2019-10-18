@@ -27,7 +27,7 @@
         ref="multipleTable"
         :data="tableData"
         tooltip-effect="dark"
-        style="width: 100%;padding:16px;"
+        style="width: 100%"
         @selection-change="handleSelectionChange">
         <el-table-column prop="id" label="问卷标题" ></el-table-column>
         <el-table-column prop="name" label="题目分类"></el-table-column>
@@ -42,11 +42,14 @@
         </el-table-column>
       </el-table>
     </panel>
+    <panel title="上市信息发布" :show="true">
+      <base-info :infoList="publishData"></base-info>
+    </panel>
   </div>
 </template>
 <script type="text/javascript">
 export default {
-  name: "planCheck",
+  name: "gameMarketPlanDetail",
   data() {
     return { 
       planData:[
@@ -128,6 +131,12 @@ export default {
       tableData: [
         {id: 'a',name:'b',type:'c',pond: 'd',time:'2019-09-12 09:00:00'}
       ],
+      publishData: [
+        {title:'发布标题',value:'',prop:'awardSetting'},
+        {title:'发布机构',value:'',prop:'awardSetting'},
+        {title:'发布时间',value:'',prop:'awardSetting'},
+        {title:'发布内容',value:'',prop:'playingMethod'},
+      ]
     }
   },
   methods: {

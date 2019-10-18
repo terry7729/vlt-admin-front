@@ -51,35 +51,52 @@ export default [{
           icon: "el-icon-menu",
           name: "游戏试玩计划",
           url: 'trialPlanList'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "游戏类型管理",
+          url: 'gameTypeList'
         }
       ]
     },
       {
         icon: "el-icon-menu",
         name: "游戏发行管理",
-        url: 'gamePlanManage',
+        url: 'gameMarketManage',
         childResources: [
           {
-            childResources: [],
             icon: "el-icon-menu",
             name: "游戏上市计划",
-            url: 'gameLaunchPlan'
+            url: 'gameMarketPlanList',
+            childResources: [],
           },
           {
-            childResources: [],
             icon: "el-icon-menu",
-            name: "游戏配置管理",
-            url: 'gameConfigManage'
+            name: "上市游戏列表",
+            url: 'gameMarketList',
+            childResources: [],
+          },
+          {
+            icon: "el-icon-menu",
+            name: "游戏变更计划",
+            url: 'gameChangePlanList',
+            childResources: [],
           },
           {
             childResources: [],
             icon: "el-icon-menu",
             name: "游戏退市计划",
+            url: 'gameDelistingPlanList'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "风险处理报告",
             url: 'gameDelistPlan'
           }
         ]
       },
-
       {
         icon: "el-icon-menu",
         name: "渠道业务管理",

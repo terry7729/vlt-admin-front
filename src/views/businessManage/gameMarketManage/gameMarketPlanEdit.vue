@@ -7,9 +7,6 @@
       <el-tab-pane label="游戏配置" name="2">
         <game-set @next="next" @prev="prev"></game-set>
       </el-tab-pane>
-      <el-tab-pane label="问卷调查配置" name="3">
-        <question @next="next" @prev="prev"></question>
-      </el-tab-pane>
       <el-tab-pane label="上传附件" name="4">
         <div class="vlt-edit-single appendix">
           <div class="vlt-edit-wrap">
@@ -26,9 +23,8 @@
 </template>
 
 <script type="text/javascript">
-import BaseInfo from './trialPlanCreateBase'
-import GameSet from './trialPlanCreateControl'
-import Question from './trialPlanCreateQuestion'
+import BaseInfo from './gameMarketPlanCreateBase'
+import GameSet from './gameMarketPlanCreateControl'
 import rules from '@/utils/rules.js';
 
 export default {
@@ -36,7 +32,6 @@ export default {
   components: {
     BaseInfo,
     GameSet,
-    Question
   },
   data() {
   return {

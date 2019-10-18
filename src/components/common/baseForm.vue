@@ -6,6 +6,10 @@
     <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <!-- 输入框 密码 -->
+      <el-input v-if="item.type=='password'" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <!-- 输入框 带icon-->
+      <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
       <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
@@ -24,8 +28,7 @@
       <el-switch
         v-if="item.type=='switch'"
         v-model="form[item.prop]"
-        @change="changeSwitch"
-        :active-text="switchText"
+        :active-text="form[item.prop]?'开启':'关闭'"
         active-color="#409EFF"
         inactive-color="">
       </el-switch>
@@ -174,7 +177,8 @@ export default {
     },
     formData: {
       handler(newValue, oldValue) {
-        this.init()
+        this.form = {};
+        this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
       deep: true
@@ -258,9 +262,9 @@ export default {
       this.form[val.prop] = this.selectParam[val.prop];
       console.log(this.selectParam)
     },
-    init() {
+    init(data) {
       const self = this;
-      self.formData.forEach((item)=>{
+      data&&data.forEach((item)=>{
         if(item.type=='datepicker-range' || item.type=='datetime-range') {
           if(item.value!='') { // 数据回填
             self.timeParam[item.prop] = item.value;
