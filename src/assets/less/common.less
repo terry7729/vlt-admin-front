@@ -1,0 +1,712 @@
+.vlt-card {
+  background: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  position: relative;
+  transition: all .2s ease-in-out;
+  border: 1px solid #dcdee2;
+  border-color: #e8eaec;
+  padding: 16px;
+
+  &.vc-plr0 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.vlt-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+  border-color: #eee;
+}
+
+.main-body {
+  padding: 10px;
+}
+
+/*表格公用样式*/
+.main-body {
+  .el-table th {
+    height: 40px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: #f8f8f9;
+    border-right: 1px solid #e8eaec;
+  }
+
+  .el-table th>.cell {
+    font-size: 12px;
+    color: #444444;
+    line-height: 1;
+  }
+
+  .el-table td {
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .el-table td>.cell {
+    font-size: 12px;
+    color: #444444;
+    line-height: 18px;
+  }
+}
+
+/*按钮公用样式*/
+.el-table td .el-button--mini {
+  padding: 2px 7px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-right: 5px;
+}
+
+.el-table td .el-button--mini:last-child {
+  margin-right: 0;
+}
+
+.main-body .el-button--medium {
+  font-size: 12px;
+  padding: 7px 15px;
+  line-height: 1.5;
+}
+
+// .main-body .el-button:focus{
+//   background: #2d8cf0;
+//   border-color: #2d8cf0;
+//   color: #FFF;
+// }
+// .main-body .el-button:hover{
+//   color: #57a3f3;
+//   background-color: #fff;
+//   border-color: #57a3f3;
+// }
+// .main-body .el-button--primary{
+//   color: #fff;
+//   background-color: #2d8cf0;
+//   border-color: #2d8cf0;
+// }
+// .main-body .el-button--primary:hover{
+//   color: #fff;
+//   background-color: #57a3f3;
+//   border-color: #57a3f3;
+// }
+
+.mt20 {
+  margin-top: 20px;
+}
+
+/*搜索按钮*/
+.search-bar-comp {
+  .el-button {
+    height: 34px;
+  }
+
+  .el-button--primary {
+    height: 32px;
+  }
+}
+
+/* 编辑 单个样式 */
+.vlt-edit-single {
+  .vlt-edit-wrap {
+    padding: 16px;
+  }
+
+  .vlt-edit-btn {
+    margin-left: 90px;
+  }
+
+  .title {
+    border-bottom: 1px solid #e8eaec;
+    padding: 14px 16px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #444444;
+    font-weight: 700;
+  }
+
+  .el-form-item__label {
+    font-size: 12px;
+    color: #444444;
+  }
+
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+  }
+
+  .el-form-item__content,
+  .el-cascader {
+    width: 400px;
+  }
+
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  .el-select,
+  .el-date-editor {
+    width: 100% !important;
+  }
+
+  .el-input__inner:hover,
+  .el-select:hover .el-input__inner,
+  .el-textarea__inner:hover {
+    border-color: #57a3f3;
+  }
+
+  .el-textarea__inner {
+    padding: 5px 10px;
+  }
+}
+
+/* 编辑 双个样式 */
+.vlt-edit-double {
+  .vlt-edit-wrap {
+    padding: 16px;
+  }
+
+  .vlt-edit-btn {
+    // margin-left: 90px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .title {
+    border-bottom: 1px solid #e8eaec;
+    padding: 14px 16px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #444444;
+    font-weight: 700;
+  }
+
+  .el-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .el-form-item {
+    flex: 50%;
+    max-width: 700px;
+  }
+
+  .el-form-item__label {
+    font-size: 12px;
+    color: #444444;
+    line-height: 20px;
+  }
+
+  .el-form--label-top .el-form-item__label {
+    padding: 0 0 7px;
+  }
+
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+  }
+
+  .el-form-item__content {
+    width: 400px;
+  }
+
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  .el-select,
+  .el-date-editor,
+  .el-cascader {
+    width: 100% !important;
+  }
+
+  .el-input__inner:hover,
+  .el-select:hover .el-input__inner,
+  .el-textarea__inner:hover {
+    border-color: #57a3f3;
+  }
+
+  .el-textarea__inner {
+    padding: 5px 10px;
+  }
+}
+
+/* 编辑 多个样式 */
+.vlt-edit-over {
+  .vlt-edit-wrap {
+    padding: 16px;
+  }
+
+  .vlt-edit-btn {
+    // margin-left: 90px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .title {
+    border-bottom: 1px solid #e8eaec;
+    padding: 14px 16px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #444444;
+    font-weight: 700;
+  }
+
+  .el-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .el-form-item {
+    flex: 30%;
+    max-width: 30%;
+  }
+
+  .el-form-item:nth-child(3n+2) {
+    margin: 0 5%;
+  }
+
+  .el-form-item__label {
+    font-size: 12px;
+    color: #444444;
+    line-height: 20px;
+  }
+
+  .el-form--label-top .el-form-item__label {
+    padding: 0 0 7px;
+  }
+
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+  }
+
+
+  .el-form-item {
+    margin-bottom: 20px;
+  }
+
+  .el-select,
+  .el-date-editor,
+  .el-cascader {
+    width: 100% !important;
+  }
+
+  .el-input__inner:hover,
+  .el-select:hover .el-input__inner,
+  .el-textarea__inner:hover {
+    border-color: #57a3f3;
+  }
+
+  .el-textarea__inner {
+    padding: 5px 10px;
+  }
+}
+
+.money_Account_Manage .el-tabs__header.is-left {
+  padding-top: 30px;
+  width: 122px;
+}
+
+.money_Account_Manage .el-tabs--left .el-tabs__item.is-left {
+  text-align: center;
+}
+
+// .money_Account_Manage .control-bar-comp {
+//   display: flex;
+//   justify-content: flex-end;
+// }
+.bankbalance .control-bar-comp {
+  margin: 20px 0 0 14px !important;
+}
+
+.bankdetail .table_paging {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.externalpayadd .el-form-item .el-form-item__label {
+  width: 120px !important;
+}
+
+.externalpayadd .el-form-item__content {
+  margin-left: 120px !important;
+}
+
+.externalpayadd .vlt-edit-single .vlt-edit-btn {
+  margin-left: 120px;
+}
+
+.externalbalance .control-bar-comp {
+  margin: 20px 0 0 14px !important;
+}
+
+.externaldetail .table_paging {
+  display: flex;
+  justify-content: flex-end;
+
+}
+
+.haveListDetailTwo .control-bar-comp {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Customeraccountlist .table_paging {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.roleManage .table-paging-comp {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.operationManage .table-paging-comp {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.operationManage .el-dialog {
+  width: 38%;
+}
+
+.roleManage .el-dialog {
+  width: 38%;
+
+}
+
+.el_box .el-dialog {
+  width: 38%;
+}
+
+.lotteryTicket .el-dialog {
+  width: 38%;
+}
+
+.expirySetting .el-dialog {
+  width: 38%;
+}
+
+.el-collapse-item__header {
+  font-size: 16px;
+  font-weight: 600;
+  text-indent: 25px;
+}
+
+
+.develop-plan {
+  .el-tabs--left .el-tabs__item.is-left {
+    text-align: left;
+  }
+}
+
+.tabs-content {
+  .el-tabs__nav {
+    margin-right: 100px;
+  }
+
+  .el-tabs__item.is-active {
+    background: rgb(230, 247, 255);
+  }
+
+  .el-tabs--left .el-tabs__active-bar.is-left,
+  .el-tabs--left .el-tabs__nav-wrap.is-left::after {
+    left: 194px;
+    margin-right: 10px;
+  }
+
+  .el-tabs--left .el-tabs__nav-wrap.is-left {
+    margin-right: -60px;
+  }
+
+  .el-tabs__item {
+    padding: 0 70px;
+  }
+
+  .tables-content .el-tabs__item.is-active {
+    background: none;
+  }
+
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
+
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
+
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
+
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
+
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
+  }
+}
+
+
+
+
+.result-assess {
+  .vlt-edit-wrap {
+    margin: 50px 0 20px 350px;
+  }
+
+  .index-config {
+    .check {
+      .el-checkbox {
+        padding-bottom: 20px;
+      }
+    }
+  }
+
+}
+
+.allot-task {
+  .formTime {
+    input {
+      width: 400px;
+
+    }
+  }
+
+}
+
+.create-active {
+
+  .header-box {
+
+    .el-form-item__label {
+      width: 145px !important;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .addForm-box {
+    .add-form {
+      margin-left: 95px;
+
+      :nth-child(1) {
+        .el-form-item__label {
+          width: 100px !important;
+        }
+      }
+
+      .el-checkbox-group {
+        display: inline-block;
+        width: 400px;
+        margin-top: -40px;
+        margin-left: 20px;
+
+      }
+
+    }
+  }
+
+  .process-content {
+    .el-header {
+      height: 110px !important;
+    }
+  }
+
+
+
+  input {
+    width: 400px;
+  }
+
+  .el-textarea__inner {
+    width: 400px;
+  }
+
+  .active-target {
+    .el-checkbox {
+      margin-right: 10px;
+    }
+
+    .el-input {
+      width: 250px;
+      margin-bottom: 5px;
+      display: inline-block;
+
+      input {
+        width: 250px;
+        margin-left: 18px;
+
+      }
+
+    }
+  }
+
+  .active-lobby {
+    .el-input {
+      width: 250px;
+      display: inline-block;
+
+      input {
+        width: 250px;
+
+      }
+
+    }
+
+  }
+}
+
+.preview-template {
+  .upload-img {
+    margin: 20px 0;
+
+    .upload-box {
+      display: inline-block;
+    }
+  }
+
+  .drag-upload {
+    margin-bottom: 20px;
+    position: relative;
+    left: 75px;
+  }
+
+  .active-rule {
+    .rule-item {
+
+      .el-select,
+      .el-input {
+        width: 100px;
+        margin-right: 20px;
+        display: inline-block;
+
+        input {
+          width: 100px;
+        }
+      }
+
+      .last-rule {
+        input {
+          width: 200px;
+        }
+
+      }
+    }
+  }
+
+  .remark {
+    .el-textarea {
+      width: 500px;
+      display: inline-block;
+
+      textarea {
+        width: 500px;
+        margin-top: 10px;
+
+      }
+
+    }
+
+  }
+
+  .item-check {
+
+    .el-checkbox {
+      padding-bottom: 10px;
+    }
+
+  }
+
+
+}
+
+.plan-detail {
+  .base-data {
+    width: 60%;
+    margin-top: 20px;
+    margin-left: 150px;
+
+    .rule-form {
+      width: 100%;
+
+      .el-select {
+        width: 160px;
+      }
+
+      .el-input {
+        width: 150px;
+
+        input {
+          width: 150px;
+        }
+      }
+
+    }
+  }
+
+  .ration-target {
+    margin-top: 20px;
+
+    .ration-check {
+      margin-left: 70px;
+      margin-top: -16px;
+
+      .el-checkbox {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.progress-bar {
+  width: 800px;
+  margin: 20px 150px;
+}
+
+.state-inform {
+  position: absolute;
+  left: 900px;
+  top: 12px;
+  text-align: right;
+}
+
+.tables-content .el-tabs__item.is-active {
+  background: none;
+}
+
+.account-detail {
+  .equity-title {
+    margin-left: 32px;
+    margin-top: 5px;
+
+    span {
+      display: inline-block;
+      margin-right: 400px;
+    }
+  }
+}
+
+//登录页面input框尺寸
+.login-container.vlt-card {
+  .vlt-edit-single .el-input__inner {
+    width: 368px;
+    height: 46px;
+    border-radius: 4px
+  }
+}
+
