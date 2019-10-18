@@ -169,8 +169,14 @@ export default [{
           {
             childResources: [],
             icon: "el-icon-menu",
-            name: "报表统计",
+            name: "设备管理",
             url: 'equipment'
+          },
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "报表统计",
+            url: 'reportStatistics'
           },
           {
             childResources: [],
@@ -186,6 +192,19 @@ export default [{
           }
         ]
       },{
+        icon: "el-icon-menu",
+        name: "资金结算管理",
+        url: 'fundSettlement',
+        childResources: [
+          {
+            childResources: [],
+            icon: "el-icon-menu",
+            name: "资金参数管理",
+            url: 'fundParameter'
+          }
+        ]
+      },
+      {
         icon: "el-icon-menu",
         name: "投注卡管理",
         url: 'bettingCardManage',
