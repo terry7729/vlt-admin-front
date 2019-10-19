@@ -30,10 +30,19 @@
         </div>
       </section>
       <section class="center">
-        <div class="mianMap" id="mianMap">
-          <div class="content row-flex-start" style="ovorflow-x:auto">
-            <div class="left_map" id="left_map" @click="showChinaMap"></div>
-          </div>
+        <div class="left_map" id="left_map" @click="showChinaMap"></div>
+        <div class="top5">
+          <span>全国销售top5</span>
+          <p v-for="itme in 5">
+            <span>浙江:</span>
+            <span>13555元</span>
+          </p>
+        </div>
+        <div class="salesNum">
+          <div class="title">全国大厅数量</div>
+          <div>全部大厅222</div>
+          <div>合作厅111</div>
+          <div>销售厅111</div>
         </div>
       </section>
       <section class="right">
@@ -50,9 +59,9 @@
               >
               <el-table-column align="center" prop="date" label="大厅编号"></el-table-column>
               <el-table-column align="center" prop="name" label="所属省份"></el-table-column>
-              <el-table-column align="center" prop="name" label="销售金额" sortable width="120"></el-table-column>
-              <el-table-column align="center" prop="name" label="中奖金额" sortable width="120"></el-table-column>
-              <el-table-column align="center" prop="name" label="兑奖金额" sortable width="120"></el-table-column>
+              <el-table-column align="center" prop="name" label="销售金额" sortable></el-table-column>
+              <el-table-column align="center" prop="name" label="中奖金额" sortable></el-table-column>
+              <el-table-column align="center" prop="name" label="兑奖金额" sortable></el-table-column>
               <el-table-column align="center" prop="name" label="状态"></el-table-column>
             </el-table>
           </div>
@@ -68,9 +77,7 @@
 
 <script>
 import echarts from "echarts";
-import china from "@/libs/map/json/china.json";
-import city from "@/libs/map/city.json";
-echarts.registerMap("china", china);
+import china from "@/libs/map/cnMapJson/china.json";
 export default {
   name: "name",
   data() {
@@ -106,7 +113,9 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  created() {
+    echarts.registerMap("china", china);
+  },
   mounted() {
     this.salesMap();
     this.machineMap();
@@ -602,13 +611,13 @@ export default {
           text: place ? place : "中国地图",
           // subtext: "data from map",
           left: "center",
-          top:'50',
+          top: "50",
           textStyle: {
             //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"}
             fontSize: 18,
             fontStyle: "normal",
             fontWeight: "normal",
-            color:'#fff'
+            color: "#fff"
           }
         },
         geo: {
@@ -762,6 +771,23 @@ main {
     border-radius: 3px;
     margin: 0 20px;
     height: 81.5%;
+    position: relative;
+    > .salesNum {
+      position: absolute;
+      width: 120px;
+      height: 180px;
+      bottom: 5px;
+      right: 2px;
+      border: 1px solid #267ca6;
+      border-radius: 3px;
+      div:nth-child(n+2){
+        height: 38px;
+        line-height: 38px;
+        color: #267ca6;
+        border-bottom: #0d3153 solid 1px;
+        padding-left: 15px;
+      }
+    }
   }
   > .right {
     flex: 35%;
@@ -804,16 +830,39 @@ main {
   height: 100%;
   background: #404a59;
 }
-.map_form {
-}
-.content {
-  height: 100%;
-}
+
 .mianMap {
   height: 100%;
 }
-.row-flex-start {
-  height: 100%;
-  display: flex;
+
+.top5 {
+  background-color: #1c2c42;
+  padding: 0 5px;
+  position: absolute;
+  width: 150px;
+  height: 220px;
+  box-shadow: 2px 2px 13px 3px #fff;
+  top: 20px;
+  left: 15px;
+  color: #dadde0;
+  border-radius: 4px;
+  border: 1px solid #fff;
+  > span {
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-bottom: 1px solid #dadde0;
+    display: block;
+  }
+  p {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px dashed #dadde0;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    > span {
+    }
+  }
 }
 </style>
