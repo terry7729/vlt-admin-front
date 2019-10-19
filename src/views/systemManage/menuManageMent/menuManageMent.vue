@@ -155,8 +155,8 @@ export default {
     }
    let res = await this.$api.getMenu({data})
   this.date = res.data
-        // console.log(res)
-  },
+        console.log(res)
+ },
   mounted() {},
   data() {
     return {
@@ -204,7 +204,7 @@ export default {
         { type: "input", title: "路由英文名", prop: "moduleCode", value: "" },
         {
           type: "select",
-          title: "图标",
+          title: "图标",  
           prop: "moduleIcon",
           value: "",
           options: [
@@ -359,7 +359,7 @@ export default {
         this.dialogFormVisible =false;
         this.clearIput(this.data2.slice(1, 9));
 
-        console.log(reslt);
+        console.log(reslt,2222222);
         // console.log(this.parms)
       } else {
         this.parms2.created = "添加子节点按钮";
