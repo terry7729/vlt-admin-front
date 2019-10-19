@@ -9,6 +9,9 @@ const haveListDetail = () => import('@/views/businessOperation/channelAccount/ha
 const haveListDetailTwo = () => import('@/views/businessOperation/channelAccount/haveListDetailTwo')
 // 账户资金管理
 const accountMoneyManage = () => import('@/views/businessOperation/channelAccount/accountMoneyManage')
+//银行
+const bank = () => import('@/views/businessOperation/channelAccount/bank')
+
 //账户资金管理银行新增
 const bankadd = () => import('@/views/businessOperation/channelAccount/bankadd')
 //账户资金管理银行修改
@@ -17,6 +20,8 @@ const bankrevise = () => import('@/views/businessOperation/channelAccount/bankre
 const bankbalance = () => import('@/views/businessOperation/channelAccount/bankbalance')
 //账户资金管理银行明细
 const bankdetail = () => import('@/views/businessOperation/channelAccount/bankdetail')
+//第三方支付
+const external = () => import('@/views/businessOperation/channelAccount/external')
 //账户资金管理第三方支付新增
 const externaladd = () => import('@/views/businessOperation/channelAccount/externaladd')
 //账户资金管理第三方支付修改
@@ -257,8 +262,35 @@ export default [
     meta: {
       title: '账户资金管理',
     },
-    component: accountMoneyManage
+    component: accountMoneyManage,
+    children: [{
+        path: '',
+        redirect: {
+          name: 'bank'
+        },
+        component: bank,
+      },
+      {
+        path: 'bank',
+        name: 'bank',
+        meta: {
+          title: '银行',
+        },
+        component: bank
+      },
+
+      {
+        path: 'external',
+        name: 'external',
+        meta: {
+          title: '第三方支付',
+        },
+        component: external
+      },
+
+    ]
   },
+
   {
     path: 'businessOperation/accountMoneyManage/bankadd',
     name: 'bankadd',
@@ -292,6 +324,8 @@ export default [
     },
     component: bankdetail
   },
+
+
   {
     path: 'businessOperation/accountMoneyManage/externaladd',
     name: 'externaladd',

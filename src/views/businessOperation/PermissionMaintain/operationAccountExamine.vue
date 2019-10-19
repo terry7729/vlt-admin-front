@@ -15,6 +15,8 @@ export default {
     return {
       dal: [],
       operationAccountExamineData: [
+        { title: "员工编号", value: "", prop: "operationManageStaffNum" },
+        { title: "年龄", value: "", prop: "operationManageAge" },
         { title: "账户ID", value: "", prop: "operationManageID" },
         { title: "账户角色", value: "", prop: "operationManageRoleName" },
         { title: "账户权限", value: "", prop: "userauthority" },

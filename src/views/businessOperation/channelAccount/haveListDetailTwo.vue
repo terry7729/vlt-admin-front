@@ -35,13 +35,13 @@
           <el-table-column prop="haveListDetailTwogamedate" label="销售时间"></el-table-column>
         </el-table>
       </panel>
-      <panel title="发放设备" :show="true" style="margin-bottom:20px">
+      <!-- <panel title="发放设备" :show="true" style="margin-bottom:20px">
         <el-table :data="haveListDetailTwoDistributioneQuipment" border style="padding:16px">
           <el-table-column prop="haveListDetailTwoDistributioneQuipmentid" label="设备1"></el-table-column>
           <el-table-column prop="haveListDetailTwoDistributioneQuipmentbet" label="投注机"></el-table-column>
           <el-table-column prop="haveListDetailTwoDistributioneQuipmentnum" label="型号"></el-table-column>
         </el-table>
-      </panel>
+      </panel>-->
       <panel title="其他事项" :show="true" style="margin-bottom:20px">
         <img src="haveListDetailTwoDistributioneQuipmentImg" alt />
       </panel>
@@ -76,6 +76,7 @@ export default {
       haveListDetailTwoData: [
         { title: "所属机构", value: "", prop: "subsidiaryorgan" },
         { title: "渠道类型", value: "", prop: "channeltype" },
+        { title: "渠道等级", value: "", prop: "channelGrade" },
         { title: "渠道编号", value: "", prop: "channelnum" },
         { title: "渠道地址", value: "", prop: "channeladdress" },
         { title: "经营场所属性", value: "", prop: "Propertyofbusinesssite" },
@@ -94,13 +95,13 @@ export default {
           haveListDetailTwogamedate: "自营"
         }
       ],
-      haveListDetailTwoDistributioneQuipment: [
-        {
-          haveListDetailTwoDistributioneQuipmentid: 1,
-          haveListDetailTwoDistributioneQuipmentbet: "广东省",
-          haveListDetailTwoDistributioneQuipmentnum: "广东省"
-        }
-      ],
+      // haveListDetailTwoDistributioneQuipment: [
+      //   {
+      //     haveListDetailTwoDistributioneQuipmentid: 1,
+      //     haveListDetailTwoDistributioneQuipmentbet: "广东省",
+      //     haveListDetailTwoDistributioneQuipmentnum: "广东省"
+      //   }
+      // ],
       haveListDetailTwoDistributioneQuipmentBtn: [
         { name: "返回", type: "primary", icon: "" }
       ]

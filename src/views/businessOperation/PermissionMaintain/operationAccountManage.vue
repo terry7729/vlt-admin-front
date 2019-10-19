@@ -172,6 +172,12 @@ export default {
         operationManageRoleName: [
           { required: true, message: "请选择账户角色", trigger: "change" }
         ],
+        operationManageStaffNum: [
+          { required: true, message: "请输入员工编号", trigger: "blur" }
+        ],
+        operationManageAge: [
+          { required: true, message: "请输入年龄", trigger: "blur" }
+        ],
         operationManagetelephone: [
           { required: true, message: "请输入手机号", trigger: "blur" }
         ],
@@ -206,6 +212,18 @@ export default {
           type: "input",
           title: "账户名称",
           prop: "operationManageName",
+          value: ""
+        },
+        {
+          type: "input",
+          title: "员工编号",
+          prop: "operationManageStaffNum",
+          value: ""
+        },
+        {
+          type: "input",
+          title: "年龄",
+          prop: "operationManageAge",
           value: ""
         },
         {
@@ -536,16 +554,17 @@ export default {
     operationManageWrite(row) {
       this.dialogFormVisible = true;
       // row = this.operationManageWriteData[0].prop;
-      let n = Object.keys(row);
-      let arr = this.operationManageWriteData;
-      //console.log(n);
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < n.length; j++) {
-          if (arr[i].prop === n[j]) {
-            arr[i].value = row[n[j]];
-          }
-        }
-      }
+      this.operationManageWriteData.value = Object.assign({}, row);
+      // let n = Object.keys(row);
+      // let arr = this.operationManageWriteData;
+      // //console.log(n);
+      // for (var i = 0; i < arr.length; i++) {
+      //   for (var j = 0; j < n.length; j++) {
+      //     if (arr[i].prop === n[j]) {
+      //       arr[i].value = row[n[j]];
+      //     }
+      //   }
+      // }
       //console.log(this.operationManageWriteData[0]);
     },
     //点击查看
