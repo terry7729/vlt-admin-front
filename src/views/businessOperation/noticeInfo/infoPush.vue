@@ -219,7 +219,7 @@ export default {
 <style lang="less" scoped>
 .info-push {
   .title {
-    margin: 10px 0 15px 20px;
+    margin: 10px 0 20px 20px;
     font-size: 18px;
     .title-msg {
       margin-left: 5px;
@@ -227,5 +227,6 @@ export default {
       font-weight: 600;
     }
   }
+
 }
 </style>

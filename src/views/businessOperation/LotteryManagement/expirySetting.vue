@@ -87,7 +87,7 @@ export default {
         all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
       },
       //新增弹框表单验证
-      lotteryTicketWriteRule: {
+      lotteryTicketAddRule: {
         test: [
           { required: true, validator: rules.checkEmail, trigger: "blur" }
         ],

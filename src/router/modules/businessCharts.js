@@ -46,7 +46,7 @@ const componentDemo = () => import('@/views/componentDemo')
 // //demo1
 // const demo1 = () => import('@/views/businessCharts/dealData/demos')
 //demo1
-const echarts = () => import('@/views/businessCharts/dealData/echarts')
+// const echarts = () => import('@/views/businessCharts/dealData/echarts')
 //城市风险指标新增
 const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd')
 //奖池风险指标新增
@@ -64,14 +64,14 @@ export default [
     },
     component: componentDemo
   },
-  {
-    path: 'businessCharts/echarts',
-    name: 'echarts',
-    meta: {
-      title: '省市区地图',
-    },
-    component: echarts
-  },
+  // {
+  //   path: 'businessCharts/echarts',
+  //   name: 'echarts',
+  //   meta: {
+  //     title: '省市区地图',
+  //   },
+  //   component: echarts
+  // },
   {
     path: '/',
     name: 'businessCharts',
