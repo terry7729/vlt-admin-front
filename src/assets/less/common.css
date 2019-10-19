@@ -340,6 +340,21 @@
 .tabs-content .el-switch .el-switch__label {
   width: 50px !important;
 }
+.create-active .step-bar .el-step__title {
+  font-size: 14px;
+  font-weight: 400;
+}
+.active-plan .vlt-edit-single .title {
+  padding-left: 0;
+}
+.active-plan .step-bar {
+  width: 70%;
+  margin: 10px auto;
+}
+.active-plan .step-bar .el-step__title {
+  font-size: 14px;
+  font-weight: 400;
+}
 .result-assess .vlt-edit-wrap {
   margin: 50px 0 20px 350px;
 }
@@ -349,74 +364,15 @@
 .allot-task .formTime input {
   width: 400px;
 }
-.active-plan .upload-img {
-  margin: 20px 0;
+.info-push .el-tabs__item {
+  margin-bottom: 10px;
+  padding: 0 50px;
 }
-.active-plan .upload-img .upload-box {
-  display: inline-block;
+.info-push .el-tabs__item.is-active {
+  background: #f0faff;
 }
-.active-plan .drag-upload {
-  margin-bottom: 20px;
-  position: relative;
-  left: 75px;
-}
-.active-plan .active-rule .rule-item .el-select,
-.active-plan .active-rule .rule-item .el-input {
-  width: 100px;
-  margin-right: 20px;
-  display: inline-block;
-}
-.active-plan .active-rule .rule-item .el-select input,
-.active-plan .active-rule .rule-item .el-input input {
-  width: 100px;
-}
-.active-plan .active-rule .rule-item .last-rule input {
-  width: 200px;
-}
-.active-plan .remark .el-textarea {
-  width: 500px;
-  display: inline-block;
-}
-.active-plan .remark .el-textarea textarea {
-  width: 500px;
-  margin-top: 10px;
-}
-.active-plan .item-check {
-  margin-bottom: 50px;
-}
-.active-plan .item-check .el-checkbox {
-  padding-bottom: 20px;
-}
-.plan-detail .base-data {
-  width: 60%;
-  margin-top: 20px;
-  margin-left: 150px;
-}
-.plan-detail .base-data .rule-form {
-  width: 100%;
-}
-.plan-detail .base-data .rule-form .el-select {
-  width: 160px;
-}
-.plan-detail .base-data .rule-form .el-input {
-  width: 150px;
-}
-.plan-detail .base-data .rule-form .el-input input {
-  width: 150px;
-}
-.plan-detail .progress-bar {
-  width: 70%;
-  margin: 20px 150px;
-}
-.plan-detail .ration-target {
-  margin-top: 20px;
-}
-.plan-detail .ration-target .ration-check {
-  margin-left: 70px;
-  margin-top: -16px;
-}
-.plan-detail .ration-target .ration-check .el-checkbox {
-  margin-bottom: 20px;
+.plan-detail .el-tabs__nav {
+  margin-left: 34px;
 }
 .tables-content .el-tabs__item.is-active {
   background: none;

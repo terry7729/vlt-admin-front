@@ -31,22 +31,31 @@
         <el-table-column prop="abandonstartTime" label="弃奖开始日期" sortable width="130"></el-table-column>
         <el-table-column prop="abandonendTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
 
-        <el-table-column label="销售状态">
-          <template>
-            <el-switch v-model="value1" active-text="停销" inactive-text="不停销" ></el-switch>
+        <el-table-column label="销售状态" >
+          <template slot-scope="scope">
+            <el-switch    
+              v-model="scope.row.switch1"
+              inactive-text="停销"
+              active-text="不停销"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="启用状态" :formatter="formatter">
-          <template>
-            <el-switch v-model="value2" active-text="已启用" inactive-text="已停用"></el-switch>
+        <el-table-column label="启用状态">
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.switch2"
+              active-text="已启用"
+              inactive-text="已停用"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
           </template>
         </el-table-column>
       </el-table>
       <table-paging :total="total"></table-paging>
     </div>
-    <template>
-      <el-switch v-model="value2" active-text="已启用" inactive-text="已停用"></el-switch>
-    </template>
   </div>
 </template>
 
@@ -94,7 +103,9 @@ export default {
           startTime: "2019-10-11 10:0:0",
           endTime: "2019-10-11 12:0:0",
           abandonstartTime: "2019-11-12",
-          abandonendTime: "2019-10-15"
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 2,
@@ -102,7 +113,9 @@ export default {
           startTime: "2019-10-12 10:0:0",
           endTime: "2019-10-12 12:0:0",
           abandonstartTime: "2019-12-12",
-          abandonendTime: "2019-10-15"
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 3,
@@ -110,7 +123,9 @@ export default {
           startTime: "2019-10-13 10:0:0",
           endTime: "2019-10-13 12:0:0",
           abandonstartTime: "2019-1-12",
-          abandonendTime: "2019-10-15"
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 4,
@@ -118,7 +133,9 @@ export default {
           startTime: "2019-10-14 10:0:0",
           endTime: "2019-10-14 12:0:0",
           abandonstartTime: "2019-2-12",
-          abandonendTime: "2019-10-15"
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 5,
@@ -126,7 +143,9 @@ export default {
           startTime: "2019-10-15 10:0:0",
           endTime: "2019-10-15 12:0:0",
           abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15"
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         }
       ],
       total: 400
@@ -143,10 +162,7 @@ export default {
         if (this.form[key] !== "") formData[key] = this.form[key];
       }
       this.$emit("search", formData);
-    },
-     formatter(row, column) {
-        return row.holidayName;
-      }
+    }
   }
 };
 </script>
