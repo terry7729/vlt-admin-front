@@ -6,6 +6,7 @@ export default {
   */
   /* 请务必注释每个接口所属名称 */
   // 例
+  //菜单管理页面
   //菜单树查询
   getMenu: (options = {}) => ajax.post('/module/queryModuleTree', options),
   //菜单详情
@@ -13,5 +14,7 @@ export default {
   //新增菜单
   addMenu:(options = {}) => ajax.post('/module/saveModule',options),
   //批量删除
-  delectMenu:(options = {}) => ajax.post('/module/deleteModul',options),
+  delectMenu:(options = {}) => ajax.post('/module/deleteModule',options),
+  //更改信息
+  ModficMenu:(options = {}) => ajax.post('/module/updateModule',options),
 }

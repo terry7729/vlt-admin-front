@@ -146,24 +146,16 @@
 // import Post from "../../../utils/ajax";
 let id = 1000;
 export default {
-  async created() {
-    // let n = await Post.axios("/module/queryModuleTree");
-    // this.date = n.data.data;
-    let data = {
-      sysCode: "VLT_BMS",
-      code: 1
-    }
-   let res = await this.$api.getMenu({data})
-  this.date = res.data
-        // console.log(res)
+  created() {
+    this.init();
   },
   mounted() {},
   data() {
     return {
       setProps: {
-        label: 'text',
-        value: 'id',
-        children: 'children',
+        label: "text",
+        value: "id",
+        children: "children"
       },
       option: [
         //类型选择
@@ -181,7 +173,7 @@ export default {
         { type: "input", title: "名称", prop: "moduleName", value: "" },
         { type: "input", title: "英文名", prop: "moduleNameEn", value: "" },
         { type: "input", title: "路径", prop: "actionUrl", value: "" },
-         { type: "input", title: "菜单编码", prop: "moduleCode", value: "" },
+        { type: "input", title: "菜单编码", prop: "moduleCode", value: "" },
         {
           type: "select",
           title: "图标",
@@ -197,11 +189,12 @@ export default {
       ],
       data2: [
         //类别为菜单时的表单对象
-       
+
         { type: "input", title: "名称", prop: "moduleName", value: "" },
 
-        { type: "input", title: "路径", prop: "actionUrl", value: "" },
-        { type: "input", title: "路由英文名", prop: "moduleCode", value: "" },
+        { type: "input", title: "路径", prop: "moduleDesc", value: "" },
+        { type: "input", title: "编码", prop: "moduleCode", value: "" },
+        { type: "input", title: "路由英文名", prop: "moduleNameEn", value: "" },
         {
           type: "select",
           title: "图标",
@@ -215,13 +208,13 @@ export default {
         { type: "input", prop: "sort", value: "", title: "排序值" },
         {
           type: "switch",
-          prop: "date2",
+          prop: "isSensitivity",
           value: false,
-          title: "是否敏感操作",
+          title: "是否敏感操作"
         },
         { type: "switch", prop: "isShow", value: true, title: "是否启用" }
       ],
-       data4: [
+      data4: [
         //类别为菜单时的表单对象
         {
           title: "上级节点",
@@ -232,17 +225,17 @@ export default {
         },
         { type: "input", title: "名称", prop: "name", value: "" },
 
-        { type: "input", title: "路由英文名", prop: "english", value: "" },
-         { type: "input", title: "菜单编码", prop: "moduleCode", value: "" },
-          {
+        { type: "input", title: "路由英文名", prop: "moduleNameEn", value: "" },
+        { type: "input", title: "菜单编码", prop: "moduleCode", value: "" },
+        {
           type: "select",
           title: "节点类型",
           prop: "moduleType",
           value: "",
           options: [
             { label: "2", value: 2 },
-            { label: "3", value: 3},
-            { label: "4", value:4 }
+            { label: "3", value: 3 },
+            { label: "4", value: 4 }
           ]
         },
         {
@@ -260,9 +253,9 @@ export default {
           type: "switch",
           prop: "date2",
           value: false,
-          title: "是否敏感操作",
+          title: "是否敏感操作"
         },
-        { type: "switch", prop: "date3", value: true, title: "是否启用" }
+        { type: "switch", prop: "isShow", value: true, title: "是否启用" }
       ],
       data3: [
         //类型为按钮时的表单对象
@@ -276,7 +269,7 @@ export default {
           type: "switch",
           prop: "date2",
           value: false,
-          title: "是否敏感操作",
+          title: "是否敏感操作"
         },
         { type: "switch", prop: "date3", value: true, title: "是否启用" }
       ],
@@ -323,11 +316,19 @@ export default {
       parms2: {},
       parms3: {},
       val: {}, //节点对象
-      codeId:[] //当前复选框选中节点Id
+      codeId: [] //当前复选框选中节点Id
     };
   },
   components: {},
   methods: {
+    async init() {
+      let data = {
+        sysCode: "VLT_BMS",
+        code: 1
+      };
+      let res = await this.$api.getMenu({ data });
+      this.date = res.data;
+    },
     handel(val) {
       this.menuType = val;
     },
@@ -339,28 +340,30 @@ export default {
     },
     cancel() {
       //关闭弹窗
-      this.clearIput(this.topMnu)
+      this.clearIput(this.topMnu);
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
-   async submitAdd() {
+    async submitAdd() {
       //添加信息表单提交
       if (this.menuType === "0") {
         this.parms.created = "添加子节点";
         let addfrom = JSON.parse(JSON.stringify(this.parms));
-          let data = {
-        parentId : this.parent.id,
-        sysCode : "VLT_BMS",
-        moduleDesc:addfrom.moduleName,
-        ...addfrom
-      }
-          console.log(data)
-        let reslt =await this.$api.addMenu({data})
-        this.dialogFormVisible =false;
+        let data = {
+          parentId: this.parent.id,
+          sysCode: "VLT_BMS",
+          moduleDesc: addfrom.moduleName,
+          ...addfrom
+        };
+        console.log(data);
+        let reslt = await this.$api.addMenu({ data });
+        if(reslt.code===0){
+          this.init()
+        }
+        this.dialogFormVisible = false;
+  
         this.clearIput(this.data2.slice(1, 9));
-
         console.log(reslt);
-        // console.log(this.parms)
       } else {
         this.parms2.created = "添加子节点按钮";
         let addfrom = JSON.parse(JSON.stringify(this.parms2));
@@ -369,19 +372,22 @@ export default {
         // console.log(this.parms2)
       }
     },
-    submitModifine(val) {
+    async submitModifine(val) {
       //更改信息表单提交
       if (this.menuType === "0") {
         this.parms.created = "更改子节点";
-      let arr =  JSON.parse(JSON.stringify(this.parms));
-        // console.log(this.$refs.baseForm)
-        this.$refs.baseForm.resetForm()
-        console.log(arr);
+        let data = JSON.parse(JSON.stringify(this.parms));
+        let reslt = await this.$api.ModficMenu({ data });
+        console.log(reslt);
+        if(reslt.code === 0){
+          this.init()
+        }
+        this.$refs.baseForm.resetForm();
       } else {
         this.parms2.created = "更改子节点按钮";
         console.log(this.parms2);
       }
-      console.log(val)
+      console.log(val);
     },
     addChangeForm(val) {
       console.log(val, "添加节点change事件");
@@ -406,20 +412,23 @@ export default {
 
       Object.assign(this.parms3, val);
     },
-   async addTopFromsubmit() {
+    async addTopFromsubmit() {
       this.parms3.created = "添加顶部菜单";
       // console.log(this.parms3)
       let n = JSON.parse(JSON.stringify(this.parms3));
       let data = {
-        parentId : null,
-        sysCode : "VLT_BMS",
+        parentId: null,
+        sysCode: "VLT_BMS",
         moduleType: 1,
-        moduleDesc:n.moduleName,
+        moduleDesc: n.moduleName,
         ...n
+      };
+      let reslt = await this.$api.addMenu({ data });
+      if(reslt.code===0){
+        this.init()
       }
-      let reslt = await this.$api.addMenu({data})
-      this.dialogFormVisible2= false;
-      console.log(reslt)
+      this.dialogFormVisible2 = false;
+      console.log(reslt);
       this.clearIput(this.topMnu);
     },
     save(val, formName) {
@@ -433,34 +442,45 @@ export default {
         }
       });
     },
-  async selectBtn(val) {
+    selectBtn(val) {
       //按钮点击事件
       // console.log(val);
       if (val.id === 1) {
         if (this.slelectifo == "") {
           this.open();
         } else {
-          
           this.setchild = false;
           this.dialogFormVisible = true;
           this.data2[0].value = this.slelectifo;
         }
       }
       if (val.id === 2) {
-        
         this.dialogFormVisible2 = true;
       }
-      if(val.name === "批量删除"){
+      if (val.name === "批量删除") {
         // alert(2)
         // let data=[];
-        let arr =  this.$refs.tree.getCheckedNodes()
-     
-       let data = arr.map(item=>{return{moduleId:item.id}})
-        let reslt = await this.$api.delectMenu({data})
-        console.log(reslt)
+        this.$alert("您确定要删除节点？", "温馨提示！", {
+          confirmButtonText: "确定",
+          callback: async action => {
+            let arr = this.$refs.tree.getCheckedNodes();
+
+            let data = arr.map(item => {
+              return { moduleId: item.id };
+            });
+
+            let reslt = await this.$api.delectMenu({ data });
+            if(reslt.code === 0){
+              this.init()
+            }
+            console.log(data, this.$api);
+            console.log(reslt);
+            close();
+          }
+        });
       }
       //触发弹框
-    },
+      },
     open() {
       this.$alert("请选择要添加机构的上级节点！", "温馨提示！", {
         confirmButtonText: "确定",
@@ -469,16 +489,16 @@ export default {
         }
       });
     },
-  async getnowNodeifo(val, s) {
+    async getnowNodeifo(val, s) {
       this.parent = val;
-      let data = {moduleCode:val.code}
-   
-      let res = await this.$api.getDestils({data})
- 
+      let data = { moduleCode: val.code };
+      this.val = val;
+      let res = await this.$api.getDestils({ data });
+
       this.slelectifo = val.text;
 
       let n = Object.keys(res.data);
-      console.log(res.data)
+      console.log(res.data);
       let arr = this.data2;
 
       for (var i = 0; i < arr.length; i++) {
@@ -489,14 +509,12 @@ export default {
         }
       }
     },
-    getCheckifo(res,val) {
+    getCheckifo(res, val) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
-      console.log(res,val);
-   
-       
+      console.log(res, val);
     },
-    hadnelCheck(...res){
-      console.log(res)
+    hadnelCheck(...res) {
+      console.log(res);
     },
     clearIput(val) {
       for (var i = 0; i < val.length; i++) {
@@ -506,13 +524,13 @@ export default {
     //
   },
   watch: {
-    val: {
-      handler: function(val, oldval) {
-        this.$refs.tree.setChecked(val, true);
-        this.$refs.tree.setChecked(oldval, false);
-      },
-      deep: true // 对象内部的属性监听，也叫深度监听
-    }
+    // val: {
+    //   handler: function(val, oldval) {
+    //     this.$refs.tree.setChecked(val, true);
+    //     this.$refs.tree.setChecked(oldval, false);
+    //   },
+    //   deep: true // 对象内部的属性监听，也叫深度监听
+    // }
   }
 };
 </script>
