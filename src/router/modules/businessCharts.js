@@ -42,9 +42,11 @@ const warningWatchDetail = () => import('@/views/businessCharts/warningWatch/mod
 //告警监控编辑
 const warningWatchEdit = () => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
 //demo
-const demo = () => import('@/views/componentDemo')
+const componentDemo = () => import('@/views/componentDemo')
+// //demo1
+// const demo1 = () => import('@/views/businessCharts/dealData/demos')
 //demo1
-const demo1 = () => import('@/views/businessCharts/dealData/demo')
+const echarts = () => import('@/views/businessCharts/dealData/echarts')
 //城市风险指标新增
 const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd')
 //奖池风险指标新增
@@ -53,14 +55,22 @@ const pondRiskAdd = () => import('@/views/businessCharts/warningRule/pondRiskAdd
 //城市游戏风险指标新增
 const gameRiskAdd = () => import('@/views/businessCharts/warningRule/gameRiskAdd')
 
-export default [{
-    path: 'demo',
-    name: 'demo',
-    component: demo,
+export default [
+  {
+    path: 'businessCharts/componentDemo',
+    name: 'componentDemo',
     meta: {
-      parentName: '', // 当左侧菜单匹配不到当前路由时(菜单无对应激活状态),请设置该属性值(菜单可激活的父级路由名称)
-      title: '路由说明'
-    }
+      title: '组件demo',
+    },
+    component: componentDemo
+  },
+  {
+    path: 'businessCharts/echarts',
+    name: 'echarts',
+    meta: {
+      title: '省市区地图',
+    },
+    component: echarts
   },
   {
     path: '/',
@@ -243,13 +253,6 @@ export default [{
     },
     component: gameRiskAdd
   },
-  {
-    path: 'businessCharts/demo1',
-    name: 'demo1',
-    meta: {
-      title: '城市游戏风险指标新增',
-    },
-    component: demo1
-  }
+  
 
 ]
