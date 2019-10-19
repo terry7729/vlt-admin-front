@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="operationManage">
-      <searchBar :options="operationManageoptions" :total="999">
+      <searchBar :options="operationManageoptions" @search="search" :total="999">
         <controlBar
           slot="extend-bar"
           @select="operationManageAddclick"
@@ -161,6 +161,7 @@ export default {
       ],
       //按钮类型
       operationManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
+      //表单验证
       operationManageWriteRule: {
         operationManageBelong: [
           { required: true, message: "请选择所属渠道", trigger: "change" }
@@ -523,6 +524,11 @@ export default {
   },
   components: {},
   methods: {
+    //点击查询
+    search(formData) {
+      console.log(formData);
+    },
+    //新增按钮
     operationManageAddclick() {
       this.$router.push("operationAccountAdd");
     },
@@ -544,10 +550,12 @@ export default {
     },
     //点击查看
     operationManageLook(row) {
-      let id = row.operationManageNum;
-      this.$router.push({ path: "operationAccountExamine", query: { id } });
+      this.$router.push({
+        path: "operationAccountExamine",
+        query: { id: row.operationManageNum }
+      });
       //console.log(row);
-      this.eventBus.$emit("send", row);
+      //this.eventBus.$emit("send", row);
     },
     operationManageWritechangeForm() {},
     //点击保存

@@ -52,7 +52,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <tablePaging :total="99" :currentPage="1" :pageSize="10"></tablePaging>
+      <tablePaging
+        :total="99"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></tablePaging>
       <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
         <div class="vlt-edit-single">
           <el-form
@@ -776,7 +782,13 @@ export default {
     roleManageSizeChange() {},
     roleManageCurrentChange() {},
     changeForm() {},
-    AuthoritychangeForm() {}
+    AuthoritychangeForm() {},
+    handleSizeChange(size) {
+      console.log(`每页 ${size} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    }
   }
 };
 </script>
