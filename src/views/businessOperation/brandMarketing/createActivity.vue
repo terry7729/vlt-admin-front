@@ -6,17 +6,19 @@
       <el-step title="创建计划"></el-step>
     </el-steps>
 
-    <preview-template v-show="stepOne">
+    <preview-template v-show="activeStep===1">
       <template v-slot:header>
-        <h3>模板选择</h3>
-        <el-select v-model="value" size="small" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+        <div class="template-check">
+          <span>模板选择</span>
+          <el-select v-model="value" size="small" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </div>
       </template>
 
       <template v-slot:footer-btn>
@@ -27,10 +29,10 @@
       </template>
     </preview-template>
 
-    <preview-template v-show="stepTwo">
+    <preview-template v-show="activeStep===2">
       <template v-slot:header>
-        <div class="header-box">
-          <h3>模板预览</h3>
+        <div class="template-preview">
+          <span>模板预览</span>
         </div>
       </template>
       <template v-slot:footer-btn>
@@ -51,8 +53,6 @@ export default {
     return {
       activeStep: 1,
       value: "",
-      stepOne: true,
-      stepTwo: false,
       form: {
         name: "",
         region: "",
@@ -90,8 +90,6 @@ export default {
       const that = this;
       that.$el.parentNode.parentNode.scrollTop = 0;
       if (that.activeStep === 2) {
-        that.stepTwo = false;
-        that.stepOne = true;
         that.activeStep = 1;
       } else {
         that.$router.push({ path: "planManage" });
@@ -100,18 +98,11 @@ export default {
 
     nextStep() {
       const that = this;
-      that.stepOne = false;
       that.$el.parentNode.parentNode.scrollTop = 0;
       if (that.activeStep === 1) {
-        that.stepTwo = true;
         that.activeStep = 2;
-      } else if (that.activeStep === 2) {
-        that.stepTwo = false;
-
-        that.activeStep = 3;
-        that.$router.push({ path: "activityPlan" });
       } else {
-        that.activeStep = 3;
+        that.$router.push({ path: "activityPlan" });
       }
     },
     handleClick() {}
@@ -120,24 +111,32 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.footer-btn {
-  width: 200px;
-  margin-left: 60%;
-  margin-bottom: 20px;
+.create-active {
+  .template-check {
+    margin-left: 36px;
+    margin-bottom: 10px;
+    span {
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .el-select {
+      left: 20px;
+    }
+  }
+  .template-preview {
+    margin-left: 36px;
+    margin-bottom: 10px;
+    span {
+      font-size: 18px;
+      font-weight: 800;
+    }
+  }
+  
+  .footer-btn {
+    width: 200px;
+    margin-left: 60%;
+    margin-bottom: 20px;
+  }
 }
-.process-content {
-  margin-left: 100px;
 
-  .state-inform {
-    text-align: right;
-    height: 20px;
-    margin-top: 10px;
-    margin-right: 33%;
-  }
-  .process-form {
-    margin-left: 80px;
-    width: 550px;
-    background: #eee;
-  }
-}
 </style>
