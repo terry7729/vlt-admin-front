@@ -33,6 +33,15 @@
         </el-table-column>
       </el-table>
     </el-row>
+
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"
+    ></table-paging>
   </div>
 </template>
 
