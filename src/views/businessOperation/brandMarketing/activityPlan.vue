@@ -1,13 +1,15 @@
 <template>
   <div class="vlt-card active-plan">
-    <el-steps :active="3" finish-status="success" simple style="margin-top: 20px">
+    <el-steps :active="3" finish-status="success" simple>
       <el-step title="模板选择"></el-step>
       <el-step title="模板预览"></el-step>
       <el-step title="创建计划"></el-step>
     </el-steps>
-    <h2 class="comp-title">新建活动计划</h2>
+    <div class="create-plan">
+      <span>新建活动计划</span>
+    </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="活动内容" name="first">
+      <el-tab-pane label="活动内容" name="activeContent">
         <div>
           <section class="comp-item">
             <div class="vlt-edit-single">
@@ -79,8 +81,6 @@
                       </el-form-item>
                     </el-form>
                   </div>
-
-                  <slot name="addForm"></slot>
                 </div>
               </panel>
             </div>
@@ -147,7 +147,7 @@
                     </el-select>
                     <el-input v-model="item.target" placeholder="输入目标金额"></el-input>
                     <span>赠送:&nbsp;</span>
-                    <el-input v-model="item.give" placeholder="输入赠送金额" class="last-rule"></el-input>
+                    <el-input v-model="item.give" placeholder="输入赠送金额"></el-input>
                   </el-form-item>
                 </el-form>
                 <div class="add-rule">+新增规则</div>
@@ -247,19 +247,19 @@
           </section>
         </div>
         <div class="footer-btn">
-          <el-button type="primary" size="small" @click="save">保存</el-button>
           <el-button size="small" @click="cancel">取消</el-button>
+          <el-button type="primary" size="small" @click="save">保存</el-button>
         </div>
       </el-tab-pane>
 
-      <el-tab-pane label="审核流程" name="second">
-        <el-container>
-          <el-aside width="400px">
+      <el-tab-pane label="审核流程" name="processInfo">
+        <el-container class="process-info">
+          <el-aside class="process-img" width="400px">
             <img src="../../../assets/img/avatar.jpg" />
           </el-aside>
-          <el-main>
+          <el-main class="process-form">
             <section class="comp-item">
-              <div class="vlt-edit-single process-form">
+              <div class="vlt-edit-single">
                 <h2 class="title">新建申请</h2>
                 <div class="vlt-edit-wrap">
                   <el-form
@@ -305,7 +305,7 @@ export default {
   name: "",
   data() {
     return {
-      activeName: "first",
+      activeName: "activeContent",
       processForm: {},
       baseData: [
         { type: "input", title: "活动名称", prop: "name" },
@@ -410,7 +410,7 @@ export default {
           label: "Lv3"
         }
       ],
-     
+
       options: [],
       value: ""
     };
@@ -452,56 +452,20 @@ export default {
 
 
 <style lang="less" scoped >
-.active-plan {
-  h2 {
-    height: 50px;
-    background: white;
-    text-indent: 25px;
-    line-height: 50px;
-  }
-  .base-info {
-    margin-left: 40px;
-  }
-  .upload-module {
-    margin: 20px 0 20px 150px;
-    .upload-file {
-      width: 600px;
-      .el-upload__tip {
-        font-size: 14px;
-        color: #aaa;
-        position: relative;
-        left: 65px;
-      }
-    }
-  }
-  .active-rule,
-  .control-index {
-    margin: 20px 0 20px 150px;
-  }
-  .base-later {
-    margin-left: 100px;
-  }
+@import "./less/activityPlan.less";
+// .process-content {
+//   margin-left: 100px;
 
-  .add-rule {
-    width: 472px;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    font-size: 14px;
-    border: 1px dashed #aaa;
-  }
-  .active-table {
-    margin: 20px 0 20px 150px;
-  }
-  .index-check {
-    margin-top: 15px;
-    .item-check {
-      display: inline-block;
-      width: 800px;
-      position: relative;
-      top: -15px;
-      left: 60px;
-    }
-  }
-}
+//   .state-inform {
+//     text-align: right;
+//     height: 20px;
+//     margin-top: 10px;
+//     margin-right: 33%;
+//   }
+//   .process-form {
+//     margin-left: 80px;
+//     width: 550px;
+//     background: #eee;
+//   }
+// }
 </style>
