@@ -30,7 +30,11 @@
         </div>
       </section>
       <section class="center">
-        <div class="mianMap" id="mianMap"></div>
+        <div class="mianMap" id="mianMap">
+          <div class="content row-flex-start" style="ovorflow-x:auto">
+            <div class="left_map" id="left_map" @click="showChinaMap"></div>
+          </div>
+        </div>
       </section>
       <section class="right">
         <div class="salesRanking">
@@ -64,10 +68,19 @@
 
 <script>
 import echarts from "echarts";
+import china from "@/libs/map/json/china.json";
+import city from "@/libs/map/city.json";
+echarts.registerMap("china", china);
 export default {
   name: "name",
   data() {
     return {
+      allCity: [],
+      map: {},
+      cityOpt: [],
+      mapForm: {},
+      mapData: [{ name: "海门", value: 100 }],
+      mapOpt: [],
       tableData: [
         {
           date: "232323",
@@ -98,7 +111,11 @@ export default {
     this.salesMap();
     this.machineMap();
     this.sharesMap();
-    this.dailySalesMap();
+    // this.dailySalesMap();
+
+    this.$nextTick(() => {
+      this.initMap();
+    });
   },
   components: {},
   methods: {
@@ -568,16 +585,89 @@ export default {
       });
     },
     //省市日销量监控地图
-    dailySalesMap(){
-       let this_ = this;
+    dailySalesMap() {
+      let this_ = this;
       let myChart = echarts.init(document.getElementById("mianMap"));
-      let option ={}
-        myChart.setOption(option);
+      let option = {};
+      myChart.setOption(option);
       //建议加上以下这一行代码，不加的效果图如下（当浏览器窗口缩小的时候）。超过了div的界限（红色边框）
       window.addEventListener("resize", function() {
         myChart.resize();
       });
+    },
+    getMapOpt(place) {
+      let option = (option = {
+        backgroundColor: "#02142c",
+        title: {
+          text: place ? place : "中国地图",
+          // subtext: "data from map",
+          left: "center",
+          top:'50',
+          textStyle: {
+            //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"}
+            fontSize: 18,
+            fontStyle: "normal",
+            fontWeight: "normal",
+            color:'#fff'
+          }
+        },
+        geo: {
+          map: place ? place : "china",
+          label: {
+            emphasis: {
+              show: false
+            }
+          },
+          roam: true,
+          itemStyle: {
+            normal: {
+              areaColor: "#02142c",
+              borderColor: "#32b1d4"
+            },
+            emphasis: {
+              areaColor: "gold"
+            }
+          }
+        }
+      });
+      return option;
+    },
+    //显示中国地图
+    showChinaMap() {
+      let option = this.getMapOpt();
+      this.map.setOption(option, true);
+    },
+    //显示各省地图
+    async getProvinceMapOpt(name) {
+      const result = await import("@/libs/map/cnMapJson/" + name + ".json");
+      // let geoJson = result.default
+      console.log(result.default);
+      // axios.get("/statics/" + provinceAlphabet + ".json").then(s => {
+      echarts.registerMap(name, result.default);
+      let option = this.getMapOpt(name);
+      this.map.setOption(option, true);
+      // });
+    },
+    initMap() {
+      var dom = document.getElementById("left_map");
+      this.map = echarts.init(dom);
+      let option = this.getMapOpt();
+      if (option && typeof option === "object") {
+        this.map.setOption(option, true);
+      }
+      this.map.on("click", param => {
+        console.log(param);
+        event.stopPropagation(); // 阻止冒泡
+        // 找到省份名
+        // let provinceIndex = provincesText.findIndex(x => {
 
+        //   return param.name === x;
+        // });
+        // if (provinceIndex === -1) return;
+        // let provinceAlphabet = provinces[provinceIndex];
+        // 重新渲染各省份地图
+        this.getProvinceMapOpt(param.name);
+      });
     }
   }
 };
@@ -704,5 +794,26 @@ main {
 }
 /deep/ .main-body .el-table td > .cell {
   color: #fff !important;
+}
+.left_map {
+  width: 100%;
+  height: 100%;
+}
+.right_opetate {
+  flex: 1;
+  height: 100%;
+  background: #404a59;
+}
+.map_form {
+}
+.content {
+  height: 100%;
+}
+.mianMap {
+  height: 100%;
+}
+.row-flex-start {
+  height: 100%;
+  display: flex;
 }
 </style>
