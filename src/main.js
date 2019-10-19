@@ -29,6 +29,8 @@ Vue.directive('prevent', {
   }),
 
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts;
+  Vue.config.productionTip = false
 Vue.prototype.$api = api
 Vue.prototype.eventBus = new Vue();
 
