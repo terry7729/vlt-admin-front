@@ -1,6 +1,6 @@
 <template>
   <div class="info-show">
-    <el-row>
+    <el-row> 
       <el-col>
         <el-button
           type="primary"

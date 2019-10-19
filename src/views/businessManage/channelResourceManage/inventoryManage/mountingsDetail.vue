@@ -1,6 +1,6 @@
 <template>
- <div class="vlt-card equipmentDetail-page">
-      <panel-static title="基础信息">
+ <div class="vlt-card mountingsDetail-page">
+   <panel-static title="基础信息">
         <div class="vlt-edit-single">
           <div class="vlt-edit-wrap">
             <base-info :infoList="infoList"></base-info>
@@ -16,19 +16,18 @@
 
 <script type="text/javascript">
 export default {
- name: "equipmentDetail",
+ name: "mountingsDetail",
  data() {
  return {
    infoList: [
-        { title: "设备名称", value: "12454646465464611313", prop: "equipmentName" },
-        { title: "设备型号", value: "", prop: "equipmentType" },
-        { title: "设备编码", value: "", prop: "equipmentCode" },
+        { title: "配件名称", value: "12454646465464611313", prop: "mountingsName" },
+        { title: "配件型号", value: "", prop: "mountingsType" },
+        { title: "配件编码", value: "", prop: "mountingsCode" },
         { title: "存放位置", value: "", prop: "depositLocation" },
         { title: "使用状态", value: "", prop: "useState" },
-        { title: "设备状态", value: "", prop: "equipmentState" },
+        { title: "配件状态", value: "", prop: "mountingsState" },
         { title: "入库时间", value: "", prop: "putStoreTime" }
       ],
-   
  }
  },
  components: {
@@ -36,7 +35,6 @@ export default {
  methods: {
    submit() {
      this.$router.back();
-
    },
    cancel() {
      this.$router.back();
@@ -47,7 +45,7 @@ export default {
 </script>
 
 <style lang="less">
-.equipmentDetail-page{
+.mountingsDetail-page{
   p{width: 392px;height: 40px;border-radius: 5px}
   .title{
     border-bottom:none;
@@ -67,4 +65,5 @@ export default {
     margin-top: 20px;
   }
 }
+
 </style>

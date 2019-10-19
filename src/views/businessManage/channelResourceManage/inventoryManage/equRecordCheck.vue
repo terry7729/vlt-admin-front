@@ -1,5 +1,5 @@
 <template>
-  <div class="vlt-card recordInfo">
+  <div class="vlt-card equRecordInfo">
     <div class="package-status">
       <div class="status-box">
         <ul class="status-list">
@@ -51,8 +51,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
-ul li {
+.equRecordInfo{
+  ul li {
   list-style: none;
   position: relative;
 }
@@ -141,14 +141,7 @@ ul li {
   position: absolute;
   top: -68px;
 }
-// .list {
-//   padding: 0 20px;
-//   background-color: #f8f8f8;
-//   margin: 10px 0 0 25px;
-//   border: 1px solid #ebebeb;
-// }
-// .list li {
-//   line-height: 30px;
-//   color: #616161;
-// }
+
+}
+
 </style>

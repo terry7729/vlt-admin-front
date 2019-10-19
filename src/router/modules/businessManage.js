@@ -77,6 +77,14 @@ const basicInfoManage = () => import('@/views/businessManage/channelResourceMana
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //设备履历
 const equRecordCheck = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equRecordCheck')
+//设施查看
+const facilityDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/facilityDetail')
+//耗材查看
+const consumableDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/consumableDetail')
+// 配件查看
+const mountingsDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/mountingsDetail')
+//配件履历
+const mountRecordCheck = () => import('@/views/businessManage/channelResourceManage/inventoryManage/mountRecordCheck')
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //台账明细
@@ -472,6 +480,38 @@ export default [
       title: '设备查看',
     },
     component: equipmentDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/facilityDetail',
+    name: 'facilityDetail',
+    meta: {
+      title: '设施查看',
+    },
+    component: facilityDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/consumableDetail',
+    name: 'consumableDetail',
+    meta: {
+      title: '耗材查看',
+    },
+    component: consumableDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/mountingsDetail',
+    name: 'mountingsDetail',
+    meta: {
+      title: '配件查看',
+    },
+    component: mountingsDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/mountRecordCheck',
+    name: 'mountRecordCheck',
+    meta: {
+      title: '配件履历',
+    },
+    component: mountRecordCheck
   },
   {
     path: 'businessManage/channelResourceManage/equRecordCheck',

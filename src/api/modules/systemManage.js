@@ -6,5 +6,12 @@ export default {
   */
   /* 请务必注释每个接口所属名称 */
   // 例
-  getTest: (options = {}) => ajax.post('/test', options),
+  //菜单树查询
+  getMenu: (options = {}) => ajax.post('/module/queryModuleTree', options),
+  //菜单详情
+  getDestils: (options = {}) => ajax.post('/module/queryModuleDetail', options),
+  //新增菜单
+  addMenu:(options = {}) => ajax.post('/module/saveModule',options),
+  //批量删除
+  delectMenu:(options = {}) => ajax.post('/module/deleteModul',options),
 }
