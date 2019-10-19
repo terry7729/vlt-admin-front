@@ -106,7 +106,9 @@ export default {
     templateDetail(account) {
       this.$router.push({ path: "templateDetail", query: account });
     },
-    createTemplate() {},
+    createTemplate() {
+      this.$router.push({ path: "createTemplate" });
+    },
     search() {},
     pageSizeChange(size) {},
     pageCurrentChange(page) {}

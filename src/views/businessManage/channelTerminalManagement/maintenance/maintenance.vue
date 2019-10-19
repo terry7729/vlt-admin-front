@@ -22,7 +22,7 @@ export default {
     return {
       menuData: {
         id: 0,
-        title: '服务分析',
+        title: '维修管理',
         icon: '',
         list: [{
           id: 0,
@@ -42,11 +42,24 @@ export default {
   components: {
     "terminal-sideMenu": terminalSideMenu
   },
-  created () {
-    // this.$router.push({
-    //   name: 'maintenanceEfficiency'
-    // })
+  watch: {
+    $route (val) {
+      // console.log(val);
+      if (val.name == "maintenance") {
+        this.$router.push({
+          name: 'repairWork'
+        })
+      }
+    }
   },
+  beforeCreate () {
+    if (this.$router.history.current.name ==  "maintenance") {
+        this.$router.push({
+        name: 'repairWork'
+      })
+    }
+  },
+  created () {},
   methods: {}
 };
 </script>

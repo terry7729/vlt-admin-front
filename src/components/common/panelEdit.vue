@@ -19,16 +19,10 @@
     <div class="collapse-panel-bd">
       <el-collapse-transition>
         <div v-show="showInfo" class="info-content">
-          <slot name="info-content">
+          <slot>
             <!-- 这里插入信息的内容 name="info-content" -->
           </slot>
-          <el-collapse-transition>
-            <div v-show="showEdit" class="edit-content">
-              <slot name="edit-content">
-                <!-- 这里插入编辑的内容 name="edit-content" -->
-              </slot>
-            </div>
-          </el-collapse-transition>
+          
         </div>
       </el-collapse-transition>
     </div>
@@ -73,7 +67,8 @@ export default {
   },
   methods: {
     edit() {
-      this.showEdit = !this.showEdit;
+      // this.showEdit = !this.showEdit;
+      this.$emit('edit')
     },
     toggle() {
       this.showInfo = !this.showInfo;

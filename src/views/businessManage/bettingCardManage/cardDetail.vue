@@ -148,19 +148,26 @@ export default {
         status: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
-      }
+      },
+      id: ''
     };
   },
   components: {
     "dialog-form": dialogForm
     },
+  created () {
+    let id = this.$route.query.id;
+    if (id) {
+      this.id = id;
+    }
+  },
   methods: {
-    selectBtn (val) {
-      // console.log(val);
-      // this.showdialog = true;
+    selectBtn () {
       this.$router.push({
         name: 'exportCard',
-        // query: 
+        query: {
+          id:  this.id
+        }
       })
     },
     hideDia () {

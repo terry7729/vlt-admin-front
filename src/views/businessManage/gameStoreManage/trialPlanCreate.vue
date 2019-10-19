@@ -6,13 +6,16 @@
       <el-step title="问卷调查配置" icon="el-icon-tickets"></el-step>
       <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
     </el-steps>
-    <!-- <div class="vlt-edit-single" v-show="active==1">
+    <div class="vlt-edit-single" v-show="active==1">
       <base-info @next="next"></base-info>
-    </div> -->
-    <div class="vlt-edit-single" v-show="active==2">
+    </div>
+    <div v-show="active==2">
       <game-set @next="next" @prev="prev"></game-set>
     </div>
-    <!-- <div class="vlt-edit-single" v-show="active==3">
+    <div class="vlt-edit-single" v-show="active==3">
+      <question @next="next" @prev="prev"></question>
+    </div>
+    <div class="vlt-edit-single appendix" v-show="active==4">
       <div class="vlt-edit-wrap">
         <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-row class="vlt-edit-btn">
@@ -21,34 +24,27 @@
         </el-row>
       </div>
     </div>
-    <div class="vlt-edit-single" v-show="active==4">
-      <div class="vlt-edit-wrap">
-        <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <el-row class="vlt-edit-btn">
-          <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
-          <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提 交</el-button>
-        </el-row>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script type="text/javascript">
 import BaseInfo from './trialPlanCreateBase'
-import GameSet from './trialPlanCreateSet'
+import GameSet from './trialPlanCreateControl'
+import Question from './trialPlanCreateQuestion'
 
 export default {
   name: "",
   components: {
     BaseInfo,
-    GameSet
+    GameSet,
+    Question
   },
   data() {
     return {
       appendixData: [
         {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
       ],
-      active: 2,
+      active: 1,
       rules: {}
     }
   },
@@ -59,7 +55,10 @@ export default {
     },
     next() {
       // this.$refs.main.scrollTop = 0;
-      if (this.active++ > 2) this.active = 0;
+      if (this.active++ > 3) this.active = 0;
+    },
+    changeForm() {
+
     },
     handlePreview() {},
     handleRemove() {},
@@ -75,10 +74,28 @@ export default {
     padding: 30px 0 40px;
   }
   .vlt-edit-btn{
-    text-align: center;
+    text-align: right;
     margin: 60px 0 30px;
     .el-button{
       width: 120px;
+    }
+    .cancel{
+      margin: 0 50px 0 180px;
+    }
+  }
+  .vlt-edit-wrap{
+    width: 100%;
+    margin: 30px auto;
+  }
+  .appendix{
+    .vlt-edit-wrap{
+      width: 900px;
+      margin: 0 auto;
+    }
+    .vlt-edit-btn{
+      .cancel{
+        margin: 0 50px 0 130px;
+      }
     }
   }
 </style>

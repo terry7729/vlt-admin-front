@@ -35,7 +35,9 @@ export default {
   },
   components: {},
   methods: {
-    goback() {}
+    goback() {
+      this.$router.go(-1);
+    }
   }
 };
 </script>

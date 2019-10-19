@@ -13,66 +13,62 @@
         ></base-form>
       </div>
     </div>
+    <!-- 添加模块 -->
     <div>
       <div>
-        <div>
-          <el-form
-            label-position="right"
-            label-width="90px"
-            ref="form"
-            :model="formDevice"
-            :rules="rules"
-            class="device-form"
+        <el-form
+          label-position="right"
+          label-width="90px"
+          ref="form"
+          :model="formSendContent"
+          :rules="rules"
+        >
+          <!-- 发送内容 -->
+          <el-form-item
+            v-for="(item,index) in sendContent"
+            :key="index"
+            :label="`${item.title}${index+1}`"
           >
-            <el-form-item
-              v-for="(item,index) in deviceData"
-              :key="index"
-              :label="`${item.title}${index+1}`"
-            >
-              <el-select v-model="item.type" placeholder="请选择一个报表" >
-                <el-option
-                  v-for="(list,index) in item.optionsType"
-                  :key="index"
-                  :label="list.label"
-                  :value="list"
-                ></el-option>
-              </el-select>
-              
-            </el-form-item>
-            <el-form-item
-              v-for="(item1,index) in deviceData1"
-              :key="index"
-              :label="`${item1.title}${index+1}`"
-            >
-              <el-select v-model="item1.model" placeholder="请选择一个部门" >
-                <el-option
-                  v-for="(list, index) in item1.optionsModel"
-                  :key="index"
-                  :label="list.label"
-                  :value="list"
-                ></el-option>
-              </el-select>
-              <el-select v-model="item1.model" placeholder="请选择一个员工" >
-                <el-option
-                  v-for="(list, index) in item1.optionsStaff"
-                  :key="index"
-                  :label="list.label"
-                  :value="list"
-                ></el-option>
-              </el-select>
-              <el-button v-if="index!==0" type="text" class="delete" @click="deleteDevice(index)">删除</el-button>
-            </el-form-item>
-            
-          </el-form>
-          
-          <el-button class="addDevice" @click="addDevice" icon="el-icon-plus" style="margin-bottom:20px">添加</el-button>
-        </div>
-        <el-row class="vlt-edit-btn">
-          <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交</el-button>
-          <el-button size="medium" @click="editShow = !editShow">取消</el-button>
-        </el-row>
+            <el-select v-model="item.type" placeholder="请选择一个报表" class="sendContent">
+              <el-option
+                v-for="(list,index) in item.optionsType"
+                :key="index"
+                :label="list.label"
+                :value="list"
+              ></el-option>
+            </el-select>
+            <span>接收人</span>
+            <el-select v-model="item.department" placeholder="请选择一个部门" class="sendContent">
+              <el-option
+                v-for="(list, index) in item.optionsDepartment"
+                :key="index"
+                :label="list.label"
+                :value="list"
+              ></el-option>
+            </el-select>
+            <el-select v-model="item.staff" placeholder="请选择一个员工" class="sendContent">
+              <el-option
+                v-for="(list, index) in item.optionsStaff"
+                :key="index"
+                :label="list.label"
+                :value="list"
+              ></el-option>
+            </el-select>
+            <el-button @click="addSendContent" icon="el-icon-plus" type="primary">增加</el-button>
+            <el-button
+              v-if="index!==0"
+              type="text"
+              class="delete"
+              @click="deleteSendContent(index)"
+            >删除</el-button>
+          </el-form-item>
+        </el-form>
       </div>
-    </div>     
+      <el-row class="vlt-edit-btn">
+        <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交</el-button>
+        <el-button size="medium" @click="editShow">取消</el-button>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -97,54 +93,53 @@ export default {
           title: "SMTP服务器地址",
           type: "input",
           prop: "serverSite",
-          value: "" 
+          value: ""
         },
         { title: "SMTP端口号", type: "input", prop: "portNumber", value: "" },
         { title: "SMTP用户名", type: "input", prop: "userName", value: "" },
         { title: "SMTP密码", type: "input", prop: "pwd", value: "" },
         { title: "发信人地址", type: "input", prop: "senderSite", value: "" },
-        { title: "发信人名称", type: "input", prop: "senderName", value: "" }
+        { title: "发信人名称", type: "input", prop: "senderName", value: "" },
+        {
+          title: "邮件类型",
+          type: "radio",
+          prop: "emailType",
+          value: "",
+          options: [
+            { key: 1, value: "纯文本邮件" },
+            { key: 0, value: "HTML邮件" }
+          ]
+        }
       ],
-      
       radio: "1",
       rules1: {},
       rules: {},
       workerData: {
         region: ""
       },
-      dynamicValidateForm: {
-        domains: [
-          {
-            value: ""
-          }
-        ],
-        email: ""
-      },
-      deviceData: [
+      sendContent: [
         {
           title: "发送内容",
+
           propType: "type",
+          propDepartment: "department",
+          propStaff: "staff",
           optionsType: [
             { label: "类型一", value: 1 },
             { label: "类型二", value: 2 }
           ],
-        },
-      ],
-      deviceData1: [
-        {
-          title: "接收人",
-          optionsModel: "model",
-          optionsStaff:"staff",
-          optionsModel: [
-            { label: "型号一", value: 1 },
-            { label: "型号二", value: 2 }
+          optionsDepartment: [
+            { label: "部门一", value: 1 },
+            { label: "部门二", value: 2 }
           ],
-          optionsStaff:[
+          optionsStaff: [
             { label: "张三", value: 1 },
             { label: "李四", value: 2 }
           ]
-        },
-      ]
+        }
+      ],
+
+      formSendContent: {}
     };
   },
   components: {},
@@ -158,31 +153,35 @@ export default {
         console.log(val);
       });
     },
-    addDevice() {
-      let cloneData = JSON.parse(JSON.stringify(this.deviceData[0]));
-      cloneData.propType = `${cloneData.propType}${this.deviceData.length}`;
-      this.$set(this.deviceData, this.deviceData.length, cloneData);
-
-      let cloneData1 = JSON.parse(JSON.stringify(this.deviceData1[0]));
-      cloneData1.propModel = `${cloneData1.propModel}${this.deviceData1.length}`;
-      cloneData1.propStaff=`${cloneData1.propStaff}${this.deviceData1.length}`;
-      this.$set(this.deviceData1, this.deviceData1.length, cloneData1);
+    addSendContent() {
+      let cloneData = JSON.parse(JSON.stringify(this.sendContent[0]));
+      console.log(cloneData)
+      cloneData.propType = `${cloneData.propType}${this.sendContent.length}`;
+      cloneData.propDepartment = `${cloneData.propDepartment}${this.sendContent.length}`;
+      cloneData.propStaff = `${cloneData.propStaff}${this.sendContent.length}`;
+      this.$set(this.sendContent, this.sendContent.length,cloneData);
+      
     },
-    deleteDevice(index) {
-      this.deviceData.splice(index, 1);
-      this.deviceData1.splice(index, 1);
-      console.log("删除", this.deviceData);
+    deleteSendContent(index) {
+      this.sendContent.splice(index, 1);
+      console.log("删除成功", this.sendContent);
+    },
+    editShow(){
+      this.$router.go(-1)
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.vlt-edit-single .title {
-  border-color: #fff;
-}
-.el-form-item {
-  width: 300px;
+// .vlt-edit-single .title {
+//   border-color: #fff;
+// }
+// .el-form-item {
+//   width: 300px;
+// }
+.sendContent {
+  margin: 0 20px;
 }
 </style>
 

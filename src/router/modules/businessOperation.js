@@ -7,7 +7,6 @@ const accountListDetail = () => import('@/views/businessOperation/channelAccount
 const haveListDetail = () => import('@/views/businessOperation/channelAccount/haveListDetail')
 //拥有渠道列表详情(副本单详情)
 const haveListDetailTwo = () => import('@/views/businessOperation/channelAccount/haveListDetailTwo')
-
 // 账户资金管理
 const accountMoneyManage = () => import('@/views/businessOperation/channelAccount/accountMoneyManage')
 //账户资金管理银行新增
@@ -27,15 +26,12 @@ const externalbalance = () => import('@/views/businessOperation/channelAccount/e
 //账户资金管理第三方支付明细
 const externaldetail = () => import('@/views/businessOperation/channelAccount/externaldetail')
 
-
 //角色管理
 const roleManage = () => import('@/views/businessOperation/PermissionMaintain/roleManage')
 //角色管理新增
 const roleManageAdd = () => import('@/views/businessOperation/PermissionMaintain/roleManageAdd')
-
 //角色管理查看
 const roleManageExamine = () => import('@/views/businessOperation/PermissionMaintain/roleManageExamine')
-
 //账户管理
 const operationAccountManage = () => import('@/views/businessOperation/PermissionMaintain/operationAccountManage')
 //账户管理新增
@@ -51,14 +47,73 @@ const lotteryTicketDetail = () => import('@/views/businessOperation/LotteryManag
 const lotteryTicketPrint = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketPrint')
 //彩票兑奖补打
 const lotteryTicketReprint = () => import('@/views/businessOperation/LotteryManagement/lotteryTicketReprint')
-
-
 //兑奖设置
 const expirySetting = () => import('@/views/businessOperation/LotteryManagement/expirySetting')
 //兑奖处管理
 const ticketOfficeManage = () => import('@/views/businessOperation/LotteryManagement/ticketOfficeManage')
 //中奖查询
 const winningCheck = () => import('@/views/businessOperation/LotteryManagement/winningCheck')
+
+//会员等级管理
+const MemberGradeManagement = () => import('@/views/businessOperation/MemberManagement/MemberGradeManagement')
+//会员权益管理
+const MemberEquityManagement = () => import('@/views/businessOperation/MemberManagement/MemberEquityManagement')
+//会员权益管理新增
+const MemberEquityManagementAdd = () => import('@/views/businessOperation/MemberManagement/MemberEquityManagementAdd')
+//会员权益管理详情
+const MemberEquityManagementDetail = () => import('@/views/businessOperation/MemberManagement/MemberEquityManagementDetail')
+//会员积分管理
+const MemberIntegralManagement = () => import('@/views/businessOperation/MemberManagement/MemberIntegralManagement')
+//会员积分管理新建
+const MemberIntegralManagementAdd = () => import('@/views/businessOperation/MemberManagement/MemberIntegralManagementAdd')
+//会员积分管理详情
+const MemberIntegralManagementDetail = () => import('@/views/businessOperation/MemberManagement/MemberIntegralManagementDetail')
+
+
+//资金日结算报表
+const financialStatementDaySettle = () => import('@/views/businessOperation/financialStatement/financialStatementDaySettle')
+//资金日结算报表打印
+const PrintDaySettle = () => import('@/views/businessOperation/financialStatement/PrintDaySettle')
+
+//资金日分配报表
+const financialStatementDayAllocation = () => import('@/views/businessOperation/financialStatement/financialStatementDayAllocation')
+//资金日分配报表打印
+const PrintDayAllocation = () => import('@/views/businessOperation/financialStatement/PrintDayAllocation')
+
+//资金日流向报表
+const financialStatementDayFlow = () => import('@/views/businessOperation/financialStatement/financialStatementDayFlow')
+//资金日流向报表打印
+const PrintDayFlow = () => import('@/views/businessOperation/financialStatement/PrintDayFlow')
+
+//资金月结算报表
+const financialStatementMonthSettle = () => import('@/views/businessOperation/financialStatement/financialStatementMonthSettle')
+//资金月结算报表打印
+const PrintMonthSettle = () => import('@/views/businessOperation/financialStatement/PrintMonthSettle')
+
+//资金月分配报表
+const financialStatementMonthAllocation = () => import('@/views/businessOperation/financialStatement/financialStatementMonthAllocation')
+//资金月分配报表打印
+const PrintMonthAllocation = () => import('@/views/businessOperation/financialStatement/PrintMonthAllocation')
+
+//资金月流向报表
+const financialStatementMonthFlow = () => import('@/views/businessOperation/financialStatement/financialStatementMonthFlow')
+//资金月流向报表打印
+const PrintMonthFlow = () => import('@/views/businessOperation/financialStatement/PrintMonthFlow')
+
+//资金年结算报表
+const financialStatementYearSettle = () => import('@/views/businessOperation/financialStatement/financialStatementYearSettle')
+//资金年结算报表打印
+const PrintYearSettle = () => import('@/views/businessOperation/financialStatement/PrintYearSettle')
+
+//资金年结算报表
+const financialStatementYearAllocation = () => import('@/views/businessOperation/financialStatement/financialStatementYearAllocation')
+//资金年结算报表打印
+const PrintYearAllocation = () => import('@/views/businessOperation/financialStatement/PrintYearAllocation')
+
+//资金年流向报表
+const financialStatementYearFlow = () => import('@/views/businessOperation/financialStatement/financialStatementYearFlow')
+//资金年流向报表打印
+const PrintYearFlow = () => import('@/views/businessOperation/financialStatement/PrintYearFlow')
 
 //品牌营销推广
 //活动计划模板
@@ -67,10 +122,13 @@ const planTemplate = () => import('@/views/businessOperation/brandMarketing/plan
 const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
 //活动计划管理
 const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
-//计划详情
-const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
+//新建活动计划
+const activityPlan = () => import('@/views/businessOperation/brandMarketing/activityPlan')
 //新建活动
 const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
+//计划详情
+const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
+
 //活动执行管理
 const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
 //活动执行详情
@@ -136,9 +194,12 @@ const bulletinDetail = () => import('@/views/businessOperation/noticeInfo/bullet
 const bulletinTemplate = () => import('@/views/businessOperation/noticeInfo/bulletinTemplate')
 //模板详情 
 const templateDetail = () => import('@/views/businessOperation/noticeInfo/templateDetail')
+//新建模板
+const createTemplate = () => import('@/views/businessOperation/noticeInfo/createTemplate')
 //消息推送
 const infoPush = () => import('@/views/businessOperation/noticeInfo/infoPush')
-
+//消息推送编辑
+const infoEdit = () => import('@/views/businessOperation/noticeInfo/infoEdit')
 
 
 export default [
@@ -371,8 +432,217 @@ export default [
     },
     component: winningCheck
   },
+  {
+    path: 'businessOperation/MemberGradeManagement',
+    name: 'MemberGradeManagement',
+    meta: {
+      title: '会员等级管理',
+    },
+    component: MemberGradeManagement
+  },
+  {
+    path: 'businessOperation/MemberEquityManagement',
+    name: 'MemberEquityManagement',
+    meta: {
+      title: '会员权益管理',
+    },
+    component: MemberEquityManagement
+  },
+  {
+    path: 'businessOperation/MemberEquityManagementAdd',
+    name: 'MemberEquityManagementAdd',
+    meta: {
+      title: '会员权益管理新增',
+    },
+    component: MemberEquityManagementAdd
+  },
+  {
+    path: 'businessOperation/MemberEquityManagementDetail',
+    name: 'MemberEquityManagementDetail',
+    meta: {
+      title: '会员权益管理详情',
+    },
+    component: MemberEquityManagementDetail
+  },
+
+  {
+    path: 'businessOperation/MemberIntegralManagement',
+    name: 'MemberIntegralManagement',
+    meta: {
+      title: '会员积分管理',
+    },
+    component: MemberIntegralManagement
+  },
+  {
+    path: 'businessOperation/MemberIntegralManagementAdd',
+    name: 'MemberIntegralManagementAdd',
+    meta: {
+      title: '会员积分管理新建',
+    },
+    component: MemberIntegralManagementAdd
+  },
+  {
+    path: 'businessOperation/MemberIntegralManagementDetail',
+    name: 'MemberIntegralManagementDetail',
+    meta: {
+      title: '会员积分管理详情',
+    },
+    component: MemberIntegralManagementDetail
+  },
+
+  {
+    path: 'businessOperation/financialStatementDaySettle',
+    name: 'financialStatementDaySettle',
+    meta: {
+      title: '资金日结算报表',
+    },
+    component: financialStatementDaySettle
+  },
+  {
+    path: 'businessOperation/PrintDaySettle',
+    name: 'PrintDaySettle',
+    meta: {
+      title: '资金日结算报表打印',
+    },
+    component: PrintDaySettle
+  },
 
 
+  {
+    path: 'businessOperation/financialStatementDayAllocation',
+    name: 'financialStatementDayAllocation',
+    meta: {
+      title: '资金日分配报表',
+    },
+    component: financialStatementDayAllocation
+  },
+  {
+    path: 'businessOperation/PrintDayAllocation',
+    name: 'PrintDayAllocation',
+    meta: {
+      title: '资金日分配报表打印',
+    },
+    component: PrintDayAllocation
+  },
+
+  {
+    path: 'businessOperation/financialStatementDayFlow',
+    name: 'financialStatementDayFlow',
+    meta: {
+      title: '资金日流向报表',
+    },
+    component: financialStatementDayFlow
+  },
+  {
+    path: 'businessOperation/PrintDayFlow',
+    name: 'PrintDayFlow',
+    meta: {
+      title: '资金日流向报表打印',
+    },
+    component: PrintDayFlow
+  },
+
+  {
+    path: 'businessOperation/financialStatementMonthSettle',
+    name: 'financialStatementMonthSettle',
+    meta: {
+      title: '资金月结算报表',
+    },
+    component: financialStatementMonthSettle
+  },
+  {
+    path: 'businessOperation/PrintMonthSettle',
+    name: 'PrintMonthSettle',
+    meta: {
+      title: '资金月结算报表打印',
+    },
+    component: PrintMonthSettle
+  },
+
+  {
+    path: 'businessOperation/financialStatementMonthAllocation',
+    name: 'financialStatementMonthAllocation',
+    meta: {
+      title: '资金月分配报表',
+    },
+    component: financialStatementMonthAllocation
+  },
+  {
+    path: 'businessOperation/PrintMonthAllocation',
+    name: 'PrintMonthAllocation',
+    meta: {
+      title: '资金月分配报表打印',
+    },
+    component: PrintMonthAllocation
+  },
+
+  {
+    path: 'businessOperation/financialStatementMonthFlow',
+    name: 'financialStatementMonthFlow',
+    meta: {
+      title: '资金月流向报表',
+    },
+    component: financialStatementMonthFlow
+  },
+  {
+    path: 'businessOperation/PrintMonthFlow',
+    name: 'PrintMonthFlow',
+    meta: {
+      title: '资金月流向报表打印',
+    },
+    component: PrintMonthFlow
+  },
+
+  {
+    path: 'businessOperation/financialStatementYearSettle',
+    name: 'financialStatementYearSettle',
+    meta: {
+      title: '资金年结算报表',
+    },
+    component: financialStatementYearSettle
+  },
+  {
+    path: 'businessOperation/PrintYearSettle',
+    name: 'PrintYearSettle',
+    meta: {
+      title: '资金年结算报表打印',
+    },
+    component: PrintYearSettle
+  },
+
+  {
+    path: 'businessOperation/financialStatementYearAllocation',
+    name: 'financialStatementYearAllocation',
+    meta: {
+      title: '资金年分配报表',
+    },
+    component: financialStatementYearAllocation
+  },
+  {
+    path: 'businessOperation/PrintYearAllocation',
+    name: 'PrintYearAllocation',
+    meta: {
+      title: '资金年分配报表打印',
+    },
+    component: PrintYearAllocation
+  },
+
+  {
+    path: 'businessOperation/financialStatementYearFlow',
+    name: 'financialStatementYearFlow',
+    meta: {
+      title: '资金年流向报表',
+    },
+    component: financialStatementYearFlow
+  },
+  {
+    path: 'businessOperation/PrintYearFlow',
+    name: 'PrintYearFlow',
+    meta: {
+      title: '资金年流向报表打印',
+    },
+    component: PrintYearFlow
+  },
 
 
 
@@ -432,6 +702,14 @@ export default [
       title: '计划详情',
     },
     component: planDetail,
+  },
+  {
+    path: 'brandMarketing/activityPlan',
+    name: 'activityPlan',
+    meta: {
+      title: '新建活动计划',
+    },
+    component: activityPlan,
   },
   {
     path: 'brandMarketing/createActivity',
@@ -642,6 +920,14 @@ export default [
     component: bulletinTemplate,
   },
   {
+    path: 'noticeInfo/createTemplate',
+    name: 'createTemplate',
+    meta: {
+      title: '新建模板',
+    },
+    component: createTemplate,
+  },
+  {
     path: 'noticeInfo/templateDetail',
     name: 'templateDetail',
     meta: {
@@ -656,6 +942,14 @@ export default [
       title: '消息推送',
     },
     component: infoPush,
+  },
+  {
+    path: 'noticeInfo/infoEdit',
+    name: 'infoEdit',
+    meta: {
+      title: '消息推送',
+    },
+    component: infoEdit,
   },
 
 

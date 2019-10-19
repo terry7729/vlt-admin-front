@@ -1,13 +1,12 @@
-<!-- 渠道终端管理 - 设备管理 -->
 <template>
+<!-- 资金参数管理详情 -->
   <div class="vlt-card">
-    设备管理
   </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: "equipment",
+  name: "",
   data() {
    return {
 

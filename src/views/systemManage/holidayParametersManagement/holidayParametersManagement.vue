@@ -22,7 +22,7 @@
       <el-table
         :data="tableData"
         style="width: 100%"
-        :default-sort="{prop: 'date', order: 'descending'}"
+        :default-sort="{prop: 'id', order: 'descending'}"
       >
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="holidayName" label="假日名称" width="100"></el-table-column>
@@ -33,17 +33,20 @@
 
         <el-table-column label="销售状态">
           <template>
-            <el-switch v-model="value2" active-text="停销" inactive-text="不停销"></el-switch>
+            <el-switch v-model="value1" active-text="停销" inactive-text="不停销" ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="启用状态">
+        <el-table-column label="启用状态" :formatter="formatter">
           <template>
-            <el-switch v-model="value1" active-text="已启用" inactive-text="已停用"></el-switch>
+            <el-switch v-model="value2" active-text="已启用" inactive-text="已停用"></el-switch>
           </template>
         </el-table-column>
       </el-table>
       <table-paging :total="total"></table-paging>
     </div>
+    <template>
+      <el-switch v-model="value2" active-text="已启用" inactive-text="已停用"></el-switch>
+    </template>
   </div>
 </template>
 
@@ -89,32 +92,32 @@ export default {
           id: 1,
           holidayName: "春节",
           startTime: "2019-10-11 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
+          endTime: "2019-10-11 12:0:0",
+          abandonstartTime: "2019-11-12",
           abandonendTime: "2019-10-15"
         },
         {
           id: 2,
           holidayName: "端午",
           startTime: "2019-10-12 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
+          endTime: "2019-10-12 12:0:0",
+          abandonstartTime: "2019-12-12",
           abandonendTime: "2019-10-15"
         },
         {
           id: 3,
           holidayName: "中秋",
           startTime: "2019-10-13 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
+          endTime: "2019-10-13 12:0:0",
+          abandonstartTime: "2019-1-12",
           abandonendTime: "2019-10-15"
         },
         {
           id: 4,
           holidayName: "国庆",
           startTime: "2019-10-14 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
+          endTime: "2019-10-14 12:0:0",
+          abandonstartTime: "2019-2-12",
           abandonendTime: "2019-10-15"
         },
         {
@@ -140,11 +143,13 @@ export default {
         if (this.form[key] !== "") formData[key] = this.form[key];
       }
       this.$emit("search", formData);
-    }
+    },
+     formatter(row, column) {
+        return row.holidayName;
+      }
   }
 };
 </script>
-
 <style lang="less" scoped>
 </style>
 

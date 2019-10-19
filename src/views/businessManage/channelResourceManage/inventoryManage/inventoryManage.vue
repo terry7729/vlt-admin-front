@@ -20,9 +20,9 @@
                 <el-table-column prop="equipmentState" label="设备状态"></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button @click="equipmentDetail(scope.row.id)" type="primary" v-prevent="2000" size="mini">查看</el-button>
+                    <el-button @click="equipmentDetail(scope.row.id,scope.row)" type="primary" v-prevent="2000" size="mini">查看</el-button>
                     <!-- <el-button size="mini" v-prevent="2000" @click.native="equipmentEdit(scope.row.id)">履历</el-button> -->
-                    <el-button type="mini" v-prevent="2000" @click="dialogFormVisible = true">履历</el-button>
+                    <el-button type="mini" v-prevent="2000" @click= equRecordCheck(scope.row.id)>履历</el-button>
 
                       <el-dialog title="履历" :visible.sync="dialogFormVisible">
                         <el-steps direction="vertical" :active="1">
@@ -91,8 +91,8 @@
                 <el-table-column prop="mountingsState" label="配件状态"></el-table-column>
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button @click="equipmentDetail(scope.row.id)" type="primary" v-prevent="2000" size="mini">查看</el-button>
-                    <el-button size="mini" v-prevent="2000" @click.native="equipmentEdit(scope.row.id)">履历</el-button>
+                    <el-button @click="mountingsDetail(scope.row.id)" type="primary" v-prevent="2000" size="mini">查看</el-button>
+                    <el-button size="mini" v-prevent="2000" @click.native="mountRecordCheck(scope.row.id)">履历</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -261,27 +261,48 @@ export default {
   },
      
   //设备查看页面跳转
-  equipmentDetail (id) {
+  equipmentDetail (id,row) {
+    console.log(row)
     this.$router.push({
       name: 'equipmentDetail',
       query: {id}
     })
   },
-  //设备编辑页面跳转
-  equipmentEdit (id) {        
+  //设备履历页面跳转
+  equRecordCheck(id){
     this.$router.push({
-      name: 'storeEdit',
-      query: {id}
+      name:'equRecordCheck',
+      query:{id}
     })
   },
   //设施查看
   facilityDetail(id){
-    console.log()
+    this.$router.push({
+      name:'facilityDetail',
+      query:{id}
+    })
   },
+  //耗材查看
   consumableDetail(id){
-    consoel.log()
+    this.$router.push({
+      name:'consumableDetail',
+      query:{id}
+    })
   },
-  //履历弹框
+  //配件查看
+  mountingsDetail(id){
+    this.$router.push({
+      name:'mountingsDetail',
+      query:{id}
+    })
+  },
+  //配件履历
+  mountRecordCheck(id){
+    this.$router.push({
+      name:'mountRecordCheck',
+      query:{id}
+    })
+  },
   
   //盘点统计
   checkBtn(id){

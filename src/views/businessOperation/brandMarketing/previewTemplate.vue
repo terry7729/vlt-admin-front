@@ -1,334 +1,94 @@
 <template>
   <div class="vlt-card preview-template">
     <slot name="header">
-      <h2 class="comp-title">促销推广活动模板1</h2>
+      <h2 class="template-title">促销推广活动模板1</h2>
     </slot>
 
-    <section class="comp-item coll-item">
+    <section class="comp-item">
       <panel title="基础信息" :show="true">
-        <div>
-          <el-form class="coll-form" size="small" label-width="100px" :model="formLabelAlign">
-            <el-form-item label="活动名称">
-              <el-input v-model="formLabelAlign.name"></el-input>
-            </el-form-item>
-            <el-form-item label="活动类型">
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="活动时间">
-              <el-date-picker
-                v-model="formLabelAlign.type"
-                type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
-            </el-form-item>
-
-            <el-form-item label="活动简介">
-              <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="formLabelAlign.name"></el-input>
-            </el-form-item>
-
-            <el-form-item label="活动管理方">
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item label="活动组织方">
-              <el-select v-model="value" placeholder="请选择">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item label="适用群体" class="coll-check">
-              <el-checkbox
-                :indeterminate="isIndeterminate"
-                v-model="checkAll"
-                @change="handleCheckAllChange"
-              >全选</el-checkbox>
-
-              <el-checkbox-group v-model="checkedUser" @change="handleCheckedCitiesChange">
-                <el-checkbox v-for="user in userList" :label="user" :key="user">{{user}}</el-checkbox>
-              </el-checkbox-group>
-
-              <el-select v-model="value" placeholder="请选择会员等级">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item class="icon-local" label="活动区域">
-              <el-input v-model="formLabelAlign.name"></el-input>
-              <i class="el-icon-location-outline"></i>
-            </el-form-item>
-
-            <el-form-item label="活动区域">
-              <div>
-                <el-radio v-model="radio" label="1">区域内全部大厅</el-radio>
-              </div>
-              <span class="active-lobby">
-                <el-radio v-model="radio" label="2">区域内指定大厅</el-radio>
-                <el-input placeholder="请输入大厅编号"></el-input>
-              </span>
-            </el-form-item>
-
-            <el-form-item label="活动目标">
-              <div class="active-target">
-                <el-checkbox v-model="checked"></el-checkbox>
-                <label>活动期间累计充值</label>
-                <el-input></el-input>
-              </div>
-              <div class="active-target">
-                <el-checkbox v-model="checked"></el-checkbox>
-                <label>活动期间累计消费</label>
-                <el-input></el-input>
-              </div>
-            </el-form-item>
-
-            <el-form-item label="活动预算">
-              <el-input v-model="formLabelAlign.name"></el-input>
-            </el-form-item>
-            <slot name="addForm"></slot>
-          </el-form>
+        <div class="template-info">
+          <base-info :infoList="baseInfo"></base-info>
         </div>
       </panel>
     </section>
 
     <slot name="upload-file">
-      <section class="comp-item coll-item">
-        <panel title="附件上传" :show="true" >
-          <div class="coll-form">
-            <div class="upload-file">
-              <el-upload
-                class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :before-remove="beforeRemove"
-                multiple
-                :limit="3"
-                :on-exceed="handleExceed"
-              >
-                <span>上传附件：</span>
-                <el-button size="small" type="primary">
-                  <i class="el-icon-upload2"></i>上传文件
-                </el-button>
-                <div slot="tip" class="el-upload__tip">支持扩展名：.rar .zip .doc .docx .pdf .jpg...</div>
-              </el-upload>
+      <section class="comp-item">
+        <panel title="附件信息" :show="true">
+          <div class="template-info file-info">
+            <div>
+              <img src="../../../assets/img/avatar.jpg" alt />
             </div>
-            <div class="upload-img">
-              <span>上传广告图：</span>
-              <el-upload
-                class="upload-box"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                list-type="picture-card"
-                :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove"
-              >
-                <i class="el-icon-plus"></i>
-              </el-upload>
-            </div>
-
-            <div class="drag-upload">
-              <el-upload
-                class="upload-demo"
-                drag
-                action="https://jsonplaceholder.typicode.com/posts/"
-                multiple
-              >
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">
-                  将文件拖到此处，或
-                  <em>点击上传</em>
-                </div>
-              </el-upload>
-              <el-progress :percentage="60" :stroke-width="strokeWidth"></el-progress>
-              <el-progress :percentage="70" :stroke-width="strokeWidth"></el-progress>
-              <el-progress :percentage="100" status="success" :stroke-width="strokeWidth"></el-progress>
-            </div>
-
-            <el-dialog :visible.sync="dialogVisible" size="tiny">
-              <img width="100%" :src="dialogImageUrl" alt />
-            </el-dialog>
           </div>
         </panel>
       </section>
     </slot>
 
-    <section class="comp-item coll-item">
+    <section class="comp-item">
       <panel title="活动规则" :show="true">
-        <div>
-          <el-form :model="formLabelAlign" class="coll-form active-rule">
-            <el-form-item class="rule-item">
-              <el-select v-model="value" placeholder="充值">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input placeholder="审批人"></el-input>
-              <label>赠送:</label>
-              <el-input class="last-rule"></el-input>
-            </el-form-item>
-            <el-form-item class="rule-item">
-              <el-select v-model="value" placeholder="消费">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input placeholder="审批人"></el-input>
-              <label>赠送:</label>
-              <el-input class="last-rule"></el-input>
-            </el-form-item>
-            <el-form-item class="rule-item">
-              <el-select v-model="value" placeholder="完成任务">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input placeholder="审批人"></el-input>
-              <label>赠送:</label>
-              <el-input class="last-rule"></el-input>
-            </el-form-item>
-            <el-form-item class="rule-item">
-              <el-select v-model="value" placeholder="完成任务">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-input placeholder="审批人"></el-input>
-              <label>赠送:</label>
-              <el-input class="last-rule"></el-input>
-            </el-form-item>
-          </el-form>
-          <div class="add-rule">+新增规则</div>
+        <div class="template-info">
+          <base-info :infoList="ruleInfo"></base-info>
         </div>
       </panel>
     </section>
 
-    <section class="comp-item coll-item">
-      <panel title="活动资金" :show="true" >
-        <div class="coll-form">
-          <el-button type="primary" size="small">资金注入</el-button>
-          <el-table :data="tableData" border style="width:650px">
-            <el-table-column prop="date" label="序号" width="80"></el-table-column>
-            <el-table-column prop="name" label="游戏编号" width="80"></el-table-column>
-            <el-table-column prop="address" label="游戏名称" width="80"></el-table-column>
-            <el-table-column prop="date" label="游戏所属机构" width="100"></el-table-column>
-            <el-table-column prop="name" label="注入方式" width="80"></el-table-column>
-            <el-table-column prop="address" label="注入金额" width="80"></el-table-column>
-            <el-table-column prop="date" label="操作" width="150">
-              <el-button type="primary" size="mini">修改</el-button>
-              <el-button type="danger" size="mini">删除</el-button>
-            </el-table-column>
+    <section class="comp-item">
+      <panel title="活动资金" :show="true">
+        <div class="template-info table-info">
+          <el-table :data="tableData" border style="width:70%;">
+            <el-table-column prop="date" label="序号"></el-table-column>
+            <el-table-column prop="name" label="游戏编号"></el-table-column>
+            <el-table-column prop="address" label="游戏名称"></el-table-column>
+            <el-table-column prop="date" label="游戏所属机构"></el-table-column>
+            <el-table-column prop="name" label="注入方式"></el-table-column>
+            <el-table-column prop="address" label="注入金额"></el-table-column>
           </el-table>
-          <div class="remark">
-            <span>备注：</span>
-            <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
-          </div>
         </div>
       </panel>
     </section>
-
-    <section class="comp-item coll-item">
-      <panel title="活动资源" :show="true" >
-        <div class="coll-form">
-          <el-button type="primary" size="small">资源选择</el-button>
-          <el-table :data="tableData" border style="width:650px">
-            <el-table-column prop="date" label="序号" width="80"></el-table-column>
-            <el-table-column prop="name" label="游戏编号" width="80"></el-table-column>
-            <el-table-column prop="address" label="游戏名称" width="80"></el-table-column>
-            <el-table-column prop="date" label="游戏所属机构" width="100"></el-table-column>
-            <el-table-column prop="name" label="注入方式" width="80"></el-table-column>
-            <el-table-column prop="address" label="注入金额" width="80"></el-table-column>
-            <el-table-column prop="date" label="操作" width="150">
-              <el-button type="primary" size="mini">修改</el-button>
-              <el-button type="danger" size="mini">删除</el-button>
-            </el-table-column>
+    <section class="comp-item">
+      <panel title="活动资源" :show="true">
+        <div class="template-info table-info">
+          <el-table :data="tableData" border style="width:70%;">
+            <el-table-column prop="date" label="序号"></el-table-column>
+            <el-table-column prop="name" label="资源ID"></el-table-column>
+            <el-table-column prop="address" label="资源名称"></el-table-column>
+            <el-table-column prop="date" label="资源分类"></el-table-column>
+            <el-table-column prop="name" label="数量"></el-table-column>
           </el-table>
-          <div class="remark">
-            <span>备注：</span>
-            <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
-          </div>
         </div>
       </panel>
     </section>
-
-    <section class="comp-item coll-item">
+    <section class="comp-item">
       <panel title="活动执行" :show="true">
-        <div class="coll-form">
-          <el-button type="primary" size="small">资金注入</el-button>
-          <el-table :data="tableData" border style="width:650px">
-            <el-table-column prop="date" label="序号" width="80"></el-table-column>
-            <el-table-column prop="name" label="游戏编号" width="80"></el-table-column>
-            <el-table-column prop="address" label="游戏名称" width="80"></el-table-column>
-            <el-table-column prop="date" label="游戏所属机构" width="100"></el-table-column>
-            <el-table-column prop="name" label="注入方式" width="80"></el-table-column>
-            <el-table-column prop="address" label="注入金额" width="80"></el-table-column>
-            <el-table-column prop="date" label="操作" width="150">
-              <el-button type="primary" size="mini">修改</el-button>
-              <el-button type="danger" size="mini">删除</el-button>
-            </el-table-column>
+        <div class="template-info table-info">
+          <el-table :data="tableData" border style="width:70%;">
+            <el-table-column prop="date" label="执行编号"></el-table-column>
+            <el-table-column prop="name" label="责任人"></el-table-column>
+            <el-table-column prop="address" label="执行角色"></el-table-column>
+            <el-table-column prop="date" label="执行计划名称"></el-table-column>
+            <el-table-column prop="name" label="执行计划说明"></el-table-column>
+            <el-table-column prop="address" label="预期开始时间"></el-table-column>
+            <el-table-column prop="date" label="预期结束时间"></el-table-column>
           </el-table>
-          <div class="remark">
-            <span>备注：</span>
-            <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
-          </div>
         </div>
       </panel>
     </section>
 
-    <section class="comp-item coll-item">
+    <section class="comp-item">
       <panel title="监控指标" :show="true">
-        <div class="coll-form">
-          <span>
-            <span>维度选择：</span>
-            <span>
-              <el-checkbox v-for="item in checkList" :key="item">{{item}}</el-checkbox>
-            </span>
-          </span>
-          <div class="index-check">
-            <p>指标选择：</p>
-            <span class="item-check">
-              <el-checkbox v-for="item in checkList2" :key="item">{{item}}</el-checkbox>
-            </span>
-          </div>
+        <div class="template-info target-check">
+          <p>维度选择：</p>
+          <el-checkbox-group v-model="checkedItem" class="check-box">
+            <el-checkbox v-for="item in checkList" :key="item" :label="item"></el-checkbox>
+          </el-checkbox-group>
+          <p>指标选择：</p>
+          <el-checkbox-group v-model="checkedItem2" class="check-box">
+            <el-checkbox v-for="item in checkList2" :key="item" :label="item"></el-checkbox>
+          </el-checkbox-group>
         </div>
       </panel>
     </section>
-
     <slot name="footer-btn"></slot>
   </div>
 </template>
@@ -336,24 +96,31 @@
 <script>
 export default {
   name: "name",
+  prop: [],
   data() {
     return {
-      activeNames: ["1"],
-      formLabelAlign: {
-        name: "",
-        region: "",
-        type: ""
-      },
-      checkAll: false,
-      checkedUser: [],
-      userList: ["游客", "新会员", "老会员"],
-      isIndeterminate: true,
-      strokeWidth: 3,
-      radio: "1",
-      checked: true,
-      dialogImageUrl: "",
-      dialogVisible: false,
-      tableData: [{ data: 1 }],
+      checkedItem: [],
+      checkedItem2: [],
+      baseInfo: [
+        { title: "活动名称", value: "", prop: "gameCode" },
+        { title: "活动类型", value: "", prop: "cycleType" },
+        { title: "活动时间", value: "", prop: "gameStatus" },
+        { title: "活动简介", value: "", prop: "gameName" },
+        { title: "活动管理方", value: "", prop: "officialEndSale" },
+        { title: "适用群体", value: "", prop: "gameCode" },
+        { title: "活动区域", value: "", prop: "cycleType" },
+        { title: "活动大厅", value: "", prop: "gameStatus" },
+        { title: "活动目标", value: "", prop: "gameName" },
+        { title: "活动预算", value: "", prop: "officialEndSale" },
+        { title: "是否发布消息", value: "", prop: "gameName" },
+        { title: "消息内容", value: "", prop: "officialEndSale" }
+      ],
+      ruleInfo: [
+        { title: "规则1", value: "充值100赠送10", prop: "gameCode" },
+        { title: "规则2", value: "消费1000赠送100", prop: "cycleType" },
+        { title: "规则3", value: "完成任务赠送50", prop: "gameStatus" }
+      ],
+      tableData: [],
       checkList: ["中心", "省级", "市级", "厅级"],
       checkList2: [
         "中心",
@@ -369,83 +136,47 @@ export default {
         "每用户充值额",
         "用户数",
         "提现总额"
-      ],
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        }
-      ],
-      value: ""
+      ]
     };
   },
-  methods: {
-    beforeRemove() {},
-    handleExceed() {},
-    handlePreview() {},
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
 
-    handleChange(val) {
-      console.log(val);
-    },
-
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-
-    handleCheckAllChange(val) {
-      this.checkedUser = val ? userOptions : [];
-      this.isIndeterminate = false;
-    },
-    handleCheckedCitiesChange(value) {
-      let checkedCount = value.length;
-      this.checkAll = checkedCount === this.userList.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.userList.length;
-    }
-  },
+  methods: {},
   computed: {},
   created() {},
   mounted() {},
-  components: {}
+  components: {},
+  updated() {}
 };
 </script>
 
 
 <style lang="less" scoped >
 .preview-template {
-  h2 {
+  .template-title {
     height: 50px;
-    background: white;
     text-indent: 25px;
     line-height: 50px;
   }
-
-  .coll-item {
-    position: relative;
-    .coll-form {
-      .icon-local {
-        position: relative;
-
-        i {
-          position: absolute;
-          top: 8px;
-          left: 5px;
-        }
+  .template-info {
+    margin: 20px 20px;
+  }
+  .file-info {
+    margin-left: 100px;
+  }
+  .table-info {
+    margin-left: 100px;
+  }
+  .target-check {
+    width: 60%;
+    margin-left: 100px;
+    margin-bottom: 60px;
+    .check-box {
+      margin-left: 65px;
+      margin-top: -16px;
+      .el-checkbox {
+        margin-bottom: 20px;
       }
     }
   }
 }
-
 </style>

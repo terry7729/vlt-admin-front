@@ -1,5 +1,5 @@
 <template>
-  <div class="vlt-edit-single">
+  <div class="vlt-edit-single wrap">
     <div class="vlt-edit-wrap">
       <el-form label-position="right" 
         label-width="90px" 
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       baseData: [
-        {title: '计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
+        {title: '试玩计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
         {title: '试玩时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
         {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
         {title: '试玩游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
@@ -358,21 +358,25 @@ export default {
 <style lang="less" scoped>
   @import './less/index.less';
   .vlt-edit-wrap{
-    width: 700px;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0 30px;
   }
   .vlt-edit-btn{
-    text-align: left;
+    text-align: right;
     margin: 60px 0 30px;
     .el-button{
       width: 120px;
     }
     .cancel{
-      margin: 0 50px 0 80px;
+      margin: 0 30px 0 80px;
     }
   }
   .flex-wrap{
     display: flex;
     align-items: center;
+  }
+  .wrap{
+    max-width: 900px;
+    margin: 0 auto;
   }
 </style>

@@ -394,16 +394,80 @@
   width: 38%;
 }
 
+.memberEquity .el-dialog {
+  width: 38%;
+}
+
+.MemberIntegral .el-dialog {
+  width: 38%;
+}
+
+.el-collapse-item__header {
+  font-size: 16px;
+  font-weight: 600;
+  text-indent: 25px;
+}
+
+
 .develop-plan {
   .el-tabs--left .el-tabs__item.is-left {
     text-align: left;
   }
 }
 
+.tabs-content {
+  .el-tabs__nav {
+    margin-right: 100px;
+  }
 
-// .el-step__icon.is-text {
-//   margin-bottom: 28px;
-// }
+  .el-tabs__item.is-active {
+    background: rgb(230, 247, 255);
+  }
+
+  .el-tabs--left .el-tabs__active-bar.is-left,
+  .el-tabs--left .el-tabs__nav-wrap.is-left::after {
+    left: 194px;
+    margin-right: 10px;
+  }
+
+  .el-tabs--left .el-tabs__nav-wrap.is-left {
+    margin-right: -60px;
+  }
+
+  .el-tabs__item {
+    padding: 0 70px;
+  }
+
+  .tables-content .el-tabs__item.is-active {
+    background: none;
+  }
+
+  .switchStyle .el-switch__label {
+    position: absolute;
+    display: none;
+    color: #fff;
+  }
+
+  .switchStyle .el-switch__label--left {
+    z-index: 9;
+    left: 6px;
+  }
+
+  .switchStyle .el-switch__label--right {
+    z-index: 9;
+    left: -14px;
+  }
+
+  .switchStyle .el-switch__label.is-active {
+    display: block;
+  }
+
+  .switchStyle.el-switch .el-switch__core,
+  .el-switch .el-switch__label {
+    width: 50px !important;
+  }
+}
+
 
 
 .result-assess {
@@ -431,227 +495,229 @@
 
 }
 
-.create-active {
+.active-plan {
+  .upload-img {
+    margin: 20px 0;
 
-  .header-box {
-
-    .el-form-item__label {
-      width: 145px !important;
-      color: black;
-      font-size: 18px;
-      font-weight: bold;
-    }
-  }
-
-  .addForm-box {
-    .add-form {
-      :nth-child(1) {
-        .el-form-item__label {
-          width: 100px !important;
-        }
-      }
-
-      .add-textarea {
-        margin-left: 20px;
-      }
-
-    }
-  }
-
-  .process-content {
-    .el-header {
-      height: 110px !important;
-    }
-  }
-
-  
-      input {
-        width: 400px;
-      }
-
-      .el-textarea__inner {
-        width: 400px;
-      }
-
-      .active-target {
-        .el-checkbox {
-          margin-right: 10px;
-        }
-
-        .el-input {
-          width: 250px;
-          margin-bottom: 5px;
-          display: inline-block;
-
-          input {
-            width: 250px;
-            margin-left: 18px;
-
-          }
-
-        }
-      }
-
-      .active-lobby {
-        .el-input {
-          width: 250px;
-          display: inline-block;
-
-          input {
-            width: 250px;
-
-          }
-
-        }
-
-      }
-    }
-
-    .active-rule {
-      .rule-item {
-
-        .el-select,
-        .el-input {
-          width: 100px;
-          margin-right: 20px;
-          display: inline-block;
-
-          input {
-            width: 100px;
-          }
-        }
-
-        .last-rule {
-          input {
-            width: 200px;
-          }
-
-        }
-      }
-    }
-
-    .remark {
-      .el-textarea {
-        width: 500px;
-        display: inline-block;
-
-        textarea {
-          width: 500px;
-          margin-top: 10px;
-
-        }
-
-      }
-
-    }
-
-    .item-check {
-
-
-      .el-checkbox {
-        padding-bottom: 10px;
-      }
-
-    }
-
-    .el-collapse-item__header {
-      font-size: 16px;
-      font-weight: 600;
-      text-indent: 25px;
-    }
-
-    .el-progress {
-      width: 400px;
-    }
-
-    .upload-file {
-      width: 600px;
-      margin-bottom: 20px;
-
-      .el-upload__tip {
-
-        font-size: 14px;
-        color: #aaa;
-        position: relative;
-        left: 65px;
-      }
-
-    }
-
-    .upload-img {
-      margin-bottom: 20px;
-
-      .upload-box {
-        display: inline-block;
-      }
-    }
-
-    .drag-upload {
-      position: relative;
-      left: 78px;
-    }
-
-    .index-check {
-      margin-top: 15px;
-
-      .item-check {
-        display: inline-block;
-        width: 800px;
-        position: relative;
-        top: -15px;
-        left: 60px;
-
-
-      }
-
-    }
-
-    .add-rule {
-      width: 472px;
-      height: 60px;
-      line-height: 60px;
-      margin: -10px 0 20px 220px;
-      text-align: center;
-      font-size: 14px;
-      border: 1px dashed #aaa;
-    }
-
-    .tables-content .el-tabs__item.is-active {
-      background: none;
-    }
-
-  
-
-
-
-
-.account-detail {
-  .equity-title {
-    margin-left: 32px;
-    margin-top: 5px;
-
-    span {
+    .upload-box {
       display: inline-block;
-      margin-right: 400px;
     }
   }
+
+  .drag-upload {
+    margin-bottom: 20px;
+    position: relative;
+    left: 75px;
+  }
+
+  .active-rule {
+    .rule-item {
+
+      .el-select,
+      .el-input {
+        width: 100px;
+        margin-right: 20px;
+        display: inline-block;
+
+        input {
+          width: 100px;
+        }
+      }
+
+      .last-rule {
+        input {
+          width: 200px;
+        }
+
+      }
+    }
+  }
+
+  .remark {
+    .el-textarea {
+      width: 500px;
+      display: inline-block;
+
+      textarea {
+        width: 500px;
+        margin-top: 10px;
+
+      }
+
+    }
+
+  }
+
+  .item-check {
+    margin-bottom: 50px;
+
+    .el-checkbox {
+      padding-bottom: 20px;
+    }
+
+  }
+
+
 }
 
 .plan-detail {
   .base-data {
+    width: 60%;
+    margin-top: 20px;
+    margin-left: 150px;
+
     .rule-form {
+      width: 100%;
+
       .el-select {
-        width: 210px;
+        width: 160px;
       }
 
       .el-input {
-        width: 210px;
+        width: 150px;
 
         input {
-          width: 200px;
+          width: 150px;
         }
       }
 
     }
   }
+
+  .progress-bar {
+    width: 70%;
+    margin: 20px 150px;
+  }
+
+  .ration-target {
+    margin-top: 20px;
+
+    .ration-check {
+      margin-left: 70px;
+      margin-top: -16px;
+
+      .el-checkbox {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+
+.tables-content .el-tabs__item.is-active {
+  background: none;
+}
+
+
+//登录页面input框尺寸
+.login-container.vlt-card {
+  .vlt-edit-single .el-input__inner {
+    width: 368px;
+    height: 46px;
+    border-radius: 4px
+  }
+}
+
+.eachBet-form {
+  padding: 16px;
+
+  .el-form-item__content {
+    width: 400px;
+    display: flex;
+    align-items: center;
+  }
+
+  .el-form-item:first-child {
+    .el-form-item__content {
+      width: 350px;
+    }
+  }
+
+  .el-form-item__label {
+    font-size: 12px;
+    color: #444444;
+    line-height: 20px;
+  }
+
+  .el-form--label-top .el-form-item__label {
+    padding: 0 0 7px;
+  }
+
+  .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+  }
+}
+
+.gameIcon-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.gameIcon-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.gameIcon-uploader-icon {
+  font-size: 42px;
+  color: #8c939d;
+  width: 120px;
+  height: 100px;
+  line-height: 100px !important;
+  text-align: center;
+}
+
+.gameIcon {
+  width: 120px;
+  height: 100px;
+  display: block;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 64px;
+  color: #8c939d;
+  width: 300px;
+  height: 170px;
+  line-height: 170px !important;
+  text-align: center;
+}
+
+.avatar {
+  width: 300px;
+  height: 170px;
+  display: block;
+}
+
+.centerWatch .el-table td,
+.centerWatch .el-table th.is-leaf {
+  border: none;
+}
+
+.centerWatch .el-table td>.cell {
+  color: #c5d5e6;
+}
+
+.centerWatch .el-table th>.cell {
+  color: #c5d5e6;
+}
+
+.centerWatch .el-table::before {
+  top: 50px;
+  background-color: #c5d5e6;
 }

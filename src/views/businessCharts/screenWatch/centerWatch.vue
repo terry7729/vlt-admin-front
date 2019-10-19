@@ -29,7 +29,9 @@
           <div class="bottomMachine" id="bottomMachine"></div>
         </div>
       </section>
-      <section class="center"></section>
+      <section class="center">
+        <div class="mianMap" id="mianMap"></div>
+      </section>
       <section class="right">
         <div class="salesRanking">
           <div class="title">全国大厅销量排名</div>
@@ -96,6 +98,7 @@ export default {
     this.salesMap();
     this.machineMap();
     this.sharesMap();
+    this.dailySalesMap();
   },
   components: {},
   methods: {
@@ -305,11 +308,11 @@ export default {
         myChart.resize();
       });
     },
-    //游戏市场氛围散点图
+    //游戏市场份额散点图
     sharesMap() {
       let this_ = this;
       let myChart = echarts.init(document.getElementById("sharesMap"));
-      app.title = "单轴散点图";
+      // app.title = "单轴散点图";
 
       var hours = [
         "12a",
@@ -563,6 +566,18 @@ export default {
       window.addEventListener("resize", function() {
         myChart.resize();
       });
+    },
+    //省市日销量监控地图
+    dailySalesMap(){
+       let this_ = this;
+      let myChart = echarts.init(document.getElementById("mianMap"));
+      let option ={}
+        myChart.setOption(option);
+      //建议加上以下这一行代码，不加的效果图如下（当浏览器窗口缩小的时候）。超过了div的界限（红色边框）
+      window.addEventListener("resize", function() {
+        myChart.resize();
+      });
+
     }
   }
 };

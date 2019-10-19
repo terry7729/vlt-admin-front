@@ -30,8 +30,7 @@ export default {
       },
       rules: {
         belongsType: [
-          { required: true, message: "请输入" },
-         
+          { required: true, message: "请输入" },   
         ],
         dictionaryname: [
           { required: true, message: "请输入内容" },
@@ -39,7 +38,7 @@ export default {
         dictionarydata: [
           {required: true, message: "请输入内容",}
         ],
-        sortfields: [
+        sortfields: [  
            { required: true,  message: "请输入内容" }
         ],  
         sortfields: [
