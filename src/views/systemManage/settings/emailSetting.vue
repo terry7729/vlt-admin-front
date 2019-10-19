@@ -87,7 +87,7 @@ export default {
           type: "radio",
           prop: "emailSend",
           value: "",
-          options: [{ key: 1, value: "开启" }, { key: 0, value: "关闭" }]
+          options: [{ label:"开启", value: "1" }, { label: "关闭", value: "0" }]
         },
         {
           title: "SMTP服务器地址",
@@ -106,8 +106,8 @@ export default {
           prop: "emailType",
           value: "",
           options: [
-            { key: 1, value: "纯文本邮件" },
-            { key: 0, value: "HTML邮件" }
+            { label:  "纯文本邮件", value: "0" },
+            { label: "HTML邮件", value: "1" }
           ]
         }
       ],

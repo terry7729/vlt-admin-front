@@ -147,6 +147,9 @@ const fundParameter = () => import('@/views/businessManage/fundSettlement/fundPa
 const fundParameterDetail = () => import('@/views/businessManage/fundSettlement/fundParameterDetail')
 // 资金参数管理 编辑
 const fundParameterEdit = () => import('@/views/businessManage/fundSettlement/fundParameterEdit')
+// 资金参数管理 全局参数
+const globalParameter = () => import('@/views/businessManage/fundSettlement/globalParameter')
+
 
 
 // 投注卡管理
@@ -833,6 +836,14 @@ export default [
       title: '资金参数管理编辑',
     },
     component: fundParameterEdit
+  },
+  {
+    path: 'businessManage/fundSettlement/globalParameter',
+    name: 'globalParameter',
+    meta: {
+      title: '资金参数全局参数',
+    },
+    component: globalParameter
   },
   {
     path: 'businessManage/cardBalance',

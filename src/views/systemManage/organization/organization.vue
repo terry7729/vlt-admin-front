@@ -147,7 +147,12 @@
           ></base-form>
 
           <el-row class="vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="OrganizationSubmit">提交并保存</el-button>
+            <el-button
+              type="primary"
+              v-prevent="1000"
+              size="medium"
+              @click="OrganizationSubmit"
+            >提交并保存</el-button>
             <el-button size="medium" @click="cancelTwo">取消</el-button>
           </el-row>
         </div>
@@ -163,8 +168,8 @@ import moment from "moment";
 export default {
   name: "organization",
   computed: {},
-   created() {
-    this.init()
+  created() {
+    this.init();
   },
   data() {
     return {
@@ -173,10 +178,12 @@ export default {
         value: "id",
         children: "children"
       },
-      rules2: {//验证表单对象
+      rules2: {
+        //验证表单对象
         section: { required: true, message: "部门不能为空" }
       },
-      controlOptions: [//顶部按钮
+      controlOptions: [
+        //顶部按钮
         { name: "添加机构", type: "primary", icon: "plus", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
         { name: "添加部门", type: "primary", icon: "plus", id: 2 },
         { name: "展开所有", type: "primary", icon: "arrow-down", id: 3 }
@@ -186,7 +193,8 @@ export default {
         { name: "添加部门", type: "primary", icon: "plus", id: 2 },
         { name: "关闭所有", type: "primary", icon: "arrow-up", id: 3 }
       ],
-      AddDepartment: [//添加部门表单对象
+      AddDepartment: [
+        //添加部门表单对象
         {
           type: "input",
           title: "上级部门",
@@ -205,7 +213,8 @@ export default {
         { type: "switch", title: "状态", prop: "status", value: "" },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
-      OrganizationAdd: [//添加机构表单对象
+      OrganizationAdd: [
+        //添加机构表单对象
         {
           type: "input",
           title: "父机构",
@@ -216,7 +225,7 @@ export default {
         {
           type: "input",
           title: "父机构编码",
-           disabled: true,
+          disabled: true,
           prop: "parentInsCode",
           value: ""
         },
@@ -232,12 +241,26 @@ export default {
           prop: "insCode",
           value: ""
         },
-        { type: "cascader", setProps: {label:'text',value:'id',children:'children', checkStrictly: true }, title: "区域", prop: "regionName", value: "" , placeholder: "请选择",options:[]},
+        {
+          type: "cascader",
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            checkStrictly: true
+          },
+          title: "区域",
+          prop: "regionName",
+          value: "",
+          placeholder: "请选择",
+          options: []
+        },
         { type: "input", title: "区域编码", prop: "regionCode", value: "" },
         { type: "switch", title: "状态", prop: "status", value: true },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
-      AgencyInformation: [//机构信息
+      AgencyInformation: [
+        //机构信息
         {
           title: "父机构",
           value: "",
@@ -309,7 +332,7 @@ export default {
       n: 1, //默认显示页
       slelectifo: "",
       //
-      regional:[],
+      regional: [],
       isexpand: false, //展开所有
       dialogFormVisible2: false, //弹框二控制
       dialogFormVisible: false, //弹框一控制
@@ -324,25 +347,28 @@ export default {
       nodeTreeData: [], //树形结构数据
       val: {}, //当前点击的节点data
       //
-      treeStatus: true,//节点树状态控制
+      treeStatus: true //节点树状态控制
     };
   },
   mounted() {},
   components: {},
   methods: {
-    async init(){
-        let reslt = await this.$api.OrganizationMenu({});
-        this.nodeTreeData = reslt.data;
-        let res = await this.$api.RegionalTree({})
-        this.OrganizationAdd[4].options = res.data;
+    async init() {
+      let reslt = await this.$api.OrganizationMenu({});
+      this.nodeTreeData = reslt.data;
+      let res = await this.$api.RegionalTree({});
+      this.OrganizationAdd[4].options = res.data;
     },
-    cancel() {//弹出框取消按钮
+    cancel() {
+      //弹出框取消按钮
       this.dialogFormVisible = false;
     },
-    cancelTwo() {//弹出框取消按钮2
+    cancelTwo() {
+      //弹出框取消按钮2
       this.dialogFormVisible2 = false;
     },
-    changeForm(val) {//弹出框表单change事件
+    changeForm(val) {
+      //弹出框表单change事件
       if (this.dialogStatus === "添加机构") {
         Object.assign(this.params, val);
       } else if (
@@ -354,11 +380,13 @@ export default {
         Object.assign(this.params3, val);
       }
     },
-    pageSizeChange(val) {//每页显示条数
+    pageSizeChange(val) {
+      //每页显示条数
       this.i = val;
       this.testlist = this.department.slice((this.n - 1) * val, this.n * val);
     },
-    pageCurrentChange(val) {//当前显示页数
+    pageCurrentChange(val) {
+      //当前显示页数
       this.n = val;
       this.testlist = this.department.slice((val - 1) * this.i, val * this.i);
       console.log(val);
@@ -386,16 +414,16 @@ export default {
         console.log(this.params3);
       } else if (this.addOrChange === "添加机构") {
         this.params.created = "添加机构";
-        let data = JSON.parse(JSON.stringify(this.params))
-        if(data.status){
+        let data = JSON.parse(JSON.stringify(this.params));
+        if (data.status) {
           data.status = 0;
-        }else{
+        } else {
           data.status = 1;
         }
-        let reslt = await this.$api.OrganizationAdd({data})
-        console.log(reslt)
-        if(reslt.code === 0){
-          this.init()
+        let reslt = await this.$api.OrganizationAdd({ data });
+        console.log(reslt);
+        if (reslt.code === 0) {
+          this.init();
         }
       }
       this.dialogFormVisible = false;
@@ -403,7 +431,8 @@ export default {
     },
 
     selectBtn(val) {
-      if (val.id === 2) {//添加部门
+      if (val.id === 2) {
+        //添加部门
         if (this.slelectifo == "") {
           this.open("请选择要添加子部门的选项！");
         } else {
@@ -413,7 +442,8 @@ export default {
           this.AddDepartment[0].value = this.slelectifo;
         }
       }
-      if (val.id === 1) {//添加机构
+      if (val.id === 1) {
+        //添加机构
         if (this.slelectifo == "") {
           this.open("请选择要添加子机构的机构");
         } else {
@@ -422,19 +452,24 @@ export default {
           this.dialogFormVisible2 = true;
 
           this.OrganizationAdd[0].value = this.slelectifo;
-          this.OrganizationAdd[1].value = this.val.code
+          this.OrganizationAdd[1].value = this.val.code;
         }
       }
-      if (val.id === 3) { //展开所有
+      if (val.id === 3) {
+        //展开所有
         let len = this.$refs.attrList.store._getAllNodes().length;
         if (this.treeStatus) {
-          for (var i = 0;i < len; i++ ) {
-            this.$refs.attrList.store._getAllNodes()[i].expanded = this.treeStatus;
+          for (var i = 0; i < len; i++) {
+            this.$refs.attrList.store._getAllNodes()[
+              i
+            ].expanded = this.treeStatus;
           }
           this.treeStatus = !this.treeStatus;
         } else {
-          for (var i = 0;i < len; i++) {
-            this.$refs.attrList.store._getAllNodes()[i].expanded = this.treeStatus;
+          for (var i = 0; i < len; i++) {
+            this.$refs.attrList.store._getAllNodes()[
+              i
+            ].expanded = this.treeStatus;
           }
           this.treeStatus = !this.treeStatus;
         }
@@ -487,13 +522,13 @@ export default {
       if (reslt.code === 0) {
         this.addValue(obj, this.AgencyInformation);
       }
-     
+
       let res = await this.$api.DepartmentPage({
-        insCode:val.code,
-        pageSize:2,
-        pageNum:1
-      })
-      console.log(res)
+        insCode: val.code,
+        pageSize: 2,
+        pageNum: 1
+      });
+      console.log(res);
     },
     getCheckifo(...res) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点

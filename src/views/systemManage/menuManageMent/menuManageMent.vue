@@ -193,7 +193,7 @@ export default {
         { type: "input", title: "路由英文名", prop: "moduleNameEn", value: "" },
         {
           type: "select",
-          title: "图标",
+          title: "图标",  
           prop: "moduleIcon",
           value: "",
           options: [

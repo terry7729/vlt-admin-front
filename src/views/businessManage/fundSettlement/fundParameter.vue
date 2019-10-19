@@ -316,7 +316,7 @@ export default {
 
     selectBtn(val) {
       this.$router.push({
-        name: 'fundParameterDetail'
+        name: 'globalParameter'
       })
     },
     handleSelectionChange(val) {
