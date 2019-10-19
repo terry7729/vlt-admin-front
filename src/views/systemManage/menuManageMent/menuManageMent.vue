@@ -359,7 +359,7 @@ export default {
         this.dialogFormVisible =false;
         this.clearIput(this.data2.slice(1, 9));
 
-        console.log(reslt,2222222);
+        console.log(reslt);
         // console.log(this.parms)
       } else {
         this.parms2.created = "添加子节点按钮";
