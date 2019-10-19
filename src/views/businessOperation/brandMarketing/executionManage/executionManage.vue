@@ -108,7 +108,7 @@ export default {
       this.$router.push({ path: "allotTask" });
     },
     detail(id) {
-      this.$router.push({ path: "activityDetail", query: { id } });
+      this.$router.push({ path: "executionDetail", query: { id } });
     },
     progressUpdate(id) {
       this.dialogFormVisible = true;

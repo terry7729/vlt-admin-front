@@ -340,8 +340,20 @@
 .tabs-content .el-switch .el-switch__label {
   width: 50px !important;
 }
+.create-active .step-bar .el-step__title {
+  font-size: 14px;
+  font-weight: 400;
+}
 .active-plan .vlt-edit-single .title {
   padding-left: 0;
+}
+.active-plan .step-bar {
+  width: 70%;
+  margin: 10px auto;
+}
+.active-plan .step-bar .el-step__title {
+  font-size: 14px;
+  font-weight: 400;
 }
 .result-assess .vlt-edit-wrap {
   margin: 50px 0 20px 350px;
@@ -352,36 +364,15 @@
 .allot-task .formTime input {
   width: 400px;
 }
-.plan-detail .base-data {
-  width: 60%;
-  margin-top: 20px;
-  margin-left: 150px;
+.info-push .el-tabs__item {
+  margin-bottom: 10px;
+  padding: 0 50px;
 }
-.plan-detail .base-data .rule-form {
-  width: 100%;
+.info-push .el-tabs__item.is-active {
+  background: #f0faff;
 }
-.plan-detail .base-data .rule-form .el-select {
-  width: 160px;
-}
-.plan-detail .base-data .rule-form .el-input {
-  width: 150px;
-}
-.plan-detail .base-data .rule-form .el-input input {
-  width: 150px;
-}
-.plan-detail .progress-bar {
-  width: 70%;
-  margin: 20px 150px;
-}
-.plan-detail .ration-target {
-  margin-top: 20px;
-}
-.plan-detail .ration-target .ration-check {
-  margin-left: 70px;
-  margin-top: -16px;
-}
-.plan-detail .ration-target .ration-check .el-checkbox {
-  margin-bottom: 20px;
+.plan-detail .el-tabs__nav {
+  margin-left: 34px;
 }
 .tables-content .el-tabs__item.is-active {
   background: none;

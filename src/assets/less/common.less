@@ -468,14 +468,34 @@
   }
 }
 
+.create-active {
+  .step-bar {
 
-.active-plan{
-  .vlt-edit-single{
-    .title{
-      padding-left: 0;
+    .el-step__title {
+      font-size: 14px;
+      font-weight: 400;
     }
   }
 }
+
+.active-plan {
+  .vlt-edit-single {
+    .title {
+      padding-left: 0;
+    }
+  }
+
+  .step-bar {
+    width: 70%;
+    margin: 10px auto;
+
+    .el-step__title {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
+
 .result-assess {
   .vlt-edit-wrap {
     margin: 50px 0 20px 350px;
@@ -501,48 +521,21 @@
 
 }
 
-.plan-detail {
-  .base-data {
-    width: 60%;
-    margin-top: 20px;
-    margin-left: 150px;
-
-    .rule-form {
-      width: 100%;
-
-      .el-select {
-        width: 160px;
-      }
-
-      .el-input {
-        width: 150px;
-
-        input {
-          width: 150px;
-        }
-      }
-
-    }
+.info-push {
+  .el-tabs__item {
+    margin-bottom: 10px;
+    padding: 0 50px;
   }
-
-  .progress-bar {
-    width: 70%;
-    margin: 20px 150px;
-  }
-
-  .ration-target {
-    margin-top: 20px;
-
-    .ration-check {
-      margin-left: 70px;
-      margin-top: -16px;
-
-      .el-checkbox {
-        margin-bottom: 20px;
-      }
-    }
+  .el-tabs__item.is-active{
+    background:#f0faff;
   }
 }
+.plan-detail{
+  .el-tabs__nav{
+    margin-left: 34px;
+  }
+}
+
 
 
 .tables-content .el-tabs__item.is-active {

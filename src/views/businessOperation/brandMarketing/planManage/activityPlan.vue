@@ -1,13 +1,14 @@
 <template>
   <div class="vlt-card active-plan">
-    <el-steps :active="3" finish-status="success" simple>
-      <el-step title="模板选择"></el-step>
-      <el-step title="模板预览"></el-step>
-      <el-step title="创建计划"></el-step>
+    <el-steps :active="3" class="step-bar">
+      <el-step title="模板选择" icon="el-icon-check"></el-step>
+      <el-step title="模板预览" icon="el-icon-tickets"></el-step>
+      <el-step title="创建计划" icon="el-icon-edit"></el-step>
     </el-steps>
     <div class="create-plan">
       <span>新建活动计划</span>
     </div>
+
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="活动内容" name="activeContent">
         <div>
@@ -57,10 +58,10 @@
 
                       <el-form-item label="活动大厅">
                         <div>
-                          <el-radio v-model="form.radio" label="全部大厅">区域内全部大厅</el-radio>
-                          <el-radio v-model="form.radio" label="指定大厅">区域内指定大厅</el-radio>
+                          <el-radio v-model="form.lobby" label="全部大厅">区域内全部大厅</el-radio>
+                          <el-radio v-model="form.lobby" label="指定大厅">区域内指定大厅</el-radio>
                           <el-input
-                            :disabled="form.radio=='全部大厅'"
+                            :disabled="form.lobby=='全部大厅'"
                             v-model="form.lobbyNum"
                             placeholder="请输入大厅编号"
                           ></el-input>
@@ -69,15 +70,26 @@
 
                       <el-form-item label="活动目标">
                         <div>
-                          <el-checkbox label="活动期间累计充值"></el-checkbox>
-                          <el-input v-model="form.recharTargrt"></el-input>
-                          <el-checkbox label="活动期间累计消费"></el-checkbox>
-                          <el-input v-model="form.payTarget"></el-input>
+                          <el-checkbox label="活动期间累计充值" v-model="recharCheck"></el-checkbox>
+                          <el-input v-model="form.recharTargrt" :disabled="!recharCheck"></el-input>
+                          <el-checkbox label="活动期间累计消费" v-model="payCheck"></el-checkbox>
+                          <el-input v-model="form.payTarget" :disabled="!payCheck"></el-input>
                         </div>
                       </el-form-item>
 
                       <el-form-item label="活动预算">
                         <el-input v-model="form.budget"></el-input>
+                      </el-form-item>
+                      <el-form-item label="是否发布消息">
+                        <el-checkbox-group v-model="form.news">
+                          <el-checkbox label="不发送"></el-checkbox>
+                          <el-checkbox label="发送短信"></el-checkbox>
+                          <el-checkbox label="终端/APP发送"></el-checkbox>
+                          <el-checkbox label="发送短信与终端/APP推送"></el-checkbox>
+                        </el-checkbox-group>
+                      </el-form-item>
+                      <el-form-item label="消息内容">
+                        <el-input type="textarea" rows="3" v-model="form.remark"></el-input>
                       </el-form-item>
                     </el-form>
                   </div>
@@ -255,7 +267,7 @@
       <el-tab-pane label="审核流程" name="processInfo">
         <el-container class="process-info">
           <el-aside class="process-img" width="400px">
-            <img src="../../../assets/img/avatar.jpg" />
+            <img src="../../../../assets/img/avatar.jpg" />
           </el-aside>
           <el-main class="process-form">
             <section class="comp-item">
@@ -306,7 +318,7 @@ export default {
   data() {
     return {
       activeName: "activeContent",
-      processForm: {},
+      rule: { rule: "" },
       baseData: [
         { type: "input", title: "活动名称", prop: "name" },
         {
@@ -339,14 +351,18 @@ export default {
           ]
         }
       ],
+      recharCheck: false,
+      payCheck: false,
       form: {
         userGroup: { type: [], member: "" },
         area: "",
         lobbyNum: "",
-        radio: "全部大厅",
+        lobby: "全部大厅",
         recharTargrt: "",
         payTarget: "",
-        budget: ""
+        budget: "",
+        news: ["不发送"],
+        remark: ""
       },
       ruleSelect: ["充值", "消费", "完成任务"],
       createRule: {
@@ -372,12 +388,6 @@ export default {
           value: ""
         }
       },
-      checkAll: false,
-      checkedUser: [],
-      isIndeterminate: true,
-      rule: { rule: "" },
-      radio: "1",
-      checked: true,
       tableData: [],
       checkList: ["中心", "省级", "市级", "厅级"],
       checkList2: [
@@ -410,9 +420,7 @@ export default {
           label: "Lv3"
         }
       ],
-
-      options: [],
-      value: ""
+      processForm: {}
     };
   },
 
@@ -430,9 +438,6 @@ export default {
     handlePreview() {},
     handleRemove(file, fileList) {
       console.log(file, fileList);
-    },
-    handleChange(val) {
-      console.log(val);
     },
     changeLater(val) {
       console.log("form参数", val);
@@ -453,19 +458,4 @@ export default {
 
 <style lang="less" scoped >
 @import "./less/activityPlan.less";
-// .process-content {
-//   margin-left: 100px;
-
-//   .state-inform {
-//     text-align: right;
-//     height: 20px;
-//     margin-top: 10px;
-//     margin-right: 33%;
-//   }
-//   .process-form {
-//     margin-left: 80px;
-//     width: 550px;
-//     background: #eee;
-//   }
-// }
 </style>

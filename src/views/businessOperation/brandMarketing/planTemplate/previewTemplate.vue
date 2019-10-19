@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card preview-template">
     <slot name="header">
-      <h2 class="template-title">促销推广活动模板1</h2>
+      <h2 class="template-title">{{templateName}}</h2>
     </slot>
 
     <section class="comp-item">
@@ -17,7 +17,7 @@
         <panel title="附件信息" :show="true">
           <div class="template-info file-info">
             <div>
-              <img src="../../../assets/img/avatar.jpg" alt />
+              <img src="../../../../assets/img/avatar.jpg" alt />
             </div>
           </div>
         </panel>
@@ -99,6 +99,7 @@ export default {
   prop: [],
   data() {
     return {
+      templateName:'',
       checkedItem: [],
       checkedItem2: [],
       baseInfo: [
@@ -142,7 +143,9 @@ export default {
 
   methods: {},
   computed: {},
-  created() {},
+  created() {
+    this.templateName=this.$route.query.name;
+  },
   mounted() {},
   components: {},
   updated() {}

@@ -88,7 +88,7 @@ export default {
       this.$router.push({ path: "planDetail" });
     },
     reuse() {
-      this.$router.push({ path: "createActivity" });
+      this.$router.push({ path: "activityPlan" });
     }
   },
   computed: {},

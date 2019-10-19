@@ -1,6 +1,5 @@
 <template>
   <div class="vlt-card plan-detail">
-    <div>
       <h3>活动计划详情</h3>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="活动内容" name="activeContent">
@@ -112,14 +111,15 @@
                 </el-table>
               </el-tab-pane>
               <el-tab-pane label="流程图预览" name="processImg">
-                <h2>流程图</h2>
+                <div>
+                  <img src="../../../../assets/img/avatar.jpg" alt="">
+                </div>
               </el-tab-pane>
             </el-tabs>
           </panel-static>
         </el-tab-pane>
       </el-tabs>
     </div>
-  </div>
 </template>
 
 <script type="text/javascript">
@@ -211,13 +211,58 @@ export default {
   components: {},
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.plan-detail {
+ 
+  .base-data {
+    width: 60%;
+    margin-top: 20px;
+    margin-left: 150px;
+    .rule-form {
+      width: 100%;
 
+      .el-select {
+        width: 120px;
+        margin-right: 10px;
+      }
 
+      .el-input {
+        width: 160px;
+
+        input {
+          width: 160px;
+        }
+      }
+    }
+  }
+
+  .progress-bar {
+    width: 70%;
+    margin: 20px 150px;
+  }
+
+  .ration-target {
+    margin-top: 20px;
+
+    .ration-check {
+      margin-left: 70px;
+      margin-top: -16px;
+
+      .el-checkbox {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .state-inform{
+    width: 50px;
+    margin-left: 70%;
+    text-align: right;
+  }
+}
 </style>

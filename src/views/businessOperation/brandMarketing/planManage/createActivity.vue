@@ -1,9 +1,9 @@
 <template>
   <div class="vlt-card create-active">
-    <el-steps :active="activeStep" finish-status="success" simple style="margin-top: 20px">
-      <el-step title="模板选择"></el-step>
-      <el-step title="模板预览"></el-step>
-      <el-step title="创建计划"></el-step>
+    <el-steps :active="activeStep"  class="step-bar">
+      <el-step title="模板选择" icon="el-icon-check"></el-step>
+      <el-step title="模板预览" icon="el-icon-tickets"></el-step>
+      <el-step title="创建计划"  icon="el-icon-edit"></el-step>
     </el-steps>
 
     <preview-template v-show="activeStep===1">
@@ -46,7 +46,7 @@
 </template>
 
 <script type="text/javascript">
-import previewTemplate from "./previewTemplate";
+import previewTemplate from "../planTemplate/previewTemplate";
 export default {
   name: "",
   data() {
@@ -112,6 +112,10 @@ export default {
 
 <style lang="less" scoped>
 .create-active {
+  .step-bar{
+    width: 80%;
+    margin: 10px auto;
+  }
   .template-check {
     margin-left: 36px;
     margin-bottom: 10px;
