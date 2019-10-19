@@ -44,7 +44,7 @@ const warningWatchEdit = () => import('@/views/businessCharts/warningWatch/modul
 //demo
 const demo = () => import('@/views/componentDemo')
 //demo1
-const demo1 = () => import('@/views/businessCharts/dealData/demos')
+const demo1 = () => import('@/views/businessCharts/dealData/demo')
 //demo1
 const demo2 = () => import('@/views/businessCharts/dealData/echarts')
 //城市风险指标新增
