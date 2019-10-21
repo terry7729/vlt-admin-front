@@ -9,6 +9,9 @@ const haveListDetail = () => import('@/views/businessOperation/channelAccount/ha
 const haveListDetailTwo = () => import('@/views/businessOperation/channelAccount/haveListDetailTwo')
 // 账户资金管理
 const accountMoneyManage = () => import('@/views/businessOperation/channelAccount/accountMoneyManage')
+//银行
+const bank = () => import('@/views/businessOperation/channelAccount/bank')
+
 //账户资金管理银行新增
 const bankadd = () => import('@/views/businessOperation/channelAccount/bankadd')
 //账户资金管理银行修改
@@ -17,6 +20,8 @@ const bankrevise = () => import('@/views/businessOperation/channelAccount/bankre
 const bankbalance = () => import('@/views/businessOperation/channelAccount/bankbalance')
 //账户资金管理银行明细
 const bankdetail = () => import('@/views/businessOperation/channelAccount/bankdetail')
+//第三方支付
+const external = () => import('@/views/businessOperation/channelAccount/external')
 //账户资金管理第三方支付新增
 const externaladd = () => import('@/views/businessOperation/channelAccount/externaladd')
 //账户资金管理第三方支付修改
@@ -117,24 +122,24 @@ const PrintYearFlow = () => import('@/views/businessOperation/financialStatement
 
 //品牌营销推广
 //活动计划模板
-const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate')
+const planTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate/planTemplate')
 //模板预览
-const previewTemplate = () => import('@/views/businessOperation/brandMarketing/previewTemplate')
+const previewTemplate = () => import('@/views/businessOperation/brandMarketing/planTemplate/previewTemplate')
 //活动计划管理
-const planManage = () => import('@/views/businessOperation/brandMarketing/planManage')
+const planManage = () => import('@/views/businessOperation/brandMarketing/planManage/planManage')
 //新建活动计划
-const activityPlan = () => import('@/views/businessOperation/brandMarketing/activityPlan')
+const activityPlan = () => import('@/views/businessOperation/brandMarketing/planManage/activityPlan')
 //新建活动
-const createActivity = () => import('@/views/businessOperation/brandMarketing/createActivity')
+const createActivity = () => import('@/views/businessOperation/brandMarketing/planManage/createActivity')
 //计划详情
-const planDetail = () => import('@/views/businessOperation/brandMarketing/planDetail')
+const planDetail = () => import('@/views/businessOperation/brandMarketing/planManage/planDetail')
 
 //活动执行管理
-const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage')
+const executionManage = () => import('@/views/businessOperation/brandMarketing/executionManage/executionManage')
 //活动执行详情
-const activityDetail = () => import('@/views/businessOperation/brandMarketing/activityDetail')
+const executionDetail = () => import('@/views/businessOperation/brandMarketing/executionManage/executionDetail')
 //分配任务
-const allotTask = () => import('@/views/businessOperation/brandMarketing/allotTask')
+const allotTask = () => import('@/views/businessOperation/brandMarketing/executionManage/allotTask')
 //活动效果评估
 const activityResult = () => import('@/views/businessOperation/brandMarketing/activityResult')
 //开始评估
@@ -165,7 +170,7 @@ const cashRecord = () => import('@/views/businessOperation/accountRecord/cashRec
 //兑奖记录详情
 const cashDetail = () => import('@/views/businessOperation/accountRecord/cashDetail')
 //提现记录列表
-const withdrawalRecord = () => import('@/views/businessOperation/accountRecord/withdrawalRecord')
+const withdrawalRecords = () => import('@/views/businessOperation/accountRecord/withdrawalRecords')
 //提现记录详情
 const withdrawalDetail = () => import('@/views/businessOperation/accountRecord/withdrawalDetail')
 //积分账户列表
@@ -257,8 +262,35 @@ export default [
     meta: {
       title: '账户资金管理',
     },
-    component: accountMoneyManage
+    component: accountMoneyManage,
+    children: [{
+        path: '',
+        redirect: {
+          name: 'bank'
+        },
+        component: bank,
+      },
+      {
+        path: 'bank',
+        name: 'bank',
+        meta: {
+          title: '银行',
+        },
+        component: bank
+      },
+
+      {
+        path: 'external',
+        name: 'external',
+        meta: {
+          title: '第三方支付',
+        },
+        component: external
+      },
+
+    ]
   },
+
   {
     path: 'businessOperation/accountMoneyManage/bankadd',
     name: 'bankadd',
@@ -292,6 +324,8 @@ export default [
     },
     component: bankdetail
   },
+
+
   {
     path: 'businessOperation/accountMoneyManage/externaladd',
     name: 'externaladd',
@@ -648,7 +682,7 @@ export default [
 
   //品牌与营销推广
   {
-    path: 'brandMarketing/planTemplate',
+    path: 'businessOperation/brandMarketing/planTemplate',
     name: 'planTemplate',
     meta: {
       title: '活动计划模板',
@@ -656,7 +690,7 @@ export default [
     component: planTemplate,
   },
   {
-    path: 'brandMarketing/planManage',
+    path: 'businessOperation/brandMarketing/planManage',
     name: 'planManage',
     meta: {
       title: '活动计划管理',
@@ -664,7 +698,7 @@ export default [
     component: planManage
   },
   {
-    path: 'brandMarketing/executionManage',
+    path: 'businessOperation/brandMarketing/executionManage',
     name: 'executionManage',
     meta: {
       title: '活动执行管理',
@@ -672,7 +706,7 @@ export default [
     component: executionManage
   },
   {
-    path: 'brandMarketing/activityResult',
+    path: 'businessOperation/brandMarketing/activityResult',
     name: 'activityResult',
     meta: {
       title: '活动效果评估',
@@ -680,7 +714,7 @@ export default [
     component: activityResult
   },
   {
-    path: 'brandMarketing/previewTemplate',
+    path: 'businessOperation/brandMarketing/previewTemplate',
     name: 'previewTemplate',
     meta: {
       title: '预览模板',
@@ -688,15 +722,15 @@ export default [
     component: previewTemplate,
   },
   {
-    path: 'brandMarketing/activityDetail',
-    name: 'activityDetail',
+    path: 'businessOperation/brandMarketing/executionDetail',
+    name: 'executionDetail',
     meta: {
       title: '活动执行详情',
     },
-    component: activityDetail,
+    component: executionDetail,
   },
   {
-    path: 'brandMarketing/planDetail',
+    path: 'businessOperation/brandMarketing/planDetail',
     name: 'planDetail',
     meta: {
       title: '计划详情',
@@ -704,7 +738,7 @@ export default [
     component: planDetail,
   },
   {
-    path: 'brandMarketing/activityPlan',
+    path: 'businessOperation/brandMarketing/activityPlan',
     name: 'activityPlan',
     meta: {
       title: '新建活动计划',
@@ -712,7 +746,7 @@ export default [
     component: activityPlan,
   },
   {
-    path: 'brandMarketing/createActivity',
+    path: 'businessOperation/brandMarketing/createActivity',
     name: 'createActivity',
     meta: {
       title: '新建活动',
@@ -720,7 +754,7 @@ export default [
     component: createActivity,
   },
   {
-    path: 'brandMarketing/allotTask',
+    path: 'businessOperation/brandMarketing/allotTask',
     name: 'allotTask',
     meta: {
       title: '分配任务',
@@ -728,7 +762,7 @@ export default [
     component: allotTask,
   },
   {
-    path: 'brandMarketing/resultAssess',
+    path: 'businessOperation/brandMarketing/resultAssess',
     name: 'resultAssess',
     meta: {
       title: '效果评估',
@@ -738,7 +772,7 @@ export default [
 
   //账户记录
   {
-    path: 'accountRecord/rechargeRecord',
+    path: 'businessOperation/accountRecord/rechargeRecord',
     name: 'rechargeRecord',
     meta: {
       title: '充值记录',
@@ -746,7 +780,7 @@ export default [
     component: rechargeRecord,
   },
   {
-    path: 'accountRecord/rechargeDetail',
+    path: 'businessOperation/accountRecord/rechargeDetail',
     name: 'rechargeDetail',
     meta: {
       title: '充值记录详情',
@@ -754,7 +788,7 @@ export default [
     component: rechargeDetail,
   },
   {
-    path: 'accountRecord/bettingRecord',
+    path: 'businessOperation/accountRecord/bettingRecord',
     name: 'BettingRecord',
     meta: {
       title: '投注记录',
@@ -762,7 +796,7 @@ export default [
     component: bettingRecord,
   },
   {
-    path: 'accountRecord/betDetail',
+    path: 'businessOperation/accountRecord/betDetail',
     name: 'betDetail',
     meta: {
       title: '投注记录详情',
@@ -770,7 +804,7 @@ export default [
     component: betDetail,
   },
   {
-    path: 'accountRecord/cashRecord',
+    path: 'businessOperation/accountRecord/cashRecord',
     name: 'cashRecord',
     meta: {
       title: '兑奖记录',
@@ -778,7 +812,7 @@ export default [
     component: cashRecord,
   },
   {
-    path: 'accountRecord/cashDetail',
+    path: 'businessOperation/accountRecord/cashDetail',
     name: 'cashDetail',
     meta: {
       title: '兑奖记录详情',
@@ -786,15 +820,15 @@ export default [
     component: cashDetail,
   },
   {
-    path: 'accountRecord/withdrawalRecord',
-    name: 'withdrawalRecord',
+    path: 'businessOperation/accountRecord/withdrawalRecords',
+    name: 'withdrawalRecords',
     meta: {
       title: '提现记录',
     },
-    component: withdrawalRecord,
+    component: withdrawalRecords,
   },
   {
-    path: 'accountRecord/withdrawalDetail',
+    path: 'businessOperation/accountRecord/withdrawalDetail',
     name: 'withdrawalDetail',
     meta: {
       title: '提现记录详情',
@@ -802,7 +836,7 @@ export default [
     component: withdrawalDetail,
   },
   {
-    path: 'accountRecord/integralRecord',
+    path: 'businessOperation/accountRecord/integralRecord',
     name: 'integralRecord',
     meta: {
       title: '积分账户',
@@ -810,7 +844,7 @@ export default [
     component: integralRecord,
   },
   {
-    path: 'accountRecord/integralDetail',
+    path: 'businessOperation/accountRecord/integralDetail',
     name: 'integralDetail',
     meta: {
       title: '积分账户详情',
@@ -818,7 +852,7 @@ export default [
     component: integralDetail,
   },
   {
-    path: 'accountRecord/fundsStatement',
+    path: 'businessOperation/accountRecord/fundsStatement',
     name: 'fundsStatement',
     meta: {
       title: '资金流水',
@@ -826,7 +860,7 @@ export default [
     component: fundsStatement,
   },
   {
-    path: 'accountRecord/fundsDetail',
+    path: 'businessOperation/accountRecord/fundsDetail',
     name: 'fundsDetail',
     meta: {
       title: '资金流水详情',
@@ -836,7 +870,7 @@ export default [
 
   //客户账户
   {
-    path: 'customerAccount/customerAccount',
+    path: 'businessOperation/customerAccount/customerAccount',
     name: 'customerAccount',
     meta: {
       title: '客户账户列表',
@@ -844,7 +878,7 @@ export default [
     component: customerAccount,
   },
   {
-    path: 'customerAccount/accountDetail',
+    path: 'businessOperation/customerAccount/accountDetail',
     name: 'accountDetail',
     meta: {
       title: '客户账户详情',
@@ -852,7 +886,7 @@ export default [
     component: accountDetail,
   },
   {
-    path: 'customerAccount/betcardDetail',
+    path: 'businessOperation/customerAccount/betcardDetail',
     name: 'betcardDetail',
     meta: {
       title: '投注卡详情',
@@ -860,7 +894,7 @@ export default [
     component: betcardDetail,
   },
   {
-    path: 'customerAccount/equityDetail',
+    path: 'businessOperation/customerAccount/equityDetail',
     name: 'equityDetail',
     meta: {
       title: '会员权益详情',
@@ -870,7 +904,7 @@ export default [
 
   //责任彩票
   {
-    path: 'dutyLottery/dutyLottery',
+    path: 'businessOperation/dutyLottery/dutyLottery',
     name: 'dutyLottery',
     meta: {
       title: '责任彩票列表',
@@ -878,7 +912,7 @@ export default [
     component: dutyLottery,
   },
   {
-    path: 'dutyLottery/ruleSet',
+    path: 'businessOperation/dutyLottery/ruleSet',
     name: 'ruleSet',
     meta: {
       title: '规则设置',
@@ -888,7 +922,7 @@ export default [
 
   //公告信息发布
   {
-    path: 'noticeInfo/materialManage',
+    path: 'businessOperation/noticeInfo/materialManage',
     name: 'materialManage',
     meta: {
       title: '素材管理',
@@ -896,7 +930,7 @@ export default [
     component: materialManage,
   },
   {
-    path: 'noticeInfo/bulletinList',
+    path: 'businessOperation/noticeInfo/bulletinList',
     name: 'bulletinList',
     meta: {
       title: '公告信息发布列表',
@@ -904,7 +938,7 @@ export default [
     component: bulletinList,
   },
   {
-    path: 'noticeInfo/bulletinDetail',
+    path: 'businessOperation/noticeInfo/bulletinDetail',
     name: 'bulletinDetail',
     meta: {
       title: '公告信息详情',
@@ -912,7 +946,7 @@ export default [
     component: bulletinDetail,
   },
   {
-    path: 'noticeInfo/bulletinTemplate',
+    path: 'businessOperation/noticeInfo/bulletinTemplate',
     name: 'bulletinTemplate',
     meta: {
       title: '公告模板',
@@ -920,7 +954,7 @@ export default [
     component: bulletinTemplate,
   },
   {
-    path: 'noticeInfo/createTemplate',
+    path: 'businessOperation/noticeInfo/createTemplate',
     name: 'createTemplate',
     meta: {
       title: '新建模板',
@@ -928,7 +962,7 @@ export default [
     component: createTemplate,
   },
   {
-    path: 'noticeInfo/templateDetail',
+    path: 'businessOperation/noticeInfo/templateDetail',
     name: 'templateDetail',
     meta: {
       title: '模板详情',
@@ -936,7 +970,7 @@ export default [
     component: templateDetail,
   },
   {
-    path: 'noticeInfo/infoPush',
+    path: 'businessOperation/noticeInfo/infoPush',
     name: 'infoPush',
     meta: {
       title: '消息推送',
@@ -944,7 +978,7 @@ export default [
     component: infoPush,
   },
   {
-    path: 'noticeInfo/infoEdit',
+    path: 'businessOperation/noticeInfo/infoEdit',
     name: 'infoEdit',
     meta: {
       title: '消息推送',

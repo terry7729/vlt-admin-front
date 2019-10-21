@@ -1,7 +1,8 @@
 // 业务运营-左侧导航数据
 
 export default [{
-    childResources: [{
+    childResources: [
+      {
         childResources: [{
             childResources: [],
             icon: "el-icon-menu",
@@ -178,7 +179,7 @@ export default [{
         }],
         icon: "el-icon-menu",
         name: "客户账户",
-        url: ''
+        url: 'customerAccount'
       },
       {
         childResources: [{
@@ -203,7 +204,7 @@ export default [{
             childResources: [],
             icon: "el-icon-menu",
             name: "提现记录",
-            url: 'withdrawalRecord'
+            url: 'withdrawalRecords'
           },
           {
             childResources: [],
@@ -265,16 +266,14 @@ export default [{
         ],
         icon: "el-icon-menu",
         name: "公告信息发布",
-        url: ''
+        url: 'bulletinList'
       },
 
 
     ],
     icon: "el-icon-menu",
     name: "业务运营",
-    url: '' // 前端路由名称
+    url: 'businessOperation' // 前端路由名称
 
   },
-
-
 ]

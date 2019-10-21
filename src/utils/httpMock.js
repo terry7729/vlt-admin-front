@@ -4,7 +4,7 @@ import menuData from '@/libs/menu/'
 Mock.mock('/api/menu', 'post', menuData);
 
 
- 
+
 //系统管理模拟数据
 
 //系统管理模拟数据 
@@ -199,17 +199,16 @@ Mock.mock('/api/menu', 'post', menuData);
 
 // })
 
-// Mock.mock(/\/menulist/, "get", function (options) {
+//Mock.mock(/\/menulist/, "get", function (options) {
 
 
 //   // console.log(Json)
 //   return data2
 
-// })
+//})
 
 // Mock.mock(/\/organilist/, "get", function (options) {
 
 
 //   // console.log(Json)
 //   return data3
-

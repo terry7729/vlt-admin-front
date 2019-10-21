@@ -97,6 +97,14 @@ export default {
             filter(children);
           }
         })(self.menuList);
+        // 默认展示首页
+        let name = self.menuList[0].url;
+        if (self.menuList[0].childResources && self.menuList[0].childResources.length) {
+          name = self.menuList[0].childResources[0].url
+        }
+        self.$router.push({
+          name
+        });
         // self.routerAuthorize();
       // }
     },

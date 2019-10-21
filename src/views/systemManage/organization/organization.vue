@@ -9,9 +9,10 @@
           <div class="organi-tree">
             <!--树形结构 !-->
             <el-tree
-              :data="date"
+              :data="nodeTreeData"
               show-checkbox
               node-key="id"
+              :props="setProps"
               :check-strictly="true"
               @node-click="getnowNodeifo"
               @check-change="getCheckifo"
@@ -28,10 +29,10 @@
           <div class="Lotteryinfo">
             <section class="comp-item">
               <panel-edit title="机构信息" @edit="jumptocompile" :show="true">
-                <base-info :infoList="infoList"></base-info>
+                <base-info :infoList="AgencyInformation"></base-info>
                 <!-- <div style=" text-align: center;padding:10px;">
                   <el-button size="small" type="primary" @click="jumptocompile">更改</el-button>
-                </div> -->
+                </div>-->
               </panel-edit>
             </section>
           </div>
@@ -56,7 +57,7 @@
                 <el-button size="medium" @click="cancel">取消</el-button>
               </el-row>
             </div>
-          </div> -->
+          </div>-->
           <div class="departmentinfo" style="margin:40px 0 40px 0; ">
             <section class="comp-item">
               <panel title="部门信息" :show="true">
@@ -116,7 +117,7 @@
         <div class="vlt-edit-wrap">
           <el-form>
             <base-form
-              :formData="this.addOrChange === '更改部门信息'?data2.slice(1,6):data2"
+              :formData="this.addOrChange === '更改部门信息'?AddDepartment.slice(1,6):AddDepartment"
               labelWidth="110px"
               ref="baseForm"
               :rules="rules2"
@@ -125,7 +126,7 @@
             ></base-form>
           </el-form>
           <el-row class="vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="branch">提交并保存</el-button>
+            <el-button type="primary" v-prevent="1000" size="medium" @click="DepartmentSubmit">提交并保存</el-button>
             <el-button size="medium" @click="cancel">取消</el-button>
           </el-row>
         </div>
@@ -137,7 +138,7 @@
         <h2 class="title">添加机构信息</h2>
         <div class="vlt-edit-wrap">
           <base-form
-            :formData="data3"
+            :formData="OrganizationAdd"
             labelWidth="110px"
             ref="baseForm"
             :rules="rules2"
@@ -146,7 +147,12 @@
           ></base-form>
 
           <el-row class="vlt-edit-btn">
-            <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+            <el-button
+              type="primary"
+              v-prevent="1000"
+              size="medium"
+              @click="OrganizationSubmit"
+            >提交并保存</el-button>
             <el-button size="medium" @click="cancelTwo">取消</el-button>
           </el-row>
         </div>
@@ -156,30 +162,39 @@
 </template>
 
 <script>
-import Post from "../../../utils/ajax";
 import rules from "../../../utils/rules";
 let id = 1000;
-
+import moment from "moment";
 export default {
   name: "organization",
+  computed: {},
+  created() {
+    this.init();
+  },
   data() {
-    
     return {
-      rules2: {//验证表单对象
+      setProps: {
+        label: "text",
+        value: "id",
+        children: "children"
+      },
+      rules2: {
+        //验证表单对象
         section: { required: true, message: "部门不能为空" }
       },
-      controlOptions: [//
+      controlOptions: [
+        //顶部按钮
         { name: "添加机构", type: "primary", icon: "plus", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
         { name: "添加部门", type: "primary", icon: "plus", id: 2 },
-        { name: "展开所有", type: "primary", icon:"arrow-down", id: 3 }
+        { name: "展开所有", type: "primary", icon: "arrow-down", id: 3 }
       ],
-      obj:[
+      obj: [
         { name: "添加机构", type: "primary", icon: "plus", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
         { name: "添加部门", type: "primary", icon: "plus", id: 2 },
-        { name: "关闭所有", type: "primary", icon:"arrow-up", id: 3 }
-        ],
-      // tit:"展开所有",
-      data2: [//添加部门表单对象
+        { name: "关闭所有", type: "primary", icon: "arrow-up", id: 3 }
+      ],
+      AddDepartment: [
+        //添加部门表单对象
         {
           type: "input",
           title: "上级部门",
@@ -189,234 +204,127 @@ export default {
         },
         { type: "input", title: "部门名称", prop: "section", value: "" },
         { type: "input", title: "部门负责人", prop: "sectionMan", value: "" },
-        { type: "input", title: "负责人电话", prop: "principalPhone", value: "" },
+        {
+          type: "input",
+          title: "负责人电话",
+          prop: "principalPhone",
+          value: ""
+        },
         { type: "switch", title: "状态", prop: "status", value: "" },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
-      data3: [//添加机构表单对象
+      OrganizationAdd: [
+        //添加机构表单对象
         {
           type: "input",
           title: "父机构",
-          prop: " parentOrganization",
+          prop: " parent",
           disabled: true,
           value: ""
         },
-        { type: "input", title: "父机构编码", prop: "parentEncoding", value: "" },
+        {
+          type: "input",
+          title: "父机构编码",
+          disabled: true,
+          prop: "parentInsCode",
+          value: ""
+        },
         {
           type: "input",
           title: "机构名称",
-          prop: "organizationName",
+          prop: "insName",
           value: ""
         },
         {
           type: "input",
           title: "机构编码",
-          prop: "organizationCode",
+          prop: "insCode",
           value: ""
         },
-        { type: "input", title: "区域", prop: "area", value: "" },
-        { type: "input", title: "区域编码", prop: "regionalCode", value: "" },
-        { type: "switch", title: "状态", prop: "status", value: "" },
+        {
+          type: "cascader",
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            checkStrictly: true
+          },
+          title: "区域",
+          prop: "regionName",
+          value: "",
+          placeholder: "请选择",
+          options: []
+        },
+        { type: "input", title: "区域编码", prop: "regionCode", value: "" },
+        { type: "switch", title: "状态", prop: "status", value: true },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
-      infoList: [//机构信息
+      AgencyInformation: [
+        //机构信息
         {
           title: "父机构",
           value: "",
           type: "input",
-          prop: "parentOrganization",
+          prop: "parentInsName",
           disabled: true
         },
-        { title: "区域", value: "", type: "input", prop: "area" },
+        { title: "区域名称", value: "", type: "input", prop: "regionName" },
         {
           title: "父机构编码",
           value: "",
           type: "input",
-          prop: "parentEncoding"
+          prop: "parentInsCode"
         },
-        { title: "区域编码", value: "", type: "input", prop: "regionalCode" },
+        { title: "区域编码", value: "", type: "input", prop: "regionCode" },
         {
           title: "机构名称",
           value: "",
           type: "input",
-          prop: "organizationName"
+          prop: "insName"
         },
         {
           title: "机构状态",
           value: "",
           type: "switch",
-          prop: "organizationStatus"
+          prop: "status"
         },
         {
           title: "机构编码",
           value: "",
           type: "input",
-          prop: "organizationCode"
+          prop: "insCode"
         },
         { title: "备注", value: "", type: "textarea", prop: "remark" },
         {
           title: "创建人",
           value: "",
           type: "input",
-          prop: "create",
+          prop: "createBy",
           disabled: true
         },
         {
           title: "创建时间",
           value: "",
           type: "input",
-          prop: "createNameOne",
+          prop: "createTime",
           disabled: true
         },
         {
           title: "修改人",
           value: "",
           type: "input",
-          prop: "modifine",
+          prop: "modifierBy",
           disabled: true
         },
         {
-          title: "创建时间",
+          title: "修改时间",
           value: "",
           type: "input",
-          prop: "createTimeTwo",
+          prop: "modifierTime",
           disabled: true
         }
       ],
-   
       value: "",
-      data: [ 
-        {
-          id: 1,
-          label: "中福彩",
-          children: [
-            {
-              id: 4,
-              label: "广东省",
-              children: [
-                {
-                  id: 9,
-                  label: "广州市"
-                },
-                {
-                  id: 10,
-                  label: "佛山市"
-                },
-                {
-                  id: 11,
-                  label: "深圳市"
-                },
-                {
-                  id: 12,
-                  label: "东莞市"
-                },
-                {
-                  id: 13,
-                  label: "惠州市"
-                }
-              ]
-            },
-            {
-              id: 5,
-              label: "河南省",
-              children: [
-                {
-                  id: 14,
-                  label: "郑州市"
-                },
-                {
-                  id: 15,
-                  label: "洛阳市"
-                },
-                {
-                  id: 16,
-                  label: "南阳市"
-                },
-                {
-                  id: 17,
-                  label: "汝阳市"
-                },
-                {
-                  id: 18,
-                  label: "驻马店市"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 2,
-          label: "体育彩票",
-          children: [
-            {
-              id: 4,
-              label: "广东省",
-              children: [
-                {
-                  id: 9,
-                  label: "广州市"
-                },
-                {
-                  id: 10,
-                  label: "佛山市"
-                },
-                {
-                  id: 11,
-                  label: "深圳市"
-                },
-                {
-                  id: 12,
-                  label: "东莞市"
-                },
-                {
-                  id: 13,
-                  label: "惠州市"
-                }
-              ]
-            },
-            {
-              id: 5,
-              label: "河南省",
-              children: [
-                {
-                  id: 14,
-                  label: "郑州市"
-                },
-                {
-                  id: 15,
-                  label: "洛阳市"
-                },
-                {
-                  id: 16,
-                  label: "南阳市"
-                },
-                {
-                  id: 17,
-                  label: "汝阳市"
-                },
-                {
-                  id: 18,
-                  label: "驻马店市"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 3,
-          label: "一级 3",
-          children: [
-            {
-              id: 7,
-              label: "二级 3-1"
-            },
-            {
-              id: 8,
-              label: "二级 3-2"
-            }
-          ]
-        }
-      ],
       //测试数据
       testlist: [], //部门信息展示列表每页信息
       num: 0, //信息条数
@@ -424,32 +332,33 @@ export default {
       n: 1, //默认显示页
       slelectifo: "",
       //
+      regional: [],
       isexpand: false, //展开所有
       dialogFormVisible2: false, //弹框二控制
       dialogFormVisible: false, //弹框一控制
-      dialogStatus: "",//操作状态
-      department: [],//部门信息总列表
+      dialogStatus: "", //操作状态
+      department: [], //部门信息总列表
       onoff: true,
       params: {}, //机构信息表单对象,
-      params2: {},//部门信息表单
-      params3:{}, //更改|机构详情
+      params2: {}, //部门信息表单
+      params3: {}, //更改|机构详情
       addOrChange: null,
       //
-      date: [], //树形结构数据
+      nodeTreeData: [], //树形结构数据
       val: {}, //当前点击的节点data
       //
-      treeStatus:true,
+      treeStatus: true //节点树状态控制
     };
-  },
-  computed: {},
-  async created() {
-    let n = await Post.axios("/organilist");
-    console.log(n);
-    this.date = n.data.data;
   },
   mounted() {},
   components: {},
   methods: {
+    async init() {
+      let reslt = await this.$api.OrganizationMenu({});
+      this.nodeTreeData = reslt.data;
+      let res = await this.$api.RegionalTree({});
+      this.OrganizationAdd[4].options = res.data;
+    },
     cancel() {
       //弹出框取消按钮
       this.dialogFormVisible = false;
@@ -460,17 +369,15 @@ export default {
     },
     changeForm(val) {
       //弹出框表单change事件
-      if (
-        this.dialogStatus === "添加机构"
-      ) {   
+      if (this.dialogStatus === "添加机构") {
         Object.assign(this.params, val);
       } else if (
         this.dialogStatus === "添加部门" ||
         this.dialogStatus === "更改部门信息"
       ) {
         Object.assign(this.params2, val);
-      }else if(this.dialogStatus === "更改机构信息"){
-         Object.assign(this.params3, val);
+      } else if (this.dialogStatus === "更改机构信息") {
+        Object.assign(this.params3, val);
       }
     },
     pageSizeChange(val) {
@@ -492,22 +399,32 @@ export default {
         }
       });
     },
-    branch(){
-       if (this.addOrChange === "更改部门信息") {
-        this.params2.created = "更改部门信息";    
+    DepartmentSubmit() {
+      if (this.addOrChange === "更改部门信息") {
+        this.params2.created = "更改部门信息";
         console.log(this.params2);
       } else if (this.addOrChange === "添加部门") {
         this.params2.created = "添加部门";
         console.log(this.params2);
       }
     },
-    submit() {
+    async OrganizationSubmit() {
       if (this.addOrChange === "更改机构信息") {
         this.params3.created = "更改机构信息";
-          console.log(this.params3);      
+        console.log(this.params3);
       } else if (this.addOrChange === "添加机构") {
         this.params.created = "添加机构";
-        console.log(this.params)
+        let data = JSON.parse(JSON.stringify(this.params));
+        if (data.status) {
+          data.status = 0;
+        } else {
+          data.status = 1;
+        }
+        let reslt = await this.$api.OrganizationAdd({ data });
+        console.log(reslt);
+        if (reslt.code === 0) {
+          this.init();
+        }
       }
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
@@ -519,11 +436,10 @@ export default {
         if (this.slelectifo == "") {
           this.open("请选择要添加子部门的选项！");
         } else {
-          this.clearIput(this.data2)
           this.dialogStatus = "添加部门";
           this.addOrChange = "添加部门";
           this.dialogFormVisible = true;
-          this.data2[0].value = this.slelectifo;
+          this.AddDepartment[0].value = this.slelectifo;
         }
       }
       if (val.id === 1) {
@@ -531,27 +447,32 @@ export default {
         if (this.slelectifo == "") {
           this.open("请选择要添加子机构的机构");
         } else {
-          this.clearIput(this.data3)
           this.addOrChange = "添加机构";
           this.dialogStatus = "添加机构";
           this.dialogFormVisible2 = true;
-          this.data3[0].value = this.slelectifo;
+
+          this.OrganizationAdd[0].value = this.slelectifo;
+          this.OrganizationAdd[1].value = this.val.code;
         }
       }
       if (val.id === 3) {
-        //展开所有       
-        if(this.treeStatus){            
-        for (var i = 0;i < this.$refs.attrList.store._getAllNodes().length;i++) {
-          this.$refs.attrList.store._getAllNodes()[i].expanded = this.treeStatus;
+        //展开所有
+        let len = this.$refs.attrList.store._getAllNodes().length;
+        if (this.treeStatus) {
+          for (var i = 0; i < len; i++) {
+            this.$refs.attrList.store._getAllNodes()[
+              i
+            ].expanded = this.treeStatus;
+          }
+          this.treeStatus = !this.treeStatus;
+        } else {
+          for (var i = 0; i < len; i++) {
+            this.$refs.attrList.store._getAllNodes()[
+              i
+            ].expanded = this.treeStatus;
+          }
+          this.treeStatus = !this.treeStatus;
         }
-        this.treeStatus=!this.treeStatus
-        }else{
-            for (var i = 0;i < this.$refs.attrList.store._getAllNodes().length;i++) {
-          this.$refs.attrList.store._getAllNodes()[i].expanded = this.treeStatus;
-        }
-        this.treeStatus=!this.treeStatus
-        }
-
       }
     },
     jumptocompile() {
@@ -559,7 +480,7 @@ export default {
       this.dialogFormVisible2 = true;
       this.addOrChange = "更改机构信息";
       this.dialogStatus = "更改机构信息";
-      this.Modifine(this.data3,this.infoList)
+      // this.Modifine(this.OrganizationAdd,this.AgencyInformation)
 
       console.log(this.params);
     },
@@ -567,48 +488,66 @@ export default {
       this.dialogFormVisible = true;
       this.addOrChange = "更改部门信息";
       this.dialogStatus = "更改部门信息";
-      this.addValue(val,this.data2)
+      // this.addValue(val,this.AddDepartment)
       console.log(val); //修改部门信息按钮
     },
 
-    getnowNodeifo(val, s) {
+    async getnowNodeifo(val, s) {
       //获取当前点击节点信息 s为当前节点node
-      // console.log(val,s)
+      console.log(val, s);
       this.val = val;
-
-      this.department = val.obj.department;
-      this.num = this.department.length;
-      this.testlist = this.department.slice(0, 10);
-      this.slelectifo = val.label;
+      let data = {
+        insCode: val.code
+      };
+      let reslt = await this.$api.OrganizationDestils({ data });
+      let arr = Object.entries(reslt.data);
+      let obj = arr.map(([key, val]) => {
+        if (
+          (key === "createTime" && val != null) ||
+          (key === "modifierTime" && val != null)
+        ) {
+          return { [key]: moment(val).format("YYYY-MM-DD HH:mm:ss") };
+        } else if (key === "status") {
+          if (val === 0) {
+            return { [key]: "启用" };
+          } else {
+            return { [key]: "失效" };
+          }
+        } else {
+          return { [key]: val };
+        }
+      });
+      this.slelectifo = reslt.data.insName;
       //当前节点父节点信息
-      this.addValue(val.obj,this.infoList)
+      if (reslt.code === 0) {
+        this.addValue(obj, this.AgencyInformation);
+      }
+
+      let res = await this.$api.DepartmentPage({
+        insCode: val.code,
+        pageSize: 2,
+        pageNum: 1
+      });
+      console.log(res);
     },
     getCheckifo(...res) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
     },
     //公用方法
-    addValue(val,data){ //value数值回填
-        let arr = Object.keys(val);
-      for (var i = 0; i < data.length; i++) {
-        for (var j = 0; j < arr.length; j++) {
-          if (data[i].prop == arr[j]) {
-            data[i].value = val[arr[j]];
+    addValue(val, data) {
+      //value数值回填
+      for (var i = 0; i < val.length; i++) {
+        for (var j = 0; j < data.length; j++) {
+          if (Object.keys(val[i])[0] === data[j].prop) {
+            data[j].value = Object.values(val[i])[0];
           }
         }
       }
     },
-   Modifine(val,data){
-      for(var i = 0 ; i < val.length ; i++){
-        for(var j =0 ; j < data.length ; j ++){
-          if(val[i].prop === data[j].prop){
-            val[i].value = data[j].value
-          }
-        }
-      }
-    },
-    clearIput(val){//清空输入框信息
-      for(var i = 0 ; i < val.length ; i++){
-        val[i].value = ''
+    clearIput(val) {
+      //清空输入框信息
+      for (var i = 0; i < val.length; i++) {
+        val[i].value = "";
       }
     }
   },
