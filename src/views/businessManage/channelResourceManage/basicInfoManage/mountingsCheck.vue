@@ -8,13 +8,12 @@
 
 <script type="text/javascript">
 export default {
- name: "typeCheck",
+ name: "mountingsCheck",
  data() {
  return {
    infoList: [
-      { title: "仓库名称", value: "", prop: "storeName" },
-      { title: "所属机构", value: "", prop: "organization" },
-      { title: "是否标配", value: "", prop: "isStandard" },
+      { title: "设备名称", value: "", prop: "equipmentName" },
+      { title: "设备单位", value: "", prop: "equipmentUnit" },
       { title: "是否回收", value: "", prop: "isRecycle" },
       { title: "备注", value: "", prop: "remark" }
     ]

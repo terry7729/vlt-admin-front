@@ -338,7 +338,7 @@ export default {
           ]},
       ],
       rules: {},
-      radio: 1,
+      radio: '1',
       options: [{label:'男', value:'1'},{label:'女',value:'2'}],
       checkList: [],
       textarea: '',

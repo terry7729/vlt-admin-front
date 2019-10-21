@@ -35,14 +35,17 @@ export default {
   name: "",
   data() {
     return {
+      //按钮类型
       importdata: [
         { name: "打印", type: "primary", icon: "printer" },
         { name: "导出", type: "danger", icon: "download" }
       ],
+      //
       accountallname: [
         { title: "户名全称", value: "", prop: "accountallname" },
         { title: "银行账号", value: "", prop: "bankaccount" }
       ],
+      //搜索类型
       bankdetailsearch: [
         {
           type: "datetime-range",
@@ -68,6 +71,7 @@ export default {
           ]
         }
       ],
+      //表格数据
       tableData: [
         {
           id: 1,
@@ -87,7 +91,11 @@ export default {
   },
   components: {},
   methods: {
-    bankdetailbtn() {},
+    //查询
+    bankdetailbtn(form) {
+      console.log("param:", form);
+    },
+    //按钮类型
     importbtn() {}
   }
 };

@@ -48,6 +48,7 @@
     <el-dialog
       :title="dialogTitle"
       :visible.sync="isShow"
+      @close="close"
       width="40%"
       max-width="700px">
       <div class="vlt-edit-single">
@@ -103,11 +104,14 @@ export default {
     },
     search() {},
     handleSelectionChange() {},
+    close() {
+      this.$refs.baseForm.resetForm()
+    },
     sure() {
+      this.close();
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
       });
-      this.$refs.baseForm.resetForm()
     },
     changeCurrent() {
 

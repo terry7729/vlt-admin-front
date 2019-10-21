@@ -345,6 +345,7 @@ export default {
           prop: "status",
           options: [{ label: "男", value: "0" }, { label: "女", value: "1" }]
         },
+        {title: '试玩渠道',type: 'radio-textarea', prop: '', props: ['radio', 'radioText'], value: ['1', 'aa'], options:[{label:'区域内全部大厅',value:'1'},{label:'区域内指定大厅',value:'2'}],placeholder:'随便说点啥'},
         { type: "textarea", title: "说明", prop: "all" },
         { type: "switch", title: "兑奖权限", prop: "isShow" },
         { type: "datepicker", prop: "date1", value: "", title: "日期选择" },
@@ -368,7 +369,6 @@ export default {
           prop: "cascader1",
           value: "",
           title: "级联选择（多选）",
-          placeholder: "请选择",
           options: [
             {
               value: "zhinan",
@@ -643,7 +643,6 @@ export default {
           prop: "cascader1",
           value: "",
           title: "级联选择",
-          placeholder: "请选择",
           options: [
             {
               value: "zhinan",
@@ -1239,21 +1238,18 @@ export default {
           prop: "date3",
           value: "",
           title: "日期时间",
-          placeholder: "请选择"
         },
         {
           type: "datetime-range",
           prop: "date4",
           value: "",
           title: "日期时间",
-          placeholder: ["开始时间", "结束时间"]
         },
         {
           type: "cascader",
           prop: "cascader1",
           value: "",
           title: "级联选择",
-          placeholder: "请选择",
           options: [
             {
               value: "zhinan",

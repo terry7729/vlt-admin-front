@@ -1,3 +1,5 @@
+import { S_IROTH } from 'constants'
+
 // 业务管理系统路由配置
 
 // 首页概况
@@ -55,24 +57,37 @@ const gameChangePlanEdit = () => import('@/views/businessManage/gameChangeManage
 const gameChangePlanCreate = () => import('@/views/businessManage/gameChangeManage/gameChangePlanCreate')
 //退市计划
 const gameDelistingPlanList = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanList')
-
+const gameDelistingPlanCreate = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanCreate')
+const gameDelistingPlanDetail = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanDetail')
+const riskReportList = () => import('@/views/businessManage/gameDelistingManage/riskReportList')
 
 
 
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
-// const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
+const channelFundsPermission = () => import('@/views/businessManage/channelBusinessManage/channelFundsPermission')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
+const developmentPlanList = () => import('@/views/businessManage/channelBusinessManage/developmentPlanList')
+const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
+const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
+const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
+const resourceApply = () => import('@/views/businessManage/channelBusinessManage/resourceApply')
+const resourceProvide = () => import('@/views/businessManage/channelBusinessManage/resourceProvide')
+const resourcePurchase = () => import('@/views/businessManage/channelBusinessManage/resourcePurchase')
+
+
 //渠道资源管理
 const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
 const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
-
-
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
-
-
+//库存管理库存查询
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //设备履历
@@ -93,8 +108,19 @@ const detailLedger = () => import('@/views/businessManage/channelResourceManage/
 const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
 //基础信息类型管理新增
 const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
-// 类型管理查看
-const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
+//类型管理修改
+const modification  = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modification')
+// 类型管理设备查看
+const equipmentCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/equipmentCheck')
+//设施查看
+const facilityCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/facilityCheck')
+//耗材查看
+const consumableCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/consumableCheck')
+//配件查看
+const mountingsCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/mountingsCheck')
+
+
+
 //型号管理查看
 const modelCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelCheck')
 //类型管理新增
@@ -109,18 +135,10 @@ const outStore = () => import('@/views/businessManage/channelResourceManage/outP
 const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
 
-const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
-const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
-const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
-const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
-const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
-const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
+
 
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
-const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
-const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
-const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
 
 // 渠道终端管理 - 服务分析
 const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/serviceAnalysis')
@@ -141,12 +159,36 @@ const equipmentList = () => import('@/views/businessManage/channelTerminalManage
 const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
 const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
 
+// 渠道终端管理 - 报表统计
+const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/reportStatistics')
+const accessoryLoss = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/accessoryLoss')
+const deviceLoss = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/deviceLoss')
+const reportEquipmentFailure = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/equipmentFailure')
+
+// 渠道终端管理 - 维护知识库
+const knowledgeBaseIndex = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/index')
+const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBase')
+const baseReview = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/baseReview')
+const knowledgeBaseInfo = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBaseInfo')
+
+// 配置管理
+const configurationManagement = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/index')
+const faultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/faultType')
+const addFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/addFaultType')
+const editFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/editFaultType')
+
+
+
 // 资金结算管理
 const fundParameter = () => import('@/views/businessManage/fundSettlement/fundParameter')
 // 资金参数管理 详情
 const fundParameterDetail = () => import('@/views/businessManage/fundSettlement/fundParameterDetail')
 // 资金参数管理 编辑
 const fundParameterEdit = () => import('@/views/businessManage/fundSettlement/fundParameterEdit')
+// 全局参数编辑
+const globalParameterEdit = () => import('@/views/businessManage/fundSettlement/globalParameterEdit')
+// 创建
+const newfundParameter = () => import('@/views/businessManage/fundSettlement/newfundParameter')
 // 资金参数管理 全局参数
 const globalParameter = () => import('@/views/businessManage/fundSettlement/globalParameter')
 
@@ -172,6 +214,12 @@ const newCard = () => import('@/views/businessManage/bettingCardManage/newCard')
 // 导出卡片
 const exportCard = () => import('@/views/businessManage/bettingCardManage/exportCard')
 
+
+// 合作伙伴管理
+const cooperatorList = () => import('@/views/businessManage/cooperatorManage/cooperatorList')
+const cooperatorBrokerageSet = () => import('@/views/businessManage/cooperatorManage/cooperatorBrokerageSet')
+const cooperatorQuotaSet = () => import('@/views/businessManage/cooperatorManage/cooperatorQuotaSet')
+const verifyReconciliation = () => import('@/views/businessManage/cooperatorManage/verifyReconciliation')
 
 
 export default [
@@ -344,7 +392,7 @@ export default [
     path: 'businessManage/trialPlanCreate',
     name: 'trialPlanCreate',
     meta: {
-      title: '创建游戏试玩计划',
+      title: '新建试玩计划',
     },
     component: trialPlanCreate
   },
@@ -376,7 +424,7 @@ export default [
     path: 'businessManage/gameMarketPlanCreate',
     name: 'gameMarketPlanCreate',
     meta: {
-      title: '创建上市计划',
+      title: '新建上市计划',
     },
     component: gameMarketPlanCreate
   },
@@ -424,7 +472,7 @@ export default [
     path: 'businessManage/gameChangePlanCreate',
     name: 'gameChangePlanCreate',
     meta: {
-      title: '创建变更计划',
+      title: '新建变更计划',
     },
     component: gameChangePlanCreate
   },
@@ -451,6 +499,30 @@ export default [
       title: '退市计划列表',
     },
     component: gameDelistingPlanList
+  },
+  {
+    path: 'businessManage/gameDelistingPlanCreate',
+    name: 'gameDelistingPlanCreate',
+    meta: {
+      title: '新建退市计划',
+    },
+    component: gameDelistingPlanCreate
+  },
+  {
+    path: 'businessManage/gameDelistingPlanDetail',
+    name: 'gameDelistingPlanDetail',
+    meta: {
+      title: '退市计划详情',
+    },
+    component: gameDelistingPlanDetail
+  },
+  {
+    path: 'businessManage/riskReportList',
+    name: 'riskReportList',
+    meta: {
+      title: '风险报告',
+    },
+    component: riskReportList
   },
   {
     path: 'businessManage/channelList',
@@ -631,12 +703,45 @@ export default [
     component: addEquipment
   },
   {
-    path: 'businessManage/channelResourceManage/typeCheck',
-    name: 'typeCheck',
+    path: 'businessManage/channelResourceManage/modification',
+    name: 'modification',
     meta: {
-      title: '基本信息类型管理查看',
+      title: '基本信息类型管理修改',
     },
-    component: typeCheck
+    component: modification
+  },
+  
+  {
+    path: 'businessManage/channelResourceManage/equipmentCheck',
+    name: 'equipmentCheck',
+    meta: {
+      title: '基本信息类型管理设备查看',
+    },
+    component: equipmentCheck
+},
+  {
+    path: 'businessManage/channelResourceManage/facilityCheck',
+    name: 'facilityCheck',
+    meta: {
+      title: '基本信息类型管理设施查看',
+    },
+    component: facilityCheck
+  },
+  {
+    path: 'businessManage/channelResourceManage/consumableCheck',
+    name: 'consumableCheck',
+    meta: {
+      title: '基本信息类型管理耗材查看',
+    },
+    component: consumableCheck
+  },
+  {
+    path: 'businessManage/channelResourceManage/mountingsCheck',
+    name: 'mountingsCheck',
+    meta: {
+      title: '基本信息类型管理耗材查看',
+    },
+    component: mountingsCheck
   },
   {
     path: 'businessManage/channelResourceManage/modelCheck',
@@ -728,8 +833,34 @@ export default [
     meta: {
       title: '报表统计',
     },
-    component: reportStatistics
-  }, {
+    component: reportStatistics,
+    children: [{
+        path: 'accessoryLoss',
+        name: 'accessoryLoss',
+        meta: {
+          title: '设备故障报表',
+        },
+        component: accessoryLoss,
+      },
+      {
+        path: 'deviceLoss',
+        name: 'deviceLoss',
+        meta: {
+          title: '设备管理损耗报表',
+        },
+        component: deviceLoss,
+      },
+      {
+        path: 'equipmentFailure',
+        name: 'reportEquipmentFailure',
+        meta: {
+          title: '配件损耗报表',
+        },
+        component: reportEquipmentFailure,
+      }
+    ]
+  },
+   {
     path: 'businessManage/channelTerminal/equipment',
     name: 'equipment',
     meta: {
@@ -752,34 +883,69 @@ export default [
       },
       component: accessoriesList,
     }]
-  }, {
-    path: 'businessManage/channelTerminal/equipmentDesc',
-    name: 'equipmentDesc',
-    meta: {
-      title: '配件详情',
+  }, 
+  {
+   path: 'businessManage/channelTerminal/knowledgeBase',
+   name: 'knowledgeBaseIndex',
+   meta: {
+     title: '维修知识库',
+   },
+   component: knowledgeBaseIndex,
+   children: [{
+       path: 'knowledgeBase',
+       name: 'knowledgeBase',
+       meta: {
+         title: '维修知识库 ',
+       },
+       component: knowledgeBase,
+     },{
+      path: 'knowledgeBaseInfo',
+      name: 'knowledgeBaseInfo',
+      meta: {
+        title: '维修知识库详情 ',
+      },
+      component: knowledgeBaseInfo,
     },
-    component: equipmentDesc,
-  }, {
-    path: 'businessManage/channelTerminal/equipmentResume',
-    name: 'equipmentResume',
-    meta: {
-      title: '配件详情',
-    },
-    component: equipmentResume,
-  },{
-    path: 'businessManage/channelTerminal/knowledgeBase',
-    name: 'knowledgeBase',
-    meta: {
-      title: '维护知识库',
-    },
-    component: knowledgeBase
-  }, {
-    path: 'businessManage/channelTerminal/configuration',
-    name: 'configuration',
+     {
+       path: 'baseReview',
+       name: 'baseReview',
+       meta: {
+         title: '知识库审核',
+       },
+       component: baseReview,
+     }
+   ]
+ }, {
+    path: 'businessManage/channelTerminal/configurationManagement',
+    name: 'configurationManagement',
     meta: {
       title: '配置管理',
     },
-    component: configuration
+    component: configurationManagement,
+    children: [{
+      path: 'faultType',
+      name: 'faultType',
+      meta: {
+        title: '故障类型 ',
+      },
+      component: faultType,
+    },{
+     path: 'addFaultType',
+     name: 'addFaultType',
+     meta: {
+       title: '新增故障类型 ',
+     },
+     component: addFaultType,
+   },
+    {
+      path: 'editFaultType',
+      name: 'editFaultType',
+      meta: {
+        title: '修改故障类型',
+      },
+      component: editFaultType,
+    }
+    ]
   },
   {
     path: 'businessManage/channelDeal',
@@ -798,12 +964,70 @@ export default [
     component: channelSalesPermission
   },
   {
+    path: 'businessManage/channelFundsPermission',
+    name: 'channelFundsPermission',
+    meta: {
+      title: '资金权限',
+    },
+    component: channelFundsPermission
+  },
+  {
+    path: 'businessManage/resourcePurchase',
+    name: 'resourcePurchase',
+    meta: {
+      title: '资源采购',
+    },
+    component: resourcePurchase
+  },
+  {
+    path: 'businessManage/resourceApply',
+    name: 'resourceApply',
+    meta: {
+      title: '资源申请',
+    },
+    component: resourceApply
+  },
+  {
+    path: 'businessManage/resourceProvide',
+    name: 'resourceProvide',
+    meta: {
+      title: '资源发放',
+    },
+    component: resourceProvide
+  },
+  {
     path: 'businessManage/developmentPlan',
     name: 'developmentPlan',
     meta: {
       title: '年度发展计划',
     },
-    component: developmentPlan
+    redirect: 'businessManage/developmentPlan/developmentPlanList',
+    component: developmentPlan,
+    children: [{
+        path: 'developmentPlanList',
+        name: 'developmentPlanList',
+        meta: {
+          title: '计划列表',
+        },
+        component: developmentPlanList,
+      },
+      {
+        path: 'developmentPlanProvince',
+        name: 'developmentPlanProvince',
+        meta: {
+          title: '计划汇总（省）',
+        },
+        component: developmentPlanProvince,
+      },
+      {
+        path: 'developmentPlanCity',
+        name: 'developmentPlanCity',
+        meta: {
+          title: '计划汇总（地市）',
+        },
+        component: developmentPlanCity,
+      }
+    ]
   },
   {
     path: 'businessManage/developmentPlanCreate',
@@ -814,7 +1038,7 @@ export default [
     component: developmentPlanCreate
   },
   {
-    path: 'businessManage/fundParameter',
+    path: 'businessManage/fundSettlement/fundParameter',
     name: 'fundParameter',
     meta: {
       title: '资金参数管理',
@@ -822,7 +1046,7 @@ export default [
     component: fundParameter
   },
   {
-    path: 'businessManage/fundParameterDetail',
+    path: 'businessManage/fundSettlement/fundParameterDetail',
     name: 'fundParameterDetail',
     meta: {
       title: '资金参数管理详情',
@@ -830,13 +1054,30 @@ export default [
     component: fundParameterDetail
   },
   {
-    path: 'businessManage/fundParameterEdit',
+    path: 'businessManage/fundSettlement/fundParameterEdit',
     name: 'fundParameterEdit',
     meta: {
       title: '资金参数管理编辑',
     },
     component: fundParameterEdit
   },
+  {
+    path: 'businessManage/fundSettlement/globalParameterEdit',
+    name: 'globalParameterEdit',
+    meta: {
+      title: '全局参数管理编辑',
+    },
+    component: globalParameterEdit
+  },
+  {
+    path: 'businessManage/fundSettlement/newfundParameter',
+    name: 'newfundParameter',
+    meta: {
+      title: '新增全局参数管理',
+    },
+    component: newfundParameter
+  },
+  
   {
     path: 'businessManage/fundSettlement/globalParameter',
     name: 'globalParameter',
@@ -919,7 +1160,8 @@ export default [
       title: '详情信息',
     },
     component: infoDetail
-  }, {
+  }, 
+  {
     path: 'businessManage/newCard',
     name: 'newCard',
     meta: {
@@ -934,12 +1176,45 @@ export default [
       title: '新建规则'
     },
     component: newRule
-  }, {
+  }, 
+  {
     path: 'businessManage/exportCard',
     name: 'exportCard',
     meta: {
       title: '导出卡片',
     },
     component: exportCard
-  }
+  },
+  {
+    path: 'businessManage/cooperatorManage/cooperatorList',
+    name: 'cooperatorList',
+    meta: {
+      title: '合作伙伴列表',
+    },
+    component: cooperatorList
+  },
+  {
+    path: 'businessManage/cooperatorManage/cooperatorBrokerageSet',
+    name: 'cooperatorBrokerageSet',
+    meta: {
+      title: '合作佣金设置',
+    },
+    component: cooperatorBrokerageSet
+  },
+  {
+    path: 'businessManage/cooperatorManage/cooperatorQuotaSet',
+    name: 'cooperatorQuotaSet',
+    meta: {
+      title: '合作额度设置',
+    },
+    component: cooperatorQuotaSet
+  },
+  {
+    path: 'businessManage/cooperatorManage/verifyReconciliation',
+    name: 'verifyReconciliation',
+    meta: {
+      title: '结算与对账',
+    },
+    component: verifyReconciliation
+  },
 ]

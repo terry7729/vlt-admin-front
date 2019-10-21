@@ -3,13 +3,13 @@
     <div class="tags-scroller">
       <div class="tags-list">
         <el-tag
-          :class="{current:current==index}"
-          v-for="(tag, index) in tags"
+          :class="{current:$route.name == tag.routerName}"
+          v-for="(tag, index) in routerTags"
           :key="index"
           :closable="closable"
-          :type="tag.type"
-          @click="tab(index)"
-          @close="close(index)"
+          type="info"
+          @click="to(tag)"
+          @close="close(tag)"
         >
           {{tag.name}}
         </el-tag>
@@ -29,52 +29,57 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'pageTags',
   data() {
     return {
-      current: 0,
-      closable: true,
-      tags: [
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签五', type: 'info' }
-      ]
+      closable: true
     }
   },
+  watch: {
+    routerTags(val) {
+      if (val.length === 1) {
+        this.closable = false;
+        return;
+      };
+      this.closable = true;
+    },
+    $route(to, from) {
+      this.setRouterTags({
+        name: to.meta.title,
+        routerName: to.name
+      })
+    }
+  },
+  computed: {
+    ...mapGetters(['routerTags'])
+  },
   created () {
-    
+    this.setRouterTags({
+      name: this.$route.meta.title,
+      routerName: this.$route.name
+    })
   },
   mounted () {
     
   },
-  watch: {
-    tags(val) {
-      if (val.length === 1) this.closable = false;
-    }
+  destroyed() {
+    this.clearRouterTags();
   },
   methods: {
-    tab(index) {
-      this.current = index;
+    to(item) {
+      this.$router.push({
+        name: item.routerName
+      })
     },
-    close(index) {
-      this.tags.splice(index, 1)
-    }
+    close(item) {
+      console.log('remove')
+      this.removeRouterTags(item)
+    },
+
+    ...mapActions(['setRouterTags', 'removeRouterTags', 'clearRouterTags'])
   }
 }
 </script>

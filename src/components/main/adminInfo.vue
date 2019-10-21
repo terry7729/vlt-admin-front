@@ -1,5 +1,13 @@
 <template>
   <div class="user-admin" v-if="user">
+    <el-tooltip effect="dark" content="全屏" placement="bottom" v-if="!isFull">
+      <span class="iconfont icon-fullscreen" @click="fullScreen"></span>
+    </el-tooltip>
+    <el-tooltip effect="dark" content="退出全屏" placement="bottom" v-else>
+      <span class="iconfont icon-exitfullscreen" @click="exitFullScreen"></span>
+    </el-tooltip>
+    <span class="el-icon-bell"></span>
+    <span class="logout iconfont icon-tuichu" @click="openConfirm"></span>
     <span class="el-dropdown-link">
       <span class="user-info">
         <el-popover
@@ -8,11 +16,11 @@
           trigger="click"
         >
           <span slot="reference">
+            <span class="user-name">{{user.name}}</span>
             <span class="avatar">
               <img v-if="user.avatar" :src="user.avatar" @error="user.avatar = ''">
               <i v-else class="iconfont icon-touxiang"></i>
             </span>
-            <span class="user-name">{{user.name}}</span>
           </span>
           <el-card class="box-card user-info-content">
             <div slot="header" class="clearfix">
@@ -39,19 +47,20 @@
         </el-popover>
       </span>
     </span>
-    <span class="logout iconfont icon-tuichu" @click="openConfirm"></span>
   </div>
 </template>
 
 <script>
 
 import storage from '@/utils/storage'
+import windowScreen from '@/utils/windowScreen'
 
 
 export default {
   name: 'adminHeader',
   data() {
     return {
+      isFull: false,
       user: {
         avatar: require('@/assets/img/avatar.jpg'),
         institutionName: '',
@@ -64,43 +73,52 @@ export default {
   },
   
   created () {
-    const self = this;
-
+    this.watchScreen(() => {
+      this.isFull = true;
+    }, () => {
+      this.isFull = false;
+    })
   },
   methods: {
-    openConfirm(){
-      this.$router.push({
+    // openConfirm(){
+      // this.$router.push({
+      //   path:'/login'
+      // })
+    // },
+    openConfirm() {
+      this.$confirm('是否退出登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.loginOut();
+      }).catch(() => {
+        // 取消         
+      });
+    },
+    async loginOut() {
+        this.$router.push({
         path:'/login'
       })
+      // const self = this;
+      // const res = await self.$api.getLoginOut({
+      //   data: {
+      //     userId: self.user.id
+      //   }
+      // });
+      // if (res && res.code == 0) {
+      //   self.$message({
+      //     message: '退出成功',
+      //     type: 'success'
+      //   });
+      //   self.eventBus.$emit('loginOut', '手动登出');
+      //   return;
+      // }
+      // self.$message.error('退出登录失败');
     },
-    // openConfirm() {
-    //   this.$confirm('是否退出登录?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(() => {
-    //     this.loginOut();
-    //   }).catch(() => {
-    //     // 取消         
-    //   });
-    // },
-    async loginOut() {
-      const self = this;
-      const res = await self.$api.getLoginOut({
-        data: {
-          userId: self.user.id
-        }
-      });
-      if (res && res.code == 0) {
-        self.$message({
-          message: '退出成功',
-          type: 'success'
-        });
-        self.eventBus.$emit('loginOut', '手动登出');
-        return;
-      }
-      self.$message.error('退出登录失败');
-    },
+    fullScreen: windowScreen.fullScreen,
+    exitFullScreen: windowScreen.exitFullScreen,
+    watchScreen: windowScreen.watchScreen
   }
 }
 </script>
@@ -108,8 +126,8 @@ export default {
 <style lang="less" scoped>
   .user-admin{
     position: absolute;
-    right: 30px;
-    top: 18px;
+    right: 10px;
+    top: 15px;
     color: #666;
     .msg-tips{
       color: #2d8cf0;
@@ -147,14 +165,19 @@ export default {
         color: #bdbdbd;
       }
     }
+    .el-icon-bell,
+    .icon-fullscreen,
+    .icon-exitfullscreen,
     .logout{
       font-size: 20px;
-      color: #333333;
+      color: #666;
       display: inline-block;
       vertical-align: middle;
-      margin-left: 20px;
-      font-weight: bold;
+      margin-right: 10px;
       cursor: pointer;
+    }
+    .logout{
+      margin-right: 30px;
     }
   }
 </style>
@@ -188,6 +211,7 @@ export default {
       }
       color: #333;
     }
+    
   }
   
 </style>
