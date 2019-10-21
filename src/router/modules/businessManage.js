@@ -184,6 +184,12 @@ const newCard = () => import('@/views/businessManage/bettingCardManage/newCard')
 const exportCard = () => import('@/views/businessManage/bettingCardManage/exportCard')
 
 
+// 合作伙伴管理
+const cooperatorList = () => import('@/views/businessManage/cooperatorManage/cooperatorList')
+const cooperatorBrokerageSet = () => import('@/views/businessManage/cooperatorManage/cooperatorBrokerageSet')
+const cooperatorQuotaSet = () => import('@/views/businessManage/cooperatorManage/cooperatorQuotaSet')
+const verifyReconciliation = () => import('@/views/businessManage/cooperatorManage/verifyReconciliation')
+
 
 export default [
   // {
@@ -1012,7 +1018,8 @@ export default [
       title: '详情信息',
     },
     component: infoDetail
-  }, {
+  }, 
+  {
     path: 'businessManage/newCard',
     name: 'newCard',
     meta: {
@@ -1027,12 +1034,45 @@ export default [
       title: '新建规则'
     },
     component: newRule
-  }, {
+  }, 
+  {
     path: 'businessManage/exportCard',
     name: 'exportCard',
     meta: {
       title: '导出卡片',
     },
     component: exportCard
-  }
+  },
+  {
+    path: 'businessManage/cooperatorManage/cooperatorList',
+    name: 'cooperatorList',
+    meta: {
+      title: '合作伙伴列表',
+    },
+    component: cooperatorList
+  },
+  {
+    path: 'businessManage/cooperatorManage/cooperatorBrokerageSet',
+    name: 'cooperatorBrokerageSet',
+    meta: {
+      title: '合作佣金设置',
+    },
+    component: cooperatorBrokerageSet
+  },
+  {
+    path: 'businessManage/cooperatorManage/cooperatorQuotaSet',
+    name: 'cooperatorQuotaSet',
+    meta: {
+      title: '合作额度设置',
+    },
+    component: cooperatorQuotaSet
+  },
+  {
+    path: 'businessManage/cooperatorManage/verifyReconciliation',
+    name: 'verifyReconciliation',
+    meta: {
+      title: '结算与对账',
+    },
+    component: verifyReconciliation
+  },
 ]

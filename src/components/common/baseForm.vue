@@ -85,6 +85,14 @@
         :key="index"
         :label="list.value">{{list.label}}</el-radio>
       </el-radio-group>
+      <!-- 上下排列的单选 带输入框 -->
+      <div v-if="item.type=='radio-textarea'">
+        <el-radio v-model="form[item.props[0]]" :label="item.options[0].value">{{item.options[0].label}}</el-radio>
+        <div class="flex-wrap">
+          <el-radio v-model="form[item.props[0]]" :label="item.options[1].value">{{item.options[1].label}}</el-radio>
+          <el-input v-model="form[item.props[1]]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-input>
+        </div>
+      </div>
       <!-- 地址栏 -->
       <div v-if="item.type=='address'">
         <el-cascader size="small" v-model="citySelect" :props='cascaderProps' @change="changeCity" :options="cityData" placeholder="请选择省、市、区"></el-cascader>
@@ -328,7 +336,15 @@ export default {
           }else{
             self.$set(self.form, item.prop, [])
           }
-        }else {
+        }else if(item.type=='radio-textarea'){
+          if(item.value !='') { // 数据回填
+            self.$set(self.form, item.props[0], item.value[0])
+            self.$set(self.form, item.props[1], item.value[1])
+          }else{
+            self.$set(self.form, item.props[0], '')
+            self.$set(self.form, item.props[1], '')
+          }
+        }else{
           if(item.value !='') { // 数据回填
             self.$set(self.form, item.prop, item.value)
           }else{
@@ -342,4 +358,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .flex-wrap{
+    display: flex;
+    align-items: center;
+  }
 </style>
