@@ -73,13 +73,6 @@ export default [
   //   component: echarts
   // },
   {
-    path: '/',
-    name: 'businessCharts',
-    redirect: {
-      path: 'businessCharts/centerWatch'
-    }
-  },
-  {
     path: 'businessCharts/centerWatch',
     name: 'centerWatch',
     meta: {

@@ -51,7 +51,6 @@ export default {
         // 未能获取 .header-container
       }
     },
-  
   },
   components: {
     sideMenu,

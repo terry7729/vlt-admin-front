@@ -102,7 +102,7 @@ export default {
         if (self.menuList[0].childResources && self.menuList[0].childResources.length) {
           name = self.menuList[0].childResources[0].url
         }
-        self.$router.push({
+        self.$router.replace({
           name
         });
         // self.routerAuthorize();
