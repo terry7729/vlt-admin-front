@@ -21,9 +21,11 @@ switch(process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = 'http://10.7.0.91:8080' // 本地server环境 
 }
 
-const request = (method, url, options) => {
+const request = (method, url, options, id) => {
   const runRequest = async () => {
     const data = options.data || {};
+    // if(id) {url = `${url}/${id}`}
+    
     const formatData = data;
     try {
       const res = await axios[method](url, method === 'get' ? {params: formatData} : formatData);
