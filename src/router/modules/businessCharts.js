@@ -194,7 +194,7 @@ export default [
     },
     component: cityGameRisk
   },
-  // {
+  /// {
   //   path: 'businessCharts/warningNotice',
   //   name: 'warningNotice',
   //   meta: {
