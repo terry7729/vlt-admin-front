@@ -1,9 +1,22 @@
 <template>
- <div class="vlt-card modelAdd">
+ <div class="vlt-card modelAdd-page">
    <div class="vlt-edit-single">
      <div class="vlt-edit-wrap">
-       <el-form label-position="right" label-width="90px" :model="form" ref="form">
-          <base-form :formData="addData" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right"
+       <span class="goods-cate">物品类别</span>
+        <el-form class="goods">
+          <el-form-item>
+            <el-select v-model="selectValue" placeholder="请选择" @change="changeOption">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+       <el-form v-if="selectValue === 1" label-position="right" label-width="90px" :model="form1" ref="form1">
+          <base-form :formData="equipmentData" labelWidth="140px" ref="baseForm1" :rules="rules2" direction="right"
           @change="changeForm" ></base-form>
           <el-form-item label="上传图片" class='upLoadImg'>
             <el-upload
@@ -28,7 +41,31 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </el-form-item>
-        </el-form>
+       </el-form>
+
+       <el-form v-else label-position="right" label-width="90px" :model="form2" ref="form2">
+         <base-form :formData="fittingsData" labelWidth="140px" ref="baseForm2" :rules="rules2" direction="right"
+          @change="changeForm" ></base-form>
+          <span class="goods-cate">可用机型</span>
+         <el-form-item class="typeSelect">
+           <el-select v-model="value" placeholder="请选择设备名称">
+            <el-option
+              v-for="(item,index) in nameOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-select v-model="value" placeholder="请选择设备型号">
+            <el-option
+              v-for="(item,index) in modelOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+         </el-form-item>
+       </el-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit('form')">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -44,12 +81,28 @@ export default {
  name: "modelAdd",
  data() {
  return {
+   selectValue:1,
+   value:'',
+   options:[
+     {value:1,label:'设备'},
+     {value:2,label:'配件'}
+   ],
+   //可用机型选择框
+   nameOptions:[
+     {label:'',value:'1'},
+     {label:'',value:'2'},
+   ],
+   modelOptions:[
+     {label:'',value:'3'},
+     {label:'',value:'4'},
+   ],
    params:'',
-   form:{},
+   form1:{},
+   form2:{},
    dialogImageUrl: '',
    dialogVisible: false,
-   addData:[
-    {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
+   equipmentData:[
+    // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备型号',type:'input',prop:'equipmentModel', value:''},
     {title:'设备单价',type:'select',prop:'equipmentPrice',options:[{label:'',value:''},{label:'',value:''}]},
@@ -58,6 +111,12 @@ export default {
     {title:'预警下限',type:'input',prop:'lowerLimit', value:''},
     {title:'厂家信息',type:'input',prop:'factoryInfo', value:''},
     {title:'备注',type:'textarea',prop:'remark',value:''},
+   ],
+   fittingsData:[
+     {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
+     {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
+     {title:'配件单价',type:'select',prop:'fittingsPrice',options:[{label:'',value:''},{label:'',value:''}]},
+     {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
    ],
    rules2: {
         goodsCategory: [
@@ -105,6 +164,9 @@ export default {
    changeForm(val) {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
+    },
+    changeOption() {
+      console.log(this.selectValue);
     },
     handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
@@ -158,11 +220,26 @@ export default {
 </script>
 
 <style lang="less">
-.modelAdd{
+.modelAdd-page{
   .upLoadImg{
     .el-form-item__label{
       margin-left:52px;
     }
+  }
+  .goods {
+    margin-left: 14px;
+    display: inline-block;
+  }
+  span {
+    font-size: 12px;
+  }
+  .goods-cate {
+    margin-left: 78px;
+    margin-top: 20px;
+  }
+  .typeSelect{
+    margin-left: 52px;
+    margin-top: -16px;
   }
 }
 </style>

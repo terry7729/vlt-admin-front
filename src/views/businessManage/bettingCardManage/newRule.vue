@@ -45,7 +45,7 @@ export default {
         },
         { type: "input", title: "笔数", prop: "text1" },
         { type: "input", title: "限额", prop: "text2" },
-        { type: "input", title: "限制次数", prop: "text3" },
+        { type: "input", title: "限制次数", prop: "mixBet" },
         { type: "switch", title: "是否启用", prop: "isShow" },
         {
           type: "datetime-range",
@@ -57,7 +57,7 @@ export default {
       ],
 
       rules2: {
-        test: [
+        mixBet: [
           { required: true, validator: rules.checkEmail, trigger: "blur" }
         ],
         status: [

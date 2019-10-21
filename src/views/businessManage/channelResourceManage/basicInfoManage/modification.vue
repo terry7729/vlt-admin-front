@@ -1,7 +1,8 @@
+
 <template>
-<!-- 类型管理新增页面 -->
+<!-- 类型管理修改页面 -->
   <div class="vlt-card">
-    <div class="vlt-edit-single typeAdd-page">
+    <div class="vlt-edit-single modification-page">
       <h2 class="title">基本信息</h2>
       <div class="vlt-edit-wrap">
         <span class="goods-cate">物品类别</span>
@@ -136,7 +137,7 @@
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
 export default {
-  name: "addEquipment",
+  name: "modification",
   data() {
     return {
       dialogImageUrl: '',
@@ -211,19 +212,19 @@ export default {
         { title: "耗材名称", type: "input", prop: "consumableName", value: "" },
         { title: "耗材编号", type: "input", prop: "consumableCode", value: "" },
         {
-          title: "耗材单价",
+          title: "设施单价",
           type: "select",
           prop: "consumableUnitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
         {
-          title: "耗材大单位",
+          title: "设施大单位",
           type: "select",
           prop: "consumableBigUnit",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
         {
-          title: "耗材小单位",
+          title: "设施小单位",
           type: "select",
           prop: "consumableSmallUnit",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
@@ -305,8 +306,8 @@ export default {
 };
 </script>
 
-<style lang="less">
-.typeAdd-page {
+<style lang="less" sco-ped>
+.modification-page {
   .goods {
     margin-left: 14px;
     display: inline-block;

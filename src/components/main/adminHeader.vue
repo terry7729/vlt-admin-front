@@ -18,6 +18,8 @@ import pageTags from './pageTags'
 import adminInfo from './adminInfo'
 import {mapGetters} from 'vuex'
 
+storage.session.set('ad', 123)
+
 export default {
   name: 'adminHeader',
   data() {
