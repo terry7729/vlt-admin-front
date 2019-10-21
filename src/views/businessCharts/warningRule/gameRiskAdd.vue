@@ -251,6 +251,9 @@ export default {
 </script>
 
 <style lang='less' scoped>
+// .vlt-card{
+//   padding: 5px;
+// }
 .el-select {
   margin-right: 20px;
   margin-bottom: 20px;
@@ -276,6 +279,8 @@ export default {
 .headling {
   margin-bottom: 20px;
   font-weight: normal;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
 }
 /deep/ .el-form {
   // width: 60%;

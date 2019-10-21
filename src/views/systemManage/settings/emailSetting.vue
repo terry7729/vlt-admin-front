@@ -155,7 +155,7 @@ export default {
     },
     addSendContent() {
       let cloneData = JSON.parse(JSON.stringify(this.sendContent[0]));
-      console.log(cloneData)
+      //console.log(cloneData)
       cloneData.propType = `${cloneData.propType}${this.sendContent.length}`;
       cloneData.propDepartment = `${cloneData.propDepartment}${this.sendContent.length}`;
       cloneData.propStaff = `${cloneData.propStaff}${this.sendContent.length}`;
@@ -164,10 +164,10 @@ export default {
     },
     deleteSendContent(index) {
       this.sendContent.splice(index, 1);
-      console.log("删除成功", this.sendContent);
+      console.log("删除成功", this.sendContent[index-1].optionsStaff[1].label);
     },
     editShow(){
-      this.$router.go(-1)
+      this.$router.go(-1);
     }
   }
 };

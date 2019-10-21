@@ -259,6 +259,8 @@ export default {
 .headling {
   margin-bottom: 20px;
   font-weight: normal;
+    padding: 15px 0;
+  border-bottom: 1px solid #ccc;
 }
 /deep/ .el-form {
   // width: 60%;

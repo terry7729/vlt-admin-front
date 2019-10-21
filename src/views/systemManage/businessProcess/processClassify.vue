@@ -1,12 +1,14 @@
 <template>
   <div class="vlt-card">
     <el-row>
-      <el-col :span="6">    <!--树形结构-->
+      <el-col :span="6">
+        <!--树形结构-->
         <div class="grid-content bg-purple">
           <el-tree
             :data="data"
             show-checkbox
-            node-key="id"
+            node-key="id"           
+            :expand-on-click-node="false"
             :default-expanded-keys="[1]"
             :default-checked-keys="[1]"
             :props="defaultProps"
@@ -16,46 +18,87 @@
       </el-col>
       <el-col :span="6">
         <div class="organi-select">
-            <el-dropdown placement="bottom-start" @command="handele" > <!--下拉选择按钮 !-->
-              <el-button size="small">
-                选择操作
-                <i class="el-icon-arrow-down el-icon--right"></i>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command1="刷新">刷新</el-dropdown-item>
-                <el-dropdown-item command2="添加一级类别" >添加一级类别</el-dropdown-item>
-                <el-dropdown-item command="添加子类别" @click="modify">添加子类别</el-dropdown-item>
-                <el-dropdown-item command3="展开所有">展开所有</el-dropdown-item>
-               
-              </el-dropdown-menu>
-            </el-dropdown>
-          </div>
+          <el-dropdown placement="bottom-start" @command="handleCommand">
+            <!--下拉选择按钮 !-->
+            <el-button size="small">
+              选择操作
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="a">刷新</el-dropdown-item>
+              <el-dropdown-item command="b">添加一级类别</el-dropdown-item>
+              <el-dropdown-item command="c">添加子类别</el-dropdown-item>
+              <el-dropdown-item command="d">展开所有</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
       </el-col>
       <el-col :span="12">
         <div class="grid-content bg-purple" style="background: rgba(247, 247, 247, 1);">
           <panel :title="title" :show="true">
-            <div id="p1">
-              <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
-                <el-form-item>
-                  <span>类型名称:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <el-input v-model="formLabelAlign.name" style="width:250px"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <span>上级类别:&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <el-input v-model="formLabelAlign.region" style="width:250px"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <span>状态:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <el-input v-model="formLabelAlign.type" style="width:250px"></el-input>
-                </el-form-item>
-              </el-form>
-              <el-button type="primary" @click="modify">修改</el-button>
-              <el-button type="info">重置</el-button>
+            <div class="vlt-edit-single">
+              <div class="vlt-edit-wrap">
+                <base-form
+                  :formData="formData"
+                  labelWidth="90px"
+                  ref="baseForm"
+                  direction="right"
+                  @change="changeForm"
+                ></base-form>
+                <el-row class="vlt-edit-btn">
+                  <el-button type="primary" v-prevent="1000" size="medium" @click="submit">修改</el-button>
+                  <el-button size="medium" @click="cancel">重置</el-button>
+                </el-row>
+              </div>
             </div>
           </panel>
         </div>
       </el-col>
     </el-row>
+    <!-- 添加一级类别弹框 -->
+    <div class="role-dialog">
+      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="roleDialog" >
+        <!-- <roleifometion></roleifometion> -->
+        <div class="vlt-edit-single" >
+          <h2 class="title">添加一级类别</h2>
+          <div class="vlt-edit-wrap">
+            <base-form
+              :formData="formData1"
+              labelWidth="90px"
+              ref="baseForm"
+              direction="right"
+              @change="changeForm"
+            ></base-form>
+            <el-row class="vlt-edit-btn">
+              <el-button type="primary" v-prevent="1000" size="medium" @click="addParentClass">提交并保存</el-button>
+              <el-button size="medium" @click="cancel">取消</el-button>
+            </el-row>
+          </div>
+        </div>
+      </el-dialog>
+    </div>
+    <!-- 添加子类别弹框 -->
+    <div class="role-dialog">
+      <el-dialog :visible.sync="dialogFormVisible2" width="600px" custom-class="roleDialog">
+        <!-- <roleifometion></roleifometion> -->
+        <div class="vlt-edit-single">
+          <h2 class="title">添加子类别</h2>
+          <div class="vlt-edit-wrap">
+            <base-form
+              :formData="formData2"
+              labelWidth="90px"
+              ref="baseForm"
+              direction="right"
+              @change="changeForm"
+            ></base-form>
+            <el-row class="vlt-edit-btn">
+              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button size="medium" @click="cancel">取消</el-button>
+            </el-row>
+          </div>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -64,6 +107,8 @@ export default {
   name: "",
   data() {
     return {
+      dialogFormVisible: false,
+      dialogFormVisible2: false,
       title: "类别信息",
       data: [
         {
@@ -145,28 +190,48 @@ export default {
         {
           value: "选项4",
           label: "展开所有"
-        },
+        }
       ],
-       value:"",
-      labelPosition: "right",
-      formLabelAlign: {
-        name: "",
-        region: "",
-        type: ""
-      }
+      value: "",
+      formData: [
+        { title: "类别名称", type: "input", prop: "className", value: "" },
+        {
+          title: "上级类别",
+          type: "input",
+          prop: "superiorClasses",
+          value: ""
+        },
+        { title: "状态", type: "switch", prop: "status", value: "" }
+      ],
+      formData1: [
+        { title: "类别名称", type: "input", prop: "classesName", value: "" },
+        { title: "状态", type: "switch", prop: "status", value: "" }  
+      ],
+      formData2: [
+        { title: "类别名称", type: "input", prop: "classesName", value: "" },
+        { title: "上级类别", type: "input", prop: "superiorClasses", value: "" },
+        { title: "状态", type: "switch", prop: "status", value: "" }
+      ]
     };
   },
   methods: {
-    modify(){
-      this.$router.push(
-        "processClassify/processClassifyModify",
-        )
+    // modify() {
+    //   this.$router.push("processClassify/processClassifyModify");
+    // },
+    handleCommand(command) {
+      if (command == "c") {
+        // this.$router.push("processClassify/processClassifyModify");
+        this.dialogFormVisible2 = true;
+      }else if(command=="b"){
+        this.dialogFormVisible = true;
+      }
     },
-     handele(){
-         this.$router.push(
-        "processClassify/processClassifyModify",
-        )
-      },
+    // handele() {
+    //   this.$router.push("processClassify/processClassifyModify");
+    // }
+    addParentClass(){
+     
+    }
   }
 };
 </script>
@@ -180,6 +245,6 @@ export default {
 }
 #p1 {
   text-align: center;
-  padding:20px;
-} 
+  padding: 20px;
+}
 </style>

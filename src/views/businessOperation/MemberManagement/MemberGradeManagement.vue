@@ -66,6 +66,12 @@ export default {
           placeholder: "请输入"
         }
       ],
+      //表单验证
+      MemberGradeWriteRule: {
+        memberRank: [
+          { required: true, message: "请输入会员级别", trigger: "blur" }
+        ]
+      },
       //表格数据
       MemberGradeTableData: [
         {
@@ -110,7 +116,9 @@ export default {
       this.MemberGradeWriteVisible = true;
     },
     //表格的change事件
-    MemberGradeChange() {}
+    MemberGradeChange() {},
+    // 编辑表单change事件啥
+    MemberGradeWritechangeForm() {}
   }
 };
 </script>

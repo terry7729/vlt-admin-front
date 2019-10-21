@@ -33,7 +33,7 @@ const cityRisk = () => import('@/views/businessCharts/warningRule/cityRisk')
 //城市游戏风险
 const cityGameRisk = () => import('@/views/businessCharts/warningRule/cityGameRisk')
 //告警通知
-const warningNotice = () => import('@/views/businessCharts/warningRule/warningNotice')
+// const warningNotice = () => import('@/views/businessCharts/warningRule/warningNotice')
 
 //用户风险
 const userRisk = () => import('@/views/businessCharts/warningRule/userRisk')
@@ -194,14 +194,14 @@ export default [
     },
     component: cityGameRisk
   },
-  {
-    path: 'businessCharts/warningNotice',
-    name: 'warningNotice',
-    meta: {
-      title: '城市游戏风险指标',
-    },
-    component: warningNotice
-  },
+  /// {
+  //   path: 'businessCharts/warningNotice',
+  //   name: 'warningNotice',
+  //   meta: {
+  //     title: '城市游戏风险指标',
+  //   },
+  //   component: warningNotice
+  // },
   {
     path: 'businessCharts/userRisk',
     name: 'userRisk',
