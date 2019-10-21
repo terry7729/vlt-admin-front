@@ -88,7 +88,16 @@ export default {
       },
     //跳转编辑页面
     toEdit(){
-      console.log(23231)
+      let query = this.$route.query
+      // console.log('query', query.hasOwnProperty('id'));
+      if (query.hasOwnProperty('id')) {
+        this.$router.push({
+          name: 'fundParameterEdit',
+          query:{
+            id:  query.id
+          }
+        })
+      }
     }
  },
 }

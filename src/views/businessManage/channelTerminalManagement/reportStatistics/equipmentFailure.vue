@@ -1,13 +1,14 @@
 <template>
-  <!-- 设备管理 - 设备列表 -->
-  <div class="">
-    <search-bar
+<!-- 设备故障报表 -->
+  <div class="vlt-card">
+   <search-bar
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
       :total="999"
       labelWidth="80px"
     >
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
     </search-bar>
 
     <el-row class="card-table">
@@ -25,12 +26,6 @@
           :label="item.label"
           :width="item.width"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
-            <el-button type="primary" size="mini" @click="resume(scope.row)">履历</el-button>
-          </template>
-        </el-table-column>
       </el-table>
     </el-row>
 
@@ -47,16 +42,23 @@
 
 <script type="text/javascript">
 export default {
-  name: "equipmentList",
+  name: "accessoriesList",
   data() {
     return {
       // 搜索组件配置
       searchOptions: [
         {
+          type: "input",
+          prop: "inputName",
+          value: "",
+          title: "设备名称：",
+          placeholder: "请输入"
+        },
+        {
           type: "select",
           prop: "selectName",
           value: "",
-          title: "设备名称：",
+          title: "设备型号：",
           placeholder: "请选择",
           options: [
             {
@@ -70,164 +72,135 @@ export default {
           ]
         },
         {
-          type: "select",
-          prop: "selectName2",
-          value: "",
-          title: "设备型号：",
-          placeholder: "请选择",
-          options: [
-            {
-              label: "型号1",
-              value: 1
-            },
-            {
-              label: "型号2",
-              value: 2
-            },
-            {
-              label: "型号3",
-              value: 3
-            }
-          ]
-        },
-        {
-          type: "input",
-          prop: "inputName",
-          value: "",
-          title: "设备编码：",
-          placeholder: "请输入"
+          title: "维修日期：",
+          type: "datetime-range",
+          prop: "date4",
+          value: ["2019-08-12 09:10:10", "2019-09-20 12:12:12"],
+          option: ["start", "end"]
         },
         {
           type: "input",
           prop: "inputName2",
           value: "",
-          title: "所属仓库：",
+          title: "所属机构：",
           placeholder: "请输入"
-        },
-        {
-          type: "select",
-          prop: "selectName3",
-          value: "",
-          title: "设备状态：",
-          placeholder: "请选择",
-          options: [
-            {
-              label: "状态1",
-              value: 1
-            },
-            {
-              label: "状态2",
-              value: 2
-            },
-            {
-              label: "状态3",
-              value: 3
-            }
-          ]
         }
       ],
-
+      controlOptions: [
+        { name: "导出", type: "primary", icon: "download" },
+        {name: '打印当前', type: "primary", icon: 'printer'}
+      ],
       tableDatas: {
         tableData: [
           {
             id: 0,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 1,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 2,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 3,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 4,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 5,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 6,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 7,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 8,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           },
           {
             id: 9,
-            device: 'xxx',
+            deviceName: 'xxx',
             type: 'xxx',
             coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            deviceStatus: '正常'
+            hallNumber : '65010117',
+            affiliation: '广东省',
+            faultLevel: '一般',
+            reportingTime:'2018-12-19 16:10:40',
+            maintenanceStaff: '张三'
           }
         ],
         tableKey: [
@@ -238,7 +211,7 @@ export default {
           },
           {
             label: "设备名称",
-            value: "device",
+            value: "deviceName",
             width: ""
           },
           {
@@ -252,23 +225,28 @@ export default {
             width: ""
           },
           {
-            label: "仓库类型",
-            value: "Warehousetype",
+            label: "大厅编号",
+            value: "hallNumber",
             width: "80"
           },
           {
-            label: "所属仓库",
-            value: "ownWarehouse",
+            label: "所属机构",
+            value: "affiliation",
             width: ""
           },
           {
-            label: "使用状态",
-            value: "useStatus",
+            label: "故障级别",
+            value: "faultLevel",
             width: ""
           },
           {
-            label: "设备状态",
-            value: "deviceStatus",
+            label: "报障时间",
+            value: "reportingTime",
+            width: ""
+          },
+          {
+            label: "维修员",
+            value: "maintenanceStaff",
             width: ""
           }
         ]
@@ -287,6 +265,9 @@ export default {
           id: row.id
         }
       })
+    },
+    selectBtn () {
+      console.log(1);
     },
     resume (row) {
       console.log(row);

@@ -1,5 +1,5 @@
-<!-- 渠道终端管理 - 设备管理 -->
 <template>
+  <!-- 维护知识库 -->
   <div class="vlt-card vc-plr0">
     <el-container>
       <el-aside width="200px">
@@ -22,44 +22,46 @@ export default {
     return {
       menuData: {
         id: 0,
-        title: '设备管理',
-        icon: '',
-        list: [{
-          id: 0,
-          name: '设备列表',
-          active: true,
-          url: 'equipmentList',
-        },{
-          id: 1,
-          name: '配件列表',
-          active: false,
-          url: 'accessoriesList',
-        }]
+        title: "维修知识库",
+        icon: "",
+        list: [
+          {
+            id: 0,
+            name: "维修知识库",
+            active: true,
+            url: "knowledgeBase"
+          },
+          {
+            id: 1,
+            name: "知识库审核",
+            active: false,
+            url: "baseReview"
+          },
+        ]
       }
     };
-    
   },
   components: {
     "terminal-sideMenu": terminalSideMenu
   },
   watch: {
-    $route (val) {
+    $route(val) {
       // console.log(val);
-      if (val.name == "equipment") {
+      if (val.name == "knowledgeBaseIndex") {
         this.$router.push({
-          name: 'equipmentList'
-        })
+          name: "knowledgeBase"
+        });
       }
     }
   },
-  beforeCreate () {
-    if (this.$router.history.current.name ==  "equipment") {
-        this.$router.push({
-        name: 'equipmentList'
-      })
+  beforeCreate() {
+    if (this.$router.history.current.name == "knowledgeBaseIndex") {
+      this.$router.push({
+        name: "knowledgeBase"
+      });
     }
   },
-  created () {
+  created() {
     // this.$router.push({
     //   name: 'maintenanceEfficiency'
     // })
@@ -69,10 +71,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .vlt-card {
-    .el-main {
-        padding: 0;
-        border-left: 1px solid #e6e6e6;
-    }
+.vlt-card {
+  .el-main {
+    padding: 0;
+    border-left: 1px solid #e6e6e6;
   }
+}
 </style>

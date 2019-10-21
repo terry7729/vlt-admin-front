@@ -1,13 +1,13 @@
-<!-- 渠道终端管理 - 报表统计 -->
 <template>
+<!-- 查看维修知识库 -->
   <div class="vlt-card">
-    报表统计
+    查看维修知识库
   </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: "reportStatistics",
+  name: "",
   data() {
    return {
 

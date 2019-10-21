@@ -1,4 +1,4 @@
-<!-- 渠道终端管理 - 设备管理 -->
+<!-- 渠道终端管理 - 报表统计 -->
 <template>
   <div class="vlt-card vc-plr0">
     <el-container>
@@ -22,18 +22,23 @@ export default {
     return {
       menuData: {
         id: 0,
-        title: '设备管理',
+        title: '报表统计',
         icon: '',
         list: [{
           id: 0,
-          name: '设备列表',
+          name: '设备故障报表',
           active: true,
-          url: 'equipmentList',
+          url: 'reportEquipmentFailure',
         },{
           id: 1,
-          name: '配件列表',
+          name: '设备管理损耗报表',
           active: false,
-          url: 'accessoriesList',
+          url: 'deviceLoss',
+        },{
+          id: 2,
+          name: '配件损耗报表',
+          active: false,
+          url: 'accessoryLoss',
         }]
       }
     };
@@ -45,17 +50,17 @@ export default {
   watch: {
     $route (val) {
       // console.log(val);
-      if (val.name == "equipment") {
+      if (val.name == "reportStatistics") {
         this.$router.push({
-          name: 'equipmentList'
+          name: 'reportEquipmentFailure'
         })
       }
     }
   },
   beforeCreate () {
-    if (this.$router.history.current.name ==  "equipment") {
+    if (this.$router.history.current.name ==  "reportStatistics") {
         this.$router.push({
-        name: 'equipmentList'
+        name: 'reportEquipmentFailure'
       })
     }
   },
