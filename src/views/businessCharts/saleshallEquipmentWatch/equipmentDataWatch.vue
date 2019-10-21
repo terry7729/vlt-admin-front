@@ -36,17 +36,14 @@
             <el-table-column prop="terminalsOnlineTotal" align="center" label="终端机在线数量"></el-table-column>
         </el-table-column>       
       </el-table>
-     <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            :current-page="1"
-            :page-size="10"
-            :total="totalCount"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+     <table-paging
+        style="margin-top:30px"
+        :current-page="1"
+        :page-size="10"
+        :total="totalCount"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>
