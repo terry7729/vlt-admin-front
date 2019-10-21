@@ -25,10 +25,10 @@
           :width="item.width"
         ></el-table-column>
 
-        <el-table-column fixed="right" label="操作">
+        <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
-            <el-button type="primary" size="mini" @click="toAudit(scope.row)">审核</el-button>
+            <el-button type="primary" size="mini" @click="toAudit(scope.row)" v-text="scope.row.type=='已审核'? '重新审核':'审核'"></el-button>
             <el-button type="primary" size="mini" @click="toDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>

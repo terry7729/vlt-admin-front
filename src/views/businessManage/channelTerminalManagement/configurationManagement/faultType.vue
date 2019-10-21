@@ -1,13 +1,14 @@
 <template>
-  <!-- 维修知识库-->
+  <!-- 配置管理 - 故障类型 -->
   <div class="vlt-card">
+    故障类型
     <search-bar
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
       :total="999"
       labelWidth="80px"
-    ></search-bar>
+    ><control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar></search-bar>
 
     <el-row class="card-table">
       <el-table
@@ -27,7 +28,7 @@
 
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
+            <el-button type="primary" size="mini" @click="handleClick(scope.row)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,39 +53,22 @@ export default {
       // 搜索组件配置
       searchOptions: [
         {
-          type: "select",
-          prop: "selectName",
-          value: "",
-          title: "物品类别：",
-          placeholder: "请选择",
-          options: [
-            {
-              label: "类别1",
-              value: 1
-            },
-            {
-              label: "类别2",
-              value: 2            
-            }
-          ]
-        },
-        {
-          type: "select",
-          prop: "selectName",
+          type: "input",
+          prop: "inputName",
           value: "",
           title: "故障类型：",
-          placeholder: "请选择",
-          options: [
-            {
-              label: "类型1",
-              value: 1
-            },
-            {
-              label: "类型2",
-              value: 2
-            }
-          ]
+          placeholder: "请输入"
+        },
+        {
+          type: "input",
+          prop: "inputName2",
+          value: "",
+          title: "设备名称：",
+          placeholder: "请输入"
         }
+      ],
+      controlOptions: [
+        { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
       tableDatas: {
         tableData: [
@@ -92,71 +76,61 @@ export default {
             id: 0,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 1,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 2,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 3,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 4,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 5,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 6,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 7,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 8,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           },
           {
             id: 9,
             category: "设备",
             name: "投注机",
-            type: "投注机进水",
-            description: "投注机进水后开不了机"
+            type: "投注机进水"
           }
         ],
         tableKey: [
@@ -179,11 +153,6 @@ export default {
             label: "故障类型",
             value: "type",
             width: ""
-          },
-          {
-            label: "故障描述",
-            value: "description",
-            width: ""
           }
         ]
       }
@@ -194,13 +163,18 @@ export default {
     search(form) {
       console.log("search", form);
     },
-    handleClick(row) {
+    selectBtn() {
       this.$router.push({
-        name: "knowledgeBaseInfo",
-        query: {
-          id: row.id
-        }
-      });
+        name: 'addFaultType'
+      })
+    },
+    handleClick(row) {
+      // this.$router.push({
+      //   name: "knowledgeBaseInfo",
+      //   query: {
+      //     id: row.id
+      //   }
+      // });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

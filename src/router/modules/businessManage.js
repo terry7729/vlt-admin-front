@@ -139,7 +139,6 @@ const detail = () => import('@/views/businessManage/channelResourceManage/storeM
 
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
-const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
 
 // 渠道终端管理 - 服务分析
 const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/serviceAnalysis')
@@ -171,6 +170,14 @@ const knowledgeBaseIndex = () => import('@/views/businessManage/channelTerminalM
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBase')
 const baseReview = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/baseReview')
 const knowledgeBaseInfo = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBaseInfo')
+
+// 配置管理
+const configurationManagement = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/index')
+const faultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/faultType')
+const addFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/addFaultType')
+const editFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/editFaultType')
+
+
 
 // 资金结算管理
 const fundParameter = () => import('@/views/businessManage/fundSettlement/fundParameter')
@@ -909,12 +916,36 @@ export default [
      }
    ]
  }, {
-    path: 'businessManage/channelTerminal/configuration',
-    name: 'configuration',
+    path: 'businessManage/channelTerminal/configurationManagement',
+    name: 'configurationManagement',
     meta: {
       title: '配置管理',
     },
-    component: configuration
+    component: configurationManagement,
+    children: [{
+      path: 'faultType',
+      name: 'faultType',
+      meta: {
+        title: '故障类型 ',
+      },
+      component: faultType,
+    },{
+     path: 'addFaultType',
+     name: 'addFaultType',
+     meta: {
+       title: '新增故障类型 ',
+     },
+     component: addFaultType,
+   },
+    {
+      path: 'editFaultType',
+      name: 'editFaultType',
+      meta: {
+        title: '修改故障类型',
+      },
+      component: editFaultType,
+    }
+    ]
   },
   {
     path: 'businessManage/channelDeal',
