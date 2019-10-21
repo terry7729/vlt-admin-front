@@ -8,7 +8,13 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions" @select="select" @click.native position="right"></control-bar>
+        <control-bar
+          slot="extend-bar"
+          :options="controlOptions"
+          @select="select"
+          @click.native
+          position="right"
+        ></control-bar>
       </search-bar>
     </section>
     <div>
@@ -36,17 +42,14 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            :current-page="1"
-            :page-size="10"
-            :total="100"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+      <table-paging
+        style="margin-top:30px"
+        :current-page="1"
+        :page-size="10"
+        :total="totalCount"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>

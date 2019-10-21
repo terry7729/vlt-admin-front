@@ -1,0 +1,11 @@
+.home-container {
+  height: 100%;
+}
+.home-container .right-container {
+  text-align: left;
+  overflow: hidden;
+}
+.home-container .main {
+  overflow: auto;
+  border-radius: 4px;
+}

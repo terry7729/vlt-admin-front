@@ -1,7 +1,7 @@
 <template>
   <div class="entry-container">
     <div class="entry-hd">
-      <div class="menu-logo">
+      <div class="hd-logo">
         <span class="ct">
           <i class="iconfont icon-B-fulicaipiao"></i>
           <strong class="name">{{title}}</strong>

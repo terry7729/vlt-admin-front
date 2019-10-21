@@ -27,7 +27,7 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
-          <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
+          <!-- <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button> -->
         </template>
       </el-table-column>
     </el-table>
