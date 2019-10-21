@@ -99,7 +99,7 @@
         <el-checkbox 
           v-for="(list,index) in item.options"
           :key="index"
-          :label="list.key">
+          :label="list.label">
           {{list.value}}
         </el-checkbox>
       </el-checkbox-group>

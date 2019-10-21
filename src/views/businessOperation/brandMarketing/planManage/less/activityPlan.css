@@ -6,7 +6,11 @@
   font-weight: 800;
 }
 .active-plan .base-info {
-  margin-left: 40px;
+  padding: 0;
+  margin-left: 50px;
+}
+.active-plan .base-later {
+  margin-left: 50px;
 }
 .active-plan .upload-module {
   margin: 20px 0 20px 150px;
@@ -30,9 +34,6 @@
   margin-bottom: 20px;
   position: relative;
   left: 75px;
-}
-.active-plan .base-later {
-  margin-left: 100px;
 }
 .active-plan .active-rule {
   margin: 20px 0 20px 150px;
