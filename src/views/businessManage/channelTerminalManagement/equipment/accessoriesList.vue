@@ -1,6 +1,6 @@
 <template>
   <!-- 设备管理 - 配件列表 -->
-  <div class="vlt-card">
+  <div class="">
     <search-bar
       class="search-bar-demo"
       @search="search"

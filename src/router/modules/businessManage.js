@@ -1,3 +1,5 @@
+import { S_IROTH } from 'constants'
+
 // 业务管理系统路由配置
 
 // 首页概况
@@ -137,9 +139,6 @@ const detail = () => import('@/views/businessManage/channelResourceManage/storeM
 
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
-const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
-const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
-const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
 
 // 渠道终端管理 - 服务分析
 const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/serviceAnalysis')
@@ -159,6 +158,26 @@ const accessoriesList = () => import('@/views/businessManage/channelTerminalMana
 const equipmentList = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentList')
 const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
 const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
+
+// 渠道终端管理 - 报表统计
+const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/reportStatistics')
+const accessoryLoss = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/accessoryLoss')
+const deviceLoss = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/deviceLoss')
+const reportEquipmentFailure = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/equipmentFailure')
+
+// 渠道终端管理 - 维护知识库
+const knowledgeBaseIndex = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/index')
+const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBase')
+const baseReview = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/baseReview')
+const knowledgeBaseInfo = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBaseInfo')
+
+// 配置管理
+const configurationManagement = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/index')
+const faultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/faultType')
+const addFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/addFaultType')
+const editFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/editFaultType')
+
+
 
 // 资金结算管理
 const fundParameter = () => import('@/views/businessManage/fundSettlement/fundParameter')
@@ -814,8 +833,34 @@ export default [
     meta: {
       title: '报表统计',
     },
-    component: reportStatistics
-  }, {
+    component: reportStatistics,
+    children: [{
+        path: 'accessoryLoss',
+        name: 'accessoryLoss',
+        meta: {
+          title: '设备故障报表',
+        },
+        component: accessoryLoss,
+      },
+      {
+        path: 'deviceLoss',
+        name: 'deviceLoss',
+        meta: {
+          title: '设备管理损耗报表',
+        },
+        component: deviceLoss,
+      },
+      {
+        path: 'equipmentFailure',
+        name: 'reportEquipmentFailure',
+        meta: {
+          title: '配件损耗报表',
+        },
+        component: reportEquipmentFailure,
+      }
+    ]
+  },
+   {
     path: 'businessManage/channelTerminal/equipment',
     name: 'equipment',
     meta: {
@@ -838,34 +883,69 @@ export default [
       },
       component: accessoriesList,
     }]
-  }, {
-    path: 'businessManage/channelTerminal/equipmentDesc',
-    name: 'equipmentDesc',
-    meta: {
-      title: '配件详情',
+  }, 
+  {
+   path: 'businessManage/channelTerminal/knowledgeBase',
+   name: 'knowledgeBaseIndex',
+   meta: {
+     title: '维修知识库',
+   },
+   component: knowledgeBaseIndex,
+   children: [{
+       path: 'knowledgeBase',
+       name: 'knowledgeBase',
+       meta: {
+         title: '维修知识库 ',
+       },
+       component: knowledgeBase,
+     },{
+      path: 'knowledgeBaseInfo',
+      name: 'knowledgeBaseInfo',
+      meta: {
+        title: '维修知识库详情 ',
+      },
+      component: knowledgeBaseInfo,
     },
-    component: equipmentDesc,
-  }, {
-    path: 'businessManage/channelTerminal/equipmentResume',
-    name: 'equipmentResume',
-    meta: {
-      title: '配件详情',
-    },
-    component: equipmentResume,
-  },{
-    path: 'businessManage/channelTerminal/knowledgeBase',
-    name: 'knowledgeBase',
-    meta: {
-      title: '维护知识库',
-    },
-    component: knowledgeBase
-  }, {
-    path: 'businessManage/channelTerminal/configuration',
-    name: 'configuration',
+     {
+       path: 'baseReview',
+       name: 'baseReview',
+       meta: {
+         title: '知识库审核',
+       },
+       component: baseReview,
+     }
+   ]
+ }, {
+    path: 'businessManage/channelTerminal/configurationManagement',
+    name: 'configurationManagement',
     meta: {
       title: '配置管理',
     },
-    component: configuration
+    component: configurationManagement,
+    children: [{
+      path: 'faultType',
+      name: 'faultType',
+      meta: {
+        title: '故障类型 ',
+      },
+      component: faultType,
+    },{
+     path: 'addFaultType',
+     name: 'addFaultType',
+     meta: {
+       title: '新增故障类型 ',
+     },
+     component: addFaultType,
+   },
+    {
+      path: 'editFaultType',
+      name: 'editFaultType',
+      meta: {
+        title: '修改故障类型',
+      },
+      component: editFaultType,
+    }
+    ]
   },
   {
     path: 'businessManage/channelDeal',
@@ -958,7 +1038,7 @@ export default [
     component: developmentPlanCreate
   },
   {
-    path: 'businessManage/fundParameter',
+    path: 'businessManage/fundSettlement/fundParameter',
     name: 'fundParameter',
     meta: {
       title: '资金参数管理',
@@ -966,7 +1046,7 @@ export default [
     component: fundParameter
   },
   {
-    path: 'businessManage/fundParameterDetail',
+    path: 'businessManage/fundSettlement/fundParameterDetail',
     name: 'fundParameterDetail',
     meta: {
       title: '资金参数管理详情',
@@ -974,7 +1054,7 @@ export default [
     component: fundParameterDetail
   },
   {
-    path: 'businessManage/fundParameterEdit',
+    path: 'businessManage/fundSettlement/fundParameterEdit',
     name: 'fundParameterEdit',
     meta: {
       title: '资金参数管理编辑',
@@ -982,7 +1062,7 @@ export default [
     component: fundParameterEdit
   },
   {
-    path: 'businessManage/globalParameterEdit',
+    path: 'businessManage/fundSettlement/globalParameterEdit',
     name: 'globalParameterEdit',
     meta: {
       title: '全局参数管理编辑',
@@ -990,7 +1070,7 @@ export default [
     component: globalParameterEdit
   },
   {
-    path: 'businessManage/newfundParameter',
+    path: 'businessManage/fundSettlement/newfundParameter',
     name: 'newfundParameter',
     meta: {
       title: '新增全局参数管理',

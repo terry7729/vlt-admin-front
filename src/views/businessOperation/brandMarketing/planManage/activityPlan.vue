@@ -8,7 +8,6 @@
     <div class="create-plan">
       <span>新建活动计划</span>
     </div>
-
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="活动内容" name="activeContent">
         <div class="vlt-edit-single">
@@ -23,6 +22,74 @@
                   :rules="rule"
                   @change="changeBaseForm"
                 ></base-form>
+              </el-form>
+              <el-form
+                label-width="140px"
+                :model="baseFormLater"
+                ref="baseFormLater"
+                class="base-later"
+              >
+                <el-form-item label="适用群体">
+                  <el-checkbox-group
+                    v-model="baseFormLater.group.type"
+                    @change="handleCheckedChange"
+                  >
+                    <el-checkbox label="游客"></el-checkbox>
+                    <el-checkbox label="新会员"></el-checkbox>
+                    <el-checkbox label="老会员"></el-checkbox>
+                  </el-checkbox-group>
+                  <el-select v-model="baseFormLater.level" placeholder="请选择会员等级">
+                    <el-option
+                      v-for="item in memberLv"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="活动区域">
+                  <el-input prefix-icon="el-icon-location-outline" v-model="baseForm.area" 请输入活动区域></el-input>
+                </el-form-item>
+
+                <el-form-item label="活动大厅">
+                  <el-radio v-model="baseFormLater.lobby" label="全部大厅">区域内全部大厅</el-radio>
+                  <el-radio v-model="baseFormLater.lobby" label="指定大厅">区域内指定大厅</el-radio>
+                  <el-input
+                    :disabled="baseFormLater.lobby=='全部大厅'"
+                    v-model="baseFormLater.lobbyId"
+                    placeholder="请输入大厅编号"
+                  ></el-input>
+                </el-form-item>
+
+                <el-form-item label="活动目标">
+                  <el-checkbox label="活动期间累计充值" v-model="recharCheck"></el-checkbox>
+                  <el-input v-model="baseFormLater.rechar" :disabled="!recharCheck"></el-input>
+                  <el-checkbox label="活动期间累计消费" v-model="payCheck"></el-checkbox>
+                  <el-input v-model="baseFormLater.pay" :disabled="!payCheck"></el-input>
+                </el-form-item>
+
+                <el-form-item label="活动预算">
+                  <el-input v-model="baseFormLater.budget" placeholder="请输入活动预算"></el-input>
+                </el-form-item>
+
+                <el-form-item label="是否发布消息">
+                  <el-checkbox-group v-model="baseFormLater.news">
+                    <el-checkbox label="不发送"></el-checkbox>
+                    <el-checkbox label="发送短信"></el-checkbox>
+                    <el-checkbox label="终端/APP发送"></el-checkbox>
+                    <el-checkbox label="发送短信与终端/APP推送"></el-checkbox>
+                  </el-checkbox-group>
+                </el-form-item>
+
+                <el-form-item label="消息内容">
+                  <el-input
+                    type="textarea"
+                    rows="3"
+                    v-model="baseFormLater.remark"
+                    placeholder="请输入消息内容"
+                  ></el-input>
+                </el-form-item>
               </el-form>
             </div>
           </panel>
@@ -303,16 +370,19 @@ export default {
         time: "",
         intro: "",
         manage: "",
-        organ: "",
-        group: [],
-        level: "",
+        organ: ""
+      },
+      baseFormLater: {
+        group: { type: [] },
         area: "",
-        lobby: "",
+        level: "",
+        lobbyId: "",
+        lobby: "全部大厅",
         rechar: "",
         pay: "",
         budget: "",
-        news: [],
-        reamrk:''
+        news: ["不发送"],
+        remark: ""
       },
       baseData: [
         { type: "input", title: "活动名称", prop: "name" },
@@ -344,67 +414,24 @@ export default {
             { label: "", value: "中彩" },
             { label: "", value: "广东分中心" }
           ]
-        },
-        {
-          type: "checkbox",
-          title: "适用群体",
-          prop: "group",
-          value: [],
-          options: [
-            { label: "游客", value: "游客" },
-            { label: "新会员", value: "新会员" },
-            { label: "老会员", value: "老会员" }
-          ]
-        },
-        {
-          type: "select",
-          placeholder: "请选择会员等级",
-          prop: "level",
-          options: [
-            { label: "", value: "lv1" },
-            { label: "", value: "lv2" },
-            { label: "", value: "lv3" }
-          ]
-        },
-        {
-          type: "input-icon",
-          title: "活动区域",
-          prop: "area",
-          icon: "location-outline"
-        },
-        {
-          title: "活动大厅",
-          type: "radio",
-          prop: "lobby",
-          value: "",
-          options: [
-            { label: "区域内全部大厅", value: "all" },
-            { label: "区域内指定大厅", value: "some" }
-          ]
-        },
-        {
-          type: "input",
-          disabled: true,
-          placeholder: "输入大厅编号",
-          prop: "lobbyId"
-        },
-        { type: "input", title: "活动期间累计充值", prop: "rechar" },
-        { type: "input", title: "活动期间累计消费", prop: "pay" },
-        { type: "input", title: "活动预算", prop: "budget" },
-        {
-          type: "checkbox",
-          title: "是否发布消息",
-          prop: "news",
-          value: [],
-          options: [
-            { label: "不发送", value: "不发送" },
-            { label: "发送短信", value: "发送短信" },
-            { label: "终端/APP发送", value: "终端/APP发送" }
-          ]
-        },
-        { type: "textarea", title: "消息内容", prop: "remark" }
+        }
       ],
-
+      memberLv: [
+        {
+          value: "选项1",
+          label: "LV1"
+        },
+        {
+          value: "选项2",
+          label: "Lv2"
+        },
+        {
+          value: "选项3",
+          label: "Lv3"
+        }
+      ],
+      recharCheck: "",
+      payCheck: "",
       ruleSelect: ["充值", "消费", "完成任务"],
       createRule: {
         one: {
@@ -427,7 +454,6 @@ export default {
         }
       },
       tableData: [],
-
       processForm: {},
       fundsintoDialog: false,
       resourceDialog: false,
@@ -556,13 +582,7 @@ export default {
       this.taskDialog = false;
     },
     changeBaseForm(val) {
-      for (let item of this.baseData) {
-        if (val.lobby == "some" && item.prop == "lobbyId") {
-          item.disabled = false;
-        } else if (val.lobby == "all" && item.prop == "lobbyId") {
-          item.disabled = true;
-        }
-      }
+      console.log(val);
     },
 
     changeLaterForm(val) {
@@ -575,17 +595,14 @@ export default {
     handleExceed() {},
     handlePreview() {},
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePictureCardPreview(file) {},
     handleCheckedChange(value) {
-      console.log(value);
+      // console.log(value);
     },
 
-    handleClick() {},
-    changeLater(val) {
-      console.log("form参数", val);
-    }
+    handleClick() {}
   },
   computed: {},
   created() {},

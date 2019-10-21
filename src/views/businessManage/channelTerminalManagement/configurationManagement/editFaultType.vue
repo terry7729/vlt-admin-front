@@ -1,13 +1,12 @@
-<!-- 渠道终端管理 - 维护知识库 -->
 <template>
+<!-- 修改 配置管理 -->
   <div class="vlt-card">
-    维护知识库
   </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: "knowledgeBase",
+  name: "",
   data() {
    return {
 

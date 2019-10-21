@@ -80,38 +80,41 @@ export default {
     })
   },
   methods: {
-    openConfirm(){
-      this.$router.push({
+    // openConfirm(){
+      // this.$router.push({
+      //   path:'/login'
+      // })
+    // },
+    openConfirm() {
+      this.$confirm('是否退出登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.loginOut();
+      }).catch(() => {
+        // 取消         
+      });
+    },
+    async loginOut() {
+        this.$router.push({
         path:'/login'
       })
-    },
-    // openConfirm() {
-    //   this.$confirm('是否退出登录?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(() => {
-    //     this.loginOut();
-    //   }).catch(() => {
-    //     // 取消         
-    //   });
-    // },
-    async loginOut() {
-      const self = this;
-      const res = await self.$api.getLoginOut({
-        data: {
-          userId: self.user.id
-        }
-      });
-      if (res && res.code == 0) {
-        self.$message({
-          message: '退出成功',
-          type: 'success'
-        });
-        self.eventBus.$emit('loginOut', '手动登出');
-        return;
-      }
-      self.$message.error('退出登录失败');
+      // const self = this;
+      // const res = await self.$api.getLoginOut({
+      //   data: {
+      //     userId: self.user.id
+      //   }
+      // });
+      // if (res && res.code == 0) {
+      //   self.$message({
+      //     message: '退出成功',
+      //     type: 'success'
+      //   });
+      //   self.eventBus.$emit('loginOut', '手动登出');
+      //   return;
+      // }
+      // self.$message.error('退出登录失败');
     },
     fullScreen: windowScreen.fullScreen,
     exitFullScreen: windowScreen.exitFullScreen,

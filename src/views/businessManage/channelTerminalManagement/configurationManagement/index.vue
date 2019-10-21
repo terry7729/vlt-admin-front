@@ -1,6 +1,5 @@
-<!-- 渠道终端管理 - 设备管理 -->
-<template>
-  <div class="vlt-card vc-plr0">
+ <template>
+ <div class="vlt-card vc-plr0">
     <el-container>
       <el-aside width="200px">
         <terminal-sideMenu :menuList="menuData"></terminal-sideMenu>
@@ -22,44 +21,40 @@ export default {
     return {
       menuData: {
         id: 0,
-        title: '设备管理',
-        icon: '',
-        list: [{
-          id: 0,
-          name: '设备列表',
-          active: true,
-          url: 'equipmentList',
-        },{
-          id: 1,
-          name: '配件列表',
-          active: false,
-          url: 'accessoriesList',
-        }]
+        title: "配置管理",
+        icon: "",
+        list: [
+          {
+            id: 0,
+            name: "故障类型",
+            active: true,
+            url: "faultType"
+          }
+        ]
       }
     };
-    
   },
   components: {
     "terminal-sideMenu": terminalSideMenu
   },
   watch: {
-    $route (val) {
+    $route(val) {
       // console.log(val);
-      if (val.name == "equipment") {
+      if (val.name == "configurationManagement") {
         this.$router.push({
-          name: 'equipmentList'
-        })
+          name: "faultType"
+        });
       }
     }
   },
-  beforeCreate () {
-    if (this.$router.history.current.name ==  "equipment") {
-        this.$router.push({
-        name: 'equipmentList'
-      })
+  beforeCreate() {
+    if (this.$router.history.current.name == "configurationManagement") {
+      this.$router.push({
+        name: "faultType"
+      });
     }
   },
-  created () {
+  created() {
     // this.$router.push({
     //   name: 'maintenanceEfficiency'
     // })
@@ -69,10 +64,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .vlt-card {
-    .el-main {
-        padding: 0;
-        border-left: 1px solid #e6e6e6;
-    }
+.vlt-card {
+  .el-main {
+    padding: 0;
+    border-left: 1px solid #e6e6e6;
   }
+}
 </style>

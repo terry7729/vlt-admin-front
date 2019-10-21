@@ -1,13 +1,12 @@
-<!-- 渠道终端管理 - 报表统计 -->
 <template>
+<!-- 添加 - 配置管理 -->
   <div class="vlt-card">
-    报表统计
   </div>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: "reportStatistics",
+  name: "",
   data() {
    return {
 
