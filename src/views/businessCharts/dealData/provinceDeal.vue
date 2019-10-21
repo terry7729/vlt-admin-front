@@ -122,5 +122,8 @@ export default {
 };
 </script>
 
-<style rel="less" lang="less" scoped>
+<style  lang="less" scoped>
+.vlt-card{
+  padding: 5px;
+}
 </style>

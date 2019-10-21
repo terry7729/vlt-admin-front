@@ -34,11 +34,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <table-paging
-        style="margin-top:30px"
+     <table-paging
         :current-page="1"
         :page-size="10"
-        :total="totalCount"
+        :total="100"
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
