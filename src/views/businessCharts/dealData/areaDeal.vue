@@ -34,18 +34,14 @@
         <el-table-column align="center" prop="bigAwardAmount" label="大奖中奖"></el-table-column>
         <el-table-column align="center" prop="grandPrize" label="大奖兑奖"></el-table-column>
       </el-table>
-      <!-- :page-size="[10,20,30, 50]" -->
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            :current-page="1"
-            :page-size="10"
-            :total="totalCount"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+      <table-paging
+        style="margin-top:30px"
+        :current-page="1"
+        :page-size="10"
+        :total="totalCount"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>
@@ -155,7 +151,7 @@ export default {
     };
   },
   methods: {
-     //获取中央交易数据列表
+    //获取中央交易数据列表
     async getAreaDeal() {
       const self = this;
       const res = await self.$api.getAreaDeal({
@@ -171,12 +167,12 @@ export default {
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit=pageSize
-      this.getAreaDeal()
+      this.listQuery.limit = pageSize;
+      this.getAreaDeal();
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page=currentPage
-      this.getAreaDeal()
+      this.listQuery.page = currentPage;
+      this.getAreaDeal();
     },
     search(form) {
       console.log("search", form);
@@ -242,7 +238,6 @@ export default {
       this.dataprovinceList = provinceArr;
       this.datacityList = cityArr;
       this.datacountryList = countryArr;
-      
     },
     //省和市的联动,根据市/100的整数商进行遍历
     getProvince() {
