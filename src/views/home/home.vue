@@ -43,11 +43,14 @@ export default {
   methods: {
     // 窗口变化设置相关区域高度
     resize() {
-      const self = this;
-      const headHeight = document.querySelector('.header-container').offsetHeight;
-      self.$refs.main.style.height = `${document.documentElement.clientHeight - headHeight}px`;
+      try {
+        const header = document.querySelector('.header-container');
+        const headHeight = header.offsetHeight;
+        this.$refs.main.style.height = `${document.documentElement.clientHeight - headHeight}px`;
+      } catch (error) {
+        // 未能获取 .header-container
+      }
     },
-  
   },
   components: {
     sideMenu,
