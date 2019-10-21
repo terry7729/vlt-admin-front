@@ -1,7 +1,9 @@
 <template>
   <div class="vlt-card">
     <div class="roleManage">
+      <!-- 搜索 -->
       <searchBar :options="roleManageoptions" :total="999">
+        <!-- 新增按钮 -->
         <controlBar
           slot="extend-bar"
           @select="roleManageAddclick"
@@ -9,6 +11,7 @@
           position="left"
         ></controlBar>
       </searchBar>
+      <!-- 表格 -->
       <el-table :data="roleManagetableData" border style="width: 100%; margin-top: 10px">
         <el-table-column prop="roleManageId" label="序号"></el-table-column>
         <el-table-column prop="roleManageName" label="用户角色"></el-table-column>
@@ -16,7 +19,7 @@
         <el-table-column prop="roleManageDescribe" label="描述"></el-table-column>
         <el-table-column prop="roleManageCreater" label="创建人"></el-table-column>
         <el-table-column prop="roleManageCreateDate" label="创建时间"></el-table-column>
-        <el-table-column label="角色状态" min-width="110">
+        <el-table-column label="角色状态" min-width="110" prop="accountStatus">
           <template slot-scope="scope">
             <tableRowStatus
               :scope="scope"
@@ -52,24 +55,23 @@
           </template>
         </el-table-column>
       </el-table>
-      <tablePaging :total="99" :currentPage="1" :pageSize="10"></tablePaging>
+      <tablePaging
+        :total="99"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></tablePaging>
+      <!-- 编辑弹框 -->
       <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
         <div class="vlt-edit-single">
-          <el-form
-            label-position="right"
-            label-width="90px"
-            :model="roleManageWriteform"
-            ref="form"
-            class="device-add"
-          >
-            <base-form
-              :formData="roleManageWriteData"
-              ref="baseForm"
-              :rules="roleManageWriteRule"
-              direction="right"
-              @change="changeForm"
-            ></base-form>
-          </el-form>
+          <base-form
+            :formData="roleManageWriteData"
+            ref="baseForm"
+            :rules="roleManageWriteRule"
+            direction="right"
+            @change="changeForm"
+          ></base-form>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -77,23 +79,16 @@
         </div>
       </el-dialog>
       <div>
+        <!-- 权限设置弹框 -->
         <el-dialog title="权限设置" :visible.sync="AuthoritydialogFormVisible">
           <div class="vlt-edit-single">
-            <el-form
-              label-position="right"
-              label-width="90px"
-              :model="roleManageAuthorityWriteform"
-              ref="form"
-              class="device-add"
-            >
-              <base-form
-                :formData="roleManageAuthorityWriteData"
-                ref="baseForm"
-                :rules="roleManageAuthorityWriteRule"
-                direction="right"
-                @change="AuthoritychangeForm"
-              ></base-form>
-            </el-form>
+            <base-form
+              :formData="roleManageAuthorityWriteData"
+              ref="baseForm"
+              :rules="roleManageAuthorityWriteRule"
+              direction="right"
+              @change="AuthoritychangeForm"
+            ></base-form>
           </div>
           <div slot="footer" class="dialog-footer">
             <el-button @click="AuthoritydialogFormVisible = false">取 消</el-button>
@@ -111,33 +106,37 @@ export default {
   name: "",
   data() {
     return {
-      roleManageAuthorityWriteform: {},
+      // 权限设置弹框默认为false
       AuthoritydialogFormVisible: false,
+      // 编辑弹框表单验证
       roleManageWriteRule: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        roleManageName: [
+          { required: true, message: "请输入用户角色", trigger: "blur" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        accountType: [
+          { required: true, message: "请输入角色类型", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        accountStatus: [
+          { required: true, message: "请选择角色状态", trigger: "change" }
+        ],
+        roleManageAuthority: [
+          { required: true, message: "请选择角色权限", trigger: "change" }
+        ]
       },
+      // 权限设置弹框表单验证
       roleManageAuthorityWriteRule: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
-        ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        roleManageAuthority: [
+          { required: true, message: "请选择角色权限", trigger: "change" }
+        ]
       },
+      // 编辑弹框表单类型
       roleManageWriteData: [
-        { type: "input", title: "用户角色", prop: "accountname" },
-        { type: "input", title: "角色类型", prop: "accounttype" },
+        { type: "input", title: "用户角色", prop: "roleManageName" },
+        { type: "input", title: "角色类型", prop: "accountType" },
         {
           type: "select",
           title: "角色状态",
-          prop: "accountstatus",
+          prop: "accountStatus",
           option: [
             {
               label: "专用存款账户",
@@ -152,7 +151,7 @@ export default {
 
         {
           type: "cascader-multiple",
-          prop: "accountauthority",
+          prop: "roleManageAuthority",
           value: "",
           title: "角色权限",
           placeholder: "请选择",
@@ -427,10 +426,11 @@ export default {
         },
         { type: "textarea", title: "描述", prop: "describe" }
       ],
+      //权限设置弹框表单
       roleManageAuthorityWriteData: [
         {
           type: "cascader-multiple",
-          prop: "accountauthority",
+          prop: "accountAuthority",
           value: "",
           title: "角色权限",
           placeholder: "请选择",
@@ -704,9 +704,10 @@ export default {
           ]
         }
       ],
-      roleManageWriteform: {},
+      // 编辑弹框默认为false
       dialogFormVisible: false,
-      roleManageCurrentPage: 1,
+      // roleManageCurrentPage: 1,
+      // 表格数据
       roleManagetableData: [
         {
           roleManageId: 1,
@@ -718,10 +719,11 @@ export default {
           roleManageCreateDate: "13800131358"
         }
       ],
+      // 搜索表单类型
       roleManageoptions: [
         {
           type: "select",
-          prop: "roleManageUsername",
+          prop: "roleManageName",
           value: "",
           title: "用户角色",
           placeholder: "请输入",
@@ -739,9 +741,9 @@ export default {
         },
         {
           type: "select",
-          prop: "roleManageStatus",
+          prop: "accountStatus",
           value: "",
-          title: "用户状态",
+          title: "角色状态",
           placeholder: "请输入",
           options: [
             { label: "哈哈", value: "0" },
@@ -756,27 +758,39 @@ export default {
           placeholder: ["开始时间", "结束时间"]
         }
       ],
+      // 新增按钮类型
       roleManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }]
     };
   },
   components: {},
   methods: {
+    // 新增按钮
     roleManageAddclick() {
       this.$router.push("roleManageAdd");
     },
+    // 权限设置按钮
     roleManageAuthority() {
       this.AuthoritydialogFormVisible = true;
     },
+    // 编辑按钮
     roleManageWrite() {
       this.dialogFormVisible = true;
     },
+    // 查看按钮
     roleManageLook() {
       this.$router.push("roleManageExamine");
     },
-    roleManageSizeChange() {},
-    roleManageCurrentChange() {},
+
+    // 表单change事件
     changeForm() {},
-    AuthoritychangeForm() {}
+    // 权限表单change事件
+    AuthoritychangeForm() {},
+    handleSizeChange(size) {
+      console.log(`每页 ${size} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    }
   }
 };
 </script>

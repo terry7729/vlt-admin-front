@@ -1,6 +1,6 @@
 <template>
- <div class="vlt-card ">
-   <div class="tabs-content">
+<div class="vlt-card ">
+    <div class="tabs-content">
      <h3>基本信息管理</h3>
      <el-tabs tab-position="left" style="height: 800px;">
        <el-tab-pane label="类型管理">
@@ -20,7 +20,7 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button @click="typeCheck(scope.row.id)" type="primary" v-prevent="2000" size="mini">查看</el-button>
+                <el-button @click="typeCheck(scope.row.id,scope.row.goodsCategory)" type="primary" v-prevent="2000" size="mini">查看</el-button>
                 <el-button @click="typeAmend(scope.row.id)" type="primary" v-prevent="2000" size="mini">修改</el-button>
               </template>
             </el-table-column>
@@ -28,15 +28,6 @@
           <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
             @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
           </table-paging>
-          <div class="vlt-edit-single">
-            <el-dialog title="基本信息" :visible.sync="typeDialogFormVisible">
-              <base-form :formData="typeAmendData" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right" @change="typeChangeForm" ></base-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="typeDialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="typeDialogFormVisible = false">保 存</el-button>
-              </div>
-            </el-dialog>
-          </div>
        </el-tab-pane>
        <el-tab-pane label="型号管理">
          <search-bar class="search-bar-demo" @search="search" :options="modelInfoOptions" :total="999" labelWidth="80px"></search-bar>
@@ -138,21 +129,17 @@ export default {
    ],
    typeData:[
      {id:1,goodsCategory:'设备',goodsName:'xxx',remark:'',state:''},
+     {id:2,goodsCategory:'设施',goodsName:'xxx',remark:'',state:''},
+     {id:3,goodsCategory:'耗材',goodsName:'xxx',remark:'',state:''},
+     {id:3,goodsCategory:'配件',goodsName:'xxx',remark:'',state:''},
+
    ],
    modelData:[
      {id:1,goodsCategory:'设备',goodsName:'xxx',goodsModel:'xxx',state:''},
    ],
-   //修改
-  typeAmendData:[
-    {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'设备',value:'sb'},{label:'设施',value:'ss'}]},
-    {title:'设备名称',type:'input',prop:'equipmentName', value:''},
-    {title:'设备单位',type:'input',prop:'equipmentUnit',options:[{label:'台',value:'0'},{label:'个',value:''}]},
-    {title:'是否标配',type:'radio',prop:'isStandard',value:'',options:[{label:1,value:'是'},{label:2,value:'否'}]},
-    {title:'是否回收',type:'radio',prop:'isRecycle',value:'',options:[{label:1,value:'是'},{label:2,value:'否'}]},
-    {title:'备注',type:'textarea',prop:'remark',value:''},
-  ],
+
   modelAmendData:[
-    {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'设备',value:'1'},{label:'配件',value:'2'}]},
     {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备型号',type:'input',prop:'equipmentModel', value:''},
     {title:'设备单价',type:'select',prop:'equipmentPrice',options:[{label:'',value:''},{label:'',value:''}]},
@@ -227,15 +214,40 @@ export default {
   },
   //修改
   typeAmend(id){
-    this.typeDialogFormVisible = true;
+    this.$router.push({
+      name:'modification',
+      query:{id}
+    })
      console.log(id)
   },
-  //查看
-  typeCheck(id){
-    this.$router.push({
-      name: 'typeCheck',
-      query: {id}
-    })
+  //设备查看
+  typeCheck(id,goodsCategory){
+    switch(goodsCategory){
+      case '设备':
+        this.$router.push({
+          name: 'equipmentCheck',
+          query: {id}
+        });
+        break;
+      case '设施':
+        this.$router.push({
+          name: 'facilityCheck',
+          query: {id}
+        });
+        break;
+      case '耗材':
+        this.$router.push({
+          name:'consumableCheck',
+          query:{id}
+        });
+        break;
+      case '配件':
+        this.$router.push({
+          name:'mountingsCheck',
+          query:{id}
+        });
+        break;
+    }
   },
   typeChangeForm(val) {
       Object.assign(this.params, val);

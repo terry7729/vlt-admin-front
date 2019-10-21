@@ -44,14 +44,14 @@ export default {
           type: "radio",
           prop: "userName",
           value: "",
-          options: [{ key: 1, value: "是" }, { key: 0, value: "否" }]
+          options: [{ label:"是", value: "1" }, { label: "否", value: "0" }]
         },
         {
           title: "是否保存密码",
           type: "radio",
           prop: "savepwd",
           value: "",
-          options: [{ key: 1, value: "是" }, { key: 0, value: "否" }]
+          options:  [{ label:"是", value: "1" }, { label: "否", value: "0" }]
         }
       ],
       data2: [
