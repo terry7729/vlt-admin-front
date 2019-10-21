@@ -64,9 +64,17 @@ export default {
     select(val) {
       if(val.title=='渠道新建') {
         this.$router.push({path:'./channelCreate',query:{id:123}})
-      }else if(val.title=='销售权限') {
+      } else if(val.title=='销售权限') {
         this.$router.push({path:'./channelSalesPermission',query:{id:123}})
-      }
+      } else if(val.title=='资金权限') {
+        this.$router.push({path:'./channelFundsPermission',query:{id:123}})
+      } else if(val.title=='资源采购') {
+        this.$router.push({path:'./resourcePurchase',query:{id:123}})
+      } else if(val.title=='资源申请') {
+        this.$router.push({path:'./resourceApply',query:{id:123}})
+      } else if(val.title=='资源发放') {
+        this.$router.push({path:'./resourceProvide',query:{id:123}})
+      } 
     }
   },
 }

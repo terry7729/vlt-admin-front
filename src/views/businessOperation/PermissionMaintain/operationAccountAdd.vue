@@ -33,11 +33,14 @@ export default {
   name: "",
   data() {
     return {
+      formData: [],
+      // 新增表单类型
       operationAccountAddData: [
         {
           type: "select",
           title: "所属渠道",
           prop: "operationManageBelong",
+          value: "",
           options: [
             {
               label: "专用存款账户",
@@ -49,12 +52,30 @@ export default {
             }
           ]
         },
-        { type: "input", title: "账户名称", prop: "operationManageName" },
+        {
+          type: "input",
+          title: "账户名称",
+          value: "",
+          prop: "operationManageName"
+        },
+        {
+          type: "input",
+          title: "员工编号",
+          value: "",
+          prop: "operationManageStaffNum"
+        },
+        {
+          type: "input",
+          title: "年龄",
+          value: "",
+          prop: "operationManageAge"
+        },
 
         {
           type: "select",
           title: "账户角色",
           prop: "operationManageRoleName",
+          value: "",
           options: [
             {
               label: "专用存款账户",
@@ -66,16 +87,39 @@ export default {
             }
           ]
         },
-        { type: "input", title: "手机号", prop: "operationManagetelephone" },
-        { type: "input", title: "身份证号", prop: "operationManageIDCard" },
-        { type: "input", title: "联系地址", prop: "operationManageAdress" },
-        { type: "input", title: "账户密码", prop: "operationManageLimit" },
+        {
+          type: "input",
+          title: "手机号",
+          value: "",
+          prop: "operationManagetelephone"
+        },
+        {
+          type: "input",
+          title: "身份证号",
+          value: "",
+          prop: "operationManageIDCard"
+        },
+        {
+          type: "input",
+          title: "联系地址",
+          value: "",
+          prop: "operationManageAdress"
+        },
+        {
+          type: "input",
+          title: "账户密码",
+          prop: "operationManagePassword",
+
+          disabled: true,
+          placeholder: "初始密码为123456"
+        },
         {
           type: "cascader-multiple",
           prop: "operationManageLimit",
           value: "",
           title: "账号权限",
           placeholder: "请选择",
+          value: "",
           options: [
             {
               value: "zhinan",
@@ -346,6 +390,7 @@ export default {
           ]
         }
       ],
+      // 新增表单验证
       operationAccountAddRules: {
         operationManageBelong: [
           { required: true, message: "请选择所属渠道", trigger: "change" }
@@ -355,6 +400,12 @@ export default {
         ],
         operationManageRoleName: [
           { required: true, message: "请选择账户角色", trigger: "change" }
+        ],
+        operationManageStaffNum: [
+          { required: true, message: "请输入员工编号", trigger: "blur" }
+        ],
+        operationManageAge: [
+          { required: true, message: "请输入年龄", trigger: "blur" }
         ],
         operationManagetelephone: [
           { required: true, message: "请输入手机号", trigger: "blur" }
@@ -378,8 +429,23 @@ export default {
   },
   components: {},
   methods: {
-    operationAccountAddChangeForm() {},
-    operationAccountAddSubmit() {},
+    // 新增表单change事件
+    operationAccountAddChangeForm(form) {
+      // console.log(form);
+      this.formData = form;
+      //console.log(this.formData);
+    },
+    // 提交按钮
+    operationAccountAddSubmit(form) {
+      console.log(this.formData);
+      //console.log(form);
+      //console.log(this.operationAccountAddData);
+      let formdata = this.$refs.baseForm.form;
+
+      //console.log(this.$refs.baseForm.form);
+      //console.log(formdata);
+    },
+    // 取消按钮
     operationAccountAddCancel() {
       this.$router.go(-1);
     }

@@ -20,7 +20,7 @@ export default {
         { title: "投注卡ID", value: "", prop: "lotteryDetailID" },
         { title: "投注卡类型", value: "", prop: "lotteryDetailType" },
         { title: "所在区域", value: "", prop: "lotteryDetailAddress" },
-        { title: "武林争霸", value: "", prop: "lotteryDetailHegemony" },
+        { title: "游戏名称", value: "", prop: "lotteryDetailHegemony" },
         { title: "订单编号", value: "", prop: "lotteryDetailPhone" },
         { title: "投注内容", value: "", prop: "lotteryDetailContent" },
         { title: "投注金额", value: "", prop: "lotteryDetailMoney" },

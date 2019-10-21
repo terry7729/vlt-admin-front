@@ -4,14 +4,14 @@
       <el-tab-pane label="渠道新建" name="first"></el-tab-pane>
       <el-tab-pane label="渠道新建流程图" name="second"></el-tab-pane>
     </el-tabs>
-    <panel title="基本信息" :show="true" style="margin-bottom:10px">
+    <panel title="基本信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
           <base-form :formData="formData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         </div>
       </div>
     </panel>
-    <panel title="人员信息" :show="true" style="margin-bottom:10px">
+    <panel title="人员信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single" v-for="(item, index) in workerData" :key="index">
         <div v-if="index!==0" class="title-wrap">
           <h2 class="title">{{`人员信息(${index+1})`}}</h2>
@@ -23,14 +23,42 @@
       </div>
       <el-button class="addMember" @click="addMember" icon="el-icon-plus">添加成员</el-button>
     </panel>
-    <panel title="财务信息" :show="true" style="margin-bottom:10px">
+    <panel title="财务信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
           <base-form :formData="financeData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         </div>
       </div>
     </panel>
-    <panel title="销售游戏" :show="true" style="margin-bottom:10px">
+    <panel title="投注卡规则" :show="true" style="margin-bottom:15px">
+      <div class="vlt-edit-single">
+        <div class="vlt-edit-wrap">
+          <el-form :model="betCard" label-position="right" label-width="90px">
+            <el-form-item label="卡费规则">
+              <div class="flex-wrap">
+                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.num" placeholder="请输入数量（张）"></el-input></div>
+                <div class="flex-wrap"><span class="label">收费</span><el-input v-model="betCard.money" placeholder="请输入金额（元）"></el-input></div>
+              </div>
+            </el-form-item>
+            <el-form-item label="押金设置">
+              <el-radio v-model="betCard.radio" label="1">不收费</el-radio>
+              <el-radio v-model="betCard.radio" label="2">全部收费</el-radio>
+              <el-radio v-model="betCard.radio" label="3">按投注卡申请量收取</el-radio>
+            </el-form-item>
+            <el-form-item label="押金金额" v-if="betCard.radio==2">
+              <el-input v-model="betCard.money2" placeholder="请输入金额（元）"></el-input>
+            </el-form-item>
+            <el-form-item label="押金金额" v-if="betCard.radio==3">
+              <div class="flex-wrap">
+                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.num2" placeholder="请输入数量（张）"></el-input></div>
+                <div class="flex-wrap"><span class="label">金额</span><el-input v-model="betCard.money2" placeholder="请输入金额（元）"></el-input></div>
+              </div>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+    </panel>
+    <panel title="销售游戏" :show="true" style="margin-bottom:15px">
       <el-table :data="tableData" border class="table">
         <el-table-column label="序号"  type="index" width="80px"></el-table-column>
         <el-table-column label="游戏名称" prop="gameName"></el-table-column>
@@ -66,7 +94,7 @@
         </el-table-column>
       </el-table>
     </panel>
-    <panel title="发放设备" :show="true" style="margin-bottom:10px">
+    <!-- <panel title="发放设备" :show="true" style="margin-bottom:15px">
       <el-form label-position="right" label-width="90px" ref="form"
         :model="formDevice"
         :rules="rules"
@@ -92,8 +120,44 @@
         </el-form-item>
       </el-form>
       <el-button class="addDevice" @click="addDevice" icon="el-icon-plus">添加设备</el-button>
+    </panel> -->
+    <panel title="发放资源" :show="true" style="margin-bottom:15px">
+      <el-form label-position="right" label-width="90px" ref="form"
+        :model="formDevice"
+        :rules="rules"
+        class="device-form">
+        <el-form-item v-for="(item,index) in resourceData" :key="index" :label="`${item.title}${index+1}`">
+          <el-select v-model="item.type" placeholder="请选择资源类型" class="device-item">
+            <el-option
+              v-for="(list, index) in item.optionsType"
+              :key="index"
+              :label="list.label"
+              :value="list.value">
+            </el-option>
+          </el-select>
+          <el-select v-model="item.name" placeholder="请选择资源名称" class="device-item">
+            <el-option
+              v-for="(list,index) in item.optionsName"
+              :key="index"
+              :label="list.label"
+              :value="list.value">
+            </el-option>
+          </el-select>
+          <el-select v-model="item.model" placeholder="请选择设备型号" class="device-item">
+            <el-option
+              v-for="(list, index) in item.optionsModel"
+              :key="index"
+              :label="list.label"
+              :value="list.value">
+            </el-option>
+          </el-select>
+          <el-input v-model="item.number" class="device-item" placeholder="请输入数量"></el-input>
+          <el-button v-if="index!==0" type="text" class="delete" @click="deleteResource(index)">删除</el-button>
+        </el-form-item>
+      </el-form>
+      <el-button class="addDevice" @click="addResource" icon="el-icon-plus">添加设备</el-button>
     </panel>
-    <panel title="其他附件" :show="true" style="margin-bottom:10px">
+    <panel title="其他附件" :show="true" style="margin-bottom:15px">
       <el-form label-position="right" 
         label-width="90px" 
         ref="form"
@@ -125,10 +189,38 @@
 </template>
 
 <script>
+import mixin from '@/utils/mixin';
+const typeData = [
+  {label:'类型一',value:'1'},
+  {label:'类型二',value:'2'},
+  {label:'类型三',value:'3'},
+];
+const nameData = [
+  {label:'名称一',value:'4'},
+  {label:'名称二',value:'5'},
+  {label:'名称三',value:'6'},
+];
+const modelData = [
+  {label:'型号一',value:'7'},
+  {label:'型号二',value:'8'},
+  {label:'型号三',value:'9'},
+];
 export default {
   name: "channelList",
+  mixins: [mixin],
   data() {
     return {
+      betCard: {
+        num:'',
+        money:'',
+        radio: '1',
+        num2: '',
+        money: ''
+      },
+      resourceData: [ // 发放资源数据
+        {title:'资源类型',type:'',model:'',name:'',number:'',optionsType:typeData,optionsName:nameData,optionsModel:modelData,}
+      ],
+      radio: '1',
       fileList: [],
       activeName: "first",
       formData: [
@@ -149,7 +241,8 @@ export default {
         {title: '身份证照背面', type: 'upload', prop: 'idCardBack', value: ''}]
       ],
       financeData: [
-        {title: '销售保证金', type: 'select', prop: 'ss', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
+        {title: '合作预交款', type: 'input', prop: 'sss', value: ''},
+        {title: '授信额度', type: 'input', prop: 'ss', value: ''},
         {title: '代销费费率', type: 'select', prop: 'bb', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
         {title: '收款凭证', type: 'upload-drag', prop: 'cc', value: ''}
       ],
@@ -170,35 +263,42 @@ export default {
       memberArray: [], // 用于保存人员信息数据
     };
   },
+  watch: {
+    resourceData: {
+      handler(newValue, oldValue) {
+        let res = JSON.parse(JSON.stringify(newValue));
+        let params = []
+        res.forEach((item)=>{
+          // 保留你需要的参数
+          let param = (({type, name, model, number}) =>({type, name, model, number}))(item);
+          params.push(param)
+        })
+        console.log('params', params)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
+  },
   created() {},
   methods: {
+    deleteResource(index) {
+      this.resourceData.splice(index, 1);
+    },
+    addResource() {
+      let obj = {
+        title:'资源类型',
+        type:'',model:'',
+        name:'',number:'',
+        optionsType:typeData,
+        optionsName:nameData,
+        optionsModel:modelData,
+      }
+      this.$set(this.resourceData, this.resourceData.length, obj);
+    },
     handleExceed() {},
     handleRemove() {},
     handlePreview() {},
     beforeRemove() {},
-    addDevice() {
-      let cloneData = JSON.parse(JSON.stringify(this.deviceData[0]))
-      cloneData.propType = `${cloneData.propType}${this.deviceData.length}`
-      cloneData.propModel = `${cloneData.propModel}${this.deviceData.length}`
-      let obj = {}
-      obj[cloneData.propType] = '';
-      obj[cloneData.propModel] = '';
-      this.$set(this.deviceData, this.deviceData.length, cloneData);
-      this.$set(this.deviceParam, this.deviceData.length-1, obj);
-      // this.deviceData.forEach((item)=>{
-      //   let obj = {};
-      //   obj[item.propType]
-      //   this.$set(this.formDevice, item.propType, this.formDevice[item.propType])
-      //   this.$set(this.formDevice, item.propModel, this.formDevice[item.propModel])
-      // })
-      console.log('this.deviceData', this.deviceData)
-      console.log('this.DeviceParam', this.deviceParam)
-    },
-    deleteDevice(index) {
-      this.deviceData.splice(index, 1)
-      this.deviceParam.splice(index, 1);
-      console.log('删除', this.deviceData)
-    },
     changeSwitchBet(val) {
       // this.switchBetText = val ? '允许' : '禁止'
     },
@@ -261,7 +361,7 @@ export default {
 }
 .addDevice{
   max-width: 468px;
-  margin-left: 60px;
+  margin-left: 108px;
 }
 .vlt-card{
   margin-bottom: 10px;
@@ -279,11 +379,22 @@ export default {
   padding: 16px;
 }
 .device-item{
-  margin-right: 20px;
+  margin-right: 15px;
+  width: 160px;
 }
 .submit-wrap{
   text-align: right;
   padding: 10px 0;
+}
+.flex-wrap{
+  display: flex;
+  align-items: center;
+  .label{
+    color: #444;
+    font-size: 12px;
+    flex: none;
+    margin: 0 8px;
+  }
 }
 // .addMember:focus{
 //   background: #FFF;

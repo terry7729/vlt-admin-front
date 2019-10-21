@@ -45,7 +45,7 @@ export default {
         { type: "input", title: "权益编码", prop: "WriteNumber" },
         {
           type: "select",
-          title: "操作等级",
+          title: "会员级别",
           prop: "WriteGrade",
           options: [
             { label: "哈哈", value: "0" },
@@ -61,19 +61,7 @@ export default {
             { label: "嘿嘿", value: "1" }
           ]
         },
-        { type: "textarea", title: "权益描述", prop: "WriteDescribe" },
-        {
-          title: "创建时间",
-          type: "datepicker",
-          prop: "WriteCreateDate",
-          value: ""
-        },
-        {
-          title: "更新时间",
-          type: "datepicker",
-          prop: "WriteUpdateDate",
-          value: ""
-        }
+        { type: "textarea", title: "权益描述", prop: "WriteDescribe" }
       ]
     };
   },

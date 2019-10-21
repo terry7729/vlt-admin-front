@@ -1,10 +1,10 @@
 <template>
   <div class="vlt-card account_detail">
     <div class="account_detail_box">
-      <panel title="账户资料" :show="true">
+      <panel title="账户资料" :show="true" style="margin-bottom:20px">
         <base-Info :infoList="accountData"></base-Info>
       </panel>
-      <panel title="资金账户" :show="true">
+      <panel title="资金账户" :show="true" style="margin-bottom:20px">
         <base-Info :infoList="moneyAccount"></base-Info>
       </panel>
       <div class="last_bottom_list">

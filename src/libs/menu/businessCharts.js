@@ -148,7 +148,7 @@ export default [{
         {
           childResources: [],
           icon: "el-icon-menu",
-          name: "componentDemo",
+          name: "组件",
           url: 'componentDemo'
         },
         // {
@@ -157,12 +157,12 @@ export default [{
         //   name: "demo1",
         //   url: 'demo1'
         // },
-        {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "echarts",
-          url: 'echarts'
-        },
+        // {
+        //   childResources: [],
+        //   icon: "el-icon-menu",
+        //   name: "echarts",
+        //   url: 'echarts'
+        // },
       ],
 
     },
