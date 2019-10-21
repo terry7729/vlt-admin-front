@@ -25,10 +25,10 @@
           :label="item.label"
           :width="item.width"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作">
+        <el-table-column fixed="right" label="操作" width="180">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
-            <el-button v-if="scope.row.status === '待激活'" type="primary" size="mini" @click="activation(scope.row)">激活</el-button>
+            <!-- <el-button v-if="scope.row.status === '待激活'" type="primary" size="mini" @click="activation(scope.row)">激活</el-button> -->
             <el-button type="danger" size="mini" @click="logout(scope.row)">注销</el-button>
           </template>
         </el-table-column>

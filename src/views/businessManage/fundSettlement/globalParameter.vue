@@ -1,6 +1,7 @@
 <template>
- <div class="vlt-card globalParameter-page">
-   <el-tabs v-model="activeName" st-yle="height: 1200px;" @tab-click="handleClick">
+<!-- 查看页面 -->
+ <div class="vlt-card globalParameter-page ">
+   <el-tabs v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="参数内容" name="first">
       <div class="basic-info">
         <div class="basic-title">
@@ -31,53 +32,76 @@
         <div class="basic-title">
           <h3>纳税</h3>
         </div>
-        <base-info :infoList="payTaxesInfoList"></base-info>
+        <base-info :infoList="bettingCardInfoList"></base-info>
       </div>
     </el-tab-pane>
     <el-tab-pane label="审核流程" name="second">
-      审核流程
+      <div class="flow">
+        开始
+      </div>
+      <div class="vlt-edit-single new-apply">
+        <h2 class="title">新建申请</h2>
+        <div class="vlt-edit-wrap">
+          <base-form :formData="data2" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right"
+          @change="changeForm"></base-form>
+        </div>
+      </div>
     </el-tab-pane>
   </el-tabs>
  </div>
 </template>
 
 <script type="text/javascript">
+import rules from "@/utils/rules.js";
 export default {
  name: "globalParameter",
  data() {
  return {
     activeName: 'first',
+    params:{},
     basicInfoList: [
-        { title: "生效时间", value: "2132132", prop: "" },
-        { title: "游戏兑换比例", value: "", prop: "cycleType" },
-        { title: "弃奖规则", value: "", prop: "gameStatus" },
-        { title: "代销费率", value: "", prop: "gameName" },
-        { title: "状态", value: "", prop: "officialEndSale" },
-        { title: "创建人", value: "", prop: "officialEndSale" },
-        { title: "创建时间", value: "", prop: "officialEndSale" }
+        { title: "生效时间", value: "2132132", prop: "takeEffectTime" },
+        { title: "游戏兑换比例", value: "", prop: "gameConversionRation" },
+        { title: "弃奖规则", value: "", prop: "abandonPrizeRule" },
+        { title: "代销费率", value: "", prop: "sellRate" },
+        { title: "状态", value: "", prop: "state" },
+        { title: "创建人", value: "", prop: "creator" },
+        { title: "创建时间", value: "", prop: "createTime" }
       ],
       fundInfoList:[
-        {title:'返奖率',value:'',prop:'aaa'},
-        {title:'调节基金',value:'',prop:'bbb'}
+        {title:'返奖率',value:'',prop:'slipperRate'},
+        {title:'调节基金',value:'',prop:'regulationFund'}
       ],
       issueInfoList:[
-        {title:'发行经费占比',value:'',prop:'aaa'},
-        {title:'中福彩中心',value:'',prop:'aaa'},
-        {title:'省级福彩中心',value:'',prop:'aaa'},
-        {title:'市级福彩中心',value:'',prop:'aaa'},
-        {title:'销售厅',value:'',prop:'aaa'},
+        {title:'发行经费占比',value:'',prop:'offeringFunds'},
+        {title:'中福彩中心',value:'',prop:'lotteryCenter'},
+        {title:'省级福彩中心',value:'',prop:'provincialLottery'},
+        {title:'市级福彩中心',value:'',prop:'cityLottery'},
+        {title:'销售厅',value:'',prop:'salesHall'},
       ],
       publicInfoList:[
-        {title:'公益金占比',value:'',prop:'aaa'},
-        {title:'中福彩中心',value:'',prop:'aaa'},
-        {title:'省级福彩中心',value:'',prop:'aaa'},
-        {title:'市级福彩中心',value:'',prop:'aaa'},
-        {title:'销售厅',value:'',prop:'aaa'},
+        {title:'公益金占比',value:'',prop:'publicFund'},
+        {title:'中福彩中心',value:'',prop:'lotteryCenter'},
+        {title:'省级福彩中心',value:'',prop:'provincialLottery'},
+        {title:'市级福彩中心',value:'',prop:'cityLottery'},
+        {title:'销售厅',value:'',prop:'salesHall'},
       ],
-      payTaxesInfoList:[
+      bettingCardInfoList:[
         {title:'1、超过10000元至20000元的部分，税率',value:'',prop:'aa'},
         {title:'2、超过20000元至30000元的部分，税率',value:'1.2',prop:'aa'}
-      ]
+      ],
+      data2:[
+        {title:'处理人',type:'input',prop:'processor',value:''},
+        {title:'处理类型',type:'select',prop:'processType',options:[{label:'选修一',value:'12'},{label:'选项二',value:'12'}]},
+        {title:'知会',type:'input',prop:'notify',value:''},
+        {title:'处理时限类型',type:'select',prop:'timeLimitType',options:[{label:'选修一',value:'12'},{label:'选项二',value:'12'}]},
+        {title:'处理时限（天）',type:'input',prop:'processTimeLimit',value:''},
+        {title:'任务类型',type:'select',prop:'taskType',options:[{label:'选修一',value:'12'},{label:'选项二',value:'12'}]},
+        {title:'消息提醒',type:'select',prop:'infoRemind',options:[{label:'选修一',value:'12'},{label:'选项二',value:'12'}]},
+      ],
+      rules2:{
+        
+      }
  }
  },
  components: {
@@ -89,13 +113,18 @@ export default {
     //跳转编辑页面
     toEdit(){
       console.log(23231)
-    }
+    },
+    changeForm(val) {
+      Object.assign(this.params, val);
+      console.log("派发出来的参数", this.params);
+    },
  },
 }
 </script>
 
 <style lang="less">
-.globalParameter-page{
+.globalParameter-page {
+  position: relative;
   .el-tabs__item{font-size: 16px;font-weight: 600}
   padding: 30px;
   .basic-title{
@@ -138,8 +167,27 @@ export default {
         width: 100%
     }
     }
-    
   }
+  .el-tab-pane{
+    height: 1200px;
+    position: relative;
+      .new-apply{
+      width: 720px;height: 700px;
+      border-radius: 6px;
+      background: rgb(247, 247, 247);
+      position: absolute;
+      top: 10px;left: 500px;
+       .title{
+         font-size: 16px;
+         font-weight: 900;
+       }
+       .el-form-item__label{
+         font-size: 14px;
+         color: #444
+       }
+    }
+  }
+  
   
     
 }

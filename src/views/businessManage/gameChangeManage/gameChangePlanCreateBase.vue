@@ -6,7 +6,7 @@
         ref="form"
         class="baseInfo">
         <base-form :formData="baseData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <el-form-item label="试玩工具">
+        <!-- <el-form-item label="试玩工具">
           <el-radio v-model="radio" label="1">试玩投注卡</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="radio" label="2">会员积分</el-radio>
@@ -45,7 +45,7 @@
             <el-radio v-model="radio" label="2">大厅内指定终端</el-radio>
             <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
           </div>
-        </el-form-item>
+        </el-form-item> -->
         <el-row class="vlt-edit-btn">
           <el-button size="medium" @click="back" class="cancel">返 回</el-button>
           <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
@@ -62,10 +62,10 @@ export default {
   data() {
     return {
       baseData: [
-        {title: '计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
-        {title: '试玩时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
+        {title: '变更计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
+        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
         {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
-        {title: '试玩游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+        {title: '变更游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
       ],
       channelData: [
         {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: [

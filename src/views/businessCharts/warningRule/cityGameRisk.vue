@@ -34,18 +34,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            position="right"
-            :current-page="1"
-            :page-size="10"
-            :total="100"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+     <table-paging
+        :current-page="1"
+        :page-size="10"
+        :total="100"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>

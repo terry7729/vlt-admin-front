@@ -60,211 +60,241 @@ export default [{
         }
       ]
     },
-      {
-        icon: "el-icon-menu",
-        name: "游戏发行管理",
-        url: 'gameMarketManage',
-        childResources: [
-          {
-            icon: "el-icon-menu",
-            name: "游戏上市计划",
-            url: 'gameMarketPlanList',
-            childResources: [],
-          },
-          {
-            icon: "el-icon-menu",
-            name: "上市游戏列表",
-            url: 'gameMarketList',
-            childResources: [],
-          },
-          {
-            icon: "el-icon-menu",
-            name: "游戏变更计划",
-            url: 'gameChangePlanList',
-            childResources: [],
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "游戏退市计划",
-            url: 'gameDelistingPlanList'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "风险处理报告",
-            url: 'gameDelistPlan'
-          }
-        ]
-      },
-      {
-        icon: "el-icon-menu",
-        name: "渠道业务管理",
-        url: 'channelBusinessManage',
-        childResources: [
-          {
-            icon: "el-icon-menu",
-            name: "渠道列表",
-            url: 'channelList',
-            childResources: []
-          },
-          {
-            icon: "el-icon-menu",
-            name: "业务办理",
-            url: 'channelDeal',
-            childResources: []
-          },
-          {
-            icon: "el-icon-menu",
-            name: "年度发展计划",
-            url: 'developmentPlan',
-            childResources: []
-          },
-          {
-            icon: "el-icon-menu",
-            name: "档案管理",
-            url: 'dossierManage',
-            childResources: []
-          }
-        ],
-      },
-      {
-        icon: "el-icon-menu",
-        name: "渠道资源管理",
-        url: 'channelResourceManage',
-        childResources: [
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "库存管理",
-            url: 'inventoryManage'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "出入库管理",
-            url: 'outPutManage'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "台账管理",
-            url: 'ledgerManage'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "仓库管理",
-            url: 'storeManage'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "基本信息管理",
-            url: 'basicInfoManage'
-          },
-        ],
-      },
-
-      {
-        icon: "el-icon-menu",
-        name: "渠道终端管理",
-        url: 'channelTerminalManagement',
-        childResources: [
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "服务分析",
-            url: 'serviceAnalysis'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "维修管理",
-            url: 'maintenance'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "设备管理",
-            url: 'equipment'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "报表统计",
-            url: 'reportStatistics'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "维护知识库",
-            url: 'knowledgeBase'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "配置管理",
-            url: 'configuration'
-          }
-        ]
-      },{
-        icon: "el-icon-menu",
-        name: "资金结算管理",
-        url: 'fundSettlement',
-        childResources: [
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "资金参数管理",
-            url: 'fundParameter'
-          }
-        ]
-      },
-      {
-        icon: "el-icon-menu",
-        name: "投注卡管理",
-        url: 'bettingCardManage',
-        childResources: [
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "投注卡生成",
-            url: 'cardGeneration'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "投注卡信息",
-            url: 'cardInformation'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "投注卡余额",
-            url: 'cardBalance'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "投注卡中奖记录",
-            url: 'winningRecord'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "投注卡提现记录",
-            url: 'withdrawalRecord'
-          },
-          {
-            childResources: [],
-            icon: "el-icon-menu",
-            name: "投注卡充值规则",
-            url: 'refillRules'
-          }
-        ]
-      }
-    ]
-  }
-]
+    {
+      icon: "el-icon-menu",
+      name: "游戏发行管理",
+      url: 'gameMarketManage',
+      childResources: [
+        {
+          icon: "el-icon-menu",
+          name: "游戏上市计划",
+          url: 'gameMarketPlanList',
+          childResources: [],
+        },
+        {
+          icon: "el-icon-menu",
+          name: "上市游戏列表",
+          url: 'gameMarketList',
+          childResources: [],
+        },
+        {
+          icon: "el-icon-menu",
+          name: "游戏变更计划",
+          url: 'gameChangePlanList',
+          childResources: [],
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "游戏退市计划",
+          url: 'gameDelistingPlanList'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "风险处理报告",
+          url: 'riskReportList'
+        }
+      ]
+    },
+    {
+      icon: "el-icon-menu",
+      name: "渠道业务管理",
+      url: 'channelBusinessManage',
+      childResources: [
+        {
+          icon: "el-icon-menu",
+          name: "渠道列表",
+          url: 'channelList',
+          childResources: []
+        },
+        {
+          icon: "el-icon-menu",
+          name: "业务办理",
+          url: 'channelDeal',
+          childResources: []
+        },
+        {
+          icon: "el-icon-menu",
+          name: "年度发展计划",
+          url: 'developmentPlan',
+          childResources: []
+        },
+        {
+          icon: "el-icon-menu",
+          name: "档案管理",
+          url: 'dossierManage',
+          childResources: []
+        }
+      ],
+    },
+    {
+      icon: "el-icon-menu",
+      name: "渠道资源管理",
+      url: 'channelResourceManage',
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "库存管理",
+          url: 'inventoryManage'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "出入库管理",
+          url: 'outPutManage'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "台账管理",
+          url: 'ledgerManage'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "仓库管理",
+          url: 'storeManage'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "基本信息管理",
+          url: 'basicInfoManage'
+        },
+      ],
+    },
+    {
+      icon: "el-icon-menu",
+      name: "渠道终端管理",
+      url: 'channelTerminalManagement',
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "服务分析",
+          url: 'serviceAnalysis'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "维修管理",
+          url: 'maintenance'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "设备管理",
+          url: 'equipment'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "报表统计",
+          url: 'reportStatistics'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "维护知识库",
+          url: 'knowledgeBase'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "配置管理",
+          url: 'configuration'
+        }
+      ]
+    },
+    {
+      icon: "el-icon-menu",
+      name: "资金结算管理",
+      url: 'fundSettlement',
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "资金参数管理",
+          url: 'fundParameter'
+        }
+      ]
+    },
+    {
+      icon: "el-icon-menu",
+      name: "投注卡管理",
+      url: 'bettingCardManage',
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "投注卡生成",
+          url: 'cardGeneration'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "投注卡信息",
+          url: 'cardInformation'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "投注卡余额",
+          url: 'cardBalance'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "投注卡中奖记录",
+          url: 'winningRecord'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "投注卡提现记录",
+          url: 'withdrawalRecord'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "投注卡充值规则",
+          url: 'refillRules'
+        }
+      ]
+    },
+    {
+      icon: "el-icon-menu",
+      name: "合作伙伴管理",
+      url: 'cooperatorManage',
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "合作伙伴列表",
+          url: 'cooperatorList'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "合作额度设置",
+          url: 'cooperatorQuotaSet'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "合作佣金设置",
+          url: 'cooperatorBrokerageSet'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "结算与对账",
+          url: 'verifyReconciliation'
+        },
+      ]
+    }
+  ]
+}]
 

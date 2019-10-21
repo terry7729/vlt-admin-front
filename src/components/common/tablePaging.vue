@@ -63,7 +63,7 @@
 
 <style lang="less" scoped>
   .table-paging-comp{
-    margin: 10px 0;
+    padding: 10px;
     &.align-right{
       text-align: right;
     }

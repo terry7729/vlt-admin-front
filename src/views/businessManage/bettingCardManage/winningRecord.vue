@@ -262,7 +262,7 @@ export default {
           {
             label: "投注卡类型",
             value: "ardType",
-            width: ""
+            width: "100"
           },
           {
             label: "投注流水号",
