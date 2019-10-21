@@ -41,7 +41,7 @@
       <h4 class="comp-title">表格分页</h4>
       <table-paging
         position="left"
-        :total="total"
+        :total="999"
         :currentPage="1"
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
@@ -233,7 +233,6 @@ export default {
   data() {
     const self = this;
     return {
-      total: 100,
       params: {},
       fileList: [
         {
@@ -267,7 +266,6 @@ export default {
           value: "",
           options: [{ label: "男", value: "0" }, { label: "女", value: "1" }]
         },
-        {title: '投注金额', prop: 'minMax', type: 'minMax', value: '', options:['betMoneyMin', 'betMoneyMax']},
         { title: "兑奖权限", type: "switch", prop: "isShow", value: "" },
         { title: "日期选择", type: "datepicker", prop: "date", value: "" },
         {
@@ -322,7 +320,7 @@ export default {
           title: "渠道地址",
           type: "address",
           prop: "address",
-          value: ["北京", "广东省", "福田区"],
+          value: ["130000", "130200", "130203"],
           address: "天安数码城"
         }
       ],
@@ -370,7 +368,6 @@ export default {
           prop: "cascader1",
           value: "",
           title: "级联选择（多选）",
-          placeholder: "请选择",
           options: [
             {
               value: "zhinan",
@@ -645,7 +642,6 @@ export default {
           prop: "cascader1",
           value: "",
           title: "级联选择",
-          placeholder: "请选择",
           options: [
             {
               value: "zhinan",
@@ -962,8 +958,6 @@ export default {
         },
         { title: "开售时间", type: "datetime", prop: "date3", value: "" },
         { title: "销售时间", type: "datetime-range", prop: "date4", value: "" },
-        { title: "年份", type: "year", prop: "year", value: "" },
-        { title: "月份", type: "month", prop: "month", value: "" },
         {
           type: "cascader",
           prop: "cascader1",
@@ -1243,21 +1237,18 @@ export default {
           prop: "date3",
           value: "",
           title: "日期时间",
-          placeholder: "请选择"
         },
         {
           type: "datetime-range",
           prop: "date4",
           value: "",
           title: "日期时间",
-          placeholder: ["开始时间", "结束时间"]
         },
         {
           type: "cascader",
           prop: "cascader1",
           value: "",
           title: "级联选择",
-          placeholder: "请选择",
           options: [
             {
               value: "zhinan",

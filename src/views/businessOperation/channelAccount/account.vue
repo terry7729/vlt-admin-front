@@ -117,6 +117,23 @@ export default {
               value: 2
             }
           ]
+        },
+        {
+          type: "select",
+          prop: "accountType",
+          value: "",
+          title: "账户类型",
+          placeholder: "请输入",
+          options: [
+            {
+              label: "启用",
+              value: 1
+            },
+            {
+              label: "冻结",
+              value: 2
+            }
+          ]
         }
       ],
       pageSize: 10,

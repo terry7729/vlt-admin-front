@@ -29,6 +29,7 @@
 import menuTree from './menuTree'
 import storage from '@/utils/storage'
 import {mapGetters} from 'vuex'
+import menuList from '@/libs/menu/'
 
 export default {
   name: 'sideMenu',
@@ -62,15 +63,15 @@ export default {
     // 获取菜单列表
     async getList() {
       const self = this;
-      const res = await self.$api.getMenu({
-        data: {
-          source: storage.get('source')
-        }
-      });
-      if (res && res.code == 0) {
+      // const res = await self.$api.getMenu({
+      //   data: {
+      //     source: storage.get('source')
+      //   }
+      // });
+      // if (res && res.code == 0) {
         // console.log('menu-data', res[self.entry.menuId].content[0].childResources);
         let n = 0;
-        self.menuList = res[self.entry.menuId].content[0].childResources;
+        self.menuList = menuList[self.entry.menuId].content[0].childResources;
         // 菜单过滤
         (function filter(treeData) {
           for (let i = 0, len = treeData.length; i < len; i++) {
@@ -96,8 +97,16 @@ export default {
             filter(children);
           }
         })(self.menuList);
+        // 默认展示首页
+        let name = self.menuList[0].url;
+        if (self.menuList[0].childResources && self.menuList[0].childResources.length) {
+          name = self.menuList[0].childResources[0].url
+        }
+        self.$router.push({
+          name
+        });
         // self.routerAuthorize();
-      }
+      // }
     },
     // 路由权限控制
     // routerAuthorize() {

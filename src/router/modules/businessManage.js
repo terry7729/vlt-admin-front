@@ -93,6 +93,14 @@ const basicInfoManage = () => import('@/views/businessManage/channelResourceMana
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //设备履历
 const equRecordCheck = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equRecordCheck')
+//设施查看
+const facilityDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/facilityDetail')
+//耗材查看
+const consumableDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/consumableDetail')
+// 配件查看
+const mountingsDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/mountingsDetail')
+//配件履历
+const mountRecordCheck = () => import('@/views/businessManage/channelResourceManage/inventoryManage/mountRecordCheck')
 //盘点统计
 const inventoryStatistics = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryStatistics')
 //台账明细
@@ -122,7 +130,6 @@ const detail = () => import('@/views/businessManage/channelResourceManage/storeM
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
 const configuration = () => import('@/views/businessManage/channelTerminalManagement/configuration')
-const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment')
 const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase')
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics')
 
@@ -137,6 +144,24 @@ const maintenanceStaff = () => import('@/views/businessManage/channelTerminalMan
 const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance/maintenance')
 const repairWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/repairWork')
 const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
+
+// 渠道终端管理 - 设备管理 
+const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipment')
+const accessoriesList = () => import('@/views/businessManage/channelTerminalManagement/equipment/accessoriesList')
+const equipmentList = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentList')
+const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
+const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
+
+// 资金结算管理
+const fundParameter = () => import('@/views/businessManage/fundSettlement/fundParameter')
+// 资金参数管理 详情
+const fundParameterDetail = () => import('@/views/businessManage/fundSettlement/fundParameterDetail')
+// 资金参数管理 编辑
+const fundParameterEdit = () => import('@/views/businessManage/fundSettlement/fundParameterEdit')
+// 资金参数管理 全局参数
+const globalParameter = () => import('@/views/businessManage/fundSettlement/globalParameter')
+
+
 
 // 投注卡管理
 const cardBalance = () => import('@/views/businessManage/bettingCardManage/cardBalance')
@@ -495,6 +520,38 @@ export default [
     component: equipmentDetail
   },
   {
+    path: 'businessManage/channelResourceManage/facilityDetail',
+    name: 'facilityDetail',
+    meta: {
+      title: '设施查看',
+    },
+    component: facilityDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/consumableDetail',
+    name: 'consumableDetail',
+    meta: {
+      title: '耗材查看',
+    },
+    component: consumableDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/mountingsDetail',
+    name: 'mountingsDetail',
+    meta: {
+      title: '配件查看',
+    },
+    component: mountingsDetail
+  },
+  {
+    path: 'businessManage/channelResourceManage/mountRecordCheck',
+    name: 'mountRecordCheck',
+    meta: {
+      title: '配件履历',
+    },
+    component: mountRecordCheck
+  },
+  {
     path: 'businessManage/channelResourceManage/equRecordCheck',
     name: 'equRecordCheck',
     meta: {
@@ -713,8 +770,38 @@ export default [
     meta: {
       title: '设备管理',
     },
-    component: equipment
+    component: equipment,
+    children: [{
+      path: 'equipmentList',
+      name: 'equipmentList',
+      meta: {
+        title: '设备列表',
+      },
+      component: equipmentList,
+      
+    },{
+      path: 'accessoriesList',
+      name: 'accessoriesList',
+      meta: {
+        title: '配件列表',
+      },
+      component: accessoriesList,
+    }]
   }, {
+    path: 'businessManage/channelTerminal/equipmentDesc',
+    name: 'equipmentDesc',
+    meta: {
+      title: '配件详情',
+    },
+    component: equipmentDesc,
+  }, {
+    path: 'businessManage/channelTerminal/equipmentResume',
+    name: 'equipmentResume',
+    meta: {
+      title: '配件详情',
+    },
+    component: equipmentResume,
+  },{
     path: 'businessManage/channelTerminal/knowledgeBase',
     name: 'knowledgeBase',
     meta: {
@@ -818,6 +905,38 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
+  },
+  {
+    path: 'businessManage/fundParameter',
+    name: 'fundParameter',
+    meta: {
+      title: '资金参数管理',
+    },
+    component: fundParameter
+  },
+  {
+    path: 'businessManage/fundParameterDetail',
+    name: 'fundParameterDetail',
+    meta: {
+      title: '资金参数管理详情',
+    },
+    component: fundParameterDetail
+  },
+  {
+    path: 'businessManage/fundParameterEdit',
+    name: 'fundParameterEdit',
+    meta: {
+      title: '资金参数管理编辑',
+    },
+    component: fundParameterEdit
+  },
+  {
+    path: 'businessManage/fundSettlement/globalParameter',
+    name: 'globalParameter',
+    meta: {
+      title: '资金参数全局参数',
+    },
+    component: globalParameter
   },
   {
     path: 'businessManage/cardBalance',

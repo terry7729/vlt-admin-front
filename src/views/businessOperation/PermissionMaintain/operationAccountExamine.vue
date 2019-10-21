@@ -13,7 +13,10 @@ export default {
   name: "",
   data() {
     return {
+      dal: [],
       operationAccountExamineData: [
+        { title: "员工编号", value: "", prop: "operationManageStaffNum" },
+        { title: "年龄", value: "", prop: "operationManageAge" },
         { title: "账户ID", value: "", prop: "operationManageID" },
         { title: "账户角色", value: "", prop: "operationManageRoleName" },
         { title: "账户权限", value: "", prop: "userauthority" },
@@ -31,19 +34,25 @@ export default {
   },
   created() {
     //console.log(this);
-    this.eventBus.$on("send", data => {
-      console.log(data);
-      let val = Object.keys(data);
-      let arr = this.operationAccountExamineData;
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < val.length; j++) {
-          if (arr[i].prop === val[j]) {
-            arr[i].value = data[val[j]];
-          }
-        }
-      }
-    });
+    // this.eventBus.$on("send", data => {
+    //   //console.log(data);
+    //   var val = Object.keys(data);
+    //   //console.log(val);
+    //   var info = this.operationAccountExamineData;
+    //   for (var i = 0; i < info.length; i++) {
+    //     for (var j = 0; j < val.length; j++) {
+    //       if (info[i].prop === val[j]) {
+    //         info[i].value = data[val[j]];
+    //       }
+    //     }
+    //   }
+    //   this.dal = info;
+    //   this.dal = this.operationAccountExamineData;
+    //   console.log(this.operationAccountExamineData);
+    //   console.log(this.dal);
+    // });
   },
+  mounted() {},
   components: {},
   methods: {}
 };

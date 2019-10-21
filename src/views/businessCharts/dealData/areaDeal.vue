@@ -242,9 +242,7 @@ export default {
       this.dataprovinceList = provinceArr;
       this.datacityList = cityArr;
       this.datacountryList = countryArr;
-      //console.log(this.cityList);
-      //console.log(this.cityArr);
-      //console.log(this.countryList);
+      
     },
     //省和市的联动,根据市/100的整数商进行遍历
     getProvince() {
@@ -277,6 +275,7 @@ export default {
   },
   mounted() {
     this.getAreaDeal();
+    this.showcity();
   }
 };
 </script>

@@ -4,30 +4,23 @@
       <div class="vlt-edit-double">
         <h2 class="title">新增账号</h2>
         <div class="vlt-edit-wrap">
-          <el-form
-            label-position="top"
-            label-width="90px"
-            :model="operationAccountAddForm"
-            ref="form"
-          >
-            <base-form
-              :formData="operationAccountAddData"
-              ref="baseForm"
-              labelWidth="140px"
-              :rules="operationAccountAddRules"
-              direction="top"
-              @change="operationAccountAddChangeForm"
-            ></base-form>
-            <el-row class="el-form-item vlt-edit-btn">
-              <el-button
-                type="primary"
-                v-prevent="1000"
-                size="medium"
-                @click="operationAccountAddSubmit"
-              >提交并保存</el-button>
-              <el-button size="medium" @click="operationAccountAddCancel">取消</el-button>
-            </el-row>
-          </el-form>
+          <base-form
+            :formData="operationAccountAddData"
+            ref="baseForm"
+            labelWidth="140px"
+            :rules="operationAccountAddRules"
+            direction="top"
+            @change="operationAccountAddChangeForm"
+          ></base-form>
+          <el-row class="el-form-item vlt-edit-btn">
+            <el-button
+              type="primary"
+              v-prevent="1000"
+              size="medium"
+              @click="operationAccountAddSubmit"
+            >提交并保存</el-button>
+            <el-button size="medium" @click="operationAccountAddCancel">取消</el-button>
+          </el-row>
         </div>
       </div>
     </div>
@@ -40,13 +33,15 @@ export default {
   name: "",
   data() {
     return {
-      operationAccountAddForm: {},
+      formData: [],
+      // 新增表单类型
       operationAccountAddData: [
         {
           type: "select",
           title: "所属渠道",
-          prop: "operationBelong",
-          option: [
+          prop: "operationManageBelong",
+          value: "",
+          options: [
             {
               label: "专用存款账户",
               value: "0"
@@ -57,13 +52,31 @@ export default {
             }
           ]
         },
-        { type: "input", title: "账户名称", prop: "operationName" },
+        {
+          type: "input",
+          title: "账户名称",
+          value: "",
+          prop: "operationManageName"
+        },
+        {
+          type: "input",
+          title: "员工编号",
+          value: "",
+          prop: "operationManageStaffNum"
+        },
+        {
+          type: "input",
+          title: "年龄",
+          value: "",
+          prop: "operationManageAge"
+        },
 
         {
           type: "select",
           title: "账户角色",
-          prop: "operationRole",
-          option: [
+          prop: "operationManageRoleName",
+          value: "",
+          options: [
             {
               label: "专用存款账户",
               value: "0"
@@ -74,16 +87,39 @@ export default {
             }
           ]
         },
-        { type: "input", title: "手机号", prop: "operationTelephone" },
-        { type: "input", title: "身份证号", prop: "operationIDCard" },
-        { type: "input", title: "联系地址", prop: "operationAddress" },
-        { type: "input", title: "账户密码", prop: "operationPassword" },
+        {
+          type: "input",
+          title: "手机号",
+          value: "",
+          prop: "operationManagetelephone"
+        },
+        {
+          type: "input",
+          title: "身份证号",
+          value: "",
+          prop: "operationManageIDCard"
+        },
+        {
+          type: "input",
+          title: "联系地址",
+          value: "",
+          prop: "operationManageAdress"
+        },
+        {
+          type: "input",
+          title: "账户密码",
+          prop: "operationManagePassword",
+
+          disabled: true,
+          placeholder: "初始密码为123456"
+        },
         {
           type: "cascader-multiple",
-          prop: "operationAuthority",
+          prop: "operationManageLimit",
           value: "",
           title: "账号权限",
           placeholder: "请选择",
+          value: "",
           options: [
             {
               value: "zhinan",
@@ -354,21 +390,62 @@ export default {
           ]
         }
       ],
+      // 新增表单验证
       operationAccountAddRules: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        operationManageBelong: [
+          { required: true, message: "请选择所属渠道", trigger: "change" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        operationManageName: [
+          { required: true, message: "请输入账户名称", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        operationManageRoleName: [
+          { required: true, message: "请选择账户角色", trigger: "change" }
+        ],
+        operationManageStaffNum: [
+          { required: true, message: "请输入员工编号", trigger: "blur" }
+        ],
+        operationManageAge: [
+          { required: true, message: "请输入年龄", trigger: "blur" }
+        ],
+        operationManagetelephone: [
+          { required: true, message: "请输入手机号", trigger: "blur" }
+        ],
+        operationManageIDCard: [
+          { required: true, message: "请输入身份证号", trigger: "blur" }
+        ],
+        operationManageAdress: [
+          { required: true, message: "请输入联系地址", trigger: "blur" }
+        ],
+        operationManageLimit: [
+          {
+            type: "array",
+            required: true,
+            message: "请选择账号权限",
+            trigger: "change"
+          }
+        ]
       }
     };
   },
   components: {},
   methods: {
-    operationAccountAddChangeForm() {},
-    operationAccountAddSubmit() {},
+    // 新增表单change事件
+    operationAccountAddChangeForm(form) {
+      // console.log(form);
+      this.formData = form;
+      //console.log(this.formData);
+    },
+    // 提交按钮
+    operationAccountAddSubmit(form) {
+      console.log(this.formData);
+      //console.log(form);
+      //console.log(this.operationAccountAddData);
+      let formdata = this.$refs.baseForm.form;
+
+      //console.log(this.$refs.baseForm.form);
+      //console.log(formdata);
+    },
+    // 取消按钮
     operationAccountAddCancel() {
       this.$router.go(-1);
     }

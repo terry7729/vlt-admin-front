@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       importdata: [
-        { name: "导入", type: "success", icon: "upload2" },
+        { name: "打印", type: "primary", icon: "printer" },
         { name: "导出", type: "danger", icon: "download" }
       ],
       accountallname: [

@@ -29,7 +29,22 @@
           <div class="bottomMachine" id="bottomMachine"></div>
         </div>
       </section>
-      <section class="center"></section>
+      <section class="center">
+        <div class="left_map" id="left_map" @click="showChinaMap"></div>
+        <div class="top5">
+          <span>全国销售top5</span>
+          <p v-for="itme in 5">
+            <span>浙江:</span>
+            <span>13555元</span>
+          </p>
+        </div>
+        <div class="salesNum">
+          <div class="title">全国大厅数量</div>
+          <div>全部大厅222</div>
+          <div>合作厅111</div>
+          <div>销售厅111</div>
+        </div>
+      </section>
       <section class="right">
         <div class="salesRanking">
           <div class="title">全国大厅销量排名</div>
@@ -44,9 +59,9 @@
               >
               <el-table-column align="center" prop="date" label="大厅编号"></el-table-column>
               <el-table-column align="center" prop="name" label="所属省份"></el-table-column>
-              <el-table-column align="center" prop="name" label="销售金额" sortable width="120"></el-table-column>
-              <el-table-column align="center" prop="name" label="中奖金额" sortable width="120"></el-table-column>
-              <el-table-column align="center" prop="name" label="兑奖金额" sortable width="120"></el-table-column>
+              <el-table-column align="center" prop="name" label="销售金额" sortable></el-table-column>
+              <el-table-column align="center" prop="name" label="中奖金额" sortable></el-table-column>
+              <el-table-column align="center" prop="name" label="兑奖金额" sortable></el-table-column>
               <el-table-column align="center" prop="name" label="状态"></el-table-column>
             </el-table>
           </div>
@@ -62,10 +77,17 @@
 
 <script>
 import echarts from "echarts";
+import china from "@/libs/map/cnMapJson/china.json";
 export default {
   name: "name",
   data() {
     return {
+      allCity: [],
+      map: {},
+      cityOpt: [],
+      mapForm: {},
+      mapData: [{ name: "海门", value: 100 }],
+      mapOpt: [],
       tableData: [
         {
           date: "232323",
@@ -91,11 +113,18 @@ export default {
     };
   },
   computed: {},
-  created() {},
+  created() {
+    echarts.registerMap("china", china);
+  },
   mounted() {
     this.salesMap();
     this.machineMap();
     this.sharesMap();
+    // this.dailySalesMap();
+
+    this.$nextTick(() => {
+      this.initMap();
+    });
   },
   components: {},
   methods: {
@@ -305,11 +334,11 @@ export default {
         myChart.resize();
       });
     },
-    //游戏市场氛围散点图
+    //游戏市场份额散点图
     sharesMap() {
       let this_ = this;
       let myChart = echarts.init(document.getElementById("sharesMap"));
-      app.title = "单轴散点图";
+      // app.title = "单轴散点图";
 
       var hours = [
         "12a",
@@ -563,6 +592,91 @@ export default {
       window.addEventListener("resize", function() {
         myChart.resize();
       });
+    },
+    //省市日销量监控地图
+    dailySalesMap() {
+      let this_ = this;
+      let myChart = echarts.init(document.getElementById("mianMap"));
+      let option = {};
+      myChart.setOption(option);
+      //建议加上以下这一行代码，不加的效果图如下（当浏览器窗口缩小的时候）。超过了div的界限（红色边框）
+      window.addEventListener("resize", function() {
+        myChart.resize();
+      });
+    },
+    getMapOpt(place) {
+      let option = (option = {
+        backgroundColor: "#02142c",
+        title: {
+          text: place ? place : "中国地图",
+          // subtext: "data from map",
+          left: "center",
+          top: "50",
+          textStyle: {
+            //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"}
+            fontSize: 18,
+            fontStyle: "normal",
+            fontWeight: "normal",
+            color: "#fff"
+          }
+        },
+        geo: {
+          map: place ? place : "china",
+          label: {
+            emphasis: {
+              show: false
+            }
+          },
+          roam: true,
+          itemStyle: {
+            normal: {
+              areaColor: "#02142c",
+              borderColor: "#32b1d4"
+            },
+            emphasis: {
+              areaColor: "gold"
+            }
+          }
+        }
+      });
+      return option;
+    },
+    //显示中国地图
+    showChinaMap() {
+      let option = this.getMapOpt();
+      this.map.setOption(option, true);
+    },
+    //显示各省地图
+    async getProvinceMapOpt(name) {
+      const result = await import("@/libs/map/cnMapJson/" + name + ".json");
+      // let geoJson = result.default
+      console.log(result.default);
+      // axios.get("/statics/" + provinceAlphabet + ".json").then(s => {
+      echarts.registerMap(name, result.default);
+      let option = this.getMapOpt(name);
+      this.map.setOption(option, true);
+      // });
+    },
+    initMap() {
+      var dom = document.getElementById("left_map");
+      this.map = echarts.init(dom);
+      let option = this.getMapOpt();
+      if (option && typeof option === "object") {
+        this.map.setOption(option, true);
+      }
+      this.map.on("click", param => {
+        console.log(param);
+        event.stopPropagation(); // 阻止冒泡
+        // 找到省份名
+        // let provinceIndex = provincesText.findIndex(x => {
+
+        //   return param.name === x;
+        // });
+        // if (provinceIndex === -1) return;
+        // let provinceAlphabet = provinces[provinceIndex];
+        // 重新渲染各省份地图
+        this.getProvinceMapOpt(param.name);
+      });
     }
   }
 };
@@ -657,6 +771,23 @@ main {
     border-radius: 3px;
     margin: 0 20px;
     height: 81.5%;
+    position: relative;
+    > .salesNum {
+      position: absolute;
+      width: 120px;
+      height: 180px;
+      bottom: 5px;
+      right: 2px;
+      border: 1px solid #267ca6;
+      border-radius: 3px;
+      div:nth-child(n+2){
+        height: 38px;
+        line-height: 38px;
+        color: #267ca6;
+        border-bottom: #0d3153 solid 1px;
+        padding-left: 15px;
+      }
+    }
   }
   > .right {
     flex: 35%;
@@ -689,5 +820,49 @@ main {
 }
 /deep/ .main-body .el-table td > .cell {
   color: #fff !important;
+}
+.left_map {
+  width: 100%;
+  height: 100%;
+}
+.right_opetate {
+  flex: 1;
+  height: 100%;
+  background: #404a59;
+}
+
+.mianMap {
+  height: 100%;
+}
+
+.top5 {
+  background-color: #1c2c42;
+  padding: 0 5px;
+  position: absolute;
+  width: 150px;
+  height: 220px;
+  box-shadow: 2px 2px 13px 3px #fff;
+  top: 20px;
+  left: 15px;
+  color: #dadde0;
+  border-radius: 4px;
+  border: 1px solid #fff;
+  > span {
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    border-bottom: 1px solid #dadde0;
+    display: block;
+  }
+  p {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px dashed #dadde0;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    > span {
+    }
+  }
 }
 </style>

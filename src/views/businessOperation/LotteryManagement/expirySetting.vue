@@ -87,7 +87,7 @@ export default {
         all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
       },
       //新增弹框表单验证
-      lotteryTicketWriteRule: {
+      lotteryTicketAddRule: {
         test: [
           { required: true, validator: rules.checkEmail, trigger: "blur" }
         ],
@@ -179,6 +179,7 @@ export default {
     expirySettingWrite() {
       this.lotteryTicketFormWriteVisible = true;
     },
+    expirySettingChange() {},
     //编辑弹框表单change事件
     lotteryTicketWritechangeForm() {},
     //新增弹框表单change事件

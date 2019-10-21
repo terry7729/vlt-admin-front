@@ -95,7 +95,7 @@ export default {
         menuId
       })
       this.$router.push({
-        name: 'home'
+        path: '/home'
       })
     },
     ...mapActions(['setEntry'])

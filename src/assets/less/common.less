@@ -394,6 +394,18 @@
   width: 38%;
 }
 
+.memberEquity .el-dialog {
+  width: 38%;
+}
+
+.MemberIntegral .el-dialog {
+  width: 38%;
+}
+
+.MemberGrade .el-dialog {
+  width: 38%;
+}
+
 .el-collapse-item__header {
   font-size: 16px;
   font-weight: 600;
@@ -460,8 +472,33 @@
   }
 }
 
+.create-active {
+  .step-bar {
 
+    .el-step__title {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
 
+.active-plan {
+  .vlt-edit-single {
+    .title {
+      padding-left: 0;
+    }
+  }
+
+  .step-bar {
+    width: 70%;
+    margin: 10px auto;
+
+    .el-step__title {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
 
 .result-assess {
   .vlt-edit-wrap {
@@ -488,195 +525,21 @@
 
 }
 
-.create-active {
-
-  .header-box {
-
-    .el-form-item__label {
-      width: 145px !important;
-      color: black;
-      font-size: 18px;
-      font-weight: bold;
-    }
+.info-push {
+  .el-tabs__item {
+    margin-bottom: 10px;
+    padding: 0 50px;
   }
-
-  .addForm-box {
-    .add-form {
-      margin-left: 95px;
-
-      :nth-child(1) {
-        .el-form-item__label {
-          width: 100px !important;
-        }
-      }
-
-      .el-checkbox-group {
-        display: inline-block;
-        width: 400px;
-        margin-top: -40px;
-        margin-left: 20px;
-
-      }
-
-    }
+  .el-tabs__item.is-active{
+    background:#f0faff;
   }
-
-  .process-content {
-    .el-header {
-      height: 110px !important;
-    }
-  }
-
-
-
-  input {
-    width: 400px;
-  }
-
-  .el-textarea__inner {
-    width: 400px;
-  }
-
-  .active-target {
-    .el-checkbox {
-      margin-right: 10px;
-    }
-
-    .el-input {
-      width: 250px;
-      margin-bottom: 5px;
-      display: inline-block;
-
-      input {
-        width: 250px;
-        margin-left: 18px;
-
-      }
-
-    }
-  }
-
-  .active-lobby {
-    .el-input {
-      width: 250px;
-      display: inline-block;
-
-      input {
-        width: 250px;
-
-      }
-
-    }
-
+}
+.plan-detail{
+  .el-tabs__nav{
+    margin-left: 34px;
   }
 }
 
-.preview-template {
-  .upload-img {
-    margin: 20px 0;
-
-    .upload-box {
-      display: inline-block;
-    }
-  }
-
-  .drag-upload {
-    margin-bottom: 20px;
-    position: relative;
-    left: 75px;
-  }
-
-  .active-rule {
-    .rule-item {
-
-      .el-select,
-      .el-input {
-        width: 100px;
-        margin-right: 20px;
-        display: inline-block;
-
-        input {
-          width: 100px;
-        }
-      }
-
-      .last-rule {
-        input {
-          width: 200px;
-        }
-
-      }
-    }
-  }
-
-  .remark {
-    .el-textarea {
-      width: 500px;
-      display: inline-block;
-
-      textarea {
-        width: 500px;
-        margin-top: 10px;
-
-      }
-
-    }
-
-  }
-
-  .item-check {
-
-    .el-checkbox {
-      padding-bottom: 10px;
-    }
-
-  }
-
-
-}
-
-.plan-detail {
-  .base-data {
-    width: 60%;
-    margin-top: 20px;
-    margin-left: 150px;
-
-    .rule-form {
-      width: 100%;
-
-      .el-select {
-        width: 160px;
-      }
-
-      .el-input {
-        width: 150px;
-
-        input {
-          width: 150px;
-        }
-      }
-
-    }
-  }
-
-  .progress-bar {
-    width: 70%;
-    margin: 20px 150px;
-  }
-
-  .ration-target {
-    margin-top: 20px;
-
-    .ration-check {
-      margin-left: 70px;
-      margin-top: -16px;
-
-      .el-checkbox {
-        margin-bottom: 20px;
-      }
-    }
-  }
-}
 
 
 .tables-content .el-tabs__item.is-active {
@@ -693,32 +556,38 @@
   }
 }
 
-.eachBet-form{
+.eachBet-form {
   padding: 16px;
-  .el-form-item__content{
+
+  .el-form-item__content {
     width: 400px;
     display: flex;
     align-items: center;
   }
+
   .el-form-item:first-child {
-    .el-form-item__content{
+    .el-form-item__content {
       width: 350px;
     }
   }
+
   .el-form-item__label {
     font-size: 12px;
     color: #444444;
     line-height: 20px;
   }
+
   .el-form--label-top .el-form-item__label {
     padding: 0 0 7px;
   }
+
   .el-input__inner {
     height: 36px;
     line-height: 36px;
     padding: 0 10px;
   }
 }
+
 .gameIcon-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -726,9 +595,11 @@
   position: relative;
   overflow: hidden;
 }
+
 .gameIcon-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
 .gameIcon-uploader-icon {
   font-size: 42px;
   color: #8c939d;
@@ -737,11 +608,13 @@
   line-height: 100px !important;
   text-align: center;
 }
+
 .gameIcon {
   width: 120px;
   height: 100px;
   display: block;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -749,9 +622,11 @@
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
   font-size: 64px;
   color: #8c939d;
@@ -760,8 +635,26 @@
   line-height: 170px !important;
   text-align: center;
 }
+
 .avatar {
   width: 300px;
   height: 170px;
   display: block;
+}
+.centerWatch .el-table td,
+.centerWatch .el-table th.is-leaf {
+  border: none;
+}
+
+.centerWatch .el-table td>.cell {
+  color: #c5d5e6;
+}
+
+.centerWatch .el-table th>.cell {
+  color: #c5d5e6;
+}
+
+.centerWatch .el-table::before {
+  top: 50px;
+  background-color: #c5d5e6;
 }

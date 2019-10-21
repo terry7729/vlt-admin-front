@@ -147,8 +147,8 @@ export default {
     {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'设备',value:'sb'},{label:'设施',value:'ss'}]},
     {title:'设备名称',type:'input',prop:'equipmentName', value:''},
     {title:'设备单位',type:'input',prop:'equipmentUnit',options:[{label:'台',value:'0'},{label:'个',value:''}]},
-    {title:'是否标配',type:'radio',prop:'isStandard',value:'',options:[{key:1,value:'是'},{key:2,value:'否'}]},
-    {title:'是否回收',type:'radio',prop:'isRecycle',value:'',options:[{key:1,value:'是'},{key:2,value:'否'}]},
+    {title:'是否标配',type:'radio',prop:'isStandard',value:'',options:[{label:1,value:'是'},{label:2,value:'否'}]},
+    {title:'是否回收',type:'radio',prop:'isRecycle',value:'',options:[{label:1,value:'是'},{label:2,value:'否'}]},
     {title:'备注',type:'textarea',prop:'remark',value:''},
   ],
   modelAmendData:[

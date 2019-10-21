@@ -22,7 +22,7 @@
       <el-table
         :data="tableData"
         style="width: 100%"
-        :default-sort="{prop: 'date', order: 'descending'}"
+        :default-sort="{prop: 'id', order: 'descending'}"
       >
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="holidayName" label="假日名称" width="100"></el-table-column>
@@ -31,14 +31,26 @@
         <el-table-column prop="abandonstartTime" label="弃奖开始日期" sortable width="130"></el-table-column>
         <el-table-column prop="abandonendTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
 
-        <el-table-column label="销售状态">
-          <template>
-            <el-switch v-model="value2" active-text="停销" inactive-text="不停销"></el-switch>
+        <el-table-column label="销售状态" >
+          <template slot-scope="scope">
+            <el-switch    
+              v-model="scope.row.switch1"
+              inactive-text="停销"
+              active-text="不停销"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="启用状态">
-          <template>
-            <el-switch v-model="value1" active-text="已启用" inactive-text="已停用"></el-switch>
+          <template slot-scope="scope">
+            <el-switch
+              v-model="scope.row.switch2"
+              active-text="已启用"
+              inactive-text="已停用"
+              :active-value="1"
+              :inactive-value="0"
+            ></el-switch>
           </template>
         </el-table-column>
       </el-table>
@@ -89,33 +101,41 @@ export default {
           id: 1,
           holidayName: "春节",
           startTime: "2019-10-11 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15"
+          endTime: "2019-10-11 12:0:0",
+          abandonstartTime: "2019-11-12",
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 2,
           holidayName: "端午",
           startTime: "2019-10-12 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15"
+          endTime: "2019-10-12 12:0:0",
+          abandonstartTime: "2019-12-12",
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 3,
           holidayName: "中秋",
           startTime: "2019-10-13 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15"
+          endTime: "2019-10-13 12:0:0",
+          abandonstartTime: "2019-1-12",
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 4,
           holidayName: "国庆",
           startTime: "2019-10-14 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15"
+          endTime: "2019-10-14 12:0:0",
+          abandonstartTime: "2019-2-12",
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         },
         {
           id: 5,
@@ -123,7 +143,9 @@ export default {
           startTime: "2019-10-15 10:0:0",
           endTime: "2019-10-15 12:0:0",
           abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15"
+          abandonendTime: "2019-10-15",
+          switch1: 1,
+          switch2:0,
         }
       ],
       total: 400
@@ -144,7 +166,6 @@ export default {
   }
 };
 </script>
-
 <style lang="less" scoped>
 </style>
 

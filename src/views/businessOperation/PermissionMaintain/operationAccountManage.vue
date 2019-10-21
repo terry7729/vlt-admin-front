@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="operationManage">
-      <searchBar :options="operationManageoptions" :total="999">
+      <searchBar :options="operationManageoptions" @search="search" :total="999">
         <controlBar
           slot="extend-bar"
           @select="operationManageAddclick"
@@ -66,7 +66,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">保 存</el-button>
+          <el-button :plain="true" type="primary" @click="save">保 存</el-button>
         </div>
       </el-dialog>
     </div>
@@ -79,7 +79,9 @@ export default {
   name: "",
   data() {
     return {
+      //编辑弹框默认为false
       dialogFormVisible: false,
+      // 表格数据
       operationManageTableData: [
         {
           operationManageNum: 1,
@@ -104,6 +106,7 @@ export default {
           roleManageCreateDate: "13800131358"
         }
       ],
+      //搜索框类型
       operationManageoptions: [
         {
           type: "input",
@@ -156,16 +159,44 @@ export default {
           options: ["start", "end"]
         }
       ],
+      //按钮类型
       operationManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
+      //表单验证
       operationManageWriteRule: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        operationManageBelong: [
+          { required: true, message: "请选择所属渠道", trigger: "change" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        operationManageName: [
+          { required: true, message: "请输入账户名称", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        operationManageRoleName: [
+          { required: true, message: "请选择账户角色", trigger: "change" }
+        ],
+        operationManageStaffNum: [
+          { required: true, message: "请输入员工编号", trigger: "blur" }
+        ],
+        operationManageAge: [
+          { required: true, message: "请输入年龄", trigger: "blur" }
+        ],
+        operationManagetelephone: [
+          { required: true, message: "请输入手机号", trigger: "blur" }
+        ],
+        operationManageIDCard: [
+          { required: true, message: "请输入身份证号", trigger: "blur" }
+        ],
+        operationManageAdress: [
+          { required: true, message: "请输入联系地址", trigger: "blur" }
+        ],
+        operationManageLimit: [
+          {
+            type: "array",
+            required: true,
+            message: "请选择账号权限",
+            trigger: "change"
+          }
+        ]
       },
+      // 编辑弹框表单类型
       operationManageWriteData: [
         {
           type: "select",
@@ -184,6 +215,18 @@ export default {
           value: ""
         },
         {
+          type: "input",
+          title: "员工编号",
+          prop: "operationManageStaffNum",
+          value: ""
+        },
+        {
+          type: "input",
+          title: "年龄",
+          prop: "operationManageAge",
+          value: ""
+        },
+        {
           type: "select",
           title: "账户角色",
           prop: "operationManageRoleName",
@@ -199,19 +242,29 @@ export default {
           value: "",
           prop: "operationManagetelephone"
         },
-        { type: "input", title: "身份证号", value: "", prop: "accountname" },
-        { type: "input", title: "联系地址", value: "", prop: "accountname" },
+        {
+          type: "input",
+          title: "身份证号",
+          value: "",
+          prop: "operationManageIDCard"
+        },
+        {
+          type: "input",
+          title: "联系地址",
+          value: "",
+          prop: "operationManageAdress"
+        },
         {
           type: "input",
           title: "账户密码",
           value: "",
-          prop: "accountname",
+          prop: "operationManagePassword",
           disabled: true,
           placeholder: "初始密码为123456"
         },
         {
           type: "cascader-multiple",
-          prop: "accountauthority",
+          prop: "operationManageLimit",
           value: "",
           title: "账号权限",
           placeholder: "请选择",
@@ -489,6 +542,11 @@ export default {
   },
   components: {},
   methods: {
+    //点击查询
+    search(formData) {
+      console.log(formData);
+    },
+    //新增按钮
     operationManageAddclick() {
       this.$router.push("operationAccountAdd");
     },
@@ -496,26 +554,33 @@ export default {
     operationManageWrite(row) {
       this.dialogFormVisible = true;
       // row = this.operationManageWriteData[0].prop;
-      let n = Object.keys(row);
-      let arr = this.operationManageWriteData;
-      //console.log(n);
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < n.length; j++) {
-          if (arr[i].prop === n[j]) {
-            arr[i].value = row[n[j]];
-          }
-        }
-      }
+      this.operationManageWriteData.value = Object.assign({}, row);
+      // let n = Object.keys(row);
+      // let arr = this.operationManageWriteData;
+      // //console.log(n);
+      // for (var i = 0; i < arr.length; i++) {
+      //   for (var j = 0; j < n.length; j++) {
+      //     if (arr[i].prop === n[j]) {
+      //       arr[i].value = row[n[j]];
+      //     }
+      //   }
+      // }
       //console.log(this.operationManageWriteData[0]);
     },
     //点击查看
     operationManageLook(row) {
-      let id = row.operationManageNum;
-      this.$router.push({ path: "operationAccountExamine", query: { id } });
+      this.$router.push({
+        path: "operationAccountExamine",
+        query: { id: row.operationManageNum }
+      });
       //console.log(row);
-      this.eventBus.$emit("send", row);
+      //this.eventBus.$emit("send", row);
     },
-    operationManageWritechangeForm() {}
+    operationManageWritechangeForm() {},
+    //点击保存
+    save() {
+      this.dialogFormVisible = false;
+    }
   }
 };
 </script>

@@ -62,7 +62,7 @@ export default {
           type: "radio",
           prop: "sendWarn",
           value: "",
-          options: [{ key: 1, value: "开启" }, { key: 0, value: "关闭" }]
+          options: [{ label:"开启", value: "1" }, { label: "关闭", value: "0" }]
         },
         {
           title: "选择提醒方式",
@@ -83,7 +83,7 @@ export default {
           type: "radio",
           prop: "realBuckle",
           value: "",
-          options: [{ key: 1, value: "开启" }, { key: 0, value: "关闭" }]
+          options:  [{ label:"是", value: "1" }, { label: "否", value: "0" }]
         },
         {
           title: "选择非实扣方式",
@@ -98,7 +98,7 @@ export default {
           type: "radio",
           prop: "autoTransfer",
           value: "",
-          options: [{ key: 1, value: "是" }, { key: 0, value: "否" }]
+          options:  [{ label:"是", value: "1" }, { label: "否", value: "0" }]
         },
         {
           title: "转账日期",
@@ -106,10 +106,10 @@ export default {
           prop: "transferDate",
           value: "",
           options: [
-            { key: 0, value: "每日" },
-            { key: 1, value: "每周" },
-            { key: 2, value: "每月" },
-            { key: 3, value: "指定日期" }
+            { label:"每日", value: "0" },
+            { label: "每周", value: "1" },
+            { label: "每月", value: "2" },
+            { label: "指定日期", value: "3" }
           ]
         },
         {
