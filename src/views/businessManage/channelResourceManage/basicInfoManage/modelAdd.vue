@@ -1,8 +1,21 @@
 <template>
- <div class="vlt-card modelAdd">
+ <div class="vlt-card modelAdd-page">
    <div class="vlt-edit-single">
      <div class="vlt-edit-wrap">
-       <el-form label-position="right" label-width="90px" :model="form" ref="form">
+       <span class="goods-cate">物品类别</span>
+        <el-form class="goods">
+          <el-form-item>
+            <el-select v-model="selectValue" placeholder="请选择" @change="changeOption">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+       <el-form v-if="selectValue === 1" label-position="right" label-width="90px" :model="form" ref="form">
           <base-form :formData="addData" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right"
           @change="changeForm" ></base-form>
           <el-form-item label="上传图片" class='upLoadImg'>
@@ -28,7 +41,12 @@
               <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
           </el-form-item>
-        </el-form>
+       </el-form>
+       <el-form v-else>
+         <el-form-item>
+           <h1>配件</h1>
+         </el-form-item>
+       </el-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit('form')">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -44,12 +62,17 @@ export default {
  name: "modelAdd",
  data() {
  return {
+   selectValue:1,
+   options:[
+     {value:1,label:'设备'},
+     {value:2,label:'配件'}
+   ],
    params:'',
    form:{},
    dialogImageUrl: '',
    dialogVisible: false,
    addData:[
-    {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
+    // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备型号',type:'input',prop:'equipmentModel', value:''},
     {title:'设备单价',type:'select',prop:'equipmentPrice',options:[{label:'',value:''},{label:'',value:''}]},
@@ -106,6 +129,9 @@ export default {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
     },
+    changeOption() {
+      console.log(this.selectValue);
+    },
     handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
@@ -158,11 +184,22 @@ export default {
 </script>
 
 <style lang="less">
-.modelAdd{
+.modelAdd-page{
   .upLoadImg{
     .el-form-item__label{
       margin-left:52px;
     }
+  }
+  .goods {
+    margin-left: 14px;
+    display: inline-block;
+  }
+  span {
+    font-size: 12px;
+  }
+  .goods-cate {
+    margin-left: 78px;
+    margin-top: 20px;
   }
 }
 </style>

@@ -68,11 +68,8 @@ const inventoryManage = () => import('@/views/businessManage/channelResourceMana
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
 const ledgerManage = () => import('@/views/businessManage/channelResourceManage/ledgerManage/ledgerManage')
 const storeManage = () => import('@/views/businessManage/channelResourceManage/storeManage/storeManage')
-
-
 const basicInfoManage = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/basicInfoManage')
-
-
+//库存管理库存查询
 //设备查看
 const equipmentDetail = () => import('@/views/businessManage/channelResourceManage/inventoryManage/equipmentDetail')
 //设备履历
@@ -93,8 +90,19 @@ const detailLedger = () => import('@/views/businessManage/channelResourceManage/
 const detailFlow = () => import('@/views/businessManage/channelResourceManage/ledgerManage/detailFlow')
 //基础信息类型管理新增
 const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
-// 类型管理查看
-const typeCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/typeCheck')
+//类型管理修改
+const modification  = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modification')
+// 类型管理设备查看
+const equipmentCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/equipmentCheck')
+//设施查看
+const facilityCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/facilityCheck')
+//耗材查看
+const consumableCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/consumableCheck')
+//配件查看
+const mountingsCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/mountingsCheck')
+
+
+
 //型号管理查看
 const modelCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelCheck')
 //类型管理新增
@@ -631,12 +639,45 @@ export default [
     component: addEquipment
   },
   {
-    path: 'businessManage/channelResourceManage/typeCheck',
-    name: 'typeCheck',
+    path: 'businessManage/channelResourceManage/modification',
+    name: 'modification',
     meta: {
-      title: '基本信息类型管理查看',
+      title: '基本信息类型管理修改',
     },
-    component: typeCheck
+    component: modification
+  },
+  
+  {
+    path: 'businessManage/channelResourceManage/equipmentCheck',
+    name: 'equipmentCheck',
+    meta: {
+      title: '基本信息类型管理设备查看',
+    },
+    component: equipmentCheck
+},
+  {
+    path: 'businessManage/channelResourceManage/facilityCheck',
+    name: 'facilityCheck',
+    meta: {
+      title: '基本信息类型管理设施查看',
+    },
+    component: facilityCheck
+  },
+  {
+    path: 'businessManage/channelResourceManage/consumableCheck',
+    name: 'consumableCheck',
+    meta: {
+      title: '基本信息类型管理耗材查看',
+    },
+    component: consumableCheck
+  },
+  {
+    path: 'businessManage/channelResourceManage/mountingsCheck',
+    name: 'mountingsCheck',
+    meta: {
+      title: '基本信息类型管理耗材查看',
+    },
+    component: mountingsCheck
   },
   {
     path: 'businessManage/channelResourceManage/modelCheck',
