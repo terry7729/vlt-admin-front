@@ -1,7 +1,11 @@
 <template>
   <div class="user-admin" v-if="user">
-    <span class="iconfont icon-fullscreen" @click="fullScreen" v-if="!isFull"></span>
-    <span class="iconfont icon-exitfullscreen" @click="exitFullScreen" v-else></span>
+    <el-tooltip effect="dark" content="全屏" placement="bottom" v-if="!isFull">
+      <span class="iconfont icon-fullscreen" @click="fullScreen"></span>
+    </el-tooltip>
+    <el-tooltip effect="dark" content="退出全屏" placement="bottom" v-else>
+      <span class="iconfont icon-exitfullscreen" @click="exitFullScreen"></span>
+    </el-tooltip>
     <span class="el-icon-bell"></span>
     <span class="logout iconfont icon-tuichu" @click="openConfirm"></span>
     <span class="el-dropdown-link">
