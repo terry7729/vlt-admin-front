@@ -30,9 +30,7 @@ export default {
       this.$refs.main.scrollTop = 0;
     });
   },
-  created () {
-    this.initStorage();
-  },
+  created () {},
   mounted() {
     const self = this;
     self.resizeTimer = null;
@@ -53,14 +51,7 @@ export default {
         // 未能获取 .header-container
       }
     },
-    // 页面进入是往stroage中插入一条创建表单的初始化数据
-    initStorage () {
-      let pc = storage.get('previewConfig');
-      if (!pc) {
-        let initConfig = {col:2,row:4,list:[{index:0}, {index: 1},{index:2},{index:3},{index:4},{index:5},{index:6},{index:7}]}
-        storage.set('previewConfig', JSON.stringify(initConfig));
-      } 
-    }
+  
   },
   components: {
     sideMenu,

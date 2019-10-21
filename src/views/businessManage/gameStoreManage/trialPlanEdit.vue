@@ -15,8 +15,8 @@
           <div class="vlt-edit-wrap">
             <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
             <el-row class="vlt-edit-btn">
-              <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
-              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提 交</el-button>
+              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
             </el-row>
           </div>
         </div>
@@ -26,9 +26,9 @@
 </template>
 
 <script type="text/javascript">
-import BaseInfo from './trialPlanCreateBase'
-import GameSet from './trialPlanCreateControl'
-import Question from './trialPlanCreateQuestion'
+import BaseInfo from './trialPlanEditBase'
+import GameSet from './trialPlanEditControl'
+import Question from './trialPlanEditQuestion'
 import rules from '@/utils/rules.js';
 
 export default {
@@ -98,30 +98,9 @@ export default {
   .vlt-edit-btn{
     text-align: right;
     margin: 60px 0 30px;
-    .el-button{
-      width: 120px;
-    }
-    .cancel{
-      margin: 0 50px 0 180px;
-    }
   }
-  // .vlt-edit-wrap{
-  //   width: 100%;
-  //   margin: 30px auto;
-  // }
   .appendix{
-    .vlt-edit-wrap{
-      width: 640px;
-      // margin: 0 auto;
-    }
-    .vlt-edit-btn{
-      .el-button{
-        width: 120px;
-      }
-      .cancel{
-        margin: 0 50px 0 130px;
-      }
-    }
+    padding-top: 30px;
   }
 </style>
 
