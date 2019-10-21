@@ -1,74 +1,85 @@
 <template>
-  <div class="vlt-edit-single wrap">
-    <div class="vlt-edit-wrap">
-      <el-form label-position="right" 
-        label-width="90px" 
-        ref="form"
-        class="baseInfo">
-        <base-form :formData="baseData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <!-- <el-form-item label="试玩工具">
-          <el-radio v-model="radio" label="1">试玩投注卡</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">会员积分</el-radio>
-            <el-input v-model="input" placeholder="请输入积分兑换比例"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="试玩群体">
-          <el-checkbox-group v-model="checkList">
-            <el-checkbox label="0">全部用户</el-checkbox>
-            <el-checkbox label="1">新游玩用户</el-checkbox>
-            <el-checkbox label="2">新会员</el-checkbox>
-            <el-checkbox label="3" >老会员</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="会员等级">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <base-form :formData="channelData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <el-form-item label="试玩渠道">
-          <el-radio v-model="radio" label="1">区域内全部大厅</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">区域内指定大厅</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="试玩终端">
-          <el-radio v-model="radio" label="1">大厅内全部终端</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">大厅内指定终端</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
-          </div>
-        </el-form-item> -->
+  <div class="vlt-card">
+    <el-steps :active="active" align-center class="step-wrap">
+      <el-step title="基础信息" icon="el-icon-edit"></el-step>
+      <el-step title="资金结余" icon="el-icon-bank-card"></el-step>
+      <el-step title="退市信息发布" icon="el-icon-chat-line-square"></el-step>
+      <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
+    </el-steps>
+    <div class="vlt-edit-single" v-show="active==0">
+      <base-info @next="next"></base-info>
+    </div>
+    <div v-show="active==1" class="bank-wrap">
+      <div class="tr">
+        <el-button type="primary" size="small" @click="addGoods">资金划转</el-button>
+      </div>
+      <el-table
+        border
+        ref="multipleTable"
+        :data="tableData"
+        tooltip-effect="dark"
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+        <el-table-column label="序号" type="index" width="55"></el-table-column>
+        <el-table-column prop="id" label="资金名称" ></el-table-column>
+        <el-table-column prop="name" label="总金额"></el-table-column>
+        <el-table-column prop="type" label="划转方式"></el-table-column>
+        <el-table-column prop="pond" label="划转金额"></el-table-column>
+        <el-table-column prop="time" label="余额"></el-table-column>
+        <el-table-column label="操作" width="150">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
+            <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">修改</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-row class="vlt-edit-btn">
+        <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
+        <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
+      </el-row>
+    </div>
+    <div v-show="active==2">
+      <div class="vlt-edit-single publish-wrap">
+        <div class="vlt-edit-wrap">
+          <base-form :formData="publishData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+        </div>
         <el-row class="vlt-edit-btn">
-          <el-button size="medium" @click="back" class="cancel">返 回</el-button>
+          <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
           <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
         </el-row>
-      </el-form>
       </div>
+    </div>
+    <div class="vlt-edit-single appendix" v-show="active==3">
+      <div class="vlt-edit-wrap">
+        <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+        <el-row class="vlt-edit-btn">
+          <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
+          <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提 交</el-button>
+        </el-row>
+      </div>
+    </div>
   </div>
 </template>
 
 <script type="text/javascript">
+import BaseInfo from './gameDelistingPlanCreateBase'
 
 export default {
   name: "",
+  components: {
+    BaseInfo,
+  },
   data() {
     return {
-      baseData: [
-        {title: '变更计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
-        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
-        {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
-        {title: '变更游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+      tableData: [
+        {id: 'a',name:'b',type:'c',pond: 'd',time:'2019-09-12 09:00:00'}
       ],
-      channelData: [
-        {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: [
+      appendixData: [
+        {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
+      ],
+      publishData: [
+        {title: '发布标题', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '选择机构', type: 'cascader-multiple',  prop: 'eachAdd', value: '',options: [
             {
               value: "zhinan",
               label: "指南",
@@ -336,29 +347,36 @@ export default {
               ]
             }
           ]},
+        {title: '发布时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
+        {title: '发布内容', type: 'textarea',  prop: 'eachAdd', value: ''},
       ],
-      rules: {},
-      radio: 1,
-      options: [{label:'男', value:'1'},{label:'女',value:'2'}],
-      checkList: [],
-      textarea: '',
+      active: 0,
+      rules: {}
     }
   },
   methods: {
+    prev() {
+      // this.$refs.main.scrollTop = 0;
+      if (this.active-- < 1) this.active = 0;
+    },
+    next() {
+      // this.$refs.main.scrollTop = 0;
+      if (this.active++ > 3) this.active = 0;
+    },
     changeForm() {
 
     },
-    next(val) {
-      this.$emit('next', val)
-    }
+    handlePreview() {},
+    handleRemove() {},
+    beforeRemove() {},
+    handleExceed() {},
   },
 }
 </script>
 
 <style lang="less" scoped>
-  .vlt-edit-wrap{
-    width: 100%;
-    margin: 0 30px;
+  .step-wrap{
+    padding: 30px 0 40px;
   }
   .vlt-edit-btn{
     text-align: right;
@@ -367,15 +385,29 @@ export default {
       width: 120px;
     }
     .cancel{
-      margin: 0 30px 0 80px;
+      margin: 0 50px 0 180px;
     }
   }
-  .flex-wrap{
-    display: flex;
-    align-items: center;
+  .appendix{
+    .vlt-edit-wrap{
+      max-width: 900px;
+      margin: 30px auto;
+    }
+    .vlt-edit-btn{
+      .cancel{
+        margin: 0 30px 0 130px;
+      }
+    }
   }
-  .wrap{
+  .bank-wrap{
     max-width: 900px;
     margin: 0 auto;
+  }
+  .publish-wrap{
+    max-width: 900px;
+    margin: 0 auto;
+    .vlt-edit-wrap{
+      // margin: 0 40px;
+    }
   }
 </style>

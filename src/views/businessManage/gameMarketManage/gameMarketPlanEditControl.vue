@@ -1,57 +1,59 @@
 <template>
-  <div class="vlt-edit-single wrap">
-    <div class="vlt-edit-wrap">
-      <el-form label-position="right" 
-        label-width="90px" 
-        ref="form"
-        class="baseInfo">
-        <base-form :formData="baseData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <!-- <el-form-item label="试玩工具">
-          <el-radio v-model="radio" label="1">试玩投注卡</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">会员积分</el-radio>
-            <el-input v-model="input" placeholder="请输入积分兑换比例"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="试玩群体">
-          <el-checkbox-group v-model="checkList">
-            <el-checkbox label="0">全部用户</el-checkbox>
-            <el-checkbox label="1">新游玩用户</el-checkbox>
-            <el-checkbox label="2">新会员</el-checkbox>
-            <el-checkbox label="3" >老会员</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="会员等级">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <base-form :formData="channelData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <el-form-item label="试玩渠道">
-          <el-radio v-model="radio" label="1">区域内全部大厅</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">区域内指定大厅</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="试玩终端">
-          <el-radio v-model="radio" label="1">大厅内全部终端</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">大厅内指定终端</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
-          </div>
-        </el-form-item> -->
-        <el-row class="vlt-edit-btn">
-          <el-button size="medium" @click="back" class="cancel">返 回</el-button>
-          <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
-        </el-row>
-      </el-form>
+  <div class="wrap">
+    <panel title="游戏规则" :show="true" style="margin-bottom:15px">
+      <div class="vlt-edit-double">
+        <div class="vlt-edit-wrap">
+          <base-form :formData="gameData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+        </div>
       </div>
+    </panel>
+    <panel title="投注规则" :show="true" style="margin-bottom:15px">
+      <div class="vlt-edit-double">
+        <div class="vlt-edit-wrap">
+          <base-form :formData="betData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+        </div>
+      </div>
+    </panel>
+    <panel title="单次加注金额配置" :show="true" style="margin-bottom:15px">
+      <el-form label-position="top" label-width="100px" ref="form"
+        :model="eachBetForm"
+        :rules="rules"
+        class="eachBet-form">
+        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`${item.title}${index+1}`">
+          <el-input v-model="eachBetForm[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+          <el-button v-if="index!==0" type="text" class="delete" @click="deleteBetMoney(index)">删除</el-button>
+        </el-form-item>
+      </el-form>
+      <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
+    </panel>
+    <panel title="资金规则" :show="true" style="margin-bottom:15px">
+      <div class="vlt-edit-double">
+        <div class="vlt-edit-wrap">
+          <base-form :formData="fundsData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+        </div>
+      </div>
+    </panel>
+    <panel title="风控规则" :show="true" style="margin-bottom:15px">
+      <div class="vlt-edit-double">
+        <div class="vlt-edit-wrap">
+          <base-form :formData="riskData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+        </div>
+      </div>
+    </panel>
+    <panel title="自定义设置" :show="true" style="margin-bottom:15px">
+      <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
+    </panel>
+    <panel title="信息发布设置" :show="true" style="margin-bottom:15px">
+      <div class="vlt-edit-single">
+        <div class="vlt-edit-wrap">
+          <base-form :formData="publishData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+        </div>
+      </div>
+    </panel>
+    <el-row class="vlt-edit-btn">
+      <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
+      <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
+    </el-row>
   </div>
 </template>
 
@@ -61,14 +63,58 @@ export default {
   name: "",
   data() {
     return {
-      baseData: [
-        {title: '变更计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
-        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
-        {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
-        {title: '变更游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+      gameData: [
+        {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]},
+        {title: '消费模式', type: 'select',  prop: 'salesModel', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
+        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
+        {title: '兑奖权限', type: 'select',  prop: 'salesModel', value: '', options:[{label: '启用',value: '1'},{label: '禁用',value: '2'}]},
+        {title: '销售权限', type: 'select',  prop: 'status', value: '', options:[{label: '启用',value: '0'},{label: '禁用',value: '1'}]},
+        {title: 'Jackpot比率', type: 'input',  prop: 'phoneNumber', value: ''},
+        {title: '返奖比率', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '调节基金比率', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '奖池比率', type: 'input',  prop: 'email', value: ''},
+        {title: '游戏兑换比例', type: 'input',  prop: 'rate', value: '',placeholder: '示例1:100 请用英文符号“ : ”'},
+        {title: '防沉迷', type: 'select',  prop: 'statusa', value: {label: '启用',value: '0'}, options:[{label: '启用',value: '0'},{label: '禁止',value: '1'}]},
+        {title: '游戏规则介绍', type: 'textarea',  prop: 'textarea', value: ''},
+        {title: '单次时长', type: 'input',  prop: 'faxaphone', value: ''},
+        {title: '单日限额', type: 'input',prop: 'address', value: ''},
       ],
-      channelData: [
-        {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: [
+      betData: [
+        {title: '单注最小金额', type: 'input',  prop: 'phoneNumber', value: ''},
+        {title: '最小投注数', type: 'input',  prop: 'email', value: ''},
+        {title: '单注最大金额', type: 'input',  prop: 'phoneNumber', value: ''},
+        {title: '最大投注数', type: 'input',  prop: 'email', value: ''},
+      ],
+      eachBetData: [
+        {title: '单次加注金额', type: 'input',  prop: 'eachAdd', value: ''},
+      ],
+      fundsData: [
+        {title: '总发行经费占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '总公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '中福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '中福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '省福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '省福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '市福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '市福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '销售厅发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '销售厅公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+      ],
+      riskData: [
+        {title: '最低中奖金额', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低返奖率', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最高中奖金额', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最高返奖率', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低奖池金额', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低销量', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最高奖池金额', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最高销量', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低开机率', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低在线数量', type: 'input',  prop: 'eachAdd', value: ''},
+      ],
+      publishData: [
+        {title: '发布标题', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '选择机构', type: 'cascader-multiple',  prop: 'eachAdd', value: '',options: [
             {
               value: "zhinan",
               label: "指南",
@@ -336,46 +382,63 @@ export default {
               ]
             }
           ]},
+        {title: '发布时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
+        {title: '发布内容', type: 'textarea',  prop: 'eachAdd', value: ''},
       ],
+      eachBetForm: {},
+      gameForm: {},
       rules: {},
-      radio: 1,
-      options: [{label:'男', value:'1'},{label:'女',value:'2'}],
-      checkList: [],
-      textarea: '',
+      params: {}
     }
   },
+  components: {
+  },
   methods: {
-    changeForm() {
-
+    deleteBetMoney(index) {
+      this.eachBetData.splice(index, 1)
+      console.log('删除', this.deviceData)
     },
-    next(val) {
-      this.$emit('next', val)
+    addBetMoney() {
+      let cloneData = JSON.parse(JSON.stringify(this.eachBetData[0]))
+      cloneData.prop = `${cloneData.eachAdd}${this.eachBetData.length}`
+      this.$set(this.eachBetData, this.eachBetData.length, cloneData);
+    },
+    changeForm(val) {
+      Object.assign(this.params, val)
+      console.log('派发出来的参数', this.params)
+    },
+    prev() {
+      this.$emit('prev', this.params)
+    },
+    next() {
+      this.$emit('next', this.params)
     }
   },
 }
 </script>
 
 <style lang="less" scoped>
-  .vlt-edit-wrap{
-    width: 100%;
-    margin: 0 30px;
-  }
+@import './less/index.less';
+.add-btn{
+  width: 100%;
+  max-width: 350px;
+  margin: 0 0 30px 16px;
+}
+.delete{
+  margin-left: 20px;
+}
   .vlt-edit-btn{
     text-align: right;
-    margin: 60px 0 30px;
+    margin: 40px 0 40px;
     .el-button{
-      width: 120px;
+      // width: 120px;
     }
     .cancel{
-      margin: 0 30px 0 80px;
+      // margin: 0 50px 0 0;
     }
   }
-  .flex-wrap{
-    display: flex;
-    align-items: center;
-  }
   .wrap{
-    max-width: 900px;
-    margin: 0 auto;
+    // max-width: 900px;
+    // margin: 0 auto;
   }
 </style>

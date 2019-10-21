@@ -1,5 +1,5 @@
 // index.js
-// import httpMock from "@/utils/httpMock.js" // 本地环境mock请求，必要时请注释
+import httpMock from "@/utils/httpMock.js" // 本地环境mock请求，必要时请注释
 import ajax from '@/utils/ajax.js'
 // 引入各个模块接口
 import businessCharts from './modules/businessCharts'

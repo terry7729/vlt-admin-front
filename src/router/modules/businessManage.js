@@ -55,14 +55,30 @@ const gameChangePlanEdit = () => import('@/views/businessManage/gameChangeManage
 const gameChangePlanCreate = () => import('@/views/businessManage/gameChangeManage/gameChangePlanCreate')
 //退市计划
 const gameDelistingPlanList = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanList')
-
+const gameDelistingPlanCreate = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanCreate')
+const gameDelistingPlanDetail = () => import('@/views/businessManage/gameDelistingManage/gameDelistingPlanDetail')
+const riskReportList = () => import('@/views/businessManage/gameDelistingManage/riskReportList')
 
 
 
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
-// const channelAdd = () => import('@/views/businessManage/channelBusinessManage/channelAdd')
+const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
+const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
+const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
+const channelFundsPermission = () => import('@/views/businessManage/channelBusinessManage/channelFundsPermission')
+const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
+const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
+const developmentPlanList = () => import('@/views/businessManage/channelBusinessManage/developmentPlanList')
+const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
+const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
+const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
+const resourceApply = () => import('@/views/businessManage/channelBusinessManage/resourceApply')
+const resourceProvide = () => import('@/views/businessManage/channelBusinessManage/resourceProvide')
+const resourcePurchase = () => import('@/views/businessManage/channelBusinessManage/resourcePurchase')
+
+
 //渠道资源管理
 const inventoryManage = () => import('@/views/businessManage/channelResourceManage/inventoryManage/inventoryManage')
 const outPutManage = () => import('@/views/businessManage/channelResourceManage/outPutManage/outPutManage')
@@ -101,12 +117,7 @@ const outStore = () => import('@/views/businessManage/channelResourceManage/outP
 const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
 
-const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
-const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
-const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
-const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
-const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
-const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
+
 
 // 渠道终端管理
 const channelTerminal = () => import('@/views/businessManage/channelTerminalManagement')
@@ -319,7 +330,7 @@ export default [
     path: 'businessManage/trialPlanCreate',
     name: 'trialPlanCreate',
     meta: {
-      title: '创建游戏试玩计划',
+      title: '新建试玩计划',
     },
     component: trialPlanCreate
   },
@@ -351,7 +362,7 @@ export default [
     path: 'businessManage/gameMarketPlanCreate',
     name: 'gameMarketPlanCreate',
     meta: {
-      title: '创建上市计划',
+      title: '新建上市计划',
     },
     component: gameMarketPlanCreate
   },
@@ -399,7 +410,7 @@ export default [
     path: 'businessManage/gameChangePlanCreate',
     name: 'gameChangePlanCreate',
     meta: {
-      title: '创建变更计划',
+      title: '新建变更计划',
     },
     component: gameChangePlanCreate
   },
@@ -426,6 +437,30 @@ export default [
       title: '退市计划列表',
     },
     component: gameDelistingPlanList
+  },
+  {
+    path: 'businessManage/gameDelistingPlanCreate',
+    name: 'gameDelistingPlanCreate',
+    meta: {
+      title: '新建退市计划',
+    },
+    component: gameDelistingPlanCreate
+  },
+  {
+    path: 'businessManage/gameDelistingPlanDetail',
+    name: 'gameDelistingPlanDetail',
+    meta: {
+      title: '退市计划详情',
+    },
+    component: gameDelistingPlanDetail
+  },
+  {
+    path: 'businessManage/riskReportList',
+    name: 'riskReportList',
+    meta: {
+      title: '风险报告',
+    },
+    component: riskReportList
   },
   {
     path: 'businessManage/channelList',
@@ -711,12 +746,70 @@ export default [
     component: channelSalesPermission
   },
   {
+    path: 'businessManage/channelFundsPermission',
+    name: 'channelFundsPermission',
+    meta: {
+      title: '资金权限',
+    },
+    component: channelFundsPermission
+  },
+  {
+    path: 'businessManage/resourcePurchase',
+    name: 'resourcePurchase',
+    meta: {
+      title: '资源采购',
+    },
+    component: resourcePurchase
+  },
+  {
+    path: 'businessManage/resourceApply',
+    name: 'resourceApply',
+    meta: {
+      title: '资源申请',
+    },
+    component: resourceApply
+  },
+  {
+    path: 'businessManage/resourceProvide',
+    name: 'resourceProvide',
+    meta: {
+      title: '资源发放',
+    },
+    component: resourceProvide
+  },
+  {
     path: 'businessManage/developmentPlan',
     name: 'developmentPlan',
     meta: {
       title: '年度发展计划',
     },
-    component: developmentPlan
+    redirect: 'businessManage/developmentPlan/developmentPlanList',
+    component: developmentPlan,
+    children: [{
+        path: 'developmentPlanList',
+        name: 'developmentPlanList',
+        meta: {
+          title: '计划列表',
+        },
+        component: developmentPlanList,
+      },
+      {
+        path: 'developmentPlanProvince',
+        name: 'developmentPlanProvince',
+        meta: {
+          title: '计划汇总（省）',
+        },
+        component: developmentPlanProvince,
+      },
+      {
+        path: 'developmentPlanCity',
+        name: 'developmentPlanCity',
+        meta: {
+          title: '计划汇总（地市）',
+        },
+        component: developmentPlanCity,
+      }
+    ]
   },
   {
     path: 'businessManage/developmentPlanCreate',

@@ -93,7 +93,7 @@ export default [{
             childResources: [],
             icon: "el-icon-menu",
             name: "风险处理报告",
-            url: 'gameDelistPlan'
+            url: 'riskReportList'
           }
         ]
       },

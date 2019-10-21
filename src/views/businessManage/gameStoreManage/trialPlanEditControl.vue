@@ -41,12 +41,15 @@
       </div>
     </panel>
     <panel title="自定义设置" :show="true" style="margin-bottom:15px">
-      <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
+      <el-button class="add-btn" @click="addSet" icon="el-icon-plus">新 增</el-button>
     </panel>
     <el-row class="vlt-edit-btn">
       <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
       <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
     </el-row>
+    <el-dialog title="自定义设置" :visible.sync="isShow" fullscreen>
+  
+    </el-dialog>
   </div>
 </template>
 
@@ -106,12 +109,16 @@ export default {
       eachBetForm: {},
       gameForm: {},
       rules: {},
-      params: {}
+      params: {},
+      isShow: false
     }
   },
   components: {
   },
   methods: {
+    addSet() {
+      this.isShow = true;
+    },
     deleteBetMoney(index) {
       this.eachBetData.splice(index, 1)
       console.log('删除', this.deviceData)
@@ -136,10 +143,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import './less/index.less';
 .add-btn{
   width: 100%;
   max-width: 350px;
-  margin: 0 0 30px 16px;
+  margin: 20px 0 30px 16px;
 }
 .delete{
   margin-left: 20px;
@@ -151,11 +159,11 @@ export default {
       // width: 120px;
     }
     .cancel{
-      // margin: 0 30px 0 0;
+      // margin: 0 50px 0 0;
     }
   }
   .wrap{
-    // max-width: 900px;
-    // margin: 0 auto;
+    // max-width: 1000px;
+    margin: 0 auto;
   }
 </style>

@@ -47,8 +47,8 @@
           </div>
         </el-form-item> -->
         <el-row class="vlt-edit-btn">
-          <el-button size="medium" @click="back" class="cancel">返 回</el-button>
-          <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
+          <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
+          <el-button size="medium" @click="back" class="cancel">取 消</el-button>
         </el-row>
       </el-form>
       </div>
@@ -362,20 +362,10 @@ export default {
   }
   .vlt-edit-btn{
     text-align: right;
-    margin: 60px 0 30px;
-    .el-button{
-      width: 120px;
-    }
-    .cancel{
-      margin: 0 30px 0 80px;
-    }
+    margin: 60px 30px 20px;
   }
   .flex-wrap{
     display: flex;
     align-items: center;
-  }
-  .wrap{
-    max-width: 900px;
-    margin: 0 auto;
   }
 </style>

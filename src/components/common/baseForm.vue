@@ -11,7 +11,7 @@
       <!-- 输入框 带icon-->
       <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
+      <el-select v-if="item.type=='select'" :filterable='item.filterable'  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items.value">
@@ -90,12 +90,12 @@
       <span v-if="item.type=='minMax'" class="siding-flag">至</span>
       <el-input v-if="item.type=='minMax'" v-model="form[item.options[1]]" @blur="checkNumber" type="text" placeholder="输入最大值"></el-input>
       <!-- 多选checkbox -->
-      <el-checkbox-group v-if="item.type=='checkbox'" v-model="form[item.prop]">
+      <el-checkbox-group v-if="item.type=='checkbox'" @change="changeCheckbox" v-model="form[item.prop]">
         <el-checkbox 
-          v-for="(list,index) in item.options"
+          v-for="(list, index) in item.options"
           :key="index"
-          :label="list.key">
-          {{list.value}}
+          :label="list.value">
+          {{list.label}}
         </el-checkbox>
       </el-checkbox-group>
       <!-- 图片上传 -->
@@ -190,6 +190,9 @@ export default {
   components: {
   },
   methods: {
+    changeCheckbox(val) {
+      console.log(val);
+    },
     checkNumber(val, flag) {
       if(this.form[val] < 0) {
         this.$message.warning(`${flag}须大于0`);
@@ -314,7 +317,13 @@ export default {
             self.$set(self.form, item.prop, '')
             self.$set(self.selectParam, item.prop, '')
           }
-        } else {
+        } else if(item.type=='checkbox') {
+          if(item.value !='') { // 数据回填
+            self.$set(self.selectParam, item.prop , item.value);
+          }else{
+            self.$set(self.form, item.prop, [])
+          }
+        }else {
           if(item.value !='') { // 数据回填
             self.$set(self.form, item.prop, item.value)
           }else{

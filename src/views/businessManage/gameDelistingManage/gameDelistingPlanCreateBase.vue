@@ -6,46 +6,20 @@
         ref="form"
         class="baseInfo">
         <base-form :formData="baseData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <!-- <el-form-item label="试玩工具">
-          <el-radio v-model="radio" label="1">试玩投注卡</el-radio>
-          <div class="flex-wrap">
-            <el-radio v-model="radio" label="2">会员积分</el-radio>
-            <el-input v-model="input" placeholder="请输入积分兑换比例"></el-input>
-          </div>
-        </el-form-item>
-        <el-form-item label="试玩群体">
-          <el-checkbox-group v-model="checkList">
-            <el-checkbox label="0">全部用户</el-checkbox>
-            <el-checkbox label="1">新游玩用户</el-checkbox>
-            <el-checkbox label="2">新会员</el-checkbox>
-            <el-checkbox label="3" >老会员</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="会员等级">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <base-form :formData="channelData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-        <el-form-item label="试玩渠道">
+        <el-form-item label="退市渠道">
           <el-radio v-model="radio" label="1">区域内全部大厅</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="radio" label="2">区域内指定大厅</el-radio>
             <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
           </div>
         </el-form-item>
-        <el-form-item label="试玩终端">
+        <el-form-item label="退市终端">
           <el-radio v-model="radio" label="1">大厅内全部终端</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="radio" label="2">大厅内指定终端</el-radio>
             <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
           </div>
-        </el-form-item> -->
+        </el-form-item>
         <el-row class="vlt-edit-btn">
           <el-button size="medium" @click="back" class="cancel">返 回</el-button>
           <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
@@ -62,13 +36,11 @@ export default {
   data() {
     return {
       baseData: [
-        {title: '变更计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
-        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
-        {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
-        {title: '变更游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
-      ],
-      channelData: [
-        {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: [
+        {title: '退市计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入上市计划名称'},
+        {title: '自动退市时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
+        {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入上市计划简介'},
+        {title: '退市游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+        {title: '销售区域', type: 'cascader-multiple',  prop: '', value: '', options: [
             {
               value: "zhinan",
               label: "指南",
@@ -367,7 +339,7 @@ export default {
       width: 120px;
     }
     .cancel{
-      margin: 0 30px 0 80px;
+      margin: 0 50px 0 80px;
     }
   }
   .flex-wrap{
