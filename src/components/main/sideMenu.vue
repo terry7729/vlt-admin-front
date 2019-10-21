@@ -102,7 +102,7 @@ export default {
         if (self.menuList[0].childResources && self.menuList[0].childResources.length) {
           name = self.menuList[0].childResources[0].url
         }
-        self.$router.push({
+        self.$router.replace({
           name
         });
         // self.routerAuthorize();
@@ -250,12 +250,12 @@ export default {
 
     .menu-logo{
       color: #ffffff;
-      line-height: 70px;
+      line-height: 60px;
       font-size: 0;
       text-align: center;
       .ct{
         width: 200px;
-        height: 70px;
+        height: 60px;
         overflow: hidden;
         word-break: keep-all;
         white-space: nowrap;

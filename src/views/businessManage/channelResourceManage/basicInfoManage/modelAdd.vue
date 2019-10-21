@@ -15,8 +15,8 @@
             </el-select>
           </el-form-item>
         </el-form>
-       <el-form v-if="selectValue === 1" label-position="right" label-width="90px" :model="form" ref="form">
-          <base-form :formData="addData" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right"
+       <el-form v-if="selectValue === 1" label-position="right" label-width="90px" :model="form1" ref="form1">
+          <base-form :formData="equipmentData" labelWidth="140px" ref="baseForm1" :rules="rules2" direction="right"
           @change="changeForm" ></base-form>
           <el-form-item label="上传图片" class='upLoadImg'>
             <el-upload
@@ -42,9 +42,28 @@
             </el-dialog>
           </el-form-item>
        </el-form>
-       <el-form v-else>
-         <el-form-item>
-           <h1>配件</h1>
+
+       <el-form v-else label-position="right" label-width="90px" :model="form2" ref="form2">
+         <base-form :formData="fittingsData" labelWidth="140px" ref="baseForm2" :rules="rules2" direction="right"
+          @change="changeForm" ></base-form>
+          <span class="goods-cate">可用机型</span>
+         <el-form-item class="typeSelect">
+           <el-select v-model="value" placeholder="请选择设备名称">
+            <el-option
+              v-for="(item,index) in nameOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-select v-model="value" placeholder="请选择设备型号">
+            <el-option
+              v-for="(item,index) in modelOptions"
+              :key="index"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
          </el-form-item>
        </el-form>
         <el-row class="vlt-edit-btn">
@@ -63,15 +82,26 @@ export default {
  data() {
  return {
    selectValue:1,
+   value:'',
    options:[
      {value:1,label:'设备'},
      {value:2,label:'配件'}
    ],
+   //可用机型选择框
+   nameOptions:[
+     {label:'',value:'1'},
+     {label:'',value:'2'},
+   ],
+   modelOptions:[
+     {label:'',value:'3'},
+     {label:'',value:'4'},
+   ],
    params:'',
-   form:{},
+   form1:{},
+   form2:{},
    dialogImageUrl: '',
    dialogVisible: false,
-   addData:[
+   equipmentData:[
     // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备型号',type:'input',prop:'equipmentModel', value:''},
@@ -81,6 +111,12 @@ export default {
     {title:'预警下限',type:'input',prop:'lowerLimit', value:''},
     {title:'厂家信息',type:'input',prop:'factoryInfo', value:''},
     {title:'备注',type:'textarea',prop:'remark',value:''},
+   ],
+   fittingsData:[
+     {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
+     {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
+     {title:'配件单价',type:'select',prop:'fittingsPrice',options:[{label:'',value:''},{label:'',value:''}]},
+     {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
    ],
    rules2: {
         goodsCategory: [
@@ -200,6 +236,10 @@ export default {
   .goods-cate {
     margin-left: 78px;
     margin-top: 20px;
+  }
+  .typeSelect{
+    margin-left: 52px;
+    margin-top: -16px;
   }
 }
 </style>

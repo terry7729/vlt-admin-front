@@ -1,5 +1,4 @@
 <template>
-<!-- 资金参数管理 编辑 -->
   <div class="vlt-card">
     <fund-parameterForm @new="getData">
       <template v-slot:lastForm>

@@ -30,8 +30,8 @@
       <el-table-column prop="remarks" label="备注"></el-table-column>
       <el-table-column prop="handle" label="操作" min-width="105">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="threepaybalance(scope.row.id)">余额</el-button>
-          <el-button type="primary" size="mini" @click="threepaydetail(scope.row.id)">明细</el-button>
+          <el-button type="primary" size="mini" @click="threepaybalance(scope.row)">余额</el-button>
+          <el-button type="primary" size="mini" @click="threepaydetail(scope.row)">明细</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -106,17 +106,17 @@ export default {
     },
     handleSelectionChangethreepay() {},
     //第三方支付页面点击余额
-    threepaybalance(id) {
+    threepaybalance(row) {
       this.$router.push({
         path: "externalbalance",
-        query: { id }
+        query: { id: row.id }
       });
     },
     //第三方支付页面点击明细
-    threepaydetail(id) {
+    threepaydetail(row) {
       this.$router.push({
         path: "externaldetail",
-        query: { id }
+        query: { id: row.id }
       });
     }
   }

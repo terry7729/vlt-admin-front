@@ -39,6 +39,7 @@ export default {
   },
   watch: {
     'config.type'(val) {
+      console.log('改变了 显示', val);
       // 清空表单值
       for(let key in this.form) {
         this.form[key] = ''
