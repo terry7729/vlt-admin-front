@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['entry'])
+    ...mapGetters(['entry', 'routerTags'])
   },
   created () {
     this.getList();
@@ -97,6 +97,10 @@ export default {
             filter(children);
           }
         })(self.menuList);
+
+        if (this.routerTags.length) {
+          return;
+        }
         // 默认展示首页
         let name = self.menuList[0].url;
         if (self.menuList[0].childResources && self.menuList[0].childResources.length) {

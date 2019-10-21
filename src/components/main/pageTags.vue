@@ -8,8 +8,9 @@
           :key="index"
           :closable="closable"
           type="info"
+          :disable-transitions="true"
           @click="to(tag)"
-          @close="close(tag)"
+          @close="close(tag, index)"
         >
           {{tag.name}}
         </el-tag>
@@ -21,8 +22,8 @@
         <i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>关闭当前</el-dropdown-item>
-        <el-dropdown-item>关闭所有</el-dropdown-item>
+        <el-dropdown-item @click.native="close(currentTag, current)">关闭当前</el-dropdown-item>
+        <el-dropdown-item @click.native="clearTags">关闭其他</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -35,6 +36,8 @@ export default {
   name: 'pageTags',
   data() {
     return {
+      currentTag: null,
+      current: 0,
       closable: true
     }
   },
@@ -47,38 +50,57 @@ export default {
       this.closable = true;
     },
     $route(to, from) {
-      this.setRouterTags({
+      const currentTag = {
         name: to.meta.title,
         routerName: to.name
-      })
+      }
+      this.setRouterTags(currentTag)
+      this.setCurrentTag(currentTag);
     }
   },
   computed: {
     ...mapGetters(['routerTags'])
   },
   created () {
-    this.setRouterTags({
-      name: this.$route.meta.title,
-      routerName: this.$route.name
-    })
+    this.init()
   },
   mounted () {
     
   },
-  destroyed() {
-    this.clearRouterTags();
-  },
   methods: {
+    init() {
+      const currentTag = {
+        name: this.$route.meta.title,
+        routerName: this.$route.name
+      }
+      this.setRouterTags(currentTag);
+      this.setCurrentTag(currentTag);
+    },
     to(item) {
       this.$router.push({
         name: item.routerName
       })
     },
-    close(item) {
-      console.log('remove')
-      this.removeRouterTags(item)
+    close(item, index) {
+      if (this.routerTags.length === 1) {
+        return;
+      }
+      this.removeRouterTags(item);
+      if (this.$route.name === item.routerName) {
+        const witch = index - 1 < 0 ? (index) : (index - 1);
+        this.$router.push({
+          name: this.routerTags[witch].routerName
+        });
+      }
     },
-
+    setCurrentTag(currentTag) {
+      this.currentTag = currentTag;
+      this.current = this.routerTags.findIndex(item => item.routerName === currentTag.routerName);
+    },
+    clearTags() {
+      this.clearRouterTags();
+      this.init();
+    },
     ...mapActions(['setRouterTags', 'removeRouterTags', 'clearRouterTags'])
   }
 }
