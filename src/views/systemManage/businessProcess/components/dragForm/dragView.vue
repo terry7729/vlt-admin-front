@@ -43,6 +43,11 @@ export default {
   mounted() {
     // console.log('slslsls', this.boxList);
   },
+  watch: {
+    boxList (newVal, oldVal) {
+      console.log('boxList', newVal);
+    }
+  },
   methods: {
     confirmConfig(config) {
       this.$emit('update', JSON.parse(JSON.stringify(config)));
@@ -51,6 +56,7 @@ export default {
       this.currentConfig = config;
       // this.showFieldConfig = true;
       this.eventBus.$emit('showFieldConfig', this.currentConfig)
+      // console.log('this.currentConfig', this.currentConfig);
     }
   },
   components: {

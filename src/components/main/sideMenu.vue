@@ -250,12 +250,12 @@ export default {
 
     .menu-logo{
       color: #ffffff;
-      line-height: 70px;
+      line-height: 60px;
       font-size: 0;
       text-align: center;
       .ct{
         width: 200px;
-        height: 70px;
+        height: 60px;
         overflow: hidden;
         word-break: keep-all;
         white-space: nowrap;

@@ -166,6 +166,10 @@ const fundParameter = () => import('@/views/businessManage/fundSettlement/fundPa
 const fundParameterDetail = () => import('@/views/businessManage/fundSettlement/fundParameterDetail')
 // 资金参数管理 编辑
 const fundParameterEdit = () => import('@/views/businessManage/fundSettlement/fundParameterEdit')
+// 全局参数编辑
+const globalParameterEdit = () => import('@/views/businessManage/fundSettlement/globalParameterEdit')
+// 创建
+const newfundParameter = () => import('@/views/businessManage/fundSettlement/newfundParameter')
 // 资金参数管理 全局参数
 const globalParameter = () => import('@/views/businessManage/fundSettlement/globalParameter')
 
@@ -971,6 +975,23 @@ export default [
     },
     component: fundParameterEdit
   },
+  {
+    path: 'businessManage/globalParameterEdit',
+    name: 'globalParameterEdit',
+    meta: {
+      title: '全局参数管理编辑',
+    },
+    component: globalParameterEdit
+  },
+  {
+    path: 'businessManage/newfundParameter',
+    name: 'newfundParameter',
+    meta: {
+      title: '新增全局参数管理',
+    },
+    component: newfundParameter
+  },
+  
   {
     path: 'businessManage/fundSettlement/globalParameter',
     name: 'globalParameter',
