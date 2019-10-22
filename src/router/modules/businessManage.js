@@ -358,6 +358,7 @@ export default [
     name: 'gameCreate',
     meta: {
       title: '新建游戏',
+      parentName: 'gameList',
     },
     component: gameCreate
   },
@@ -366,6 +367,7 @@ export default [
     name: 'gameDetail',
     meta: {
       title: '游戏详情',
+      parentName: 'gameList',
     },
     component: gameDetail
   },
@@ -374,6 +376,7 @@ export default [
     name: 'gameEdit',
     meta: {
       title: '游戏编辑',
+      parentName: 'gameList',
     },
     component: gameEdit
   },
@@ -398,6 +401,7 @@ export default [
     name: 'trialPlanCreate',
     meta: {
       title: '新建试玩计划',
+      parentName: 'trialPlanList',
     },
     component: trialPlanCreate
   },
@@ -405,7 +409,8 @@ export default [
     path: 'businessManage/trialPlanDetail',
     name: 'trialPlanDetail',
     meta: {
-      title: '试玩详情',
+      title: '试玩计划详情',
+      parentName: 'trialPlanList',
     },
     component: trialPlanDetail
   },
@@ -414,6 +419,7 @@ export default [
     name: 'trialPlanEdit',
     meta: {
       title: '试玩计划编辑',
+      parentName: 'trialPlanList',
     },
     component: trialPlanEdit
   },
@@ -430,6 +436,7 @@ export default [
     name: 'gameMarketPlanCreate',
     meta: {
       title: '新建上市计划',
+      parentName: 'gameMarketPlanList',
     },
     component: gameMarketPlanCreate
   },
@@ -438,6 +445,7 @@ export default [
     name: 'gameMarketPlanDetail',
     meta: {
       title: '上市计划详情',
+      parentName: 'gameMarketPlanList',
     },
     component: gameMarketPlanDetail
   },
@@ -446,6 +454,7 @@ export default [
     name: 'gameMarketPlanEdit',
     meta: {
       title: '上市计划编辑',
+      parentName: 'gameMarketPlanList',
     },
     component: gameMarketPlanEdit
   },
@@ -462,6 +471,7 @@ export default [
     name: 'gameMarketDetail',
     meta: {
       title: '上市游戏详情',
+      parentName: 'gameMarketList',
     },
     component: gameMarketDetail
   },
@@ -478,6 +488,7 @@ export default [
     name: 'gameChangePlanCreate',
     meta: {
       title: '新建变更计划',
+      parentName: 'gameChangePlanList',
     },
     component: gameChangePlanCreate
   },
@@ -486,6 +497,7 @@ export default [
     name: 'gameChangePlanDetail',
     meta: {
       title: '变更计划详情',
+      parentName: 'gameChangePlanList',
     },
     component: gameChangePlanDetail
   },
@@ -494,6 +506,7 @@ export default [
     name: 'gameChangePlanEdit',
     meta: {
       title: '变更计划编辑',
+      parentName: 'gameChangePlanList',
     },
     component: gameChangePlanEdit
   },
@@ -510,6 +523,7 @@ export default [
     name: 'gameDelistingPlanCreate',
     meta: {
       title: '新建退市计划',
+      parentName: 'gameDelistingPlanList',
     },
     component: gameDelistingPlanCreate
   },
@@ -518,6 +532,7 @@ export default [
     name: 'gameDelistingPlanDetail',
     meta: {
       title: '退市计划详情',
+      parentName: 'gameDelistingPlanList',
     },
     component: gameDelistingPlanDetail
   },
@@ -542,6 +557,7 @@ export default [
     name: 'channelCreate',
     meta: {
       title: '新建渠道',
+      parentName: 'channelList',
     },
     component: channelCreate
   },
@@ -964,6 +980,7 @@ export default [
     path: 'businessManage/channelSalesPermission',
     name: 'channelSalesPermission',
     meta: {
+      parentName: 'channelDeal',
       title: '销售权限',
     },
     component: channelSalesPermission
@@ -972,6 +989,7 @@ export default [
     path: 'businessManage/channelFundsPermission',
     name: 'channelFundsPermission',
     meta: {
+      parentName: 'channelDeal',
       title: '资金权限',
     },
     component: channelFundsPermission
@@ -980,6 +998,7 @@ export default [
     path: 'businessManage/resourcePurchase',
     name: 'resourcePurchase',
     meta: {
+      parentName: 'channelDeal',
       title: '资源采购',
     },
     component: resourcePurchase
@@ -988,6 +1007,7 @@ export default [
     path: 'businessManage/resourceApply',
     name: 'resourceApply',
     meta: {
+      parentName: 'channelDeal',
       title: '资源申请',
     },
     component: resourceApply
@@ -996,6 +1016,7 @@ export default [
     path: 'businessManage/resourceProvide',
     name: 'resourceProvide',
     meta: {
+      parentName: 'channelDeal',
       title: '资源发放',
     },
     component: resourceProvide
@@ -1013,6 +1034,7 @@ export default [
     path: 'businessManage/developmentPlanCreate',
     name: 'developmentPlanCreate',
     meta: {
+      parentName: 'developmentPlan',
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
@@ -1177,6 +1199,7 @@ export default [
     path: 'businessManage/cooperatorManage/cooperatorCreate',
     name: 'cooperatorCreate',
     meta: {
+      parentName: 'cooperatorList',
       title: '新建合作伙伴',
     },
     component: cooperatorCreate
