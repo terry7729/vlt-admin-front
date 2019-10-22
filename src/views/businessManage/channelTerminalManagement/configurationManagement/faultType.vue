@@ -42,14 +42,26 @@
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
+    
+    <edit-fault-type
+    :showForm="showdialog"
+    :formDatas="data2"
+    :diaTitle="diaTitle"
+    :rule="rules2"
+     @closeDia="hideDia">
+
+    </edit-fault-type>
   </div>
 </template>
 
 <script type="text/javascript">
+import rules from "@/utils/rules.js";
+import editFaultType from '@/views/businessManage/channelTerminalManagement/configurationManagement/editFaultType'
 export default {
   name: "accessoriesList",
   data() {
     return {
+      showdialog: false,
       // 搜索组件配置
       searchOptions: [
         {
@@ -70,6 +82,37 @@ export default {
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
+      data2: [
+        {
+          type: "select",
+          title: "物品类别：",
+          prop: "auditResults",
+          options: [
+            { label: "配件", value: "0" },
+            { label: "配件2", value: "1" }
+          ]
+        },
+        { type: "input", prop: "itemName", title: "物品名称：", value: "" },
+        {
+          type: "input",
+          prop: "faultDescription_1",
+          title: "故障描述1：",
+          value: ""
+        }
+      ],
+      rules2: {
+        // address: [{required: true,trigger: "blur" }],
+        auditResults: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        itemName: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        faultDescription_1: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ]
+      },
+      diaTitle: '',
       tableDatas: {
         tableData: [
           {
@@ -158,7 +201,9 @@ export default {
       }
     };
   },
-  components: {},
+  components: {
+    'edit-fault-type': editFaultType
+  },
   methods: {
     search(form) {
       console.log("search", form);
@@ -168,13 +213,11 @@ export default {
         name: 'addFaultType'
       })
     },
+    hideDia () {
+      this.showdialog = false;
+    },
     handleClick(row) {
-      // this.$router.push({
-      //   name: "knowledgeBaseInfo",
-      //   query: {
-      //     id: row.id
-      //   }
-      // });
+      this.showdialog = true;
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

@@ -1,5 +1,5 @@
 <template>
-  <!-- 查看维修知识库 -->
+  <!-- 知识库审核详情 -->
   <div class="vlt-card">
     <div class="vlt-edit-single">
       <h2 class="title">基本信息</h2>
@@ -36,8 +36,11 @@ export default {
         {type: 'input', prop:'itemName', title: '物品名称：',value: '', disabled: true},
         {type: 'input', prop:'faultType', title: '故障类型：',value: '', disabled: true},
         {type: 'input', prop:'faultDesc', title: '故障描述：',value: '', disabled: true},
-        {type: 'input', prop:'processingTime', title: '处理时间：',value: '', disabled: true},
         {type: 'input', prop:'processingDesc', title: '处理描述：',value: '', disabled: true},
+        {type: 'input', prop:'processingTime', title: '处理时间：',value: '', disabled: true},
+        {type: 'input', prop:'approvalStatus', title: '审核状态：',value: '', disabled: true},
+        {type: 'input', prop:'auditResults', title: '审核结果：',value: '', disabled: true},
+        {type: 'input', prop:'reviewDescription', title: '审核描述：',value: '', disabled: true}
       ],
       rule: {
         // address: [{required: true,trigger: "blur" }],
@@ -48,11 +51,14 @@ export default {
       mockDate: {
         id: 0,
         itemCategory: '设备',
-        itemName: '投注机',
-        faultType: '投注机进水',
+        itemName: '基础信息',
+        faultType: '投注机',
         faultDesc: '投注机进水',
-        processingTime: '2018-08-09',
         processingDesc: '运行中',
+        processingTime: '2018-08-09',
+        approvalStatus: '已审核',
+        auditResults: '已通过',
+        reviewDescription: '请输入审核描述说明'
       }
     };
   },

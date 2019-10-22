@@ -186,7 +186,7 @@ export default {
       handler(newValue, oldValue) {
         let param = JSON.parse(JSON.stringify(newValue))
         for(let key in this.cascaderParam) {
-          if(param[key].length > 0) {
+          if(param[key]&&param[key].length > 0) {
             for(let i=0;i<param[key].length;i++) {
               param[key][i] = param[key][i][param[key][i].length-1]
             }
@@ -357,7 +357,7 @@ export default {
           if(item.value !='') { // 数据回填
             self.$set(self.form, item.prop, item.value)
           }else{
-            self.$set(self.form, item.prop, '')
+            self.$set(self.form, item.prop, [])
           }
           self.$set(self.cascaderParam, item.prop , '');
         }else{

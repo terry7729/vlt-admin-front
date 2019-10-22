@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="option"
-        :total="999"
+        :total="num"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -42,7 +42,7 @@
         <table-paging
           :current-page="1"
           :page-size="10"
-          :total="100"
+          :total="num"
           @handleSizeChange="pageSizeChange"
           @handleCurrentChange="pageCurrentChange"
         ></table-paging>
@@ -79,7 +79,7 @@ export default {
   name: "roleList",
   data() {
     return {
-      rules:{},
+      rules: {},
       dialogFormVisible: false,
       controlOptions: [
         //按钮组
@@ -87,7 +87,17 @@ export default {
       ],
       data2: [
         { type: "input", title: "用户角色", prop: "roleName", value: "" },
-        { type: "select", title: "角色类型", prop: "roleType", value: "" ,options:[{label:'管理员',value:1},{label:'子管理员',value:2},{label:'普通角色',value:3}]},
+        {
+          type: "select",
+          title: "角色类型",
+          prop: "roleType",
+          value: "",
+          options: [
+            { label: "管理员", value: 1 },
+            { label: "子管理员", value: 2 },
+            { label: "普通角色", value: 3 }
+          ]
+        },
         { type: "switch", title: "角色状态", prop: "status", value: 1 },
         {
           type: "cascader-multiple",
@@ -96,13 +106,13 @@ export default {
             label: "text",
             value: "id",
             children: "children",
-             multiple: true, 
-             checkStrictly: true 
+            multiple: true,
+            checkStrictly: true
           },
-          value: "",
+          value: [],
           title: "角色权限",
           placeholder: "请选择",
-          options:[]
+          options: []
         },
         { type: "textarea", title: "描述", prop: "roleDesc", value: "" }
       ],
@@ -189,29 +199,32 @@ export default {
       //新建按钮点击
       newcreate: false,
       parms: {},
-      currentState:'' 
+      currentState: "",
+      num:0,
+      val:{},
     };
   },
   computed: {},
   async created() {
-    let reslt = await this.$api.QueryAllRole({});
-    console.log(reslt);
-    let arr = reslt.data;
-    console.log(arr);
-     let res = await this.$api.getMenu({});
-      // this.nodeTreeData = res.data;
-    this.data2[3].options= res.data
-    console.log(res)
-    if(reslt.code === 0){
-      this.dataProcessing(arr)
+    // let reslt = await this.$api.QueryAllRole({});
+   
+    let res = await this.$api.getMenu({});
+    //
+    let reslt = await this.$api.QueryRoleInfoPage({  });
+    console.log(reslt)
+     let arr = reslt.data.records;
+     this.num = arr.length
+    this.data2[3].options = res.data;
+    if (reslt.code === 0) {
+      this.dataProcessing(arr);
     }
   },
   mounted() {},
   components: {},
   methods: {
     handelifo(val) {
-      console.log(val)
-      this.$router.push({name:"roleifometion",query:{id:val.roleId}});
+      console.log(val);
+      this.$router.push({ name: "roleifometion", query: { id: val.roleId } });
     },
     pageSizeChange(val) {
       //每页显示条数
@@ -224,6 +237,17 @@ export default {
     handelskip(val) {
       this.dialogFormVisible = true;
       this.currentState = "编缉";
+      this.val = val ;
+      let arr = Object.keys(val)
+      let len  = this.data2
+      console.log(val.roleType)
+      for(var i = 0 ; i<len.length ; i++){
+        for(var j = 0 ; j< arr.length ; j++){
+          if(arr[j]===len[i].prop){
+            len[i].value = val[arr[j]]
+          }
+        }
+      }
       // this.$router.push("roleList/roleDestails");
     },
     selectBtn(val) {
@@ -233,64 +257,85 @@ export default {
         this.dialogFormVisible = true;
       }
     },
-   async search(val) {
+    async search(val) {
       //搜索事件
-      let data = JSON.parse(JSON.stringify(val))
-      let reslt = await this.$api.QueryRoleInfoPage({data})
+      let data = JSON.parse(JSON.stringify(val));
+      let reslt = await this.$api.QueryRoleInfoPage({ data });
       console.log(reslt);
-       let arr = reslt.data.records;
-      if(reslt.code === 0){
-        this.dataProcessing(arr)
+      let arr = reslt.data.records;
+      if (reslt.code === 0) {
+        this.dataProcessing(arr);
       }
-
     },
-    dataProcessing(arr){
-          // console.log(arr);
-    let obj = arr.map(item => {
-      console.log(item);
-      if (item.roleType === 1) {
-        return {
-          ...item,
-          createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
-          updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
-          roleType: "管理员"
-        };
-      } else if (item.roleType === 2) {
-        return {
-          ...item,
-          createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
-          updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
-          roleType: "子管理员"
-        };
-      } else {
-        return {
-          ...item,
-          createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
-          updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
-          roleType: "普通角色"
-        };
-      }
-    });
-     this.tableData = obj;
+    dataProcessing(arr) {
+      // console.log(arr);
+      let obj = arr.map(item => {
+        console.log(item);
+        if (item.roleType === 1) {
+          return {
+            ...item,
+            createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
+            updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+            roleType: "管理员"
+          };
+        } else if (item.roleType === 2) {
+          return {
+            ...item,
+            createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
+            updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+            roleType: "子管理员"
+          };
+        } else {
+          return {
+            ...item,
+            createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
+            updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+            roleType: "普通角色"
+          };
+        }
+      });
+      this.tableData = obj;
     },
-   async submit(val) {
+    async submit(val) {
       //表单提交
       if (this.currentState === "新建角色") {
         //点击新建按钮提交
         this.parms.created = "新建角色";
-        let data = JSON.parse(JSON.stringify(this.parms))
-        let reslt = await this.$api.SaveRoleInfo({data})
-        console.log(reslt)
-        this.$refs.baseForm.resetForm()
-        this.parms = {}
-        console.log(data)
-      } else if(this.currentState ==="编缉"){
+        let data = JSON.parse(JSON.stringify(this.parms));
+        data.sysCode= "VLT_BMS"
+        data.status = Number(data.status)
+        let reslt = await this.$api.SaveRoleInfo({ data });
+        console.log(reslt);
+      if(reslt.code===0){
+        this.dialogFormVisible =false;
+        this.$refs.baseForm.resetForm();
+        this.parms = {};
+      }
+        
+        console.log(data);
+      } else if (this.currentState === "编缉") {
         //点击编缉按钮提交
-          this.parms.created = "编缉";
-         let data = JSON.parse(JSON.stringify(this.parms))
-         this.$refs.baseForm.resetForm()
-         this.parms = {}
-         console.log(data)
+        this.parms.created = "编缉";
+       
+
+        let data = JSON.parse(JSON.stringify(this.parms));
+        data.roleId = this.val.roleId
+        data.status = Number(data.status)
+        if(typeof data.roleType != Number ){
+            if(data.roleType ==="管理员"){
+          data.roleType = 1;
+        }else if(data.roleType === "子管理员"){
+          data.roleType = 2;
+        }else{
+          data.roleType = 3;
+        }
+        }
+        let reslt = await this.$api.UpdateRoleInfo({data})
+         console.log(reslt)
+
+        this.$refs.baseForm.resetForm();
+        this.parms = {};
+        // console.log(data);
       }
     },
     //弹框事件
@@ -298,7 +343,10 @@ export default {
       this.dialogFormVisible = false;
     },
     changeForm(val) {
-      Object.assign(this.parms, val);
+    
+  
+       Object.assign(this.parms, val);
+      
     }
   }
 };
