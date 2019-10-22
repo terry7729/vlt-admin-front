@@ -21,7 +21,7 @@
         </el-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
-          <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+          <el-button size="medium" @click="edit">取消</el-button>
         </el-row>
       </div>
     </div>
@@ -43,7 +43,9 @@ export default {
   },
   components: {},
   methods: {
-     
+     edit(){
+       this.$router.go(-1)
+     }
   }
 };
 </script>

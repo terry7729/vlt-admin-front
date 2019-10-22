@@ -691,6 +691,7 @@ export default [
     path: 'businessOperation/brandMarketing/previewTemplate',
     name: 'previewTemplate',
     meta: {
+      parentName: 'planTemplate',
       title: '预览模板',
     },
     component: previewTemplate,
@@ -699,14 +700,25 @@ export default [
     path: 'businessOperation/brandMarketing/executionDetail',
     name: 'executionDetail',
     meta: {
+      parentName: 'executionManage',
       title: '活动执行详情',
     },
     component: executionDetail,
   },
   {
+    path: 'businessOperation/brandMarketing/allotTask',
+    name: 'executionManage',
+    meta: {
+      parentName: 'executionManage',
+      title: '分配任务',
+    },
+    component: allotTask,
+  },
+  {
     path: 'businessOperation/brandMarketing/planDetail',
     name: 'planDetail',
     meta: {
+      parentName: 'planManage',
       title: '计划详情',
     },
     component: planDetail,
@@ -715,6 +727,7 @@ export default [
     path: 'businessOperation/brandMarketing/activityPlan',
     name: 'activityPlan',
     meta: {
+      parentName: 'planManage',
       title: '新建活动计划',
     },
     component: activityPlan,
@@ -723,22 +736,17 @@ export default [
     path: 'businessOperation/brandMarketing/createActivity',
     name: 'createActivity',
     meta: {
+      parentName: 'planManage',
       title: '新建活动',
     },
     component: createActivity,
   },
-  {
-    path: 'businessOperation/brandMarketing/allotTask',
-    name: 'allotTask',
-    meta: {
-      title: '分配任务',
-    },
-    component: allotTask,
-  },
+
   {
     path: 'businessOperation/brandMarketing/resultAssess',
     name: 'resultAssess',
     meta: {
+      parentName: 'activityResult',
       title: '效果评估',
     },
     component: resultAssess,
@@ -757,6 +765,7 @@ export default [
     path: 'businessOperation/accountRecord/rechargeDetail',
     name: 'rechargeDetail',
     meta: {
+      parentName: 'rechargeRecord',
       title: '充值记录详情',
     },
     component: rechargeDetail,
@@ -773,6 +782,7 @@ export default [
     path: 'businessOperation/accountRecord/betDetail',
     name: 'betDetail',
     meta: {
+      parentName: 'BettingRecord',
       title: '投注记录详情',
     },
     component: betDetail,
@@ -789,6 +799,7 @@ export default [
     path: 'businessOperation/accountRecord/cashDetail',
     name: 'cashDetail',
     meta: {
+      parentName: 'cashRecord',
       title: '兑奖记录详情',
     },
     component: cashDetail,
@@ -805,6 +816,7 @@ export default [
     path: 'businessOperation/accountRecord/withdrawalDetail',
     name: 'withdrawalDetail',
     meta: {
+      parentName: 'withdrawalRecords',
       title: '提现记录详情',
     },
     component: withdrawalDetail,
@@ -821,6 +833,7 @@ export default [
     path: 'businessOperation/accountRecord/integralDetail',
     name: 'integralDetail',
     meta: {
+      parentName: 'integralRecord',
       title: '积分账户详情',
     },
     component: integralDetail,
@@ -837,6 +850,7 @@ export default [
     path: 'businessOperation/accountRecord/fundsDetail',
     name: 'fundsDetail',
     meta: {
+      parentName: 'fundsStatement',
       title: '资金流水详情',
     },
     component: fundsDetail,
@@ -855,6 +869,7 @@ export default [
     path: 'businessOperation/customerAccount/accountDetail',
     name: 'accountDetail',
     meta: {
+      parentName: 'customerAccount',
       title: '客户账户详情',
     },
     component: accountDetail,
@@ -863,6 +878,7 @@ export default [
     path: 'businessOperation/customerAccount/betcardDetail',
     name: 'betcardDetail',
     meta: {
+      parentName: 'customerAccount',
       title: '投注卡详情',
     },
     component: betcardDetail,
@@ -871,6 +887,7 @@ export default [
     path: 'businessOperation/customerAccount/equityDetail',
     name: 'equityDetail',
     meta: {
+      parentName: 'customerAccount',
       title: '会员权益详情',
     },
     component: equityDetail,
@@ -889,6 +906,7 @@ export default [
     path: 'businessOperation/dutyLottery/ruleSet',
     name: 'ruleSet',
     meta: {
+      parentName: 'dutyLottery',
       title: '规则设置',
     },
     component: ruleSet,
@@ -915,6 +933,7 @@ export default [
     path: 'businessOperation/noticeInfo/bulletinDetail',
     name: 'bulletinDetail',
     meta: {
+      parentName: 'bulletinList',
       title: '公告信息详情',
     },
     component: bulletinDetail,
@@ -931,6 +950,7 @@ export default [
     path: 'businessOperation/noticeInfo/createTemplate',
     name: 'createTemplate',
     meta: {
+      parentName: 'bulletinTemplate',
       title: '新建模板',
     },
     component: createTemplate,
@@ -939,6 +959,7 @@ export default [
     path: 'businessOperation/noticeInfo/templateDetail',
     name: 'templateDetail',
     meta: {
+      parentName: 'bulletinTemplate',
       title: '模板详情',
     },
     component: templateDetail,
@@ -955,7 +976,8 @@ export default [
     path: 'businessOperation/noticeInfo/infoEdit',
     name: 'infoEdit',
     meta: {
-      title: '消息推送',
+      parentName: 'infoPush',
+      title: '发布推送',
     },
     component: infoEdit,
   },

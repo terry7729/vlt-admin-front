@@ -170,8 +170,8 @@ export default {
 </script>
 
 
-<style lang="less">
-.control-bar-comp {
-  text-align: right;
+<style lang="less" scoped>
+.vlt-card{
+  padding: 5px;
 }
 </style>

@@ -116,12 +116,14 @@ export default [{
               icon: "el-icon-menu",
               name: "城市游戏风险指标",
               url: 'cityGameRisk'
-            },{
-              childResources: [],
-              icon: "el-icon-menu",
-              name: "告警通知",
-              url: 'warningNotice'
-            },{
+            },
+            // {
+            //   childResources: [],
+            //   icon: "el-icon-menu",
+            //   name: "告警通知",
+            //   url: 'warningNotice'
+            // },
+            {
               childResources: [],
               icon: "el-icon-menu",
               name: "用户风险指标",

@@ -8,27 +8,89 @@
     <div class="create-plan">
       <span>新建活动计划</span>
     </div>
-
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="活动内容" name="activeContent">
-        <div class="vlt-edit-single">
-          <panel title="基础信息" :show="true">
-            <div class="vlt-edit-wrap">
-              <el-form label-width="140px" :model="baseForm" ref="baseForm">
-                <base-form
-                  class="base-info"
-                  :formData="baseData"
-                  labelWidth="140px"
-                  ref="baseForm"
-                  :rules="rule"
-                  @change="changeBaseForm"
-                ></base-form>
-              </el-form>
-            </div>
-          </panel>
-        </div>
+        <panel title="基础信息" :show="false" class="vlt-edit-single">
+          <div class="vlt-edit-wrap">
+            <el-form label-width="140px" :model="baseForm" ref="baseForm">
+              <base-form
+                class="base-info"
+                :formData="baseData"
+                labelWidth="140px"
+                ref="baseForm"
+                :rules="rule"
+                @change="changeBaseForm"
+              ></base-form>
+            </el-form>
+            <el-form
+              label-width="140px"
+              :model="baseFormLater"
+              ref="baseFormLater"
+              class="base-later"
+            >
+              <el-form-item label="适用群体">
+                <el-checkbox-group v-model="baseFormLater.group" @change="handleCheckedChange">
+                  <el-checkbox label="游客"></el-checkbox>
+                  <el-checkbox label="新会员"></el-checkbox>
+                  <el-checkbox label="老会员"></el-checkbox>
+                </el-checkbox-group>
+                <el-select v-model="baseFormLater.level" placeholder="请选择会员等级">
+                  <el-option
+                    v-for="item in memberLv"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.label"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
 
-        <panel title="附件上传" :show="true">
+              <el-form-item label="活动区域">
+                <el-input prefix-icon="el-icon-location-outline" v-model="baseFormLater.area"></el-input>
+              </el-form-item>
+
+              <el-form-item label="活动大厅">
+                <el-radio v-model="baseFormLater.lobby" label="全部大厅">区域内全部大厅</el-radio>
+                <el-radio v-model="baseFormLater.lobby" label="指定大厅">区域内指定大厅</el-radio>
+                <el-input
+                  :disabled="baseFormLater.lobby=='全部大厅'"
+                  v-model="baseFormLater.lobbyId"
+                  placeholder="请输入大厅编号"
+                ></el-input>
+              </el-form-item>
+
+              <el-form-item label="活动目标">
+                <el-checkbox label="活动期间累计充值" v-model="recharCheck"></el-checkbox>
+                <el-input v-model="baseFormLater.rechar" :disabled="!recharCheck"></el-input>
+                <el-checkbox label="活动期间累计消费" v-model="payCheck"></el-checkbox>
+                <el-input v-model="baseFormLater.pay" :disabled="!payCheck"></el-input>
+              </el-form-item>
+
+              <el-form-item label="活动预算">
+                <el-input v-model="baseFormLater.budget" placeholder="请输入活动预算"></el-input>
+              </el-form-item>
+
+              <el-form-item label="是否发布消息">
+                <el-checkbox-group v-model="baseFormLater.news">
+                  <el-checkbox label="不发送"></el-checkbox>
+                  <el-checkbox label="发送短信"></el-checkbox>
+                  <el-checkbox label="终端/APP发送"></el-checkbox>
+                  <el-checkbox label="发送短信与终端/APP推送"></el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
+
+              <el-form-item label="消息内容">
+                <el-input
+                  type="textarea"
+                  rows="3"
+                  v-model="baseFormLater.remark"
+                  placeholder="请输入消息内容"
+                ></el-input>
+              </el-form-item>
+            </el-form>
+          </div>
+        </panel>
+
+        <panel title="附件上传" :show="false">
           <div class="upload-module">
             <div class="upload-file">
               <el-upload
@@ -77,12 +139,12 @@
           </div>
         </panel>
 
-        <panel title="活动规则" :show="true">
+        <panel title="活动规则" :show="false">
           <div class="active-rule">
-            <el-form :model="createRule">
-              <el-form-item v-for="item in createRule" :key="item.num" class="rule-item">
+            <el-form :model="createRuleForm">
+              <el-form-item v-for="item in createRuleForm" :key="item.index" class="rule-item">
                 <el-select v-model="item.value" placeholder="充值">
-                  <el-option v-for="option in ruleSelect" :key="option.index" :value="option"></el-option>
+                  <el-option v-for="option in item.options" :key="option.index" :value="option"></el-option>
                 </el-select>
                 <el-input v-model="item.target" placeholder="输入目标金额"></el-input>
                 <span>赠送:&nbsp;</span>
@@ -93,17 +155,17 @@
           </div>
         </panel>
 
-        <panel title="活动资金" :show="true">
+        <panel title="活动资金" :show="false">
           <div class="active-table">
-            <el-button type="primary" size="small" @click="fundsInto">资金注入</el-button>
-            <el-table :data="tableData" border style="width:60%">
-              <el-table-column prop="date" label="序号"></el-table-column>
-              <el-table-column prop="name" label="游戏编号"></el-table-column>
-              <el-table-column prop="address" label="游戏名称"></el-table-column>
-              <el-table-column prop="date" label="游戏所属机构"></el-table-column>
-              <el-table-column prop="name" label="注入方式"></el-table-column>
-              <el-table-column prop="address" label="注入金额"></el-table-column>
-              <el-table-column prop="date" label="操作">
+            <el-button type="primary" size="small" @click="fundsintoDialog=true">资金注入</el-button>
+            <el-table :data="fundsData" border style="width:60%">
+              <el-table-column label="序号" type="index"></el-table-column>
+              <el-table-column prop="id" label="游戏编号"></el-table-column>
+              <el-table-column prop="name" label="游戏名称"></el-table-column>
+              <el-table-column prop="organ" label="游戏所属机构"></el-table-column>
+              <el-table-column prop="type" label="注入方式"></el-table-column>
+              <el-table-column prop="money" label="注入金额"></el-table-column>
+              <el-table-column label="操作">
                 <el-button type="primary" size="mini">修改</el-button>
                 <el-button type="danger" size="mini">删除</el-button>
               </el-table-column>
@@ -115,13 +177,12 @@
           </div>
           <el-dialog title="资金注入" :visible.sync="fundsintoDialog" class="vlt-edit-single">
             <base-form
-              :formData="fundsForm"
+              :formData="fundsFormData"
               labelWidth="140px"
-              ref="baseForm"
+              ref="fundsForm"
               :rules="rule"
               direction="right"
-              @change="changeBase"
-              class="vlt-"
+              @change="changeFundsForm"
             ></base-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="fundsintoDialog = false">取 消</el-button>
@@ -130,17 +191,16 @@
           </el-dialog>
         </panel>
 
-        <panel title="活动资源" :show="true">
+        <panel title="活动资源" :show="false">
           <div class="active-table">
-            <el-button type="primary" size="small" @click="resourceCheck">资源选择</el-button>
+            <el-button type="primary" size="small" @click="resourceDialog=true">资源选择</el-button>
             <el-table :data="resourceData" border style="width:60%">
-              <el-table-column prop="date" label="序号"></el-table-column>
-              <el-table-column prop="name" label="游戏编号"></el-table-column>
-              <el-table-column prop="address" label="游戏名称"></el-table-column>
-              <el-table-column prop="date" label="游戏所属机构"></el-table-column>
-              <el-table-column prop="name" label="注入方式"></el-table-column>
-              <el-table-column prop="address" label="注入金额"></el-table-column>
-              <el-table-column prop="date" label="操作">
+              <el-table-column type="index" label="序号"></el-table-column>
+              <el-table-column prop="id" label="资源ID"></el-table-column>
+              <el-table-column prop="name" label="资源名称"></el-table-column>
+              <el-table-column prop="type" label="资源分类"></el-table-column>
+              <el-table-column prop="num" label="数量"></el-table-column>
+              <el-table-column label="操作">
                 <el-button type="primary" size="mini">修改</el-button>
                 <el-button type="danger" size="mini">删除</el-button>
               </el-table-column>
@@ -150,7 +210,8 @@
               <el-input type="textarea" :rows="3" placeholder="请输入内容"></el-input>
             </div>
           </div>
-          <el-dialog title="资源选择" :visible.sync="resourceDialog" class="vlt-edit-single">
+          <el-dialog title="资源选择" :visible.sync="resourceDialog">
+            <search-bar @search="resourceSearch" :options="searchOptions" labelWidth="80px"></search-bar>
             <el-table
               :data="resourceCheckData"
               border
@@ -158,14 +219,14 @@
               @select-all="selectAllChange"
             >
               <el-table-column type="selection"></el-table-column>
-              <el-table-column prop="date" label="序号"></el-table-column>
-              <el-table-column prop="name" label="资源ID"></el-table-column>
-              <el-table-column prop="address" label="资源名称"></el-table-column>
-              <el-table-column prop="date" label="资源分类"></el-table-column>
-              <el-table-column prop="name" label="所属机构"></el-table-column>
-              <el-table-column prop="address" label="存储仓"></el-table-column>
-              <el-table-column prop="date" label="存量"></el-table-column>
-              <el-table-column label="需求数量">
+              <el-table-column type="index" label="序号"></el-table-column>
+              <el-table-column prop="id" label="资源ID"></el-table-column>
+              <el-table-column prop="name" label="资源名称"></el-table-column>
+              <el-table-column prop="type" label="资源分类"></el-table-column>
+              <el-table-column prop="organ" label="所属机构"></el-table-column>
+              <el-table-column prop="store" label="存储仓"></el-table-column>
+              <el-table-column prop="stock" label="存量"></el-table-column>
+              <el-table-column prop="num" label="需求数量">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.num" :disabled="scope.row.isabled"></el-input>
                 </template>
@@ -178,18 +239,18 @@
           </el-dialog>
         </panel>
 
-        <panel title="活动执行" :show="true">
+        <panel title="活动执行" :show="false">
           <div class="active-table">
-            <el-button type="primary" size="small" @click="executePlan">执行计划</el-button>
-            <el-table :data="tableData" border style="width:60%">
-              <el-table-column prop="date" label="执行编号"></el-table-column>
-              <el-table-column prop="name" label="责任人"></el-table-column>
-              <el-table-column prop="address" label="执行角色"></el-table-column>
-              <el-table-column prop="date" label="执行计划名称"></el-table-column>
-              <el-table-column prop="name" label="执行计划说明"></el-table-column>
-              <el-table-column prop="address" label="预期开始时间"></el-table-column>
-              <el-table-column prop="address" label="预期结束时间"></el-table-column>
-              <el-table-column prop="date" label="操作">
+            <el-button type="primary" size="small" @click="taskDialog=true">执行计划</el-button>
+            <el-table :data="executeData" border style="width:65%">
+              <el-table-column prop="num" label="执行编号"></el-table-column>
+              <el-table-column prop="person" label="责任人"></el-table-column>
+              <el-table-column prop="role" label="执行角色"></el-table-column>
+              <el-table-column prop="name" label="执行计划名称"></el-table-column>
+              <el-table-column prop="talk" label="执行计划说明"></el-table-column>
+              <el-table-column prop="start" label="预期开始时间"></el-table-column>
+              <el-table-column prop="end" label="预期结束时间"></el-table-column>
+              <el-table-column label="操作">
                 <el-button type="primary" size="mini">修改</el-button>
                 <el-button type="danger" size="mini">删除</el-button>
               </el-table-column>
@@ -221,17 +282,16 @@
 
         <panel title="监控指标" :show="true">
           <div class="control-index">
-            <span>
-              <span>维度选择：</span>
-              <span>
-                <el-checkbox v-for="item in checkList" :key="item">{{item}}</el-checkbox>
-              </span>
-            </span>
+            <span>维度选择：</span>
+            <el-checkbox-group v-model="targetCheck">
+              <el-checkbox v-for="item in checkList" :key="item" :label="item">{{item}}</el-checkbox>
+            </el-checkbox-group>
+
             <div class="index-check">
               <p>指标选择：</p>
-              <span class="item-check">
-                <el-checkbox v-for="item in checkList2" :key="item">{{item}}</el-checkbox>
-              </span>
+              <el-checkbox-group v-model="targetCheck">
+                <el-checkbox v-for="item in checkList2" :key="item" :label="item">{{item}}</el-checkbox>
+              </el-checkbox-group>
             </div>
           </div>
         </panel>
@@ -291,28 +351,25 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "",
   data() {
     return {
       activeName: "activeContent",
       rule: { rule: "" },
-      baseForm: {
-        name: "",
-        type: "",
-        time: "",
-        intro: "",
-        manage: "",
-        organ: "",
+      baseForm: {},
+      baseFormLater: {
         group: [],
-        level: "",
         area: "",
-        lobby: "",
+        level: "",
+        lobbyId: "",
+        lobby: "全部大厅",
         rechar: "",
         pay: "",
         budget: "",
-        news: [],
-        reamrk:''
+        news: ["不发送"],
+        remark: ""
       },
       baseData: [
         { type: "input", title: "活动名称", prop: "name" },
@@ -321,11 +378,17 @@ export default {
           title: "活动类型",
           prop: "type",
           options: [
-            { label: "", value: "充值赠送" },
-            { label: "", value: "消费赠送" }
+            { label: "充值赠送", value: "充值赠送" },
+            { label: "消费赠送", value: "消费赠送" }
           ]
         },
-        { type: "datetime", prop: "time", value: "", title: "日期时间" },
+        {
+          type: "datetime-range",
+          prop: "time",
+          value: "",
+          title: "日期时间",
+          options: ["start", "end"]
+        },
         { type: "textarea", title: "活动简介", prop: "intro" },
         {
           type: "select",
@@ -344,129 +407,131 @@ export default {
             { label: "", value: "中彩" },
             { label: "", value: "广东分中心" }
           ]
-        },
-        {
-          type: "checkbox",
-          title: "适用群体",
-          prop: "group",
-          value: [],
-          options: [
-            { label: "游客", value: "游客" },
-            { label: "新会员", value: "新会员" },
-            { label: "老会员", value: "老会员" }
-          ]
-        },
-        {
-          type: "select",
-          placeholder: "请选择会员等级",
-          prop: "level",
-          options: [
-            { label: "", value: "lv1" },
-            { label: "", value: "lv2" },
-            { label: "", value: "lv3" }
-          ]
-        },
-        {
-          type: "input-icon",
-          title: "活动区域",
-          prop: "area",
-          icon: "location-outline"
-        },
-        {
-          title: "活动大厅",
-          type: "radio",
-          prop: "lobby",
-          value: "",
-          options: [
-            { label: "区域内全部大厅", value: "all" },
-            { label: "区域内指定大厅", value: "some" }
-          ]
-        },
-        {
-          type: "input",
-          disabled: true,
-          placeholder: "输入大厅编号",
-          prop: "lobbyId"
-        },
-        { type: "input", title: "活动期间累计充值", prop: "rechar" },
-        { type: "input", title: "活动期间累计消费", prop: "pay" },
-        { type: "input", title: "活动预算", prop: "budget" },
-        {
-          type: "checkbox",
-          title: "是否发布消息",
-          prop: "news",
-          value: [],
-          options: [
-            { label: "不发送", value: "不发送" },
-            { label: "发送短信", value: "发送短信" },
-            { label: "终端/APP发送", value: "终端/APP发送" }
-          ]
-        },
-        { type: "textarea", title: "消息内容", prop: "remark" }
+        }
       ],
-
-      ruleSelect: ["充值", "消费", "完成任务"],
-      createRule: {
-        one: {
-          num: "1",
-          target: "",
-          give: "",
-          value: ""
+      memberLv: [
+        {
+          value: "选项1",
+          label: "LV1"
         },
-        two: {
-          num: "2",
-          target: "",
-          give: "",
-          value: ""
+        {
+          value: "选项2",
+          label: "Lv2"
         },
-        three: {
-          num: "3",
+        {
+          value: "选项3",
+          label: "Lv3"
+        }
+      ],
+      recharCheck: "",
+      payCheck: "",
+      createRuleForm: {
+        rule1: {
           target: "",
           give: "",
-          value: ""
+          value: "",
+          options: ["充值", "消费", "完成任务"]
+        },
+        rule2: {
+          target: "",
+          give: "",
+          value: "",
+          options: ["充值", "消费", "完成任务"]
+        },
+        rule3: {
+          target: "",
+          give: "",
+          value: "",
+          options: ["充值", "消费", "完成任务"]
         }
       },
-      tableData: [],
-
-      processForm: {},
       fundsintoDialog: false,
-      resourceDialog: false,
-      taskDialog: false,
-      fundsForm: [
+      fundsData: [
+        {
+          id: "9527",
+          name: "泡泡龙",
+          organ: "中彩",
+          type: "游戏发行基金",
+          money: "10万"
+        }
+      ],
+      fundsForm: {},
+      fundsFormData: [
         {
           type: "select",
           title: "注入方式",
           prop: "type",
           options: [
-            { label: "发行经费注入", value: "0" },
-            { label: "调节基金注入", value: "1" }
+            { label: "发行经费注入", value: "发行经费注入" },
+            { label: "调节基金注入", value: "调节基金注入" }
           ]
         },
         { type: "input", title: "游戏名称", prop: "name" },
-        { type: "input", title: "注入金额", prop: "name" },
+        { type: "input", title: "注入金额", prop: "money" },
         {
           type: "select",
           title: "游戏所属机构",
-          prop: "manage",
+          prop: "organ",
           options: [
-            { label: "中彩", value: "2" },
-            { label: "分中心", value: "3" }
+            { label: "中彩", value: "中彩" },
+            { label: "分中心", value: "分中心" }
           ]
         },
-        { type: "textarea", title: "备注", prop: "all" }
+        { type: "textarea", title: "备注", prop: "remark" }
       ],
-      resourceData: [],
+      resourceDialog: false,
+      searchOptions: [
+        { title: "资源名称", type: "input", prop: "name", value: "" },
+        {
+          title: "设备状态",
+          type: "select",
+          prop: "state",
+          value: "",
+          options: [
+            {
+              label: "活动礼品",
+              value: "活动礼品"
+            },
+            {
+              label: "宣传材料",
+              value: "宣传材料"
+            }
+          ]
+        }
+      ],
+      resourceData: [{ id: 9527, name: "海报", type: "宣传材料", num: 100 }],
       resourceCheckData: [
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          tag: "公司",
+          id: 9528,
+          name: "海报",
+          type: "宣传材料",
+          organ: "中彩",
+          store: "深圳仓",
+          stock: 188,
           num: "",
           isabled: true
+        },
+        {
+          id: 9529,
+          name: "海报",
+          type: "活动礼物",
+          organ: "中彩",
+          store: "深圳仓",
+          stock: 888,
+          num: "",
+          isabled: true
+        }
+      ],
+      taskDialog: false,
+      executeData: [
+        {
+          num: "007",
+          person: "李白",
+          role: "渠道经理",
+          name: "A计划",
+          talk: "balabala",
+          start: "19-10-25",
+          end: "19-11-11"
         }
       ],
       taskData: [
@@ -475,48 +540,50 @@ export default {
           title: "责任人",
           prop: "person",
           options: [
-            { label: "李白", value: "0" },
-            { label: "李黑", value: "1" }
+            { label: "李白", value: "李白" },
+            { label: "李黑", value: "李黑" }
           ]
         },
 
         {
           title: "执行角色",
           type: "select",
-          prop: "roles",
+          prop: "role",
           value: "",
           options: [
-            { label: "渠道经理", value: "0" },
-            { label: "部门经理", value: "1" }
+            { label: "渠道经理", value: "渠道经理" },
+            { label: "部门经理", value: "部门经理" }
           ]
         },
         { type: "input", title: "执行计划名称", prop: "name" },
-        { type: "input", title: "执行计划说明", prop: "txt" },
+        { type: "input", title: "执行计划说明", prop: "talk" },
         {
           type: "datetime",
-          prop: "dateStart",
+          prop: "start",
           value: "",
           title: "预期开始时间"
         },
-        { type: "datetime", prop: "dateEnd", value: "", title: "预期结束时间" }
+        { type: "datetime", prop: "end", value: "", title: "预期结束时间" }
       ],
-
+      taskForm: {},
+      targetCheck: [],
       checkList: ["中心", "省级", "市级", "厅级"],
       checkList2: [
-        "中心",
-        "省级",
-        "市级",
         "充值总额",
         "充值总订单数",
         "投注总额",
         "投注总订单数",
+        "提现总额",
+        "活动预算使用分类汇总",
+        "用户数",
         "充值用户数",
         "投注用户数",
         "提现用户数",
         "每用户充值额",
-        "用户数",
-        "提现总额"
-      ]
+        "每户投注额",
+        "每户提现额"
+      ],
+      processForm: {}
     };
   },
 
@@ -528,70 +595,73 @@ export default {
       this.$router.push({ path: "planManage" });
     },
     //资金注入
-    fundsInto() {
-      this.fundsintoDialog = true;
-    },
     fundsEnter() {
+      this.fundsData.push(this.fundsForm);
       this.fundsintoDialog = false;
     },
     //资源选择
-    resourceCheck() {
-      this.resourceDialog = true;
-    },
     resourceEnter() {
-      this.resourceData = this.resourceCheckData;
+      for (let item of this.resourceCheckData) {
+        if (item.isabled == false) {
+          this.resourceData.push(item);
+        }
+      }
       this.resourceDialog = false;
     },
     selectChange(select, row) {
       row.isabled = !row.isabled;
     },
     selectAllChange() {
-      this.resourceCheckData.forEach(item => (item.isabled = !item.isabled));
+      this.resourceCheckData.forEach(item => {
+        item.isabled = !item.isabled;
+      });
     },
     //执行计划
-    executePlan() {
-      this.taskDialog = true;
-    },
     taskEnter() {
-      this.taskDialog = false;
-    },
-    changeBaseForm(val) {
-      for (let item of this.baseData) {
-        if (val.lobby == "some" && item.prop == "lobbyId") {
-          item.disabled = false;
-        } else if (val.lobby == "all" && item.prop == "lobbyId") {
-          item.disabled = true;
-        }
-      }
+      this.taskForm.start = moment(this.taskForm.start).format(
+        "YYYY-MM-DD hh:mm:ss"
+      );
+      this.taskForm.end = moment(this.taskForm.start).format(
+        "YYYY-MM-DD hh:mm:ss"
+      );
+      this.executeData.push(JSON.parse(JSON.stringify(this.taskForm)));
+      this.taskDialog = false; 
     },
 
-    changeLaterForm(val) {
-      // console.log(val);
+    //表单派出参数
+    changeBaseForm(val) {
+      this.baseForm = val;
     },
-    changeTaskForm() {},
-    changeBase() {},
+    changeFundsForm(val) {
+      this.fundsForm = val;
+    },
+    changeTaskForm(val) {
+      console.log(val);
+      this.taskForm = val;
+    },
+    resourceSearch() {},
+
     //附件上传
     beforeRemove() {},
     handleExceed() {},
     handlePreview() {},
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePictureCardPreview(file) {},
     handleCheckedChange(value) {
-      console.log(value);
+      // console.log(value);
     },
 
-    handleClick() {},
-    changeLater(val) {
-      console.log("form参数", val);
-    }
+    handleClick() {}
   },
   computed: {},
   created() {},
   mounted() {},
   components: {},
-  updated() {}
+  updated() {
+    // console.log(this.baseFormLater);
+  }
 };
 </script>
 
