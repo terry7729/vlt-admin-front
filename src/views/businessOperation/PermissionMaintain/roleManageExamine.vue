@@ -13,6 +13,7 @@ export default {
   name: "",
   data() {
     return {
+      // 表格数据
       roleManageExamineData: [
         { title: "用户角色", value: "", prop: "userrole" },
         { title: "角色权限", value: "", prop: "userauthority" },
