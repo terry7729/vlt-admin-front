@@ -119,13 +119,13 @@ export default {
         [
           {
             name: "黑龙江",
-            value: 0
+            value: 33
           }
         ],
         [
           {
             name: "内蒙古",
-            value: 0
+            value: 12222
           }
         ],
         [
@@ -986,7 +986,7 @@ export default {
             },
             symbol: "circle",
             symbolSize: function(val) {
-              return 5 + val[2] * 5; //圆环大小
+              return 5+ val[2] * 0.0005; //圆环大小
             },
             itemStyle: {
               normal: {
@@ -1007,7 +1007,7 @@ export default {
           {
             type: "scatter",
             coordinateSystem: "geo",
-            zlevel: 2,
+            zlevel: 2,  
             rippleEffect: {
               period: 4,
               brushType: "stroke",
