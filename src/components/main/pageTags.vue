@@ -66,11 +66,12 @@ export default {
     ...mapGetters(['routerTags'])
   },
   created () {
-    
+
   },
   mounted () {
-    this.init();
-    this.scrollX();
+    this.$nextTick(() => {
+      this.scrollX();
+    })
   },
   methods: {
     init() {
@@ -114,6 +115,9 @@ export default {
       const wrapper = document.querySelector('.tags-scroller');
       const tags = document.querySelectorAll('.el-tag');
       const currentTag = tags[this.current];
+      if (!currentTag) {
+        return;
+      }
       const currentTagPosition = currentTag.getBoundingClientRect();
       const wrapperPosition = wrapper.getBoundingClientRect();
       const tagMargin = 4;
