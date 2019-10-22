@@ -159,6 +159,7 @@ const reportStatistics = () => import('@/views/businessManage/channelTerminalMan
 // 渠道终端管理 - 维护知识库
 const knowledgeBaseIndex = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/index')
 const knowledgeBaseInfo = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBaseInfo')
+const baseAuditDetails = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/baseAuditDetails')
 
 // 配置管理
 const configurationManagement = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/index')
@@ -203,7 +204,8 @@ const newRule = () => import('@/views/businessManage/bettingCardManage/newRule')
 const newCard = () => import('@/views/businessManage/bettingCardManage/newCard')
 // 导出卡片
 const exportCard = () => import('@/views/businessManage/bettingCardManage/exportCard')
-
+// 新建投注卡规则
+const newbettingRule = () => import('@/views/businessManage/bettingCardManage/newbettingRule')
 // 合作伙伴管理
 const cooperatorList = () => import('@/views/businessManage/cooperatorManage/cooperatorList')
 const cooperatorCreate = () => import('@/views/businessManage/cooperatorManage/cooperatorCreate')
@@ -267,6 +269,7 @@ export default [
     path: 'businessManage/overview/messages/:type',
     name: 'messages',
     meta: {
+      parentName: 'overview',
       title: '更多消息',
     },
     component: messages
@@ -283,6 +286,7 @@ export default [
     path: 'businessManage/overview/sendMessage',
     name: 'sendMessage',
     meta: {
+      parentName: 'overview',
       title: '发布消息',
     },
     component: sendMessage
@@ -291,6 +295,7 @@ export default [
     path: 'businessManage/overview/pendingReview',
     name: 'pendingReview',
     meta: {
+      parentName: 'myToDo',
       title: '待审核',
     },
     component: pendingReview
@@ -299,6 +304,7 @@ export default [
     path: 'businessManage/overview/pendingReviewEdit',
     name: 'pendingReviewEdit',
     meta: {
+      parentName: 'myToDo',
       title: '待审核-处理',
     },
     component: pendingReviewEdit
@@ -307,6 +313,7 @@ export default [
     path: 'businessManage/overview/pendingReviewTransfer',
     name: 'pendingReviewTransfer',
     meta: {
+      parentName: 'myToDo',
       title: '待审核-移交',
     },
     component: pendingReviewTransfer
@@ -315,6 +322,7 @@ export default [
     path: 'businessManage/overview/audited',
     name: 'audited',
     meta: {
+      parentName: 'myDone',
       title: '已审核',
     },
     component: audited
@@ -323,6 +331,7 @@ export default [
     path: 'businessManage/overview/alreadyApplied',
     name: 'alreadyApplied',
     meta: {
+      parentName: 'myApplication',
       title: '已申请',
     },
     component: alreadyApplied
@@ -331,6 +340,7 @@ export default [
     path: 'businessManage/overview/pendingReading',
     name: 'audipendingReadingted',
     meta: {
+      parentName: 'myKnowledge',
       title: '待阅读',
     },
     component: pendingReading
@@ -819,9 +829,17 @@ export default [
     path: 'businessManage/channelTerminal/knowledgeBaseInfo',
     name: 'knowledgeBaseInfo',
     meta: {
+      parentName: 'knowledgeBase',
       title: '知识库审核',
     },
     component: knowledgeBaseInfo,
+  },{
+    path: 'businessManage/channelTerminal/baseAuditDetails',
+    name: 'baseAuditDetails',
+    meta: {
+      title: '知识库审核详情',
+    },
+    component: baseAuditDetails
   }, {
     path: 'businessManage/channelTerminal/configurationManagement',
     name: 'configurationManagement',
@@ -1023,6 +1041,7 @@ export default [
     path: 'businessManage/cardBalance/cardDetail',
     name: 'cardDetail',
     meta: {
+      parentName: 'cardGeneration',
       title: '投注卡明细',
     },
     component: cardDetail
@@ -1031,6 +1050,7 @@ export default [
     path: 'businessManage/cardBalance/balanceDetail',
     name: 'balanceDetail',
     meta: {
+      parentName: 'cardBalance',
       title: '投注卡明细',
     },
     component: balanceDetail
@@ -1039,6 +1059,7 @@ export default [
     path: 'businessManage/cardBalance/infoDetail',
     name: 'infoDetail',
     meta: {
+      parentName: 'cardInformation',
       title: '详情信息',
     },
     component: infoDetail
@@ -1047,14 +1068,26 @@ export default [
     path: 'businessManage/cardBalance/newCard',
     name: 'newCard',
     meta: {
+      parentName: 'cardGeneration',
       title: '新建卡片'
     },
     component: newCard
+  },{
+    path: 'businessManage/cardBalance/newbettingRule',
+    name: 'newbettingRule',
+    meta: {
+      parentName: 'bettingCardRules',
+      title: '新增规则'
+    },
+    component: newbettingRule
+    
   },
+  
   {
     path: 'businessManage/cardBalance/newRule',
     name: 'newRule',
     meta: {
+      parentName: 'refillRules',
       title: '新建规则'
     },
     component: newRule
@@ -1063,6 +1096,7 @@ export default [
     path: 'businessManage/cardBalance/exportCard',
     name: 'exportCard',
     meta: {
+      parentName: 'cardGeneration',
       title: '导出卡片',
     },
     component: exportCard
