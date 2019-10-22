@@ -2,7 +2,7 @@
   <div class="vlt-card">
     <div class="roleManage">
       <!-- 搜索 -->
-      <searchBar :options="roleManageoptions" :total="999">
+      <searchBar :options="roleManageoptions" @search="search" :total="999">
         <!-- 新增按钮 -->
         <controlBar
           slot="extend-bar"
@@ -50,7 +50,7 @@
         <el-table-column label="操作" min-width="140">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="roleManageAuthority(scope.row.id)">权限设置</el-button>
-            <el-button type="primary" size="mini" @click="roleManageWrite(scope.row.id)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="roleManageWrite(scope.row)">编辑</el-button>
             <el-button type="primary" size="mini" @click="roleManageLook(scope.row.id)">查看</el-button>
           </template>
         </el-table-column>
@@ -131,20 +131,25 @@ export default {
       },
       // 编辑弹框表单类型
       roleManageWriteData: [
-        { type: "input", title: "用户角色", prop: "roleManageName" },
-        { type: "input", title: "角色类型", prop: "accountType" },
+        { type: "input", title: "用户角色", value: "", prop: "roleManageName" },
+        { type: "input", title: "角色类型", value: "", prop: "accountType" },
         {
           type: "select",
           title: "角色状态",
           prop: "accountStatus",
-          option: [
+          value: "",
+          options: [
             {
-              label: "专用存款账户",
+              label: "启用",
               value: "0"
             },
             {
-              label: "专用存款账户2",
+              label: "冻结",
               value: "1"
+            },
+            {
+              label: "注销",
+              value: "2"
             }
           ]
         },
@@ -154,6 +159,7 @@ export default {
           prop: "roleManageAuthority",
           value: "",
           title: "角色权限",
+          value: "",
           placeholder: "请选择",
           options: [
             {
@@ -424,7 +430,12 @@ export default {
             }
           ]
         },
-        { type: "textarea", title: "描述", prop: "describe" }
+        {
+          type: "textarea",
+          title: "描述",
+          value: "",
+          prop: "roleManageDescribe"
+        }
       ],
       //权限设置弹框表单
       roleManageAuthorityWriteData: [
@@ -764,6 +775,10 @@ export default {
   },
   components: {},
   methods: {
+    //点击搜索
+    search(formData) {
+      console.log(formData);
+    },
     // 新增按钮
     roleManageAddclick() {
       this.$router.push("roleManageAdd");
@@ -773,8 +788,19 @@ export default {
       this.AuthoritydialogFormVisible = true;
     },
     // 编辑按钮
-    roleManageWrite() {
+    roleManageWrite(row) {
       this.dialogFormVisible = true;
+      let name = Object.keys(row);
+
+      let msg = this.roleManageWriteData;
+
+      for (var i = 0; i < msg.length; i++) {
+        for (var j = 0; j < name.length; j++) {
+          if (msg[i].prop === name[j]) {
+            msg[i].value = row[name[j]];
+          }
+        }
+      }
     },
     // 查看按钮
     roleManageLook() {

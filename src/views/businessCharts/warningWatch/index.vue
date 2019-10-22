@@ -39,17 +39,15 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            :current-page="1"
-            :page-size="10"
-            :total="100"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+      
+      <table-paging
+        style="margin-top:30px"
+        :current-page="1"
+        :page-size="10"
+        :total="100"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>
@@ -149,10 +147,10 @@ export default {
   },
   methods: {
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      console.log("每页条数：", pageSize);
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      console.log("当前页：", currentPage);
     },
     //查看页面跳转
     detail(id) {

@@ -4,25 +4,23 @@
       <div class="vlt-edit-double">
         <h2 class="title">新增角色</h2>
         <div class="vlt-edit-wrap">
-          <el-form label-position="top" label-width="90px" :model="roleManageAddForm" ref="form">
-            <base-form
-              :formData="roleManageAddData"
-              ref="baseForm"
-              labelWidth="140px"
-              :rules="roleManageAddRules"
-              direction="top"
-              @change="roleManageAddChangeForm"
-            ></base-form>
-            <el-row class="el-form-item vlt-edit-btn">
-              <el-button
-                type="primary"
-                v-prevent="1000"
-                size="medium"
-                @click="roleManageAddSubmit"
-              >提交并保存</el-button>
-              <el-button size="medium" @click="roleManageAddCancel">取消</el-button>
-            </el-row>
-          </el-form>
+          <base-form
+            :formData="roleManageAddData"
+            ref="baseForm"
+            labelWidth="140px"
+            :rules="roleManageAddRules"
+            direction="top"
+            @change="roleManageAddChangeForm"
+          ></base-form>
+          <el-row class="el-form-item vlt-edit-btn">
+            <el-button
+              type="primary"
+              v-prevent="1000"
+              size="medium"
+              @click="roleManageAddSubmit"
+            >提交并保存</el-button>
+            <el-button size="medium" @click="roleManageAddCancel">取消</el-button>
+          </el-row>
         </div>
       </div>
     </div>
@@ -35,15 +33,14 @@ export default {
   name: "",
   data() {
     return {
-      roleManageAddForm: {},
       roleManageAddData: [
-        { type: "input", title: "用户角色", prop: "accountname" },
-        { type: "input", title: "角色类型", prop: "accounttype" },
+        { type: "input", title: "用户角色", prop: "roleManageName" },
+        { type: "input", title: "角色类型", prop: "accountType" },
         {
           type: "select",
           title: "角色状态",
-          prop: "accountstatus",
-          option: [
+          prop: "accountStatus",
+          options: [
             {
               label: "专用存款账户",
               value: "0"
@@ -56,7 +53,7 @@ export default {
         },
         {
           type: "cascader-multiple",
-          prop: "accountauthority",
+          prop: "accountAuthority",
           value: "",
           title: "角色权限",
           placeholder: "请选择",
@@ -332,20 +329,35 @@ export default {
         { type: "textarea", title: "描述", prop: "describe" }
       ],
       roleManageAddRules: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        accountname: [
+          { required: true, message: "请输入用户角色", trigger: "blur" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        accounttype: [
+          { required: true, message: "请输入角色类型", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        accountStatus: [
+          { required: true, message: "请选择角色状态", trigger: "change" }
+        ],
+        accountauthority: [
+          {
+            required: true,
+            message: "请至少选择一个角色权限",
+            trigger: "change"
+          }
+        ]
       }
     };
   },
   components: {},
   methods: {
+    //表单change事件
     roleManageAddChangeForm() {},
-    roleManageAddSubmit() {},
+    //表单提交
+    roleManageAddSubmit() {
+      let form = this.$refs.baseForm.form;
+      console.log(form);
+    },
+    //表单取消
     roleManageAddCancel() {
       this.$router.go(-1);
     }

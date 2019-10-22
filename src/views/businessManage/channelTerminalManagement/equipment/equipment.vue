@@ -71,7 +71,8 @@ export default {
 <style lang="less" scoped>
   .vlt-card {
     .el-main {
-          border-left: 1px solid #e6e6e6;
+        padding: 0;
+        border-left: 1px solid #e6e6e6;
     }
   }
 </style>

@@ -1,15 +1,16 @@
 <template>
   <div class="page-tags-con">
     <div class="tags-scroller">
-      <div class="tags-list">
+      <div class="tags-list" :style="{left: translateX + 'px'}">
         <el-tag
-          :class="{current:current==index}"
-          v-for="(tag, index) in tags"
+          :class="{current:$route.name == tag.routerName}"
+          v-for="(tag, index) in routerTags"
           :key="index"
           :closable="closable"
-          :type="tag.type"
-          @click="tab(index)"
-          @close="close(index)"
+          type="info"
+          :disable-transitions="true"
+          @click="to(tag)"
+          @close="close(tag, index)"
         >
           {{tag.name}}
         </el-tag>
@@ -21,60 +22,120 @@
         <i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>关闭当前</el-dropdown-item>
-        <el-dropdown-item>关闭所有</el-dropdown-item>
+        <el-dropdown-item @click.native="close(currentTag, current)">关闭当前</el-dropdown-item>
+        <el-dropdown-item @click.native="clearTags">关闭其他</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'pageTags',
   data() {
     return {
+      translateX: 0,
+      currentTag: null,
       current: 0,
-      closable: true,
-      tags: [
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签五', type: 'info' }
-      ]
+      closable: true
     }
+  },
+  watch: {
+    routerTags(val) {
+      if (val.length === 1) {
+        this.closable = false;
+        return;
+      };
+      this.closable = true;
+    },
+    $route(to, from) {
+      const currentTag = {
+        name: to.meta.title,
+        routerName: to.name
+      }
+      this.setRouterTags(currentTag);
+      this.setCurrentTag(currentTag);
+      this.$nextTick(() => {
+        this.scrollX();
+      })
+    }
+  },
+  computed: {
+    ...mapGetters(['routerTags'])
   },
   created () {
     
   },
   mounted () {
-    
-  },
-  watch: {
-    tags(val) {
-      if (val.length === 1) this.closable = false;
-    }
+    this.init();
+    this.scrollX();
   },
   methods: {
-    tab(index) {
-      this.current = index;
+    init() {
+      const currentTag = {
+        name: this.$route.meta.title,
+        routerName: this.$route.name
+      }
+      this.setRouterTags(currentTag);
+      this.setCurrentTag(currentTag);
     },
-    close(index) {
-      this.tags.splice(index, 1)
-    }
+    to(item) {
+      this.$router.push({
+        name: item.routerName
+      })
+    },
+    close(item, index) {
+      if (this.routerTags.length === 1) {
+        return;
+      }
+      this.removeRouterTags(item);
+      if (this.$route.name === item.routerName) {
+        const witch = index - 1 < 0 ? (index) : (index - 1);
+        this.$router.push({
+          name: this.routerTags[witch].routerName
+        });
+      }
+      
+    },
+    setCurrentTag(currentTag) {
+      this.currentTag = currentTag;
+      this.current = this.routerTags.findIndex(item => item.routerName === currentTag.routerName);
+    },
+    clearTags() {
+      this.clearRouterTags();
+      this.init();
+      this.translateX = 0;
+    },
+    scrollX() {
+      // 标签栏滚动
+      let x = 0;
+      const wrapper = document.querySelector('.tags-scroller');
+      const tags = document.querySelectorAll('.el-tag');
+      const currentTag = tags[this.current];
+      const currentTagPosition = currentTag.getBoundingClientRect();
+      const wrapperPosition = wrapper.getBoundingClientRect();
+      const tagMargin = 4;
+      
+      if (currentTagPosition.right >= wrapperPosition.right - tagMargin) {
+        const nextTag = tags[this.current + 1];
+        if (nextTag) {
+          x = -nextTag.getBoundingClientRect().right + wrapperPosition.right - tagMargin;
+        } else {
+          x = -currentTagPosition.right + wrapperPosition.right - tagMargin;
+        }
+      } else if (currentTagPosition.left < wrapperPosition.left + tagMargin) {
+        const prevTag = tags[this.current - 1];
+        if (prevTag) {
+          x = wrapperPosition.left - prevTag.getBoundingClientRect().left;
+        } else {
+          x = wrapperPosition.left - currentTagPosition.left;
+        }
+      }
+      this.translateX += x;
+    },
+    ...mapActions(['setRouterTags', 'removeRouterTags', 'clearRouterTags'])
   }
 }
 </script>
@@ -90,12 +151,18 @@ export default {
     -ms-user-select: none; /* Internet Explorer/Edge */
     .tags-scroller{
       overflow: hidden;
+      position: relative;
+      height: 32px;
+      margin-right: 90px;
     }
     .tags-list{
       white-space: nowrap;
       word-break: keep-all;
-      margin-right: 90px;
-      
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: left 0.2s ease 0s;
+      transform: translate3d(0,0,0);
     }
     .el-tag{
       cursor: pointer;

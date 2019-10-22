@@ -554,17 +554,20 @@ export default {
     operationManageWrite(row) {
       this.dialogFormVisible = true;
       // row = this.operationManageWriteData[0].prop;
-      this.operationManageWriteData.value = Object.assign({}, row);
-      // let n = Object.keys(row);
-      // let arr = this.operationManageWriteData;
-      // //console.log(n);
-      // for (var i = 0; i < arr.length; i++) {
-      //   for (var j = 0; j < n.length; j++) {
-      //     if (arr[i].prop === n[j]) {
-      //       arr[i].value = row[n[j]];
-      //     }
-      //   }
-      // }
+      //this.operationManageWriteData.value = Object.assign({}, row);
+      let n = Object.keys(row);
+      let arr = this.operationManageWriteData;
+      //console.log(n);
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < n.length; j++) {
+          console.log(arr[i]);
+          console.log(arr[i].prop);
+          if (arr[i].prop === n[j]) {
+            console.log(arr[i].prop);
+            arr[i].value = row[n[j]];
+          }
+        }
+      }
       //console.log(this.operationManageWriteData[0]);
     },
     //点击查看

@@ -345,6 +345,7 @@ export default {
           prop: "status",
           options: [{ label: "男", value: "0" }, { label: "女", value: "1" }]
         },
+        {title: '试玩渠道',type: 'radio-textarea', prop: '', props: ['radio', 'radioText'], value: ['1', 'aa'], options:[{label:'区域内全部大厅',value:'1'},{label:'区域内指定大厅',value:'2'}],placeholder:'随便说点啥'},
         { type: "textarea", title: "说明", prop: "all" },
         { type: "switch", title: "兑奖权限", prop: "isShow" },
         { type: "datepicker", prop: "date1", value: "", title: "日期选择" },
