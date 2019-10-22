@@ -1,4 +1,5 @@
 <template>
+<!-- 设施查看页面 -->
  <div class="vlt-card facility-page">
    <panel-static title="基本信息">
       <base-info :infoList="infoList"></base-info>

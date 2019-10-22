@@ -1,4 +1,5 @@
 <template>
+<!-- 型号管理查看页面 -->
  <div class="vlt-card basic-info">
    <panel-static title="设备类型查看" style="margin-bottom:20px">
       <base-info :infoList="typeInfoList"></base-info>

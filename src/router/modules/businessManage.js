@@ -131,6 +131,8 @@ const putStore = () => import('@/views/businessManage/channelResourceManage/outP
 const alreadyPutDetail =  () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyPutDetail')
 //出库
 const outStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/outStore')
+//已出库详情
+const alreadyOutDetail = () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyOutDetail')
 //仓库管理新增仓库
 const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
@@ -358,6 +360,7 @@ export default [
     name: 'gameCreate',
     meta: {
       title: '新建游戏',
+      parentName: 'gameList',
     },
     component: gameCreate
   },
@@ -366,6 +369,7 @@ export default [
     name: 'gameDetail',
     meta: {
       title: '游戏详情',
+      parentName: 'gameList',
     },
     component: gameDetail
   },
@@ -374,6 +378,7 @@ export default [
     name: 'gameEdit',
     meta: {
       title: '游戏编辑',
+      parentName: 'gameList',
     },
     component: gameEdit
   },
@@ -398,6 +403,7 @@ export default [
     name: 'trialPlanCreate',
     meta: {
       title: '新建试玩计划',
+      parentName: 'trialPlanList',
     },
     component: trialPlanCreate
   },
@@ -405,7 +411,8 @@ export default [
     path: 'businessManage/trialPlanDetail',
     name: 'trialPlanDetail',
     meta: {
-      title: '试玩详情',
+      title: '试玩计划详情',
+      parentName: 'trialPlanList',
     },
     component: trialPlanDetail
   },
@@ -414,6 +421,7 @@ export default [
     name: 'trialPlanEdit',
     meta: {
       title: '试玩计划编辑',
+      parentName: 'trialPlanList',
     },
     component: trialPlanEdit
   },
@@ -430,6 +438,7 @@ export default [
     name: 'gameMarketPlanCreate',
     meta: {
       title: '新建上市计划',
+      parentName: 'gameMarketPlanList',
     },
     component: gameMarketPlanCreate
   },
@@ -438,6 +447,7 @@ export default [
     name: 'gameMarketPlanDetail',
     meta: {
       title: '上市计划详情',
+      parentName: 'gameMarketPlanList',
     },
     component: gameMarketPlanDetail
   },
@@ -446,6 +456,7 @@ export default [
     name: 'gameMarketPlanEdit',
     meta: {
       title: '上市计划编辑',
+      parentName: 'gameMarketPlanList',
     },
     component: gameMarketPlanEdit
   },
@@ -462,6 +473,7 @@ export default [
     name: 'gameMarketDetail',
     meta: {
       title: '上市游戏详情',
+      parentName: 'gameMarketList',
     },
     component: gameMarketDetail
   },
@@ -478,6 +490,7 @@ export default [
     name: 'gameChangePlanCreate',
     meta: {
       title: '新建变更计划',
+      parentName: 'gameChangePlanList',
     },
     component: gameChangePlanCreate
   },
@@ -486,6 +499,7 @@ export default [
     name: 'gameChangePlanDetail',
     meta: {
       title: '变更计划详情',
+      parentName: 'gameChangePlanList',
     },
     component: gameChangePlanDetail
   },
@@ -494,6 +508,7 @@ export default [
     name: 'gameChangePlanEdit',
     meta: {
       title: '变更计划编辑',
+      parentName: 'gameChangePlanList',
     },
     component: gameChangePlanEdit
   },
@@ -510,6 +525,7 @@ export default [
     name: 'gameDelistingPlanCreate',
     meta: {
       title: '新建退市计划',
+      parentName: 'gameDelistingPlanList',
     },
     component: gameDelistingPlanCreate
   },
@@ -518,6 +534,7 @@ export default [
     name: 'gameDelistingPlanDetail',
     meta: {
       title: '退市计划详情',
+      parentName: 'gameDelistingPlanList',
     },
     component: gameDelistingPlanDetail
   },
@@ -542,6 +559,7 @@ export default [
     name: 'channelCreate',
     meta: {
       title: '新建渠道',
+      parentName: 'channelList',
     },
     component: channelCreate
   },
@@ -557,6 +575,7 @@ export default [
     path: 'businessManage/channelResourceManage/equipmentDetail',
     name: 'equipmentDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '设备查看',
     },
     component: equipmentDetail
@@ -565,6 +584,7 @@ export default [
     path: 'businessManage/channelResourceManage/facilityDetail',
     name: 'facilityDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '设施查看',
     },
     component: facilityDetail
@@ -573,6 +593,7 @@ export default [
     path: 'businessManage/channelResourceManage/consumableDetail',
     name: 'consumableDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '耗材查看',
     },
     component: consumableDetail
@@ -581,6 +602,7 @@ export default [
     path: 'businessManage/channelResourceManage/mountingsDetail',
     name: 'mountingsDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '配件查看',
     },
     component: mountingsDetail
@@ -589,6 +611,7 @@ export default [
     path: 'businessManage/channelResourceManage/mountRecordCheck',
     name: 'mountRecordCheck',
     meta: {
+      parentName:'inventoryManage',
       title: '配件履历',
     },
     component: mountRecordCheck
@@ -597,6 +620,7 @@ export default [
     path: 'businessManage/channelResourceManage/equRecordCheck',
     name: 'equRecordCheck',
     meta: {
+      parentName:'inventoryManage',
       title: '设备履历',
     },
     component: equRecordCheck
@@ -605,6 +629,7 @@ export default [
     path: 'businessManage/channelResourceManage/inventoryStatistics',
     name: 'inventoryStatistics',
     meta: {
+      parentName:'inventoryManage',
       title: '盘点统计',
     },
     component: inventoryStatistics
@@ -622,6 +647,7 @@ export default [
     path: 'businessManage/channelResourceManage/putStore',
     name: 'putStore',
     meta: {
+      parentName:'outPutManage',
       title: '入库',
     },
     component: putStore
@@ -630,6 +656,7 @@ export default [
     path: 'businessManage/channelResourceManage/alreadyPutDetail',
     name: 'alreadyPutDetail',
     meta: {
+      parentName:'outPutManage',
       title: '已入库详情',
     },
     component: alreadyPutDetail
@@ -638,9 +665,19 @@ export default [
     path: 'businessManage/channelResourceManage/outStore',
     name: 'outStore',
     meta: {
+      parentName:'outPutManage',
       title: '出库',
     },
     component: outStore
+  },
+  {
+    path: 'businessManage/channelResourceManage/alreadyOutDetail',
+    name: 'alreadyOutDetail',
+    meta: {
+      parentName:'outPutManage',
+      title: '已出库详情',
+    },
+    component: alreadyOutDetail
   },
 
   {
@@ -655,6 +692,7 @@ export default [
     path: 'businessManage/channelResourceManage/detailLedger',
     name: 'detailLedger',
     meta: {
+      parentName:'ledgerManage',
       title: '台账明细',
     },
     component: detailLedger
@@ -663,6 +701,7 @@ export default [
     path: 'businessManage/channelResourceManage/detailFlow',
     name: 'detailFlow',
     meta: {
+      parentName:'ledgerManage',
       title: '相关流程',
     },
     component: detailFlow
@@ -679,6 +718,7 @@ export default [
     path: 'businessManage/channelResourceManage/detail',
     name: 'detail',
     meta: {
+      parentName:'storeManage',
       title: '仓库查看',
     },
     component: detail
@@ -687,6 +727,7 @@ export default [
     path: 'businessManage/channelResourceManage/addStore',
     name: 'addStore',
     meta: {
+      parentName:'storeManage',
       title: '新建仓库',
     },
     component: addStore
@@ -703,6 +744,7 @@ export default [
     path: 'businessManage/channelResourceManage/addEquipment',
     name: 'addEquipment',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理新增',
     },
     component: addEquipment
@@ -711,6 +753,7 @@ export default [
     path: 'businessManage/channelResourceManage/modification',
     name: 'modification',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理修改',
     },
     component: modification
@@ -720,6 +763,7 @@ export default [
     path: 'businessManage/channelResourceManage/equipmentCheck',
     name: 'equipmentCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理设备查看',
     },
     component: equipmentCheck
@@ -728,6 +772,7 @@ export default [
     path: 'businessManage/channelResourceManage/facilityCheck',
     name: 'facilityCheck',
     meta: {
+      parentName:'basicInfoManage',      
       title: '基本信息类型管理设施查看',
     },
     component: facilityCheck
@@ -736,6 +781,7 @@ export default [
     path: 'businessManage/channelResourceManage/consumableCheck',
     name: 'consumableCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理耗材查看',
     },
     component: consumableCheck
@@ -744,6 +790,7 @@ export default [
     path: 'businessManage/channelResourceManage/mountingsCheck',
     name: 'mountingsCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理耗材查看',
     },
     component: mountingsCheck
@@ -752,6 +799,7 @@ export default [
     path: 'businessManage/channelResourceManage/modelCheck',
     name: 'modelCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息型号管理查看',
     },
     component: modelCheck
@@ -760,6 +808,7 @@ export default [
     path: 'businessManage/channelResourceManage/modelAdd',
     name: 'modelAdd',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息型号管理新增',
     },
     component: modelAdd
@@ -964,6 +1013,7 @@ export default [
     path: 'businessManage/channelSalesPermission',
     name: 'channelSalesPermission',
     meta: {
+      parentName: 'channelDeal',
       title: '销售权限',
     },
     component: channelSalesPermission
@@ -972,6 +1022,7 @@ export default [
     path: 'businessManage/channelFundsPermission',
     name: 'channelFundsPermission',
     meta: {
+      parentName: 'channelDeal',
       title: '资金权限',
     },
     component: channelFundsPermission
@@ -980,6 +1031,7 @@ export default [
     path: 'businessManage/resourcePurchase',
     name: 'resourcePurchase',
     meta: {
+      parentName: 'channelDeal',
       title: '资源采购',
     },
     component: resourcePurchase
@@ -988,6 +1040,7 @@ export default [
     path: 'businessManage/resourceApply',
     name: 'resourceApply',
     meta: {
+      parentName: 'channelDeal',
       title: '资源申请',
     },
     component: resourceApply
@@ -996,6 +1049,7 @@ export default [
     path: 'businessManage/resourceProvide',
     name: 'resourceProvide',
     meta: {
+      parentName: 'channelDeal',
       title: '资源发放',
     },
     component: resourceProvide
@@ -1013,6 +1067,7 @@ export default [
     path: 'businessManage/developmentPlanCreate',
     name: 'developmentPlanCreate',
     meta: {
+      parentName: 'developmentPlan',
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
@@ -1177,6 +1232,7 @@ export default [
     path: 'businessManage/cooperatorManage/cooperatorCreate',
     name: 'cooperatorCreate',
     meta: {
+      parentName: 'cooperatorList',
       title: '新建合作伙伴',
     },
     component: cooperatorCreate
