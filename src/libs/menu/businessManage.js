@@ -204,7 +204,7 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "配置管理",
-          url: 'configuration'
+          url: 'configurationManagement'
         }
       ]
     },
@@ -293,6 +293,31 @@ export default [{
           name: "结算与对账",
           url: 'verifyReconciliation'
         },
+      ]
+    },
+    {
+      icon: "el-icon-menu",
+      name: "在线培训",
+      url: 'trainingManage',
+      childResources: [
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "培训管理",
+          url: 'trainingManage'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "课程管理",
+          url: 'courseManage'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "考核管理",
+          url: 'assessManage'
+        }
       ]
     }
   ]

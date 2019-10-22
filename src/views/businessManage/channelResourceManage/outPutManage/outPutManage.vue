@@ -248,7 +248,7 @@ export default {
 //  出库详情
  outDetail(id){
    this.$router.push({
-      name: 'outStore',
+      name: 'alreadyOutDetail',
       query: {id}
     })
  }

@@ -29,7 +29,7 @@
 <script type="text/javascript">
 
 export default {
-  name: "",
+  name: "developmentPlanCity",
   data() {
     return {
       searchOptions: [

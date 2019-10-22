@@ -39,7 +39,7 @@
         <div class="vlt-edit-single">
           <div class="vlt-edit-wrap">
             <!--右侧表单-->
-            <el-form>
+            <!-- <el-form>
               <el-form-item label="类型" label-width="110px">
                 <el-select v-model="menuType" placeholder="请选择" @change="handel">
                   <el-option
@@ -50,7 +50,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-            </el-form>
+            </el-form> -->
             <base-form
               v-if="menuType==0"
               :formData="rightFrom"
@@ -120,7 +120,7 @@
             <base-form
               :formData="topMnu"
               labelWidth="90px"
-              ref="baseForm"
+              ref="TopMenubaseForm"
               :rules="rules"
               direction="right"
               @change="addTopChangeForm"
@@ -187,6 +187,7 @@ export default {
       ],
       rightFrom: [
         //右侧修改信息表单对象
+         { type: "input", title: "类型", prop: "moduleType", value: "" ,disabled: true},
         { type: "input", title: "名称", prop: "moduleName", value: "" },
         { type: "input", title: "路径", prop: "moduleDesc", value: "" },
         { type: "input", title: "编码", prop: "moduleCode", value: "" },
@@ -228,7 +229,7 @@ export default {
           title: "节点类型",
           prop: "moduleType",
           value: "",
-          options: [{ label: "菜单", value: 3 }, { label: "按钮", value: 4 }]
+          options: [{ label: "子系统", value: 2 },{ label: "菜单", value: 3 }, { label: "按钮", value: 4 }]
         },
         {
           type: "select",
@@ -316,11 +317,7 @@ export default {
   methods: {
     async init() {
       //节点树请求
-      let data = {
-        sysCode: "VLT_BMS",
-        code: 1
-      };
-      let res = await this.$api.getMenu({ data });
+      let res = await this.$api.getMenu({});
       this.nodeTreeData = res.data;
     },
     handel(val) {
@@ -388,12 +385,23 @@ export default {
       if (this.menuType === "0") {
         this.parms.created = "更改子节点";
         let data = JSON.parse(JSON.stringify(this.parms));
-        let reslt = await this.$api.ModficMenu({ data });
-        console.log(reslt);
+        data.moduleId = this.val.id
+        if (data.isSensitivity) {
+        data.isSensitivity = 0;
+      } else {
+        data.isSensitivity = 1;
+      }
+      if (data.isShow) {
+        data.isShow = 0;
+      } else {
+        data.isShow = 1;
+      }
+        let reslt = await this.$api.UpdateModule({ data });
         if (reslt.code === 0) {
+          this.$refs.baseForm.resetForm();
           this.init();
         }
-        this.$refs.baseForm.resetForm();
+        
       } else {
         this.parms2.created = "更改子节点按钮";
         console.log(this.parms2);
@@ -422,14 +430,13 @@ export default {
     },
     addTopChangeForm(val) {
       //添加顶部菜单change事件
-
       Object.assign(this.parms3, val);
     },
     async addTopFromsubmit() {
       //添加顶部菜单提交请求
       this.parms3.created = "添加顶部菜单";
-      // console.log(this.parms3)
       let n = JSON.parse(JSON.stringify(this.parms3));
+      console.log(n)
       let data = {
         parentId: null,
         sysCode: "VLT_BMS",
@@ -439,11 +446,11 @@ export default {
       };
       let reslt = await this.$api.addMenu({ data });
       if (reslt.code === 0) {
+        this.$refs.TopMenubaseForm.resetForm()
+        this.dialogFormVisible2 = false;
         this.init();
       }
-      this.dialogFormVisible2 = false;
-      console.log(reslt);
-      this.clearIput(this.topMnu);
+      
     },
     selectBtn(val) {
       //顶部按钮点击事件
@@ -499,10 +506,11 @@ export default {
     },
     async getnowNodeifo(val, s) {
       //获取当前点击节点信息及详情
+      console.log(val)
       this.parent = val;
-      let data = { moduleCode: val.code };
+      let data = {} ;
       this.val = val;
-      let res = await this.$api.getDestils({ data });
+      let res = await this.$api.getDestils( {data} ,val.id);
       this.slelectifo = val.text;
       if (res.data.isSensitivity === 0) {
         res.data.isSensitivity = true;
@@ -515,13 +523,29 @@ export default {
         res.data.isShow = false;
       }
       let n = Object.keys(res.data);
-      console.log(res.data);
+      console.log(n)
       this.nodeType = res.data.moduleType;
       let arr = this.rightFrom;
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < n.length; j++) {
-          if (arr[i].prop == n[j]) {
-            arr[i].value = res.data[n[j]];
+          if (arr[i].prop ===n[j]) {
+            if(arr[i].prop === "moduleType"){
+              switch (res.data[n[j]]) {
+                case 2:
+                  arr[i].value = "子系统";
+                  break
+                  break;
+                case 3:
+                  arr[i].value = "菜单";
+                  break
+                default:
+                  arr[i].value = "按钮";
+                  break;
+              }
+            }else{
+              arr[i].value = res.data[n[j]];
+            }
+            
           }
         }
       }

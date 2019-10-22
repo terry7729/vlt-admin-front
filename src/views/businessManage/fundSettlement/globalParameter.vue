@@ -112,7 +112,9 @@ export default {
       },
     //跳转编辑页面
     toEdit(){
-      console.log(23231)
+      this.$router.push({
+        name: 'globalParameterEdit'
+      })
     },
     changeForm(val) {
       Object.assign(this.params, val);
