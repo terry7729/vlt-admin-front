@@ -7,7 +7,7 @@
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 密码 -->
-      <el-input v-if="item.type=='password'" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='password'" :prefix-icon="`el-icon-${item.icon}`" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 带icon-->
       <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
