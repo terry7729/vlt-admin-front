@@ -27,13 +27,19 @@ export default {
     return {
       // 表单类型
       bankAccount: [
-        { type: "input", title: "户名全称", prop: "accountname" },
-        { type: "input", title: "银行接口类型", prop: "bankinterfacetype" },
-        { type: "input", title: "银行账号", prop: "bankaccount" },
+        { type: "input", title: "户名全称", value: "", prop: "accountname" },
+        {
+          type: "input",
+          title: "银行接口类型",
+          value: "",
+          prop: "bankinterfacetype"
+        },
+        { type: "input", title: "银行账号", value: "", prop: "bankaccount" },
         {
           type: "select",
           title: "账户类别",
           prop: "typeofaccount",
+          value: "",
           options: [
             {
               label: "专用存款账户",
@@ -49,6 +55,7 @@ export default {
           type: "select",
           title: "账户属性",
           prop: "accountproperties",
+          value: "",
           options: [
             {
               label: "对公账户",
@@ -60,15 +67,27 @@ export default {
             }
           ]
         },
-        { type: "input", title: "开户行", prop: "openingbank" },
-        { type: "datepicker", title: "开户日期", prop: "openingdate" },
-        { type: "input", title: "备注", prop: "remark" },
-        { type: "input", title: "联系人", prop: "linkman" },
-        { type: "input", title: "电话", prop: "telephone" },
+        { type: "input", title: "开户行", value: "", prop: "openingbank" },
+        {
+          type: "datepicker",
+          title: "开户日期",
+          value: "",
+          prop: "openingdate"
+        },
+        { type: "input", title: "备注", value: "", prop: "remark" },
+        { type: "input", title: "联系人", value: "", prop: "linkman" },
+        {
+          type: "input",
+          title: "电话",
+          value: "",
+          value: "",
+          prop: "telephone"
+        },
         {
           type: "upload-drag",
           title: "开户许可证",
-          prop: "openCard"
+          prop: "openCard",
+          value: ""
         }
       ],
       // 表单验证

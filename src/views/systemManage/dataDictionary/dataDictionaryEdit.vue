@@ -13,7 +13,8 @@
   </div>
 </template>
 
-<script type="text/javascript">
+<script>
+import rules from "../../../utils/rules";
 export default {
   name: "",
   data() {
