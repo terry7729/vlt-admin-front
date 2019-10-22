@@ -67,10 +67,13 @@
 .active-plan .control-index {
   margin: 20px 0 20px 150px;
 }
+.active-plan .control-index .el-checkbox-group {
+  display: inline-block;
+}
 .active-plan .control-index .index-check {
   margin-top: 20px;
 }
-.active-plan .control-index .index-check .item-check {
+.active-plan .control-index .index-check .el-checkbox-group {
   display: inline-block;
   width: 800px;
   position: relative;

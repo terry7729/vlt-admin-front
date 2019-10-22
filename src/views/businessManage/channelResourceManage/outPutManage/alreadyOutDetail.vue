@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
 export default {
- name: "alreadyPutDetail",
+ name: "alreadyOutDetail",
  data() {
  return {
    totalMoney:'',
@@ -51,7 +51,7 @@ export default {
  components: {
  },
  methods: {
-   putStoreClick(){
+   outStoreClick(){
      console.log(32123)
    },
    cancel(){

@@ -66,10 +66,9 @@ export default {
     ...mapGetters(['routerTags'])
   },
   created () {
-    
+    this.init();
   },
   mounted () {
-    this.init();
     this.$nextTick(() => {
       this.scrollX();
     })
@@ -119,15 +118,15 @@ export default {
       const currentTagPosition = currentTag.getBoundingClientRect();
       const wrapperPosition = wrapper.getBoundingClientRect();
       const tagMargin = 4;
-      
-      if (currentTagPosition.right >= wrapperPosition.right - tagMargin) {
+      const boundary = 50;
+      if (currentTagPosition.right >= wrapperPosition.right - boundary) {
         const nextTag = tags[this.current + 1];
         if (nextTag) {
           x = -nextTag.getBoundingClientRect().right + wrapperPosition.right - tagMargin;
         } else {
           x = -currentTagPosition.right + wrapperPosition.right - tagMargin;
         }
-      } else if (currentTagPosition.left < wrapperPosition.left + tagMargin) {
+      } else if (currentTagPosition.left < wrapperPosition.left + boundary) {
         const prevTag = tags[this.current - 1];
         if (prevTag) {
           x = wrapperPosition.left - prevTag.getBoundingClientRect().left;

@@ -108,6 +108,7 @@ export default [
     path :'systemManage/formManage/formCompile',
     name:'formCompile',
     meta:{
+      parentName:"formManage",
       title:'表单管理编辑',
     },
     component:formCompile
@@ -124,6 +125,7 @@ export default [
     path :'systemManage/processSet/processSetDetail',
     name:'processSetDetail',
     meta:{
+      parentName:"processSet",
       title:'流程设置编辑',
     },
     component:processSetDetail
@@ -140,6 +142,7 @@ export default [
     path :'systemManage/processClassify/processClassifyModify',
     name:'processClassifyModify',
     meta:{
+      parentName:"processClassify",
       title:'流程分类修改',
     },
     component:processClassifyModify
@@ -156,6 +159,7 @@ export default [
     path :'systemManage/dataDictionary/dataDictionaryEdit',
     name:'dataDictionaryEdit',
     meta:{
+      parentName:"dataDictionary",
       title:'数据字典编辑',
     },
     component:dataDictionaryEdit

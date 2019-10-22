@@ -33,7 +33,7 @@ export default {
   name: "",
   data() {
     return {
-      formData: [],
+      // formData: [],
       // 新增表单类型
       operationAccountAddData: [
         {
@@ -109,7 +109,7 @@ export default {
           type: "input",
           title: "账户密码",
           prop: "operationManagePassword",
-
+          value: "",
           disabled: true,
           placeholder: "初始密码为123456"
         },
@@ -430,17 +430,13 @@ export default {
   components: {},
   methods: {
     // 新增表单change事件
-    operationAccountAddChangeForm(form) {
-      // console.log(form);
-      this.formData = form;
-      //console.log(this.formData);
-    },
+    operationAccountAddChangeForm(form) {},
     // 提交按钮
-    operationAccountAddSubmit(form) {
-      console.log(this.formData);
-      //console.log(form);
-      //console.log(this.operationAccountAddData);
+    operationAccountAddSubmit() {
+      // console.log(this.formData);
+
       let formdata = this.$refs.baseForm.form;
+      console.log(formdata);
 
       //console.log(this.$refs.baseForm.form);
       //console.log(formdata);

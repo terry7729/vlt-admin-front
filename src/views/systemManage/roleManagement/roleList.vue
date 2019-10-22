@@ -14,43 +14,26 @@
     <div class="role-table">
       <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
         <el-table-column type="index" prop="date" label="序号"></el-table-column>
-        <el-table-column prop="date" label="用户角色"></el-table-column>
-        <el-table-column prop="name" label="角色描述"></el-table-column>
-        <el-table-column prop="province" label="创建人"></el-table-column>
-        <el-table-column prop="city" label="角色类型"></el-table-column>
-        <el-table-column prop="address" label="创建时间"></el-table-column>
-
+        <el-table-column prop="roleName" label="用户角色"></el-table-column>
+        <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
+        <el-table-column prop="createBy" label="创建人"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
+        <el-table-column prop="roleType" label="角色类型"></el-table-column>
+        <el-table-column prop="updateBy" label="修改人"></el-table-column>
+        <el-table-column prop="updateTime" label="修改时间"></el-table-column>
         <el-table-column label="角色状态" align="center">
           <template slot-scope="scope">
-            <table-row-status
-              statusField="status"
-              idField="id"
-              :scope="scope"
-              :tableData="tableData"
-              :rowName="scope.row.name"
-              :option="{
-                'enable': {
-                  apiName: 'apiName', // 接口名称
-                  label: '启用', // 按钮文字
-                  value: 0 // 接口字段传值
-                },
-                'disable': {
-                  apiName: 'apiName',
-                  label: '冻结',
-                  value: 1
-                },
-                'logout': {
-                  apiName: 'apiName',
-                  label: '注销',
-                  value: -1
-                }
-              }"
-            ></table-row-status>
+            <el-switch
+              v-model="tableData[scope.$index].status"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              disabled
+            ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column prop="zip" label="操作" >
+        <el-table-column prop="zip" label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handelifo">查看</el-button>
+            <el-button type="primary" size="mini" @click="handelifo(scope.row)">查看</el-button>
             <el-button type="success" size="mini" @click="handelskip(scope.row)">编缉</el-button>
           </template>
         </el-table-column>
@@ -74,6 +57,7 @@
             <base-form
               :formData="data2"
               labelWidth="90px"
+              :rules="rules"
               ref="baseForm"
               direction="right"
               @change="changeForm"
@@ -90,325 +74,66 @@
 </template>
 
 <script>
-
+import moment from "moment";
 export default {
   name: "roleList",
   data() {
     return {
+      rules:{},
       dialogFormVisible: false,
       controlOptions: [
         //按钮组
-        { name: "新建计划", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
+        { name: "新建角色", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
       data2: [
-        { type: "input", title: "用户角色", prop: "userRole", value: "12" },
-        { type: "input", title: "角色类型", prop: "roleType", value: "12" },
-        { type: "input", title: "角色状态", prop: "roleStatus", value: "12" },
+        { type: "input", title: "用户角色", prop: "roleName", value: "" },
+        { type: "select", title: "角色类型", prop: "roleType", value: "" ,options:[{label:'管理员',value:1},{label:'子管理员',value:2},{label:'普通角色',value:3}]},
+        { type: "switch", title: "角色状态", prop: "status", value: 1 },
         {
           type: "cascader-multiple",
-          prop: "rolepower",
+          prop: "moduleIds",
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+             multiple: true, 
+             checkStrictly: true 
+          },
           value: "",
           title: "角色权限",
           placeholder: "请选择",
-          options: [
-            {
-              value: "1",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率"
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控"
-                    }
-                  ]
-                },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航"
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "zujian",
-              label: "组件",
-              children: [
-                {
-                  value: "basic",
-                  label: "Basic",
-                  children: [
-                    {
-                      value: "layout",
-                      label: "Layout 布局"
-                    },
-                    {
-                      value: "color",
-                      label: "Color 色彩"
-                    },
-                    {
-                      value: "typography",
-                      label: "Typography 字体"
-                    },
-                    {
-                      value: "icon",
-                      label: "Icon 图标"
-                    },
-                    {
-                      value: "button",
-                      label: "Button 按钮"
-                    }
-                  ]
-                },
-                {
-                  value: "form",
-                  label: "Form",
-                  children: [
-                    {
-                      value: "radio",
-                      label: "Radio 单选框"
-                    },
-                    {
-                      value: "checkbox",
-                      label: "Checkbox 多选框"
-                    },
-                    {
-                      value: "input",
-                      label: "Input 输入框"
-                    },
-                    {
-                      value: "input-number",
-                      label: "InputNumber 计数器"
-                    },
-                    {
-                      value: "select",
-                      label: "Select 选择器"
-                    },
-                    {
-                      value: "cascader",
-                      label: "Cascader 级联选择器"
-                    },
-                    {
-                      value: "switch",
-                      label: "Switch 开关"
-                    },
-                    {
-                      value: "slider",
-                      label: "Slider 滑块"
-                    },
-                    {
-                      value: "time-picker",
-                      label: "TimePicker 时间选择器"
-                    },
-                    {
-                      value: "date-picker",
-                      label: "DatePicker 日期选择器"
-                    },
-                    {
-                      value: "datetime-picker",
-                      label: "DateTimePicker 日期时间选择器"
-                    },
-                    {
-                      value: "upload",
-                      label: "Upload 上传"
-                    },
-                    {
-                      value: "rate",
-                      label: "Rate 评分"
-                    },
-                    {
-                      value: "form",
-                      label: "Form 表单"
-                    }
-                  ]
-                },
-                {
-                  value: "data",
-                  label: "Data",
-                  children: [
-                    {
-                      value: "table",
-                      label: "Table 表格"
-                    },
-                    {
-                      value: "tag",
-                      label: "Tag 标签"
-                    },
-                    {
-                      value: "progress",
-                      label: "Progress 进度条"
-                    },
-                    {
-                      value: "tree",
-                      label: "Tree 树形控件"
-                    },
-                    {
-                      value: "pagination",
-                      label: "Pagination 分页"
-                    },
-                    {
-                      value: "badge",
-                      label: "Badge 标记"
-                    }
-                  ]
-                },
-                {
-                  value: "notice",
-                  label: "Notice",
-                  children: [
-                    {
-                      value: "alert",
-                      label: "Alert 警告"
-                    },
-                    {
-                      value: "loading",
-                      label: "Loading 加载"
-                    },
-                    {
-                      value: "message",
-                      label: "Message 消息提示"
-                    },
-                    {
-                      value: "message-box",
-                      label: "MessageBox 弹框"
-                    },
-                    {
-                      value: "notification",
-                      label: "Notification 通知"
-                    }
-                  ]
-                },
-                {
-                  value: "navigation",
-                  label: "Navigation",
-                  children: [
-                    {
-                      value: "menu",
-                      label: "NavMenu 导航菜单"
-                    },
-                    {
-                      value: "tabs",
-                      label: "Tabs 标签页"
-                    },
-                    {
-                      value: "breadcrumb",
-                      label: "Breadcrumb 面包屑"
-                    },
-                    {
-                      value: "dropdown",
-                      label: "Dropdown 下拉菜单"
-                    },
-                    {
-                      value: "steps",
-                      label: "Steps 步骤条"
-                    }
-                  ]
-                },
-                {
-                  value: "others",
-                  label: "Others",
-                  children: [
-                    {
-                      value: "dialog",
-                      label: "Dialog 对话框"
-                    },
-                    {
-                      value: "tooltip",
-                      label: "Tooltip 文字提示"
-                    },
-                    {
-                      value: "popover",
-                      label: "Popover 弹出框"
-                    },
-                    {
-                      value: "card",
-                      label: "Card 卡片"
-                    },
-                    {
-                      value: "carousel",
-                      label: "Carousel 走马灯"
-                    },
-                    {
-                      value: "collapse",
-                      label: "Collapse 折叠面板"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "ziyuan",
-              label: "资源",
-              children: [
-                {
-                  value: "axure",
-                  label: "Axure Components"
-                },
-                {
-                  value: "sketch",
-                  label: "Sketch Templates"
-                },
-                {
-                  value: "jiaohu",
-                  label: "组件交互文档"
-                }
-              ]
-            }
-          ]
+          options:[]
         },
-        { type: "textarea", title: "描述", prop: "describe", value: "12" }
+        { type: "textarea", title: "描述", prop: "roleDesc", value: "" }
       ],
       option: [
         //搜索框组
         {
           title: "用户角色",
-          prop: "userRole",
+          prop: "roleName",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
           title: "创建人",
-          prop: "createrMan",
+          prop: "createBy",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
           title: "角色状态",
-          prop: "rolueStatus",
+          prop: "status",
           type: "select",
           options: [
             {
-              value: "beijing",
-              label: "北京"
+              value: "0",
+              label: "无效"
             },
             {
-              value: "shanghai",
-              label: "上海"
+              value: "1",
+              label: "有效"
             }
           ],
           value: "",
@@ -462,19 +187,31 @@ export default {
       ],
       multipleSelection: [],
       //新建按钮点击
-      newcreate:false,
-      parms:{}
+      newcreate: false,
+      parms: {},
+      currentState:'' 
     };
   },
   computed: {},
-  created() {},
-  mounted() {},
-  components: {
-   
+  async created() {
+    let reslt = await this.$api.QueryAllRole({});
+    console.log(reslt);
+    let arr = reslt.data;
+    console.log(arr);
+     let res = await this.$api.getMenu({});
+      // this.nodeTreeData = res.data;
+    this.data2[3].options= res.data
+    console.log(res)
+    if(reslt.code === 0){
+      this.dataProcessing(arr)
+    }
   },
+  mounted() {},
+  components: {},
   methods: {
-    handelifo() {
-      this.$router.push("roleList/roleifometion");
+    handelifo(val) {
+      console.log(val)
+      this.$router.push({name:"roleifometion",query:{id:val.roleId}});
     },
     pageSizeChange(val) {
       //每页显示条数
@@ -486,39 +223,82 @@ export default {
     },
     handelskip(val) {
       this.dialogFormVisible = true;
-      this.newcreate = 0;
+      this.currentState = "编缉";
       // this.$router.push("roleList/roleDestails");
     },
     selectBtn(val) {
       //新增删除事件
-      if (val.name === "新建计划") {
-        this.newcreate = 1;
-        this.dialogFormVisible= true;
+      if (val.name === "新建角色") {
+        this.currentState = "新建角色";
+        this.dialogFormVisible = true;
       }
-   
     },
-    search(val) {
+   async search(val) {
       //搜索事件
-      console.log(val);
-    },
-    submit(val) {//表单提交
-      if(this.newcreate){
-        //点击新建按钮提交
-         this.parms.created = true;
-      }else{
-        //点击编缉按钮提交
-        this.parms.created = false;
+      let data = JSON.parse(JSON.stringify(val))
+      let reslt = await this.$api.QueryRoleInfoPage({data})
+      console.log(reslt);
+       let arr = reslt.data.records;
+      if(reslt.code === 0){
+        this.dataProcessing(arr)
       }
-      console.log(this.parms);
 
+    },
+    dataProcessing(arr){
+          // console.log(arr);
+    let obj = arr.map(item => {
+      console.log(item);
+      if (item.roleType === 1) {
+        return {
+          ...item,
+          createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
+          updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+          roleType: "管理员"
+        };
+      } else if (item.roleType === 2) {
+        return {
+          ...item,
+          createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
+          updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+          roleType: "子管理员"
+        };
+      } else {
+        return {
+          ...item,
+          createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
+          updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
+          roleType: "普通角色"
+        };
+      }
+    });
+     this.tableData = obj;
+    },
+   async submit(val) {
+      //表单提交
+      if (this.currentState === "新建角色") {
+        //点击新建按钮提交
+        this.parms.created = "新建角色";
+        let data = JSON.parse(JSON.stringify(this.parms))
+        let reslt = await this.$api.SaveRoleInfo({data})
+        console.log(reslt)
+        this.$refs.baseForm.resetForm()
+        this.parms = {}
+        console.log(data)
+      } else if(this.currentState ==="编缉"){
+        //点击编缉按钮提交
+          this.parms.created = "编缉";
+         let data = JSON.parse(JSON.stringify(this.parms))
+         this.$refs.baseForm.resetForm()
+         this.parms = {}
+         console.log(data)
+      }
     },
     //弹框事件
     cancel() {
       this.dialogFormVisible = false;
     },
     changeForm(val) {
-      Object.assign(this.parms,val)
-      
+      Object.assign(this.parms, val);
     }
   }
 };

@@ -560,14 +560,15 @@ export default {
       //console.log(n);
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < n.length; j++) {
-          console.log(arr[i]);
-          console.log(arr[i].prop);
+          // console.log(arr[i]);
+          // console.log(arr[i].prop);
           if (arr[i].prop === n[j]) {
-            console.log(arr[i].prop);
+            //console.log(arr[i].prop);
             arr[i].value = row[n[j]];
           }
         }
       }
+
       //console.log(this.operationManageWriteData[0]);
     },
     //点击查看
@@ -582,6 +583,8 @@ export default {
     operationManageWritechangeForm() {},
     //点击保存
     save() {
+      let formData = this.$refs.baseForm.form;
+      console.log(formData);
       this.dialogFormVisible = false;
     }
   }

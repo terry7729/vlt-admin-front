@@ -1,4 +1,5 @@
 <template>
+<!-- 耗材查看页面 -->
  <div class="vlt-card consumable-page">
    <panel-static title="基本信息">
       <base-info :infoList="infoList"></base-info>
