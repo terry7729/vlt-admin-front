@@ -1,23 +1,17 @@
 <template>
-<!-- 添加 - 配置管理 -->
-  <div class="vlt-card">
-    添加
-  </div>
+  <!-- 投注卡规则 -->
+  <div class="vlt-card">投注卡规则</div>
 </template>
 
 <script type="text/javascript">
 export default {
   name: "",
   data() {
-   return {
-
-   }
+    return {};
   },
- components: {
- },
- methods: {
- },
-}
+  components: {},
+  methods: {}
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,4 +1,6 @@
-import { S_IROTH } from 'constants'
+import {
+  S_IROTH
+} from 'constants'
 
 // 业务管理系统路由配置
 
@@ -109,7 +111,7 @@ const detailFlow = () => import('@/views/businessManage/channelResourceManage/le
 //基础信息类型管理新增
 const addEquipment = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/addEquipment')
 //类型管理修改
-const modification  = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modification')
+const modification = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modification')
 // 类型管理设备查看
 const equipmentCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/equipmentCheck')
 //设施查看
@@ -128,7 +130,7 @@ const modelAdd = () => import('@/views/businessManage/channelResourceManage/basi
 //入库
 const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
 //入库详情
-const alreadyPutDetail =  () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyPutDetail')
+const alreadyPutDetail = () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyPutDetail')
 //出库
 const outStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/outStore')
 //仓库管理新增仓库
@@ -142,38 +144,24 @@ const channelTerminal = () => import('@/views/businessManage/channelTerminalMana
 
 // 渠道终端管理 - 服务分析
 const serviceAnalysis = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/serviceAnalysis')
-const maintenanceEfficiency = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/maintenanceEfficiency')
-const accessoryFault = () => import('../../views/businessManage/channelTerminalManagement/serviceAnalysis/accessoryFault')
-const equipmentFailure = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/equipmentFailure')
-const maintenanceStaff = () => import('@/views/businessManage/channelTerminalManagement/serviceAnalysis/maintenanceStaff')
 
 // 渠道终端管理 - 维修管理
 const maintenance = () => import('@/views/businessManage/channelTerminalManagement/maintenance/maintenance')
-const repairWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/repairWork')
-const replacementWork = () => import('@/views/businessManage/channelTerminalManagement/maintenance/replacementWork')
-
+const repairOrderDetails = () =>import('@/views/businessManage/channelTerminalManagement/maintenance/repairOrderDetails')
 // 渠道终端管理 - 设备管理 
 const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipment')
-const accessoriesList = () => import('@/views/businessManage/channelTerminalManagement/equipment/accessoriesList')
-const equipmentList = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentList')
 const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
 const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
 
 // 渠道终端管理 - 报表统计
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/reportStatistics')
-const accessoryLoss = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/accessoryLoss')
-const deviceLoss = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/deviceLoss')
-const reportEquipmentFailure = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/equipmentFailure')
 
 // 渠道终端管理 - 维护知识库
 const knowledgeBaseIndex = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/index')
-const knowledgeBase = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBase')
-const baseReview = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/baseReview')
 const knowledgeBaseInfo = () => import('@/views/businessManage/channelTerminalManagement/knowledgeBase/knowledgeBaseInfo')
 
 // 配置管理
 const configurationManagement = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/index')
-const faultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/faultType')
 const addFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/addFaultType')
 const editFaultType = () => import('@/views/businessManage/channelTerminalManagement/configurationManagement/editFaultType')
 
@@ -201,6 +189,8 @@ const refillRules = () => import('@/views/businessManage/bettingCardManage/refil
 const winningRecord = () => import('@/views/businessManage/bettingCardManage/winningRecord')
 const withdrawalRecord = () => import('@/views/businessManage/bettingCardManage/withdrawalRecord')
 const cardInformation = () => import('@/views/businessManage/bettingCardManage/cardInformation')
+const bettingCardRules = () =>import('@/views/businessManage/bettingCardManage/bettingCardRules')
+
 // 投注卡基本信息
 const cardDetail = () => import('@/views/businessManage/bettingCardManage/cardDetail')
 // 投注卡详细信息
@@ -233,35 +223,35 @@ export default [
   //   }
   // },
   {
-    path: 'businessManage/overview',
+    path: 'businessManage/overview/index',
     name: 'overview',
     meta: {
       title: '首页',
     },
     component: overview
   }, {
-    path: 'businessManage/myToDo',
+    path: 'businessManage/overview/myToDo',
     name: 'myToDo',
     meta: {
       title: '我的待办',
     },
     component: myToDo
   }, {
-    path: 'businessManage/myApplication',
+    path: 'businessManage/overview/myApplication',
     name: 'myApplication',
     meta: {
       title: '我的申请',
     },
     component: myApplication
   }, {
-    path: 'businessManage/myDone',
+    path: 'businessManage/overview/myDone',
     name: 'myDone',
     meta: {
       title: '我的已办',
     },
     component: myDone
   }, {
-    path: 'businessManage/myKnowledge',
+    path: 'businessManage/overview/myKnowledge',
     name: 'myKnowledge',
     meta: {
       title: '我的知会',
@@ -269,7 +259,7 @@ export default [
     component: myKnowledge
   },
   {
-    path: 'businessManage/messages/:type',
+    path: 'businessManage/overview/messages/:type',
     name: 'messages',
     meta: {
       title: '更多消息',
@@ -277,7 +267,7 @@ export default [
     component: messages
   },
   {
-    path: 'businessManage/messagesDetail',
+    path: 'businessManage/overview/messagesDetail',
     name: 'messagesDetail',
     meta: {
       title: '查看消息',
@@ -285,7 +275,7 @@ export default [
     component: messagesDetail
   },
   {
-    path: 'businessManage/sendMessage',
+    path: 'businessManage/overview/sendMessage',
     name: 'sendMessage',
     meta: {
       title: '发布消息',
@@ -293,7 +283,7 @@ export default [
     component: sendMessage
   },
   {
-    path: 'businessManage/pendingReview',
+    path: 'businessManage/overview/pendingReview',
     name: 'pendingReview',
     meta: {
       title: '待审核',
@@ -301,7 +291,7 @@ export default [
     component: pendingReview
   },
   {
-    path: 'businessManage/pendingReviewEdit',
+    path: 'businessManage/overview/pendingReviewEdit',
     name: 'pendingReviewEdit',
     meta: {
       title: '待审核-处理',
@@ -309,7 +299,7 @@ export default [
     component: pendingReviewEdit
   },
   {
-    path: 'businessManage/pendingReviewTransfer',
+    path: 'businessManage/overview/pendingReviewTransfer',
     name: 'pendingReviewTransfer',
     meta: {
       title: '待审核-移交',
@@ -317,7 +307,7 @@ export default [
     component: pendingReviewTransfer
   },
   {
-    path: 'businessManage/audited',
+    path: 'businessManage/overview/audited',
     name: 'audited',
     meta: {
       title: '已审核',
@@ -325,7 +315,7 @@ export default [
     component: audited
   },
   {
-    path: 'businessManage/alreadyApplied',
+    path: 'businessManage/overview/alreadyApplied',
     name: 'alreadyApplied',
     meta: {
       title: '已申请',
@@ -333,7 +323,7 @@ export default [
     component: alreadyApplied
   },
   {
-    path: 'businessManage/pendingReading',
+    path: 'businessManage/overview/pendingReading',
     name: 'audipendingReadingted',
     meta: {
       title: '待阅读',
@@ -710,7 +700,7 @@ export default [
     },
     component: modification
   },
-  
+
   {
     path: 'businessManage/channelResourceManage/equipmentCheck',
     name: 'equipmentCheck',
@@ -718,7 +708,7 @@ export default [
       title: '基本信息类型管理设备查看',
     },
     component: equipmentCheck
-},
+  },
   {
     path: 'businessManage/channelResourceManage/facilityCheck',
     name: 'facilityCheck',
@@ -765,187 +755,91 @@ export default [
     meta: {
       title: '服务分析',
     },
-    component: serviceAnalysis,
-    children: [{
-        path: '',
-        redirect: {
-          name: 'maintenanceEfficiency'
-        },
-        component: maintenanceEfficiency,
-      },
-      {
-        path: 'maintenanceEfficiency',
-        name: 'maintenanceEfficiency',
-        meta: {
-          title: '维修率分析',
-        },
-        component: maintenanceEfficiency,
-      }, {
-        path: 'accessoryFault',
-        name: 'accessoryFault',
-        meta: {
-          title: '维修员排行',
-        },
-        component: accessoryFault,
-      }, {
-        path: 'equipmentFailure',
-        name: 'equipmentFailure',
-        meta: {
-          title: '设备故障排行',
-        },
-        component: equipmentFailure,
-      }, {
-        path: 'maintenanceStaff',
-        name: 'maintenanceStaff',
-        meta: {
-          title: '配件故障排行',
-        },
-        component: maintenanceStaff,
-      }
-    ]
+    component: serviceAnalysis
   }, {
     path: 'businessManage/channelTerminal/maintenance',
     name: 'maintenance',
     meta: {
       title: '维修管理',
     },
-    component: maintenance,
-    children: [{
-        path: 'repairWork',
-        name: 'repairWork',
-        meta: {
-          title: '维修工单',
-        },
-        component: repairWork,
-      },
-      {
-        path: 'replacementWork',
-        name: 'replacementWork',
-        meta: {
-          title: '置换工单',
-        },
-        component: replacementWork,
-      }
-    ]
+    component: maintenance
+  },{
+    path: 'businessManage/channelTerminal/repairOrderDetails',
+    name: 'repairOrderDetails',
+    meta: {
+      title: '维修工单详情',
+    },
+    component: repairOrderDetails
   }, {
     path: 'businessManage/channelTerminal/reportStatistics',
     name: 'reportStatistics',
     meta: {
       title: '报表统计',
     },
-    component: reportStatistics,
-    children: [{
-        path: 'accessoryLoss',
-        name: 'accessoryLoss',
-        meta: {
-          title: '设备故障报表',
-        },
-        component: accessoryLoss,
-      },
-      {
-        path: 'deviceLoss',
-        name: 'deviceLoss',
-        meta: {
-          title: '设备管理损耗报表',
-        },
-        component: deviceLoss,
-      },
-      {
-        path: 'equipmentFailure',
-        name: 'reportEquipmentFailure',
-        meta: {
-          title: '配件损耗报表',
-        },
-        component: reportEquipmentFailure,
-      }
-    ]
+    component: reportStatistics
   },
-   {
+  {
     path: 'businessManage/channelTerminal/equipment',
     name: 'equipment',
     meta: {
       title: '设备管理',
     },
-    component: equipment,
-    children: [{
-      path: 'equipmentList',
-      name: 'equipmentList',
-      meta: {
-        title: '设备列表',
-      },
-      component: equipmentList,
-      
-    },{
-      path: 'accessoriesList',
-      name: 'accessoriesList',
-      meta: {
-        title: '配件列表',
-      },
-      component: accessoriesList,
-    }]
-  }, 
+    component: equipment
+  },
   {
-   path: 'businessManage/channelTerminal/knowledgeBase',
-   name: 'knowledgeBaseIndex',
-   meta: {
-     title: '维修知识库',
-   },
-   component: knowledgeBaseIndex,
-   children: [{
-       path: 'knowledgeBase',
-       name: 'knowledgeBase',
-       meta: {
-         title: '维修知识库 ',
-       },
-       component: knowledgeBase,
-     },{
-      path: 'knowledgeBaseInfo',
-      name: 'knowledgeBaseInfo',
-      meta: {
-        title: '维修知识库详情 ',
-      },
-      component: knowledgeBaseInfo,
+    path: 'businessManage/channelTerminal/equipment/equipmentDesc',
+    name: 'equipmentDesc',
+    meta: {
+      title: '查看设备',
     },
-     {
-       path: 'baseReview',
-       name: 'baseReview',
-       meta: {
-         title: '知识库审核',
-       },
-       component: baseReview,
-     }
-   ]
- }, {
+    component: equipmentDesc
+  },
+  {
+    path: 'businessManage/channelTerminal/equipment/equipmentResume',
+    name: 'equipmentResume',
+    meta: {
+      title: '履历',
+    },
+    component: equipmentResume
+  },
+  {
+    path: 'businessManage/channelTerminal/knowledgeBase',
+    name: 'knowledgeBase',
+    meta: {
+      title: '维修知识库',
+    },
+    component: knowledgeBaseIndex,
+  },
+  {
+    path: 'businessManage/channelTerminal/knowledgeBaseInfo',
+    name: 'knowledgeBaseInfo',
+    meta: {
+      title: '知识库审核',
+    },
+    component: knowledgeBaseInfo,
+  }, {
     path: 'businessManage/channelTerminal/configurationManagement',
     name: 'configurationManagement',
     meta: {
       title: '配置管理',
     },
-    component: configurationManagement,
-    children: [{
-      path: 'faultType',
-      name: 'faultType',
-      meta: {
-        title: '故障类型 ',
-      },
-      component: faultType,
-    },{
-     path: 'addFaultType',
-     name: 'addFaultType',
-     meta: {
-       title: '新增故障类型 ',
-     },
-     component: addFaultType,
-   },
-    {
-      path: 'editFaultType',
-      name: 'editFaultType',
-      meta: {
-        title: '修改故障类型',
-      },
-      component: editFaultType,
-    }
-    ]
+    component: configurationManagement
+  },
+  {
+    path: 'businessManage/channelTerminal/addFaultType',
+    name: 'addFaultType',
+    meta: {
+      title: '新增故障类型 ',
+    },
+    component: addFaultType,
+  },
+  {
+    path: 'businessManage/channelTerminal/editFaultType',
+    name: 'editFaultType',
+    meta: {
+      title: '修改故障类型',
+    },
+    component: editFaultType,
   },
   {
     path: 'businessManage/channelDeal',
@@ -994,6 +888,14 @@ export default [
       title: '资源发放',
     },
     component: resourceProvide
+  },
+  {
+    path: 'businessManage/dossierManage',
+    name: 'dossierManage',
+    meta: {
+      title: '档案管理',
+    },
+    component: dossierManage
   },
   {
     path: 'businessManage/developmentPlan',
@@ -1077,7 +979,7 @@ export default [
     },
     component: newfundParameter
   },
-  
+
   {
     path: 'businessManage/fundSettlement/globalParameter',
     name: 'globalParameter',
@@ -1087,42 +989,50 @@ export default [
     component: globalParameter
   },
   {
-    path: 'businessManage/cardBalance',
+    path: 'businessManage/cardBalance/cardBalance',
     name: 'cardBalance',
     meta: {
       title: '投注卡余额',
     },
     component: cardBalance
   }, {
-    path: 'businessManage/cardGeneration',
+    path: 'businessManage/cardBalance/cardGeneration',
     name: 'cardGeneration',
     meta: {
       title: '投注卡生成',
     },
     component: cardGeneration
+  },{
+    
+    path: 'businessManage/cardBalance/bettingCardRules',
+    name: 'bettingCardRules',
+    meta: {
+      title: '投注卡规则',
+    },
+    component: bettingCardRules
   }, {
-    path: 'businessManage/refillRules',
+    path: 'businessManage/cardBalance/refillRules',
     name: 'refillRules',
     meta: {
       title: '投注卡充值规则',
     },
     component: refillRules
   }, {
-    path: 'businessManage/winningRecord',
+    path: 'businessManage/cardBalance/winningRecord',
     name: 'winningRecord',
     meta: {
       title: '投注卡中奖记录',
     },
     component: winningRecord
   }, {
-    path: 'businessManage/withdrawalRecord',
+    path: 'businessManage/cardBalance/withdrawalRecord',
     name: 'withdrawalRecord',
     meta: {
       title: '投注卡提现记录',
     },
     component: withdrawalRecord
   }, {
-    path: 'businessManage/cardInformation',
+    path: 'businessManage/cardBalance/cardInformation',
     name: 'cardInformation',
     meta: {
       title: '投注卡信息',
@@ -1130,15 +1040,7 @@ export default [
     component: cardInformation
   },
   {
-    path: 'businessManage/dossierManage',
-    name: 'dossierManage',
-    meta: {
-      title: '档案管理',
-    },
-    component: dossierManage
-  },
-  {
-    path: 'businessManage/cardDetail',
+    path: 'businessManage/cardBalance/cardDetail',
     name: 'cardDetail',
     meta: {
       title: '投注卡明细',
@@ -1146,7 +1048,7 @@ export default [
     component: cardDetail
   },
   {
-    path: 'businessManage/balanceDetail',
+    path: 'businessManage/cardBalance/balanceDetail',
     name: 'balanceDetail',
     meta: {
       title: '投注卡明细',
@@ -1154,15 +1056,15 @@ export default [
     component: balanceDetail
   },
   {
-    path: 'businessManage/infoDetail',
+    path: 'businessManage/cardBalance/infoDetail',
     name: 'infoDetail',
     meta: {
       title: '详情信息',
     },
     component: infoDetail
-  }, 
+  },
   {
-    path: 'businessManage/newCard',
+    path: 'businessManage/cardBalance/newCard',
     name: 'newCard',
     meta: {
       title: '新建卡片'
@@ -1170,15 +1072,15 @@ export default [
     component: newCard
   },
   {
-    path: 'businessManage/newRule',
+    path: 'businessManage/cardBalance/newRule',
     name: 'newRule',
     meta: {
       title: '新建规则'
     },
     component: newRule
-  }, 
+  },
   {
-    path: 'businessManage/exportCard',
+    path: 'businessManage/cardBalance/exportCard',
     name: 'exportCard',
     meta: {
       title: '导出卡片',

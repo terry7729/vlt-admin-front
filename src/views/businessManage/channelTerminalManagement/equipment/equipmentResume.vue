@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="vlt-card">
     <div class="time-line">
       <div v-for="item  in timeLiness" :key="item.id" class="list">
         <div class="date">
@@ -102,6 +102,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.vlt-card {
+  padding: 20px;
+}
 .time-line {
   position: relative;
   &:before {

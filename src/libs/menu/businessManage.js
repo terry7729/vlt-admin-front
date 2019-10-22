@@ -241,6 +241,12 @@ export default [{
         {
           childResources: [],
           icon: "el-icon-menu",
+          name: "投注卡规则",
+          url: 'bettingCardRules'
+        },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
           name: "投注卡余额",
           url: 'cardBalance'
         },

@@ -1,23 +1,17 @@
 <template>
-<!-- 添加 - 配置管理 -->
-  <div class="vlt-card">
-    添加
-  </div>
+  <!-- 维修工单详情 -->
+  <div class="vlt-card">维修工单详情</div>
 </template>
 
 <script type="text/javascript">
 export default {
   name: "",
   data() {
-   return {
-
-   }
+    return {};
   },
- components: {
- },
- methods: {
- },
-}
+  components: {},
+  methods: {}
+};
 </script>
 
 <style lang="less" scoped>

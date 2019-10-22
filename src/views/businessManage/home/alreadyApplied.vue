@@ -16,8 +16,8 @@
       <el-table-column prop="date" label="申请时间" width="150"></el-table-column>
       <el-table-column prop="date2" label="完成时间" width="150"></el-table-column>
       <el-table-column prop="process" label="当前步骤"></el-table-column>
-      <el-table-column prop="name" label="当前处理人" width="150"></el-table-column>
-      <el-table-column fixed="right" label="操作" >
+      <el-table-column prop="name" label="当前处理人" width="100"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="toView(scope.row)">查看</el-button>
 
