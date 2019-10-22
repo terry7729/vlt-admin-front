@@ -9,7 +9,7 @@
             :formData="data1"
             labelWidth="140px"
             ref="baseForm"
-            :rules="rules1"
+            :rules="rules"
             direction="top"
             @change="changeForm"
           ></base-form>
@@ -60,7 +60,6 @@ export default {
       changeForm: "",
       input1: "",
       input2: "",
-      rules1: {},
       data1: [
         {
           type: "input-icon",
@@ -68,10 +67,10 @@ export default {
           prop: "username",
           value: "",
           placeholder: "请输入用户账号",
-          icon:"s-custom",
+          icon:"user",
         },
         {
-          type: "input-icon",
+          type: "password",
           title: "",
           prop: "pwd",
           value: "",
@@ -96,9 +95,11 @@ export default {
       ],
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, validator: rules.checkAccount, message: "请输入用户名", trigger: "blur" }
         ],
-        pwd: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        pwd: [
+          { required: true, validator: rules.checkPwd, message: "请输入密码", trigger: "blur" }
+        ]
       }
     };
   },
@@ -117,7 +118,11 @@ export default {
     cancel() {
       this.dialogFormVisible = false;
     },
-    submit() {},
+    submit() {
+      this.$refs.baseForm.validate((val)=>{
+        console.log(val)
+      });
+    },
   },
   components: {}
 };
