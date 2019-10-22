@@ -33,13 +33,15 @@ export default {
   name: "",
   data() {
     return {
+      //新增表单类型
       roleManageAddData: [
-        { type: "input", title: "用户角色", prop: "roleManageName" },
-        { type: "input", title: "角色类型", prop: "accountType" },
+        { type: "input", title: "用户角色", value: "", prop: "roleManageName" },
+        { type: "input", title: "角色类型", value: "", prop: "accountType" },
         {
           type: "select",
           title: "角色状态",
           prop: "accountStatus",
+          value: "",
           options: [
             {
               label: "专用存款账户",
@@ -326,8 +328,9 @@ export default {
             }
           ]
         },
-        { type: "textarea", title: "描述", prop: "describe" }
+        { type: "textarea", title: "描述", value: "", prop: "describe" }
       ],
+      // 新增表单验证
       roleManageAddRules: {
         accountname: [
           { required: true, message: "请输入用户角色", trigger: "blur" }

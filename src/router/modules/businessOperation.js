@@ -9,8 +9,7 @@ const haveListDetail = () => import('@/views/businessOperation/channelAccount/ha
 const haveListDetailTwo = () => import('@/views/businessOperation/channelAccount/haveListDetailTwo')
 // 账户资金管理
 const accountMoneyManage = () => import('@/views/businessOperation/channelAccount/accountMoneyManage')
-//银行
-const bank = () => import('@/views/businessOperation/channelAccount/bank')
+
 
 //账户资金管理银行新增
 const bankadd = () => import('@/views/businessOperation/channelAccount/bankadd')
@@ -20,8 +19,7 @@ const bankrevise = () => import('@/views/businessOperation/channelAccount/bankre
 const bankbalance = () => import('@/views/businessOperation/channelAccount/bankbalance')
 //账户资金管理银行明细
 const bankdetail = () => import('@/views/businessOperation/channelAccount/bankdetail')
-//第三方支付
-const external = () => import('@/views/businessOperation/channelAccount/external')
+
 //账户资金管理第三方支付新增
 const externaladd = () => import('@/views/businessOperation/channelAccount/externaladd')
 //账户资金管理第三方支付修改
@@ -221,7 +219,7 @@ export default [
 
   //渠道账户
   {
-    path: 'businessOperation/accountList',
+    path: 'businessOperation/screenWatch/accountList',
     name: 'accountList',
     meta: {
       title: '渠道账户列表',
@@ -229,7 +227,7 @@ export default [
     component: accountList
   },
   {
-    path: 'businessOperation/accountList/accountListDetail',
+    path: 'businessOperation/screenWatch/accountList/accountListDetail',
     name: 'accountListDetail',
     meta: {
       title: '渠道账户列表详情',
@@ -237,7 +235,7 @@ export default [
     component: accountListDetail
   },
   {
-    path: 'businessOperation/accountList/haveListDetail',
+    path: 'businessOperation/screenWatch/accountList/haveListDetail',
     name: 'haveListDetail',
     meta: {
       title: '拥有渠道列表详情',
@@ -245,7 +243,7 @@ export default [
     component: haveListDetail
   },
   {
-    path: 'businessOperation/accountList/haveListDetailTwo',
+    path: 'businessOperation/screenWatch/accountList/haveListDetailTwo',
     name: 'haveListDetailTwo',
     meta: {
       title: '拥有渠道列表详情单详情',
@@ -257,42 +255,17 @@ export default [
 
 
   {
-    path: 'businessOperation/accountMoneyManage',
+    path: 'businessOperation/screenWatch/accountMoneyManage',
     name: 'accountMoneyManage',
     meta: {
       title: '账户资金管理',
     },
     component: accountMoneyManage,
-    children: [{
-        path: '',
-        redirect: {
-          name: 'bank'
-        },
-        component: bank,
-      },
-      {
-        path: 'bank',
-        name: 'bank',
-        meta: {
-          title: '银行',
-        },
-        component: bank
-      },
 
-      {
-        path: 'external',
-        name: 'external',
-        meta: {
-          title: '第三方支付',
-        },
-        component: external
-      },
-
-    ]
   },
 
   {
-    path: 'businessOperation/accountMoneyManage/bankadd',
+    path: 'businessOperation/screenWatch/accountMoneyManage/bankadd',
     name: 'bankadd',
     meta: {
       title: '银行新增',
@@ -300,7 +273,7 @@ export default [
     component: bankadd
   },
   {
-    path: 'businessOperation/accountMoneyManage/bankrevise',
+    path: 'businessOperation/screenWatch/accountMoneyManage/bankrevise',
     name: 'bankrevise',
     meta: {
       title: '银行修改',
@@ -309,7 +282,7 @@ export default [
   },
 
   {
-    path: 'businessOperation/accountMoneyManage/bankbalance',
+    path: 'businessOperation/screenWatch/accountMoneyManage/bankbalance',
     name: 'bankbalance',
     meta: {
       title: '银行余额',
@@ -317,7 +290,7 @@ export default [
     component: bankbalance
   },
   {
-    path: 'businessOperation/accountMoneyManage/bankdetail',
+    path: 'businessOperation/screenWatch/accountMoneyManage/bankdetail',
     name: 'bankdetail',
     meta: {
       title: '银行明细',
@@ -327,7 +300,7 @@ export default [
 
 
   {
-    path: 'businessOperation/accountMoneyManage/externaladd',
+    path: 'businessOperation/screenWatch/accountMoneyManage/externaladd',
     name: 'externaladd',
     meta: {
       title: '第三方支付新增',
@@ -335,7 +308,7 @@ export default [
     component: externaladd
   },
   {
-    path: 'businessOperation/accountMoneyManage/externalrevise',
+    path: 'businessOperation/screenWatch/accountMoneyManage/externalrevise',
     name: 'externalrevise',
     meta: {
       title: '第三方支付修改',
@@ -343,7 +316,7 @@ export default [
     component: externalrevise
   },
   {
-    path: 'businessOperation/accountMoneyManage/externalbalance',
+    path: 'businessOperation/screenWatch/accountMoneyManage/externalbalance',
     name: 'externalbalance',
     meta: {
       title: '第三方支付余额',
@@ -351,7 +324,7 @@ export default [
     component: externalbalance
   },
   {
-    path: 'businessOperation/accountMoneyManage/externaldetail',
+    path: 'businessOperation/screenWatch/accountMoneyManage/externaldetail',
     name: 'externaldetail',
     meta: {
       title: '第三方支付明细',
@@ -360,7 +333,7 @@ export default [
   },
 
   {
-    path: 'businessOperation/roleManage',
+    path: 'businessOperation/PermissionMaintain/roleManage',
     name: 'roleManage',
     meta: {
       title: '角色管理',
@@ -368,7 +341,7 @@ export default [
     component: roleManage
   },
   {
-    path: 'businessOperation/roleManageAdd',
+    path: 'businessOperation/PermissionMaintain/roleManageAdd',
     name: 'roleManageAdd',
     meta: {
       title: '角色管理新增',
@@ -377,7 +350,7 @@ export default [
   },
 
   {
-    path: 'businessOperation/roleManageExamine',
+    path: 'businessOperation/PermissionMaintain/roleManageExamine',
     name: 'roleManageExamine',
     meta: {
       title: '角色管理查看',
@@ -386,7 +359,7 @@ export default [
   },
 
   {
-    path: 'businessOperation/operationAccountManage',
+    path: 'businessOperation/PermissionMaintain/operationAccountManage',
     name: 'operationAccountManage',
     meta: {
       title: '账户管理',
@@ -394,7 +367,7 @@ export default [
     component: operationAccountManage
   },
   {
-    path: 'businessOperation/operationAccountAdd',
+    path: 'businessOperation/PermissionMaintain/operationAccountAdd',
     name: 'operationAccountAdd',
     meta: {
       title: '账户管理新增',
@@ -402,15 +375,16 @@ export default [
     component: operationAccountAdd
   },
   {
-    path: 'businessOperation/operationAccountExamine',
+    path: 'businessOperation/PermissionMaintain/operationAccountExamine',
     name: 'operationAccountExamine',
     meta: {
       title: '账户管理查看',
     },
     component: operationAccountExamine
   },
+
   {
-    path: 'businessOperation/lotteryTicket',
+    path: 'businessOperation/LotteryManagement/lotteryTicket',
     name: 'lotteryTicket',
     meta: {
       title: '彩票兑奖',
@@ -418,7 +392,7 @@ export default [
     component: lotteryTicket
   },
   {
-    path: 'businessOperation/lotteryTicketDetail',
+    path: 'businessOperation/LotteryManagement/lotteryTicketDetail',
     name: 'lotteryTicketDetail',
     meta: {
       title: '彩票兑奖详情',
@@ -426,7 +400,7 @@ export default [
     component: lotteryTicketDetail
   },
   {
-    path: 'businessOperation/lotteryTicketPrint',
+    path: 'businessOperation/LotteryManagement/lotteryTicketPrint',
     name: 'lotteryTicketPrint',
     meta: {
       title: '彩票兑奖打印',
@@ -434,16 +408,16 @@ export default [
     component: lotteryTicketPrint
   },
   {
-    path: 'businessOperation/lotteryTicketReprint',
+    path: 'businessOperation/LotteryManagement/lotteryTicketReprint',
     name: 'lotteryTicketReprint',
     meta: {
-      title: '彩票兑奖打印',
+      title: '彩票兑奖补打',
     },
     component: lotteryTicketReprint
   },
 
   {
-    path: 'businessOperation/expirySetting',
+    path: 'businessOperation/LotteryManagement/expirySetting',
     name: 'expirySetting',
     meta: {
       title: '兑奖设置',
@@ -451,7 +425,7 @@ export default [
     component: expirySetting
   },
   {
-    path: 'businessOperation/ticketOfficeManage',
+    path: 'businessOperation/LotteryManagement/ticketOfficeManage',
     name: 'ticketOfficeManage',
     meta: {
       title: '中奖处管理',
@@ -459,7 +433,7 @@ export default [
     component: ticketOfficeManage
   },
   {
-    path: 'businessOperation/winningCheck',
+    path: 'businessOperation/LotteryManagement/winningCheck',
     name: 'winningCheck',
     meta: {
       title: '中奖查询',
@@ -467,7 +441,7 @@ export default [
     component: winningCheck
   },
   {
-    path: 'businessOperation/MemberGradeManagement',
+    path: 'businessOperation/MemberManagement/MemberGradeManagement',
     name: 'MemberGradeManagement',
     meta: {
       title: '会员等级管理',
@@ -475,7 +449,7 @@ export default [
     component: MemberGradeManagement
   },
   {
-    path: 'businessOperation/MemberEquityManagement',
+    path: 'businessOperation/MemberManagement/MemberEquityManagement',
     name: 'MemberEquityManagement',
     meta: {
       title: '会员权益管理',
@@ -483,7 +457,7 @@ export default [
     component: MemberEquityManagement
   },
   {
-    path: 'businessOperation/MemberEquityManagementAdd',
+    path: 'businessOperation/MemberManagement/MemberEquityManagementAdd',
     name: 'MemberEquityManagementAdd',
     meta: {
       title: '会员权益管理新增',
@@ -491,7 +465,7 @@ export default [
     component: MemberEquityManagementAdd
   },
   {
-    path: 'businessOperation/MemberEquityManagementDetail',
+    path: 'businessOperation/MemberManagement/MemberEquityManagementDetail',
     name: 'MemberEquityManagementDetail',
     meta: {
       title: '会员权益管理详情',
@@ -500,7 +474,7 @@ export default [
   },
 
   {
-    path: 'businessOperation/MemberIntegralManagement',
+    path: 'businessOperation/MemberManagement/MemberIntegralManagement',
     name: 'MemberIntegralManagement',
     meta: {
       title: '会员积分管理',
@@ -508,7 +482,7 @@ export default [
     component: MemberIntegralManagement
   },
   {
-    path: 'businessOperation/MemberIntegralManagementAdd',
+    path: 'businessOperation/MemberManagement/MemberIntegralManagementAdd',
     name: 'MemberIntegralManagementAdd',
     meta: {
       title: '会员积分管理新建',
@@ -516,7 +490,7 @@ export default [
     component: MemberIntegralManagementAdd
   },
   {
-    path: 'businessOperation/MemberIntegralManagementDetail',
+    path: 'businessOperation/MemberManagement/MemberIntegralManagementDetail',
     name: 'MemberIntegralManagementDetail',
     meta: {
       title: '会员积分管理详情',
