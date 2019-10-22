@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="option"
-        :total="999"
+        :total="num"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -42,7 +42,7 @@
         <table-paging
           :current-page="1"
           :page-size="10"
-          :total="100"
+          :total="num"
           @handleSizeChange="pageSizeChange"
           @handleCurrentChange="pageCurrentChange"
         ></table-paging>
@@ -109,7 +109,7 @@ export default {
             multiple: true,
             checkStrictly: true
           },
-          value: "",
+          value: [],
           title: "角色权限",
           placeholder: "请选择",
           options: []
@@ -199,7 +199,9 @@ export default {
       //新建按钮点击
       newcreate: false,
       parms: {},
-      currentState: ""
+      currentState: "",
+      num:0,
+      val:{},
     };
   },
   computed: {},
@@ -211,6 +213,7 @@ export default {
     let reslt = await this.$api.QueryRoleInfoPage({  });
     console.log(reslt)
      let arr = reslt.data.records;
+     this.num = arr.length
     this.data2[3].options = res.data;
     if (reslt.code === 0) {
       this.dataProcessing(arr);
@@ -234,6 +237,17 @@ export default {
     handelskip(val) {
       this.dialogFormVisible = true;
       this.currentState = "编缉";
+      this.val = val ;
+      let arr = Object.keys(val)
+      let len  = this.data2
+      console.log(val.roleType)
+      for(var i = 0 ; i<len.length ; i++){
+        for(var j = 0 ; j< arr.length ; j++){
+          if(arr[j]===len[i].prop){
+            len[i].value = val[arr[j]]
+          }
+        }
+      }
       // this.$router.push("roleList/roleDestails");
     },
     selectBtn(val) {
@@ -288,20 +302,7 @@ export default {
         //点击新建按钮提交
         this.parms.created = "新建角色";
         let data = JSON.parse(JSON.stringify(this.parms));
-            if(data.moduleIds.length>1){
-        let len = data.moduleIds.length
-        for(var i = 0 ; i< len ; i++){
-          if(data.moduleIds[i].length>1){
-            data.moduleIds[i] = data.moduleIds[i][data.moduleIds[i].length-1]
-          }else{
-            data.moduleIds[i] = data.moduleIds[i][0]
-          }
-        }  
-      }else{
-        data.moduleIds = data.moduleIds[0][0]
-      }
         data.sysCode= "VLT_BMS"
-
         data.status = Number(data.status)
         let reslt = await this.$api.SaveRoleInfo({ data });
         console.log(reslt);
@@ -315,10 +316,26 @@ export default {
       } else if (this.currentState === "编缉") {
         //点击编缉按钮提交
         this.parms.created = "编缉";
+       
+
         let data = JSON.parse(JSON.stringify(this.parms));
+        data.roleId = this.val.roleId
+        data.status = Number(data.status)
+        if(typeof data.roleType != Number ){
+            if(data.roleType ==="管理员"){
+          data.roleType = 1;
+        }else if(data.roleType === "子管理员"){
+          data.roleType = 2;
+        }else{
+          data.roleType = 3;
+        }
+        }
+        let reslt = await this.$api.UpdateRoleInfo({data})
+         console.log(reslt)
+
         this.$refs.baseForm.resetForm();
         this.parms = {};
-        console.log(data);
+        // console.log(data);
       }
     },
     //弹框事件

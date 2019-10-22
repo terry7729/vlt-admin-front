@@ -1,4 +1,5 @@
 <template>
+<!-- 型号管理新增页面 -->
  <div class="vlt-card modelAdd-page">
    <div class="vlt-edit-single">
      <div class="vlt-edit-wrap">
@@ -44,8 +45,9 @@
        </el-form>
 
        <el-form v-else label-position="right" label-width="90px" :model="form2" ref="form2">
-         <base-form :formData="fittingsData" labelWidth="140px" ref="baseForm2" :rules="rules2" direction="right"
-          @change="changeForm" ></base-form>
+         <base-form :formData="mountingsData" labelWidth="140px" ref="baseForm2" :rules="rules2" direction="right"
+          @change="changeForm" >
+         </base-form>
           <span class="goods-cate">可用机型</span>
          <el-form-item class="typeSelect">
            <el-select v-model="value" placeholder="请选择设备名称">
@@ -112,16 +114,13 @@ export default {
     {title:'厂家信息',type:'input',prop:'factoryInfo', value:''},
     {title:'备注',type:'textarea',prop:'remark',value:''},
    ],
-   fittingsData:[
+   mountingsData:[
      {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
      {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
      {title:'配件单价',type:'select',prop:'fittingsPrice',options:[{label:'',value:''},{label:'',value:''}]},
      {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
    ],
    rules2: {
-        goodsCategory: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
         equipmentName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
