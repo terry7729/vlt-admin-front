@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['entry'])
+    ...mapGetters(['entry', 'routerTags'])
   },
   created () {
     this.getList();
@@ -97,16 +97,6 @@ export default {
             filter(children);
           }
         })(self.menuList);
-        // 默认展示首页
-        let name = self.menuList[0].url;
-        if (self.menuList[0].childResources && self.menuList[0].childResources.length) {
-          name = self.menuList[0].childResources[0].url
-        }
-        self.$router.replace({
-          name
-        });
-        // self.routerAuthorize();
-      // }
     },
     // 路由权限控制
     // routerAuthorize() {
@@ -137,13 +127,13 @@ export default {
     //   }
     // },
     handleOpen(key, keyPath) {
-      // // console.log(key, keyPath);
+
     },
     handleClose(key, keyPath) {
-      // // console.log(key, keyPath);
+
     },
     select(index, indexPath) {
-      // // console.log(index, indexPath)
+
     }
   },
   components: {

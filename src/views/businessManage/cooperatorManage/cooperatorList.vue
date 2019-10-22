@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import cooperatorCreateVue from './cooperatorCreate.vue'
 export default {
   name: 'channelList',
   data() {
@@ -55,6 +56,7 @@ export default {
     },
     select(val) {
       console.log(val)
+      this.$router.push({path:'./cooperatorCreate'})
     },
     add() {
       console.log('a')
