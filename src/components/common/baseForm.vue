@@ -74,7 +74,7 @@
         v-if="item.type=='cascader-multiple'"
         v-model="form[item.prop]"
         :options="item.options"
-        :props="{ multiple: true, checkStrictly: true }"
+        :props="item.setProps"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"
         clearable>
       </el-cascader>

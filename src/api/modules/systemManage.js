@@ -45,10 +45,10 @@ export default {
   //角色管理
   //角色信息分页查询接口
   QueryRoleInfoPage:(options = {}) =>ajax.post('/role/queryRoleInfoPage',options),
-  //查询角色接口
+  //查询全部有交角色接口
   QueryAllRole:(options = {}) =>ajax.post('/role/queryAllRole',options),
   //查询角色详情
-  QueryRoleInfoDetail:(options = {}) =>ajax.post('/role/queryRoleInfoDetail',options),
+  QueryRoleInfoDetail:(options = {},id) =>ajax.post(`/role/queryRoleInfoDetail/${id}`,options),
   //保存角色信息
   SaveRoleInfo:(options = {}) =>ajax.post('/role/saveRoleInfo',options),
   //修改角色信息

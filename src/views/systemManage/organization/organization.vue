@@ -7,50 +7,26 @@
         </div>
         <el-col :span="18">
           <div class="organi-tree">
-            <!--树形结构 !-->
-            <!-- <el-tree
+            <el-tree
               :data="nodeTreeData"
+              :props="setProps"
               show-checkbox
               node-key="id"
-              :props="setProps"
-              :check-strictly="true"
               @node-click="getnowNodeifo"
               @check-change="getCheckifo"
-              :default-expanded-keys="[1, 2]"
-              :expand-on-click-node="false"
+              default-expand-all
               ref="attrList"
-            ></el-tree> -->
-
-            <!--xbot-->
-             <el-tree
-      :data="nodeTreeData"
-        :props="setProps"
-      show-checkbox
-      node-key="id"
-       @node-click="getnowNodeifo"
-       @check-change="getCheckifo"
-      default-expand-all
-      ref="attrList"
-      :expand-on-click-node="false">
-      <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
-        <span class="freeze">
-           <el-button
-            type="text"
-            size="mini"
-            @click="() => append(node, data)">
-            新增
-          </el-button>
-          <el-button
-            type="text"
-            size="mini"
-            @click="() => remove(node, data)">
-            冻结
-          </el-button>
-        </span>
-      </span>
-    </el-tree>
-    <!--添加删除功能-->
+              :expand-on-click-node="false"
+            >
+              <span class="custom-tree-node" slot-scope="{ node, data }">
+                <span>{{ node.label }}</span>
+                <span class="freeze">
+                  <el-button type="text" size="mini" @click="() => append(node, data)">新增</el-button>
+                  <el-button type="text" size="mini" @click="() => remove(node, data)">冻结</el-button>
+                </span>
+              </span>
+            </el-tree>
+            <!--添加删除功能-->
           </div>
         </el-col>
       </el-aside>
@@ -61,40 +37,15 @@
             <section class="comp-item">
               <panel-edit title="机构信息" @edit="jumptocompile" :show="true">
                 <base-info :infoList="AgencyInformation"></base-info>
-                <!-- <div style=" text-align: center;padding:10px;">
-                  <el-button size="small" type="primary" @click="jumptocompile">更改</el-button>
-                </div>-->
               </panel-edit>
             </section>
           </div>
-          <!-- <div class="vlt-edit-double">
-            <h2 class="title">机构信息</h2>
-            <div class="vlt-edit-wrap">
-              <base-form
-                :formData="infoList"
-                ref="baseForm"
-                labelWidth="140px"
-                :rules="rules2"
-                direction="top"
-                @change="changeForm"
-              ></base-form>
-              <el-row class="el-form-item vlt-edit-btn">
-                <el-button
-                  type="primary"
-                  v-prevent="1000"
-                  size="medium"
-                  @click="jumptocompile"
-                >提交并保存</el-button>
-                <el-button size="medium" @click="cancel">取消</el-button>
-              </el-row>
-            </div>
-          </div>-->
           <div class="departmentinfo" style="margin:40px 0 40px 0; ">
             <section class="comp-item">
               <panel title="部门信息" :show="true">
                 <tips-line>
                   共搜索到
-                  <span style="color:#57a3f3;padding:0 4px">{{num}}</span>条数据
+                  <span style="color:#57a3f3;padding:0 4px">{{total}}</span>条数据
                 </tips-line>
                 <!-- 提示信息!-->
                 <el-table
@@ -105,17 +56,18 @@
                   border
                 >
                   <el-table-column type="index" width="50" label="序号"></el-table-column>
-                  <el-table-column property="section" label="部门名称" width="120"></el-table-column>
-                  <el-table-column property="superiorDepartment" label="所属机构" width="120"></el-table-column>
-                  <el-table-column property="prevSection" label="上级部门"></el-table-column>
-                  <el-table-column property="departmentPrincipal" label="部门负责人"></el-table-column>
-                  <el-table-column property="principalPhone" label="负责人电话"></el-table-column>
+                  <el-table-column property="departmentName" label="部门名称" width="120"></el-table-column>
+                  <el-table-column property="insName" label="所属机构" width="120"></el-table-column>
+                  <el-table-column property="parentName" label="上级部门"></el-table-column>
+                  <el-table-column property="principal" label="部门负责人"></el-table-column>
+                  <el-table-column property="principalMobile" label="负责人电话"></el-table-column>
                   <el-table-column property="status" label="状态">
                     <template slot-scope="scope">
                       <el-switch
                         v-model="testlist[scope.$index].status"
                         active-color="#13ce66"
                         inactive-color="#ff4949"
+                        disabled
                       ></el-switch>
                     </template>
                   </el-table-column>
@@ -125,12 +77,12 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                <div style="padding:10px;" v-if="num">
+                <div style="padding:10px;" v-if="total">
                   <!-- 分页!-->
                   <table-paging
-                    :current-page="1"
-                    :page-size="i"
-                    :total="num"
+                    :current-page="current"
+                    :page-size="size"
+                    :total="total"
                     @handleSizeChange="pageSizeChange"
                     @handleCurrentChange="pageCurrentChange"
                   ></table-paging>
@@ -144,7 +96,7 @@
     <!--弹出框-->
     <el-dialog title :visible.sync="dialogFormVisible" custom-class="organiDialog">
       <div class="vlt-edit-single">
-        <h2 class="title">编辑</h2>
+        <h2 class="title">添加部门信息</h2>
         <div class="vlt-edit-wrap">
           <el-form>
             <base-form
@@ -169,7 +121,7 @@
         <h2 class="title">添加机构信息</h2>
         <div class="vlt-edit-wrap">
           <base-form
-            :formData="OrganizationAdd"
+            :formData="this.addOrChange==='更改机构信息'?OrganizationChange:OrganizationAdd"
             labelWidth="110px"
             ref="OrganizationBaseForm"
             :rules="rules2"
@@ -215,7 +167,6 @@ export default {
       },
       controlOptions: [
         //顶部按钮
-        // { name: "添加机构", type: "primary", icon: "plus", id: 1 }, // type为按钮的五种颜色， icon为具体的图标
         { name: "添加部门", type: "primary", icon: "plus", id: 2 },
         { name: "刷新", type: "", icon: "refresh-right", id: 3 }
       ],
@@ -230,7 +181,7 @@ export default {
             checkStrictly: true
           },
           title: "上级部门",
-          prop: "PrveSection",
+          prop: "parentId",
           value: "",
           placeholder: "请选择",
           options: []
@@ -245,6 +196,32 @@ export default {
         },
         { type: "switch", title: "状态", prop: "status", value: 1 },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
+      ],
+      OrganizationChange:[//更改机构表单对象
+          {
+          type: "input",
+          title: "机构名称",
+          prop: "insName",
+          value: ""
+        },
+        {
+          type: "input",
+          title: "机构编码",
+          prop: "insCode",
+          value: ""
+        },
+        {
+          type: "input",
+          title: "机构责任人",
+          prop: "principal",
+          value: ""
+        },
+        {
+          type: "textarea",
+          title: "备注",
+          prop: "remark",
+          value: ""
+        },
       ],
       OrganizationAdd: [
         //添加机构表单对象
@@ -278,7 +255,7 @@ export default {
           type: "cascader",
           setProps: {
             label: "text",
-            value: "id",
+            value: "code",
             children: "children",
             checkStrictly: true
           },
@@ -288,7 +265,7 @@ export default {
           placeholder: "请选择",
           options: []
         },
-        { type: "input", title: "区域编码", prop: "regionCode", value: "" },
+         { type: "input", title: "区域编码", prop: "regionCode", value: '' ,disabled: true},
         { type: "switch", title: "状态", prop: "status", value: true },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
@@ -360,13 +337,13 @@ export default {
       value: "",
       //测试数据
       testlist: [], //部门信息展示列表每页信息
-      num: 0, //信息条数
-      i: 10, //每页显示条数
-      n: 1, //默认显示页
+      size: 0, //每页显示条数
+      page: 0, //页数
+      current: 1,
+      total: 0,
       slelectifo: "",
       //
       regional: [],
-      isexpand: false, //展开所有
       dialogFormVisible2: false, //弹框二控制
       dialogFormVisible: false, //弹框一控制
       dialogStatus: "", //操作状态
@@ -379,7 +356,8 @@ export default {
       nodeTreeData: [], //树形结构数据
       val: {}, //当前点击的节点data
       //
-      close: false //节点树状态控制
+      parentId:-1,
+      departmenIfo:{}
     };
   },
   mounted() {},
@@ -389,6 +367,8 @@ export default {
       let reslt = await this.$api.OrganizationMenu({});
       this.nodeTreeData = reslt.data;
       let res = await this.$api.RegionalTree({});
+      console.log(res)
+      this.region = res.data;
       this.OrganizationAdd[4].options = res.data;
     },
     cancel() {
@@ -400,48 +380,60 @@ export default {
       this.close = true;
       this.dialogFormVisible2 = false;
     },
-     append(node,data) {//机构新增
-      console.log(node,data)
+    append(node, data) {
+      //机构新增
+      console.log(node, data);
       this.addOrChange = "添加机构";
       this.dialogStatus = "添加机构";
-      console.log(this.OrganizationParams)
+      console.log(this.OrganizationParams);
       this.dialogFormVisible2 = true;
       this.OrganizationAdd[0].value = data.text;
       this.OrganizationAdd[1].value = data.code;
-      
-      },
-
-    async remove(node,date) { //冻结
-          console.log(node,date)
-          let data ={
-            insId:date.id,
-            status:1
-          }
-          let reslt = await this.$api.UpdateInsInfoStatus({data})
-          console.log(reslt)
-          if(reslt.code === 0){
-            this.init()
-          }
-      },
-    DepartmentChangeForm(val) {//部门表单对象
-      console.log(val)
-      //弹出框表单change事件
-          Object.assign(this.DepartmenParams, val);
     },
-    OrganizationChangeForm(val){//机构表单对象
-      console.log(val)
-        Object.assign(this.OrganizationParams, val);
+
+    async remove(node, date) {
+      //冻结
+      console.log(node, date);
+      let data = {
+        insId: date.id,
+        status: 1
+      };
+      let reslt = await this.$api.UpdateInsInfoStatus({ data });
+      console.log(reslt);
+      if (reslt.code === 0) {
+        this.init();
+      }
+    },
+    DepartmentChangeForm(val) {
+      //部门表单对象
+      console.log(val);
+      //弹出框表单change事件
+      Object.assign(this.DepartmenParams, val);
+    },
+   async OrganizationChangeForm(val) {
+      //机构表单对象
+      console.log(val);
+      if(this.addOrChange !="更改机构信息"){
+          if(val.regionName.length>1){
+          let code = val.regionName[val.regionName.length-1]
+          val.regionCode = code;
+         Object.assign(this.OrganizationParams, val);
+          }else{
+          val.regionCode = val.regionName[0]
+         Object.assign(this.OrganizationParams, val);
+        }
+      }else{
+         Object.assign(this.OrganizationParams, val);
+      }
+      
+      
     },
     pageSizeChange(val) {
       //每页显示条数
-      this.i = val;
-      this.testlist = this.department.slice((this.n - 1) * val, this.n * val);
     },
     pageCurrentChange(val) {
       //当前显示页数
-      this.n = val;
-      this.testlist = this.department.slice((val - 1) * this.i, val * this.i);
-      console.log(val);
+      this.subsidiaryOrgan( val);
     },
     open(val) {
       this.$alert(val, "温馨提示！", {
@@ -451,74 +443,125 @@ export default {
         }
       });
     },
-   async DepartmentSubmit() {
+    async subsidiaryOrgan( num) {
+      //部门分页控制
+      let data = {
+        insId: this.val.id,
+        pageSize:  10,
+        page: num || 1
+      };
+      let resl = await this.$api.DepartmentPage({ data });
+      let arr2 = resl.data.records; //.panentOrgan
+      let list = arr2.map(item => {
+          console.log(item)
+          if(item.status){
+            return{
+              ...item,
+              status:false
+            }
+          }else{
+            return {
+              ...item,
+              status:true
+            }
+          }
+      }
+      );
+      console.log(list);
+      this.testlist = list;
+      this.page = resl.data.pages;
+      this.size = resl.data.size;
+      this.total = resl.data.total;
+    },
+    async DepartmentSubmit() {
       if (this.addOrChange === "更改部门信息") {
         this.DepartmenParams.created = "更改部门信息";
-        
-        console.log(  this.$refs.DepartmentBaseForm)
-        console.log(this.params);
-        this.$refs.DepartmentBaseForm.resetForm()//表单重置
-        this.DepartmenParams ={}//表单对象重置为空
+
+        let data = JSON.parse(JSON.stringify(this.DepartmenParams))
+        data.departmentId= this.departmenIfo.departmentId
+        if(data.status){
+          data.status = 0;
+        }else{
+          data.status =1;
+        }
+        let reslt = await this.$api.ModficDepartment({data})
+        if(reslt.code === 0){
+            this.subsidiaryOrgan()
+            this.dialogFormVisible = false;
+            this.$refs.DepartmentBaseForm.resetForm(); //表单重置
+            this.DepartmenParams = {}; //表单对象重置为空
+        }
+      
       } else if (this.addOrChange === "添加部门") {
-         
         this.DepartmenParams.created = "添加部门";
-         console.log(this.DepartmenParams.prev);
+        let data = JSON.parse(JSON.stringify(this.DepartmenParams));
+        data.insId = this.val.id;
+        if (data.parentId.length > 1) {
+          data.parentId = data.parentId[data.parentId.length - 1];
+        } else {
+          data.parentId = data.parentId[0];
+        }
+        if (data.status) {
+          data.status = 0;
+        } else {
+          data.status = 1;
+        }
+        let reslt = await this.$api.DepartmentAdd({ data });
 
-        let reslt = await this.$api.DepartmentAdd()
-       
-
-
-        this.$refs.DepartmentBaseForm.resetForm()
-        this.DepartmenParams ={}
+        if (reslt.code === 0) {
+          this.subsidiaryOrgan()
+          this.dialogFormVisible = false;
+          this.$refs.DepartmentBaseForm.resetForm();
+          this.DepartmenParams = {};
+        }
       }
     },
     async OrganizationSubmit() {
       if (this.addOrChange === "更改机构信息") {
         this.OrganizationParams.created = "更改机构信息";
-        console.log(this.params);
-        return
+          let data = JSON.parse(JSON.stringify(this.OrganizationParams))
+          data.insId = this.val.id
+          data.parentId = this.parentId
+          let rest = await this.$api.ModficMenu({data})
+            if(rest.code === 0){
+              this.dialogFormVisible2 = false;
+              this.OrganizationParams = {}
+              this.init()
+            }
+        
       } else if (this.addOrChange === "添加机构") {
-           this.OrganizationParams.created = "添加机构";
-          
+        this.OrganizationParams.created = "添加机构";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
         if (data.status) {
           data.status = 0;
         } else {
           data.status = 1;
         }
-        data.parentId = this.val.id
-        console.log(this.data)
+        data.parentId = this.val.id;
         let reslt = await this.$api.OrganizationAdd({ data });
-        console.log(reslt);
-      
         if (reslt.code === 0) {
-          this.$refs.OrganizationBaseForm.resetForm()
-          this.OrganizationParams ={}
+          this.$refs.OrganizationBaseForm.resetForm();
+          this.OrganizationParams = {};
           this.dialogFormVisible = false;
           this.dialogFormVisible2 = false;
           this.init();
         }
       }
-     
-      
     },
 
-   async selectBtn(val) {
+    async selectBtn(val) {
       if (val.name === "添加部门") {
         //添加部门
-          console.log(this.DepartmenParams)
-          this.dialogStatus = "添加部门";
-          this.addOrChange = "添加部门";
-          this.dialogFormVisible = true;
-          this.AddDepartment[0].value = this.slelectifo;
-        
-          let res = await this.$api.FindDeptTreeRoots({},this.val.id);
-          this.AddDepartment[0].options = res.data
-          console.log(res)
-        
+        console.log(this.DepartmenParams);
+        this.dialogStatus = "添加部门";
+        this.addOrChange = "添加部门";
+        this.dialogFormVisible = true;
+        this.AddDepartment[0].value = this.slelectifo;
+        let res = await this.$api.FindDeptTreeRoots({}, this.val.id);
+        this.AddDepartment[0].options = res.data;
       }
-      if(val.name === "刷新"){
-          location.assign(location)
+      if (val.name === "刷新") {
+          this.init()
       }
     },
     jumptocompile() {
@@ -526,23 +569,29 @@ export default {
       this.dialogFormVisible2 = true;
       this.addOrChange = "更改机构信息";
       this.dialogStatus = "更改机构信息";
-      // this.Modifine(this.OrganizationAdd,this.AgencyInformation)
-
-      console.log(this.params);
+      // console.log(this.params);
     },
     derparModifine(val) {
       this.dialogFormVisible = true;
       this.addOrChange = "更改部门信息";
       this.dialogStatus = "更改部门信息";
-      // this.addValue(val,this.AddDepartment)
-      console.log(val); //修改部门信息按钮
+      this.departmenIfo = val;
+      let arr = Object.keys(val);
+      let len = this.AddDepartment
+      for(var i = 0 ; i< arr.length ; i++){
+        for(var j =0 ; j<len.length ; j++){
+          if(arr[i]=== len[j].prop){
+            len[j].value = val[arr[i]]
+          }
+        }
+      }
     },
 
     async getnowNodeifo(val, s) {
       //获取当前点击节点信息 s为当前节点node
-      console.log(val, s);
+      // console.log(val, s);
       this.val = val;
-      let reslt = await this.$api.OrganizationDestils({ },val.id);
+      let reslt = await this.$api.OrganizationDestils({}, val.id);
       let arr = Object.entries(reslt.data);
       let obj = arr.map(([key, val]) => {
         if (
@@ -561,25 +610,15 @@ export default {
         }
       });
       this.slelectifo = reslt.data.insName;
+      this.parentId = reslt.data.parentId
       //当前节点父节点信息
       if (reslt.code === 0) {
         this.addValue(obj, this.AgencyInformation);
+        this.addValue(obj,this.OrganizationChange)
       }
-      console.log()
-      let  data = {
-          insId:val.id ,
-          pageSize: 2,
-          pageNum: 1
-      }
-      let resl = await this.$api.DepartmentPage({data});
-          console.log(resl)
-        
-    },  
-  async departmentPage(val){//部门分页参数
-    
-      
-      
+      this.subsidiaryOrgan();
     },
+
     getCheckifo(...res) {
       //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
     },
@@ -592,12 +631,6 @@ export default {
             data[j].value = Object.values(val[i])[0];
           }
         }
-      }
-    },
-    clearIput(val) {
-      //清空输入框信息
-      for (var i = 0; i < val.length; i++) {
-        val[i].value = "";
       }
     }
   },
@@ -624,20 +657,18 @@ export default {
   }
 }
 
-.freeze{
-  padding-left:20px; 
-  
+.freeze {
+  padding-left: 20px;
 }
-.custom-tree-node{
+.custom-tree-node {
   width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.organizati{
-  .el-col-18{
-  width: 100%;
+.organizati {
+  .el-col-18 {
+    width: 100%;
+  }
 }
-}
-
 </style>
