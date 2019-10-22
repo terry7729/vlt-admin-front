@@ -71,11 +71,12 @@
 <script>
 import adminInfo from '@/components/main/adminInfo'
 import {mapActions} from 'vuex'
+import menuList from '@/libs/menu/'
+
 export default {
   name: 'entry',
   data() {
     return {
-      
       title: '中国福利彩票'
     }
   },
@@ -94,8 +95,14 @@ export default {
         title,
         menuId
       })
+      // 跳转到子模块首页
+      const list = menuList[menuId].content[0].childResources;
+      let name = list[0].url;
+      if (list[0].childResources && list[0].childResources.length) {
+        name = list[0].childResources[0].url
+      }
       this.$router.push({
-        path: '/home'
+        name
       })
     },
     ...mapActions(['setEntry'])
