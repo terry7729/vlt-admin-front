@@ -128,7 +128,7 @@ export default {
       { name: "新增", type: "primary", icon: "plus" }
    ],
    typeData:[
-     {id:1,goodsCategory:'设备',goodsName:'xxx',remark:'',state:''},
+     {id:1,goodsCategory:'设备',goodsName:'xxx',remark:'',state:1},
      {id:2,goodsCategory:'设施',goodsName:'xxx',remark:'',state:''},
      {id:3,goodsCategory:'耗材',goodsName:'xxx',remark:'',state:''},
      {id:3,goodsCategory:'配件',goodsName:'xxx',remark:'',state:''},
@@ -201,8 +201,8 @@ export default {
  methods: {
    //类型管理
    //状态改变
-   changeState($event,state,index){
-     console.log(state)
+   changeState($event,data,index){
+     console.log(data)
    },
    
    search(form) {
