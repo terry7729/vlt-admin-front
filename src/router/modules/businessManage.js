@@ -204,12 +204,17 @@ const newCard = () => import('@/views/businessManage/bettingCardManage/newCard')
 // 导出卡片
 const exportCard = () => import('@/views/businessManage/bettingCardManage/exportCard')
 
-
 // 合作伙伴管理
 const cooperatorList = () => import('@/views/businessManage/cooperatorManage/cooperatorList')
+const cooperatorCreate = () => import('@/views/businessManage/cooperatorManage/cooperatorCreate')
 const cooperatorBrokerageSet = () => import('@/views/businessManage/cooperatorManage/cooperatorBrokerageSet')
 const cooperatorQuotaSet = () => import('@/views/businessManage/cooperatorManage/cooperatorQuotaSet')
 const verifyReconciliation = () => import('@/views/businessManage/cooperatorManage/verifyReconciliation')
+
+// 在线培训管理
+const assessManage = () => import('@/views/businessManage/onlineTraining/assessManage/index')
+const courseManage = () => import('@/views/businessManage/onlineTraining/courseManage/index')
+const trainingManage = () => import('@/views/businessManage/onlineTraining/trainingManage/index')
 
 
 export default [
@@ -903,33 +908,8 @@ export default [
     meta: {
       title: '年度发展计划',
     },
-    redirect: 'businessManage/developmentPlan/developmentPlanList',
     component: developmentPlan,
-    children: [{
-        path: 'developmentPlanList',
-        name: 'developmentPlanList',
-        meta: {
-          title: '计划列表',
-        },
-        component: developmentPlanList,
-      },
-      {
-        path: 'developmentPlanProvince',
-        name: 'developmentPlanProvince',
-        meta: {
-          title: '计划汇总（省）',
-        },
-        component: developmentPlanProvince,
-      },
-      {
-        path: 'developmentPlanCity',
-        name: 'developmentPlanCity',
-        meta: {
-          title: '计划汇总（地市）',
-        },
-        component: developmentPlanCity,
-      }
-    ]
+    children: []
   },
   {
     path: 'businessManage/developmentPlanCreate',
@@ -1096,6 +1076,14 @@ export default [
     component: cooperatorList
   },
   {
+    path: 'businessManage/cooperatorManage/cooperatorCreate',
+    name: 'cooperatorCreate',
+    meta: {
+      title: '新建合作伙伴',
+    },
+    component: cooperatorCreate
+  },
+  {
     path: 'businessManage/cooperatorManage/cooperatorBrokerageSet',
     name: 'cooperatorBrokerageSet',
     meta: {
@@ -1118,5 +1106,29 @@ export default [
       title: '结算与对账',
     },
     component: verifyReconciliation
+  },
+  {
+    path: 'businessManage/onlineTraining/trainingManage',
+    name: 'trainingManage',
+    meta: {
+      title: '培训管理',
+    },
+    component: trainingManage
+  },
+  {
+    path: 'businessManage/onlineTraining/courseManage',
+    name: 'courseManage',
+    meta: {
+      title: '课程管理',
+    },
+    component: courseManage
+  },
+  {
+    path: 'businessManage/onlineTraining/assessManage',
+    name: 'assessManage',
+    meta: {
+      title: '考核管理',
+    },
+    component: assessManage
   },
 ]

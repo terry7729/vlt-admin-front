@@ -285,22 +285,22 @@ export default {
     },
     changeForm(val) {
       Object.assign(this.params, val);
-      console.log("派发出来的参数", this.params);
+      console.log("派发出来的参数", val);
     },
     changeOption() {
       console.log(this.selectValue);
     },
 
-     handleRemove(file) {
-        console.log(file);
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
-      handleDownload(file) {
-        console.log(file);
-      }
+    handleRemove(file) {
+      console.log(file);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload(file) {
+      console.log(file);
+    }
   }
 };
 </script>
