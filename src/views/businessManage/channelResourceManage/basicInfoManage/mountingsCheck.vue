@@ -1,4 +1,5 @@
 <template>
+<!-- 配件查看页面 -->
  <div class="vlt-card">
    <panel-static title="基本信息">
       <base-info :infoList="infoList"></base-info>
