@@ -1,7 +1,7 @@
 <template>
-  <!-- 添加 - 配置管理 -->
   <el-dialog title :visible.sync="show" width="50%" :before-close="close" class="dialog-form-list">
     <div class="vlt-edit-single">
+      <h2 class="title" v-if="diaTitle">{{diaTitle}}</h2>
       <div class="vlt-edit-wrap">
         <base-form
           :formData="formDatas"
@@ -11,9 +11,6 @@
           direction="right"
           @change="changeForm"
         ></base-form>
-        <p @click="addDesc" class="add-item">
-          <i class="el-icon-plus"></i> 新增描述
-        </p>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="onSubmit">提交</el-button>
           <el-button size="medium" @click="close">取 消</el-button>
@@ -25,7 +22,7 @@
 
 <script type="text/javascript">
 export default {
-  name: "editFaultType",
+  name: "dialogForm",
   props: {
     showForm: {
       type: Boolean,
@@ -53,20 +50,15 @@ export default {
       this.show = value;
     }
   },
+  mounted() {},
   components: {},
   methods: {
-    changeForm() {
-      console.log("change");
+    changeForm(val) {
+      Object.assign(this.params, val);
+      // console.log("change", this.params);
     },
-    addDesc() {
-      // let descIndex = this.formDatas
-      const newDesc = {
-        type: "input",
-        prop: "faultDescription1",
-        title: "故障描述2：",
-        value: ""
-      };
-      console.log("add");
+    handleClose() {
+      console.log("close");
     },
     close() {
       this.$emit("closeDia");
@@ -84,15 +76,34 @@ export default {
   .el-dialog__header {
     padding-top: 0;
   }
-  .add-item {
-    width: 400px;
-    margin: 20px 0 20px 140px;
-    padding: 9px 0;
-    font-size: 12px;
-    text-align: center;
-    color: #333;
-    cursor: pointer;
-    border: 1px dashed #dddddd;
+  .el-switch__core {
+    width: 60px !important;
+    height: 26px;
+    border-radius: 13px;
+    &:after {
+      width: 22px;
+      height: 22px;
+    }
+  }
+  .el-switch.is-checked .el-switch__core::after {
+    left: 100%;
+    margin-left: -23px;
+  }
+  .el-switch__label {
+    position: absolute;
+    right: 6px;
+    left: auto;
+    height: 26px;
+    line-height: 26px;
+    color: #fff;
+    span {
+      font-size: 12px;
+    }
+    &.is-active {
+      left: 0;
+      right: auto;
+      color: #fff;
+    }
   }
 }
 </style>

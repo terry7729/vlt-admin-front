@@ -112,8 +112,7 @@ export default {
   }
 }
 .card-list {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   &:last-child {
     margin-bottom: 0;
   }
@@ -127,7 +126,7 @@ export default {
       span.number {
         position: absolute;
         top: 10px;
-        right: -5px;
+        right: 5px;
         display: block;
         padding: 10px 20px;
         border: 1px solid #333;

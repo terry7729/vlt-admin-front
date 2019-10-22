@@ -2,22 +2,22 @@
 <template>
   <div class="vlt-card vc-plr0">
     <el-container>
-      <el-aside width="200px">
-        <terminal-sideMenu :menuList="menuData"></terminal-sideMenu>
-      </el-aside>
-      <el-main>
-        <div class="main-body">
-          <router-view></router-view>
-        </div>
-      </el-main>
+       <terminal-sideMenu :menuList="menuData">
+          <template v-slot:tabContent="tabContent">
+            <div :is="tabContent.item.url"></div>
+          </template>
+        </terminal-sideMenu>
     </el-container>
   </div>
 </template>
 
 <script type="text/javascript">
 import terminalSideMenu from "@/views/businessManage/channelTerminalManagement/components/terminalSideMenu";
+import equipmentList from "@/views/businessManage/channelTerminalManagement/equipment/equipmentList";
+import accessoriesList from "@/views/businessManage/channelTerminalManagement/equipment/accessoriesList";
+
 export default {
-  name: "maintenance",
+  name: "equipment",
   data() {
     return {
       menuData: {
@@ -28,12 +28,12 @@ export default {
           id: 0,
           name: '设备列表',
           active: true,
-          url: 'equipmentList',
+          url: equipmentList,
         },{
           id: 1,
           name: '配件列表',
           active: false,
-          url: 'accessoriesList',
+          url: accessoriesList,
         }]
       }
     };
@@ -42,23 +42,7 @@ export default {
   components: {
     "terminal-sideMenu": terminalSideMenu
   },
-  watch: {
-    $route (val) {
-      // console.log(val);
-      if (val.name == "equipment") {
-        this.$router.push({
-          name: 'equipmentList'
-        })
-      }
-    }
-  },
-  beforeCreate () {
-    if (this.$router.history.current.name ==  "equipment") {
-        this.$router.push({
-        name: 'equipmentList'
-      })
-    }
-  },
+  watch: {},
   created () {
     // this.$router.push({
     //   name: 'maintenanceEfficiency'
@@ -70,6 +54,7 @@ export default {
 
 <style lang="less" scoped>
   .vlt-card {
+    padding: 20px;
     .el-main {
         padding: 0;
         border-left: 1px solid #e6e6e6;

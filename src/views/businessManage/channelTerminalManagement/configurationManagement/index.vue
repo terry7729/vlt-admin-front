@@ -1,22 +1,21 @@
  <template>
  <div class="vlt-card vc-plr0">
     <el-container>
-      <el-aside width="200px">
-        <terminal-sideMenu :menuList="menuData"></terminal-sideMenu>
-      </el-aside>
-      <el-main>
-        <div class="main-body">
-          <router-view></router-view>
-        </div>
-      </el-main>
+       <terminal-sideMenu :menuList="menuData">
+          <template v-slot:tabContent="tabContent">
+            <div :is="tabContent.item.url"></div>
+          </template>
+        </terminal-sideMenu>
     </el-container>
   </div>
 </template>
 
 <script type="text/javascript">
 import terminalSideMenu from "@/views/businessManage/channelTerminalManagement/components/terminalSideMenu";
+import faultType from "@/views/businessManage/channelTerminalManagement/configurationManagement/faultType";
+
 export default {
-  name: "maintenance",
+  name: "configurationManagement",
   data() {
     return {
       menuData: {
@@ -28,7 +27,7 @@ export default {
             id: 0,
             name: "故障类型",
             active: true,
-            url: "faultType"
+            url: faultType
           }
         ]
       }
@@ -37,23 +36,7 @@ export default {
   components: {
     "terminal-sideMenu": terminalSideMenu
   },
-  watch: {
-    $route(val) {
-      // console.log(val);
-      if (val.name == "configurationManagement") {
-        this.$router.push({
-          name: "faultType"
-        });
-      }
-    }
-  },
-  beforeCreate() {
-    if (this.$router.history.current.name == "configurationManagement") {
-      this.$router.push({
-        name: "faultType"
-      });
-    }
-  },
+  watch: {},
   created() {
     // this.$router.push({
     //   name: 'maintenanceEfficiency'
@@ -65,6 +48,7 @@ export default {
 
 <style lang="less" scoped>
 .vlt-card {
+  padding: 20px;
   .el-main {
     padding: 0;
     border-left: 1px solid #e6e6e6;
