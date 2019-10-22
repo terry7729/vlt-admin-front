@@ -43,14 +43,23 @@
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
+    <kenwLedge-base-review
+    :showForm="showdialog"
+    :formDatas="data2"
+    :diaTitle="diaTitle"
+    :rule="rules2"
+     @closeDia="hideDia"></kenwLedge-base-review>
   </div>
 </template>
 
 <script type="text/javascript">
+import rules from "@/utils/rules.js";
+import kenwLedgeBaseReview from '@/views/businessManage/channelTerminalManagement/knowledgeBase/kenwLedgeBaseReview'
 export default {
   name: "accessoriesList",
   data() {
     return {
+      showdialog: false,
       // 搜索组件配置
       searchOptions: [
         {
@@ -88,6 +97,28 @@ export default {
           ]
         }
       ],
+      data2: [
+        {
+          type: "select",
+          title: "审核结果：",
+          prop: "auditResults",
+          options: [
+            { label: "通过", value: "0" },
+            { label: "未通过", value: "1" }
+          ]
+        },
+        {type: 'input', prop:'auditOpinion', title: '审核意见：',value: ''},
+      ],
+      rules2: {
+        // address: [{required: true,trigger: "blur" }],
+        auditResults: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        auditOpinion: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ]
+      },
+      diaTitle: '',
       tableDatas: {
         tableData: [
           {
@@ -206,22 +237,27 @@ export default {
       }
     };
   },
-  components: {},
+  components: {
+    'kenwLedge-base-review': kenwLedgeBaseReview
+  },
   methods: {
     search(form) {
       console.log("search", form);
     },
     handleClick(row) {
       this.$router.push({
-        name: "knowledgeBaseInfo",
+        name: "baseAuditDetails",
         query: {
           id: row.id
         }
       });
     },
-
     toAudit(row) {
+      this.showdialog = true;
       console.log(row);
+    },
+    hideDia () {
+      this.showdialog = false;
     },
     toDelete(row) {
       console.log(row);

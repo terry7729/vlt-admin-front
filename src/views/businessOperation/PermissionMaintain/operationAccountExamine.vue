@@ -13,7 +13,8 @@ export default {
   name: "",
   data() {
     return {
-      dal: [],
+      // dal: [],
+      // 详情类型
       operationAccountExamineData: [
         { title: "员工编号", value: "", prop: "operationManageStaffNum" },
         { title: "年龄", value: "", prop: "operationManageAge" },

@@ -28,25 +28,25 @@ const LIST_DATA = {
       id: 1,
       name: "待审核",
       number: 888,
-      url: "/home/businessManage/pendingReview"
+      url: "/home/businessManage/overview/pendingReview"
     },
     {
       id: 2,
       name: "已审核",
       number: 66,
-      url: "/home/businessManage/audited"
+      url: "/home/businessManage/overview/audited"
     },
     {
       id: 3,
       name: "已申请",
       number: 54,
-      url: "/home/businessManage/alreadyApplied"
+      url: "/home/businessManage/overview/alreadyApplied"
     },
     {
       id: 4,
       name: "待阅读",
       number: 21,
-      url: "/home/businessManage/pendingReading"
+      url: "/home/businessManage/overview/pendingReading"
     }
   ]
 };

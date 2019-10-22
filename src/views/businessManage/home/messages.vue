@@ -8,8 +8,8 @@
       :options="searchOptions"
       :total="999"
       labelWidth="80px"
-    >   
-    <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left" ></control-bar>
+    >
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
     </search-bar>
     <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs">
       <el-tab-pane v-for="item in tabs" :key="item.id" :label="item.label" :name="item.name">
@@ -35,8 +35,7 @@
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
         @handleCurrentChange="handleCurrentChange"
-      >
-      </table-paging>
+      ></table-paging>
     </el-tabs>
   </div>
 </template>
@@ -46,7 +45,7 @@ const tabsList = [
   {
     id: 0,
     label: "接收消息",
-    name: "frist",
+    name: "receiving",
     tableData: [
       {
         id: "1",
@@ -89,7 +88,7 @@ const tabsList = [
   {
     id: 1,
     label: "已发消息",
-    name: "second",
+    name: "sent",
     tableData: [
       {
         id: "1",
@@ -123,11 +122,11 @@ const tabsList = [
   }
 ];
 export default {
-  name: 'messages',
+  name: "messages",
   data() {
     return {
       tabs: [],
-      activeName: "second",
+      activeName: "sent",
       // 搜索组件配置
       searchOptions: [
         {
@@ -156,16 +155,30 @@ export default {
         }
       ],
       controlOptions: [
-        { name: "发布消息", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "发布消息", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ]
     };
   },
+  beforeCreate() {
+    // console.log(this.$route.params.type);
+    // if (this.$route.params.type == 'receiving') {
+
+      // this.activeName = this.$route.params.type;
+      // this.$router.push({
+      //   params: {
+      //     type: "receiving"
+      //   }
+      // });
+    // }
+  },
   created() {
     this.tabs = tabsList;
+    this.activeName = this.$route.params.type;
   },
   watch: {
     $route(url) {
-      // console.log(url.params.type);
+      // console.log(url);
+      this.activeName = url.params.type;
     }
   },
   methods: {
@@ -173,10 +186,10 @@ export default {
       console.log("search", form);
     },
     selectBtn() {
-      console.log('selectBtn');
+      console.log("selectBtn");
       this.$router.push({
-        name: 'sendMessage'
-      })
+        name: "sendMessage"
+      });
     },
     handleClick(tab, event) {
       const index = tab.index;
@@ -198,14 +211,14 @@ export default {
     detail(row) {
       console.log(row);
       this.$router.push({
-        name: 'messagesDetail',
-        query: {id: row.id}
-      })
+        name: "messagesDetail",
+        query: { id: row.id }
+      });
     },
-    toPush () {
+    toPush() {
       this.$router.push({
-        name: 'sendMessage'
-      })
+        name: "sendMessage"
+      });
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
