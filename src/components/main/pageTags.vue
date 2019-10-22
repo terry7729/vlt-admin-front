@@ -1,7 +1,7 @@
 <template>
   <div class="page-tags-con">
     <div class="tags-scroller">
-      <div class="tags-list">
+      <div class="tags-list" :style="{left: translateX + 'px'}">
         <el-tag
           :class="{current:$route.name == tag.routerName}"
           v-for="(tag, index) in routerTags"
@@ -36,6 +36,7 @@ export default {
   name: 'pageTags',
   data() {
     return {
+      translateX: 0,
       currentTag: null,
       current: 0,
       closable: true
@@ -54,18 +55,22 @@ export default {
         name: to.meta.title,
         routerName: to.name
       }
-      this.setRouterTags(currentTag)
+      this.setRouterTags(currentTag);
       this.setCurrentTag(currentTag);
+      this.$nextTick(() => {
+        this.scrollX();
+      })
     }
   },
   computed: {
     ...mapGetters(['routerTags'])
   },
   created () {
-    this.init()
+    
   },
   mounted () {
-    
+    this.init();
+    this.scrollX();
   },
   methods: {
     init() {
@@ -92,6 +97,7 @@ export default {
           name: this.routerTags[witch].routerName
         });
       }
+      
     },
     setCurrentTag(currentTag) {
       this.currentTag = currentTag;
@@ -100,6 +106,34 @@ export default {
     clearTags() {
       this.clearRouterTags();
       this.init();
+      this.translateX = 0;
+    },
+    scrollX() {
+      // 标签栏滚动
+      let x = 0;
+      const wrapper = document.querySelector('.tags-scroller');
+      const tags = document.querySelectorAll('.el-tag');
+      const currentTag = tags[this.current];
+      const currentTagPosition = currentTag.getBoundingClientRect();
+      const wrapperPosition = wrapper.getBoundingClientRect();
+      const tagMargin = 4;
+      
+      if (currentTagPosition.right >= wrapperPosition.right - tagMargin) {
+        const nextTag = tags[this.current + 1];
+        if (nextTag) {
+          x = -nextTag.getBoundingClientRect().right + wrapperPosition.right - tagMargin;
+        } else {
+          x = -currentTagPosition.right + wrapperPosition.right - tagMargin;
+        }
+      } else if (currentTagPosition.left < wrapperPosition.left + tagMargin) {
+        const prevTag = tags[this.current - 1];
+        if (prevTag) {
+          x = wrapperPosition.left - prevTag.getBoundingClientRect().left;
+        } else {
+          x = wrapperPosition.left - currentTagPosition.left;
+        }
+      }
+      this.translateX += x;
     },
     ...mapActions(['setRouterTags', 'removeRouterTags', 'clearRouterTags'])
   }
@@ -117,12 +151,18 @@ export default {
     -ms-user-select: none; /* Internet Explorer/Edge */
     .tags-scroller{
       overflow: hidden;
+      position: relative;
+      height: 32px;
+      margin-right: 90px;
     }
     .tags-list{
       white-space: nowrap;
       word-break: keep-all;
-      margin-right: 90px;
-      
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: left 0.2s ease 0s;
+      transform: translate3d(0,0,0);
     }
     .el-tag{
       cursor: pointer;
