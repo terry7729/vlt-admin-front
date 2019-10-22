@@ -131,6 +131,8 @@ const putStore = () => import('@/views/businessManage/channelResourceManage/outP
 const alreadyPutDetail =  () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyPutDetail')
 //出库
 const outStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/outStore')
+//已出库详情
+const alreadyOutDetail = () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyOutDetail')
 //仓库管理新增仓库
 const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
@@ -557,6 +559,7 @@ export default [
     path: 'businessManage/channelResourceManage/equipmentDetail',
     name: 'equipmentDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '设备查看',
     },
     component: equipmentDetail
@@ -565,6 +568,7 @@ export default [
     path: 'businessManage/channelResourceManage/facilityDetail',
     name: 'facilityDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '设施查看',
     },
     component: facilityDetail
@@ -573,6 +577,7 @@ export default [
     path: 'businessManage/channelResourceManage/consumableDetail',
     name: 'consumableDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '耗材查看',
     },
     component: consumableDetail
@@ -581,6 +586,7 @@ export default [
     path: 'businessManage/channelResourceManage/mountingsDetail',
     name: 'mountingsDetail',
     meta: {
+      parentName:'inventoryManage',
       title: '配件查看',
     },
     component: mountingsDetail
@@ -589,6 +595,7 @@ export default [
     path: 'businessManage/channelResourceManage/mountRecordCheck',
     name: 'mountRecordCheck',
     meta: {
+      parentName:'inventoryManage',
       title: '配件履历',
     },
     component: mountRecordCheck
@@ -597,6 +604,7 @@ export default [
     path: 'businessManage/channelResourceManage/equRecordCheck',
     name: 'equRecordCheck',
     meta: {
+      parentName:'inventoryManage',
       title: '设备履历',
     },
     component: equRecordCheck
@@ -605,6 +613,7 @@ export default [
     path: 'businessManage/channelResourceManage/inventoryStatistics',
     name: 'inventoryStatistics',
     meta: {
+      parentName:'inventoryManage',
       title: '盘点统计',
     },
     component: inventoryStatistics
@@ -622,6 +631,7 @@ export default [
     path: 'businessManage/channelResourceManage/putStore',
     name: 'putStore',
     meta: {
+      parentName:'outPutManage',
       title: '入库',
     },
     component: putStore
@@ -630,6 +640,7 @@ export default [
     path: 'businessManage/channelResourceManage/alreadyPutDetail',
     name: 'alreadyPutDetail',
     meta: {
+      parentName:'outPutManage',
       title: '已入库详情',
     },
     component: alreadyPutDetail
@@ -638,9 +649,19 @@ export default [
     path: 'businessManage/channelResourceManage/outStore',
     name: 'outStore',
     meta: {
+      parentName:'outPutManage',
       title: '出库',
     },
     component: outStore
+  },
+  {
+    path: 'businessManage/channelResourceManage/alreadyOutDetail',
+    name: 'alreadyOutDetail',
+    meta: {
+      parentName:'outPutManage',
+      title: '已出库详情',
+    },
+    component: alreadyOutDetail
   },
 
   {
@@ -655,6 +676,7 @@ export default [
     path: 'businessManage/channelResourceManage/detailLedger',
     name: 'detailLedger',
     meta: {
+      parentName:'ledgerManage',
       title: '台账明细',
     },
     component: detailLedger
@@ -663,6 +685,7 @@ export default [
     path: 'businessManage/channelResourceManage/detailFlow',
     name: 'detailFlow',
     meta: {
+      parentName:'ledgerManage',
       title: '相关流程',
     },
     component: detailFlow
@@ -679,6 +702,7 @@ export default [
     path: 'businessManage/channelResourceManage/detail',
     name: 'detail',
     meta: {
+      parentName:'storeManage',
       title: '仓库查看',
     },
     component: detail
@@ -687,6 +711,7 @@ export default [
     path: 'businessManage/channelResourceManage/addStore',
     name: 'addStore',
     meta: {
+      parentName:'storeManage',
       title: '新建仓库',
     },
     component: addStore
@@ -703,6 +728,7 @@ export default [
     path: 'businessManage/channelResourceManage/addEquipment',
     name: 'addEquipment',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理新增',
     },
     component: addEquipment
@@ -711,6 +737,7 @@ export default [
     path: 'businessManage/channelResourceManage/modification',
     name: 'modification',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理修改',
     },
     component: modification
@@ -720,6 +747,7 @@ export default [
     path: 'businessManage/channelResourceManage/equipmentCheck',
     name: 'equipmentCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理设备查看',
     },
     component: equipmentCheck
@@ -728,6 +756,7 @@ export default [
     path: 'businessManage/channelResourceManage/facilityCheck',
     name: 'facilityCheck',
     meta: {
+      parentName:'basicInfoManage',      
       title: '基本信息类型管理设施查看',
     },
     component: facilityCheck
@@ -736,6 +765,7 @@ export default [
     path: 'businessManage/channelResourceManage/consumableCheck',
     name: 'consumableCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理耗材查看',
     },
     component: consumableCheck
@@ -744,6 +774,7 @@ export default [
     path: 'businessManage/channelResourceManage/mountingsCheck',
     name: 'mountingsCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息类型管理耗材查看',
     },
     component: mountingsCheck
@@ -752,6 +783,7 @@ export default [
     path: 'businessManage/channelResourceManage/modelCheck',
     name: 'modelCheck',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息型号管理查看',
     },
     component: modelCheck
@@ -760,6 +792,7 @@ export default [
     path: 'businessManage/channelResourceManage/modelAdd',
     name: 'modelAdd',
     meta: {
+      parentName:'basicInfoManage',
       title: '基本信息型号管理新增',
     },
     component: modelAdd
