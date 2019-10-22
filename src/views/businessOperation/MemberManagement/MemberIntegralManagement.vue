@@ -16,6 +16,7 @@
         @selection-change="MemberIntegralChange"
         border
       >
+        <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="MemberIntegralId" label="序号"></el-table-column>
         <el-table-column prop="MemberIntegralName" label="规则名称" show-overflow-tooltip></el-table-column>
         <el-table-column prop="MemberIntegralType" label="积分类型"></el-table-column>

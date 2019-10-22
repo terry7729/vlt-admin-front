@@ -16,7 +16,7 @@
 import storage from '@/utils/storage'
 import sideMenu from '@/components/main/sideMenu'
 import adminHeader from '@/components/main/adminHeader'
-
+import {mapActions} from 'vuex'
 
 export default {
   name: 'home',
@@ -51,7 +51,11 @@ export default {
         // 未能获取 .header-container
       }
     },
-  
+    ...mapActions(['clearRouterTags'])
+  },
+  beforeRouteLeave (to, from, next) {
+    this.clearRouterTags();
+    next();
   },
   components: {
     sideMenu,

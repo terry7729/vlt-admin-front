@@ -3,13 +3,14 @@
     <div class="tags-scroller">
       <div class="tags-list">
         <el-tag
-          :class="{current:current==index}"
-          v-for="(tag, index) in tags"
+          :class="{current:$route.name == tag.routerName}"
+          v-for="(tag, index) in routerTags"
           :key="index"
           :closable="closable"
-          :type="tag.type"
-          @click="tab(index)"
-          @close="close(index)"
+          type="info"
+          :disable-transitions="true"
+          @click="to(tag)"
+          @close="close(tag, index)"
         >
           {{tag.name}}
         </el-tag>
@@ -21,60 +22,86 @@
         <i class="el-icon-arrow-down el-icon--right"></i>
       </el-button>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>关闭当前</el-dropdown-item>
-        <el-dropdown-item>关闭所有</el-dropdown-item>
+        <el-dropdown-item @click.native="close(currentTag, current)">关闭当前</el-dropdown-item>
+        <el-dropdown-item @click.native="clearTags">关闭其他</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'pageTags',
   data() {
     return {
+      currentTag: null,
       current: 0,
-      closable: true,
-      tags: [
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签一', type: 'info' },
-        { name: '标签二', type: 'info' },
-        { name: '标签三', type: 'info' },
-        { name: '标签四', type: 'info' },
-        { name: '标签五', type: 'info' }
-      ]
+      closable: true
     }
   },
+  watch: {
+    routerTags(val) {
+      if (val.length === 1) {
+        this.closable = false;
+        return;
+      };
+      this.closable = true;
+    },
+    $route(to, from) {
+      const currentTag = {
+        name: to.meta.title,
+        routerName: to.name
+      }
+      this.setRouterTags(currentTag)
+      this.setCurrentTag(currentTag);
+    }
+  },
+  computed: {
+    ...mapGetters(['routerTags'])
+  },
   created () {
-    
+    this.init()
   },
   mounted () {
     
   },
-  watch: {
-    tags(val) {
-      if (val.length === 1) this.closable = false;
-    }
-  },
   methods: {
-    tab(index) {
-      this.current = index;
+    init() {
+      const currentTag = {
+        name: this.$route.meta.title,
+        routerName: this.$route.name
+      }
+      this.setRouterTags(currentTag);
+      this.setCurrentTag(currentTag);
     },
-    close(index) {
-      this.tags.splice(index, 1)
-    }
+    to(item) {
+      this.$router.push({
+        name: item.routerName
+      })
+    },
+    close(item, index) {
+      if (this.routerTags.length === 1) {
+        return;
+      }
+      this.removeRouterTags(item);
+      if (this.$route.name === item.routerName) {
+        const witch = index - 1 < 0 ? (index) : (index - 1);
+        this.$router.push({
+          name: this.routerTags[witch].routerName
+        });
+      }
+    },
+    setCurrentTag(currentTag) {
+      this.currentTag = currentTag;
+      this.current = this.routerTags.findIndex(item => item.routerName === currentTag.routerName);
+    },
+    clearTags() {
+      this.clearRouterTags();
+      this.init();
+    },
+    ...mapActions(['setRouterTags', 'removeRouterTags', 'clearRouterTags'])
   }
 }
 </script>

@@ -134,7 +134,7 @@ export default {
       checkList: ["站内"],
       checkList1: ["站内", "短信"],
       checkList2: ["站内", "短信", "邮件"],
-       tableData1: [
+      tableData1: [
         {
           warningLevel: "普通"
         },
@@ -178,7 +178,6 @@ export default {
         { type: "最低开机律" },
         { type: "最低单厅销量" }
       ],
-     
 
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
@@ -265,10 +264,10 @@ export default {
 .headling {
   margin-bottom: 20px;
   font-weight: normal;
+  padding: 15px 0;
+  border-bottom: 1px solid #ccc;
 }
 /deep/ .el-form {
-  // width: 60%;
-
   .editfrom {
     display: flex;
     flex-wrap: wrap;
@@ -278,4 +277,14 @@ export default {
     }
   }
 }
+
+.vlt-card {
+  border: 1px solid #eee;
+  padding: 10px 10px;
+  &:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    border-color: #eee;
+  }
+}
+
 </style>

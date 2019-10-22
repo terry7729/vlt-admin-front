@@ -8,7 +8,13 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" :options="controlOptions" @select="select" @click.native position="right"></control-bar>
+        <control-bar
+          slot="extend-bar"
+          :options="controlOptions"
+          @select="select"
+          @click.native
+          position="right"
+        ></control-bar>
       </search-bar>
     </section>
     <div>
@@ -28,25 +34,22 @@
         <el-table-column align="center" prop="name" label="最低开机律"></el-table-column>
         <el-table-column align="center" prop="name" label="最低单厅销量"></el-table-column>
         <el-table-column align="center" prop="address" label="状态"></el-table-column>
-        <el-table-column label="操作" fixed="right" width="220px" fit align="center">
+        <el-table-column label="操作" fixed="right"  align="center">
           <template slot-scope="scope">
-            <el-button type="primary" @click size="small">审核</el-button>
-            <el-button type="primary" @click size="small">修改</el-button>
-            <el-button type="primary" @click size="small">删除</el-button>
+            <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
+            <el-button type="primary" @click size="mini">修改</el-button>
+            <el-button type="primary" @click size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            :current-page="1"
-            :page-size="10"
-            :total="100"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+      <table-paging
+        style="margin-top:30px"
+        :current-page="1"
+        :page-size="10"
+        :total="100"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>

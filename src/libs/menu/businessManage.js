@@ -204,7 +204,7 @@ export default [{
           childResources: [],
           icon: "el-icon-menu",
           name: "配置管理",
-          url: 'configuration'
+          url: 'configurationManagement'
         }
       ]
     },

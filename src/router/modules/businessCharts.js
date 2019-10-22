@@ -33,7 +33,7 @@ const cityRisk = () => import('@/views/businessCharts/warningRule/cityRisk')
 //城市游戏风险
 const cityGameRisk = () => import('@/views/businessCharts/warningRule/cityGameRisk')
 //告警通知
-const warningNotice = () => import('@/views/businessCharts/warningRule/warningNotice')
+// const warningNotice = () => import('@/views/businessCharts/warningRule/warningNotice')
 
 //用户风险
 const userRisk = () => import('@/views/businessCharts/warningRule/userRisk')
@@ -43,10 +43,7 @@ const warningWatchDetail = () => import('@/views/businessCharts/warningWatch/mod
 const warningWatchEdit = () => import('@/views/businessCharts/warningWatch/modules/warningWatchEdit')
 //demo
 const componentDemo = () => import('@/views/componentDemo')
-// //demo1
-// const demo1 = () => import('@/views/businessCharts/dealData/demos')
-//demo1
-// const echarts = () => import('@/views/businessCharts/dealData/echarts')
+
 //城市风险指标新增
 const cityRiskAdd = () => import('@/views/businessCharts/warningRule/cityRiskAdd')
 //奖池风险指标新增
@@ -72,13 +69,13 @@ export default [
   //   },
   //   component: echarts
   // },
-  {
-    path: '/',
-    name: 'businessCharts',
-    redirect: {
-      path: 'businessCharts/centerWatch'
-    }
-  },
+  // {
+  //   path: '/',
+  //   name: 'businessCharts',
+  //   redirect: {
+  //     path: 'businessCharts/centerWatch'
+  //   }
+  // },
   {
     path: 'businessCharts/centerWatch',
     name: 'centerWatch',
@@ -197,14 +194,14 @@ export default [
     },
     component: cityGameRisk
   },
-  {
-    path: 'businessCharts/warningNotice',
-    name: 'warningNotice',
-    meta: {
-      title: '城市游戏风险指标',
-    },
-    component: warningNotice
-  },
+  /// {
+  //   path: 'businessCharts/warningNotice',
+  //   name: 'warningNotice',
+  //   meta: {
+  //     title: '城市游戏风险指标',
+  //   },
+  //   component: warningNotice
+  // },
   {
     path: 'businessCharts/userRisk',
     name: 'userRisk',
@@ -252,7 +249,7 @@ export default [
       title: '城市游戏风险指标新增',
     },
     component: gameRiskAdd
-  },
+  }, 
   
 
 ]

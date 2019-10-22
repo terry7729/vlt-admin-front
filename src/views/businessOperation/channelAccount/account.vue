@@ -1,10 +1,10 @@
 <template>
   <div class="vlt-card">
     <div class="el_box">
-      <search-bar :options="options" :total="999"></search-bar>
+      <search-bar :options="options" @search="search" :total="999"></search-bar>
       <div class="el_table">
         <el-table :data="tableData" border>
-          <el-table-column prop="id" label="序号"></el-table-column>
+          <el-table-column prop="accountId" label="序号"></el-table-column>
           <el-table-column prop="accountName" label="账户名称"></el-table-column>
           <el-table-column prop="accountNum" label="账号"></el-table-column>
           <el-table-column prop="accountType" label="账户类型"></el-table-column>
@@ -25,7 +25,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="detail(scope.row)">详情</el-button>
-              <el-button type="primary" size="mini" @click="write(scope.row.id)">编辑</el-button>
+              <el-button type="primary" size="mini" @click="write(scope.row)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -33,27 +33,20 @@
       <div class="table_paging">
         <tablePaging class="table_paging_right" :total="99" :currentPage="1" :pageSize="10"></tablePaging>
       </div>
+      <!-- 编辑弹框 -->
       <el-dialog title="新增账号" :visible.sync="accountDialogFormVisible">
         <div class="vlt-edit-single">
-          <el-form
-            label-position="right"
-            label-width="90px"
-            :model="accountWriteform"
-            ref="form"
-            class="device-add"
-          >
-            <base-form
-              :formData="accountWriteData"
-              ref="baseForm"
-              :rules="accountWriteRule"
-              direction="right"
-              @change="accountWritechangeForm"
-            ></base-form>
-          </el-form>
+          <base-form
+            :formData="accountWriteData"
+            ref="baseForm"
+            :rules="accountWriteRule"
+            direction="right"
+            @change="accountWritechangeForm"
+          ></base-form>
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="accountDialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="accountDialogFormVisible = false">保 存</el-button>
+          <el-button type="primary" @click="save">保 存</el-button>
         </div>
       </el-dialog>
     </div>
@@ -68,23 +61,32 @@ export default {
   data() {
     return {
       // swich1: 0,
-      accountWriteform: {},
+
+      //编辑弹框默认为false
       accountDialogFormVisible: false,
+      //编辑弹框表单类型
       accountWriteData: [
-        { type: "input", title: "负责人", prop: "accountprincipal" },
-        { type: "input", title: "手机号码", prop: "accounttelephone" },
+        { type: "input", title: "负责人", prop: "principalName" },
+        { type: "input", title: "手机号码", prop: "telephoneNum" },
         { type: "input", title: "所属区域", prop: "accountarea" },
         { type: "input", title: "详细地址", prop: "accountaddress" }
       ],
+      //编辑表单验证
       accountWriteRule: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
+        principalName: [
+          { required: true, message: "请输入负责人", trigger: "blur" }
         ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        telephoneNum: [
+          { required: true, message: "请输入手机号码", trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        accountarea: [
+          { required: true, message: "请输入所属区域", trigger: "blur" }
+        ],
+        accountaddress: [
+          { required: true, message: "请输入详细地址", trigger: "blur" }
+        ]
       },
+      //搜索类型
       options: [
         {
           type: "input",
@@ -136,15 +138,12 @@ export default {
           ]
         }
       ],
-      pageSize: 10,
-      currentPage: 1,
-      totalCount: 0,
-      accounttype: false,
+
+      // 表格数据
       tableData: [
         {
-          id: 1,
+          accountId: 1,
           accountName: "广东省",
-
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -154,9 +153,8 @@ export default {
           operation: "详情"
         },
         {
-          id: 2,
+          accountId: 2,
           accountName: "广东省",
-
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -166,9 +164,8 @@ export default {
           operation: "详情"
         },
         {
-          id: 3,
+          accountId: 3,
           accountName: "广东省",
-
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -178,9 +175,8 @@ export default {
           operation: "详情"
         },
         {
-          id: 4,
+          accountId: 4,
           accountName: "广东省",
-
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -190,9 +186,8 @@ export default {
           operation: "详情"
         },
         {
-          id: 5,
+          accountId: 5,
           accountName: "广东省",
-
           accountNum: "赵",
           accountType: "自营",
           principalName: "赵",
@@ -210,16 +205,42 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    write() {
-      this.accountDialogFormVisible = true;
+    //点击搜索
+    search(formData) {
+      console.log(formData);
     },
+    //点击编辑
+    write(row) {
+      this.accountDialogFormVisible = true;
+      let outKey = Object.keys(row);
+      let writeData = this.accountWriteData;
+
+      for (let i = 0; i < writeData.length; i++) {
+        for (let j = 0; j < outKey.length; j++) {
+          if (writeData[i].prop === outKey[j]) {
+            writeData[i].value = row[outKey[j]];
+          }
+        }
+      }
+    },
+    // 编辑弹框表单change事件
     accountWritechangeForm() {},
-    changeSize() {},
-    changeCurrent() {},
+    handleSizeChange(size) {
+      console.log(`每页 ${size} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    //保存
+    save() {
+      this.accountDialogFormVisible = false;
+    },
+    // 详情
     detail(row) {
       console.log(row);
       this.$router.push({
-        path: "accountList/accountListDetail" + "?id" + "=" + row.id
+        path: "accountList/accountListDetail",
+        query: { id: row.id }
       });
     }
   }

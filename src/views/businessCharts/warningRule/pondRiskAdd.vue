@@ -259,6 +259,8 @@ export default {
 .headling {
   margin-bottom: 20px;
   font-weight: normal;
+    padding: 15px 0;
+  border-bottom: 1px solid #ccc;
 }
 /deep/ .el-form {
   // width: 60%;
@@ -272,4 +274,13 @@ export default {
     }
   }
 }
+.vlt-card {
+  border: 1px solid #eee;
+  padding: 10px 10px;
+  &:hover {
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    border-color: #eee;
+  }
+}
+
 </style>

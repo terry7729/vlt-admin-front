@@ -25,17 +25,14 @@
         <el-table-column align="center" prop="bigAwardAmount" label="大奖中奖"></el-table-column>
         <el-table-column align="center" prop="grandPrize" label="大奖兑奖"></el-table-column>
       </el-table>
-      <div class="pagination-container" style="text-align:right;margin-top:30px">
-        <section class="comp-item">
-          <table-paging
-            :current-page="1"
-            :page-size="10"
-            :total="totalCount"
-            @handleSizeChange="pageSizeChange"
-            @handleCurrentChange="pageCurrentChange"
-          ></table-paging>
-        </section>
-      </div>
+      <table-paging
+        style="margin-top:30px"
+        :current-page="1"
+        :page-size="10"
+        :total="totalCount"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>
@@ -155,14 +152,15 @@ export default {
         }
       });
     }
-  },created() {
-    this.getCityDeal();
   },
+  created() {
+    this.getCityDeal();
+  }
 };
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp {
-  text-align: right;
+.vlt-card{
+  padding: 5px;
 }
 </style>

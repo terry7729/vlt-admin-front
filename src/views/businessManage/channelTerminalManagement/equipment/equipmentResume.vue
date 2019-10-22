@@ -1,5 +1,5 @@
 <template>
-  <div class="vlt-card">
+  <div class="">
     <div class="time-line">
       <div v-for="item  in timeLiness" :key="item.id" class="list">
         <div class="date">
