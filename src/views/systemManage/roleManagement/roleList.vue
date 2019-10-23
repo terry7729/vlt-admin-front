@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="option"
-        :total="num"
+        :total="total"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -21,28 +21,28 @@
         <el-table-column prop="roleType" label="角色类型"></el-table-column>
         <el-table-column prop="updateBy" label="修改人"></el-table-column>
         <el-table-column prop="updateTime" label="修改时间"></el-table-column>
-        <el-table-column label="角色状态" align="center">
-          <template slot-scope="scope">
+        <el-table-column label="角色状态" prop="status" >
+          <!-- <template slot-scope="scope">
             <el-switch
               v-model="tableData[scope.$index].status"
               active-color="#13ce66"
               inactive-color="#ff4949"
               disabled
             ></el-switch>
-          </template>
+          </template> -->
         </el-table-column>
-        <el-table-column prop="zip" label="操作">
+        <el-table-column prop="zip" label="操作" >
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handelifo(scope.row)">查看</el-button>
-            <el-button type="success" size="mini" @click="handelskip(scope.row)">编缉</el-button>
+            <el-button type="success" size="mini" @click="handelskip(scope.row)" :disabled="tableData[scope.$index].status==='无效'?true:false">编缉</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagintion">
+      <div class="pagintion" v-if="total">
         <table-paging
           :current-page="1"
           :page-size="10"
-          :total="num"
+          :total="total"
           @handleSizeChange="pageSizeChange"
           @handleCurrentChange="pageCurrentChange"
         ></table-paging>
@@ -98,7 +98,7 @@ export default {
             { label: "普通角色", value: 3 }
           ]
         },
-        { type: "switch", title: "角色状态", prop: "status", value: 1 },
+        { type: "switch", title: "角色状态", prop: "status", value: true },
         {
           type: "cascader-multiple",
           prop: "moduleIds",
@@ -138,11 +138,11 @@ export default {
           type: "select",
           options: [
             {
-              value: "0",
+              value: 1,
               label: "无效"
             },
             {
-              value: "1",
+              value: 0,
               label: "有效"
             }
           ],
@@ -157,82 +157,66 @@ export default {
           placeholder: ["开始时间", "结束时间"]
         }
       ],
-      currentPage4: 4,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      currentPage4: 0,
+      tableData: [],
       multipleSelection: [],
       //新建按钮点击
       newcreate: false,
       parms: {},
       currentState: "",
-      num:0,
+      total:0,
       val:{},
+      pageSize:10,
+   
     };
   },
   computed: {},
-  async created() {
-    // let reslt = await this.$api.QueryAllRole({});
-   
-    let res = await this.$api.getMenu({});
-    //
-    let reslt = await this.$api.QueryRoleInfoPage({  });
-    console.log(reslt)
-     let arr = reslt.data.records;
-     this.num = arr.length
-    this.data2[3].options = res.data;
-    if (reslt.code === 0) {
-      this.dataProcessing(arr);
-    }
+  created() {
+    this.init()
   },
   mounted() {},
   components: {},
   methods: {
+   async init(val){
+    let res = await this.$api.QueryModuleTree({});
+    let data = {
+      page:val||1,
+      pageSize:this.pageSize
+    }
+    let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息
+     let arr = reslt.data.records;
+     console.log(arr)
+     this.total = reslt.data.total
+    this.data2[3].options = res.data;
+    if (reslt.code === 0) {
+       console.log(arr)
+      this.dataProcessing(arr);
+    }
+    },
     handelifo(val) {
       console.log(val);
       this.$router.push({ name: "roleifometion", query: { id: val.roleId } });
     },
-    pageSizeChange(val) {
+   async pageSizeChange(val) {
       //每页显示条数
       console.log(val);
+      this.pageSize = val;
+       let data = {
+          page:1,
+          pageSize:val
+      }
+    let reslt = await this.$api.QueryRoleInfoPage({data });
+    let arr = reslt.data.records;
+    if(reslt.code === 0){
+       this.total = reslt.data.total
+       this.dataProcessing(arr);
+    }
     },
     pageCurrentChange(val) {
       //当前显示页数
       console.log(val);
+      this.currentPage4 = val;
+      this.init(val)
     },
     handelskip(val) {
       this.dialogFormVisible = true;
@@ -248,7 +232,6 @@ export default {
           }
         }
       }
-      // this.$router.push("roleList/roleDestails");
     },
     selectBtn(val) {
       //新增删除事件
@@ -264,13 +247,20 @@ export default {
       console.log(reslt);
       let arr = reslt.data.records;
       if (reslt.code === 0) {
+        this.total = reslt.data.total;
         this.dataProcessing(arr);
       }
     },
-    dataProcessing(arr) {
-      // console.log(arr);
+    dataProcessing(arr) {//数据处理
+      arr.forEach(item => {
+       if(item.status===1){
+         item.status = "无效";
+       }else{
+         item.status ="有效"
+       }
+     });
       let obj = arr.map(item => {
-        console.log(item);
+        // console.log(item);
         if (item.roleType === 1) {
           return {
             ...item,
@@ -303,10 +293,15 @@ export default {
         this.parms.created = "新建角色";
         let data = JSON.parse(JSON.stringify(this.parms));
         data.sysCode= "VLT_BMS"
-        data.status = Number(data.status)
+        if(data.status){
+          data.status = 0;
+        }else{
+          data.status = 1;
+        }
         let reslt = await this.$api.SaveRoleInfo({ data });
         console.log(reslt);
       if(reslt.code===0){
+        this.init()
         this.dialogFormVisible =false;
         this.$refs.baseForm.resetForm();
         this.parms = {};
@@ -316,25 +311,33 @@ export default {
       } else if (this.currentState === "编缉") {
         //点击编缉按钮提交
         this.parms.created = "编缉";
-       
-
         let data = JSON.parse(JSON.stringify(this.parms));
         data.roleId = this.val.roleId
-        data.status = Number(data.status)
+        // data.status = Number(data.status)
+        console.log(data.roleType)
         if(typeof data.roleType != Number ){
             if(data.roleType ==="管理员"){
-          data.roleType = 1;
-        }else if(data.roleType === "子管理员"){
-          data.roleType = 2;
-        }else{
-          data.roleType = 3;
+              data.roleType = 1;
+            }else if(data.roleType === "子管理员"){
+              data.roleType = 2;
+            }else{
+              data.roleType = 3;
+            }
         }
+        if(data.status){
+          data.status = 0;
+        }else{
+          data.status = 1
         }
         let reslt = await this.$api.UpdateRoleInfo({data})
          console.log(reslt)
-
-        this.$refs.baseForm.resetForm();
-        this.parms = {};
+        if(reslt.code === 0){
+          this.init(this.currentPage4)
+          this.dialogFormVisible = false;
+          this.$refs.baseForm.resetForm();
+          this.parms = {};
+        }
+        
         // console.log(data);
       }
     },
@@ -343,10 +346,7 @@ export default {
       this.dialogFormVisible = false;
     },
     changeForm(val) {
-    
-  
        Object.assign(this.parms, val);
-      
     }
   }
 };

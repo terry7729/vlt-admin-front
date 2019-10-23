@@ -18,8 +18,9 @@ switch(process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//192.168.0.1/test/api'
     break
   default:
-    axios.defaults.baseURL = 'http://10.7.0.91:8080/bms/api' // 本地server环境 
+    axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境 
 }
+//http://10.7.0.91:8080/bms/api
 //http://10.6.0.103:8080/bms/api
 const request = (method, url, options, id) => {
   const runRequest = async () => {

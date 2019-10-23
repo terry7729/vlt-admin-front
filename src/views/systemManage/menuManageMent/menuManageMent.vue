@@ -317,7 +317,7 @@ export default {
   methods: {
     async init() {
       //节点树请求
-      let res = await this.$api.getMenu({});
+      let res = await this.$api.QueryModuleTree({});
       this.nodeTreeData = res.data;
     },
     handel(val) {
@@ -358,7 +358,7 @@ export default {
             ...addfrom
           };
           console.log(addfrom);
-          let reslt = await this.$api.addMenu({ data });
+          let reslt = await this.$api.SaveModule({ data });
           if (reslt.code === 0) {
             this.init();
           }
@@ -444,7 +444,7 @@ export default {
         moduleDesc: n.moduleName,
         ...n
       };
-      let reslt = await this.$api.addMenu({ data });
+      let reslt = await this.$api.SaveModule({ data });
       if (reslt.code === 0) {
         this.$refs.TopMenubaseForm.resetForm()
         this.dialogFormVisible2 = false;
@@ -477,7 +477,7 @@ export default {
             let data = arr.map(item => {
               return { moduleId: item.id };
             });
-            let reslt = await this.$api.delectMenu({ data });
+            let reslt = await this.$api.DeleteModule({ data });
             if (reslt.code === 0) {
               this.init();
             }
@@ -510,7 +510,7 @@ export default {
       this.parent = val;
       let data = {} ;
       this.val = val;
-      let res = await this.$api.getDestils( {data} ,val.id);
+      let res = await this.$api.QueryModuleDetail( {data} ,val.id);
       this.slelectifo = val.text;
       if (res.data.isSensitivity === 0) {
         res.data.isSensitivity = true;

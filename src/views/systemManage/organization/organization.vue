@@ -81,7 +81,7 @@
                   <!-- 分页!-->
                   <table-paging
                     :current-page="current"
-                    :page-size="size"
+                    :page-size="pageSize"
                     :total="total"
                     @handleSizeChange="pageSizeChange"
                     @handleCurrentChange="pageCurrentChange"
@@ -337,7 +337,7 @@ export default {
       value: "",
       //测试数据
       testlist: [], //部门信息展示列表每页信息
-      size: 0, //每页显示条数
+      pageSize: 10, //每页显示条数
       page: 0, //页数
       current: 1,
       total: 0,
@@ -364,9 +364,9 @@ export default {
   components: {},
   methods: {
     async init() {
-      let reslt = await this.$api.OrganizationMenu({});
+      let reslt = await this.$api.QueryInsTree({});
       this.nodeTreeData = reslt.data;
-      let res = await this.$api.RegionalTree({});
+      let res = await this.$api.FindRegionTreeRoots({});
       console.log(res)
       this.region = res.data;
       this.OrganizationAdd[4].options = res.data;
@@ -430,6 +430,8 @@ export default {
     },
     pageSizeChange(val) {
       //每页显示条数
+      this.pageSize = val;
+      this.subsidiaryOrgan()
     },
     pageCurrentChange(val) {
       //当前显示页数
@@ -447,10 +449,10 @@ export default {
       //部门分页控制
       let data = {
         insId: this.val.id,
-        pageSize:  10,
+        pageSize:  this.pageSize,
         page: num || 1
       };
-      let resl = await this.$api.DepartmentPage({ data });
+      let resl = await this.$api.QueryDeptInfoPage({ data });
       let arr2 = resl.data.records; //.panentOrgan
       let list = arr2.map(item => {
           console.log(item)
@@ -470,7 +472,7 @@ export default {
       console.log(list);
       this.testlist = list;
       this.page = resl.data.pages;
-      this.size = resl.data.size;
+      this.pageSize = resl.data.size;
       this.total = resl.data.total;
     },
     async DepartmentSubmit() {
@@ -484,7 +486,7 @@ export default {
         }else{
           data.status =1;
         }
-        let reslt = await this.$api.ModficDepartment({data})
+        let reslt = await this.$api.UpdateDeptInfo({data})
         if(reslt.code === 0){
             this.subsidiaryOrgan()
             this.dialogFormVisible = false;
@@ -506,7 +508,7 @@ export default {
         } else {
           data.status = 1;
         }
-        let reslt = await this.$api.DepartmentAdd({ data });
+        let reslt = await this.$api.AddDeptInfo({ data });
 
         if (reslt.code === 0) {
           this.subsidiaryOrgan()
@@ -522,7 +524,7 @@ export default {
           let data = JSON.parse(JSON.stringify(this.OrganizationParams))
           data.insId = this.val.id
           data.parentId = this.parentId
-          let rest = await this.$api.ModficMenu({data})
+          let rest = await this.$api.UpdateInsInfo({data})
             if(rest.code === 0){
               this.dialogFormVisible2 = false;
               this.OrganizationParams = {}
@@ -538,7 +540,7 @@ export default {
           data.status = 1;
         }
         data.parentId = this.val.id;
-        let reslt = await this.$api.OrganizationAdd({ data });
+        let reslt = await this.$api.AddInsInfo({ data });
         if (reslt.code === 0) {
           this.$refs.OrganizationBaseForm.resetForm();
           this.OrganizationParams = {};
@@ -552,6 +554,7 @@ export default {
     async selectBtn(val) {
       if (val.name === "添加部门") {
         //添加部门
+        console.log(this.val.id)
         console.log(this.DepartmenParams);
         this.dialogStatus = "添加部门";
         this.addOrChange = "添加部门";
@@ -591,7 +594,7 @@ export default {
       //获取当前点击节点信息 s为当前节点node
       // console.log(val, s);
       this.val = val;
-      let reslt = await this.$api.OrganizationDestils({}, val.id);
+      let reslt = await this.$api.QueryInsInfo({}, val.id);
       let arr = Object.entries(reslt.data);
       let obj = arr.map(([key, val]) => {
         if (
