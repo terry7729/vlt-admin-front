@@ -9,6 +9,7 @@
         </div>
       </div>
     </div>
+    <lock-mask></lock-mask>
   </div>
 </template>
 
@@ -16,6 +17,7 @@
 import storage from '@/utils/storage'
 import sideMenu from '@/components/main/sideMenu'
 import adminHeader from '@/components/main/adminHeader'
+import lockMask from '@/components/main/lockMask'
 import {mapActions} from 'vuex'
 
 export default {
@@ -54,12 +56,15 @@ export default {
     ...mapActions(['clearRouterTags'])
   },
   beforeRouteLeave (to, from, next) {
-    this.clearRouterTags();
+    if (to.name === 'entry' || to.name === 'login') {
+      this.clearRouterTags();
+    }
     next();
   },
   components: {
     sideMenu,
-    adminHeader
+    adminHeader,
+    lockMask
   }
 }
 </script>

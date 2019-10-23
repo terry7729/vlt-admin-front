@@ -13,7 +13,7 @@
 
     <el-row class="card-table">
       <el-table
-        :data="tableDatas.tableData"
+        :data="tableData.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
@@ -29,7 +29,7 @@
         <el-table-column fixed="right" label="操作" width="120">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="toDelete(scope.row)">删除</el-button>
+            <el-button type="danger" size="mini" @click="toDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -37,226 +37,144 @@
 
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableData.total"
+      :currentPage="tableData.current"
+      :pageSize="tableData.size"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
+    <edit-betting-rule :isShow="showformDia" :oData="rowData" @closeDia="closeDia"></edit-betting-rule>
   </div>
 </template>
 
 <script type="text/javascript">
+import editBettingRule from '@/views/businessManage/bettingCardManage/editBettingRule'
 export default {
   name: "",
   data() {
     return {
+      showformDia: false,
       // 搜索组件配置
       searchOptions: [
         {
-          title: "所属机构：",
           type: "select",
-          prop: "selectName",
-          value: "",
-          options: [
-            {
-              label: "机构1",
-              value: 1
-            },
-            {
-              label: "机构2",
-              value: 2
-            }
-          ]
+          title: "所属机构：",
+          prop: "insId",
+          options: [{ label: "中福彩", value: "1" }]
         },
-        {
-          type: "datetime-range",
-          prop: "date4",
-          value: "",
-          title: "生效日期：",
-          placeholder: ["开始时间", "结束时间"]
-        }
+        // {
+        //   type: "datetime-range",
+        //   prop: "date4",
+        //   value: "",
+        //   title: "生效日期：",
+        //   placeholder: ["开始时间", "结束时间"]
+        // }
       ],
       controlOptions: [{ name: "新建", type: "primary", icon: "plus" }],
+      tableData: {
+        records: [],
+        total: 4,
+        size: 15,
+        current: 1,
+        searchCount: true,
+        pages: 1
+      },
       tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 1,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 2,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 3,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 4,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 5,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 6,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 7,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 8,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 9,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          }
-        ],
         tableKey: [
-          {
-            label: "序号",
-            value: "id",
-            width: "80"
-          },
-          {
-            label: "所属机构",
-            value: "affiliation",
-            width: ""
-          },
-          {
-            label: "选择渠道",
-            value: "selectChannel",
-            width: "100"
-          },
-
-          {
-            label: "周期",
-            value: "cycle",
-            width: ""
-          },
-          {
-            label: "笔数",
-            value: "number",
-            width: "80"
-          },
-          {
-            label: "限额",
-            value: "limit",
-            width: ""
-          },
-          {
-            label: "限制次数",
-            value: "limitTimes",
-            width: ""
-          },
-          {
-            label: "生效时间",
-            value: "effectiveTime",
-            width: ""
-          }
+          { label: "序号", value: "id", width: "80" },
+          { label: "所属机构", value: "insName", width: "" },
+          { label: "选择渠道", value: "channelName", width: "200" },
+          { label: "周期", value: "circle", width: "" },
+          { label: "笔数", value: "limitPenNum", width: "80" },
+          { label: "限额", value: "limitAmount", width: "" },
+          { label: "限制次数", value: "limitNum", width: "" }
         ]
-      }
+      },
+      rowData: {}
     };
   },
-  components: {},
+  components: {
+    'edit-betting-rule': editBettingRule
+  },
+  created() {
+    // this.getList(1, 2);
+    this.getList();
+  },
   methods: {
     selectBtn(val) {
-      // console.log(val);
-      // this.showdialog = true;
       this.$router.push({
         name: "newbettingRule"
       });
     },
     search(form) {
       console.log("search", form);
+      this.getList(form.insId)
+    },
+
+    async getList(insId = 0, page=1, size=10) {
+      let options = {
+        page: page,
+        pageSize: size,
+        param: {
+          insId: insId
+        }
+      };
+      let data = JSON.parse(JSON.stringify(options));
+      let result = await this.$api.getBettingRulesList({ data });
+      console.log("data", result);
+      if (result.code == 0) {
+        this.tableData = result.data;
+      }
+    },
+    async deleteBettingRule(id) {
+      const _this = this;
+      let result = await _this.$api.deleteBettingCard(id);
+      return result;
     },
     edit(row) {
       console.log(row);
-      // this.$router.push({
-      //   name: "equipmentResume"
-      // });
+      this.rowData = row;
+      this.showformDia = true;
     },
-
     toDelete(row) {
-      console.log(row);
+      this.$confirm("将永久删除这条规则, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          let result = this.deleteBettingRule(row.id);
+          result.then(resp => {
+            if (resp.code == 0) {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+            }
+            // 删除之后再次刷新一下数据
+            this.getList();
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     handleSizeChange(pageSize) {
-      console.log(pageSize);
+      this.getList(0, 1, pageSize);
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
+      this.getList(0, currentPage, 10);
+    },
+    closeDia () {
+      this.showformDia = false;
+      this.getList();
     }
   }
 };
