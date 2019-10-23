@@ -121,6 +121,21 @@
     </section>
 
     <section class="comp-item">
+      <h4 class="comp-title">文件上传</h4>
+      <div class="mt10">
+        <el-upload
+          action="upload"
+          :limit="1"
+          :show-file-list="true"
+          :on-remove="handleRemove"
+          :http-request="uploadFile"
+        >
+          <el-button size="small" type="danger">上传应用<i class="el-icon-upload el-icon--right"></i></el-button>
+        </el-upload>
+      </div>
+    </section>
+
+    <section class="comp-item">
       <h4 class="comp-title">无伸缩框</h4>
       <panel-static title="彩票信息">
         <base-info :infoList="infoList"></base-info>
@@ -1595,6 +1610,22 @@ export default {
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage)
+    },
+    // 文件上传
+    handleRemove(file, fileList) {
+      // console.log(file, fileList);
+    },
+    async uploadFile(files) {
+      let formData = new FormData();
+      formData.append('file', files.file);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      }) 
+
+      console.log('uploadFile', res);
     }
   },
   components: {}

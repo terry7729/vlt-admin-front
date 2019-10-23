@@ -10,7 +10,7 @@
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="活动内容" name="activeContent">
-        <panel title="基础信息" :show="false" class="vlt-edit-single">
+        <panel title="基础信息" :show="true" class="vlt-edit-single">
           <div class="vlt-edit-wrap">
             <el-form label-width="140px" :model="baseForm" ref="baseForm">
               <base-form
@@ -280,7 +280,7 @@
           </el-dialog>
         </panel>
 
-        <panel title="监控指标" :show="true">
+        <panel title="监控指标" :show="false">
           <div class="control-index">
             <span>维度选择：</span>
             <el-checkbox-group v-model="targetCheck">
@@ -288,7 +288,7 @@
             </el-checkbox-group>
 
             <div class="index-check">
-              <p>指标选择：</p>
+              <p style="width:60px">指标选择：</p>
               <el-checkbox-group v-model="targetCheck">
                 <el-checkbox v-for="item in checkList2" :key="item" :label="item">{{item}}</el-checkbox>
               </el-checkbox-group>
@@ -625,7 +625,7 @@ export default {
         "YYYY-MM-DD hh:mm:ss"
       );
       this.executeData.push(JSON.parse(JSON.stringify(this.taskForm)));
-      this.taskDialog = false; 
+      this.taskDialog = false;
     },
 
     //表单派出参数

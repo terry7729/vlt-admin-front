@@ -18,6 +18,7 @@ export default {
         { title: "用户角色", value: "", prop: "userrole" },
         { title: "角色权限", value: "", prop: "userauthority" },
         { title: "描述", value: "", prop: "describe" },
+        { title: "是否为经理", value: "", prop: "describe" },
         { title: "创建人", value: "", prop: "createpeople" },
         { title: "创建时间", value: "", prop: "createdate" },
         { title: "更新人", value: "", prop: "updatepeople" },

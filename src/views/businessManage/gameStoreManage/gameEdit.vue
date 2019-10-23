@@ -115,6 +115,22 @@ export default {
     }
   },
   methods:{
+    getStoreList(row) {
+      const self = this;
+      const data = {
+        orderId: row.orderId
+      };
+      (async (data)=>{
+				let res = await self.$api.getStoreList({data})
+				if(res && res.code == 0) {
+          self.$message.success('注销成功')
+          row.orderStatus = 6;
+          self.getLotteryList(self.param)
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     onSubmit(){
         console.log(this.form)
     },

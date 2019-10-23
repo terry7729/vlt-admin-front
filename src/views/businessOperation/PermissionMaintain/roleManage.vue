@@ -51,7 +51,7 @@
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="roleManageAuthority(scope.row.id)">权限设置</el-button>
             <el-button type="primary" size="mini" @click="roleManageWrite(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="roleManageLook(scope.row.id)">查看</el-button>
+            <el-button type="primary" size="mini" @click="roleManageLook(scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -263,25 +263,22 @@ export default {
       roleManageoptions: [
         {
           type: "select",
-          prop: "roleManageName",
+          prop: "id",
           value: "",
           title: "用户角色",
           placeholder: "请输入",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
+          options: []
         },
         {
           type: "input",
-          prop: "roleManageCreater",
+          prop: "createBy",
           value: "",
           title: "创建人",
           placeholder: "请输入"
         },
         {
           type: "select",
-          prop: "accountStatus",
+          prop: "status",
           value: "",
           title: "角色状态",
           placeholder: "请输入",
@@ -306,6 +303,7 @@ export default {
   },
   components: {},
   async created() {
+    //初始表格数据
     let data = {
       page: 0,
       pageSize: 0,
@@ -320,16 +318,22 @@ export default {
       }
     };
     let result = await this.$api.getRole({ data });
-    console.log(result);
+    //console.log(result);
     let arr = result.data.records;
     this.num = arr.length;
     // this.roleManageoptions[0].options = arr.roleType;
     this.roleManagetableData = arr;
+    //初始搜索用户角色数据
+    let resul = await this.$api.accountRole();
+    //console.log(resul);
+    this.roleManageoptions[0].options = resul.data;
   },
   methods: {
     //点击搜索
-    search(formData) {
-      console.log(formData);
+    async search(formData) {
+      let data = JSON.parse(JSON.stringify(formData));
+      let result = await this.$api.getRole({ data });
+      console.log(result);
     },
     // 新增按钮
     roleManageAddclick() {
@@ -355,8 +359,8 @@ export default {
       }
     },
     // 查看按钮
-    roleManageLook() {
-      this.$router.push("roleManageExamine");
+    roleManageLook(row) {
+      this.$router.push({ path: "roleManageExamine", query: { id: row.id } });
     },
 
     // 表单change事件

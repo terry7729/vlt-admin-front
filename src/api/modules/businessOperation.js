@@ -11,6 +11,8 @@ export default {
   getRole: (options = {}) => ajax.post('/tChannelRoleInfo/list', options),
   //角色新增接口
   roleAdd: (options = {}) => ajax.post('/tChannelRoleInfo/create', options),
+  //用户角色数据接口
+  accountRole: (options = {}) => ajax.post('/tChannelRoleInfo/findAll', options),
   //渠道权限接口
   channelLimit: (options = {}) => ajax.post('/tChannelModuleInfo', options),
 

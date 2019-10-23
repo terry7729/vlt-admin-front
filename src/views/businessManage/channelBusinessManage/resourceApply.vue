@@ -186,6 +186,22 @@ export default {
     }
   },
   methods: {
+    getStoreList(row) {
+      const self = this;
+      const data = {
+        orderId: row.orderId
+      };
+      (async (data)=>{
+				let res = await self.$api.getStoreList({data})
+				if(res && res.code == 0) {
+          self.$message.success('注销成功')
+          row.orderStatus = 6;
+          self.getLotteryList(self.param)
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     changeGoods(val, index) {
       console.log(this.tableData, val.row, val.$index)
       val.row.price = val.row.options[index].price;

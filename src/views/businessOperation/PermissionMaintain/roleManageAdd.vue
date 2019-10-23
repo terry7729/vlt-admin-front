@@ -36,7 +36,6 @@ export default {
       //新增表单类型
       roleManageAddData: [
         { type: "input", title: "用户角色", value: "", prop: "roleName" },
-
         {
           type: "select",
           title: "角色状态",
@@ -45,15 +44,15 @@ export default {
           options: [
             {
               label: "启动",
-              value: 0
+              value: "0"
             },
             {
               label: "冻结",
-              value: 1
+              value: "1"
             },
             {
               label: "注销",
-              value: 2
+              value: "2"
             }
           ]
         },
@@ -71,6 +70,14 @@ export default {
             checkStrictly: true
           },
           options: []
+        },
+        {
+          type: "radio-textarea",
+          prop: "isManager",
+          title: "是否为经理",
+          props: ["radio"],
+          value: "",
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
         { type: "textarea", title: "描述", value: "", prop: "remark" }
       ],
@@ -92,7 +99,8 @@ export default {
             trigger: "change"
           }
         ]
-      }
+      },
+      param: null
     };
   },
   components: {},
@@ -102,19 +110,20 @@ export default {
 
     this.roleManageAddData[2].options = result.data;
   },
-  //console.log(result);
-  //console.log(result.{PromiseValue});
 
   methods: {
     //表单change事件
-    roleManageAddChangeForm() {},
+    roleManageAddChangeForm(val) {
+      this.param = val;
+      this.param.sysCode = this.param.sysCode.join(",");
+
+      console.log(this.param);
+    },
     //表单提交
     async roleManageAddSubmit() {
-      let form = this.$refs.baseForm.form;
-      let channel = form.sysCode[0].length - 1;
-
-      let data = JSON.parse(JSON.stringify(form));
+      let data = this.param;
       let resul = await this.$api.roleAdd({ data });
+      this.$router.push("roleManage");
     },
     //表单取消
     roleManageAddCancel() {
