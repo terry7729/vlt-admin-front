@@ -25,7 +25,7 @@ const request = (method, url, options) => {
   const runRequest = async () => {
     try {
       let res;
-      if (typeof options === 'string') {
+      if (typeof options !== 'object') {
         const id = options;
         res = await axios[method](`url/${id}`);
       } else {
