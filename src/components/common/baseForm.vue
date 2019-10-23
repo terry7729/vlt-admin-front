@@ -185,6 +185,7 @@ export default {
     form: {
       handler(newValue, oldValue) {
         let param = JSON.parse(JSON.stringify(newValue))
+        console.log('newValue', newValue)
         for(let key in this.cascaderParam) {
           if(param[key].length > 0) {
             for(let i=0;i<param[key].length;i++) {
@@ -192,6 +193,7 @@ export default {
             }
           }
         }
+        console.log('param', param)
         this.$emit("change", param)
       },
       // 深度监听 监听对象，数组的变化

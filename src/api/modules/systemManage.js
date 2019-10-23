@@ -20,7 +20,7 @@ export default {
 
   //组织架构
   //架构树菜单
-  OrganizationMenu:(options = {}) => ajax.post('/ins/queryInsTree',options),
+  queryInsTree:(options = {}) => ajax.post('/ins/queryInsTree',options),
   //查询机构详情
   OrganizationDestils:(options,id) => ajax.post(`/ins/queryInsInfo/${id}`,options),
   //添加机构
