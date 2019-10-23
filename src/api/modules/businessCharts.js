@@ -22,5 +22,7 @@ export default {
   // 销售厅设备统计数据监控列表
   getHallEqData:(options={})=>ajax.post('monitor/hall/terminal/count',options),
    // 销售厅设备硬件监控列表
-   getHallEqHardware:(options={})=>ajax.post('monitor/hall/terminal/hardware',options)
+   getHallEqHardware:(options={})=>ajax.post('monitor/hall/terminal/hardware',options),
+   // 城市游戏风险指标详情
+   getGameRiskDetail:(options={})=>ajax.post('game/risk/detail',options)
 }

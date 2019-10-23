@@ -51,6 +51,8 @@ const pondRiskAdd = () => import('@/views/businessCharts/warningRule/pondRiskAdd
 
 //城市游戏风险指标新增
 const gameRiskAdd = () => import('@/views/businessCharts/warningRule/gameRiskAdd')
+//城市游戏风险指标详情
+const gameRiskDetail = () => import('@/views/businessCharts/warningRule/gameRiskDetail')
 
 export default [
   {
@@ -215,6 +217,7 @@ export default [
     name: 'warningWatchDetail',
     meta: {
       title: '告警监控详情',
+      parentName:'warningWatch'
     },
     component: warningWatchDetail
   },
@@ -223,6 +226,7 @@ export default [
     name: 'warningWatchEdit',
     meta: {
       title: '告警监控编辑',
+      parentName:'warningWatch'
     },
     component: warningWatchEdit
   },
@@ -231,6 +235,7 @@ export default [
     name: 'cityRiskAdd',
     meta: {
       title: '城市风险指标新增',
+      parentName:'cityRisk'
     },
     component: cityRiskAdd
   },
@@ -239,6 +244,7 @@ export default [
     name: 'pondRiskAdd',
     meta: {
       title: '奖池风险指标新增',
+      parentName:'pondRisk'
     },
     component: pondRiskAdd
   },
@@ -247,8 +253,17 @@ export default [
     name: 'gameRiskAdd',
     meta: {
       title: '城市游戏风险指标新增',
+      parentName:'cityGameRisk'
     },
     component: gameRiskAdd
+  }, {
+    path: 'businessCharts/gameRiskDetail',
+    name: 'gameRiskDetail',
+    meta: {
+      title: '城市游戏风险指标详情',
+      parentName:'cityGameRisk'
+    },
+    component: gameRiskDetail
   }, 
   
 
