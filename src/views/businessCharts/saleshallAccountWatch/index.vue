@@ -161,8 +161,8 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        self.tableData = res.data.data.dataList;
-        self.totalCount = res.data.data.totalRecord;
+        self.tableData = res.data.dataList;
+        self.totalCount = res.data.totalRecord;
       }
     },
     pageSizeChange(pageSize) {

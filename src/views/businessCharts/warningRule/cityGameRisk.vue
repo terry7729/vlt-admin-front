@@ -28,7 +28,7 @@
         <el-table-column align="center" prop="address" label="状态"></el-table-column>
         <el-table-column label="操作" fixed="right" width="220px" fit align="center">
           <template slot-scope="scope">
-            <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
+            <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
             <el-button type="primary" @click size="mini">修改</el-button>
             <el-button type="primary" @click size="mini">删除</el-button>
           </template>
@@ -263,6 +263,14 @@ export default {
     select(val) {
       if (val.name === "新增") {
         this.goToAdd();
+      }
+    },
+    detail(row){
+      this.$router.push({
+        name: "gameRiskDetail"
+      });
+      query:{
+        id: row.id
       }
     }
   },
