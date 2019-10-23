@@ -28,7 +28,7 @@
         ></el-table-column>
         <el-table-column fixed="right" label="操作" width="250">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
+            <!-- <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button> -->
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
             <el-button type="primary" size="mini" @click="toExport(scope.row)">导出</el-button>
             <el-button type="danger" size="mini" @click="logout (scope.row) ">注销</el-button>

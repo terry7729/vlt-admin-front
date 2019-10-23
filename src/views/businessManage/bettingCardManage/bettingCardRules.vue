@@ -13,7 +13,7 @@
 
     <el-row class="card-table">
       <el-table
-        :data="tableDatas.tableData"
+        :data="tableData.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
@@ -37,9 +37,9 @@
 
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableData.total"
+      :currentPage="tableData.current"
+      :pageSize="tableData.size"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
@@ -78,109 +78,15 @@ export default {
         }
       ],
       controlOptions: [{ name: "新建", type: "primary", icon: "plus" }],
+      tableData: {
+        records: [],
+        total : 4,
+        size : 15,
+        current : 1,
+        searchCount : true,
+        pages : 1,
+      },
       tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 1,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 2,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 3,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 4,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 5,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 6,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 7,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 8,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 9,
-            affiliation: '广东省',
-            selectChannel: '全部',
-            cycle: '1天',
-            number: '1',
-            limit: '100',
-            limitTimes: '5',
-            effectiveTime: '2019-02-25 01:50:06'
-          }
-        ],
         tableKey: [
           {
             label: "序号",
@@ -189,38 +95,38 @@ export default {
           },
           {
             label: "所属机构",
-            value: "affiliation",
+            value: "channelName",
             width: ""
           },
           {
             label: "选择渠道",
-            value: "selectChannel",
+            value: "channelName",
             width: "100"
           },
 
           {
             label: "周期",
-            value: "cycle",
+            value: "circleUnit",
             width: ""
           },
           {
             label: "笔数",
-            value: "number",
+            value: "limitPenNum",
             width: "80"
           },
           {
             label: "限额",
-            value: "limit",
+            value: "limitAmount",
             width: ""
           },
           {
             label: "限制次数",
-            value: "limitTimes",
+            value: "limitNum",
             width: ""
           },
           {
             label: "生效时间",
-            value: "effectiveTime",
+            value: "createTime",
             width: ""
           }
         ]
@@ -228,6 +134,9 @@ export default {
     };
   },
   components: {},
+  created() {
+    this.getList();
+  },
   methods: {
     selectBtn(val) {
       // console.log(val);
@@ -238,6 +147,22 @@ export default {
     },
     search(form) {
       console.log("search", form);
+    },
+
+    async getList() {
+      let options = {
+        page: 0,
+        pageSize: 0,
+        param: {
+          insId: 0
+        }
+      };
+      let data = JSON.parse(JSON.stringify(options));
+      let result = await this.$api.getBettingRulesList({ data });
+      console.log("data", result);
+      if (result.code == 0) {
+      this.tableData = result.data
+      }
     },
     edit(row) {
       console.log(row);
