@@ -20,11 +20,10 @@ export default {
   UpdateModule:(options = {}) => ajax.post('/module/updateModule',options),
 
   //组织架构
-  //架构树菜单
+  //机构树菜单
   QueryInsTree:(options = {}) => ajax.post('/ins/queryInsTree',options),
   //查询机构详情
   QueryInsInfo:(options = {}) => ajax.post('/ins/queryInsInfo',options),
-  OrganizationDestils:(options = {}) => ajax.post(`/ins/queryInsInfo`,options),
   //添加机构
   AddInsInfo:(options = {}) => ajax.post('/ins/addInsInfo',options),
   //修改机构信息
@@ -47,13 +46,19 @@ export default {
   //角色管理
   //角色信息分页查询接口
   QueryRoleInfoPage:(options = {}) =>ajax.post('/role/queryRoleInfoPage',options),
-  //查询全部有交角色接口
+  //查询全部有效角色接口
   QueryAllRole:(options = {}) =>ajax.post('/role/queryAllRole',options),
   //查询角色详情
   QueryRoleInfoDetail:(options = {}) =>ajax.post(`/role/queryRoleInfoDetail`,options),
   //保存角色信息
   SaveRoleInfo:(options = {}) =>ajax.post('/role/saveRoleInfo',options),
   //修改角色信息
-  UpdateRoleInfo:(options ={}) =>ajax.post('/role/updateRoleInfo',options)
+  UpdateRoleInfo:(options ={}) =>ajax.post('/role/updateRoleInfo',options),
+  //更改角色状态
+  UpdateRoleStatusInfo:(options = {}) =>ajax.post('role/updateRoleStatusInfo',options)
+
+  //用户管理
+  //用户新增
+
 
 }

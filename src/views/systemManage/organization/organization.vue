@@ -167,6 +167,7 @@ export default {
       },
       controlOptions: [
         //顶部按钮
+        { name: "添加根机构", type: "primary", icon: "plus", id: 1},
         { name: "添加部门", type: "primary", icon: "plus", id: 2 },
         { name: "刷新", type: "", icon: "refresh-right", id: 3 }
       ],
@@ -197,8 +198,9 @@ export default {
         { type: "switch", title: "状态", prop: "status", value: 1 },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
-      OrganizationChange:[//更改机构表单对象
-          {
+      OrganizationChange: [
+        //更改机构表单对象
+        {
           type: "input",
           title: "机构名称",
           prop: "insName",
@@ -221,7 +223,7 @@ export default {
           title: "备注",
           prop: "remark",
           value: ""
-        },
+        }
       ],
       OrganizationAdd: [
         //添加机构表单对象
@@ -265,7 +267,13 @@ export default {
           placeholder: "请选择",
           options: []
         },
-         { type: "input", title: "区域编码", prop: "regionCode", value: '' ,disabled: true},
+        {
+          type: "input",
+          title: "区域编码",
+          prop: "regionCode",
+          value: "",
+          disabled: true
+        },
         { type: "switch", title: "状态", prop: "status", value: true },
         { type: "textarea", title: "备注", prop: "remark", value: "" }
       ],
@@ -356,8 +364,8 @@ export default {
       nodeTreeData: [], //树形结构数据
       val: {}, //当前点击的节点data
       //
-      parentId:-1,
-      departmenIfo:{}
+      parentId: -1,
+      departmenIfo: {}
     };
   },
   mounted() {},
@@ -365,11 +373,15 @@ export default {
   methods: {
     async init() {
       let reslt = await this.$api.QueryInsTree();
-      this.nodeTreeData = reslt.data;
+      if(reslt.code === 0){
+         this.nodeTreeData = reslt.data;
+      }
       let res = await this.$api.FindRegionTreeRoots();
-      console.log(res)
-      this.region = res.data;
-      this.OrganizationAdd[4].options = res.data;
+      console.log(res);
+     if(res.code===0){
+        this.region = res.data;
+        this.OrganizationAdd[4].options = res.data;
+     }
     },
     cancel() {
       //弹出框取消按钮
@@ -410,32 +422,30 @@ export default {
       //弹出框表单change事件
       Object.assign(this.DepartmenParams, val);
     },
-   async OrganizationChangeForm(val) {
+    async OrganizationChangeForm(val) {
       //机构表单对象
       console.log(val);
-      if(this.addOrChange !="更改机构信息"){
-          if(val.regionName.length>1){
-          let code = val.regionName[val.regionName.length-1]
+      if (this.addOrChange != "更改机构信息") {
+        if (val.regionName.length > 1) {
+          let code = val.regionName[val.regionName.length - 1];
           val.regionCode = code;
-         Object.assign(this.OrganizationParams, val);
-          }else{
-          val.regionCode = val.regionName[0]
-         Object.assign(this.OrganizationParams, val);
+          Object.assign(this.OrganizationParams, val);
+        } else {
+          val.regionCode = val.regionName[0];
+          Object.assign(this.OrganizationParams, val);
         }
-      }else{
-         Object.assign(this.OrganizationParams, val);
+      } else {
+        Object.assign(this.OrganizationParams, val);
       }
-      
-      
     },
     pageSizeChange(val) {
       //每页显示条数
       this.pageSize = val;
-      this.subsidiaryOrgan()
+      this.subsidiaryOrgan();
     },
     pageCurrentChange(val) {
       //当前显示页数
-      this.subsidiaryOrgan( val);
+      this.subsidiaryOrgan(val);
     },
     open(val) {
       this.$alert(val, "温馨提示！", {
@@ -445,55 +455,51 @@ export default {
         }
       });
     },
-    async subsidiaryOrgan( num) {
+    async subsidiaryOrgan(num) {
       //部门分页控制
       let data = {
         insId: this.val.id,
-        pageSize:  this.pageSize,
+        pageSize: this.pageSize,
         page: num || 1
       };
       let resl = await this.$api.QueryDeptInfoPage({ data });
-      let arr2 = resl.data.records; //.panentOrgan
-      let list = arr2.map(item => {
-          console.log(item)
-          if(item.status){
-            return{
-              ...item,
-              status:false
-            }
-          }else{
+      if (resl.code === 0) {
+        let arr2 = resl.data.records; //.panentOrgan
+        let list = arr2.map(item => {
+          console.log(item);
+          if (item.status) {
             return {
               ...item,
-              status:true
-            }
+              status: false
+            };
+          } else {
+            return {
+              ...item,
+              status: true
+            };
           }
+        });
+        console.log(list);
+        this.testlist = list;
+        this.page = resl.data.pages;
+        this.pageSize = resl.data.size;
+        this.total = resl.data.total;
       }
-      );
-      console.log(list);
-      this.testlist = list;
-      this.page = resl.data.pages;
-      this.pageSize = resl.data.size;
-      this.total = resl.data.total;
     },
     async DepartmentSubmit() {
       if (this.addOrChange === "更改部门信息") {
         this.DepartmenParams.created = "更改部门信息";
 
-        let data = JSON.parse(JSON.stringify(this.DepartmenParams))
-        data.departmentId= this.departmenIfo.departmentId
-        if(data.status){
-          data.status = 0;
-        }else{
-          data.status =1;
+        let data = JSON.parse(JSON.stringify(this.DepartmenParams));
+        data.departmentId = this.departmenIfo.departmentId;
+
+        let reslt = await this.$api.UpdateDeptInfo({ data });
+        if (reslt.code === 0) {
+          this.subsidiaryOrgan();
+          this.dialogFormVisible = false;
+          this.$refs.DepartmentBaseForm.resetForm(); //表单重置
+          this.DepartmenParams = {}; //表单对象重置为空
         }
-        let reslt = await this.$api.UpdateDeptInfo({data})
-        if(reslt.code === 0){
-            this.subsidiaryOrgan()
-            this.dialogFormVisible = false;
-            this.$refs.DepartmentBaseForm.resetForm(); //表单重置
-            this.DepartmenParams = {}; //表单对象重置为空
-        }
-      
       } else if (this.addOrChange === "添加部门") {
         this.DepartmenParams.created = "添加部门";
         let data = JSON.parse(JSON.stringify(this.DepartmenParams));
@@ -503,15 +509,11 @@ export default {
         } else {
           data.parentId = data.parentId[0];
         }
-        if (data.status) {
-          data.status = 0;
-        } else {
-          data.status = 1;
-        }
+  
         let reslt = await this.$api.AddDeptInfo({ data });
 
         if (reslt.code === 0) {
-          this.subsidiaryOrgan()
+          this.subsidiaryOrgan();
           this.dialogFormVisible = false;
           this.$refs.DepartmentBaseForm.resetForm();
           this.DepartmenParams = {};
@@ -521,25 +523,21 @@ export default {
     async OrganizationSubmit() {
       if (this.addOrChange === "更改机构信息") {
         this.OrganizationParams.created = "更改机构信息";
-          let data = JSON.parse(JSON.stringify(this.OrganizationParams))
-          data.insId = this.val.id
-          data.parentId = this.parentId
-          let rest = await this.$api.UpdateInsInfo({data})
-            if(rest.code === 0){
-              this.dialogFormVisible2 = false;
-              this.OrganizationParams = {}
-              this.init()
-            }
-        
+        let data = JSON.parse(JSON.stringify(this.OrganizationParams));
+        data.insId = this.val.id;
+        data.parentId = this.parentId;
+        let rest = await this.$api.UpdateInsInfo({ data });
+        if (rest.code === 0) {
+          this.dialogFormVisible2 = false;
+          this.OrganizationParams = {};
+          this.init();
+        }
       } else if (this.addOrChange === "添加机构") {
         this.OrganizationParams.created = "添加机构";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
-        if (data.status) {
-          data.status = 0;
-        } else {
-          data.status = 1;
-        }
+    
         data.parentId = this.val.id;
+        console.log(data)
         let reslt = await this.$api.AddInsInfo({ data });
         if (reslt.code === 0) {
           this.$refs.OrganizationBaseForm.resetForm();
@@ -554,18 +552,19 @@ export default {
     async selectBtn(val) {
       if (val.name === "添加部门") {
         //添加部门
-        console.log(this.val.id)
+        console.log(this.val.id);
         console.log(this.DepartmenParams);
         this.dialogStatus = "添加部门";
         this.addOrChange = "添加部门";
         this.dialogFormVisible = true;
         this.AddDepartment[0].value = this.slelectifo;
-        let res = await this.$api.FindDeptTreeRoots( this.val.id);
+        let res = await this.$api.FindDeptTreeRoots(this.val.id);
         this.AddDepartment[0].options = res.data;
       }
       if (val.name === "刷新") {
-          this.init()
+        this.init();
       }
+
     },
     jumptocompile() {
       //更改机构信息
@@ -580,11 +579,11 @@ export default {
       this.dialogStatus = "更改部门信息";
       this.departmenIfo = val;
       let arr = Object.keys(val);
-      let len = this.AddDepartment
-      for(var i = 0 ; i< arr.length ; i++){
-        for(var j =0 ; j<len.length ; j++){
-          if(arr[i]=== len[j].prop){
-            len[j].value = val[arr[i]]
+      let len = this.AddDepartment;
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < len.length; j++) {
+          if (arr[i] === len[j].prop) {
+            len[j].value = val[arr[i]];
           }
         }
       }
@@ -592,7 +591,7 @@ export default {
 
     async getnowNodeifo(val, s) {
       //获取当前点击节点信息 s为当前节点node
-      // console.log(val, s);
+      console.log(val, s);
       this.val = val;
       let reslt = await this.$api.QueryInsInfo(val.id);
       let arr = Object.entries(reslt.data);
@@ -603,7 +602,7 @@ export default {
         ) {
           return { [key]: moment(val).format("YYYY-MM-DD HH:mm:ss") };
         } else if (key === "status") {
-          if (val === 0) {
+          if (val === 1) {
             return { [key]: "启用" };
           } else {
             return { [key]: "失效" };
@@ -613,11 +612,11 @@ export default {
         }
       });
       this.slelectifo = reslt.data.insName;
-      this.parentId = reslt.data.parentId
+      this.parentId = reslt.data.parentId;
       //当前节点父节点信息
       if (reslt.code === 0) {
         this.addValue(obj, this.AgencyInformation);
-        this.addValue(obj,this.OrganizationChange)
+        this.addValue(obj, this.OrganizationChange);
       }
       this.subsidiaryOrgan();
     },

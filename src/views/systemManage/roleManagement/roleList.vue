@@ -22,19 +22,19 @@
         <el-table-column prop="updateBy" label="修改人"></el-table-column>
         <el-table-column prop="updateTime" label="修改时间"></el-table-column>
         <el-table-column label="角色状态" prop="status" >
-          <!-- <template slot-scope="scope">
+          <template slot-scope="scope">
             <el-switch
               v-model="tableData[scope.$index].status"
               active-color="#13ce66"
               inactive-color="#ff4949"
-              disabled
+          
             ></el-switch>
-          </template> -->
+          </template>
         </el-table-column>
         <el-table-column prop="zip" label="操作" >
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handelifo(scope.row)">查看</el-button>
-            <el-button type="success" size="mini" @click="handelskip(scope.row)" :disabled="tableData[scope.$index].status==='无效'?true:false">编缉</el-button>
+            <el-button type="success" size="mini" @click="handelskip(scope.row)" :disabled="tableData[scope.$index].status?true:false">编缉</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -55,7 +55,7 @@
           <h2 class="title">角色信息</h2>
           <div class="vlt-edit-wrap">
             <base-form
-              :formData="data2"
+              :formData="this.currentState === '编缉'?updataFrom: addFrom"
               labelWidth="90px"
               :rules="rules"
               ref="baseForm"
@@ -85,7 +85,7 @@ export default {
         //按钮组
         { name: "新建角色", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
-      data2: [
+      addFrom: [
         { type: "input", title: "用户角色", prop: "roleName", value: "" },
         {
           type: "select",
@@ -99,6 +99,36 @@ export default {
           ]
         },
         { type: "switch", title: "角色状态", prop: "status", value: true },
+        {
+          type: "cascader-multiple",
+          prop: "moduleIds",
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            multiple: true,
+            checkStrictly: true
+          },
+          value: [],
+          title: "角色权限",
+          placeholder: "请选择",
+          options: []
+        },
+        { type: "textarea", title: "描述", prop: "roleDesc", value: "" }
+      ],
+      updataFrom:[
+         { type: "input", title: "用户角色", prop: "roleName", value: "" },
+        {
+          type: "select",
+          title: "角色类型",
+          prop: "roleType",
+          value: "",
+          options: [
+            { label: "管理员", value: 1 },
+            { label: "子管理员", value: 2 },
+            { label: "普通角色", value: 3 }
+          ]
+        },
         {
           type: "cascader-multiple",
           prop: "moduleIds",
@@ -183,14 +213,18 @@ export default {
       page:val||1,
       pageSize:this.pageSize
     }
-    let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息
-     let arr = reslt.data.records;
-     console.log(arr)
-     this.total = reslt.data.total
-    this.data2[3].options = res.data;
+    let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
+     console.log(reslt)
+    if(res.code === 0){
+       this.addFrom[3].options = res.data;
+       this.updataFrom[2].options = res.data;
+    }
     if (reslt.code === 0) {
-       console.log(arr)
-      this.dataProcessing(arr);
+      let arr = reslt.data.records;
+      
+       this.total = reslt.data.total
+       let Arr = JSON.parse(JSON.stringify(arr))
+       this.dataProcessing(Arr);
     }
     },
     handelifo(val) {
@@ -206,8 +240,9 @@ export default {
           pageSize:val
       }
     let reslt = await this.$api.QueryRoleInfoPage({data });
-    let arr = reslt.data.records;
+   
     if(reslt.code === 0){
+       let arr = reslt.data.records;
        this.total = reslt.data.total
        this.dataProcessing(arr);
     }
@@ -223,7 +258,7 @@ export default {
       this.currentState = "编缉";
       this.val = val ;
       let arr = Object.keys(val)
-      let len  = this.data2
+      let len  = this.updataFrom
       console.log(val.roleType)
       for(var i = 0 ; i<len.length ; i++){
         for(var j = 0 ; j< arr.length ; j++){
@@ -245,20 +280,16 @@ export default {
       let data = JSON.parse(JSON.stringify(val));
       let reslt = await this.$api.QueryRoleInfoPage({ data });
       console.log(reslt);
-      let arr = reslt.data.records;
+     
       if (reslt.code === 0) {
+         let arr = reslt.data.records;
         this.total = reslt.data.total;
         this.dataProcessing(arr);
       }
     },
     dataProcessing(arr) {//数据处理
-      arr.forEach(item => {
-       if(item.status===1){
-         item.status = "无效";
-       }else{
-         item.status ="有效"
-       }
-     });
+
+     console.log(arr)
       let obj = arr.map(item => {
         // console.log(item);
         if (item.roleType === 1) {
@@ -293,11 +324,7 @@ export default {
         this.parms.created = "新建角色";
         let data = JSON.parse(JSON.stringify(this.parms));
         data.sysCode= "VLT_BMS"
-        if(data.status){
-          data.status = 0;
-        }else{
-          data.status = 1;
-        }
+    
         let reslt = await this.$api.SaveRoleInfo({ data });
         console.log(reslt);
       if(reslt.code===0){
@@ -314,7 +341,7 @@ export default {
         let data = JSON.parse(JSON.stringify(this.parms));
         data.roleId = this.val.roleId
         // data.status = Number(data.status)
-        console.log(data.roleType)
+       
         if(typeof data.roleType != Number ){
             if(data.roleType ==="管理员"){
               data.roleType = 1;
@@ -324,11 +351,7 @@ export default {
               data.roleType = 3;
             }
         }
-        if(data.status){
-          data.status = 0;
-        }else{
-          data.status = 1
-        }
+         console.log(data)
         let reslt = await this.$api.UpdateRoleInfo({data})
          console.log(reslt)
         if(reslt.code === 0){
