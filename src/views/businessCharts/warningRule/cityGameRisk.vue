@@ -20,24 +20,29 @@
         :cell-style="{align:'center'}"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column align="center" prop="date" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="date" label="游戏"></el-table-column>
-        <el-table-column align="center" prop="name" label="最低返奖率"></el-table-column>
-        <el-table-column align="center" prop="name" label="最高返奖率"></el-table-column>
-        <el-table-column align="center" prop="address" label="状态"></el-table-column>
+        <el-table-column align="center" prop="provinceName" label="省份"></el-table-column>
+        <el-table-column align="center" prop="cityName" label="城市"></el-table-column>
+        <el-table-column align="center" prop="gameName" label="游戏"></el-table-column>
+        <el-table-column align="center" prop="minimumReturnRateOrdinary" label="最低返奖率"></el-table-column>
+        <el-table-column align="center" prop="highestReturnRateOrdinary" label="最高返奖率"></el-table-column>
+        <el-table-column align="center" property="collectStatus" label="状态">
+          <template slot-scope="scope">
+            <span v-if="scope.row.collectStatus===0">生效</span>
+            <span v-if="scope.row.collectStatus===1">停止</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" fixed="right" width="220px" fit align="center">
           <template slot-scope="scope">
-            <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
+            <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
             <el-button type="primary" @click size="mini">修改</el-button>
             <el-button type="primary" @click size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-     <table-paging
+      <table-paging
         :current-page="1"
-        :page-size="10"
-        :total="100"
+        :page-size="5"
+        :total="totalCount"
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
@@ -48,9 +53,9 @@
 <script>
 import city from "@/libs/map/city.json";
 export default {
-  name: "areaDeal",
   data() {
     return {
+      totalCount: 0,
       searchOptions: [
         {
           type: "select",
@@ -153,6 +158,20 @@ export default {
     };
   },
   methods: {
+    //获取游戏风险指标列表
+    async getGameRiskList() {
+      const self = this;
+      const res = await self.$api.getGameRiskList({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.records;
+        self.totalCount = res.data.total;
+      }
+    },
     pageSizeChange(pageSize) {
       console.log("每页条数：", pageSize);
     },
@@ -264,10 +283,21 @@ export default {
       if (val.name === "新增") {
         this.goToAdd();
       }
+    },
+    detail(row) {
+      this.$router.push({
+        name: "gameRiskDetail",
+        query: {
+          id: row.businessKey
+        }
+      });
     }
   },
   mounted() {
     // this.showcity();
+  },
+  created() {
+    this.getGameRiskList();
   }
 };
 </script>
