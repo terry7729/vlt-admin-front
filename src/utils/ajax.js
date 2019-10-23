@@ -27,7 +27,7 @@ const request = (method, url, options) => {
       let res;
       if (typeof options !== 'object') {
         const id = options;
-        res = await axios[method](`url/${id}`);
+        res = await axios[method](`${url}/${id}`);
       } else {
         const data = options.data || {}
         res = await axios[method](url, method === 'get' ? {params: data} : data);
