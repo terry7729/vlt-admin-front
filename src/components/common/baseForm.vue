@@ -133,7 +133,8 @@
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
       </el-upload>
-    </el-form-item> 
+    </el-form-item>
+    
   </el-form> 
 </template>
 
@@ -177,7 +178,8 @@ export default {
       dateParam: {}, // 用于保存起止日期的参数
       timeParam: {}, // 用于保存起止时间的参数
       selectParam: {}, // 用于保存起止时间的参数
-      cascaderParam: {},  // 用于保存级联选择器的参数
+      cascaderParams: {},  // 用于保存级联选择器（多选）的参数
+      cascaderParam: {},  // 用于保存级联选择器（单选）的参数
       imageUrl: '',
     }
   },
@@ -185,13 +187,20 @@ export default {
     form: {
       handler(newValue, oldValue) {
         let param = JSON.parse(JSON.stringify(newValue))
-        for(let key in this.cascaderParam) {
+        console.log('newValue', newValue)
+        for(let key in this.cascaderParams) {
           if(param[key]&&param[key].length > 0) {
             for(let i=0;i<param[key].length;i++) {
               param[key][i] = param[key][i][param[key][i].length-1]
             }
           }
         }
+        for(let key in this.cascaderParam) {
+          if(param[key]&&param[key].length > 0) {
+            param[key] = param[key][param[key].length-1]
+          }
+        }
+        console.log('param', param)
         this.$emit("change", param)
       },
       // 深度监听 监听对象，数组的变化
@@ -353,7 +362,14 @@ export default {
             self.$set(self.form, item.props[0], '')
             self.$set(self.form, item.props[1], '')
           }
-        }else if(item.type=='cascader-multiple' || item.type=='cascader'){
+        }else if(item.type=='cascader-multiple'){
+          if(item.value !='') { // 数据回填
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, [])
+          }
+          self.$set(self.cascaderParams, item.prop , '');
+        }else if(item.type=='cascader'){
           if(item.value !='') { // 数据回填
             self.$set(self.form, item.prop, item.value)
           }else{
