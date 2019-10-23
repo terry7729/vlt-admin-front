@@ -1,52 +1,74 @@
 <template>
-  <!-- 新增投注卡规则 -->
-  <div class="vlt-card add-bettingCard">
-    <div class="vlt-edit-single">
-      <h2 class="title">新增规则</h2>
+  <!-- 新增规则 -->
+  <el-dialog
+    :visible.sync="show"
+    width="50%"
+    title="修改规则"
+    :before-close="close"
+    class="dialog-form-list"
+  >
+    <div class="vlt-card">
+      <!-- <h2 class="title">新增规则</h2> -->
       <div class="vlt-edit-wrap">
         <el-form label-position="right" label-width="90px" :model="form" ref="form">
           <base-form
             :formData="data2"
-            labelWidth="140px"
+            labelWidth="100px"
             ref="baseForm"
             :rules="rules2"
             direction="right"
             @change="changeForm"
           ></base-form>
         </el-form>
-        <el-row class="vlt-edit-btn">
-          <el-button type="primary" v-prevent="1000" size="medium" @click="submit" :loading="showLoading" >提交并保存</el-button>
-          <el-button size="medium" @click="cancel">取消</el-button>
+        <el-row class="vlt-edit-btn" style="text-align: right">
+          <el-button
+            type="primary"
+            v-prevent="1000"
+            size="medium"
+            @click="onSubmit"
+            :loading="showLoading"
+          >提交并保存</el-button>
+          <el-button size="medium" @click="close">取消</el-button>
         </el-row>
       </div>
     </div>
-  </div>
+  </el-dialog>
 </template>
 
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
 
 export default {
-  name: "CreateRule",
+  name: "editBettingRule",
+  props: {
+    oData: {
+      type: Object,
+      default: 0
+    },
+    isShow: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       showLoading: false,
       params: {
-        channelId: "", 
-        channelName: "", 
-        circle: "", 
-        circleUnit: "", 
+        channelId: "",
+        channelName: "",
+        circle: "",
+        circleUnit: "",
         createBy: "",
-        createTime: "", 
+        createTime: "",
         id: 0,
-        insId: 0, 
-        insName: "", 
-        limitAmount: 0, 
-        limitNum: 0, 
-        limitPenNum: 0, 
-        status: 0, 
-        updateBy: "", 
-        updateTime: "" 
+        insId: 0,
+        insName: "",
+        limitAmount: 0,
+        limitNum: 0,
+        limitPenNum: 0,
+        status: 0,
+        updateBy: "",
+        updateTime: ""
       },
       data2: [
         {
@@ -107,34 +129,80 @@ export default {
         status: 0, // 是否删除 1/是,2/否
         updateBy: "ss", // 更新人
         updateTime: "" // 更新时间
-      }
+      },
+      show: this.isShow,
+      obData: this.oData
     };
+  },
+  watch: {
+    isShow(value) {
+      this.show = value;
+      this.backfill(this.oData);
+    },
+    oData: {
+      handler(newValue, oldValue) {
+        this.backfill(newValue)
+        
+      },
+      deep: true
+    },
+    obData: {
+      handler (newVal, onlVal) {
+        console.log('newVal', newVal);
+        this.initParams();
+      },
+      deep: true
+    }
   },
   components: {},
   methods: {
+    initParams (data) {
+      let arr = Object.keys(data);
+      for (let i = 0; i < arr.length; i++) {
+        console.log('------', arr[i]);
+      }
+    },
+    backfill(newValue) {
+      let arr = Object.keys(newValue);
+      let aForm = this.data2;
+      // console.log("this id", this.oData.id);
+      for (let i = 0; i < aForm.length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+          if (aForm[i].prop == arr[j]) {
+            aForm[i].value = this.oData[arr[j]];
+          }
+        }
+      }
+    },
     async submit() {
       const _this = this;
-      _this.showLoading = true;
-      let data = th_thisis.params;
-      data.status = data.status ? 1 : 2;
-      let result = await _this.$api.createBettingRulesList({ data })
+      this.showLoading = true;
+      let data = _this.params;
+      console.log('发送的数据', data);
+      data.status = data.status ? 1 : 0;
+      let result = await _this.$api.updateBettingRules({ data });
       if (result.code == 0) {
         _this.showLoading = false;
         _this.$message({
           message: result.msg,
-          type: 'success'
+          type: "success"
         });
         setTimeout(() => {
-          _this.$router.back();
+          _this.close();
         }, 1000);
       }
     },
 
-    cancel() {
-      this.$router.back();
+    close() {
+      this.$refs.baseForm.resetForm();
+      this.$emit("closeDia");
+    },
+    onSubmit() {
+      this.submit();
     },
     changeForm(val) {
       Object.assign(this.params, val);
+      console.log(',,,',  this.params);
     },
     changeSelect(val) {
       console.log(this.form, val);
@@ -153,23 +221,28 @@ export default {
 </script>
 
 <style lang="less">
-.add-bettingCard {
-  .vlt-edit-single {
-    .el-form-item {
-      &:nth-of-type(3),
-      &:nth-of-type(4) {
-        display: inline-block;
-        width: 200px;
-      }
-      &:nth-of-type(4) {
-        margin-left: 40px;
-      }
+.dialog-form-list {
+  .el-select {
+    width: 100%;
+  }
+
+  .el-form-item {
+    &:nth-of-type(3),
+    &:nth-of-type(4) {
+      display: inline-block;
+      // width: 200px;
+      // .el-input {
+      //   width: 100%;
+      // }
     }
-    .el-input.cycle {
-      width: 50% !important;
+    &:nth-of-type(3) {
+      width: 70%;
     }
-    .el-select.cycle-selection {
-      width: 40% !important;
+    &:nth-of-type(4) {
+      width: 30%;
+      .el-form-item__content {
+        margin-left: 40px !important;
+      }
     }
   }
 }

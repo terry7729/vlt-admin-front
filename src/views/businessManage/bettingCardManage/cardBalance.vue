@@ -1,5 +1,5 @@
 <template>
-<!-- 投注卡余额 -->
+  <!-- 投注卡余额 -->
   <div class="vlt-card">
     <search-bar
       class="search-bar-demo"
@@ -10,7 +10,7 @@
     ></search-bar>
     <el-row class="card-table">
       <el-table
-        :data="tableDatas.tableData"
+        :data="tableData.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
@@ -92,159 +92,39 @@ export default {
         }
       ],
       tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 1,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 2,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 3,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 4,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 5,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 6,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 7,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 8,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          },
-          {
-            id: 9,
-            number: "F01",
-            balance: 300,
-            total:20000,
-            status: "已激活",
-            date: "2019-09-08",
-            lastConsumption: "2019-10-08"
-          }
-        ],
         tableKey: [
-          {
-            label: "序号",
-            value: "id",
-            width: "80"
-          },
-          {
-            label: "编号",
-            value: "number",
-            width: ""
-          },
-          {
-            label: "余额",
-            value: "balance",
-            width: "100"
-          },
-          {
-            label: "累计消费",
-            value: "total",
-            width: ""
-          },
-          {
-            label: "状态",
-            value: "status",
-            width: "80"
-          },
-          {
-            label: "过期日期",
-            value: "date",
-            width: ""
-          },
-          {
-            label: "最后消费时",
-            value: "lastConsumption",
-            width: ""
-          }
+          { label: "序号", value: "id", width: "80" },
+          { label: "编号", value: "number", width: "" },
+          { label: "余额", value: "balance", width: "100" },
+          { label: "累计消费", value: "total", width: "" },
+          { label: "状态", value: "status", width: "80" },
+          { label: "过期日期", value: "date", width: "" },
+          { label: "最后消费时", value: "lastConsumption", width: "" }
         ]
-      },
+      }
     };
   },
   components: {},
   methods: {
     search(form) {
       console.log("search", form);
-    },  
+    },
     handleClick(row) {
       this.$router.push({
-        name: 'infoDetail',
+        name: "infoDetail",
         query: {
           id: row.id
         }
-      })
+      });
     },
-    activation (row) {
+    activation(row) {
       console.log(row);
       this.$router.push({
-        name: 'balanceDetail',
+        name: "balanceDetail",
         query: {
           id: row.id
         }
-      })
+      });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
