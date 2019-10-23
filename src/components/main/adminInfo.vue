@@ -6,6 +6,9 @@
     <el-tooltip effect="dark" content="退出全屏" placement="bottom" v-else>
       <span class="iconfont icon-exitfullscreen" @click="exitFullScreen"></span>
     </el-tooltip>
+    <el-tooltip effect="dark" content="锁屏" placement="bottom">
+      <span class="el-icon-lock" @click="lock"></span>
+    </el-tooltip>
     <span class="el-icon-bell"></span>
     <span class="logout iconfont icon-tuichu" @click="openConfirm"></span>
     <span class="el-dropdown-link">
@@ -116,6 +119,9 @@ export default {
       // }
       // self.$message.error('退出登录失败');
     },
+    lock() {
+      this.eventBus.$emit('lock', true);
+    },
     fullScreen: windowScreen.fullScreen,
     exitFullScreen: windowScreen.exitFullScreen,
     watchScreen: windowScreen.watchScreen
@@ -165,6 +171,7 @@ export default {
         color: #bdbdbd;
       }
     }
+    .el-icon-lock,
     .el-icon-bell,
     .icon-fullscreen,
     .icon-exitfullscreen,
