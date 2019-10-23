@@ -45,7 +45,7 @@ export default {
     if (!test) {
       return callback(new Error('仅支持6-16位数字英文大小写或特殊字符'));
     }
-    callback();
+    callback(); 
   },
   // 用户密码
   checkPassword: (rule, value, callback) => {

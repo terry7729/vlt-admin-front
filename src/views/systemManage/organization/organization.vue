@@ -364,9 +364,9 @@ export default {
   components: {},
   methods: {
     async init() {
-      let reslt = await this.$api.QueryInsTree({});
+      let reslt = await this.$api.QueryInsTree();
       this.nodeTreeData = reslt.data;
-      let res = await this.$api.FindRegionTreeRoots({});
+      let res = await this.$api.FindRegionTreeRoots();
       console.log(res)
       this.region = res.data;
       this.OrganizationAdd[4].options = res.data;
@@ -560,7 +560,7 @@ export default {
         this.addOrChange = "添加部门";
         this.dialogFormVisible = true;
         this.AddDepartment[0].value = this.slelectifo;
-        let res = await this.$api.FindDeptTreeRoots({}, this.val.id);
+        let res = await this.$api.FindDeptTreeRoots( this.val.id);
         this.AddDepartment[0].options = res.data;
       }
       if (val.name === "刷新") {
@@ -594,7 +594,7 @@ export default {
       //获取当前点击节点信息 s为当前节点node
       // console.log(val, s);
       this.val = val;
-      let reslt = await this.$api.QueryInsInfo({}, val.id);
+      let reslt = await this.$api.QueryInsInfo(val.id);
       let arr = Object.entries(reslt.data);
       let obj = arr.map(([key, val]) => {
         if (

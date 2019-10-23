@@ -22,14 +22,17 @@ switch(process.env.VUE_APP_MODE) {
 }
 //http://10.7.0.91:8080/bms/api
 //http://10.6.0.103:8080/bms/api
-const request = (method, url, options, id) => {
+const request = (method, url, options) => {
   const runRequest = async () => {
-    const data = options.data || {};
-    // if(id) {url = `${url}/${id}`}
-    
-    const formatData = data;
     try {
-      const res = await axios[method](url, method === 'get' ? {params: formatData} : formatData);
+      let res;
+      if (typeof options !== 'object') {
+        const id = options;
+        res = await axios[method](`url/${id}`);
+      } else {
+        const data = options.data || {}
+        res = await axios[method](url, method === 'get' ? {params: data} : data);
+      }
       return res.data;
     } catch (err) {
       console.warn('ajax-error', err);

@@ -30,7 +30,7 @@
         </div>
       </section>
       <section class="center">
-        <div class="left_map" id="left_map"></div>
+        <div class="left_map" id="left_map" @click=""></div>
         <div class="top5">
           <span>全国销售top5</span>
           <p v-for="itme in 5">
@@ -360,7 +360,7 @@ export default {
         // },
         series: [
           {
-            name: "业务指标",
+            // name: "业务指标",
             type: "gauge",
             detail: { formatter: "{value}%" },
             data: [{ value: 50, name: "ddd" }],
@@ -412,7 +412,10 @@ export default {
               formatter: "{value}" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式。 示例:// 使用字符串模板，模板变量为刻度默认标签 {value},如:formatter: '{value} kg'; // 使用函数模板，函数参数分别为刻度数值,如formatter: function (value) {return value + 'km/h';}
             }
           }
-        ]
+        ],
+        legend:{
+          top:'0'
+        }
       };
       myChart.setOption(option);
 
@@ -450,7 +453,7 @@ export default {
             color: "#ffffff" //字体颜色
           },
           right: "0",
-
+          top: "0",
           data: ["游戏总机", "今年新增", "在线"]
         },
         // toolbox: {
@@ -545,30 +548,17 @@ export default {
       // app.title = "单轴散点图";
 
       var hours = [
-        "12a",
-        "1a",
-        "2a",
-        "3a",
-        "4a",
-        "5a",
-        "6a",
-        "7a",
-        "8a",
-        "9a",
-        "10a",
-        "11a",
-        "12p",
-        "1p",
-        "2p",
-        "3p",
-        "4p",
-        "5p",
-        "6p",
-        "7p",
-        "8p",
-        "9p",
-        "10p",
-        "11p"
+        "北京",
+        "天津",
+        "河北",
+        "湖南",
+        "湖北",
+        "广东",
+        "四川",
+        "重庆",
+        "江西",
+        "江苏",
+        "上海"
       ];
       var days = [
         "Saturday",
@@ -834,17 +824,17 @@ export default {
             }
           },
           backgroundColor: "#02142c",
-          visualMap: {
-            //图例值控制
-            min: 0,
-            max: 1,
-            calculable: true,
-            show: true,
-            color: ["#f44336", "#fc9700", "#ffde00", "#ffde00", "#00eaff"],
-            textStyle: {
-              color: "#fff"
-            }
-          },
+          // visualMap: {
+          //   //图例值控制
+          //   min: 0,
+          //   max: 1,
+          //   calculable: true,
+          //   show: true,
+          //   color: ["#f44336", "#fc9700", "#ffde00", "#ffde00", "#00eaff"],
+          //   textStyle: {
+          //     color: "#fff"
+          //   }
+          // },
           geo: {
             map: "china",
             zoom: 1.2,
@@ -863,12 +853,10 @@ export default {
               emphasis: {
                 color: "rgba(37, 43, 61, .5)" //悬浮背景
               }
-            }
+            },
+            top: '30%',
           },
-          series: series,
-          grid : {
-            top: 350
-          }
+          series: series,       
         };
       } else {
         var option = (option = {
@@ -893,7 +881,7 @@ export default {
                 show: false
               }
             },
-            roam: true,
+            roam: false,
             itemStyle: {
               normal: {
                 areaColor: "#02142c",
@@ -903,7 +891,7 @@ export default {
                 areaColor: "gold"
               }
             },
-            top:'40%'
+            top: "30%"
           }
         });
       }
@@ -915,10 +903,10 @@ export default {
     //   return option;
     // },
     //显示中国地图
-    // showChinaMap() {
-    //   let option = this.getMapOpt();
-    //   this.map.setOption(option, true);
-    // },
+    showChinaMap() {
+      let option = this.getMapOpt();
+      this.map.setOption(option, true);
+    },
     //显示各省地图
     async getProvinceMapOpt(name) {
       const result = await import("@/libs/map/cnMapJson/" + name + ".json");
@@ -937,7 +925,6 @@ export default {
       // this.map.showLoading()
       var series = [];
       [["北京市", this.chinaDatas]].forEach((item, i) => {
-        console.log(item);
         var res = this.convertData(item[1]);
         series.push(
           {
@@ -948,13 +935,15 @@ export default {
               period: 3, //箭头指向速度，值越小速度越快
               trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
               symbol: "arrow", //箭头图标
-              symbolSize: 5 //图标大小
+              symbolSize: 5, //图标大小
+              color:'#0ff'
             },
             lineStyle: {
               normal: {
                 width: 1, //尾迹线条宽度
                 opacity: 1, //尾迹线条透明度
-                curveness: 0.3 //尾迹线条曲直度
+                curveness: 0.3, //尾迹线条曲直度
+                color:'#0ff'
               }
             },
             data: res
@@ -967,7 +956,8 @@ export default {
               //涟漪特效
               period: 4, //动画时间，值越小速度越快
               brushType: "stroke", //波纹绘制方式 stroke, fill
-              scale: 4 //波纹圆环最大限制，值越大波纹越大
+              scale: 4, //波纹圆环最大限制，值越大波纹越大
+              // color:'#fff'
             },
             label: {
               normal: {
@@ -986,12 +976,12 @@ export default {
             },
             symbol: "circle",
             symbolSize: function(val) {
-              return 5+ val[2] * 0.0005; //圆环大小
+              return 5 + val[2] * 0.0005; //圆环大小
             },
             itemStyle: {
               normal: {
                 show: false,
-                color: "#f00"
+                color: "#0ff"
               }
             },
             data: item[1].map(dataItem => {
@@ -1007,7 +997,7 @@ export default {
           {
             type: "scatter",
             coordinateSystem: "geo",
-            zlevel: 2,  
+            zlevel: 2,
             rippleEffect: {
               period: 4,
               brushType: "stroke",
@@ -1047,7 +1037,6 @@ export default {
         this.map.setOption(option, true);
       }
       this.map.on("click", param => {
-        // console.log(param);
         event.stopPropagation(); // 阻止冒泡
         // 找到省份名
         // let provinceIndex = provincesText.findIndex(x => {
@@ -1078,7 +1067,9 @@ export default {
           ]);
         }
       }
+      console.log(res)
       return res;
+      
     }
   },
   beforeDestroy() {

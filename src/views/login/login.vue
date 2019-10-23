@@ -9,7 +9,7 @@
             :formData="data1"
             labelWidth="140px"
             ref="baseForm"
-            :rules="rules1"
+            :rules="rules"
             direction="top"
             @change="changeForm"
           ></base-form>
@@ -27,7 +27,6 @@
     </div>
     <div class="role-dialog">
       <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="roleDialog">
-        <!-- <roleifometion></roleifometion> -->
         <div class="vlt-edit-single">
           <h2 class="title">修改密码</h2>
           <div class="vlt-edit-wrap">
@@ -60,7 +59,6 @@ export default {
       changeForm: "",
       input1: "",
       input2: "",
-      rules1: {},
       data1: [
         {
           type: "input-icon",
@@ -68,10 +66,10 @@ export default {
           prop: "username",
           value: "",
           placeholder: "请输入用户账号",
-          icon:"s-custom",
+          icon:"user",
         },
         {
-          type: "input-icon",
+          type: "password",
           title: "",
           prop: "pwd",
           value: "",
@@ -96,9 +94,11 @@ export default {
       ],
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, validator: rules.checkAccount,  trigger: "blur" }
         ],
-        pwd: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        pwd: [
+          { required: true, validator: rules.checkPwd,  trigger: "blur" }
+        ]
       }
     };
   },
@@ -117,7 +117,11 @@ export default {
     cancel() {
       this.dialogFormVisible = false;
     },
-    submit() {},
+    submit() {
+      this.$refs.baseForm.validate((val)=>{
+        console.log(val)
+      });
+    },
   },
   components: {}
 };
@@ -135,31 +139,34 @@ export default {
   align-items: center;
 
   .mid {
-    width: 490px;
-    height: 520px;
+    width: 450px;
+    height: 480px;
     background: rgba(255, 255, 255, 1);
     border-radius: 20px;
     position: relative;
     .companyLogo {
       position: absolute;
-      top: -102px;
-      left: 143px;
+      top: -85px;
+      left: 140px;
+      width:170px;
+      height:170px;
     }
     .title {
       position: absolute;
-      top: 156px;
-      left: 60px;
+      top: 136px;
+      left: 46px;
+      width:359px;
     }
     .vlt-edit-single {
       position: absolute;
-      top: 242px;
-      left: 60px;
+      top: 232px;
+      left: 46px;
       .inputAll {
-        margin-bottom: 90px;
+        margin-bottom: 70px;
       }
       .registerPwd {
         .btn {
-          width: 368px;
+          width: 359px;
           height: 46px;
           background: rgba(0, 29, 65, 1);
           border-radius: 4px;
@@ -171,18 +178,18 @@ export default {
         }
         .register {
           position: absolute;
-          top: 150px;
-          left: 250px;
-          font-size: 14px;
+          top: 120px;
+          left: 260px;
+          font-size: 12px;
           font-family: MicrosoftYaHei;
           color: rgba(43, 43, 43, 1);
           line-height: 14px;
         }
         .forgetPwd {
           position: absolute;
-          top: 150px;
+          top: 120px;
           left: 310px;
-          font-size: 14px;
+          font-size: 12px;
           font-family: MicrosoftYaHei;
           color: rgba(43, 43, 43, 1);
           line-height: 14px;
