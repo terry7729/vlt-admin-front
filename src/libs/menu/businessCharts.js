@@ -147,12 +147,12 @@ export default [{
           name: "告警报告",
           url: 'warningReport'
         },
-        // {
-        //   childResources: [],
-        //   icon: "el-icon-menu",
-        //   name: "组件",
-        //   url: 'componentDemo'
-        // },
+        {
+          childResources: [],
+          icon: "el-icon-menu",
+          name: "组件",
+          url: 'componentDemo'
+        },
         // {
         //   childResources: [],
         //   icon: "el-icon-menu",

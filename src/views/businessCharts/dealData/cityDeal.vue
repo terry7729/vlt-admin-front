@@ -41,10 +41,10 @@
 // import errGif from "@/assets/401_images/401.gif";
 // import pagination from '@/components/common/pagination'
 export default {
-  totalCount: 0,
   name: "cityDeal",
   data() {
     return {
+      totalCount: 0,
       controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
       total: null,
       listQuery: {
@@ -87,7 +87,7 @@ export default {
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
-        self.totalCount = res.data.totalRecord;
+         self.totalCount = res.data.totalRecord;
       }
     },
     pageSizeChange(pageSize) {

@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import commonComponents from './components/common/' // 通用组件引入
 import echarts from 'echarts'
 import Print from "@/utils/print";
+import storage from '@/utils/storage'
 
 
 Vue.use(commonComponents)

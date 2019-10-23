@@ -1,12 +1,12 @@
 <template>
   <div class="vlt-card">
-    <div class="search" v-if="num">
+    <div class="search">
       <!--搜索栏 !-->
       <search-bar
         class="search-bar-demo"
         @search="search"
         :options="option"
-        :total="num"
+        :total="999"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
