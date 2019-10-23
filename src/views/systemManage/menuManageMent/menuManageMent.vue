@@ -169,7 +169,8 @@ export default {
           ]
         },
         { type: "input", prop: "sort", value: "", title: "排序值" },
-        { type: "switch", prop: "date3", value: "", title: "是否启用" }
+        { type: "switch", prop: "isShow", value: "", title: "是否启用" },
+        { type: "textarea", prop: "moduleDesc", value: "", title: "描述" },
       ],
       rightFrom: [
         //右侧修改信息表单对象
@@ -325,7 +326,6 @@ export default {
             let data = {
               parentId: this.parent.id,
               sysCode: "VLT_BMS",
-              moduleDesc: addfrom.moduleName,
               ...addfrom
             };
             let reslt = await this.$api.SaveModule({ data });
@@ -402,7 +402,6 @@ export default {
         parentId: null,
         sysCode: "VLT_BMS",
         moduleType: 1,
-        moduleDesc: n.moduleName,
         ...n
       };
       let reslt = await this.$api.SaveModule({ data });
@@ -475,16 +474,16 @@ export default {
       console.log(res)
       this.slelectifo = val.text;
       if(res.code === 0){
-        if (res.data.isSensitivity === 0) {
-        res.data.isSensitivity = true;
-      } else {
-        res.data.isSensitivity = false;
-      }
-      if (res.data.isShow === 0) {
-        res.data.isShow = true;
-      } else {
-        res.data.isShow = false;
-      }
+      //   if (res.data.isSensitivity === 0) {
+      //   res.data.isSensitivity = true;
+      // } else {
+      //   res.data.isSensitivity = false;
+      // }
+      // if (res.data.isShow === 0) {
+      //   res.data.isShow = true;
+      // } else {
+      //   res.data.isShow = false;
+      // }
       let n = Object.keys(res.data);
       console.log(n)
       this.moduleType = res.data.moduleType;
@@ -529,9 +528,9 @@ export default {
         this.$refs.tree.setChecked(oldval, false);
       },
       deep: true // 对象内部的属性监听，也叫深度监听
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style lang="less">

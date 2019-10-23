@@ -324,7 +324,7 @@ export default {
         this.parms.created = "新建角色";
         let data = JSON.parse(JSON.stringify(this.parms));
         data.sysCode= "VLT_BMS"
-    
+        data.status = Number(data.status)
         let reslt = await this.$api.SaveRoleInfo({ data });
         console.log(reslt);
       if(reslt.code===0){

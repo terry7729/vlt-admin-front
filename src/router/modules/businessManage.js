@@ -550,18 +550,89 @@ export default [
     path: 'businessManage/channelList',
     name: 'channelList',
     meta: {
-      title: '渠道业务管理',
+      title: '渠道列表',
     },
     component: channelList
+  },
+  {
+    path: 'businessManage/channelDeal',
+    name: 'channelDeal',
+    meta: {
+      title: '业务办理',
+    },
+    component: channelDeal
   },
   {
     path: 'businessManage/channelCreate',
     name: 'channelCreate',
     meta: {
       title: '新建渠道',
-      parentName: 'channelList',
+      parentName: 'channelDeal',
     },
     component: channelCreate
+  },
+  {
+    path: 'businessManage/channelSalesPermission',
+    name: 'channelSalesPermission',
+    meta: {
+      parentName: 'channelDeal',
+      title: '销售权限',
+    },
+    component: channelSalesPermission
+  },
+  {
+    path: 'businessManage/channelFundsPermission',
+    name: 'channelFundsPermission',
+    meta: {
+      parentName: 'channelDeal',
+      title: '资金权限',
+    },
+    component: channelFundsPermission
+  },
+  {
+    path: 'businessManage/resourcePurchase',
+    name: 'resourcePurchase',
+    meta: {
+      parentName: 'channelDeal',
+      title: '资源采购',
+    },
+    component: resourcePurchase
+  },
+  {
+    path: 'businessManage/resourceApply',
+    name: 'resourceApply',
+    meta: {
+      parentName: 'channelDeal',
+      title: '资源申请',
+    },
+    component: resourceApply
+  },
+  {
+    path: 'businessManage/resourceProvide',
+    name: 'resourceProvide',
+    meta: {
+      parentName: 'channelDeal',
+      title: '资源发放',
+    },
+    component: resourceProvide
+  },
+  {
+    path: 'businessManage/developmentPlan',
+    name: 'developmentPlan',
+    meta: {
+      title: '年度发展计划',
+    },
+    component: developmentPlan,
+    children: []
+  },
+  {
+    path: 'businessManage/developmentPlanCreate',
+    name: 'developmentPlanCreate',
+    meta: {
+      parentName: 'developmentPlan',
+      title: '新建年度发展计划',
+    },
+    component: developmentPlanCreate
   },
   {
     path: 'businessManage/channelResourceManage/inventoryManage',
@@ -912,85 +983,6 @@ export default [
       title: '修改故障类型',
     },
     component: editFaultType,
-  },
-  {
-    path: 'businessManage/channelDeal',
-    name: 'channelDeal',
-    meta: {
-      title: '业务办理',
-    },
-    component: channelDeal
-  },
-  {
-    path: 'businessManage/channelSalesPermission',
-    name: 'channelSalesPermission',
-    meta: {
-      parentName: 'channelDeal',
-      title: '销售权限',
-    },
-    component: channelSalesPermission
-  },
-  {
-    path: 'businessManage/channelFundsPermission',
-    name: 'channelFundsPermission',
-    meta: {
-      parentName: 'channelDeal',
-      title: '资金权限',
-    },
-    component: channelFundsPermission
-  },
-  {
-    path: 'businessManage/resourcePurchase',
-    name: 'resourcePurchase',
-    meta: {
-      parentName: 'channelDeal',
-      title: '资源采购',
-    },
-    component: resourcePurchase
-  },
-  {
-    path: 'businessManage/resourceApply',
-    name: 'resourceApply',
-    meta: {
-      parentName: 'channelDeal',
-      title: '资源申请',
-    },
-    component: resourceApply
-  },
-  {
-    path: 'businessManage/resourceProvide',
-    name: 'resourceProvide',
-    meta: {
-      parentName: 'channelDeal',
-      title: '资源发放',
-    },
-    component: resourceProvide
-  },
-  {
-    path: 'businessManage/dossierManage',
-    name: 'dossierManage',
-    meta: {
-      title: '档案管理',
-    },
-    component: dossierManage
-  },
-  {
-    path: 'businessManage/developmentPlan',
-    name: 'developmentPlan',
-    meta: {
-      title: '年度发展计划',
-    },
-    component: developmentPlan,
-    children: []
-  },
-  {
-    path: 'businessManage/developmentPlanCreate',
-    name: 'developmentPlanCreate',
-    meta: {
-      parentName: 'developmentPlan',
-      title: '新建年度发展计划',
-    },
-    component: developmentPlanCreate
   },
   {
     path: 'businessManage/fundSettlement/fundParameter',

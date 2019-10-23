@@ -422,21 +422,31 @@ export default {
       //弹出框表单change事件
       Object.assign(this.DepartmenParams, val);
     },
-    async OrganizationChangeForm(val) {
+    OrganizationChangeForm(val) {
       //机构表单对象
       console.log(val);
-      if (this.addOrChange != "更改机构信息") {
-        if (val.regionName.length > 1) {
-          let code = val.regionName[val.regionName.length - 1];
-          val.regionCode = code;
+      if(val.regionName !=""){
+        val.regionCode = val.regionName
+         Object.assign(this.OrganizationParams, val);
+      }else{
           Object.assign(this.OrganizationParams, val);
-        } else {
-          val.regionCode = val.regionName[0];
-          Object.assign(this.OrganizationParams, val);
-        }
-      } else {
-        Object.assign(this.OrganizationParams, val);
       }
+      // if (this.addOrChange != "更改机构信息") {
+      //   if (val.regionName.length > 1) {
+      //     let code = val.regionName[val.regionName.length - 1];
+      //     val.regionCode = code;
+      //     Object.assign(this.OrganizationParams, val);
+      //   } else {
+          
+      //     Object.assign(this.OrganizationParams, val);
+      //   }
+      // } else {
+        // val.regionCode = val.regionName;
+        // this.$set(this.OrganizationAdd[5], 'value', val.regionName) 
+        // debugger;
+        // this.OrganizationAdd[5].value = val.regionName;
+        
+      // }
     },
     pageSizeChange(val) {
       //每页显示条数
@@ -463,24 +473,25 @@ export default {
         page: num || 1
       };
       let resl = await this.$api.QueryDeptInfoPage({ data });
+        console.log(resl)
       if (resl.code === 0) {
         let arr2 = resl.data.records; //.panentOrgan
-        let list = arr2.map(item => {
-          console.log(item);
-          if (item.status) {
-            return {
-              ...item,
-              status: false
-            };
-          } else {
-            return {
-              ...item,
-              status: true
-            };
-          }
-        });
-        console.log(list);
-        this.testlist = list;
+        // let list = arr2.map(item => {
+        //   console.log(item);
+        //   if (item.status) {
+        //     return {
+        //       ...item,
+        //       status: false
+        //     };
+        //   } else {
+        //     return {
+        //       ...item,
+        //       status: true
+        //     };
+        //   }
+        // });
+        // console.log(list);
+        this.testlist = arr2;
         this.page = resl.data.pages;
         this.pageSize = resl.data.size;
         this.total = resl.data.total;
@@ -504,14 +515,16 @@ export default {
         this.DepartmenParams.created = "添加部门";
         let data = JSON.parse(JSON.stringify(this.DepartmenParams));
         data.insId = this.val.id;
-        if (data.parentId.length > 1) {
-          data.parentId = data.parentId[data.parentId.length - 1];
-        } else {
-          data.parentId = data.parentId[0];
-        }
+        console.log(data)
+        // if (data.parentId.length > 1) {
+        //   data.parentId = data.parentId[data.parentId.length - 1];
+        // } else {
+        //   data.parentId = data.parentId[0];
+        // }
+        data.status = Number(data.status)
   
         let reslt = await this.$api.AddDeptInfo({ data });
-
+        console.log(reslt)
         if (reslt.code === 0) {
           this.subsidiaryOrgan();
           this.dialogFormVisible = false;
@@ -535,7 +548,7 @@ export default {
       } else if (this.addOrChange === "添加机构") {
         this.OrganizationParams.created = "添加机构";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
-    
+        data.status = Number(data.status)
         data.parentId = this.val.id;
         console.log(data)
         let reslt = await this.$api.AddInsInfo({ data });
@@ -557,9 +570,12 @@ export default {
         this.dialogStatus = "添加部门";
         this.addOrChange = "添加部门";
         this.dialogFormVisible = true;
-        this.AddDepartment[0].value = this.slelectifo;
+        // this.AddDepartment[0].value = this.slelectifo;
         let res = await this.$api.FindDeptTreeRoots(this.val.id);
-        this.AddDepartment[0].options = res.data;
+        console.log(res)
+       if(res.code === 0){
+          this.AddDepartment[0].options = res.data;
+       }
       }
       if (val.name === "刷新") {
         this.init();
@@ -594,6 +610,8 @@ export default {
       console.log(val, s);
       this.val = val;
       let reslt = await this.$api.QueryInsInfo(val.id);
+      console.log(reslt)
+      if (reslt.code === 0) {
       let arr = Object.entries(reslt.data);
       let obj = arr.map(([key, val]) => {
         if (
@@ -614,11 +632,13 @@ export default {
       this.slelectifo = reslt.data.insName;
       this.parentId = reslt.data.parentId;
       //当前节点父节点信息
-      if (reslt.code === 0) {
+      
         this.addValue(obj, this.AgencyInformation);
         this.addValue(obj, this.OrganizationChange);
+
+         this.subsidiaryOrgan();//分页控制
       }
-      this.subsidiaryOrgan();
+     
     },
 
     getCheckifo(...res) {
