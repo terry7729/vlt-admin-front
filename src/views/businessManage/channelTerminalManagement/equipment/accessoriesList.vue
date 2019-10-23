@@ -25,7 +25,7 @@
           :label="item.label"
           :width="item.width"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作">
+        <el-table-column fixed="right" label="操作" width="120">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
             <el-button type="primary" size="mini" @click="resume(scope.row)">履历</el-button>

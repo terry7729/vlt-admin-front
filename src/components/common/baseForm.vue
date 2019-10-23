@@ -7,7 +7,7 @@
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 密码 -->
-      <el-input v-if="item.type=='password'" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='password'" :prefix-icon="`el-icon-${item.icon}`" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 带icon-->
       <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
@@ -177,13 +177,22 @@ export default {
       dateParam: {}, // 用于保存起止日期的参数
       timeParam: {}, // 用于保存起止时间的参数
       selectParam: {}, // 用于保存起止时间的参数
+      cascaderParam: {},  // 用于保存级联选择器的参数
       imageUrl: '',
     }
   },
   watch: {
     form: {
       handler(newValue, oldValue) {
-        this.$emit("change", this.form)
+        let param = JSON.parse(JSON.stringify(newValue))
+        for(let key in this.cascaderParam) {
+          if(param[key]&&param[key].length > 0) {
+            for(let i=0;i<param[key].length;i++) {
+              param[key][i] = param[key][i][param[key][i].length-1]
+            }
+          }
+        }
+        this.$emit("change", param)
       },
       // 深度监听 监听对象，数组的变化
       deep: true
@@ -344,6 +353,13 @@ export default {
             self.$set(self.form, item.props[0], '')
             self.$set(self.form, item.props[1], '')
           }
+        }else if(item.type=='cascader-multiple' || item.type=='cascader'){
+          if(item.value !='') { // 数据回填
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, [])
+          }
+          self.$set(self.cascaderParam, item.prop , '');
         }else{
           if(item.value !='') { // 数据回填
             self.$set(self.form, item.prop, item.value)

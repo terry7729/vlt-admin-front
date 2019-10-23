@@ -112,13 +112,13 @@ export default {
     scrollX() {
       // 标签栏滚动
       let x = 0;
-      const wrapper = document.querySelector('.tags-scroller');
-      const tags = document.querySelectorAll('.el-tag');
-      const currentTag = tags[this.current];
-      const currentTagPosition = currentTag.getBoundingClientRect();
-      const wrapperPosition = wrapper.getBoundingClientRect();
-      const tagMargin = 4;
-      const boundary = 50;
+      const wrapper = document.querySelector('.tags-scroller'),
+            tags = document.querySelectorAll('.el-tag'),
+            currentTag = tags[this.current],
+            currentTagPosition = currentTag.getBoundingClientRect(),
+            wrapperPosition = wrapper.getBoundingClientRect(),
+            tagMargin = 4,
+            boundary = 50;
       if (currentTagPosition.right >= wrapperPosition.right - boundary) {
         const nextTag = tags[this.current + 1];
         if (nextTag) {

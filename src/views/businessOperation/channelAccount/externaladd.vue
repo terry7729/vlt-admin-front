@@ -27,11 +27,12 @@ export default {
     return {
       // 表单类型
       externalpaydata: [
-        { type: "input", title: "账户名称", prop: "accountname" },
+        { type: "input", title: "账户名称", value: "", prop: "accountname" },
         {
           type: "select",
           title: "第三方支付平台",
           prop: "externalpay",
+          value: "",
           options: [
             { lable: "支付宝", value: "0" },
             { lable: "支付宝", value: "1" }
@@ -41,27 +42,36 @@ export default {
           type: "select",
           title: "账户类型",
           prop: "accounttype",
+          value: "",
           options: [
             { lable: "对公账户", value: "0" },
             { lable: "支付宝", value: "1" }
           ]
         },
-        { type: "input", title: "法人代表", prop: "legalrepresentative" },
+        {
+          type: "input",
+          title: "法人代表",
+          value: "",
+          prop: "legalrepresentative"
+        },
         {
           type: "select",
           title: "法人代表证件",
           prop: " legalrepresentativepaper",
+          value: "",
           options: [{ lable: "对公账户", value: "0" }]
         },
         {
           type: "input",
           title: "法人代表证件号",
-          prop: "legalrepresentativepapernum"
+          prop: "legalrepresentativepapernum",
+          value: ""
         },
-        { type: "input", title: "手机号", prop: "telephone" },
+        { type: "input", title: "手机号", value: "", prop: "telephone" },
         {
           type: "input",
           title: "营业执照注册号",
+          value: "",
           prop: "registrationnumber"
         }
       ],

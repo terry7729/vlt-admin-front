@@ -1,5 +1,5 @@
 <template>
-  <div class=" vlt-edit-single">
+  <div class="vlt-card  vlt-edit-single">
     <div class="vlt-edit-wrap">
       <el-form label-position="right" label-width="90px" :model="form" ref="form">
         <base-form
@@ -88,4 +88,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.vlt-card {
+  padding: 20px;
+}
 </style>
