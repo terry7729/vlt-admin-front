@@ -10,6 +10,7 @@
 </template>
 
 <script type="text/javascript">
+import { async } from 'q';
 export default {
  name: "detail",
  data() {
@@ -26,9 +27,22 @@ export default {
  },
  components: {
  },
+ created(){
+   this.getDetail()
+ },
  methods: {
    returnBtn(){
      this.$router.back();
+   },
+   getDetail() {
+     const data = {
+       id:this.$route.query.id
+     };
+     console.log(data)
+     (async (data) =>{
+       let res = await this.$api.detailStore(data.id)
+      //  console.log(res)
+     })
    }
  },
 }
