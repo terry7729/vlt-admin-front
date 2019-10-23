@@ -52,6 +52,28 @@ export default {
   //保存角色信息
   SaveRoleInfo:(options = {}) =>ajax.post('/role/saveRoleInfo',options),
   //修改角色信息
-  UpdateRoleInfo:(options ={}) =>ajax.post('/role/updateRoleInfo',options)
+  UpdateRoleInfo:(options ={}) =>ajax.post('/role/updateRoleInfo',options),
 
+
+  //数据字典
+  //字典数据保存接口
+  Add:(options = {}) =>ajax.post('/dictData/add/',options),
+  //编辑接口
+  edit:(options = {}) =>ajax.post('/dictData/edit',options),
+  //数据字典启用接口
+  enable:(options = {}) =>ajax.post('/dictData/enable/{id}',options),
+  //数据字典禁用接口
+  disable:(options = {}) =>ajax.post('/dictData/disable/{id}',options),
+  //获取全部数据
+  getAll:(options = {}) =>ajax.post('/dictData/getAll',options),
+  //通过keyCode查询
+  find:(options = {}) =>ajax.get('/dictData/find/{keyCode}',options),
+
+  //系统设置
+  //系统参数设置
+  config:(options = {}) =>ajax.post('/sysConfig/config/set',options),
+  //系统短信参数设置
+  sms:(options = {}) =>ajax.post('/sysConfig/sms/set',options),
+  //系统邮件参数设置
+  email:(options = {}) =>ajax.post('/sysConfig/email/set',options),
 }
