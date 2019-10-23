@@ -26,7 +26,7 @@ switch(process.env.VUE_APP_MODE) {
 * @description http请求
 * @param  {String} method 请求方法
 * @param  {String} url 请求路径
-* @param  {Object} options 请求数据
+* @param  {Object} options 请求配置
 * @param  {String} extend 请求拓展
 * @return {Function} result promise
 */
