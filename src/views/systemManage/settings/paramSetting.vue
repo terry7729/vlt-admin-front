@@ -51,6 +51,7 @@
   </div>
 </template>
 <script type="text/javascript">
+import rules from "../../../utils/rules";
 export default {
   name: "",
   data() {

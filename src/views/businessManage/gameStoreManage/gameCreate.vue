@@ -5,7 +5,7 @@
       <el-step title="上传游戏包" icon="el-icon-upload"></el-step>
       <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
     </el-steps>
-    <div class="vlt-edit-single" v-show="active==1">
+    <div class="vlt-edit-single" v-show="active==0">
       <div class="vlt-edit-wrap">
         <base-form :formData="baseData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-row class="vlt-edit-btn">
@@ -14,7 +14,7 @@
         </el-row>
       </div>
     </div>
-    <div class="vlt-edit-single" v-show="active==2">
+    <div class="vlt-edit-single" v-show="active==1">
       <div class="vlt-edit-wrap">
         <el-form label-position="right" 
           label-width="90px" 
@@ -53,7 +53,7 @@
         </el-row>
       </div>
     </div>
-    <div class="vlt-edit-single" v-show="active==3">
+    <div class="vlt-edit-single" v-show="active==2">
       <div class="vlt-edit-wrap">
         <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-row class="vlt-edit-btn">
@@ -74,16 +74,16 @@ export default {
     return {
       form: {},
       baseData: [
-        {title: '游戏名称', type: 'input',  prop: 'name', value: ''},
-        {title: '游戏类型', type: 'select',  prop: 'type', value: '', options:[{label: '概率型',value: '0'},{label: '奖组型',value: '1'},]},
-        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
-        {title: '游戏简介', type: 'textarea',  prop: 'desc', value: ''},
-        {title: '版权归属', type: 'input',  prop: 'c', value: ''},
-        {title: '开发商名称', type: 'input',  prop: 'developersName', value: ''},
-        {title: '联系人', type: 'input',  prop: 'linkMan', value: ''},
-        {title: '手机号码', type: 'input',  prop: 'phoneNumber', value: ''},
+        {title: '游戏名称', type: 'input;',  prop: 'gameName', value: ''},
+        {title: '游戏类型', type: 'select',  prop: 'gameType;', value: '', options:[{label: '概率型',value: '0'},{label: '奖组型',value: '1'},]},
+        {title: '游戏奖池', type: 'select',  prop: 'jackpotType;;', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
+        {title: '游戏简介', type: 'textarea',  prop: 'gameDesc;', value: ''},
+        {title: '版权归属', type: 'input',  prop: 'gameGenlot;', value: ''},
+        {title: '开发商名称', type: 'input',  prop: 'developerName;', value: ''},
+        {title: '联系人', type: 'input',  prop: 'person;', value: ''},
+        {title: '手机号码', type: 'input',  prop: 'cellPhone;', value: ''},
         {title: '电子邮箱', type: 'input',  prop: 'email', value: ''},
-        {title: '传真电话', type: 'input',  prop: 'faxaphone', value: ''},
+        {title: '传真电话', type: 'input',  prop: 'faxPhone', value: ''},
         {title: '联系地址', type: 'address',prop: 'address', value: ''},
       ],
       softData: [
@@ -102,20 +102,20 @@ export default {
         status: [{ required: true, validator: rules.checkEmpty, trigger: 'blur' }],
         all: [{ required: true, validator: rules.checkEmail, trigger: 'blur' }]
       },
-      active: 1,
+      active: 0,
       fileList: [],
       imageUrl: '',
       params: {}
     }
   },
   methods: {
-    getStoreList(row) {
+    createGameStore(row) {
       const self = this;
       const data = {
         orderId: row.orderId
       };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.createGameStore({data})
 				if(res && res.code == 0) {
           self.$message.success('注销成功')
           row.orderStatus = 6;

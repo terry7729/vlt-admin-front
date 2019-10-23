@@ -1,33 +1,35 @@
 <template>
-  <div class="terminal-side">
+  <div class="terminal-content">
     <el-row class="tac">
       <el-col class="menu-group">
-        <el-menu
+        <!-- <el-menu
           ref="elMenu"
           :default-active="$route.meta.parentName || $route.name"
           @open="handleOpen"
           @close="handleClose"
           :collapse="isCollapse"
           :unique-opened="true"
-        >
-          <li class="menu-logo">
+        > -->
+          <div class="menu-logo">
             <span class="ct">
               <i class="iconfont el-icon-s-home"></i>
               <span class="name">{{menuList.title}}</span>
             </span>
-          </li>
-          <li class="menu-wrapper">
-            <menu-tree :menuData="menuList.list"></menu-tree>
-          </li>
-        </el-menu>
+          </div>
+          <div class="menu-wrapper">
+             <el-tabs tab-position="left" v-model="activeName" style="height: 700px">
+                <el-tab-pane v-for="item in menuList.list" :key="item.id" :label="item.name" :name="item.name" ref="tablist">
+                    <slot name="tabContent" :item="item"></slot>
+                </el-tab-pane>
+             </el-tabs>
+          </div>
+        <!-- </el-menu> -->
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import menuTree from "@/components/main/menuTree";
-import { sync } from "glob";
 // businessManageTrimimal
 export default {
   name: "terminalSideMenu",
@@ -38,18 +40,17 @@ export default {
   },
   data() {
     return {
-      isCollapse: false
+      isCollapse: false,
+      activeName: this.menuList.list[0].name
     };
   },
   computed: {},
   created() {},
   mounted() {
-    // console.log(this.menuList);
+   
   },
   watch: {
-    $route() {
-      // console.log("router", this.$router);
-    }
+    $route() {}
   },
   methods: {
     async getMenuList() {
@@ -67,46 +68,42 @@ export default {
       console.log("handleClose");
     }
   },
-  components: {
-    "menu-tree": menuTree
-  }
+  components: {}
 };
 </script>
 
 <style lang="less">
-.terminal-side {
+.terminal-content {
+  width: 100%;
   color: #000;
   background: #fff;
+  .el-tabs {
+    .el-tabs__header {
+      width: 200px;
+      height: 100%;
+      .el-tabs__nav {
+         .el-tabs__item.is-left{
+          text-align: left;   
+          text-indent: 10px;
+          &.is-active, &:hover {
+             background: #e6f7ff;
+          }
+        }
+      }
+    }
+    .el-tabs__content {
+      height: 100%;
+      overflow-y: scroll;
+    }
+  }
   .menu-logo {
-    padding-left: 20px;
     line-height: 40px;
     color: #000;
+    font-weight: 600;
     .iconfont {
       margin-right: 10px;
       font-size: 20px;
       color: #333;
-    }
-  }
-  .el-menu {
-    border-right: 0;
-    .el-menu-item {
-      height: 50px;
-      line-height: 50px;
-      padding-left: 50px !important;
-      &.is-active {
-        position: relative;
-        background: #e6f7ff;
-        &:after {
-          position: absolute;
-          right: 0;
-          top: 0;
-          display: block;
-          content:'';
-          width: 3px;
-          height: 100%;
-          background: #1890ff;
-        }
-      }
     }
   }
 }

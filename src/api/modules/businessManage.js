@@ -24,6 +24,15 @@ export default {
   // 查询年度开展计划汇总市级信息
   getCityPlanInfo: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanInfo', options),
   // 省级查询市级计划汇总信息
-  getTest: (options = {}) => ajax.post('/developPlan/queryProvinceCityDevelopPlan', options),
+  getProvinceCityPlan: (options = {}) => ajax.post('/developPlan/queryProvinceCityDevelopPlan', options),
+  // 游戏储备列表
+  getGameStoreList: (options = {}) => ajax.post('/game/queryGameListByPage', options),
+  // 新增游戏储备
+  createGameStore: (options = {}) => ajax.post('/game/insertGameInfo', options),
+  // 编辑游戏储备
+  editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
+  // 查看游戏储备详情
+  getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options)
 }

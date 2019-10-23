@@ -9,9 +9,7 @@
           <el-table-column prop="goodsName" label="物品名称"></el-table-column>
           <el-table-column prop="goodsType" label="物品型号"></el-table-column>
           <el-table-column prop="goodsCode" label="物品编号"></el-table-column>
-          <el-table-column prop="maxNum" label="数量（大）"></el-table-column>
           <el-table-column prop="miniNum" label="数量（小）"></el-table-column>
-          <el-table-column prop="conversionValue" label="大小单位转换值"></el-table-column>
           <el-table-column prop="money" label="单价（元）"></el-table-column>
           <el-table-column prop="remark" label="备注"></el-table-column>
       </el-table>
@@ -42,8 +40,7 @@ export default {
         { title: "备注", value: "", prop: "remark" },
     ],
   goodsListData:[
-    {id:1,goodsName:'投注终端',goodsType:'xxxxx',goodsCode:'xxxxx',
-    maxNum:'2019-03-15',miniNum:'xxxx',conversionValue:'xxx',money:'xxxx',remark:''}
+    {id:1,goodsName:'投注终端',goodsType:'xxxxx',goodsCode:'xxxxx',miniNum:'xxxx',money:'xxxx',remark:''}
   ]
 
  }

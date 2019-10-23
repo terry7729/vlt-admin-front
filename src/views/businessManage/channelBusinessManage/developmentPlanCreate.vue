@@ -3,7 +3,13 @@
     <div class="vlt-edit-single">
       <h2 class="title">基础信息</h2>
       <div class="vlt-edit-wrap">
-        <base-form :formData="formData" ref="baseForm" :rules="rules" direction="right" labelWidth="120px" @change="changeForm"></base-form>
+        <base-form ref="baseForm"
+          :formData="formData" 
+          :rules="rules" 
+          direction="right" 
+          labelWidth="120px" 
+          @change="changeForm">
+        </base-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -14,7 +20,7 @@
 </template>
 
 <script type="text/javascript">
-
+import {getCascaderCheckedItem} from '@/utils/getCascaderCheckedItem.js'
 import rules from '@/utils/rules.js';
 
 export default {
@@ -23,11 +29,13 @@ export default {
     return {
       formData: [
         {title: '计划时间', type: 'datetime', prop: 'time', value: ''},
-        {title: '所属机构', type: 'cascader-multiple', prop: 'insCode', value: [], options: [], 
+        {title: '所属机构', type: 'cascader', prop: 'insCode', value: [], options: [], 
           setProps: {
             label: "text",
             value: "id",
-            children: "children"
+            children: "children",
+            // multiple: true, // 多选
+            // checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
         },
         {title: '新建销售厅数量', type: 'input', prop: 'test', value: ''},
@@ -50,6 +58,7 @@ export default {
           { required: true, validator: rules.checkEmail, trigger: 'blur' }
         ]
       },
+      cascaderOptions: []
     }
   },
   created() {
@@ -64,8 +73,9 @@ export default {
 				let res = await self.$api.queryInsTree({data})
 				if(res && res.code == 0) {
           console.log('res', res.data)
-          // self.$set(self.formData[1], 'options', res.data)
-          self.formData[1].options = res.data;
+          self.$set(self.formData[1], 'options', res.data)
+          // self.formData[1].options = res.data;
+          self.cascaderOptions = res.data;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -89,6 +99,8 @@ export default {
     },
     changeForm(val) {
       console.log('派发出来的参数', val)
+      const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
+      console.log(instArr)
     },
     submit() {
       this.$refs.baseForm.validate((val)=>{
