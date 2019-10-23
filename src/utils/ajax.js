@@ -63,10 +63,10 @@ const request = (method, url, options, extend) => {
 }
 
 export default {
-  get (url, options) {
+  get(url, options) {
     return request('get', url, options);
   },
-  post (url, options) {
+  post(url, options) {
     return request('post', url, options);
   },
   upload(url, options) {
