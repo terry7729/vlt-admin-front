@@ -1,5 +1,5 @@
 // index.js
-import httpMock from "@/utils/httpMock.js" // 本地环境mock请求，必要时请注释
+// import httpMock from "@/utils/httpMock.js" // 本地环境mock请求，前后端联调时请注释
 import ajax from '@/utils/ajax.js'
 // 引入各个模块接口
 import businessCharts from './modules/businessCharts'
@@ -16,9 +16,12 @@ export default {
   getMenu: (options = {}) => ajax.post('/menu', options),
   // 登出
   getLoginOut: (options = {}) => ajax.post('/logout', options),
+  // 上传范例
+  testUpload: (options = {}) => ajax.upload('/upload', options),
 
   ...businessCharts,
   ...businessManage,
   ...businessOperation,
   ...systemManage
 }
+//aaa

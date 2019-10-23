@@ -10,7 +10,7 @@ export default {
   //菜单树查询
   getMenu: (options = {}) => ajax.post('/module/queryModuleTree/VLT_BMS', options),
   //菜单详情
-  getDestils: (options, id) => ajax.post(`/module/queryModuleDetail/${id}`, options),
+  getDestils: (options = {}) => ajax.post(`/module/queryModuleDetail`, options),
   //新增菜单
   addMenu:(options = {}) => ajax.post('/module/saveModule',options),
   //批量删除
@@ -22,7 +22,7 @@ export default {
   //架构树菜单
   queryInsTree:(options = {}) => ajax.post('/ins/queryInsTree',options),
   //查询机构详情
-  OrganizationDestils:(options,id) => ajax.post(`/ins/queryInsInfo/${id}`,options),
+  OrganizationDestils:(options = {}) => ajax.post(`/ins/queryInsInfo`,options),
   //添加机构
   OrganizationAdd:(options = {}) => ajax.post('/ins/addInsInfo',options),
   //修改机构信息
@@ -38,7 +38,7 @@ export default {
   //区域树查询
   RegionalTree:(options = {}) => ajax.post('/region/findRegionTreeRoots',options),
   //部门树查询
-  FindDeptTreeRoots:(options = {},id) =>ajax.post(`/dept/findDeptTreeRoots/${id}`,options),
+  FindDeptTreeRoots:(options = {}) =>ajax.post(`/dept/findDeptTreeRoots`,options),
 
 
 
@@ -48,7 +48,7 @@ export default {
   //查询全部有交角色接口
   QueryAllRole:(options = {}) =>ajax.post('/role/queryAllRole',options),
   //查询角色详情
-  QueryRoleInfoDetail:(options = {},id) =>ajax.post(`/role/queryRoleInfoDetail/${id}`,options),
+  QueryRoleInfoDetail:(options = {}) =>ajax.post(`/role/queryRoleInfoDetail`,options),
   //保存角色信息
   SaveRoleInfo:(options = {}) =>ajax.post('/role/saveRoleInfo',options),
   //修改角色信息
