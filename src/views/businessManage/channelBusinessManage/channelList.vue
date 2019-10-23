@@ -249,13 +249,7 @@ export default {
         },
       ],
       controlOptions: [
-        {name: '新建计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
-        {name: '批量删除', type: '', icon: 'delete'},
-        {name: '刷新', type: '', icon: 'refresh-right'},
-        {name: '打印', type: 'primary', icon: 'printer'},
-        {name: '导出', type: 'danger', icon: 'download'},   
-        {name: '导出', type: 'success', icon: 'upload'},
-        {name: '导出', type: 'warning', icon: 'download'},
+        {name: '导出', type: 'primary', icon: 's-promotion'},   
       ],
       tableData: [
         {gameId:'12',gameName: 'a',cycleType: 0,gameTypeName:'奖组型',status:'2019-09-12 09：00：00'}
@@ -266,6 +260,22 @@ export default {
   
   },
   methods: {
+    getStoreList(row) {
+      const self = this;
+      const data = {
+        orderId: row.orderId
+      };
+      (async (data)=>{
+				let res = await self.$api.getStoreList({data})
+				if(res && res.code == 0) {
+          self.$message.success('注销成功')
+          row.orderStatus = 6;
+          self.getLotteryList(self.param)
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     search(val) {
       console.log(val)
     },

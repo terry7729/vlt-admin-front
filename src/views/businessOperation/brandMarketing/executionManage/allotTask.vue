@@ -1,72 +1,22 @@
 <template>
   <div class="vlt-card allot-task">
-    <section class="comp-item">
-      <div class="vlt-edit-double">
-        <div class="vlt-edit-wrap">
-          <el-form
-            label-position="top"
-            label-width="90px"
-            :model="form"
-            ref="form"
-            class="device-add"
-          >
-            <el-form-item label="活动编号">
-              <el-select v-model="form.logOff" placeholder="请选择">
-                <el-option
-                  v-for="item in logOffOption"
-                  @click.native="changeLogOff(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="执行编号">
-              <el-select v-model="form.logOff" placeholder="请选择">
-                <el-option
-                  v-for="item in logOffOption"
-                  @click.native="changeLogOff(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="执行人">
-              <el-select v-model="form.logOff" placeholder="请选择">
-                <el-option
-                  v-for="item in logOffOption"
-                  @click.native="changeLogOff(item)"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="任务名">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item label="任务描述">
-              <el-input v-model="form.mixBet"></el-input>
-            </el-form-item>
-            <el-form-item></el-form-item>
-
-            <el-form-item class="formTime" label="生效时间">
-              <el-date-picker v-model="form.satartTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
-            </el-form-item>
-
-            <el-form-item class="formTime" label="截止时间">
-              <el-date-picker v-model="form.endTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
-            </el-form-item>
-
-            <el-row class="el-form-item vlt-edit-btn">
-              <el-button type="primary" v-prevent="1000" size="medium" @click="save">提交并保存</el-button>
-              <el-button size="medium" @click="editShow = !editShow">取消</el-button>
-            </el-row>
-          </el-form>
-        </div>
+    <div class="vlt-edit-double">
+      <div class="vlt-edit-wrap">
+        <el-form label-position="top" label-width="90px" :model="allotForm" ref="allotForm">
+          <base-form
+            :formData="allotData"
+            labelWidth="140px"
+            :rules="rules1"
+            direction="top"
+            @change="changeForm"
+          ></base-form>
+        </el-form>
+        <el-row class="el-form-item vlt-edit-btn">
+          <el-button type="primary"  size="medium" @click="submit">提交并保存</el-button>
+          <el-button size="medium" @click="cancel">取消</el-button>
+        </el-row>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -75,29 +25,74 @@ export default {
   name: "",
   data() {
     return {
-      logOffOption: [],
-      form: {
-        singleAmount: "",
-        minMultiple: "",
-        mixBet: "",
-        bet: "",
-        logOff: "",
-        textarea: "",
-        satartTime: "",
-        endTime: ""
-      }
+      rules1: { rule: "" },
+      allotData: [
+        {
+          type: "select",
+          title: "活动编号",
+          prop: "activeNum",
+          options: [
+            { label: "007", value: "007" },
+            { label: "008", value: "008" }
+          ]
+        },
+        {
+          type: "select",
+          title: "执行编号",
+          prop: "execuNum",
+          options: [
+            { label: "101", value: "101" },
+            { label: "102", value: "102" }
+          ]
+        },
+        {
+          type: "select",
+          title: "执行人",
+          prop: "person",
+          options: [
+            { label: "王二", value: "王二" },
+            { label: "赵二", value: "赵二" }
+          ]
+        },
+
+        { title: "任务名", type: "input", prop: "name", value: "" },
+        { title: "任务描述", type: "input", prop: "describe", value: "" },
+        {
+          title: "",
+          type: "",
+          prop: "",
+          value: ""
+        },
+        {
+          title: "生效时间",
+          type: "datetime",
+          prop: "startTime",
+          value: ""
+        },
+        {
+          title: "截止时间",
+          type: "datetime",
+          prop: "endTime",
+          value: ""
+        }
+      ],
+      allotForm: {}
     };
   },
   methods: {
-    save() {
+    submit() {
+      console.log(this.allotForm);
       this.$router.push({ path: "executionManage" });
     },
-    changeLogOff() {}
-  },
-  components: {}
+    cancel() {
+      this.$router.go(-1);
+    },
+    changeForm(val) {
+      this.allotForm = val;
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped >
-
 </style>

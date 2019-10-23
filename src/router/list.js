@@ -1,6 +1,7 @@
 const home = () => import('@/views/home/home')
 const login = () => import('@/views/login/login')
 const entry = () => import('@/views/entry/entry')
+const locking = () => import('@/views/locking/locking')
 const componentDemo = () => import('@/views/componentDemo/')
 import children from './modules/entry'
 
@@ -25,6 +26,11 @@ export default [
     path: '/entry',
     name: 'entry',
     component: entry
+  },
+  {
+    path: '/locking',
+    name: 'locking',
+    component: locking
   },
   {
     path: '/componentDemo',

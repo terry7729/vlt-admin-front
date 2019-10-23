@@ -16,6 +16,8 @@ export default {
   getMenu: (options = {}) => ajax.post('/menu', options),
   // 登出
   getLoginOut: (options = {}) => ajax.post('/logout', options),
+  // 上传范例
+  testUpload: (options = {}) => ajax.upload('/upload', options),
 
   ...businessCharts,
   ...businessManage,
