@@ -55,9 +55,9 @@ export default {
     height: 4500px; 
     border-radius: 100%;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate3d(-50%, -50%, 0);
     box-sizing: content-box;
     z-index: 999;
   }
