@@ -43,7 +43,7 @@ export default {
   },
   components: {},
   methods: {
-    //获取中央交易数据列表
+    //获取中央交易数据列表.
     async getGameRiskDetail() {
       const id= this.$route.query.id
       const self = this;
