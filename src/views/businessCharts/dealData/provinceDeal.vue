@@ -111,9 +111,8 @@ export default {
       });
       if (res && res.code == 0) {
         console.log(res)
-        self.tableData = res.data.data.dataList;
-        self.totalCount = res.data.data.totalRecord;
-        // console.log(self.totalCount);
+        self.tableData = res.data.dataList;
+        self.totalCount = res.data.totalRecord;
       }
     }
   },created() {
