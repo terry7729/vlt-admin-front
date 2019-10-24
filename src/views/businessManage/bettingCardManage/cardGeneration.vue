@@ -8,11 +8,11 @@
       :total="999"
       labelWidth="100px"
     >
-      <control-bar slot="extend-bar" position="left" @select="selectBtn" :options="controlOptions" ></control-bar>
+      <control-bar slot="extend-bar" position="left" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     <el-row class="card-table">
       <el-table
-        :data="tableDatas.tableData"
+        :data="tableData.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
@@ -28,7 +28,7 @@
         ></el-table-column>
         <el-table-column fixed="right" label="操作" width="250">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
+            <!-- <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button> -->
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
             <el-button type="primary" size="mini" @click="toExport(scope.row)">导出</el-button>
             <el-button type="danger" size="mini" @click="logout (scope.row) ">注销</el-button>
@@ -36,12 +36,11 @@
         </el-table-column>
       </el-table>
     </el-row>
-
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableData.total"
+      :currentPage="tableData.current"
+      :pageSize="tableData.size"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
@@ -56,11 +55,11 @@ export default {
     return {
       // 搜索组件配置
       searchOptions: [
-        { title: "批次：", type: "input", prop: "inputName", value: "" },
+        { title: "批次：", type: "input", prop: "batch", value: "" },
         {
           title: "所属机构：",
           type: "select",
-          prop: "selectName",
+          prop: "insId",
           value: "",
           options: [
             {
@@ -76,7 +75,7 @@ export default {
         {
           title: "投注卡类型：",
           type: "select",
-          prop: "selectName2",
+          prop: "bettingCardType",
           value: "",
           options: [
             {
@@ -88,13 +87,6 @@ export default {
               value: 2
             }
           ]
-        },
-        {
-          type: "datetime-range",
-          prop: "date4",
-          value: "",
-          title: "有效日期：",
-          placeholder: ["开始时间", "结束时间"]
         }
       ],
       controlOptions: [{ name: "新建卡片", type: "primary", icon: "plus" }],
@@ -236,139 +228,47 @@ export default {
         ]
       },
       tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 1,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 2,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 3,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 4,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 5,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 6,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 7,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 8,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          },
-          {
-            id: 9,
-            ardType: "F01",
-            batch: 3,
-            cardsIssued: 1,
-            affiliation: "56",
-            date: "2019-09-08",
-            remarks: "sss"
-          }
-        ],
         tableKey: [
-          {
-            label: "序号",
-            value: "id",
-            width: "80"
-          },
-          {
-            label: "批次",
-            value: "batch",
-            width: ""
-          },
-          {
-            label: "投注卡类型",
-            value: "ardType",
-            width: "100"
-          },
-          {
-            label: "所属机构",
-            value: "affiliation",
-            width: ""
-          },
-          {
-            label: "发卡数量",
-            value: "cardsIssued",
-            width: "80"
-          },
-          {
-            label: "有效日期",
-            value: "date",
-            width: ""
-          },
-          {
-            label: "备注",
-            value: "remarks",
-            width: ""
-          }
+          { label: "序号", value: "bettingCardId", width: "80" },
+          { label: "批次", value: "batch", width: "" },
+          { label: "投注卡类型", value: "bettingCardType", width: "100" },
+          { label: "所属机构", value: "insName", width: "" },
+          { label: "发卡数量", value: "cardMakingQuantity", width: "80" },
+          { label: "备注", value: "remark", width: "" }
         ]
+      },
+      tableData: {
+        records: [],
+        total: 4,
+        size: 15,
+        current: 1,
+        orders: [],
+        searchCount: true,
+        pages: 1
       }
     };
   },
+  created() {
+    this.initList();
+  },
   methods: {
+    async initList(insId = 0, page = 1, size = 10, batch = '', bettingCardType = 0) {
+      let options = {
+        page: 0,
+        pageSize: 0,
+        param: {
+          batch: "",
+          bettingCardType: 0,
+          insId: 0
+        }
+      };
+      let data = JSON.parse(JSON.stringify(options));
+      let result = await this.$api.cardGenerationList({ data });
+      console.log("data", result);
+      if (result.code == 0) {
+        this.tableData = result.data;
+      }
+    },
     changeSelect(val) {
       console.log(this.form, val);
     },
@@ -376,51 +276,54 @@ export default {
       // console.log(val);
       // this.showdialog = true;
       this.$router.push({
-        name: 'newCard',
-      })
+        name: "newCard"
+      });
     },
     search(form) {
       console.log("search", form);
+      // this.initList();
     },
     handleClick(row) {
       this.$router.push({
-        name: 'cardDetail',
+        name: "cardDetail",
         query: {
           id: row.id
         }
-      })
+      });
     },
-    edit (val) {
+    edit(val) {
       this.$router.push({
-        name: 'exportCard',
+        name: "exportCard",
         query: {
           id: val.id
         }
-      })
+      });
     },
-    toExport (val) {
+    toExport(val) {
       this.$router.push({
-        name: 'exportCard',
+        name: "exportCard",
         query: {
           id: val.id
         }
-      })
+      });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     handleSizeChange(pageSize) {
-      console.log(pageSize);
+      // this.tableData.size = pageSize
+      this.initList(0, 1, pageSize);
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
+      this.initList(0, currentPage, 10);
     },
     changeForm(val) {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
     },
-    logout (row) {
-      console.log('注销', row);
+    logout(row) {
+      console.log("注销", row);
     }
   },
   components: {
@@ -430,5 +333,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 </style>

@@ -65,11 +65,13 @@
         </el-col>
       </el-row>
     </div>
+    <lock-mask></lock-mask>
   </div>
 </template>
 
 <script>
 import adminInfo from '@/components/main/adminInfo'
+import lockMask from '@/components/main/lockMask'
 import {mapActions} from 'vuex'
 import menuList from '@/libs/menu/'
 
@@ -108,7 +110,8 @@ export default {
     ...mapActions(['setEntry'])
   },
   components: {
-    adminInfo
+    adminInfo,
+    lockMask
   }
 }
 </script>

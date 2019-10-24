@@ -12,9 +12,10 @@ export default {
  async created() {
     let id = this.$route.query.id
     // console.log(data)
-    let reslt =  await this.$api.QueryRoleInfoDetail({},id)
+    let reslt =  await this.$api.QueryRoleInfoDetail(id)
     // this.infoList = reslt.data
-    let arr  = Object.keys(reslt.data)
+    if(reslt.code === 0){
+          let arr  = Object.keys(reslt.data)
     let len = this.infoList
     for(var i = 0 ; i < len.length ; i++ ){
       for(var j = 0 ; j< arr.length ; j++){
@@ -22,6 +23,7 @@ export default {
           len[i].value = reslt.data[arr[j]]
         }
       }
+    }
     }
     console.log(reslt)
   },

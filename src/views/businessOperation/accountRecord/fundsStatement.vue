@@ -8,7 +8,6 @@
       labelWidth="80px"
     ></search-bar>
 
-    <section class="comp-item">
       <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
         <el-table-column prop="num" label="序号"></el-table-column>
         <el-table-column prop="orderNum" label="订单编号"></el-table-column>
@@ -33,7 +32,7 @@
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
-    </section>
+
   </div>
 </template>
 

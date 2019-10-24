@@ -434,9 +434,7 @@ export default {
     // 提交按钮
     operationAccountAddSubmit() {
       // console.log(this.formData);
-
       let formdata = this.$refs.baseForm.form;
-      console.log(formdata);
 
       //console.log(this.$refs.baseForm.form);
       //console.log(formdata);

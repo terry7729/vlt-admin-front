@@ -145,12 +145,18 @@ export default {
     };
   },
   components: {},
+  async created() {
+   
+    let reslt = await this.$api.config();
+    console.log(reslt)
+  },
   methods: {
     changeForm(val) {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
     },
     submit() {
+      
       this.$refs.baseForm.validate(val => {
         console.log(val);
       });

@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card account-detail">
-    <section class="comp-item">
+    
       <panel-static title="账户资料" style="margin-top: 10px;">
         <base-info :infoList="infoList"></base-info>
       </panel-static>
@@ -39,7 +39,6 @@
           <el-table-column prop="cardNum" label="权益名称"></el-table-column>
           <el-table-column prop="sequenceNum" label="起止时间"></el-table-column>
           <el-table-column prop="type" label="权益描述"></el-table-column>
-
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="equityDetail(scope.row.cardNum)">详情</el-button>
@@ -47,7 +46,6 @@
           </el-table-column>
         </el-table>
       </panel-static>
-    </section>
   </div>
 </template>
 
