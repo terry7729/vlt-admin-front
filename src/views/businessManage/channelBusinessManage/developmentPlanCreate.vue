@@ -45,8 +45,7 @@ export default {
         {title: '发展预算', type: 'input', prop: 'test', value: ''},
         {title: '计划说明',type: 'textarea', prop: 'all', value: ''},
       ],
-      params: {
-      },
+      params: null,
       rules: {
         test: [
           { required: true, validator: rules.checkEmail, trigger: 'blur' }
@@ -81,17 +80,13 @@ export default {
         }
       })(data)
     },
-    createDevelopPlan(row) {
+    createDevelopPlan() {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
+      const data = this.params;
       (async (data)=>{
 				let res = await self.$api.createDevelopPlan({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          console.log(res)
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -99,6 +94,7 @@ export default {
     },
     changeForm(val) {
       console.log('派发出来的参数', val)
+      this.params = val;
       const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
       console.log(instArr)
     },

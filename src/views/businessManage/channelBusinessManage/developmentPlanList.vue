@@ -47,20 +47,20 @@ export default {
       ]
     }
   },
-  components: {
+  created() {
+    let data = {};
+    this.getDevelopPlanList(data)
   },
   methods: {
-    getStoreList(row) {
+    search(data) {
+      this.getDevelopPlanList(data)
+    },
+    getDevelopPlanList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getDevelopPlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          console.log(res)
 				} else {
           // self.$message.warning(res.msg)
         }

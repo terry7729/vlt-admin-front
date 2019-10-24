@@ -241,20 +241,22 @@ export default {
       ]
     }
   },
-  components: {
+  created() {
+    this.getCityPlanList({})
   },
   methods: {
-    getStoreList(row) {
+    select() {
+
+    },
+    search(data) {
+      this.getCityPlanList(data)
+    },
+    getCityPlanList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getCityPlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          console.log(res)
 				} else {
           // self.$message.warning(res.msg)
         }
