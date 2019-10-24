@@ -218,54 +218,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.plan-detail {
-  // .el-tabs__nav {
-  //   margin-left: 34px;
-  // }
-
-  .base-data {
-    width: 60%;
-    margin-top: 20px;
-    margin-left: 150px;
-    .rule-form {
-      width: 100%;
-
-      .el-select {
-        width: 120px;
-        margin-right: 10px;
-      }
-
-      .el-input {
-        width: 160px;
-
-        input {
-          width: 160px;
-        }
-      }
-    }
-  }
-
-  .progress-bar {
-    width: 70%;
-    margin: 20px 150px;
-  }
-
-  .ration-target {
-    margin-top: 20px;
-
-    .ration-check {
-      margin-left: 70px;
-      margin-top: -16px;
-
-      .el-checkbox {
-        margin-bottom: 20px;
-      }
-    }
-  }
-  .state-inform {
-    width: 50px;
-    margin-left: 70%;
-    text-align: right;
-  }
-}
+@import "./less/index.less";
 </style>

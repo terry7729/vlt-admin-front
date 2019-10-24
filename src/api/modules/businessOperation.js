@@ -2,7 +2,7 @@
 import ajax from '@/utils/ajax.js'
 export default {
   /*
-   *@param {json} options: {} || {data: json}
+   *@param {json} options: {} || {data: json} 
    */
   /* 请务必注释每个接口所属名称 */
   // 例
@@ -29,7 +29,8 @@ export default {
   //新增账户
   addAccount: (options = {}) => ajax.post('tChannelFund/create', options),
   //账户详情
-  accountDetail: (options = {}) => ajax.post('tChannelFund/detail', options),
+  // accountDetail: (options = {}) => ajax.post('tChannelFund/detail', options),
+  accountDetail: (options = {}) => ajax.post('/tChannelFund/detail', options),
   //账户修改
   updateAccount: (options = {}, id) => ajax.post(`tChannelFund/update/${id}`, options),
 
