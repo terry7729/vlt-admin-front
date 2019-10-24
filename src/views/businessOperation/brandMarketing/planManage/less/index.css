@@ -93,3 +93,68 @@
   margin-left: 150px;
   margin-top: -50px;
 }
+.create-active .step-bar {
+  width: 80%;
+  margin: 10px auto;
+}
+.create-active .template-check {
+  margin-left: 36px;
+  margin-bottom: 10px;
+}
+.create-active .template-check span {
+  font-size: 18px;
+  font-weight: 800;
+}
+.create-active .template-check .el-select {
+  left: 20px;
+}
+.create-active .template-preview {
+  margin-left: 36px;
+  margin-bottom: 10px;
+}
+.create-active .template-preview span {
+  font-size: 18px;
+  font-weight: 800;
+}
+.create-active .footer-btn {
+  width: 200px;
+  margin-left: 60%;
+  margin-bottom: 20px;
+}
+.plan-detail .base-data {
+  width: 60%;
+  margin-top: 20px;
+  margin-left: 150px;
+}
+.plan-detail .base-data .rule-form {
+  width: 100%;
+}
+.plan-detail .base-data .rule-form .el-select {
+  width: 120px;
+  margin-right: 10px;
+}
+.plan-detail .base-data .rule-form .el-input {
+  width: 160px;
+}
+.plan-detail .base-data .rule-form .el-input input {
+  width: 160px;
+}
+.plan-detail .progress-bar {
+  width: 70%;
+  margin: 20px 150px;
+}
+.plan-detail .ration-target {
+  margin-top: 20px;
+}
+.plan-detail .ration-target .ration-check {
+  margin-left: 70px;
+  margin-top: -16px;
+}
+.plan-detail .ration-target .ration-check .el-checkbox {
+  margin-bottom: 20px;
+}
+.plan-detail .state-inform {
+  width: 50px;
+  margin-left: 70%;
+  text-align: right;
+}

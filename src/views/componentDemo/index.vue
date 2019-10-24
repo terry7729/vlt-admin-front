@@ -124,7 +124,7 @@
       <h4 class="comp-title">文件上传</h4>
       <div class="mt10">
         <el-upload
-          action="upload"
+          action=""
           :limit="1"
           :show-file-list="true"
           :on-remove="handleRemove"
@@ -1618,13 +1618,14 @@ export default {
     async uploadFile(files) {
       let formData = new FormData();
       formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
           console.log('上传进度事件:', evt)
         }
-      }) 
-
+      })
       console.log('uploadFile', res);
     }
   },

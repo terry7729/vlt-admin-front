@@ -60,10 +60,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.execution-detail {
-  .last-list {
-    margin: 20px;
-    width: 80%;
-  }
-}
+@import "./less/index";
 </style>

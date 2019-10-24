@@ -111,36 +111,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.create-active {
-  .step-bar{
-    width: 80%;
-    margin: 10px auto;
-  }
-  .template-check {
-    margin-left: 36px;
-    margin-bottom: 10px;
-    span {
-      font-size: 18px;
-      font-weight: 800;
-    }
-    .el-select {
-      left: 20px;
-    }
-  }
-  .template-preview {
-    margin-left: 36px;
-    margin-bottom: 10px;
-    span {
-      font-size: 18px;
-      font-weight: 800;
-    }
-  }
-  
-  .footer-btn {
-    width: 200px;
-    margin-left: 60%;
-    margin-bottom: 20px;
-  }
-}
-
+@import "./less/index";
 </style>
