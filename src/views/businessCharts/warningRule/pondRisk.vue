@@ -8,7 +8,7 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" @select='select' :options="controlOptions" position="right"></control-bar>
+        <control-bar slot="extend-bar" @select="select" :options="controlOptions" position="right"></control-bar>
       </search-bar>
     </section>
     <div class>
@@ -20,23 +20,28 @@
         :cell-style="{align:'center'}"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column align="center" prop="date" label="游戏"></el-table-column>
-        <el-table-column align="center" prop="date" label="最高奖池金额"></el-table-column>
-        <el-table-column align="center" prop="name" label="最低奖池金额"></el-table-column>
-        <el-table-column align="center" prop="address" label="状态/审核"></el-table-column>
-        <el-table-column label="操作" fixed="right"  align="center">
+        <el-table-column align="center" prop="gameName" label="游戏"></el-table-column>
+        <el-table-column align="center" prop="maxJackpotMoneyOrdinary" label="最高奖池金额"></el-table-column>
+        <el-table-column align="center" prop="minJackpotMoneyOrdinary" label="最低奖池金额"></el-table-column>
+        <el-table-column align="center" prop="collectStatus" label="状态">
           <template slot-scope="scope">
-            <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
+            <span v-if="scope.row.collectStatus===0">生效</span>
+            <span v-if="scope.row.collectStatus===1">停止</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" fixed="right" align="center">
+          <template slot-scope="scope">
+            <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
             <el-button type="primary" @click size="mini">修改</el-button>
-            <el-button type="primary" @click size="mini">删除</el-button>
+            <el-button type="primary" @click.native="deleteInfo(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-     <table-paging
+      <table-paging
         style="margin-top:30px"
         :current-page="1"
         :page-size="10"
-        :total="100"
+        :total="totalCount"
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
@@ -50,6 +55,7 @@ export default {
   name: "areaDeal",
   data() {
     return {
+      totalCount: 0,
       searchOptions: [
         {
           type: "select",
@@ -69,11 +75,10 @@ export default {
           ]
         }
       ],
-      
+
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "批量删除", type: "primary", icon: "delete" },
-        { name: "批量修改", type: "primary", icon: "edit" }
+      
       ],
       //记录省市县
       provinceList: [],
@@ -119,11 +124,27 @@ export default {
     };
   },
   methods: {
+    async getPondRiskList() {
+      const self = this;
+      const res = await self.$api.getPondRiskList({
+        data: {
+          pageNum: self.listQuery.page,
+          pageSize: self.listQuery.limit
+        }
+      });
+      if (res && res.code == 0) {
+        self.tableData = res.data.records;
+        self.totalCount = res.data.total;
+      }
+    },
+
     pageSizeChange(pageSize) {
-      console.log('每页条数：', pageSize);
+      this.listQuery.limit = pageSize;
+      this.getPondRiskList();
     },
     pageCurrentChange(currentPage) {
-      console.log('当前页：', currentPage);
+      this.listQuery.page = currentPage;
+      this.getPondRiskList();
     },
     search(form) {
       console.log("search", form);
@@ -220,19 +241,63 @@ export default {
           "县：" +
           this.countryCode
       );
-    },select(val){
-      if(val.name==='新增'){
-        this.goToAdd()
+    },
+    select(val) {
+      if (val.name === "新增") {
+        this.goToAdd();
       }
-    },goToAdd() {
+    },
+    goToAdd() {
       this.$router.push({
         name: "pondRiskAdd"
       });
+    },
+    detail(row) {
+      this.$router.push({
+        name: "pondRiskDetail",
+        query: {
+          id: row.businessKey
+        }
+      });
+    },
+    deleteInfo(row) {
+      this.$confirm(`确定要删除这条数据吗? `, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.pondRiskDelete(row.businessKey);
+        })
+        .catch(() => {
+          
+        });
+    },
+    async pondRiskDelete(id) {
+      const res = await this.$api.pondRiskDelete({
+        data: {
+          businessKey: id
+        }
+      });
+      if (res && res.code == 0) {
+        this.$message({
+          type: "success",
+          message: "删除成功!"
+        });
+        this.getPondRiskList()
+      }else{
+          this.$message({
+            type: 'info',
+            message: '删除失败'
+          });    
+      }
     }
-
   },
   mounted() {
     // this.showcity();
+  },
+  created() {
+    this.getPondRiskList();
   }
 };
 </script>
