@@ -157,8 +157,11 @@ export default {
       this.$router.push({ path: "rechargeDetail", query: { id: account } });
     },
     search(params) {
-      let area = params.area.slice(params.area.length - 1);
-      params.area = area.join();
+      if (params.area && params.area.length > 0) {
+        let area = params.area.slice(params.area.length - 1);
+        params.area = area.join();
+      }
+
       console.info(params);
     },
     pageSizeChange(size) {},
