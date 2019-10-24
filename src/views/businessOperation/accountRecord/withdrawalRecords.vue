@@ -8,32 +8,30 @@
       labelWidth="80px"
     ></search-bar>
 
-    <section class="comp-item">
-      <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
-        <el-table-column prop="num" label="序号"></el-table-column>
-        <el-table-column prop="orderNum" label="订单编号"></el-table-column>
-        <el-table-column prop="type" label="提现类型"></el-table-column>
-        <el-table-column prop="account" label="提现卡号"></el-table-column>
-        <el-table-column prop="accountName" label="账户名称"></el-table-column>
-        <el-table-column prop="phoneNum" label="手机号码"></el-table-column>
-        <el-table-column prop="area" label="所在区域"></el-table-column>
-        <el-table-column prop="money" label="提现金额"></el-table-column>
-        <el-table-column prop="way" label="提现方式"></el-table-column>
-        <el-table-column prop="time" label="提现时间"></el-table-column>
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="withdrawalDetail(scope.row.account)">详情</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <table-paging
-        :current-page="1"
-        :page-size="10"
-        :total="this.tableData.length"
-        @handleSizeChange="pageSizeChange"
-        @handleCurrentChange="pageCurrentChange"
-      ></table-paging>
-    </section>
+    <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
+      <el-table-column prop="num" label="序号"></el-table-column>
+      <el-table-column prop="orderNum" label="订单编号"></el-table-column>
+      <el-table-column prop="type" label="提现类型"></el-table-column>
+      <el-table-column prop="account" label="提现卡号"></el-table-column>
+      <el-table-column prop="accountName" label="账户名称"></el-table-column>
+      <el-table-column prop="phoneNum" label="手机号码"></el-table-column>
+      <el-table-column prop="area" label="所在区域"></el-table-column>
+      <el-table-column prop="money" label="提现金额"></el-table-column>
+      <el-table-column prop="way" label="提现方式"></el-table-column>
+      <el-table-column prop="time" label="提现时间"></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="withdrawalDetail(scope.row.account)">详情</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <table-paging
+      :current-page="1"
+      :page-size="10"
+      :total="this.tableData.length"
+      @handleSizeChange="pageSizeChange"
+      @handleCurrentChange="pageCurrentChange"
+    ></table-paging>
   </div>
 </template>
 
@@ -43,7 +41,7 @@ export default {
   data() {
     return {
       searchOptions: [
-        { title: "提现账号", type: "input", prop: "inputName", value: "" },
+        { title: "提现账号", type: "input", prop: "account", value: "" },
         {
           title: "提现类型",
           type: "select",
@@ -60,8 +58,8 @@ export default {
             }
           ]
         },
-        { title: "手机号", type: "input", prop: "date2", value: "" },
-        { title: "订单编号", type: "input", prop: "date3", value: "" },
+        { title: "手机号", type: "input", prop: "phone", value: "" },
+        { title: "订单编号", type: "input", prop: "num", value: "" },
         {
           title: "所在区域",
           type: "select",
@@ -81,7 +79,7 @@ export default {
         {
           title: "提现时间",
           type: "datetime-range",
-          prop: "date5",
+          prop: "time",
           value: 1
         }
       ],
@@ -108,12 +106,10 @@ export default {
     },
     search() {},
     pageSizeChange(size) {
-      this.PAGESIZE = size;
-      this.$emit("handleSizeChange", size);
+     
     },
     pageCurrentChange(page) {
-      this.CURRENTPAGE = page;
-      this.$emit("handleCurrentChange", page);
+     
     }
   }
 };

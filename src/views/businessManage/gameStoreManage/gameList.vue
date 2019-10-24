@@ -53,162 +53,36 @@ export default {
         { name: "批量删除", type: "", icon: "delete" },
         { name: "导出", type: "", icon: "download" }
       ],
-      tableData: [
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },
-        {
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        },{
-          id:"01",
-          name: '开心一刻',
-          type:'概率型',
-          pond:"单奖池",
-          versions:"1.0.1",
-          icon:"",
-          developer:"中彩",
-          time:"2019-09-12 09:00:00",
-          state:"试玩",
-        }
-        ],
-        multipleSelection: [],
-        totalCount:0,
-        ruleForm: {
-          page: 1,
-          limit: 10
-        },
-        searchOptions:[
-        {type: 'input', prop: 'inputName', value: '', title: '游戏编码', placeholder: '请输入'},
-        {type: 'input', prop: 'inputName2', value: '', title: '游戏名称', placeholder: '请输入'},
-        {
-          type: 'select', prop: 'selectName', value: '', title: '游戏类型', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {
-          type: 'select', prop: 'selectName2', value: '', title: '游戏状态', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {
-          type: 'select', prop: 'selectName3', value: '', title: '奖池类型', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '最近更新时间', placeholder: ['开始日期', '结束日期']},
-          
-        ],
-        currentPage: 1
-      }
+      tableData: [],
+      multipleSelection: [],
+      totalCount:0,
+      ruleForm: {
+        page: 1,
+        limit: 10
+      },
+      searchOptions:[
+        {title: '游戏编码', type: 'input', prop: 'inputName', value: '',},
+        {title: '游戏名称', type: 'input', prop: 'inputName2', value: '',},
+        {title: '游戏类型', type: 'select', prop: 'selectName', value: '', options: []},
+        {title: '游戏状态', type: 'select', prop: 'selectName2', value: '', options: []},
+        {title: '奖池类型', type: 'select', prop: 'selectName3', value: '', options: []},
+        {title: '最近更新时间', type: 'datepicker-range', prop: '', value: '', options: ['start', 'end']} 
+      ],
+      currentPage: 1
+    }
     
   },
+  created() {
+    let data = {};
+    this.getGameStoreList(data)
+  },
   methods: {
-    getStoreList(row) {
+    getGameStoreList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getGameStoreList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -261,18 +135,6 @@ export default {
       console.log(`当前页: ${val}`);
     },
   },
-  computed: {
-
-  },
-  created() {
-  
-  },
-  mounted() {
-    
-  },
-  components: {
-
-  }
 }
 </script>
 

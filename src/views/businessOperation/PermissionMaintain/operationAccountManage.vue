@@ -10,15 +10,15 @@
         ></controlBar>
       </searchBar>
       <el-table :data="operationManageTableData" border style="width: 100%; margin-top: 10px">
-        <el-table-column prop="operationManageNum" label="序号"></el-table-column>
-        <el-table-column prop="operationManageBelong" label="所属渠道"></el-table-column>
-        <el-table-column prop="operationManageName" label="账户名"></el-table-column>
-        <el-table-column prop="operationManageID" label="账户ID"></el-table-column>
-        <el-table-column prop="operationManagetelephone" label="手机号"></el-table-column>
-        <el-table-column prop="operationManageRoleName" label="角色名称"></el-table-column>
-        <el-table-column prop="operationManageCreater" label="创建人"></el-table-column>
-        <el-table-column prop="operationManageCreateDate" label="创建时间"></el-table-column>
-        <el-table-column label="账户状态" min-width="140" prop="operationManageStatus">
+        <el-table-column prop="operationManageNum" label="序号" type="index"></el-table-column>
+        <el-table-column prop="channelName" label="所属渠道"></el-table-column>
+        <el-table-column prop="accountName" label="账户名"></el-table-column>
+        <el-table-column prop="id" label="账户ID"></el-table-column>
+        <el-table-column prop="phone" label="手机号"></el-table-column>
+        <el-table-column prop="roleName" label="角色名称"></el-table-column>
+        <el-table-column prop="createBy" label="创建人"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
+        <el-table-column label="账户状态" min-width="140">
           <template slot-scope="scope">
             <tableRowStatus
               :scope="scope"
@@ -26,23 +26,7 @@
               idField="id"
               statusField="status"
               :rowName="scope.row.name"
-              :option="{
-                enable:{
-                  apiName:'apiName',
-                  label:'启用',
-                  value:0
-                },
-               disable:{
-                  apiName:'apiName',
-                  label:'冻结',
-                  value:1
-               },
-               logout:{
-                  apiName:'apiName',
-                  label:'注销',
-                  value:2
-               }
-              }"
+              :option="option"
             ></tableRowStatus>
           </template>
         </el-table-column>
@@ -79,63 +63,58 @@ export default {
   name: "",
   data() {
     return {
+      option: {
+        enable: {
+          apiName: "apiName",
+          label: "启用",
+          value: 0
+        },
+        disable: {
+          apiName: "apiName",
+          label: "冻结",
+          value: 1
+        },
+        logout: {
+          apiName: "apiName",
+          label: "注销",
+          value: 2
+        }
+      },
       //编辑弹框默认为false
       dialogFormVisible: false,
       // 表格数据
-      operationManageTableData: [
-        {
-          operationManageNum: 1,
-          operationManageBelong: "广东省",
-          operationManageName: "上海市普陀区金沙江路 1518 弄",
-          operationManageID: "赵",
-          operationManagetelephone: "自营",
-          operationManageRoleName: "赵",
-          operationManageCreater: "13800131358",
-          operationManageCreateDate: "13800131358",
-          roleManageCreateDate: "13800131358"
-        },
-        {
-          operationManageNum: 2,
-          operationManageBelong: "广东省",
-          operationManageName: "上海市普陀区金沙江路 1518 弄",
-          operationManageID: "赵",
-          operationManagetelephone: "自营",
-          operationManageRoleName: "赵",
-          operationManageCreater: "13800131358",
-          operationManageCreateDate: "13800131358",
-          roleManageCreateDate: "13800131358"
-        }
-      ],
+      operationManageTableData: [],
       //搜索框类型
       operationManageoptions: [
         {
           type: "input",
-          prop: "roleManageID",
+          prop: "id",
           value: "",
           title: "账户ID",
           placeholder: "请输入"
         },
         {
           type: "input",
-          prop: "roleManageRoleName",
+          prop: "roleName",
           value: "",
           title: "角色名称",
           placeholder: "请输入"
         },
         {
           type: "select",
-          prop: "roleManageStatus",
+          prop: "accountStatus",
           value: "",
           title: "账户状态",
           placeholder: "请输入",
           options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
+            { label: "启用", value: 0 },
+            { label: "冻结", value: 1 },
+            { label: "注销", value: 2 }
           ]
         },
         {
           type: "select",
-          prop: "roleManageUsername",
+          prop: "accountName",
           value: "",
           title: "用户角色",
           placeholder: "请输入",
@@ -146,14 +125,14 @@ export default {
         },
         {
           type: "input",
-          prop: "roleManageCreater",
+          prop: "createBy",
           value: "",
           title: "创建人",
           placeholder: "请输入"
         },
         {
           type: "datetime-range",
-          prop: "roleManageCreateDate",
+          prop: "createTime",
           value: "",
           title: "创建时间",
           options: ["start", "end"]
@@ -195,6 +174,19 @@ export default {
             trigger: "change"
           }
         ]
+      },
+      //初始查询列表的参数
+      info: {
+        page: 0,
+        pageSize: 0,
+        param: {
+          accountName: "",
+          accountStatus: "",
+          createBy: "",
+          createTime: "",
+          fundId: "",
+          roleId: ""
+        }
       },
       // 编辑弹框表单类型
       operationManageWriteData: [
@@ -540,11 +532,23 @@ export default {
       ]
     };
   },
+  async created() {
+    let data = this.info;
+    let result = await this.$api.getAccount({ data });
+    this.operationManageTableData = result.data.records;
+    console.log(result);
+  },
   components: {},
+
   methods: {
+    // async getData() {},
     //点击查询
-    search(formData) {
-      console.log(formData);
+    async search(formData) {
+      let data = JSON.parse(JSON.stringify(formData));
+      let result = await this.$api.getAccount({ data });
+      console.log(result);
+      // if (result.code == 0) {
+      // }
     },
     //新增按钮
     operationManageAddclick() {

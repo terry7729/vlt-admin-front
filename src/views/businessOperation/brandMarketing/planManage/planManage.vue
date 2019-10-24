@@ -2,10 +2,10 @@
   <div class="vlt-card">
     <search-bar :options="options" :total="999" @search="search"></search-bar>
     <div class="create-btn">
-      <el-button type="primary" size="mini" @click="createActive">
+      <el-button type="primary" size="small" @click="createActive">
         <i class="el-icon-plus"></i> 新建活动
       </el-button>
-      <el-button size="mini">批量撤销</el-button>
+      <el-button size="small">批量撤销</el-button>
     </div>
 
     <el-table :data="activeList" border>

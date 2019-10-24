@@ -8,34 +8,32 @@
       labelWidth="80px"
     ></search-bar>
 
-    <section class="comp-item">
-      <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
-        <el-table-column prop="num" label="序号"></el-table-column>
-        <el-table-column prop="orderNum" label="订单编号"></el-table-column>
-        <el-table-column prop="type" label="投注类型"></el-table-column>
-        <el-table-column prop="account" label="投注卡号"></el-table-column>
-        <el-table-column prop="accountName" label="账户名称"></el-table-column>
-        <el-table-column prop="phoneNum" label="手机号码"></el-table-column>
-        <el-table-column prop="area" label="所在区域"></el-table-column>
-        <el-table-column prop="money" label="投注金额"></el-table-column>
-        <el-table-column prop="balance" label="游戏名称"></el-table-column>
-        <el-table-column prop="way" label="投注状态"></el-table-column>
-        <el-table-column prop="time" label="投注时间"></el-table-column>
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="betDetail(scope.row.account)">详情</el-button>
-            <el-button type="primary" size="mini">回放</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <table-paging
-        :current-page="1"
-        :page-size="10"
-        :total="this.tableData.length"
-        @handleSizeChange="pageSizeChange"
-        @handleCurrentChange="pageCurrentChange"
-      ></table-paging>
-    </section>
+    <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
+      <el-table-column prop="num" label="序号"></el-table-column>
+      <el-table-column prop="orderNum" label="订单编号"></el-table-column>
+      <el-table-column prop="type" label="投注类型"></el-table-column>
+      <el-table-column prop="account" label="投注卡号"></el-table-column>
+      <el-table-column prop="accountName" label="账户名称"></el-table-column>
+      <el-table-column prop="phoneNum" label="手机号码"></el-table-column>
+      <el-table-column prop="area" label="所在区域"></el-table-column>
+      <el-table-column prop="money" label="投注金额"></el-table-column>
+      <el-table-column prop="balance" label="游戏名称"></el-table-column>
+      <el-table-column prop="way" label="投注状态"></el-table-column>
+      <el-table-column prop="time" label="投注时间"></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="betDetail(scope.row.account)">详情</el-button>
+          <el-button type="primary" size="mini">回放</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <table-paging
+      :current-page="1"
+      :page-size="10"
+      :total="this.tableData.length"
+      @handleSizeChange="pageSizeChange"
+      @handleCurrentChange="pageCurrentChange"
+    ></table-paging>
   </div>
 </template>
 
@@ -59,7 +57,7 @@ export default {
           title: "投注状态",
           type: "select",
           prop: "selectName",
-          value: '',
+          value: "",
           options: [
             {
               label: "已投注",
