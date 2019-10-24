@@ -7,6 +7,7 @@ import businessManage from './modules/businessManage'
 import businessOperation from './modules/businessOperation'
 import systemManage from './modules/systemManage'
 
+
 export default {
   /*
   *@param {json} options: {} || {data: json}
@@ -14,10 +15,12 @@ export default {
   /* 请务必注释每个接口所属名称 */
   // 获取左侧导航
   getMenu: (options = {}) => ajax.post('/menu', options),
+  //登录
+  getLogin: (options = {}) => ajax.post('/login', options),
   // 登出
   getLoginOut: (options = {}) => ajax.post('/logout', options),
   // 上传范例
-  testUpload: (options = {}) => ajax.upload('/upload', options),
+  testUpload: (options = {}) => ajax.upload('/game/uploading', options),
 
   ...businessCharts,
   ...businessManage,

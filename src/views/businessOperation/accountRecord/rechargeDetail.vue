@@ -34,11 +34,18 @@ export default {
     };
   },
   components: {},
-  methods: {},
-  created() {
-    for (let item of this.infoList) {
-      item.value = "1";
+  methods: {
+    async init() {
+      let id = this.$route.query.id;
+
+      let res = await this.$api.accountDetail(id);
+      if (res.code === 0) {
+        console.log(res);
+      }
     }
+  },
+  created() {
+    this.init();
   }
 };
 </script>

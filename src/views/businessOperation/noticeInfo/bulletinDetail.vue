@@ -1,22 +1,20 @@
 <template>
   <div class="vlt-card bulletin-detail">
-    <section class="comp-item">
-      <div class="vlt-edit-single">
-        <div class="vlt-edit-wrap form-detail">
-          <h3>基础信息</h3>
-          <el-form label-width="90px" :model="form" ref="form">
-            <base-form
-              :formData="detailData"
-              labelWidth="140px"
-              ref="baseForm"
-              :rules="rule1"
-              direction="right"
-              @change="changeForm"
-            ></base-form>
-          </el-form>
-        </div>
+    <div class="vlt-edit-single">
+      <div class="vlt-edit-wrap form-detail">
+        <h3>基础信息</h3>
+        <el-form label-width="90px" :model="form" ref="form">
+          <base-form
+            :formData="detailData"
+            labelWidth="140px"
+            ref="baseForm"
+            :rules="rule1"
+            direction="right"
+            @change="changeForm"
+          ></base-form>
+        </el-form>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -26,14 +24,7 @@ export default {
   data() {
     return {
       rule1: { rule: "" },
-      form: {
-        name: "",
-        region: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
+      form: {},
       detailData: [
         { type: "input", title: "公告名称", prop: "test" },
         {
@@ -76,22 +67,11 @@ export default {
   },
   components: {},
   methods: {
-    changeForm() {
-      // Object.assign(this.params, val);
-      // console.log("派发出来的参数", this.params);
-    }
+    changeForm() {}
   }
 };
 </script>
 
 <style lang="less" scoped>
-.bulletin-detail {
-  .form-detail {
-    margin-top: 50px;
-    margin-left: 50px;
-  }
-  .bottom-btn {
-    margin-left: 450px;
-  }
-}
+@import "./less/index";
 </style>

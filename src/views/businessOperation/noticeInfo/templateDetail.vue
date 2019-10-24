@@ -1,10 +1,8 @@
 <template>
   <div class="vlt-card bulletin-detail">
-    <section class="comp-item">
-      <panel-static title="基本信息">
-        <base-info :infoList="infoList"></base-info>
-      </panel-static>
-    </section>
+    <panel-static title="基本信息">
+      <base-info :infoList="infoList"></base-info>
+    </panel-static>
   </div>
 </template>
 
@@ -36,13 +34,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.bulletin-detail {
-  .form-detail {
-    margin-top: 50px;
-    margin-left: 50px;
-  }
-  .bottom-btn {
-    margin-left: 450px;
-  }
-}
+@import "./less/index";
 </style>

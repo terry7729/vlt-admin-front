@@ -72,11 +72,10 @@ export default {
           options: []
         },
         {
-          type: "radio-textarea",
+          type: "radio",
           prop: "isManager",
           title: "是否为经理",
-          props: ["radio"],
-          value: "",
+          value: 1,
           options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
         { type: "textarea", title: "描述", value: "", prop: "remark" }

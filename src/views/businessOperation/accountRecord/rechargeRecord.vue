@@ -2,7 +2,7 @@
   <div class="vlt-card">
     <search-bar @search="search" :options="searchOptions" :total="999" labelWidth="80px"></search-bar>
     <el-table :data="rechargeList" border style="width: 100%; margin-top: 10px;">
-      <el-table-column prop="num" label="序号"></el-table-column>
+      <el-table-column prop="channelId" label="序号"></el-table-column>
       <el-table-column prop="orderNum" label="订单编号"></el-table-column>
       <el-table-column prop="type" label="充值类型"></el-table-column>
       <el-table-column prop="account" label="充值账号"></el-table-column>
@@ -12,10 +12,10 @@
       <el-table-column prop="money" label="充值金额"></el-table-column>
       <el-table-column prop="balance" label="账户余额"></el-table-column>
       <el-table-column prop="way" label="充值方式"></el-table-column>
-      <el-table-column prop="time" label="操作时间"></el-table-column>
+      <el-table-column prop="createTime" label="操作时间"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="rechargeDetail(scope.row.account)">详情</el-button>
+          <el-button type="primary" size="mini" @click="rechargeDetail(scope.row.channelId)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -113,7 +113,7 @@ export default {
       ],
       rechargeList: [
         {
-          num: 1,
+          channelId: 1,
           orderNum: "8008208820",
           type: "投注卡",
           account: "10086",
@@ -123,30 +123,51 @@ export default {
           money: "8080",
           balance: "18888",
           way: "微信",
-          time: "2019-10-14"
+          createTime: "2019-10-14"
         }
       ]
     };
   },
-  components: {},
+  created() {
+    this.init();
+  },
+
   methods: {
+    async init() {
+      let data = {
+        page: "1",
+        pageSize: "15",
+        param: {
+          accountName: "",
+          accountStatus: "",
+          createBy: "",
+          endTime: "",
+          fundId: "",
+          roleId: "",
+          startTime: ""
+        }
+      };
+      let res = await this.$api.getAccount({ data });
+      if (res.code === 0) {
+        console.log(res);
+        this.rechargeList = res.data.records;
+      }
+    },
     rechargeDetail(account) {
-      this.$router.push({ path: "rechargeDetail", query: account });
+      this.$router.push({ path: "rechargeDetail", query: { id: account } });
     },
     search(params) {
-      let area = params.area.slice(params.area.length - 1);
-      params.area = area.join();
+      if (params.area && params.area.length > 0) {
+        let area = params.area.slice(params.area.length - 1);
+        params.area = area.join();
+      }
+
       console.info(params);
     },
-    pageSizeChange(size) {
-      // this.PAGESIZE = size;
-      // this.$emit("handleSizeChange", size);
-    },
-    pageCurrentChange(page) {
-      // this.CURRENTPAGE = page;
-      // this.$emit("handleCurrentChange", page);
-    }
-  }
+    pageSizeChange(size) {},
+    pageCurrentChange(page) {}
+  },
+  components: {}
 };
 </script>
 

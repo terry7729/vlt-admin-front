@@ -39,7 +39,7 @@
               @change="changeForm"
             ></base-form>
             <el-row class="vlt-edit-btn">
-              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              <el-button type="primary" v-prevent="1000" size="medium" @ciclk="submit">提交并保存</el-button>
               <el-button size="medium" @click="cancel">取消</el-button>
             </el-row>
           </div>
@@ -57,8 +57,6 @@ export default {
     return {
       dialogFormVisible: false,
       changeForm: "",
-      input1: "",
-      input2: "",
       data1: [
         {
           type: "input-icon",
@@ -66,15 +64,15 @@ export default {
           prop: "username",
           value: "",
           placeholder: "请输入用户账号",
-          icon:"user",
+          icon: "user"
         },
         {
           type: "password",
           title: "",
-          prop: "pwd",
+          prop: "password",
           value: "",
           placeholder: "请输入用户密码",
-          icon:"lock",
+          icon: "lock"
         }
       ],
       formData: [
@@ -88,17 +86,33 @@ export default {
             { label: "登录密码", value: "0" }
           ]
         },
-        { title: "请输入原始登录密码", type: "password", prop: "serverSite", value: "",placeholder: "请输入" },
-        { title: "请输入新登录密码", type: "password", prop: "portNumber", value: "",placeholder: "请输入" },
-        { title: "请重复新登录密码", type: "password", prop: "userName", value: "",placeholder: "请输入"}
+        {
+          title: "请输入原始登录密码",
+          type: "password",
+          prop: "serverSite",
+          value: "",
+          placeholder: "请输入"
+        },
+        {
+          title: "请输入新登录密码",
+          type: "password",
+          prop: "portNumber",
+          value: "",
+          placeholder: "请输入"
+        },
+        {
+          title: "请重复新登录密码",
+          type: "password",
+          prop: "userName",
+          value: "",
+          placeholder: "请输入"
+        }
       ],
       rules: {
         username: [
-          { required: true, validator: rules.checkAccount,  trigger: "blur" }
+          { required: true, validator: rules.checkAccount, trigger: "blur" }
         ],
-        pwd: [
-          { required: true, validator: rules.checkPwd,  trigger: "blur" }
-        ]
+        pwd: [{ required: true, validator: rules.checkPwd, trigger: "blur" }]
       }
     };
   },
@@ -106,11 +120,31 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    login() {
-      this.$router.push({
-        path: "entry"
+    // login() {
+    //   this.$router.push({
+    //     path: "entry"
+    //   });
+    // },
+    async login() {
+      let result = await this.$api.getLogin({});
+      console.log(result);
+      this.$refs.baseForm.validate(val => {
+        if (val) {
+          if (this.username == "qwe" && this.password == "qwe") {
+            
+            this.$router.push("/entry");
+          } else {
+            this.$message({
+              type: "error",
+              message: "用户名或密码错误",
+            });
+          }
+        } else {
+          return false;
+        }
       });
     },
+
     handleForgetPwd() {
       this.dialogFormVisible = true;
     },
@@ -118,10 +152,10 @@ export default {
       this.dialogFormVisible = false;
     },
     submit() {
-      this.$refs.baseForm.validate((val)=>{
-        console.log(val)
+      this.$refs.baseForm.validate(val => {
+        console.log(val);
       });
-    },
+    }
   },
   components: {}
 };
@@ -137,7 +171,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  border-radius: 0px;
   .mid {
     width: 450px;
     height: 480px;
@@ -148,14 +182,14 @@ export default {
       position: absolute;
       top: -85px;
       left: 140px;
-      width:170px;
-      height:170px;
+      width: 170px;
+      height: 170px;
     }
     .title {
       position: absolute;
       top: 136px;
       left: 46px;
-      width:359px;
+      width: 359px;
     }
     .vlt-edit-single {
       position: absolute;

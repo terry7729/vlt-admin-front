@@ -31,7 +31,25 @@
               :default-expanded-keys="[1, 2]"
               :expand-on-click-node="false"
               :props="setProps"
-            ></el-tree>
+            >
+              <span class="custom-tree-node" slot-scope="{ node, data }">
+                <span>{{ node.label }}</span>
+                <span>
+                  <el-button
+                    type="text"
+                    size="mini"
+                    @click="() => addMenuMagnage(data)">
+                    新增
+                  </el-button>
+                  <el-button
+                    type="text"
+                    size="mini"
+                    @click="() => remove(node, data)">
+                    删除
+                  </el-button>
+                </span>
+              </span>
+            </el-tree>
           </div>
         </div>
       </el-aside>
@@ -65,10 +83,22 @@
     </el-container>
     <div class="bouncedMessage">
       <!--添加子节点弹框-->
-      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog" @close="handelClose">
+      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog">
         <div class="vlt-edit-single">
           <h2 class="title">添加子节点</h2>
           <div class="vlt-edit-wrap">
+            <!-- <el-form>
+              <el-form-item label="类型" label-width="110px">
+                <el-select v-model="menuType" placeholder="请选择">
+                  <el-option
+                    v-for="item in option"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form> -->
             <base-form
               :formData="Addchildnodes"
               ref="baseForm"
@@ -87,7 +117,7 @@
     </div>
     <!--添加顶部菜单-->
     <div class="topManu">
-      <el-dialog :visible.sync="dialogFormVisible2" width="600px" custom-class="menuDialog" @close="handelClose">
+      <el-dialog :visible.sync="dialogFormVisible2" width="600px" custom-class="menuDialog">
         <div class="vlt-edit-single">
           <h2 class="title">添加顶部菜单</h2>
           <div class="vlt-edit-wrap">
@@ -228,8 +258,11 @@ export default {
       rules: {
         //验证对象
         minMultiple: [
-          { required: true,
-            message: "请输入名称" }],
+          {
+            required: true,
+            message: "请输入名称"
+          }
+        ],
         mixBet: [
           {
             required: true,
@@ -278,8 +311,14 @@ export default {
               this.nodeTreeData = res.data;
       }
     },
-    handelClose(){
-      this.slelectifo = ''//关闭弹框时置空当前选中节点信息
+    addMenuMagnage(){
+
+          this.Addchildnodes[0].value = this.slelectifo;
+          this.dialogFormVisible = true;
+    },
+    handel(val) {
+      //菜单按钮选择控制
+      this.menuType = val;
     },
     deselect() {
       //取消选择按钮
@@ -292,7 +331,7 @@ export default {
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
-async submitAdd() {
+    async submitAdd() {
       //添加信息表单提交
         // console.log(this.parent)
         this.AddInsInfoParms.created = "添加子节点";
@@ -307,7 +346,7 @@ async submitAdd() {
         } else {
           addfrom.isSensitivity = 0;
         }
-       
+        if (this.moduleType != 4) {
             let data = {
               parentId: this.parent.id,
               sysCode: "VLT_BMS",
@@ -323,7 +362,14 @@ async submitAdd() {
               this.$refs.baseForm.resetForm();
             }
             
-      
+        } else {
+          this.$alert("按钮类型不能进行此操作！", "温馨提示！", {
+            confirmButtonText: "确定",
+            callback: action => {
+              close();
+            }
+          });
+        }
  
     },
 async submitModifine(val) {
@@ -382,6 +428,12 @@ async submitModifine(val) {
       data.parentId = null;
       data.sysCode = "VLT_BMS"
       data.moduleType = 1;
+      // let data = {
+      //   parentId: null,
+      //   sysCode: "VLT_BMS",
+      //   moduleType: 1,
+      //   ...n
+      // };
       console.log(data,'添加顶部菜单表单对象')
       let reslt = await this.$api.SaveModule({ data });
       console.log('新增顶部菜单',reslt)
@@ -392,27 +444,11 @@ async submitModifine(val) {
         this.init();
       }  
     },
+    remove(){
+
+    },
     selectBtn(val) {
       //顶部按钮点击事件
-      if (val.name === "添加子节点") {
-        if (this.slelectifo == "") {
-          this.open("请选择要添加子节点的机构！");
-        } else {
-           if (this.moduleType != 4) {
-                this.setchild = false;
-                this.Addchildnodes[0].value = this.slelectifo;
-                this.dialogFormVisible = true;
-                // this.rightFrom[0].value = this.slelectifo;
-            } else {
-                this.$alert("按钮类型不能进行此操作！", "温馨提示！", {
-                confirmButtonText: "确定",
-                callback: action => {
-                  close();
-                }
-            });
-        }
-        }
-      }
       if (val.name === "添加顶部菜单") {
         this.dialogFormVisible2 = true;
       }
@@ -463,16 +499,16 @@ async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
       console.log('菜单详情信息',res)
       this.slelectifo = val.text;
       if(res.code === 0){
-        if (res.data.isSensitivity === 0) {
-        res.data.isSensitivity = true;
-      } else {
-        res.data.isSensitivity = false;
-      }
-      if (res.data.isShow === 0) {
-        res.data.isShow = true;
-      } else {
-        res.data.isShow = false;
-      }
+      //   if (res.data.isSensitivity === 0) {
+      //   res.data.isSensitivity = true;
+      // } else {
+      //   res.data.isSensitivity = false;
+      // }
+      // if (res.data.isShow === 0) {
+      //   res.data.isShow = true;
+      // } else {
+      //   res.data.isShow = false;
+      // }
       let n = Object.keys(res.data);
       this.moduleType = res.data.moduleType;
       let arr = this.rightFrom;

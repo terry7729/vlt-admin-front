@@ -1,9 +1,9 @@
 <template>
   <div class="vlt-card active-result">
-    <search-bar :options="options" @search="search"></search-bar>
+    <search-bar :options="options" @search="search"  :total="999"></search-bar>
     <el-button type="primary" size="small" @click="assess">评估</el-button>
     <el-button type="primary" size="small">下载</el-button>
-    <el-table :data="assessList" border class="assess-list">
+    <el-table :data="assessList" border style="margin-top:15px">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column type="index" label="序号" width="55"></el-table-column>
       <el-table-column prop="activeNum" label="活动编号"></el-table-column>
@@ -74,9 +74,4 @@ export default {
 
 
 <style lang="less">
-.active-result {
-  .assess-list {
-    margin-top: 15px;
-  }
-}
 </style>

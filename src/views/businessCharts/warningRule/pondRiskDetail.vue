@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card plan-check">
-    <panel title="城市游戏风险指标详情" :show="true">
+    <panel title="奖池风险指标详情" :show="true">
       <base-info :infoList="planList"></base-info>
     </panel>
   </div>
@@ -8,19 +8,19 @@
 
 <script type="text/javascript">
 export default {
-  name: "warningWatchDetail",
+  name: "pondRiskDetail",
   data() {
     return {
       planList: [
         { title: "省", value: '', prop: "provinceName" },
         { title: "市", value: "", prop: "gameName" },
         { title: "游戏", value: "", prop: "planState" },
-        { title: "最高返奖率", value: "", prop: "highestReturnRateOrdinary" },
-        { title: "最高返奖率-严重级别", value: "", prop: "highestReturnRateSerious" },
-        { title: "最高返奖率-重大级别", value: "", prop: "highestReturnRateMajor" },
-         { title: "最低返奖率", value: "", prop: "minimumReturnRateOrdinary" },
-        { title: "最高返奖率-严重级别", value: "", prop: "minimumReturnRateSerious" },
-        { title: "最高返奖率-重大级别", value: "", prop: "minimumReturnRateMajor" },
+        { title: "最高奖池金额-普通级别", value: "", prop: "maxJackpotMoneyOrdinary" },
+        { title: "最高返奖率-严重级别", value: "", prop: "maxJackpotMoneySerious" },
+        { title: "最高奖池金额-重大级别", value: "", prop: "maxJackpotMoneyMajor" },
+         { title: "最低奖池金额-普通级别", value: "", prop: "minJackpotMoneyOrdinary" },
+        { title: "最低奖池金额-严重级别", value: "", prop: "minJackpotMoneySerious" },
+        { title: "最低奖池金额-重大级别", value: "", prop: "minJackpotMoneyMajor" },
         { title: "普通告警频次", value: "", prop: "alarmFrequencyOrdinary" },
         { title: "普通告警频次", value: "", prop: "alarmFrequencySerious" },
         { title: "重大告警频次", value: "", prop: "alarmFrequencyMajor" },
@@ -47,10 +47,10 @@ export default {
   components: {},
   methods: {
     //获取游戏风险指标详情.
-    async getGameRiskDetail() {
+    async getPondRiskDetail() {
       const id= this.$route.query.id
       const self = this;
-      const res = await self.$api.getGameRiskDetail({
+      const res = await self.$api.getPondRiskDetail({
         data: {
           businessKey: id
         }
@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted() {
-    this.getGameRiskDetail();
+    this.getPondRiskDetail();
   }
 };
 </script>

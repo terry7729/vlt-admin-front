@@ -145,12 +145,10 @@ export default {
       console.info("search", params);
     },
     pageSizeChange(size) {
-      // this.PAGESIZE = size;
-      // this.$emit("handleSizeChange", size);
+
     },
     pageCurrentChange(page) {
-      // this.CURRENTPAGE = page;
-      // this.$emit("handleCurrentChange", page);
+
     }
   }
 };
