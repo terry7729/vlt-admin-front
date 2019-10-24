@@ -2,7 +2,7 @@
   <div class="vlt-card create-template">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="公告模板" name="msgTemplate">
-        <section class="comp-item">
+      
           <div class="vlt-edit-single">
             <div class="vlt-edit-wrap form-detail">
               <h3>基本信息</h3>
@@ -34,7 +34,7 @@
               </el-form>
             </div>
           </div>
-        </section>
+       
       </el-tab-pane>
       <el-tab-pane label="公告模板流程图" name="processImg">
         <h3>公告模板流程图</h3>
@@ -111,13 +111,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.create-template {
-  .form-detail {
-    margin-left: 50px;
-    margin-top: 50px;
-    .upload-demo{
-      margin-left: 50px;
-    }
-  }
-}
+@import "./less/index";
 </style>

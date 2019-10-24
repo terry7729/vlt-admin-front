@@ -2,27 +2,25 @@
   <div class="vlt-card info-edit">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="公告模板" name="template">
-        <section class="comp-item">
-          <div class="vlt-edit-single">
-            <div class="vlt-edit-wrap form-detail">
-              <h3>基本信息</h3>
-              <el-form label-width="90px" :model="form" ref="form">
-                <base-form
-                  :formData="baseInfo"
-                  labelWidth="140px"
-                  ref="baseForm"
-                  :rules="rule"
-                  direction="right"
-                  :disabled="disabled"
-                  @change="changeForm"
-                ></base-form>
-              </el-form>
-            </div>
+        <div class="vlt-edit-single">
+          <div class="vlt-edit-wrap form-detail">
+            <h3>基本信息</h3>
+            <el-form label-width="90px" :model="form" ref="form">
+              <base-form
+                :formData="baseInfo"
+                labelWidth="140px"
+                ref="baseForm"
+                :rules="rule"
+                direction="right"
+                :disabled="disabled"
+                @change="changeForm"
+              ></base-form>
+            </el-form>
           </div>
-        </section>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="公告模板流程图" name="processImg">
-        <div class="process-img">
+        <div style=" margin-left: 150px">
           <img src="../../../assets/img/avatar.jpg" alt />
         </div>
       </el-tab-pane>
@@ -38,10 +36,8 @@ export default {
       rule: { rule: "" },
       activeName: "template",
       disabled: true,
-      title:123,
-      form: {
-      
-      },
+      title: 123,
+      form: {},
       baseInfo: [
         { type: "input", title: "推送标题", prop: "title", disabled: false },
         {
@@ -80,8 +76,8 @@ export default {
   components: {},
   methods: {
     changeForm(val) {
-      this.form=val;
-      console.log(this.form)
+      this.form = val;
+      console.log(this.form);
     },
     handleClick() {}
   },
@@ -89,7 +85,6 @@ export default {
     if (this.$route.query.id) {
       for (let item of this.baseInfo) {
         item.disabled = true;
-     
       }
     }
   }
@@ -97,9 +92,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.info-edit {
-  .process-img {
-    margin-left: 150px;
-  }
-}
 </style>

@@ -115,15 +115,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.account-detail {
-  .equity-title {
-    margin-left: 32px;
-    margin-top: 5px;
-    span {
-      display: inline-block;
-      margin-right: 400px;
-    }
-  }
-}
+@import "./less/index";
 </style>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card">
-    <section class="comp-item">
+ 
       <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
         <el-table-column prop="num" label="序号"></el-table-column>
         <el-table-column prop="type" label="责任类型"></el-table-column>
@@ -13,7 +13,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </section>
+  
   </div>
 </template>
 
