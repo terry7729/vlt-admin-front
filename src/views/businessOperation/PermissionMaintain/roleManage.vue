@@ -2,7 +2,7 @@
   <div class="vlt-card">
     <div class="roleManage">
       <!-- 搜索 -->
-      <searchBar :options="roleManageoptions" @search="search" :total="999">
+      <searchBar :options="roleManageoptions" @search="search" :total="this.num">
         <!-- 新增按钮 -->
         <controlBar
           slot="extend-bar"
@@ -13,12 +13,12 @@
       </searchBar>
       <!-- 表格 -->
       <el-table :data="roleManagetableData" border style="width: 100%; margin-top: 10px">
-        <el-table-column prop="roleManageId" label="序号"></el-table-column>
-        <el-table-column prop="roleManageName" label="用户角色"></el-table-column>
-        <el-table-column prop="roleManageAuthority" label="角色权限"></el-table-column>
-        <el-table-column prop="roleManageDescribe" label="描述"></el-table-column>
-        <el-table-column prop="roleManageCreater" label="创建人"></el-table-column>
-        <el-table-column prop="roleManageCreateDate" label="创建时间"></el-table-column>
+        <el-table-column prop="roleManageId" label="序号" type="index"></el-table-column>
+        <el-table-column prop="roleName" label="用户角色"></el-table-column>
+        <el-table-column prop="roleTypes" label="角色权限"></el-table-column>
+        <el-table-column prop="remark" label="描述"></el-table-column>
+        <el-table-column prop="createBy" label="创建人"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="角色状态" min-width="110" prop="accountStatus">
           <template slot-scope="scope">
             <tableRowStatus
@@ -51,12 +51,12 @@
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="roleManageAuthority(scope.row.id)">权限设置</el-button>
             <el-button type="primary" size="mini" @click="roleManageWrite(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="roleManageLook(scope.row.id)">查看</el-button>
+            <el-button type="primary" size="mini" @click="roleManageLook(scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
       <tablePaging
-        :total="99"
+        :total="this.num"
         :currentPage="1"
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
@@ -258,46 +258,34 @@ export default {
       dialogFormVisible: false,
       // roleManageCurrentPage: 1,
       // 表格数据
-      roleManagetableData: [
-        {
-          roleManageId: 1,
-          roleManageName: "广东省",
-          roleManageAuthority: "上海市普陀区金沙江路 1518 弄",
-          roleManageDescribe: "赵",
-          roleManageCreater: "自营",
-          principalName: "赵",
-          roleManageCreateDate: "13800131358"
-        }
-      ],
+      roleManagetableData: [],
       // 搜索表单类型
       roleManageoptions: [
         {
           type: "select",
-          prop: "roleManageName",
+          prop: "id",
           value: "",
           title: "用户角色",
           placeholder: "请输入",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
+          options: []
         },
         {
           type: "input",
-          prop: "roleManageCreater",
+          prop: "createBy",
           value: "",
           title: "创建人",
           placeholder: "请输入"
         },
         {
           type: "select",
-          prop: "accountStatus",
+          prop: "status",
           value: "",
           title: "角色状态",
           placeholder: "请输入",
           options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
+            { label: "启用", value: 0 },
+            { label: "禁用", value: 1 },
+            { label: "注销", value: 2 }
           ]
         },
         {
@@ -309,14 +297,43 @@ export default {
         }
       ],
       // 新增按钮类型
-      roleManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }]
+      roleManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
+      num: 0
     };
   },
   components: {},
+  async created() {
+    //初始表格数据
+    let data = {
+      page: 0,
+      pageSize: 0,
+      param: {
+        createBy: "",
+        createTime: "",
+        page: 0,
+        pageSize: 0,
+        param: {},
+        roleName: "",
+        roleType: ""
+      }
+    };
+    let result = await this.$api.getRole({ data });
+    //console.log(result);
+    let arr = result.data.records;
+    this.num = arr.length;
+    // this.roleManageoptions[0].options = arr.roleType;
+    this.roleManagetableData = arr;
+    //初始搜索用户角色数据
+    let resul = await this.$api.accountRole();
+    //console.log(resul);
+    this.roleManageoptions[0].options = resul.data;
+  },
   methods: {
     //点击搜索
-    search(formData) {
-      console.log(formData);
+    async search(formData) {
+      let data = JSON.parse(JSON.stringify(formData));
+      let result = await this.$api.getRole({ data });
+      console.log(result);
     },
     // 新增按钮
     roleManageAddclick() {
@@ -342,8 +359,8 @@ export default {
       }
     },
     // 查看按钮
-    roleManageLook() {
-      this.$router.push("roleManageExamine");
+    roleManageLook(row) {
+      this.$router.push({ path: "roleManageExamine", query: { id: row.id } });
     },
 
     // 表单change事件

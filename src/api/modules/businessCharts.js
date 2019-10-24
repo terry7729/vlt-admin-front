@@ -26,5 +26,7 @@ export default {
    // 城市游戏风险指标列表
    getGameRiskList:(options={})=>ajax.post('/game/risk/list',options),
    // 城市游戏风险指标详情
-   getGameRiskDetail:(options={})=>ajax.post('/game/risk/detail',options)
+   getGameRiskDetail:(options={})=>ajax.post('/game/risk/detail',options),
+   // 城市游戏风险指标新增
+   getGameRiskInsert:(options={})=>ajax.post('/game/risk/insert',options)
 }

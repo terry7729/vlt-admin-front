@@ -4,32 +4,35 @@ import qs from 'qs'
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
-switch(process.env.VUE_APP_MODE) {
+switch (process.env.VUE_APP_MODE) {
   // 生产环境
-  case 'production': 
+  case 'production':
     axios.defaults.baseURL = '//192.168.0.1/prod/api'
     break
-  // 开发环境
+    // 开发环境
   case 'development':
     axios.defaults.baseURL = '//192.168.0.1/dev/api'
     break
-  // 测试环境
+    // 测试环境
   case 'testing':
     axios.defaults.baseURL = '//192.168.0.1/test/api'
     break
   default:
-    axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
-}
-//http://10.6.0.103:8080/bms/api
+    axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
+    axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
 
+}
+//http://10.6.0.103:8080/bms/api 测试
+// http://10.7.0.91:8080/bms/api 本地
 /**
-* @description http请求
-* @param  {String} method 请求方法
-* @param  {String} url 请求路径
-* @param  {Object} options 请求配置
-* @param  {String} extend 请求拓展
-* @return {Function} result promise
-*/
+ * @description http请求
+ * @param  {String} method 请求方法
+ * @param  {String} url 请求路径
+ * @param  {Object} options 请求配置
+ * @param  {String} extend 请求拓展
+ * @return {Function} result promise
+ */
 const request = (method, url, options, extend) => {
   return (async () => {
     try {
@@ -48,11 +51,13 @@ const request = (method, url, options, extend) => {
                 // 监听回调
                 options.onUploadProgress(progressEvent);
               }
-             }
+            }
           });
           return res.data;
         }
-        res = await axios[method](url, method === 'get' ? {params: data} : data);
+        res = await axios[method](url, method === 'get' ? {
+          params: data
+        } : data);
       }
       return res.data;
     } catch (err) {
