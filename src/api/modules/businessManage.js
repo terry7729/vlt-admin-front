@@ -2,8 +2,8 @@
 import ajax from '@/utils/ajax.js'
 export default {
   /*
-  *@param {json} options: {} || {data: json}
-  */
+   *@param {json} options: {} || {data: json}
+   */
   /* 请务必注释每个接口所属名称 */
   // 例
   getTest: (options = {}) => ajax.post('/test', options),
@@ -57,5 +57,9 @@ export default {
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
 
-  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options)
+  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
+  //资金参数列表分页查询
+  getFundsParameter: (options = {}) => ajax.post('/tFundParameter/list', options),
+  //资金参数详情查询
+  getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
 }
