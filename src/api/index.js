@@ -20,7 +20,7 @@ export default {
   // 登出
   getLoginOut: (options = {}) => ajax.post('/logout', options),
   // 上传范例
-  testUpload: (options = {}) => ajax.upload('/upload', options),
+  testUpload: (options = {}) => ajax.upload('/game/uploading', options),
 
   ...businessCharts,
   ...businessManage,

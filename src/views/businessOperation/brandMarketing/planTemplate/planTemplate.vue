@@ -54,50 +54,6 @@ export default {
 
 
 <style lang="less" scoped>
-.plan-template {
-  padding: 25px;
-  .box-card {
-    width: 350px;
-    display: inline-block;
-    margin: 0 20px 20px 0;
 
-    .clearfix {
-      height: 180px;
-
-      img {
-        float: left;
-        width: 50px;
-        height: 80px;
-      }
-
-      span {
-        display: inline-block;
-      }
-
-      .card-title {
-        font-size: 16px;
-        font-weight: 700;
-        margin-left: 20px;
-      }
-
-      .card-text {
-        margin-left: 20px;
-        margin-top: 30px;
-        font-size: 14px;
-        color: #aaa;
-      }
-    }
-
-    .el-card__body {
-      text-align: center;
-      background: #eee;
-    }
-
-    .card-btn {
-      margin-left: 49%;
-      padding: 3px 0;
-      color: #aaa;
-    }
-  }
-}
+@import "./less/index";
 </style>

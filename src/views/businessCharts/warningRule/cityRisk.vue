@@ -98,8 +98,7 @@ export default {
       ],
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "批量删除", type: "", icon: "delete" },
-        { name: "批量修改", type: "", icon: "edit" }
+      
       ],
       //记录省市县
       provinceList: [],

@@ -22,7 +22,14 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = 'http://10.7.0.91:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
 
+    axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
+    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
+
+    axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
 }
+//http://10.7.0.88:8080/bms/api/vlt
 //http://10.6.0.103:8080/bms/api 测试
 // http://10.7.0.91:8080/bms/api 本地
 /**

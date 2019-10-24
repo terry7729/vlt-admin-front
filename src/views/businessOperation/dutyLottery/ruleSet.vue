@@ -1,40 +1,38 @@
 <template>
   <div class="vlt-card rule-set">
     <h3 class="rule-title">责任设置</h3>
-    <section class="comp-item dutyType">
-      <el-form ref="form" :model="form" label-width="112px">
-        <el-form-item label="责任限制类型">
-          <el-select v-model="value" size="small" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-    </section>
-    <section class="comp-item">
-      <div class="vlt-edit-double">
-        <div class="vlt-edit-wrap">
-          <el-form label-position="top" label-width="90px" :model="form" ref="form">
-            <base-form
-              :formData="formData"
-              ref="baseForm"
-              labelWidth="140px"
-              direction="top"
-              :rules='rule'
-              @change="changeForm"
-            ></base-form>
-            <el-row class="el-form-item vlt-edit-btn">
-              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
-              <el-button size="medium" @click="cancel">取消</el-button>
-            </el-row>
-          </el-form>
-        </div>
+
+    <el-form ref="form" :model="form" label-width="112px" class="duty-type">
+      <el-form-item label="责任限制类型">
+        <el-select v-model="value" size="small" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+
+    <div class="vlt-edit-double">
+      <div class="vlt-edit-wrap">
+        <el-form label-position="top" label-width="90px" :model="form" ref="form">
+          <base-form
+            :formData="formData"
+            ref="baseForm"
+            labelWidth="140px"
+            direction="top"
+            :rules="rule"
+            @change="changeForm"
+          ></base-form>
+          <el-row class="el-form-item vlt-edit-btn">
+            <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+            <el-button size="medium" @click="cancel">取消</el-button>
+          </el-row>
+        </el-form>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 
@@ -44,7 +42,7 @@ export default {
   data() {
     return {
       form: {},
-      rule:{rule:''},
+      rule: { rule: "" },
       formData: [
         {
           type: "select",
@@ -111,7 +109,7 @@ export default {
   .rule-title {
     margin-left: 20px;
   }
-  .dutyType {
+  .duty-type {
     margin-top: 20px;
   }
 }

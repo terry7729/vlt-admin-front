@@ -217,16 +217,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.info-push {
-  .title {
-    margin: 10px 0 20px 20px;
-    font-size: 18px;
-    .title-msg {
-      margin-left: 5px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-
-}
+@import "./less/index";
 </style>
