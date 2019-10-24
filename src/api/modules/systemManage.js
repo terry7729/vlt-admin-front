@@ -11,7 +11,6 @@ export default {
   QueryModuleTree: (options = {}) => ajax.post('/module/queryModuleTree/VLT_BMS', options),
   //菜单详情
   QueryModuleDetail: (options = {}) => ajax.post('/module/queryModuleDetail', options),
-  getDestils: (options = {}) => ajax.post(`/module/queryModuleDetail`, options),
   //新增菜单
   SaveModule:(options = {}) => ajax.post('/module/saveModule',options),
   //批量删除
@@ -20,7 +19,7 @@ export default {
   UpdateModule:(options = {}) => ajax.post('/module/updateModule',options),
 
   //组织架构
-  //架构树菜单
+  //机构树菜单
   QueryInsTree:(options = {}) => ajax.post('/ins/queryInsTree',options),
   //查询机构详情
   QueryInsInfo:(options = {}) => ajax.post('/ins/queryInsInfo',options),
@@ -55,18 +54,23 @@ export default {
   //修改角色信息
   UpdateRoleInfo:(options ={}) =>ajax.post('/role/updateRoleInfo',options),
   //更改角色状态
-  UpdateRoleStatusInfo:(options = {}) =>ajax.post('role/updateRoleStatusInfo',options),
+  UpdateRoleStatusInfo:(options = {}) =>ajax.post('/role/updateRoleStatusInfo',options),
 
   //用户管理
   //用户新增
-  regist:(options = {}) =>ajax.post('/user/regist',options),
+  userRegist:(options = {}) =>ajax.post('/user/regist',options),
   //用户搜索
-  page:(options = {}) =>ajax.post('/user/query/page',options),
+  userPage:(options = {}) =>ajax.post('/user/query/page',options),
   //用户详情
   getUserDestils:(options = {}) =>ajax.get("/user/query/{userID}",options),
   //密码重置
-  restPassWord:(options = {}) =>ajax.post("/user/resetPass",options)
-
+  restPassWord:(options = {}) =>ajax.post("/user/resetPass",options),
+  //用户冻结
+  userDisable:(options = {}) =>ajax.post('/user/disable',options),
+  //用户注销
+  userCanceel:(options = {}) =>ajax.post('/user/cancel/{userId}',options),
+  //用户启用
+  userEnable:(options = {}) =>ajax.post('/user/enable/{userId}',options)
 
 
 }

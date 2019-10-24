@@ -26,8 +26,9 @@
             <el-switch
               v-model="tableData[scope.$index].status"
               active-color="#13ce66"
-              inactive-color="#ff4949"
-          
+              @change="switchChange(scope.row)"
+              active-text="启用"
+              inactive-text="冻结"
             ></el-switch>
           </template>
         </el-table-column>
@@ -40,7 +41,7 @@
       </el-table>
       <div class="pagintion" v-if="total">
         <table-paging
-          :current-page="1"
+          :current-page="page"
           :page-size="10"
           :total="total"
           @handleSizeChange="pageSizeChange"
@@ -49,13 +50,13 @@
       </div>
     </div>
     <div class="role-dialog">
-      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="roleDialog">
+      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="roleDialog" >
         <!-- <roleifometion></roleifometion> -->
         <div class="vlt-edit-single">
           <h2 class="title">角色信息</h2>
           <div class="vlt-edit-wrap">
             <base-form
-              :formData="this.currentState === '编缉'?updataFrom: addFrom"
+              :formData="this.currentStatus === '编缉'?updataFrom: addFrom"
               labelWidth="90px"
               :rules="rules"
               ref="baseForm"
@@ -80,26 +81,23 @@ export default {
   data() {
     return {
       rules: {},
-      dialogFormVisible: false,
-      controlOptions: [
-        //按钮组
+      controlOptions: [//按钮组
         { name: "新建角色", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
-      addFrom: [
+      addFrom: [ //新建角色表单
         { type: "input", title: "用户角色", prop: "roleName", value: "" },
-        {
+        { title: "角色类型",
           type: "select",
-          title: "角色类型",
           prop: "roleType",
           value: "",
           options: [
             { label: "管理员", value: 1 },
             { label: "子管理员", value: 2 },
             { label: "普通角色", value: 3 }
-          ]
-        },
+          ]},
         { type: "switch", title: "角色状态", prop: "status", value: true },
-        {
+        { type: "input", title: "角色编码", prop: "roleCode", value: '' },
+        { title: "角色权限",
           type: "cascader-multiple",
           prop: "moduleIds",
           setProps: {
@@ -110,26 +108,22 @@ export default {
             checkStrictly: true
           },
           value: [],
-          title: "角色权限",
           placeholder: "请选择",
-          options: []
-        },
+          options: []},
         { type: "textarea", title: "描述", prop: "roleDesc", value: "" }
       ],
-      updataFrom:[
-         { type: "input", title: "用户角色", prop: "roleName", value: "" },
-        {
+      updataFrom:[//编缉角色信息
+        { type: "input", title: "用户角色", prop: "roleName", value: "" },
+        { title: "角色类型",
           type: "select",
-          title: "角色类型",
           prop: "roleType",
           value: "",
           options: [
             { label: "管理员", value: 1 },
             { label: "子管理员", value: 2 },
             { label: "普通角色", value: 3 }
-          ]
-        },
-        {
+          ]},
+        { title: "角色权限",
           type: "cascader-multiple",
           prop: "moduleIds",
           setProps: {
@@ -140,62 +134,25 @@ export default {
             checkStrictly: true
           },
           value: [],
-          title: "角色权限",
           placeholder: "请选择",
-          options: []
-        },
+          options: []},
         { type: "textarea", title: "描述", prop: "roleDesc", value: "" }
       ],
-      option: [
-        //搜索框组
-        {
-          title: "用户角色",
-          prop: "roleName",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "创建人",
-          prop: "createBy",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "角色状态",
-          prop: "status",
-          type: "select",
-          options: [
-            {
-              value: 1,
-              label: "无效"
-            },
-            {
-              value: 0,
-              label: "有效"
-            }
-          ],
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          type: "datetime-range",
-          prop: "createTime",
-          value: "",
-          title: "创建时间",
-          placeholder: ["开始时间", "结束时间"]
-        }
+      option: [//搜索框组
+        { title: "用户角色",prop: "roleName",type: "input",value: "",placeholder: "请输入" || ["请输入1", "请输入2"]},
+        {title: "创建人",prop: "createBy",type: "input",value: "", placeholder: "请输入" || ["请输入1", "请输入2"]},
+        {title: "角色状态", value: "", prop: "status",type: "select",options: [{value: 0,label: "无效"},{value: 1,label: "有效" }],placeholder: "请输入" || ["请输入1", "请输入2"] },
+        {type: "datetime-range",prop: "createTime", value: "",title: "创建时间",placeholder: ["开始时间", "结束时间"]}
       ],
-      currentPage4: 0,
+      dialogFormVisible: false,//弹框控制
+      currentPage4: 0,//当前显示分页
       tableData: [],
-      multipleSelection: [],
       //新建按钮点击
-      newcreate: false,
-      parms: {},
-      currentState: "",
+      parms: {},//表单对象
+      currentStatus: "",//当前操作状态
       total:0,
       val:{},
+      page:1,
       pageSize:10,
    
     };
@@ -207,55 +164,83 @@ export default {
   mounted() {},
   components: {},
   methods: {
-   async init(val){
+async init(val){ //初始化页面数据
     let res = await this.$api.QueryModuleTree({});
-    let data = {
-      page:val||1,
-      pageSize:this.pageSize
-    }
-    let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
-     console.log(reslt)
-    if(res.code === 0){
-       this.addFrom[3].options = res.data;
-       this.updataFrom[2].options = res.data;
-    }
-    if (reslt.code === 0) {
-      let arr = reslt.data.records;
-      
-       this.total = reslt.data.total
-       let Arr = JSON.parse(JSON.stringify(arr))
-       this.dataProcessing(Arr);
-    }
+        if(res.code === 0){
+        this.addFrom[4].options = res.data;
+        this.updataFrom[2].options = res.data;
+        }
+    console.log('菜单树查询',res)
+    this.pagingControl()
+
     },
-    handelifo(val) {
-      console.log(val);
+async pagingControl(val){ //分页控制
+    let data = {
+          page:val||1,
+          pageSize:this.pageSize
+        }
+    let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
+        console.log("获取当前分页信息",reslt)
+      if (reslt.code === 0) {
+          let arr = reslt.data.records;
+          this.total = reslt.data.total//查询到的信息总数量
+          this.page = reslt.data.page  //当前返回页
+          let Arr = JSON.parse(JSON.stringify(arr))
+          this.dataProcessing(Arr);//处理数据
+      }
+     },
+    handelifo(val) {//路由跳转到角色详情
       this.$router.push({ name: "roleifometion", query: { id: val.roleId } });
     },
-   async pageSizeChange(val) {
-      //每页显示条数
-      console.log(val);
-      this.pageSize = val;
-       let data = {
-          page:1,
-          pageSize:val
-      }
-    let reslt = await this.$api.QueryRoleInfoPage({data });
-   
-    if(reslt.code === 0){
-       let arr = reslt.data.records;
-       this.total = reslt.data.total
-       this.dataProcessing(arr);
-    }
+    async switchChange(val){
+        let ifo;
+        if(val.status){
+          ifo = "此操作会解除冻结状态，请确认是否解除此角色冻结状态？"
+        }else{
+          ifo = "此操作会冻结此角色，认确认是否要冻结此角色？"
+        }
+         this.$confirm(ifo, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(async () => {
+
+                 let data = {
+                    status:Number(val.status),
+                    roleId:val.roleId
+                  }
+                  let reslt = await this.$api.UpdateRoleStatusInfo({data})
+                  console.log('更改角色状态',reslt)
+                  if(reslt.code === 0){
+                    this.init()
+                       this.$message({
+                        type: "success",
+                        message: "状态更改成功!"
+                      });
+                  }
+          })
+          .catch(() => {
+            this.init()
+            this.$message({
+              type: "info",
+              message: "更改状态失败"
+            });
+          });
     },
-    pageCurrentChange(val) {
-      //当前显示页数
-      console.log(val);
+   async pageSizeChange(val) {//每页显示条数
+      // console.log(val);
+      this.pageSize = val;
+
+    },
+    pageCurrentChange(val) { //当前显示页数
+      // console.log(val);
       this.currentPage4 = val;
-      this.init(val)
+      this.pagingControl(val)
     },
     handelskip(val) {
       this.dialogFormVisible = true;
-      this.currentState = "编缉";
+      this.currentStatus = "编缉";
       this.val = val ;
       let arr = Object.keys(val)
       let len  = this.updataFrom
@@ -268,28 +253,28 @@ export default {
         }
       }
     },
-    selectBtn(val) {
-      //新增删除事件
+    selectBtn(val) {//新增删除事件
       if (val.name === "新建角色") {
-        this.currentState = "新建角色";
+        this.currentStatus = "新建角色";
         this.dialogFormVisible = true;
       }
     },
-    async search(val) {
-      //搜索事件
+async search(val) {//搜索事件
+      console.log(val)
       let data = JSON.parse(JSON.stringify(val));
-      let reslt = await this.$api.QueryRoleInfoPage({ data });
-      console.log(reslt);
-     
+      let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
+      console.log('角色查询接口',reslt);  
       if (reslt.code === 0) {
-         let arr = reslt.data.records;
+        let arr = reslt.data.records;
         this.total = reslt.data.total;
         this.dataProcessing(arr);
       }
     },
     dataProcessing(arr) {//数据处理
-
-     console.log(arr)
+        arr.forEach(item => {      
+              item.status = !!item.status;
+        });
+        //  console.log(arr)
       let obj = arr.map(item => {
         // console.log(item);
         if (item.roleType === 1) {
@@ -317,31 +302,26 @@ export default {
       });
       this.tableData = obj;
     },
-    async submit(val) {
-      //表单提交
-      if (this.currentState === "新建角色") {
-        //点击新建按钮提交
+    async submit(val) {//表单提交
+      if (this.currentStatus === "新建角色") {//点击新建按钮提交
         this.parms.created = "新建角色";
         let data = JSON.parse(JSON.stringify(this.parms));
         data.sysCode= "VLT_BMS"
         data.status = Number(data.status)
-        let reslt = await this.$api.SaveRoleInfo({ data });
-        console.log(reslt);
+        console.log('保存角色信息表单对象',data);
+        let reslt = await this.$api.SaveRoleInfo({ data });//保存角色信息
+        console.log('保存角色信息',reslt);
       if(reslt.code===0){
         this.init()
         this.dialogFormVisible =false;
         this.$refs.baseForm.resetForm();
         this.parms = {};
-      }
-        
-        console.log(data);
-      } else if (this.currentState === "编缉") {
-        //点击编缉按钮提交
+      }        
+      } else if (this.currentStatus === "编缉") { //点击编缉按钮提交
         this.parms.created = "编缉";
         let data = JSON.parse(JSON.stringify(this.parms));
         data.roleId = this.val.roleId
-        // data.status = Number(data.status)
-       
+        // data.status = Number(data.status)  
         if(typeof data.roleType != Number ){
             if(data.roleType ==="管理员"){
               data.roleType = 1;
@@ -351,17 +331,15 @@ export default {
               data.roleType = 3;
             }
         }
-         console.log(data)
-        let reslt = await this.$api.UpdateRoleInfo({data})
-         console.log(reslt)
+        console.log(data,"修改角色信息表单对象")
+        let reslt = await this.$api.UpdateRoleInfo({data})//修改角色信息
+         console.log('修改角色信息',reslt)
         if(reslt.code === 0){
           this.init(this.currentPage4)
           this.dialogFormVisible = false;
           this.$refs.baseForm.resetForm();
           this.parms = {};
-        }
-        
-        // console.log(data);
+        }      
       }
     },
     //弹框事件
@@ -370,6 +348,16 @@ export default {
     },
     changeForm(val) {
        Object.assign(this.parms, val);
+    }
+  },
+  watch: {
+    pageSize: {
+      handler: function(newValue, oldVale) {
+           if(newValue != oldVale){
+              this.init()
+           }
+      },
+      deep: true // 对象内部的属性监听，也叫深度监听
     }
   }
 };
