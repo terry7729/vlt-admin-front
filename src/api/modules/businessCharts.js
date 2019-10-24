@@ -28,5 +28,18 @@ export default {
    // 城市游戏风险指标详情
    getGameRiskDetail:(options={})=>ajax.post('/game/risk/detail',options),
    // 城市游戏风险指标新增
-   getGameRiskInsert:(options={})=>ajax.post('/game/risk/insert',options)
-}
+   gameRiskInsert:(options={})=>ajax.post('/game/risk/insert',options),
+  // 奖池风险指标风险指标新增
+   pondRiskInsert:(options={})=>ajax.post('/jackpot/risk/insert',options),
+   //奖池风险指标列表
+   getPondRiskList:(options={})=>ajax.post('/jackpot/risk/list',options),
+   // 奖池风险指标详情
+   getPondRiskDetail:(options={})=>ajax.post('/jackpot/risk/detail',options),
+   // 奖池风险指标新增
+   cityRiskInsert:(options={})=>ajax.post('/city/risk/insert',options),
+   //奖池风险指标列表
+   //删除奖池风险指标
+   pondRiskDelete:(options={})=>ajax.post('/jackpot/risk/delete',options),
+  //删除城市游戏风险指标
+   gameRiskDelete:(options={})=>ajax.post('/game/risk/delete',options)
+  }
