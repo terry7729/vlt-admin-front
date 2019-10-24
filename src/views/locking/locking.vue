@@ -45,11 +45,7 @@ export default {
       this.$router.back();
       storage.remove('locked');
     }
-  },
-  // beforeRouteLeave (to, from, next) {
-  //   console.log('to', to.name)
-  //   // next();
-  // },
+  }
 }
 </script>
 
