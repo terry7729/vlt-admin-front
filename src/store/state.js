@@ -9,6 +9,7 @@ const state = {
     info: "渠道名称",
     name: "中心管理部门",
     num: "85"
-  }]
+  }],
+  insData: null, // 机构数据
 }
 export default state;

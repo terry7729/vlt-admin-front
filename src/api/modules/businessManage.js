@@ -56,6 +56,14 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
-
+  // 新建渠道
+  creatChannel: (options = {}) => ajax.post('/create/save', options),
+  // 新建渠道--销售游戏列表
+  getChannelGameList: (options = {}) => ajax.post('/create/selectGameList', options),
+  // 渠道列表
+  getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
+  // 渠道详情
+  getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
+  
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options)
 }

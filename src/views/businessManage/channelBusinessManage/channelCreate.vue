@@ -36,22 +36,22 @@
           <el-form :model="betCard" label-position="right" label-width="90px">
             <el-form-item label="卡费规则">
               <div class="flex-wrap">
-                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.num" placeholder="请输入数量（张）"></el-input></div>
-                <div class="flex-wrap"><span class="label">收费</span><el-input v-model="betCard.money" placeholder="请输入金额（元）"></el-input></div>
+                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.charge" placeholder="请输入数量（张）"></el-input></div>
+                <div class="flex-wrap"><span class="label">收费</span><el-input v-model="betCard.amount" placeholder="请输入金额（元）"></el-input></div>
               </div>
             </el-form-item>
             <el-form-item label="押金设置">
-              <el-radio v-model="betCard.radio" label="1">不收费</el-radio>
-              <el-radio v-model="betCard.radio" label="2">全部收费</el-radio>
-              <el-radio v-model="betCard.radio" label="3">按投注卡申请量收取</el-radio>
+              <el-radio v-model="betCard.depositSet" label="0">不收费</el-radio>
+              <el-radio v-model="betCard.depositSet" label="1">全部收费</el-radio>
+              <el-radio v-model="betCard.depositSet" label="2">按投注卡申请量收取</el-radio>
             </el-form-item>
-            <el-form-item label="押金金额" v-if="betCard.radio==2">
-              <el-input v-model="betCard.money2" placeholder="请输入金额（元）"></el-input>
+            <el-form-item label="押金金额" v-if="betCard.depositSet==1">
+              <el-input v-model="betCard.amount" placeholder="请输入金额（元）"></el-input>
             </el-form-item>
-            <el-form-item label="押金金额" v-if="betCard.radio==3">
+            <el-form-item label="押金金额" v-if="betCard.depositSet==2">
               <div class="flex-wrap">
-                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.num2" placeholder="请输入数量（张）"></el-input></div>
-                <div class="flex-wrap"><span class="label">金额</span><el-input v-model="betCard.money2" placeholder="请输入金额（元）"></el-input></div>
+                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.charge" placeholder="请输入数量（张）"></el-input></div>
+                <div class="flex-wrap"><span class="label">金额</span><el-input v-model="betCard.amount" placeholder="请输入金额（元）"></el-input></div>
               </div>
             </el-form-item>
           </el-form>
@@ -191,9 +191,10 @@
 <script>
 import mixin from '@/utils/mixin';
 const typeData = [
-  {label:'类型一',value:'1'},
-  {label:'类型二',value:'2'},
-  {label:'类型三',value:'3'},
+  {label:'设备',value:'1'},
+  {label:'配件',value:'2'},
+  {label:'耗材',value:'3'},
+  {label:'设施',value:'3'},
 ];
 const nameData = [
   {label:'名称一',value:'4'},
@@ -210,12 +211,12 @@ export default {
   mixins: [mixin],
   data() {
     return {
-      betCard: {
+      betCard: { // 投注卡的数据
         num:'',
         money:'',
-        radio: '1',
+        depositSet: '0', // 押金设置 0-不收费；1-收费，2-按投注卡申请量收费
         num2: '',
-        money: ''
+        amount: '' // 押金金额
       },
       resourceData: [ // 发放资源数据
         {title:'资源类型',type:'',model:'',name:'',number:'',optionsType:typeData,optionsName:nameData,optionsModel:modelData,}
@@ -224,27 +225,27 @@ export default {
       fileList: [],
       activeName: "first",
       formData: [
-        {title: '所属机构', type: 'cascader', prop: 'insCode', value: '',  options: []},
+        {title: '所属机构', type: 'cascader', prop: 'insId', value: '',  options: []},
         {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options:[{label:'自营厅',value:'1'},{label:'合作厅',value:'2'}]},
-        {title: '渠道编号', type: 'input', prop: 'channelCode', value: ''},
-        {title: '经营场所属性', type: 'select', prop: 'addressType', value: '', options:[{label:'自有',value:'1'},{label:'租赁',value:'2'}]},
-        {title: '渠道面积', type: 'input', prop: 'abc', value: ''},
-        {title: '渠道地址', type: 'address', prop: 'address', value: '',options:[]},
+        {title: '渠道编号', type: 'input', prop: 'channelNo', value: ''},
+        {title: '经营场所属性', type: 'select', prop: 'runField', value: '', options:[{label:'自有',value:'1'},{label:'租赁',value:'2'}]},
+        {title: '渠道面积', type: 'input', prop: 'pointArea', value: ''},
+        {title: '渠道地址', type: 'address', prop: 'channelAddress', value: '',options:[]},
       ],
       workerData: [
-        [{title: '职位类别', type: 'select', prop: 'workerType', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
-        {title: '姓名', type: 'input', prop: 'name', value: ''},
+        [{title: '角色名称', type: 'select', prop: 'roleId', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
+        {title: '姓名', type: 'input', prop: 'accountName', value: ''},
         {title: '性别', type: 'radio', prop: 'sex', value: '2', options: [{ label: '男', value: "1" }, { label: '女', value: "2" }]},
-        {title: '手机号码', type: 'input', prop: 'mobile', value: ''},
-        {title: '身份证号码', type: 'input', prop: 'idCard', value: ''},
-        {title: '身份证照正面', type: 'upload', prop: 'idCardPre', value: ''},
-        {title: '身份证照背面', type: 'upload', prop: 'idCardBack', value: ''}]
+        {title: '手机号码', type: 'input', prop: ' phone', value: ''},
+        {title: '身份证号码', type: 'input', prop: 'channelIdentity', value: ''},
+        {title: '身份证照正面', type: 'upload', prop: 'photo', value: ''},
+        {title: '身份证照背面', type: 'upload', prop: 'photo', value: ''}]
       ],
       financeData: [
-        {title: '合作预交款', type: 'input', prop: 'sss', value: ''},
-        {title: '授信额度', type: 'input', prop: 'ss', value: ''},
-        {title: '代销费费率', type: 'select', prop: 'bb', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
-        {title: '收款凭证', type: 'upload-drag', prop: 'cc', value: ''}
+        {title: '合作预交款', type: 'input', prop: 'coPrepareMoney', value: ''},
+        {title: '授信额度', type: 'input', prop: 'creditQuota', value: ''},
+        {title: '代销费费率', type: 'select', prop: 'agentSellRate', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
+        {title: '收款凭证', type: 'upload-drag', prop: 'evidence', value: ''}
       ],
       deviceData: [
         {title:'设备', propType: 'type', propModel: 'model', optionsType:[{label:'类型一',value:1},{label:'类型二',value:2}],optionsModel:[{label:'型号三',value:3},{label:'型号四',value:4}]}
@@ -279,19 +280,52 @@ export default {
       deep: true
     },
   },
-  created() {},
+  created() {
+    this.getInsData()
+    this.getChannelGameList()
+  },
   methods: {
-    getStoreList(row) {
+    // 获取渠道 销售游戏列表
+    getChannelGameList() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.getChannelGameList({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          // self.$set(self.formData[1], 'options', res.data)
+          // self.formData[1].options = res.data;
+          self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 获取机构列表
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.QueryInsTree({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          self.$set(self.formData[1], 'options', res.data)
+          // self.formData[1].options = res.data;
+          self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    creatChannel(row) {
       const self = this;
       const data = {
         orderId: row.orderId
       };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.creatChannel({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -359,6 +393,7 @@ export default {
       console.log('设备参数', this.deviceParam)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
+        self.creatChannel();
       });
     },
   },
