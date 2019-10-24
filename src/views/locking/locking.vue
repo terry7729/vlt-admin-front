@@ -33,13 +33,16 @@ export default {
 
   },
   methods: {
+    showMessage(msg) {
+      this.$message.closeAll();
+      this.$message({
+        message: msg,
+        type: 'warning'
+      });
+    },
     submit() {
       if (!this.password.trim()) {
-        this.$message.closeAll();
-        this.$message({
-          message: '请输入密码',
-          type: 'warning'
-        });
+        this.showMessage('请输入密码');
         return;
       }
       this.$router.back();
