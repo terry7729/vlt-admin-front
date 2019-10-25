@@ -99,7 +99,8 @@ export default {
   components: {},
   methods: {
     async initList () {
-      let result = await this.$api.equipmentRecord()
+      let result = await this.$api.accessoriesRecord()
+      console.log(result);
       // equipmentRecord
     }
   }

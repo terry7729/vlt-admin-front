@@ -22,6 +22,20 @@ export default {
   //类型管理状态修改
   statusUpdate:(options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`,options),
 
+  // 设备管理
+  // 设备分页查询列表
+  equipmentListPage: (options = {}) => ajax.post('/equipment/equipmentPage', options),
+  // 设备详情查询
+  equipmentInfoDetail: (options = {}) => ajax.post('/equipment/equipmentInfo', options),
+  // 设备履历
+  equipmentRecord: (options = {}) => ajax.post('/equipment/equipmentRecord', options),
+  // 配件详情查询
+  accessoriesInfoDetail: (options = {}) => ajax.post('/accessories/accessoriesInfo', options),
+  // 配件分页查询列表
+  accessoriesListPage: (options = {}) => ajax.post('/accessories/accessoriesPage', options),
+  // 配件履历
+  accessoriesRecord: (options = {}) => ajax.post('/accessories/accessoriesRecord', options),
+
   // 投注卡生成
   createCardGeneration: (options = {}) => ajax.post('/bettingCardGeneration/create', options),
   //  投注卡生成注销
@@ -30,12 +44,18 @@ export default {
   cardGenerationDetail: (options = {}) => ajax.post('/bettingCardGeneration/detail', options),
   // 投注卡生成列表分页查询
   cardGenerationList: (options = {}) => ajax.post('/bettingCardGeneration/list', options),
+
+  // 投注卡信息列表分页查询
+  bettingCardInfoList: (options = {}) => ajax.post('/bettingCardInfo/list', options),
+  // 投注卡信息详情查询
+  bettingCardInfoDetail: (options = {}) => ajax.post('/bettingCardInfo/detail', options),
+  // 投注卡信息注销
+  deleteBettingCardInfo: (options = {}) => ajax.post('/bettingCardInfo/delete', options),
+
   // 投注卡管理
   getBettingRulesList: (options = {}) => ajax.post('/bettingCardRechargeRules/list', options),
   // 新增投注卡规则
   createBettingRulesList: (options = {}) => ajax.post('/bettingCardRechargeRules/create', options),
-  // 更新修改账户
-  updateAccount: (options = {}) => ajax.post(`/tChannelFund/update/${id}`, options),
   // 删除投注卡规则
   deleteBettingCard: (options = {}) => ajax.post(`/bettingCardRechargeRules/delete`, options),
   // 修改投注卡规则

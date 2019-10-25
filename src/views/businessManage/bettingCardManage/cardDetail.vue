@@ -4,9 +4,12 @@
     <panel-static title="基本信息">
       <base-info :infoList="infoList"></base-info>
     </panel-static>
+    <!-- <panel-static title="基本信息">
+      <base-info :infoList="infoList2"></base-info>
+    </panel-static> -->
     <control-bar :options="controlOptions" @select="selectBtn" position="left"></control-bar>
 
-    <el-row class="card-table">
+    <!-- <el-row class="card-table">
       <el-table
         :data="tableDatas.tableData"
         border
@@ -22,16 +25,16 @@
           :width="item.width"
         ></el-table-column>
       </el-table>
-    </el-row>
+    </el-row> -->
 
-    <table-paging
+    <!-- <table-paging
       position="left"
       :total="999"
       :currentPage="1"
       :pageSize="10"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
-    ></table-paging>
+    ></table-paging> -->
     <dialog-form 
     :showForm="showdialog"
     :formDatas="data2"
@@ -49,14 +52,12 @@ export default {
     return {
       showdialog: false,
       infoList: [
-        { title: "批次", value: "ww", prop: "gameCode" },
-        { title: "投注卡类型", value: "sss", prop: "gameName" },
-        { title: "所属机构", value: "www", prop: "officialEndSale" },
-        { title: "发卡数量", value: "2", prop: "cycleType" },
-        { title: "有效日期", value: "9012-09-09", prop: "gameStatus" }
+        { title: "批次", value: '', prop: "batch" },
+        { title: "投注卡类型", value: '', prop: "bettingCardType" },
+        { title: "所属机构", value: '', prop: "insName" },
+        { title: "发卡数量", value:'', prop: "cardMakingQuantity" }
       ],
       controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
-
       tableDatas: {
         tableData: [
           {
@@ -66,38 +67,6 @@ export default {
           },
           {
             id: 1,
-            ardType: "F01",
-          },
-          {
-            id: 2,
-            ardType: "F01",
-          },
-          {
-            id: 3,
-            ardType: "F01",
-          },
-          {
-            id: 4,
-            ardType: "F01",
-          },
-          {
-            id: 5,
-            ardType: "F01",
-          },
-          {
-            id: 6,
-            ardType: "F01",
-          },
-          {
-            id: 7,
-            ardType: "F01",
-          },
-          {
-            id: 8,
-            ardType: "F01",
-          },
-          {
-            id: 9,
             ardType: "F01",
           }
         ],
@@ -149,7 +118,8 @@ export default {
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       },
-      id: ''
+      id: '',
+      dataList: {}
     };
   },
   components: {
@@ -159,9 +129,24 @@ export default {
     let id = this.$route.query.id;
     if (id) {
       this.id = id;
+      this.getInfo(this.id)
     }
   },
   methods: {
+    async getInfo(id) {
+      const _this = this;
+      let result = await _this.$api.cardGenerationDetail(id);
+      if (result.code === 0) {
+        console.log(result.data);
+        _this.infoList.forEach(item => {
+          // result.data
+          item.value = result.data[item.prop]
+          if (item.prop == 'bettingCardType') {
+            item.value = _this.forMatType(result.data[item.prop]);
+          }
+        })
+      }
+    },
     selectBtn () {
       this.$router.push({
         name: 'exportCard',
@@ -181,6 +166,16 @@ export default {
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
+    },
+    forMatType(type) {
+      switch (type) {
+        case 1:
+          return (type = "普通卡");
+        case 2:
+          return (type = "会员卡");
+        case 3:
+          return (type = "试玩卡");
+      }
     }
   }
 };
