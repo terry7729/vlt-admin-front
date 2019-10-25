@@ -1,22 +1,15 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <el-form :inline="true" :model="form" class="demo-form-inline">
-        <el-form-item label="假日名称">
-          <el-select v-model="form.name" placeholder="请选择" size="small">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button size="small" type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
-        </el-form-item>
-      </el-form>
-      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+      <searchBar :options="options" @search="search" :total="total">
+        <controlBar
+          slot="extend-bar"
+          @select="Addclick"
+          :options="Addbtn"
+          position="left"
+        ></controlBar>
+      </searchBar>
+      <!-- <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar> -->
     </div>
     <div class="el_table">
       <el-table
@@ -24,16 +17,18 @@
         style="width: 100%"
         :default-sort="{prop: 'id', order: 'descending'}"
       >
-        <el-table-column prop="id" label="序号" width="100"></el-table-column>
+        <el-table-column prop="id" type="index" label="序号" width="100"></el-table-column>
         <el-table-column prop="holidayName" label="假日名称" width="100"></el-table-column>
-        <el-table-column prop="startTime" label="开始时间" sortable width="190"></el-table-column>
+        <el-table-column label="开始时间" sortable width="190">
+          <template slot-scope="scope">{{translateTime(scope.row.beginTime)}}</template>
+        </el-table-column>
         <el-table-column prop="endTime" label="结束时间" sortable width="190"></el-table-column>
-        <el-table-column prop="abandonstartTime" label="弃奖开始日期" sortable width="130"></el-table-column>
-        <el-table-column prop="abandonendTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
+        <el-table-column prop="discardBeginTime" label="弃奖开始日期" sortable width="130"></el-table-column>
+        <el-table-column prop="discardEndTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
 
-        <el-table-column label="销售状态" >
+        <el-table-column label="销售状态" prop="marketStatus">
           <template slot-scope="scope">
-            <el-switch    
+            <el-switch
               v-model="scope.row.switch1"
               inactive-text="停销"
               active-text="不停销"
@@ -42,7 +37,7 @@
             ></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="启用状态">
+        <el-table-column label="启用状态" prop="holidayStatus">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.switch2"
@@ -54,12 +49,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <table-paging :total="total"></table-paging>
+      <tablePaging  :total="total" :currentPage="1" :pageSize="10"></tablePaging>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
+import moment from "moment";
 export default {
   data() {
     return {
@@ -68,26 +64,19 @@ export default {
       form: {
         name: ""
       },
+      Addbtn: [{ name: "新增", type: "primary", icon: "plus" }],
       options: [
         {
-          value: "chunjie",
-          label: "春节"
-        },
-        {
-          value: "guoqing",
-          label: "国庆"
-        },
-        {
-          value: "zhongqiu",
-          label: "中秋"
-        },
-        {
-          value: "qingming",
-          label: "清明"
-        },
-        {
-          value: "duanwu",
-          label: "端午"
+          type: "select",
+          prop: "holidayName",
+          value: "",
+          title: "假日名称",
+          placeholder: "请输入",
+          options: [
+            { label: "", value: 0 },
+            { label: "", value: 1 },
+            { label: "", value: 2 }
+          ]
         }
       ],
       value: "",
@@ -97,62 +86,61 @@ export default {
         { name: "保存", type: "success" }
       ],
       tableData: [
-        {
-          id: 1,
-          holidayName: "春节",
-          startTime: "2019-10-11 10:0:0",
-          endTime: "2019-10-11 12:0:0",
-          abandonstartTime: "2019-11-12",
-          abandonendTime: "2019-10-15",
-          switch1: 1,
-          switch2:0,
-        },
-        {
-          id: 2,
-          holidayName: "端午",
-          startTime: "2019-10-12 10:0:0",
-          endTime: "2019-10-12 12:0:0",
-          abandonstartTime: "2019-12-12",
-          abandonendTime: "2019-10-15",
-          switch1: 1,
-          switch2:0,
-        },
-        {
-          id: 3,
-          holidayName: "中秋",
-          startTime: "2019-10-13 10:0:0",
-          endTime: "2019-10-13 12:0:0",
-          abandonstartTime: "2019-1-12",
-          abandonendTime: "2019-10-15",
-          switch1: 1,
-          switch2:0,
-        },
-        {
-          id: 4,
-          holidayName: "国庆",
-          startTime: "2019-10-14 10:0:0",
-          endTime: "2019-10-14 12:0:0",
-          abandonstartTime: "2019-2-12",
-          abandonendTime: "2019-10-15",
-          switch1: 1,
-          switch2:0,
-        },
-        {
-          id: 5,
-          holidayName: "清明",
-          startTime: "2019-10-15 10:0:0",
-          endTime: "2019-10-15 12:0:0",
-          abandonstartTime: "2019-10-12",
-          abandonendTime: "2019-10-15",
-          switch1: 1,
-          switch2:0,
-        }
+        // {
+        //   id: 1,
+        //   holidayName: "春节",
+        //   startTime: "2019-10-11 10:0:0",
+        //   endTime: "2019-10-11 12:0:0",
+        //   abandonstartTime: "2019-11-12",
+        //   abandonendTime: "2019-10-15",
+        //   switch1: 1,
+        //   switch2: 0
+        // }
       ],
-      total: 400
+      total: 400,
+      row: "",
+      param: null
     };
+  },
+  created() {
+    this.init();
   },
   components: {},
   methods: {
+    translateTime(val) {
+      return moment(val).format("YYYY-MM-DD HH:mm:ss");
+    },
+    async init() {
+      //初始查询列表的参数
+      let data = {
+        page: 1,
+        pageSize: 10,
+        param: {
+          holidayName: "",
+          // holidayStatus: "",
+          // beginTime: "",
+          // endTime: "",
+          // marketStatus: "",
+          // discardBeginTime: "",
+          // discardEndTime: ""
+        }
+      };
+      let result = await this.$api.queryHolInfoPage({data});
+      console.log(result)
+      if (result.code === 0) {
+        let tableData = result.data.records;
+        // this.tableData = arr;
+        // this.num = arr.length;
+        total=tableData.length;
+        console.log(result);
+      }
+    },
+    search(){
+
+    },
+    Addclick(){
+      this.$router.push({path:"holidayParametersManagement/holidayParametersAdd"});
+    },
     selectBtn(val) {
       this.$emit("select", val);
     },

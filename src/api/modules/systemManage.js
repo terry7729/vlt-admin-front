@@ -96,4 +96,12 @@ export default {
   sms:(options = {}) =>ajax.post('/sysConfig/sms/set',options),
   //系统邮件参数设置
   email:(options = {}) =>ajax.post('/sysConfig/email/set',options),
+
+  //假日参数
+  //假日分页接口
+  queryHolInfoPage:(options = {}) =>ajax.post('/hol/queryHolInfoPage',options),
+  //系统短信参数设置
+  addHolInfo:(options = {}) =>ajax.post('/hol/addHolInfo',options),
+  //系统邮件参数设置
+  updateHolStatus:(options = {}) =>ajax.post('/hol/updateHolStatus',options),
 }
