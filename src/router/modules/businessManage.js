@@ -68,6 +68,7 @@ const riskReportList = () => import('@/views/businessManage/gameDelistingManage/
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
+const channelDetail = () => import('@/views/businessManage/channelBusinessManage/channelDetail')
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -555,6 +556,15 @@ export default [
       title: '渠道列表',
     },
     component: channelList
+  },
+  {
+    path: 'businessManage/channelDetail',
+    name: 'channelDetail',
+    meta: {
+      title: '渠道详情',
+      parentName: 'channelList',
+    },
+    component: channelDetail
   },
   {
     path: 'businessManage/channelDeal',

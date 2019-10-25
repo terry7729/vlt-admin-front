@@ -32,10 +32,17 @@
         active-color="#409EFF"
         inactive-color="">
       </el-switch>
-      <!-- 单个日期选择 -->
-      <el-date-picker size="small" type="date"
+      <!-- 单个日期选择// dateType设置时间类型 年 月 日 --> 
+      <!-- <el-date-picker size="small" type="year"
+        v-if="item.type=='dateyear'"
+        v-model="form[item.prop]"
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
+      </el-date-picker> -->
+      <!-- 单个日期选择// dateType设置时间类型 年 月 日 --> 
+      <el-date-picker size="small" 
         v-if="item.type=='datepicker'"
         v-model="form[item.prop]"
+        :type="item.dateType"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
       <!-- 起止日期选择 -->

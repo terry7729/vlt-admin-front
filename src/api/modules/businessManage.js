@@ -2,8 +2,8 @@
 import ajax from '@/utils/ajax.js'
 export default {
   /*
-  *@param {json} options: {} || {data: json}
-  */
+   *@param {json} options: {} || {data: json}
+   */
   /* 请务必注释每个接口所属名称 */
   // 例
   getTest: (options = {}) => ajax.post('/test', options),
@@ -50,13 +50,13 @@ export default {
   /* 
     请务必注释每个接口所属名称 
   */
-  // 新增年度开展计划信息
+  // 新增年度开展计划
   createDevelopPlan: (options = {}) => ajax.post('/developPlan/addDevelopPlanInfo', options),
-  // 修改年度开展计划信息
+  // 编辑年度开展计划
   editDevelopPlan: (options = {}) => ajax.post('/developPlan/updateDevelopPlanInfo', options),
-  // 查询年度开展计划信息
+  // 查询年度开展计划列表
   getDevelopPlanList: (options = {}) => ajax.post('/developPlan/queryDevelopPlanList', options),
-  // 查询年度开展计划详情信息
+  // 查询年度开展计划详情
   getDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划汇总省级列表
   getProvincePlanList: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanList', options),
@@ -76,6 +76,20 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 新建渠道
+  creatChannel: (options = {}) => ajax.post('/create/save', options),
+  // 新建渠道--销售游戏列表
+  getChannelGameList: (options = {}) => ajax.post('/create/selectGameList', options),
+  // 渠道列表
+  getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
+  // 渠道详情
+  getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
+  
+  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
 
-  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options)
+  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
+  //资金参数列表分页查询
+  getFundsParameter: (options = {}) => ajax.post('/tFundParameter/list', options),
+  //资金参数详情查询
+  getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
 }

@@ -35,7 +35,7 @@
           <template slot-scope="scope">
             <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
             <el-button type="primary" @click size="mini">修改</el-button>
-            <el-button type="primary" @click size="mini">删除</el-button>
+            <el-button type="primary" @click.native="deleteInfo(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,8 +111,7 @@ export default {
       ],
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "批量删除", type: "primary", icon: "delete" },
-        { name: "批量修改", type: "primary", icon: "edit" }
+       
       ],
       //记录省市县
       provinceList: [],
@@ -172,11 +171,45 @@ export default {
         self.totalCount = res.data.total;
       }
     },
+    deleteInfo(row) {
+      this.$confirm(`确定要删除这条数据吗? `, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.gameRiskDelete(row.businessKey);
+        })
+        .catch(() => {
+
+        });
+    },
+    async gameRiskDelete(id) {
+      const res = await this.$api.gameRiskDelete({
+        data: {
+          businessKey: id
+        }
+      });
+      if (res && res.code == 0) {
+        this.$message({
+          type: "success",
+          message: "删除成功!"
+        });
+        this.getGameRiskList()
+      } else {
+        this.$message({
+          type: "info",
+          message: "删除失败"
+        });
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log("每页条数：", pageSize);
+      this.listQuery.limit = pageSize;
+      this.getGameRiskList();
     },
     pageCurrentChange(currentPage) {
-      console.log("当前页：", currentPage);
+      this.listQuery.page = currentPage;
+      this.getGameRiskList();
     },
     search(form) {
       console.log("search", form);

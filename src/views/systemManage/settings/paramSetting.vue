@@ -156,7 +156,6 @@ export default {
       console.log("派发出来的参数", this.params);
     },
     submit() {
-      
       this.$refs.baseForm.validate(val => {
         console.log(val);
       });

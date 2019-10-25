@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card plan-check">
-    <panel title="告警监控详情" :show="true">
+    <panel title="城市游戏风险指标详情" :show="true">
       <base-info :infoList="planList"></base-info>
     </panel>
   </div>

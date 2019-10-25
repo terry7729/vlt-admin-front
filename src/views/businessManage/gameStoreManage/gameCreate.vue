@@ -74,28 +74,28 @@ export default {
     return {
       form: {},
       baseData: [
-        {title: '游戏名称', type: 'input;',  prop: 'gameName', value: ''},
-        {title: '游戏类型', type: 'select',  prop: 'gameType;', value: '', options:[{label: '概率型',value: '0'},{label: '奖组型',value: '1'},]},
-        {title: '游戏奖池', type: 'select',  prop: 'jackpotType;;', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
-        {title: '游戏简介', type: 'textarea',  prop: 'gameDesc;', value: ''},
-        {title: '版权归属', type: 'input',  prop: 'gameGenlot;', value: ''},
-        {title: '开发商名称', type: 'input',  prop: 'developerName;', value: ''},
-        {title: '联系人', type: 'input',  prop: 'person;', value: ''},
-        {title: '手机号码', type: 'input',  prop: 'cellPhone;', value: ''},
-        {title: '电子邮箱', type: 'input',  prop: 'email', value: ''},
-        {title: '传真电话', type: 'input',  prop: 'faxPhone', value: ''},
-        {title: '联系地址', type: 'address',prop: 'address', value: ''},
+        {title: '游戏名称', type: 'input',  prop: 'gameName', value: '游戏名称'},
+        {title: '游戏类型', type: 'select',  prop: 'gameType', value: '', options:[{label: '概率型',value: '0'},{label: '奖组型',value: '1'},]},
+        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
+        {title: '游戏简介', type: 'textarea',  prop: 'gameDesc', value: '游戏简介'},
+        {title: '版权归属', type: 'input',  prop: 'gameGenlot', value: '版权归属'},
+        {title: '开发商名称', type: 'input',  prop: 'developerName', value: '开发商名称'},
+        {title: '联系人', type: 'input',  prop: 'person', value: '小李'},
+        {title: '手机号码', type: 'input',  prop: 'cellPhone', value: '1300000000'},
+        {title: '电子邮箱', type: 'input',  prop: 'email', value: '1011@qq.com'},
+        {title: '传真电话', type: 'input',  prop: 'faxPhone', value: '0797-342324'},
+        {title: '联系地址', type: 'input',prop: 'address', value: '天安数码城'},
       ],
       softData: [
-        {title: '软件名称', type: 'input',  prop: 'a', value: '', placeholder:'apk填写软件包名'},
-        {title: '版本名称', type: 'input',  prop: 'b', value: '', placeholder:'字符串版本（示例：V1.0.0）'},
-        {title: '版本号', type: 'input',  prop: 'email', value: '', placeholder:'版本整型（示例：100）'},
-        {title: '软件大小', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '软件描述', type: 'textarea',  prop: 'e', value: ''},
-        {title: '新版特性', type: 'textarea',  prop: 'f', value: ''},
+        {title: '软件名称', type: 'input',  prop: 'softwareName', value: '软件名称', placeholder:'apk填写软件包名'},
+        {title: '版本名称', type: 'input',  prop: 'versionName', value: '版本名称', placeholder:'字符串版本（示例：V1.0.0）'},
+        {title: '版本号', type: 'input',  prop: 'versionNumber', value: '版本号', placeholder:'版本整型（示例：100）'},
+        {title: '软件大小', type: 'input',  prop: 'softwareSize', value: '1.2'},
+        {title: '软件描述', type: 'textarea',  prop: 'softwareDesc', value: '描述'},
+        {title: '新版特性', type: 'textarea',  prop: 'newFeatures', value: '新版特性'},
       ],
       appendixData: [
-        {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
+        {title: '其他附件', type: 'upload-drag',  prop: 'fileIds', value: '1,2'},
       ],
       rules: {
         test: [{ required: true, validator: rules.checkEmail, trigger: 'blur' }],
@@ -109,17 +109,12 @@ export default {
     }
   },
   methods: {
-    createGameStore(row) {
+    createGameStore(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
 				let res = await self.$api.createGameStore({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+         console.log(res)
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -143,13 +138,15 @@ export default {
       if (this.active++ > 2) this.active = 0;
     },
     changeForm(val) {
-      Object.assign(this.params, val)
-      console.log('派发出来的参数', this.params)
+      this.params =Object.assign(this.params, val)
+      console.log('表单的参数', val)
     },
-    submit(formName){
+    submit(){
       const self = this;
+      console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
+        self.createGameStore(this.params)
       });
     }
   },

@@ -65,22 +65,10 @@
     </el-container>
     <div class="bouncedMessage">
       <!--添加子节点弹框-->
-      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog">
+      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="menuDialog" @close="handelClose">
         <div class="vlt-edit-single">
           <h2 class="title">添加子节点</h2>
           <div class="vlt-edit-wrap">
-            <!-- <el-form>
-              <el-form-item label="类型" label-width="110px">
-                <el-select v-model="menuType" placeholder="请选择">
-                  <el-option
-                    v-for="item in option"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-form> -->
             <base-form
               :formData="Addchildnodes"
               ref="baseForm"
@@ -99,7 +87,7 @@
     </div>
     <!--添加顶部菜单-->
     <div class="topManu">
-      <el-dialog :visible.sync="dialogFormVisible2" width="600px" custom-class="menuDialog">
+      <el-dialog :visible.sync="dialogFormVisible2" width="600px" custom-class="menuDialog" @close="handelClose">
         <div class="vlt-edit-single">
           <h2 class="title">添加顶部菜单</h2>
           <div class="vlt-edit-wrap">
@@ -240,11 +228,8 @@ export default {
       rules: {
         //验证对象
         minMultiple: [
-          {
-            required: true,
-            message: "请输入名称"
-          }
-        ],
+          { required: true,
+            message: "请输入名称" }],
         mixBet: [
           {
             required: true,
@@ -278,7 +263,7 @@ export default {
       dialogFormVisible2: false,
       AddInsInfoParms: {},//添加更改节点表单对象
       TopMenuParms: {},//顶部菜单表单对象
-      val: {}, //节点对象
+      nowNodeObject: {}, //当前选中节点对象
       codeId: [], //当前复选框选中节点Id
       moduleType: null
     };
@@ -287,14 +272,14 @@ export default {
   methods: {
     async init() {
       //节点树请求
-      let res = await this.$api.QueryModuleTree({});
+      let res = await this.$api.QueryModuleTree({});//菜单树查询
+      console.log('菜单树查询',res)
       if(res.code === 0){
               this.nodeTreeData = res.data;
       }
     },
-    handel(val) {
-      //菜单按钮选择控制
-      this.menuType = val;
+    handelClose(){
+      this.slelectifo = ''//关闭弹框时置空当前选中节点信息
     },
     deselect() {
       //取消选择按钮
@@ -307,9 +292,9 @@ export default {
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
-    async submitAdd() {
+async submitAdd() {
       //添加信息表单提交
-        console.log(this.parent)
+        // console.log(this.parent)
         this.AddInsInfoParms.created = "添加子节点";
         let addfrom = JSON.parse(JSON.stringify(this.AddInsInfoParms));
         if (addfrom.isShow === true) {
@@ -322,58 +307,53 @@ export default {
         } else {
           addfrom.isSensitivity = 0;
         }
-        if (this.moduleType != 4) {
+       
             let data = {
               parentId: this.parent.id,
               sysCode: "VLT_BMS",
               ...addfrom
             };
-            let reslt = await this.$api.SaveModule({ data });
+            let reslt = await this.$api.SaveModule({ data });//新增菜单
+            console.log('新增菜单',reslt)
             if (reslt.code === 0) {
-              this.AddInsInfoParms = {}
+              this.init();
               this.dialogFormVisible = false;
+              this.AddInsInfoParms = {}
               this.slelectifo = ""
               this.$refs.baseForm.resetForm();
-              this.init();
             }
             
-        } else {
-          this.$alert("按钮类型不能添加子节点", "温馨提示！", {
-            confirmButtonText: "确定",
-            callback: action => {
-              close();
-            }
-          });
-        }
+      
  
     },
-    async submitModifine(val) {
+async submitModifine(val) {
       //更改信息表单提交
       if(this.slelectifo !=""){
-       this.AddInsInfoParms.created = "更改子节点";
-        let data = JSON.parse(JSON.stringify(this.AddInsInfoParms));
-        data.moduleId = this.val.id
-        if (data.isSensitivity) {
-        data.isSensitivity = 0;
-      } else {
-        data.isSensitivity = 1;
-      }
-      if (data.isShow) {
-        data.isShow = 0;
-      } else {
-        data.isShow = 1;
-      }
-      if(data.moduleType===" "){
+          this.AddInsInfoParms.created = "更改子节点";
+            let data = JSON.parse(JSON.stringify(this.AddInsInfoParms));
+            data.moduleId = this.nowNodeObject.id
+            if (data.isSensitivity) {
+              data.isSensitivity = 0;
+            } else {
+              data.isSensitivity = 1;
+            }
+            if (data.isShow) {
+              data.isShow = 0;
+            } else {
+              data.isShow = 1;
+            }
+            if(data.moduleType===" "){
 
-      }
-      data.moduleType = this.val.type
-        let reslt = await this.$api.UpdateModule({ data });
-        if (reslt.code === 0) {
-          this.AddInsInfoParms = {}
-          this.$refs.baseForm.resetForm();
-          this.slelectifo=""
-          this.init();
-        }
+            }
+      data.moduleType = this.nowNodeObject.type
+      let reslt = await this.$api.UpdateModule({ data });//更改信息
+      console.log('更改机构信息',reslt)
+          if (reslt.code === 0) {
+            this.AddInsInfoParms = {}
+            this.$refs.baseForm.resetForm();
+            this.slelectifo=""
+            this.init();
+          }
       }else{
         this.open("请选择要更改的机构！")
       }
@@ -382,29 +362,29 @@ export default {
     },
     addChangeForm(val) {
       //添加节点change事件
-      console.log(val, "添加节点change事件");
+         console.log(val, "添加节点change事件");
         Object.assign(this.AddInsInfoParms, val); 
     },
     ModifineChangeForm(val) {
       //更改节点信息change事件
+       console.log(val, "更改节点信息change事件");
         Object.assign(this.AddInsInfoParms, val);
     },
     addTopChangeForm(val) {
       //添加顶部菜单change事件
+      console.log(val, "添加顶部菜单change事件");
       Object.assign(this.TopMenuParms, val);
     },
     async addTopFromsubmit() {
       //添加顶部菜单提交请求
       this.TopMenuParms.created = "添加顶部菜单";
-      let n = JSON.parse(JSON.stringify(this.TopMenuParms));
-      console.log(n)
-      let data = {
-        parentId: null,
-        sysCode: "VLT_BMS",
-        moduleType: 1,
-        ...n
-      };
+      let data = JSON.parse(JSON.stringify(this.TopMenuParms));   
+      data.parentId = null;
+      data.sysCode = "VLT_BMS"
+      data.moduleType = 1;
+      console.log(data,'添加顶部菜单表单对象')
       let reslt = await this.$api.SaveModule({ data });
+      console.log('新增顶部菜单',reslt)
       if (reslt.code === 0) {
         this.TopMenuParms = {}
         this.$refs.TopMenubaseForm.resetForm()
@@ -418,10 +398,19 @@ export default {
         if (this.slelectifo == "") {
           this.open("请选择要添加子节点的机构！");
         } else {
-          this.setchild = false;
-          this.Addchildnodes[0].value = this.slelectifo;
-          this.dialogFormVisible = true;
-          // this.rightFrom[0].value = this.slelectifo;
+           if (this.moduleType != 4) {
+                this.setchild = false;
+                this.Addchildnodes[0].value = this.slelectifo;
+                this.dialogFormVisible = true;
+                // this.rightFrom[0].value = this.slelectifo;
+            } else {
+                this.$alert("按钮类型不能进行此操作！", "温馨提示！", {
+                confirmButtonText: "确定",
+                callback: action => {
+                  close();
+                }
+            });
+        }
         }
       }
       if (val.name === "添加顶部菜单") {
@@ -438,7 +427,8 @@ export default {
             let data = arr.map(item => {
               return { moduleId: item.id };
             });
-            let reslt = await this.$api.DeleteModule({ data });
+            let reslt = await this.$api.DeleteModule({ data });//批量删除
+            console.log('批量删除',reslt)
             if (reslt.code === 0) {
               this.init();
               this.slelectifo=""
@@ -465,27 +455,25 @@ export default {
         }
       });
     },
-    async getnowNodeifo(val, s) {
-      //获取当前点击节点信息及详情
+async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
       console.log(val)
       this.parent = val;
-      this.val = val;
-      let res = await this.$api.QueryModuleDetail(val.id);
-      console.log(res)
+      this.nowNodeObject = val;
+      let res = await this.$api.QueryModuleDetail(val.id);//菜单详情
+      console.log('菜单详情信息',res)
       this.slelectifo = val.text;
       if(res.code === 0){
-      //   if (res.data.isSensitivity === 0) {
-      //   res.data.isSensitivity = true;
-      // } else {
-      //   res.data.isSensitivity = false;
-      // }
-      // if (res.data.isShow === 0) {
-      //   res.data.isShow = true;
-      // } else {
-      //   res.data.isShow = false;
-      // }
+        if (res.data.isSensitivity === 0) {
+        res.data.isSensitivity = true;
+      } else {
+        res.data.isSensitivity = false;
+      }
+      if (res.data.isShow === 0) {
+        res.data.isShow = true;
+      } else {
+        res.data.isShow = false;
+      }
       let n = Object.keys(res.data);
-      console.log(n)
       this.moduleType = res.data.moduleType;
       let arr = this.rightFrom;
       for (var i = 0; i < arr.length; i++) {
@@ -515,14 +503,13 @@ export default {
       }
       }
     },
-    getCheckifo(res, val) {
-      //复选框选中状态变化事件
-      console.log(res, val);
+    getCheckifo(res, val) {//复选框选中状态变化事件
+      // console.log(res, val);
     },
 
   },
   watch: {
-    val: {
+    nowNodeObject: {
       handler: function(val, oldval) {
         this.$refs.tree.setChecked(val, true);
         this.$refs.tree.setChecked(oldval, false);
