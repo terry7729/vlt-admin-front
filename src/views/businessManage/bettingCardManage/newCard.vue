@@ -1,7 +1,7 @@
 <template>
-  <div class="vlt-card">
-        <div class="vlt-edit-single">
-      <h2 class="title">基本信息</h2>
+  <div class="vlt-card betting-new-card">
+    <div class="vlt-edit-single">
+      <h2 class="title">投注卡生成 - 新建卡片</h2>
       <div class="vlt-edit-wrap">
         <base-form
           :formData="formDatas"
@@ -12,7 +12,13 @@
           @change="changeForm"
         ></base-form>
         <el-row class="vlt-edit-btn">
-          <el-button type="primary" v-prevent="1000" size="medium" @click="onSubmit">生成并导出</el-button>
+          <el-button
+            type="primary"
+            v-prevent="1000"
+            size="medium"
+            @click="submit"
+            :loading="showLoading"
+          >生成并导出</el-button>
           <el-button size="medium" @click="close">取 消</el-button>
         </el-row>
       </div>
@@ -26,312 +32,57 @@ export default {
   name: "CreateCard",
   data() {
     return {
+      showLoading: false,
       show: this.showForm,
-      params: {},
+      params: {
+        batch: "",
+        bettingCardId: 0,
+        bettingCardType: 0,
+        cardMakingQuantity: 0,
+        createBy: "",
+        createTime: "",
+        insId: 0,
+        insName: "",
+        remark: "",
+        status: 0,
+        updateBy: "",
+        updateTime: ""
+      },
       formDatas: [
         {
           type: "cascader",
-          prop: "cascader",
+          prop: "insId",
           value: "",
           title: "所属机构",
           placeholder: "请选择",
-          options: [
-            {
-              value: "zhinan",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    }
-                  ]
-                },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航"
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "zujian",
-              label: "组件",
-              children: [
-                {
-                  value: "basic",
-                  label: "Basic",
-                  children: [
-                    {
-                      value: "layout",
-                      label: "Layout 布局"
-                    },
-                    {
-                      value: "color",
-                      label: "Color 色彩"
-                    },
-                    {
-                      value: "typography",
-                      label: "Typography 字体"
-                    },
-                    {
-                      value: "icon",
-                      label: "Icon 图标"
-                    },
-                    {
-                      value: "button",
-                      label: "Button 按钮"
-                    }
-                  ]
-                },
-                {
-                  value: "form",
-                  label: "Form",
-                  children: [
-                    {
-                      value: "radio",
-                      label: "Radio 单选框"
-                    },
-                    {
-                      value: "checkbox",
-                      label: "Checkbox 多选框"
-                    },
-                    {
-                      value: "input",
-                      label: "Input 输入框"
-                    },
-                    {
-                      value: "input-number",
-                      label: "InputNumber 计数器"
-                    },
-                    {
-                      value: "select",
-                      label: "Select 选择器"
-                    },
-                    {
-                      value: "cascader",
-                      label: "Cascader 级联选择器"
-                    },
-                    {
-                      value: "switch",
-                      label: "Switch 开关"
-                    },
-                    {
-                      value: "slider",
-                      label: "Slider 滑块"
-                    },
-                    {
-                      value: "time-picker",
-                      label: "TimePicker 时间选择器"
-                    },
-                    {
-                      value: "date-picker",
-                      label: "DatePicker 日期选择器"
-                    },
-                    {
-                      value: "datetime-picker",
-                      label: "DateTimePicker 日期时间选择器"
-                    },
-                    {
-                      value: "upload",
-                      label: "Upload 上传"
-                    },
-                    {
-                      value: "rate",
-                      label: "Rate 评分"
-                    },
-                    {
-                      value: "form",
-                      label: "Form 表单"
-                    }
-                  ]
-                },
-                {
-                  value: "data",
-                  label: "Data",
-                  children: [
-                    {
-                      value: "table",
-                      label: "Table 表格"
-                    },
-                    {
-                      value: "tag",
-                      label: "Tag 标签"
-                    },
-                    {
-                      value: "progress",
-                      label: "Progress 进度条"
-                    },
-                    {
-                      value: "tree",
-                      label: "Tree 树形控件"
-                    },
-                    {
-                      value: "pagination",
-                      label: "Pagination 分页"
-                    },
-                    {
-                      value: "badge",
-                      label: "Badge 标记"
-                    }
-                  ]
-                },
-                {
-                  value: "notice",
-                  label: "Notice",
-                  children: [
-                    {
-                      value: "alert",
-                      label: "Alert 警告"
-                    },
-                    {
-                      value: "loading",
-                      label: "Loading 加载"
-                    },
-                    {
-                      value: "message",
-                      label: "Message 消息提示"
-                    },
-                    {
-                      value: "message-box",
-                      label: "MessageBox 弹框"
-                    },
-                    {
-                      value: "notification",
-                      label: "Notification 通知"
-                    }
-                  ]
-                },
-                {
-                  value: "navigation",
-                  label: "Navigation",
-                  children: [
-                    {
-                      value: "menu",
-                      label: "NavMenu 导航菜单"
-                    },
-                    {
-                      value: "tabs",
-                      label: "Tabs 标签页"
-                    },
-                    {
-                      value: "breadcrumb",
-                      label: "Breadcrumb 面包屑"
-                    },
-                    {
-                      value: "dropdown",
-                      label: "Dropdown 下拉菜单"
-                    },
-                    {
-                      value: "steps",
-                      label: "Steps 步骤条"
-                    }
-                  ]
-                },
-                {
-                  value: "others",
-                  label: "Others",
-                  children: [
-                    {
-                      value: "dialog",
-                      label: "Dialog 对话框"
-                    },
-                    {
-                      value: "tooltip",
-                      label: "Tooltip 文字提示"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "ziyuan",
-              label: "资源",
-              children: [
-                {
-                  value: "axure",
-                  label: "Axure Components"
-                },
-                {
-                  value: "sketch",
-                  label: "Sketch Templates"
-                },
-                {
-                  value: "jiaohu",
-                  label: "组件交互文档"
-                }
-              ]
-            }
-          ]
+          options: [{ label: "中福彩", value: "1" }]
         },
         {
           type: "select",
           title: "投注卡类型：",
-          prop: "status",
-          options: [{ label: "类型1", value: "0" }, { label: "类型2", value: "1" }]
-        },
-        {
-          type: "select",
-          title: "发卡数量：",
-          prop: "status2",
-          options: [{ label: "1", value: "0" }, { label: "2", value: "1" }]
-        },
-        {
-          type: "datepicker-range",
-          prop: "date2",
-          value: "",
-          title: "有效日期：",
-          options: ["start", "end"]
-        },
-        { type: "textarea", title: "备注", prop: "all" },
-        {type: '', title: '限额规则配置', name: 'tips'},
-        { type: "input", title: "周期", prop: "text" },
-        {
-          type: "select",
-          title: "",
-          prop: "status",
+          prop: "bettingCardType",
           options: [
-            { label: "天", value: "0" },
-            { label: "周", value: "1" },
-            { label: "月", value: "2" },
-            { label: "年", value: "3" }
+            { label: "普通卡", value: 1 },
+            { label: "会员卡", value: 2 },
+            { label: "试玩卡", value: 3 }
           ]
         },
-        { type: "input", title: "笔数", prop: "text1" },
-        { type: "input", title: "限额", prop: "text2" },
-        { type: "input", title: "限制次数", prop: "mixBet" }
+        { type: "input", title: "发卡数量：", prop: "cardMakingQuantity", value: '' },
+        { type: "textarea", title: "备注", prop: "remark" }
       ],
       rule: {
-        cascader: [{required: true,trigger: "blur" }],
-        address: [{required: true,trigger: "blur" }],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        insId: [{ required: true, trigger: "blur" }],
+        bettingCardType: [{ required: true, trigger: "blur" }],
+        cardMakingQuantity: [
+          { required: true, validator: rules.numberVal, trigger: "blur" }
         ]
       }
     };
   },
- components: {
- },
- methods: {
+  components: {},
+  methods: {
     changeForm(val) {
       Object.assign(this.params, val);
-      // console.log("change", this.params);
     },
     handleClose() {
       console.log("close");
@@ -339,13 +90,50 @@ export default {
     close() {
       this.$router.back();
     },
+    async submit() {
+      const _this = this;
+      _this.showLoading = true;
+      let data = _this.params;
+      console.log("提交的数据", data);
+      data.status = data.status ? 1 : 2;
+      let result = await _this.$api.createCardGeneration({ data });
+      if (result.code == 0) {
+        _this.showLoading = false;
+        _this.$message({
+          message: result.msg,
+          type: "success"
+        });
+        setTimeout(() => {
+          _this.$router.back();
+        }, 1000);
+      }
+    },
     onSubmit() {
       console.log("formData", this.params);
       this.close();
     }
- },
-}
+  }
+};
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+// .betting-new-card {
+//   .el-form-item {
+//     &:nth-of-type(7),
+//     &:nth-of-type(8) {
+//       display: inline-block;
+//       width: 200px;
+//     }
+//     &:nth-of-type(8) {
+//       margin-left: 40px;
+//     }
+//   }
+//   .el-input.cycle {
+//     width: 50% !important;
+//   }
+//   .el-select.cycle-selection {
+//     width: 40% !important;
+//   }
+// }
 </style>
+

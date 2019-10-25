@@ -53,7 +53,7 @@ export default {
   components: {},
   methods: {
     async initDetail (id) {
-      let result = await this.$api.equipmentInfoDetail(id)
+      let result = await this.$api.accessoriesInfoDetail(id)
        if (result.code === 0) {
         this.infoList.forEach(item => {
           item.value = result.data[item.prop]
