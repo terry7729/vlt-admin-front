@@ -89,16 +89,22 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 查询上市计划列表
+  getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 新增上市计划
+  createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 新建渠道
-  creatChannel: (options = {}) => ajax.post('/create/save', options),
+  createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
   getChannelGameList: (options = {}) => ajax.post('/create/selectGameList', options),
   // 渠道列表
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
-  
-  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
+  // 根据资源类型获取资源名称---新建渠道
+  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
+  // 资金权限修改
+  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //资金参数列表分页查询
