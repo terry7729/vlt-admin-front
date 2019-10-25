@@ -225,14 +225,17 @@ export default {
       ]
     }
   },
+  created() {
+    this.getGameStoreInfo()
+  },
   methods: {
-    getStoreList(row) {
+    getGameStoreInfo() {
       const self = this;
       const data = {
-        orderId: row.orderId
+        gameId: this.$route.query.gameId
       };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getGameStoreInfo({data})
 				if(res && res.code == 0) {
           self.$message.success('注销成功')
           row.orderStatus = 6;

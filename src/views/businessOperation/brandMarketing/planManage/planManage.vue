@@ -1,11 +1,11 @@
 <template>
   <div class="vlt-card">
     <search-bar :options="options" :total="999" @search="search"></search-bar>
-    <div class="create-btn">
-      <el-button type="primary" size="mini" @click="createActive">
+    <div style="margin-top:10px">
+      <el-button type="primary" size="small" @click="createActive">
         <i class="el-icon-plus"></i> 新建活动
       </el-button>
-      <el-button size="mini">批量撤销</el-button>
+      <el-button size="small">批量撤销</el-button>
     </div>
 
     <el-table :data="activeList" border>
@@ -18,7 +18,7 @@
       <el-table-column prop="activeEnd" label="活动结束时间"></el-table-column>
       <el-table-column prop="createPerson" label="创建人"></el-table-column>
       <el-table-column prop="createDate" label="创建时间"></el-table-column>
-      <el-table-column label="操作" >
+      <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="planDetail(scope.row.id)">查看</el-button>
           <el-button type="primary" size="mini" @click="reuse(scope.row.id)">复用</el-button>
@@ -98,7 +98,4 @@ export default {
 
 
 <style lang="less" scoped>
-.create-btn {
-  margin-bottom: 10px;
-}
 </style>

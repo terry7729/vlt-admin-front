@@ -667,5 +667,5 @@ export default {
 
 
 <style lang="less" scoped >
-@import "./less/activityPlan.less";
+@import "./less/index.less";
 </style>

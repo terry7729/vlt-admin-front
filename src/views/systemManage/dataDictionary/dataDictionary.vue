@@ -12,19 +12,36 @@
     <div class="el_table">
       <el-table :data="tableData" border>
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
-        <el-table-column prop="classes" label="所属类别 "></el-table-column>
-        <el-table-column prop="dictionaryname" label="字典名称"></el-table-column>
-        <el-table-column prop="dictionarydata" label="字典数据值"></el-table-column>
-        <el-table-column prop="sort" label="排序字段"></el-table-column>
-        <el-table-column prop="creater" label="创建人 "></el-table-column>
-        <el-table-column prop="createrdate" label="创建时间 "></el-table-column>
-        <el-table-column label="状态  ">
-          <template>
-            <div>
-              <el-button type="primary" size="mini">启动</el-button>
-
-              <el-button type="danger" size="mini">禁止</el-button>
-            </div>
+        <el-table-column prop="keyName" label="数据字典名称"></el-table-column>
+        <el-table-column prop="key" label="数据字典键"></el-table-column>
+        <el-table-column prop="value" label="字典数据值"></el-table-column>
+        <el-table-column prop="description" label="数据字典描述 "></el-table-column>
+        <el-table-column prop="createTime" label="创建时间 "></el-table-column>
+        <el-table-column prop="createBy" label="创建人"></el-table-column>
+        <el-table-column prop="updateBy" label="更新人 "></el-table-column>
+        <el-table-column prop="updateTime" label="更新时间 "></el-table-column>
+        <el-table-column prop="status" label="数据字典状态">
+          <template slot-scope="scope">
+            <tableRowStatus
+              :scope="scope"
+              :tableData="tableData"
+              idField="id"
+              statusField="status"
+              :rowName="scope.row.name"
+              :option="{
+                enable:{
+                  apiName:'disable',
+                  label:'启用',
+                  value:0
+                },
+               disable:{
+                  apiName:'enable',
+                  label:'冻结',
+                  value:1
+               },
+               
+              }"
+            ></tableRowStatus>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -33,7 +50,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <table-paging :total="total"></table-paging>
+      <table-paging
+        :total="tableData.total"
+        :currentPage="tableData.current"
+        :pageSize="tableData.size"
+        @handleSizeChange="pageSizeChange"
+        @handleCurrentChange="pageCurrentChange"
+      ></table-paging>
     </div>
 
     <div class="role-dialog">
@@ -46,6 +69,7 @@
               :formData="formData"
               labelWidth="90px"
               ref="baseForm"
+              :rules="rules"
               direction="right"
               @change="changeForm"
             ></base-form>
@@ -65,13 +89,14 @@ export default {
   name: "",
   data() {
     return {
+      rules: {},
       dialogFormVisible: false,
-      changeForm:"",
+      changeForm: "",
       controlOptions: [
         //按钮组
-        { name: "新建流程", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "导出", type: "success", icon: "download" },
-        { name: "打印", type: "primary", icon: "printer" }
+        { name: "新建流程", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
+        // { name: "导出", type: "success", icon: "download" },
+        // { name: "打印", type: "primary", icon: "printer" }
       ],
       option: [
         {
@@ -134,52 +159,79 @@ export default {
           sort: "1",
           creater: "admin",
           createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 6,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
         }
       ],
       total: 100,
       pageSize: 20,
+      currentPage4: 0,
       formData: [
-        {title: '所属类型',type:'input',prop:'belongsType',value:'' },
-        {title: '字典名称',type:'input',prop:'dictionaryname',value:'' },
-        {title: '字典数据值',type:'input',prop:'dictionarydata',value:'' },
-        {title: '排序字段',type:'input',prop:'sortfields',value:'' },
-        {title: '状态',type:'switch',prop:'status',value:'' },
-        {title: '详情描述',type:'textarea',prop:'all',value:'' },
-      ],
+        { title: "所属类型", type: "input", prop: "belongsType", value: "" },
+        { title: "字典名称", type: "input", prop: "keyName", value: "" },
+        {
+          title: "字典数据值",
+          type: "input",
+          prop: "value",
+          value: ""
+        },
+        { title: "排序字段", type: "input", prop: "key", value: "" },
+        { title: "状态", type: "switch", prop: "status", value: "" },
+        { title: "详情描述", type: "description", prop: "all", value: "" }
+      ]
     };
   },
   components: {},
+  created() {
+    // let res = await this.$api.getAll({});
+    // console.log(res);
+    // this.tableData = res.data.records;
+    this.initList();
+  },
   methods: {
-    selectBtn() {
-      this.$router.push({
-        path: "dataDictionary/dataDictionaryEdit",
-      });
+    async initList() {
+      let result = await this.$api.getAll({});
+      console.log(result);
+      if (result.code == 0) {
+        this.tableData = result.data.records;
+      }
     },
-    edit(val) {
+    selectBtn() {
+      // this.$router.push({
+      //   path: "dataDictionary/dataDictionaryEdit",
+      // });
+      this.dialogFormVisible = true;
+      this.flag = true;
+    },
+    async edit(val) {
       this.dialogFormVisible = true;
       this.newcreate = 0;
       //this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       //   query:{id}
       // });
+      let result = await this.$api.edit;
     },
-    submit() {
+    submit(val) {
       this.$refs.baseForm.validate(val => {
         console.log(val);
+        if (this.flag == true) {
+        } else {
+        }
       });
     },
-    cancel(){
-      this.$router.go(-1)
-    }
+
+    cancel() {
+      // this.$router.go(-1)
+      this.dialogFormVisible = false;
+    },
+    handler() {}
+    // async disable(id) {
+    //   let result = await this.$api.disable(id);
+    //   console.log(result);
+    // },
+    // async enable(id) {
+    //   let result = await this.$api.enable(id);
+    //   console.log(result);
+    // },
   }
 };
 </script>

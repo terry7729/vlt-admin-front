@@ -1,27 +1,27 @@
 <template>
   <div class="vlt-card">
-    <div class="search" v-if="num">
+    <div class="search">
       <!--搜索栏 !-->
       <search-bar
         class="search-bar-demo"
         @search="search"
         :options="option"
-        :total="num"
+        :total="999"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
       </search-bar>
     </div>
     <div class="role-table">
-      <el-table :data="testlist" border style="width: 100%; margin-top: 10px;">
+      <el-table :data="userList" border style="width: 100%; margin-top: 10px;">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column type="index" prop="id" label="序号"></el-table-column>
         <el-table-column prop="account" label="账号"></el-table-column>
         <el-table-column prop="subsidiaryOrgan" label="所属机构"></el-table-column>
         <el-table-column prop="department" label="部门"></el-table-column>
-        <el-table-column prop="userRole" label="用户角色"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="phoneNumber" label="手机号码"></el-table-column>
+        <el-table-column prop="roleName" label="用户角色"></el-table-column>
+        <el-table-column prop="userName" label="姓名"></el-table-column>
+        <el-table-column prop="mobile" label="手机号码"></el-table-column>
         <el-table-column prop="latelyFrequency" label="最近登陆次数"></el-table-column>
         <el-table-column prop="latelyTime" label="最近登录时间"></el-table-column>
         <el-table-column prop="latelyIP" label="最近登陆IP"></el-table-column>
@@ -29,7 +29,7 @@
         <el-table-column label="用户状态" align="center" width="200">
           <template slot-scope="scope">
             <table-row-status
-              statusField="status"
+              statusField="userStatus"
               idField="id"
               :scope="scope"
               :tableData="testlist"
@@ -38,7 +38,7 @@
                 'enable': {
                   apiName: 'apiName', // 接口名称
                   label: '启用', // 按钮文字
-                  value: 0 // 接口字段传值
+                  value: 0// 接口字段传值
                 },
                 'disable': {
                   apiName: 'apiName',
@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import Post from '../../../utils/ajax'
 export default {
   name: "userList",
   data() {
@@ -115,43 +114,7 @@ export default {
       //
       dialogFormVisible: false,
       currentPage4: 4,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ],
+      userList:[],
       multipleSelection: [],
       controlOptions: [
         //按钮组
@@ -234,12 +197,11 @@ export default {
   },
   computed: {},
   async created() {
-   console.log(Post)
-    let n = await  Post.axios.get('/shoopList')
-    this.test = n.data.data;
-    this.num = Number(n.data.data.length);
-    this.testlist = this.test.slice(0,10)
-    console.log(this.num)
+    
+    let n = await  this.$api.userPage()
+    this.userList = n.data.records
+    console.log(n)
+  
   },
   mounted() {},
   methods: {
@@ -260,13 +222,7 @@ export default {
       this.$router.push("roleList/roleDestails/");
     },
     handelifo(val,obj) {
-      // console.log(val,obj)
-      //   Post.axios.post('/shoopList',{...obj}).then(data=>{
-      //     console.log(val)
-      //   console.log(data,33)
-      // })
-      //  
-      this.$router.push("userList/userInformed");
+      this.$router.push({name:"userInformed",query:{title:"编缉用户信息"}});
     },
 
     handelides(val) {
@@ -276,7 +232,7 @@ export default {
     selectBtn(val) {
       //新增删除事件
       if(val.name==='新建计划'){
-        this.$router.push("userList/userInformed");
+        this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
       }
       console.log(val);
     },

@@ -2,7 +2,7 @@
   <div class="vlt-card">
     <div class="roleManage">
       <!-- 搜索 -->
-      <searchBar :options="roleManageoptions" @search="search" :total="999">
+      <searchBar :options="roleManageoptions" @search="search" :total="this.num">
         <!-- 新增按钮 -->
         <controlBar
           slot="extend-bar"
@@ -13,12 +13,12 @@
       </searchBar>
       <!-- 表格 -->
       <el-table :data="roleManagetableData" border style="width: 100%; margin-top: 10px">
-        <el-table-column prop="roleManageId" label="序号"></el-table-column>
-        <el-table-column prop="roleManageName" label="用户角色"></el-table-column>
-        <el-table-column prop="roleManageAuthority" label="角色权限"></el-table-column>
-        <el-table-column prop="roleManageDescribe" label="描述"></el-table-column>
-        <el-table-column prop="roleManageCreater" label="创建人"></el-table-column>
-        <el-table-column prop="roleManageCreateDate" label="创建时间"></el-table-column>
+        <el-table-column prop="roleManageId" label="序号" type="index"></el-table-column>
+        <el-table-column prop="roleName" label="用户角色"></el-table-column>
+        <el-table-column prop="roleTypes" label="角色权限"></el-table-column>
+        <el-table-column prop="remark" label="描述"></el-table-column>
+        <el-table-column prop="createBy" label="创建人"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="角色状态" min-width="110" prop="accountStatus">
           <template slot-scope="scope">
             <tableRowStatus
@@ -51,19 +51,19 @@
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="roleManageAuthority(scope.row.id)">权限设置</el-button>
             <el-button type="primary" size="mini" @click="roleManageWrite(scope.row)">编辑</el-button>
-            <el-button type="primary" size="mini" @click="roleManageLook(scope.row.id)">查看</el-button>
+            <el-button type="primary" size="mini" @click="roleManageLook(scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
       <tablePaging
-        :total="99"
+        :total="this.num"
         :currentPage="1"
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
         @handleCurrentChange="handleCurrentChange"
       ></tablePaging>
       <!-- 编辑弹框 -->
-      <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
+      <el-dialog :title="title" :visible.sync="dialogFormVisible">
         <div class="vlt-edit-single">
           <base-form
             :formData="roleManageWriteData"
@@ -106,6 +106,8 @@ export default {
   name: "",
   data() {
     return {
+      //编辑弹框标题
+      title: "编辑角色",
       // 权限设置弹框默认为false
       AuthoritydialogFormVisible: false,
       // 编辑弹框表单验证
@@ -113,9 +115,7 @@ export default {
         roleManageName: [
           { required: true, message: "请输入用户角色", trigger: "blur" }
         ],
-        accountType: [
-          { required: true, message: "请输入角色类型", trigger: "blur" }
-        ],
+
         accountStatus: [
           { required: true, message: "请选择角色状态", trigger: "change" }
         ],
@@ -131,8 +131,14 @@ export default {
       },
       // 编辑弹框表单类型
       roleManageWriteData: [
-        { type: "input", title: "用户角色", value: "", prop: "roleManageName" },
-        { type: "input", title: "角色类型", value: "", prop: "accountType" },
+        { type: "input", title: "用户角色", value: "", prop: "roleName" },
+        {
+          type: "radio",
+          prop: "isManager",
+          title: "是否为经理",
+          value: 1,
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
+        },
         {
           type: "select",
           title: "角色状态",
@@ -156,148 +162,79 @@ export default {
 
         {
           type: "cascader-multiple",
-          prop: "roleManageAuthority",
+          prop: "sysCode",
           value: "",
           title: "角色权限",
-          value: "",
           placeholder: "请选择",
-          options: [
-            {
-              value: "zhinan",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率"
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          setProps: {
+            label: "moduleName",
+            value: "id",
+            children: "childModules",
+            multiple: true,
+            checkStrictly: true
+          },
+          options: []
         },
         {
           type: "textarea",
           title: "描述",
           value: "",
-          prop: "roleManageDescribe"
+          prop: "remark"
         }
       ],
-      data: {},
+      // 定义当前页
+      currentPage: 0,
+
       //权限设置弹框表单
       roleManageAuthorityWriteData: [
         {
           type: "cascader-multiple",
-          prop: "accountAuthority",
+          prop: "sysCode",
           value: "",
           title: "角色权限",
           placeholder: "请选择",
-          options: [
-            {
-              value: "zhinan",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率"
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控"
-                    }
-                  ]
-                },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航"
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          setProps: {
+            label: "moduleName",
+            value: "id",
+            children: "childModules",
+            multiple: true,
+            checkStrictly: true
+          },
+          options: []
         }
       ],
       // 编辑弹框默认为false
       dialogFormVisible: false,
       // roleManageCurrentPage: 1,
       // 表格数据
-      roleManagetableData: [
-        {
-          roleManageId: 1,
-          roleManageName: "广东省",
-          roleManageAuthority: "上海市普陀区金沙江路 1518 弄",
-          roleManageDescribe: "赵",
-          roleManageCreater: "自营",
-          principalName: "赵",
-          roleManageCreateDate: "13800131358"
-        }
-      ],
+      roleManagetableData: [],
       // 搜索表单类型
       roleManageoptions: [
         {
           type: "select",
-          prop: "roleManageName",
+          prop: "id",
           value: "",
           title: "用户角色",
           placeholder: "请输入",
-          options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
-          ]
+          options: []
         },
         {
           type: "input",
-          prop: "roleManageCreater",
+          prop: "createBy",
           value: "",
           title: "创建人",
           placeholder: "请输入"
         },
         {
           type: "select",
-          prop: "accountStatus",
+          prop: "status",
           value: "",
           title: "角色状态",
           placeholder: "请输入",
           options: [
-            { label: "哈哈", value: "0" },
-            { label: "嘿嘿", value: "1" }
+            { label: "启用", value: 0 },
+            { label: "禁用", value: 1 },
+            { label: "注销", value: 2 }
           ]
         },
         {
@@ -309,71 +246,140 @@ export default {
         }
       ],
       // 新增按钮类型
-      roleManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }]
+      roleManageAddbtn: [{ name: "新增", type: "primary", icon: "plus" }],
+      num: 0,
+      row: "",
+      sycords: "",
+      searchData: {
+        page: 0,
+        pageSize: 0
+      },
+      //表单定义为空
+      form: "",
+      //权限表单定义为空
+      limit: ""
     };
   },
   components: {},
+  created() {
+    //初始表格数据
+    this.init();
+  },
   methods: {
+    //初始数据
+    async init() {
+      //console.log(val);
+      let data = {
+        page: 0,
+        pageSize: 10,
+        param: {
+          createBy: "",
+          createTime: "",
+          param: {},
+          roleName: "",
+          roleType: ""
+        }
+      };
+      let result = await this.$api.getRole({ data });
+      //console.log(result);
+      let arr = result.data.records;
+      this.num = arr.length;
+      // this.roleManageoptions[0].options = arr.roleType;
+      this.roleManagetableData = arr;
+      //初始搜索用户角色数据
+      let resul = await this.$api.accountRole();
+      //console.log(resul);
+      this.roleManageoptions[0].options = resul.data;
+    },
     //点击搜索
-    search(formData) {
-      console.log(formData);
+    async search(param) {
+      let obj = this.searchData;
+      let data = { ...obj, param };
+      let result = await this.$api.getRole({ data });
+      this.roleManagetableData = result.data.records;
     },
     // 新增按钮
     roleManageAddclick() {
       this.$router.push("roleManageAdd");
     },
     // 权限设置按钮
-    roleManageAuthority() {
+    roleManageAuthority(row) {
       this.AuthoritydialogFormVisible = true;
+      this.getRoleSetting();
+      this.sycords = row;
     },
     // 编辑按钮
     roleManageWrite(row) {
+      this.getRoleTypes();
+      this.row = row;
       this.dialogFormVisible = true;
-      let name = Object.keys(row);
-
+      let name = Object.keys(this.row);
       let msg = this.roleManageWriteData;
-
       for (var i = 0; i < msg.length; i++) {
         for (var j = 0; j < name.length; j++) {
           if (msg[i].prop === name[j]) {
-            msg[i].value = row[name[j]];
+            msg[i].value = this.row[name[j]];
           }
         }
       }
     },
+    //获取编辑权限设置列表
+    async getRoleSetting() {
+      let res = await this.$api.channelLimit();
+      this.roleManageAuthorityWriteData[0].options = res.data;
+    },
+    // 获取编辑权限列表
+    async getRoleTypes() {
+      let res = await this.$api.channelLimit();
+      this.roleManageWriteData[3].options = res.data;
+    },
     // 查看按钮
-    roleManageLook() {
-      this.$router.push("roleManageExamine");
+    roleManageLook(row) {
+      this.$router.push({ path: "roleManageExamine", query: { id: row.id } });
     },
 
     // 表单change事件
     changeForm(form) {
-      Object.assign(this.data, form);
+      this.form = form;
       //console.log(this.data);
     },
     // 权限表单change事件
-    AuthoritychangeForm() {},
+    AuthoritychangeForm(form) {
+      this.limit = form;
+    },
     handleSizeChange(size) {
-      console.log(`每页 ${size} 条`);
+      console.log(size);
+      //console.log(`每页 ${size} 条`);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      //console.log(`当前页: ${val}`);
+      this.currentPage = val;
     },
     //编辑表单弹框保存
-    HandelSave() {
-      let writeData = JSON.parse(JSON.stringify(this.data));
-      console.log(writeData);
-      // let getForm = this.$refs.baseFormDaglog.form;
-      // console.log(getForm);
-      //console.log(this.data);
-
+    async HandelSave() {
+      console.log(this.row.id);
+      let id = this.row.id;
+      let data = JSON.parse(JSON.stringify(this.form));
+      data.sysCode = data.sysCode.join(",");
+      //console.log(data);
+      let response = await this.$api.roleAmend({ data }, id);
+      console.log(response);
+      this.init();
+      // this.$refs.baseForm.resetForm();
       this.dialogFormVisible = false;
     },
     //权限设置弹框保存
-    save() {
+    async save() {
       this.AuthoritydialogFormVisible = false;
-      let getAuthorityForm = this.$refs.baseForm.form;
-      console.log(getAuthorityForm);
+      let one = this.sycords;
+
+      console.log(one);
+      let data = JSON.parse(JSON.stringify(this.limit));
+      data.sysCode = data.sysCode.join(",");
+      let res = await this.$api.roleAmend({ data }, one);
+      this.init();
+      // console.log(res);
+      // console.log(getAuthorityForm);
     }
   }
 };

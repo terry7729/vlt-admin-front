@@ -53,6 +53,8 @@ const pondRiskAdd = () => import('@/views/businessCharts/warningRule/pondRiskAdd
 const gameRiskAdd = () => import('@/views/businessCharts/warningRule/gameRiskAdd')
 //城市游戏风险指标详情
 const gameRiskDetail = () => import('@/views/businessCharts/warningRule/gameRiskDetail')
+//奖池风险指标详情
+const pondRiskDetail = () => import('@/views/businessCharts/warningRule/pondRiskDetail')
 
 export default [
   {
@@ -264,7 +266,16 @@ export default [
       parentName:'cityGameRisk'
     },
     component: gameRiskDetail
+  },{
+    path: 'businessCharts/pondRiskDetail',
+    name: 'pondRiskDetail',
+    meta: {
+      title: '奖池风险指标详情',
+      parentName:'pondRisk'
+    },
+    component: pondRiskDetail
   }, 
+   
   
 
 ]

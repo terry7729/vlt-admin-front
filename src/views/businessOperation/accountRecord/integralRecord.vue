@@ -8,36 +8,34 @@
       labelWidth="80px"
     ></search-bar>
 
-    <section class="comp-item">
-      <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
-        <el-table-column prop="num" label="序号"></el-table-column>
-        <el-table-column prop="orderNum" label="积分编号"></el-table-column>
-        <el-table-column prop="accountName" label="账户名称"></el-table-column>
-        <el-table-column prop="phoneNum" label="手机号码"></el-table-column>
-        <el-table-column prop="type" label="积分类型"></el-table-column>
-        <el-table-column prop="area" label="所在区域"></el-table-column>
-        <el-table-column prop="money" label="原积分"></el-table-column>
-        <el-table-column label="现积分">
-          <template slot-scope="scope">{{scope.row.money+scope.row.change}}</template>
-        </el-table-column>
-        <el-table-column prop="change" label="变动积分">
-          <template slot-scope="scope">{{'+'+scope.row.change}}</template>
-        </el-table-column>
-        <el-table-column prop="time" label="变更时间"></el-table-column>
-        <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="integralDetail(scope.row.account)">详情</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <table-paging
-        :current-page="1"
-        :page-size="10"
-        :total="this.tableData.length"
-        @handleSizeChange="pageSizeChange"
-        @handleCurrentChange="pageCurrentChange"
-      ></table-paging>
-    </section>
+    <el-table :data="tableData" border style="width: 100%; margin-top: 10px;">
+      <el-table-column prop="num" label="序号"></el-table-column>
+      <el-table-column prop="orderNum" label="积分编号"></el-table-column>
+      <el-table-column prop="accountName" label="账户名称"></el-table-column>
+      <el-table-column prop="phoneNum" label="手机号码"></el-table-column>
+      <el-table-column prop="type" label="积分类型"></el-table-column>
+      <el-table-column prop="area" label="所在区域"></el-table-column>
+      <el-table-column prop="money" label="原积分"></el-table-column>
+      <el-table-column label="现积分">
+        <template slot-scope="scope">{{scope.row.money+scope.row.change}}</template>
+      </el-table-column>
+      <el-table-column prop="change" label="变动积分">
+        <template slot-scope="scope">{{'+'+scope.row.change}}</template>
+      </el-table-column>
+      <el-table-column prop="time" label="变更时间"></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button type="primary" size="mini" @click="integralDetail(scope.row.account)">详情</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <table-paging
+      :current-page="1"
+      :page-size="10"
+      :total="this.tableData.length"
+      @handleSizeChange="pageSizeChange"
+      @handleCurrentChange="pageCurrentChange"
+    ></table-paging>
   </div>
 </template>
 
@@ -96,13 +94,12 @@ export default {
     },
     search() {},
     pageSizeChange(size) {
-      this.PAGESIZE = size;
-      this.$emit("handleSizeChange", size);
+     
     },
     pageCurrentChange(page) {
-      this.CURRENTPAGE = page;
-      this.$emit("handleCurrentChange", page);
-    }
+      
+    },
+
   }
 };
 </script>

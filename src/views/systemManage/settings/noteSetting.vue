@@ -137,6 +137,11 @@ export default {
     };
   },
   components: {},
+  async created() {
+   
+    let reslt = await this.$api.sms();
+    console.log(reslt)
+  },
   methods: {
     changeForm(val) {
       Object.assign(this.params, val);

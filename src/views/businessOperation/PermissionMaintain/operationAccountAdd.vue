@@ -39,16 +39,16 @@ export default {
         {
           type: "select",
           title: "所属渠道",
-          prop: "operationManageBelong",
+          prop: "channelId",
           value: "",
           options: [
             {
               label: "专用存款账户",
-              value: "0"
+              value: 0
             },
             {
               label: "专用存款账户2",
-              value: "1"
+              value: 1
             }
           ]
         },
@@ -56,339 +56,63 @@ export default {
           type: "input",
           title: "账户名称",
           value: "",
-          prop: "operationManageName"
+          prop: "accountName"
         },
         {
           type: "input",
           title: "员工编号",
           value: "",
-          prop: "operationManageStaffNum"
+          prop: "accountCode"
         },
         {
           type: "input",
           title: "年龄",
           value: "",
-          prop: "operationManageAge"
+          prop: "age"
         },
 
         {
           type: "select",
-          title: "账户角色",
-          prop: "operationManageRoleName",
+          title: "角色名称",
+          prop: "roleId",
           value: "",
-          options: [
-            {
-              label: "专用存款账户",
-              value: "0"
-            },
-            {
-              label: "专用存款账户2",
-              value: "1"
-            }
-          ]
+          options: []
         },
         {
           type: "input",
           title: "手机号",
           value: "",
-          prop: "operationManagetelephone"
+          prop: "phone"
         },
         {
           type: "input",
           title: "身份证号",
           value: "",
-          prop: "operationManageIDCard"
+          prop: "channelIdentity"
         },
         {
           type: "input",
           title: "联系地址",
           value: "",
-          prop: "operationManageAdress"
+          prop: "address"
         },
         {
           type: "input",
           title: "账户密码",
-          prop: "operationManagePassword",
+          prop: "password",
           value: "",
-          disabled: true,
+          //disabled: true,
           placeholder: "初始密码为123456"
-        },
-        {
-          type: "cascader-multiple",
-          prop: "operationManageLimit",
-          value: "",
-          title: "账号权限",
-          placeholder: "请选择",
-          value: "",
-          options: [
-            {
-              value: "zhinan",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率"
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控"
-                    }
-                  ]
-                },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航"
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "zujian",
-              label: "组件",
-              children: [
-                {
-                  value: "basic",
-                  label: "Basic",
-                  children: [
-                    {
-                      value: "layout",
-                      label: "Layout 布局"
-                    },
-                    {
-                      value: "color",
-                      label: "Color 色彩"
-                    },
-                    {
-                      value: "typography",
-                      label: "Typography 字体"
-                    },
-                    {
-                      value: "icon",
-                      label: "Icon 图标"
-                    },
-                    {
-                      value: "button",
-                      label: "Button 按钮"
-                    }
-                  ]
-                },
-                {
-                  value: "form",
-                  label: "Form",
-                  children: [
-                    {
-                      value: "radio",
-                      label: "Radio 单选框"
-                    },
-                    {
-                      value: "checkbox",
-                      label: "Checkbox 多选框"
-                    },
-                    {
-                      value: "input",
-                      label: "Input 输入框"
-                    },
-                    {
-                      value: "input-number",
-                      label: "InputNumber 计数器"
-                    },
-                    {
-                      value: "select",
-                      label: "Select 选择器"
-                    },
-                    {
-                      value: "cascader",
-                      label: "Cascader 级联选择器"
-                    },
-                    {
-                      value: "switch",
-                      label: "Switch 开关"
-                    },
-                    {
-                      value: "slider",
-                      label: "Slider 滑块"
-                    },
-                    {
-                      value: "time-picker",
-                      label: "TimePicker 时间选择器"
-                    },
-                    {
-                      value: "date-picker",
-                      label: "DatePicker 日期选择器"
-                    },
-                    {
-                      value: "datetime-picker",
-                      label: "DateTimePicker 日期时间选择器"
-                    },
-                    {
-                      value: "upload",
-                      label: "Upload 上传"
-                    },
-                    {
-                      value: "rate",
-                      label: "Rate 评分"
-                    },
-                    {
-                      value: "form",
-                      label: "Form 表单"
-                    }
-                  ]
-                },
-                {
-                  value: "data",
-                  label: "Data",
-                  children: [
-                    {
-                      value: "table",
-                      label: "Table 表格"
-                    },
-                    {
-                      value: "tag",
-                      label: "Tag 标签"
-                    },
-                    {
-                      value: "progress",
-                      label: "Progress 进度条"
-                    },
-                    {
-                      value: "tree",
-                      label: "Tree 树形控件"
-                    },
-                    {
-                      value: "pagination",
-                      label: "Pagination 分页"
-                    },
-                    {
-                      value: "badge",
-                      label: "Badge 标记"
-                    }
-                  ]
-                },
-                {
-                  value: "notice",
-                  label: "Notice",
-                  children: [
-                    {
-                      value: "alert",
-                      label: "Alert 警告"
-                    },
-                    {
-                      value: "loading",
-                      label: "Loading 加载"
-                    },
-                    {
-                      value: "message",
-                      label: "Message 消息提示"
-                    },
-                    {
-                      value: "message-box",
-                      label: "MessageBox 弹框"
-                    },
-                    {
-                      value: "notification",
-                      label: "Notification 通知"
-                    }
-                  ]
-                },
-                {
-                  value: "navigation",
-                  label: "Navigation",
-                  children: [
-                    {
-                      value: "menu",
-                      label: "NavMenu 导航菜单"
-                    },
-                    {
-                      value: "tabs",
-                      label: "Tabs 标签页"
-                    },
-                    {
-                      value: "breadcrumb",
-                      label: "Breadcrumb 面包屑"
-                    },
-                    {
-                      value: "dropdown",
-                      label: "Dropdown 下拉菜单"
-                    },
-                    {
-                      value: "steps",
-                      label: "Steps 步骤条"
-                    }
-                  ]
-                },
-                {
-                  value: "others",
-                  label: "Others",
-                  children: [
-                    {
-                      value: "dialog",
-                      label: "Dialog 对话框"
-                    },
-                    {
-                      value: "tooltip",
-                      label: "Tooltip 文字提示"
-                    },
-                    {
-                      value: "popover",
-                      label: "Popover 弹出框"
-                    },
-                    {
-                      value: "card",
-                      label: "Card 卡片"
-                    },
-                    {
-                      value: "carousel",
-                      label: "Carousel 走马灯"
-                    },
-                    {
-                      value: "collapse",
-                      label: "Collapse 折叠面板"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "ziyuan",
-              label: "资源",
-              children: [
-                {
-                  value: "axure",
-                  label: "Axure Components"
-                },
-                {
-                  value: "sketch",
-                  label: "Sketch Templates"
-                },
-                {
-                  value: "jiaohu",
-                  label: "组件交互文档"
-                }
-              ]
-            }
-          ]
         }
+        // {
+        //   type: "cascader-multiple",
+        //   prop: "operationManageLimit",
+        //   value: "",
+        //   title: "账号权限",
+        //   placeholder: "请选择",
+        //   value: "",
+        //   options: []
+        // }
       ],
       // 新增表单验证
       operationAccountAddRules: {
@@ -415,29 +139,43 @@ export default {
         ],
         operationManageAdress: [
           { required: true, message: "请输入联系地址", trigger: "blur" }
-        ],
-        operationManageLimit: [
-          {
-            type: "array",
-            required: true,
-            message: "请选择账号权限",
-            trigger: "change"
-          }
         ]
-      }
+        // operationManageLimit: [
+        //   {
+        //     type: "array",
+        //     required: true,
+        //     message: "请选择账号权限",
+        //     trigger: "change"
+        //   }
+        // ]
+      },
+      param: null
     };
   },
+  created() {
+    this.init();
+  },
+
   components: {},
   methods: {
+    //获得账户角色数据
+    async init() {
+      let resul = await this.$api.accountRole();
+      console.log(resul);
+      this.operationAccountAddData[4].options = resul.data;
+    },
     // 新增表单change事件
-    operationAccountAddChangeForm(form) {},
+    operationAccountAddChangeForm(form) {
+      this.param = form;
+      // console.log(this.param);
+    },
     // 提交按钮
-    operationAccountAddSubmit() {
+    async operationAccountAddSubmit() {
       // console.log(this.formData);
-
-      let formdata = this.$refs.baseForm.form;
-      console.log(formdata);
-
+      let data = this.param;
+      let result = await this.$api.addAccount({ data });
+      this.$router.push("operationAccountManage");
+      console.log(result);
       //console.log(this.$refs.baseForm.form);
       //console.log(formdata);
     },

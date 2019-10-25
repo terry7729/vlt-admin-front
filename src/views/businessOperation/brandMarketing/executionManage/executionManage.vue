@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card execu-manage">
     <search-bar :options="options" :total="999" @search="search"></search-bar>
-    <el-button type="primary" size="mini" @click="allotTask">分配任务</el-button>
+    <el-button type="primary" size="small" @click="allotTask">分配任务</el-button>
     <el-table :data="executionData" border style="margin-top:15px;">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column type="index" label="序号" width="55"></el-table-column>
@@ -131,11 +131,5 @@ export default {
 
 
 <style lang="less" scoped>
-.execu-manage {
-  .task-progress {
-    width: 500px;
-    margin-top: 20px;
-    margin-left: 50px;
-  }
-}
+@import "./less/index";
 </style>

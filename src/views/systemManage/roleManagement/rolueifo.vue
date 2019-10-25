@@ -8,12 +8,13 @@
 
 <script type="text/javascript">
 export default {
-  name: "",
+  name: "rolueifo",
  async created() {
     let id = this.$route.query.id
-    // console.log(data)
-    let reslt =  await this.$api.QueryRoleInfoDetail({},id)
+    let reslt =  await this.$api.QueryRoleInfoDetail(id)//查询角色详情
     // this.infoList = reslt.data
+     console.log('查询角色详情',reslt)
+    if(reslt.code === 0){
     let arr  = Object.keys(reslt.data)
     let len = this.infoList
     for(var i = 0 ; i < len.length ; i++ ){
@@ -23,7 +24,8 @@ export default {
         }
       }
     }
-    console.log(reslt)
+    }
+   
   },
   
   data() {
