@@ -106,5 +106,5 @@ export default {
   //资金参数详情查询
   getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
   //资金参数修改
-  editFundsParameter: (options = {}) => ajax.post('/tFundParameter/update', options),
+  editFundsParameter: (options = {},id) => ajax.post(`/tFundParameter/update/${id}`, options),
 }

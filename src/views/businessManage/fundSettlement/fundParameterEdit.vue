@@ -161,7 +161,7 @@ export default {
       let id = this.$route.query.id;
       let data = this.form;
       console.log(data);
-      let res = await this.$api.editFundsParameter({data});
+      let res = await this.$api.editFundsParameter({data},id);
       console.log(res);
       this.showLoad = false;
     },
