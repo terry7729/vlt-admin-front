@@ -68,6 +68,7 @@ const riskReportList = () => import('@/views/businessManage/gameDelistingManage/
 
 // 渠道业务管理
 const channelList = () => import('@/views/businessManage/channelBusinessManage/channelList')
+const channelDetail = () => import('@/views/businessManage/channelBusinessManage/channelDetail')
 const channelCreate = () => import('@/views/businessManage/channelBusinessManage/channelCreate')
 const channelDeal = () => import('@/views/businessManage/channelBusinessManage/channelDeal')
 const channelSalesPermission = () => import('@/views/businessManage/channelBusinessManage/channelSalesPermission')
@@ -154,6 +155,8 @@ const repairOrderDetails = () =>import('@/views/businessManage/channelTerminalMa
 const equipment = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipment')
 const equipmentDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentDetail')
 const equipmentResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/equipmentResume')
+const accessoriesDesc = () => import('@/views/businessManage/channelTerminalManagement/equipment/accessoriesDetail')
+const accessoriesResume = () => import('@/views/businessManage/channelTerminalManagement/equipment/accessoriesResume')
 
 // 渠道终端管理 - 报表统计
 const reportStatistics = () => import('@/views/businessManage/channelTerminalManagement/reportStatistics/reportStatistics')
@@ -555,6 +558,15 @@ export default [
     component: channelList
   },
   {
+    path: 'businessManage/channelDetail',
+    name: 'channelDetail',
+    meta: {
+      title: '渠道详情',
+      parentName: 'channelList',
+    },
+    component: channelDetail
+  },
+  {
     path: 'businessManage/channelDeal',
     name: 'channelDeal',
     meta: {
@@ -925,7 +937,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/equipmentDesc',
     name: 'equipmentDesc',
     meta: {
-      title: '查看设备',
+      title: '查看设备详情',
     },
     component: equipmentDesc
   },
@@ -933,9 +945,25 @@ export default [
     path: 'businessManage/channelTerminal/equipment/equipmentResume',
     name: 'equipmentResume',
     meta: {
-      title: '履历',
+      title: '设备履历',
     },
     component: equipmentResume
+  },
+  {
+    path: 'businessManage/channelTerminal/equipment/accessoriesDesc',
+    name: 'accessoriesDesc',
+    meta: {
+      title: '查看配件详情',
+    },
+    component: accessoriesDesc
+  },
+  {
+    path: 'businessManage/channelTerminal/equipment/accessoriesResume',
+    name: 'accessoriesResume',
+    meta: {
+      title: '配件履历',
+    },
+    component: accessoriesResume
   },
   {
     path: 'businessManage/channelTerminal/knowledgeBase',

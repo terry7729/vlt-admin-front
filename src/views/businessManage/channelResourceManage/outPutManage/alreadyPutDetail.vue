@@ -9,7 +9,7 @@
           <el-table-column prop="goodsName" label="物品名称"></el-table-column>
           <el-table-column prop="goodsType" label="物品型号"></el-table-column>
           <el-table-column prop="goodsCode" label="物品编号"></el-table-column>
-          <el-table-column prop="miniNum" label="数量（小）"></el-table-column>
+          <el-table-column prop="miniNum" label="数量"></el-table-column>
           <el-table-column prop="money" label="单价（元）"></el-table-column>
           <el-table-column prop="remark" label="备注"></el-table-column>
       </el-table>

@@ -5,7 +5,7 @@
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="tableData.total"
       labelWidth="100px"
     ></search-bar>
     <el-row class="card-table">
@@ -72,16 +72,7 @@ export default {
           type: "select",
           prop: "selectName2",
           value: "",
-          options: [
-            {
-              label: "类型1",
-              value: 1
-            },
-            {
-              label: "类型2",
-              value: 2
-            }
-          ]
+          options: [{ label: "普通卡", value: 1 }, { label: "会员卡", value: 2 }, {label: "试玩卡", value:3}]
         },
         {
           type: "datetime-range",
