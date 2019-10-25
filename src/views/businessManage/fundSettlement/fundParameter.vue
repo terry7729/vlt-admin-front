@@ -53,7 +53,7 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "gameName",
+          prop: "gameCode",
           value: "",
           title: "游戏名称：",
           options: [
@@ -212,7 +212,6 @@ export default {
       });
     },
     edit(row) {
-      console.log(row);
       this.$router.push({
         name: "fundParameterEdit",
         query: {

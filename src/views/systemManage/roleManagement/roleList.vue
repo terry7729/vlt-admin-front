@@ -154,7 +154,8 @@ export default {
       val:{},
       page:1,
       pageSize:10,
-   
+      searchStatus:'',
+      searchFrom:{}
     };
   },
   computed: {},
@@ -176,17 +177,32 @@ async init(val){ //初始化页面数据
     },
 async pagingControl(val){ //分页控制
     let data = {
+          ...this.searchFrom,
           page:val||1,
           pageSize:this.pageSize
         }
-    let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
+      if(this.searchStatus != "搜索"){
+        console.log('我是默认',data)
+          let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
         console.log("获取当前分页信息",reslt)
-      if (reslt.code === 0) {
+           if (reslt.code === 0) {
           let arr = reslt.data.records;
           this.total = reslt.data.total//查询到的信息总数量
           this.page = reslt.data.page  //当前返回页
           let Arr = JSON.parse(JSON.stringify(arr))
           this.dataProcessing(Arr);//处理数据
+          }
+          console.log('我是默认',n)
+      }else{
+        console.log('我是搜索',data)
+          let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
+        console.log('角色查询接口',reslt);  
+        if (reslt.code === 0) {
+        let arr = reslt.data.records;
+        this.total = reslt.data.total;
+        let Arr = JSON.parse(JSON.stringify(arr))
+        this.dataProcessing(Arr);//处理数据
+      }
       }
      },
     handelifo(val) {//路由跳转到角色详情
@@ -231,7 +247,7 @@ async pagingControl(val){ //分页控制
    async pageSizeChange(val) {//每页显示条数
       // console.log(val);
       this.pageSize = val;
-
+      this.pagingControl()
     },
     pageCurrentChange(val) { //当前显示页数
       // console.log(val);
@@ -261,14 +277,11 @@ async pagingControl(val){ //分页控制
     },
 async search(val) {//搜索事件
       console.log(val)
+        this.searchFrom = val;
+          this.searchStatus = "搜索"
+            this.init()
       let data = JSON.parse(JSON.stringify(val));
-      let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
-      console.log('角色查询接口',reslt);  
-      if (reslt.code === 0) {
-        let arr = reslt.data.records;
-        this.total = reslt.data.total;
-        this.dataProcessing(arr);
-      }
+     
     },
     dataProcessing(arr) {//数据处理
         arr.forEach(item => {      
@@ -350,16 +363,7 @@ async search(val) {//搜索事件
        Object.assign(this.parms, val);
     }
   },
-  watch: {
-    pageSize: {
-      handler: function(newValue, oldVale) {
-           if(newValue != oldVale){
-              this.init()
-           }
-      },
-      deep: true // 对象内部的属性监听，也叫深度监听
-    }
-  }
+
 };
 </script>
 

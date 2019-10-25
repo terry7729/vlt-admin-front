@@ -10,16 +10,20 @@
       <tips-line>共搜索到8项数据</tips-line>
     </div>
     <div class="el_table">
-      <el-table :data="tableData" border>
+      <el-table :data="tableData" ref="multipleTable" border>
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="keyName" label="数据字典名称"></el-table-column>
         <el-table-column prop="key" label="数据字典键"></el-table-column>
         <el-table-column prop="value" label="字典数据值"></el-table-column>
         <el-table-column prop="description" label="数据字典描述 "></el-table-column>
-        <el-table-column prop="createTime" label="创建时间 "></el-table-column>
+        <el-table-column label="创建时间 ">
+          <template slot-scope="scope">{{translateTime(scope.row.createTime)}}</template>
+        </el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
         <el-table-column prop="updateBy" label="更新人 "></el-table-column>
-        <el-table-column prop="updateTime" label="更新时间 "></el-table-column>
+        <el-table-column label="更新时间 ">
+          <template slot-scope="scope">{{translateTime(scope.row.updateTime)}}</template>
+        </el-table-column>
         <el-table-column prop="status" label="数据字典状态">
           <template slot-scope="scope">
             <tableRowStatus
@@ -51,9 +55,9 @@
         </el-table-column>
       </el-table>
       <table-paging
-        :total="tableData.total"
-        :currentPage="tableData.current"
-        :pageSize="tableData.size"
+        :total="999"
+        :currentPage="1"
+        :pageSize="10"
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
@@ -85,12 +89,14 @@
 </template>
 
 <script type="text/javascript">
+import moment from "moment";
 export default {
   name: "",
   data() {
     return {
       rules: {},
       dialogFormVisible: false,
+      multipleSelection: [],
       changeForm: "",
       controlOptions: [
         //按钮组
@@ -123,42 +129,6 @@ export default {
           sort: "1",
           creater: "admin",
           createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 2,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 3,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 4,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 5,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
         }
       ],
       total: 100,
@@ -181,18 +151,41 @@ export default {
   },
   components: {},
   created() {
-    // let res = await this.$api.getAll({});
-    // console.log(res);
-    // this.tableData = res.data.records;
-    this.initList();
+    let data = {};
+    this.getAll(data);
   },
   methods: {
-    async initList() {
-      let result = await this.$api.getAll({});
-      console.log(result);
-      if (result.code == 0) {
-        this.tableData = result.data.records;
+    translateTime(val) {
+      return moment(val).format("YYYY-MM-DD HH:mm:ss");
+    },
+    getAll(data) {
+      const that = this;
+      (async data => {
+        let res = await that.$api.getAll({ data });
+        console.log(res)
+        if (res && res.code == 0) {
+          that.tableData = res.data.records;
+        } else {
+        }
+      })(data);
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
       }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     },
     selectBtn() {
       // this.$router.push({
