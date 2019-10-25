@@ -39,21 +39,16 @@ export default {
         {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
       ],
       active: 1,
-      rules: {}
+      rules: {},
+      param: {},
     }
   },
   methods: {
-    getStoreList(row) {
+    createMarketPlan(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.createMarketPlan({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -63,12 +58,20 @@ export default {
       // this.$refs.main.scrollTop = 0;
       if (this.active-- < 1) this.active = 0;
     },
-    next() {
+    next(val) {
+      console.log('当前参数', val)
+      this.param = Object.assign(this.param, val)
+      
       // this.$refs.main.scrollTop = 0;
       if (this.active++ > 3) this.active = 0;
     },
     changeForm() {
 
+    },
+    submit() {
+      console.log('提交的参数', this.param)
+      let data = this.param;
+      this.createMarketPlan()
     },
     handlePreview() {},
     handleRemove() {},

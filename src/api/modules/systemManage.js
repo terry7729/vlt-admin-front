@@ -62,15 +62,17 @@ export default {
   //用户搜索
   userPage:(options = {}) =>ajax.post('/user/query/page',options),
   //用户详情
-  getUserDestils:(options = {}) =>ajax.get("/user/query/{userID}",options),
+  getUserDestils:(options = {}) =>ajax.get("/user/query",options),
   //密码重置
   restPassWord:(options = {}) =>ajax.post("/user/resetPass",options),
   //用户冻结
   userDisable:(options = {}) =>ajax.post('/user/disable',options),
   //用户注销
-  userCanceel:(options = {}) =>ajax.post('/user/cancel/{userId}',options),
+  userCanceel:(options = {}) =>ajax.post('/user/cancel',options),
   //用户启用
-  userEnable:(options = {}) =>ajax.post('/user/enable/{userId}',options),
+  userEnable:(options = {}) =>ajax.post('/user/enable',options),
+  //所有用户信息
+  getUserAll:(options = {}) =>ajax.post('/user/getAll',options),
 
 
 

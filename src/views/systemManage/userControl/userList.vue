@@ -6,7 +6,7 @@
         class="search-bar-demo"
         @search="search"
         :options="option"
-        :total="999"
+        :total="total"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -30,18 +30,18 @@
           <template slot-scope="scope">
             <table-row-status
               statusField="userStatus"
-              idField="id"
+              idField="userId"
               :scope="scope"
-              :tableData="testlist"
+              :tableData="userList"
               :rowName="scope.row.name"
               :option="{
                 'enable': {
-                  apiName: 'apiName', // 接口名称
+                  apiName: 'userEnable', // 接口名称
                   label: '启用', // 按钮文字
                   value: 0// 接口字段传值
                 },
                 'disable': {
-                  apiName: 'apiName',
+                  apiName: 'userDisable',
                   label: '冻结',
                   value: 1
                 },
@@ -62,11 +62,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagintion" v-if="num">
+      <div class="pagintion">
         <table-paging
           :currentPage="1"
-          :pageSize="i"
-          :total="num"
+          :pageSize="pageSize"
+          :total="total"
           @handleSizeChange="pageSizeChange"
           @handleCurrentChange="pageCurrentChange"
         ></table-paging>
@@ -106,26 +106,24 @@ export default {
         password: ""
       },
       //测试数据
-      test:[],
-      testlist:[],
-      num: 0,
-      i:10,
-      n:1,
+      total:0,
+      page:1,
+      pageSize:10,
       //
       dialogFormVisible: false,
-      currentPage4: 4,
+      currentPage4: 1,
       userList:[],
       multipleSelection: [],
       controlOptions: [
         //按钮组
-        { name: "新建计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "新建用户", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
         { name: "批量删除", type: "", icon: "delete" }
       ],
       option: [
         //搜索框组
         {
           title: "姓名",
-          prop: "name",
+          prop: "userName",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
@@ -139,7 +137,7 @@ export default {
         },
         {
           title: "所属机构",
-          prop: "organ",
+          prop: "insInfoList",
           type: "select",
           options: [
             {
@@ -156,21 +154,21 @@ export default {
         },
         {
           title: "用户角色",
-          prop: "userrole",
+          prop: "roleName",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
           title: "手机号码",
-          prop: "phonecode",
+          prop: "mobile",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
           title: "用户状态",
-          prop: "userstatus",
+          prop: "userStatus",
           type: "select",
           options: [
             {
@@ -187,63 +185,117 @@ export default {
         },
         {
           type: "datetime-range",
-          prop: "date4",
+          prop: "createTime",
           value: "",
           title: "创建时间",
           placeholder: ["开始时间", "结束时间"]
         }
-      ]
+      ],
+      searchFrom:{},
+      searchStatus:''
+
     };
   },
   computed: {},
-  async created() {
-    
-    let n = await  this.$api.userPage()
-    this.userList = n.data.records
-    console.log(n)
+   created() {
+
+      this.init()
   
   },
-  mounted() {},
-  methods: {
-    pageSizeChange(val) {
-      //每页显示条数
-      this.i = val
-      this.testlist = this.test.slice((this.n-1)*val,this.n*val)
-      console.log(val);
-    },
-    pageCurrentChange(val) {
-      //当前显示页数
-      this.n= val;
-      this.testlist = this.test.slice((val-1)*this.i,val*this.i)
-      console.log(this.testlist)
-      console.log(val);
-    },
-    handelskip() {
-      this.$router.push("roleList/roleDestails/");
-    },
-    handelifo(val,obj) {
-      this.$router.push({name:"userInformed",query:{title:"编缉用户信息"}});
-    },
+  mounted() {
 
-    handelides(val) {
-      console.log(val)
-      this.$router.push(`userList/userDestails`);
-    },
-    selectBtn(val) {
-      //新增删除事件
-      if(val.name==='新建计划'){
-        this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
+  },
+  methods: {
+async init(val){
+      let data  = {  
+        param:{...this.searchFrom,},
+        page:val||1,
+        pageSize:this.pageSize
       }
-      console.log(val);
-    },
-    search(val) {
-      //搜索事件
-      console.log(val);
-    },
-    dialogFormVisibleEnter() {
-      console.log(this.restpaswordfrom);
-      this.dialogFormVisible = false;
-    }
+      if(this.searchStatus != "搜索"){
+        console.log('我是默认',data)
+         let n = await  this.$api.getUserAll({data})
+          console.log(n)
+          this.userList = n.data.records
+          this.total = n.data.total;
+          console.log('我是默认',n)
+      }else{
+        console.log('我是搜索',data)
+         let reslt =await this.$api.userPage({data})
+            console.log('我是搜索',reslt)
+            this.userList = reslt.data.records
+            this.total = reslt.data.total;
+      }
+     
+      // this.pageSize = n.data.pages
+      },
+      pageSizeChange(val) {
+        //每页显示条数
+          this.pageSize = val;
+          this.init()
+      },
+      pageCurrentChange(val) {
+        //当前显示页数
+        this.currentPage4 = val;
+        this.init(val)
+      
+      },
+      handelifo(val,obj) {
+        this.$router.push({name:"userInformed",query:{title:"编缉用户信息"}});
+      },
+
+      handelides(val) {
+        console.log(val)
+  
+        this.$router.push({name:"userDestails",query:{id:val.userId}});
+      },
+      selectBtn(val) {
+        //新增删除事件
+        if(val.name==='新建用户'){
+          this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
+        }
+        console.log(val);
+      },
+     async search(val) {
+        //搜索事件
+        console.log(val);
+           this.searchFrom = val;
+          this.searchStatus = "搜索"
+            this.init()
+      },
+      pagingControl(){
+
+      },
+      dialogFormVisibleEnter() {  
+        if(this.restpaswordfrom.radio === 3){
+          //操作密码重置
+          console.log(this.restpaswordfrom)
+          let data = {
+            ...this.restpaswordfrom,
+          }
+          let reslt = this.$api.restPassWord()
+
+        }else{
+          //登陆密码重置
+           console.log(this.restpaswordfrom)
+           let data = {
+             ...this.restpaswordfrom,
+           }
+           let reslt = this.$api.restPassWord()
+
+        }
+        // this.dialogFormVisible = false;
+      }
+  },
+   watch: {
+    // pageSize: {
+    //   handler: function(newValue, oldVale) {
+    //        if(newValue != oldVale){
+    //           this.init()
+    //        }
+    //   },
+    //   deep: true // 对象内部的属性监听，也叫深度监听
+    // }
   }
 };
 </script>

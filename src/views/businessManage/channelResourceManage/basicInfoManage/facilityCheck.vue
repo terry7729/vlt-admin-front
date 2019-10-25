@@ -19,18 +19,16 @@ export default {
  name: "facilityCheck",
  data() {
  return {
-   url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+   url: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+   imgUrlList: '',
    infoList:[
-     {title:'设施名称',value:'',prop:'facilityName'},
-     {title:'设施编号',value:'',prop:'facilityCode'},
-     {title:'设施单价',value:'',prop:'facilityUnitPrice'},
-     {title:'设施大单位',value:'',prop:'facilityBigUnit'},
-     {title:'设施小单位',value:'',prop:'facilitySmallUnit'},
-     {title:'大小单位转换值',value:'',prop:'transformValue'},
-     {title:'供应商',value:'',prop:'supplier'},
+     {title:'设施名称',value:'',prop:'goodsName'},
+     {title:'设施编号',value:'',prop:'code'},
+     {title:'设施单价',value:'',prop:'unitPrice'},
+     {title:'设施单位',value:'',prop:'deviceUnit'},
+     {title:'供应商',value:'',prop:'providerId'},
      {title:'预警上限',value:'',prop:'upperLimit'},
      {title:'预警下限',value:'',prop:'lowerLimit'},
-    //  {title:'图片',value:'',prop:'image'},
      {title:'备注',value:'',prop:'remark'},
    ]
 
@@ -38,7 +36,25 @@ export default {
  },
  components: {
  },
+ created(){
+   this.getDetail()
+ },
  methods: {
+   async getDetail(){
+     const data ={
+       id:this.$route.query.id
+     }
+     console.log(data.id)
+     let res = await this.$api.getDetail(data.id)
+     console.log(res)
+     if(res && res.code == 0){
+       this.infoList.forEach(item=>{
+         item.value = res.data[item.prop]
+       })
+     }
+     this.imgUrlList = res.data.imgUrlList[0].filePath
+     console.log(this.imgUrlList)
+   }
  },
 }
 </script>
