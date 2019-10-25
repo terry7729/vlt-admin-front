@@ -1077,7 +1077,7 @@ export default {
     }
   },
   beforeDestroy() {
-    //释放资源  清空图例数据，释放内存
+    //释放资源  清空图例数据，释放内存.
     this.map.clear();
   }
 };
