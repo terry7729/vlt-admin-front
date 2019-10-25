@@ -21,7 +21,7 @@
           <base-form :formData="workerData[index]" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         </div>
       </div>
-      <el-button class="addMember" @click="addMember" icon="el-icon-plus">添加成员</el-button>
+      <el-button class="addMember" @click="addMember" v-show="isAddMember" icon="el-icon-plus">添加成员</el-button>
     </panel>
     <panel title="财务信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
@@ -211,6 +211,7 @@ export default {
   mixins: [mixin],
   data() {
     return {
+      isAddMember: false,
       betCard: { // 投注卡的数据
         num:'',
         money:'',
