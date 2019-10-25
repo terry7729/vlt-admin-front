@@ -1,11 +1,20 @@
 <template>
   <div class="vlt-card">
-    <h3 class="headling">奖池风险指标新增</h3>
+    <h3 class="headling">城市风险指标修改</h3>
     <div class="vlt-card select-box">
-      <span>游戏</span>
-      <el-select v-model="gameValue" placeholder="请选择">
+      <span>省份</span>
+      <el-select v-model="proviceValue" placeholder="请选择">
         <el-option
-          v-for="item in options"
+          v-for="item in options1"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <span>城市</span>
+      <el-select v-model="cityValue" placeholder="请选择">
+        <el-option
+          v-for="item in options2"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -14,7 +23,7 @@
       <el-table
         :data="tableData"
         border
-        style="width: 30%"
+        ref="multipleTable"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
         @selection-change="selectChange"
@@ -29,48 +38,111 @@
           <div v-for="item in type" class="editfrom">
             <el-form-item>
               <span slot="label">{{item.type}}</span>
-              <span v-if="item.type==='最低奖池金额'">
-                <el-input v-model="form.minJackpotMoneyOrdinary"></el-input>
+              <span v-if="item.type==='最高销量'">
+                <el-input v-model="form.highestSalesMoneyOrdinary"></el-input>
               </span>
-              <span v-if="item.type==='最高奖池金额'">
-                <el-input v-model="form.maxJackpotMoneyOrdinary"></el-input>
+              <span v-if="item.type==='最低销量'">
+                <el-input v-model="form.minimumSalesMoneyOrdinary"></el-input>
+              </span>
+              <span v-if="item.type==='最低在线数量'">
+                <el-input v-model="form.minimumOnlineCountsOrdinary"></el-input>
+              </span>
+              <span v-if="item.type==='最低开机率'">
+                <el-input v-model="form.minimumOperatingRateOrdinary"></el-input>
+              </span>
+              <span v-if="item.type==='最低单厅销量'">
+                <el-input v-model="form.minimumHallSaleMoneyOrdinary"></el-input>
               </span>
             </el-form-item>
             <el-form-item label="严重">
-              <span v-if="item.type==='最低奖池金额'">
-                <el-input v-model="form.minJackpotMoneySerious"></el-input>
+              <span v-if="item.type==='最高销量'">
+                <el-input v-model="form.highestSalesMoneySerious"></el-input>
               </span>
-              <span v-if="item.type==='最高奖池金额'">
-                <el-input v-model="form.maxJackpotMoneySerious"></el-input>
+              <span v-if="item.type==='最低销量'">
+                <el-input v-model="form.minimumSalesMoneySerious"></el-input>
+              </span>
+              <span v-if="item.type==='最低在线数量'">
+                <el-input v-model="form.minimumOnlineCountsSerious"></el-input>
+              </span>
+              <span v-if="item.type==='最低开机率'">
+                <el-input v-model="form.minimumOperatingRateSerious"></el-input>
+              </span>
+              <span v-if="item.type==='最低单厅销量'">
+                <el-input v-model="form.minimumHallSaleMoneySerious"></el-input>
               </span>
             </el-form-item>
             <el-form-item label="重大">
-              <span v-if="item.type==='最低奖池金额'">
-                <el-input v-model="form.minJackpotMoneyMajor"></el-input>
+              <span v-if="item.type==='最高销量'">
+                <el-input v-model="form.highestSalesMoneyMajor"></el-input>
               </span>
-              <span v-if="item.type==='最高奖池金额'">
-                <el-input v-model="form.maxJackpotMoneyMajor"></el-input>
+              <span v-if="item.type==='最低销量'">
+                <el-input v-model="form.minimumSalesMoneyMajor"></el-input>
+              </span>
+              <span v-if="item.type==='最低在线数量'">
+                <el-input v-model="form.minimumOnlineCountsMajor"></el-input>
+              </span>
+              <span v-if="item.type==='最低开机率'">
+                <el-input v-model="form.minimumOperatingRateMajor"></el-input>
+              </span>
+              <span v-if="item.type==='最低单厅销量'">
+                <el-input v-model="form.minimumHallSaleMoneyMajor"></el-input>
               </span>
             </el-form-item>
           </div>
         </el-form-item>
         <div class="editfrom">
-         
-          <el-form-item prop label="监控频率">
-            <el-input-number
-              v-model="form.collectFrequency"
-              controls-position="right"
-              @change="handleChange"
-              :min="1"
-              :max="100"
-              :step="10"
-              size="medium"
-            ></el-input-number>
+          <el-form-item prop label="监控时间点">
+            <el-time-select
+              placeholder="选择时间"
+              v-model="watchingTime1"
+              :picker-options="{
+                start: '00:00',
+                step: '00:15',
+                end: '23:30'
+              }"
+              @change="changeTime1"
+            ></el-time-select>
+          </el-form-item>
+          <el-form-item prop label="监控时间点">
+            <el-time-select
+              placeholder="选择时间"
+              v-model="watchingTime2"
+              :picker-options="{
+                start: watchingTime1,
+                step: '00:15',
+                end: '23:30',
+                minTime: watchingTime1
+              }"
+            ></el-time-select>
+          </el-form-item>
+          <el-form-item prop label="监控时间点">
+            <el-time-select
+              placeholder="选择时间"
+              v-model="watchingTime3"
+              :picker-options="{
+                start: watchingTime2,
+                step: '00:15',
+                end: '23:30',
+                minTime: watchingTime2
+              }"
+            ></el-time-select>
+          </el-form-item>
+          <el-form-item prop label="监控时间点">
+            <el-time-select
+              placeholder="选择时间"
+              v-model="watchingTime4"
+              :picker-options="{
+                start: watchingTime3,
+                step: '00:15',
+                end: '23:30',
+                minTime: watchingTime3
+              }"
+            ></el-time-select>
           </el-form-item>
         </div>
         <el-form-item>
           <div class="btn">
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
             <el-button>取消</el-button>
           </div>
         </el-form-item>
@@ -241,8 +313,12 @@ import rules from "@/utils/rules.js";
 export default {
   data() {
     return {
-      num: "",
-      value1: "",
+      watchingTime2:'',
+      watchingTime1:'',
+      watchingTime3:'',
+      watchingTime4:'',
+      num: 10,
+      checked3: false,
       checkList: ["站内"],
       checkList1: ["站内", "短信"],
       checkList2: ["站内", "短信", "邮件"],
@@ -262,15 +338,56 @@ export default {
           warningPl: 18
         }
       ],
-      //[new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)]
       options: [
         {
+          value: "选项1",
+          label: "黄金糕"
+        },
+        {
+          value: "选项2",
+          label: "双皮奶"
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎"
+        },
+        {
+          value: "选项4",
+          label: "龙须面"
+        },
+        {
+          value: "选项5",
+          label: "北京烤鸭"
+        }
+      ],
+      value: "",
+      type: null,
+      showeditBox: false,
+      tableData: [
+        { type: "最高销量" },
+        { type: "最低销量" },
+        { type: "最低在线数量" },
+        { type: "最低开机率" },
+        { type: "最低单厅销量" }
+      ],
+      options1: [
+        {
           value: 1,
-          label: "魂斗罗"
+          label: "广东"
         },
         {
           value: 2,
-          label: "狼和兔子"
+          label: "广西"
+        }
+      ],
+      options2: [
+        {
+          value: 3,
+          label: "深圳"
+        },
+        {
+          value: 4,
+          label: "广州"
         }
       ],
        options3: [
@@ -385,20 +502,14 @@ export default {
       checked8: true,
       checked9: true,
       optionsNotifyCityObjOfOrdinary1: false, //普通市级通知对象
-      optionsNotifyProObjOfOrdinary1: true, //普通省级通知对象
-      optionsNotifyCenterObjOfOrdinary1: true, //普通中央通知对象
+      optionsNotifyProObjOfOrdinary1: false, //普通省级通知对象
+      optionsNotifyCenterObjOfOrdinary1: false, //普通中央通知对象
       optionsNotifyCityObjOfSerious: false, //严重市级通知对象
       optionsNotifyProObjOfSerious: false, //严重省级通知对象
-      optionsNotifyCenterObjOfSerious: true, //严重中央通知对象
+      optionsNotifyCenterObjOfSerious: false, //严重中央通知对象
       optionsNotifyCityObjOfMajor: false, //重大市级通知对象
       optionsNotifyProObjOfMajor: false, //重大省级通知对象
       optionsNotifyCenterObjOfMajor: false, //重大中央通知对象
-
-      value: "",
-      num: 10,
-      type: null,
-      showeditBox: false,
-      tableData: [{ type: "最高奖池金额" }, { type: "最低奖池金额" }],
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
@@ -406,13 +517,10 @@ export default {
         alarmFrequencyMajor: "", //重大告警频次
         alarmFrequencyOrdinary: "", //普通告警频次
         alarmFrequencySerious: "", //严重告警频次
+        cityId: "",
+        cityName: "",
         collectFrequency: "", //采集间隔(单位：分钟) 传入15，表示15分钟匹配一次
         collectStatus: 0, //0生效 1停止
-        gameId: "",
-        gameName: "",
-        maxJackpotMoneyMajor: "", //最高奖池金额-重大级别
-        maxJackpotMoneyOrdinary: "", //最高奖池金额-普通级别
-        maxJackpotMoneySerious: "", //最高奖池金额-严重级别
         informCentralManIdMajor: "", //重大通知中央管理员id
         informCentralManIdOrdinary: "", //普通通知中央管理员id
         informCentralManIdSerious: "", //严重通知中央管理员id
@@ -425,9 +533,23 @@ export default {
         informWayMajor: 7, //重大通知方式 1站内 2邮件 3短信 4站|邮 5站|端 6邮|短 7全部
         informWaySerious: 5, //严重通知方式 同上
         informWayOrdinary: 1, //普通通知方式
-        minJackpotMoneyMajor: "", //最低奖池金额-重大级别
-        minJackpotMoneyOrdinary: "", //最低奖池金额-普通级别
-        minJackpotMoneySerious: "" //最低奖池金额-严重级别
+        highestSalesMoneyMajor: "", //最低返奖率-重大级别
+        highestSalesMoneySerious: "", //最低返奖率-普通级别
+        highestSalesMoneyOrdinary: "", //最低返奖率-严重级别
+        provinceId: "", //省级id
+        provinceName: "", //省级名称
+        minimumHallSaleMoneyMajor: "", //最高返奖率-重大级别
+        minimumHallSaleMoneySerious: "", //最高返奖率-普通级别
+        minimumHallSaleMoneyOrdinary: "", //最高返奖率-严重级别
+        minimumOnlineCountsMajor: "", //最高返奖率-重大级别
+        minimumOnlineCountsSerious: "", //最高返奖率-普通级别
+        minimumOnlineCountsOrdinary: "", //最高返奖率-严重级别
+        minimumOperatingRateMajor: "", //最高返奖率-重大级别
+        minimumOperatingRateSerious: "", //最高返奖率-普通级别
+        minimumOperatingRateOrdinary: "", //最高返奖率-严重级别
+        minimumSalesMoneyMajor: "", //最高返奖率-重大级别
+        minimumSalesMoneyOrdinary: "", //最高返奖率-普通级别
+        minimumSalesMoneySerious: "" //最高返奖率-严重级别
       },
       rules2: {
         test: [
@@ -441,62 +563,6 @@ export default {
     };
   },
   methods: {
-    handleChange(value) {
-      console.log(value);
-    },
-    onSubmit() {
-      this.pondRiskInsert();
-    },
-    async pondRiskInsert() {
-      const res = await this.$api.pondRiskInsert({
-        data: {
-          alarmFrequencyMajor: this.tableData1[2].warningPl,
-          alarmFrequencyOrdinary: this.tableData1[1].warningPl,
-          alarmFrequencySerious: this.tableData1[0].warningPl,
-          gameId: this.gameValue,
-          gameName: this.gameValue,
-          collectFrequency: this.form.collectFrequency,
-          collectStatus: this.form.collectStatus,
-          maxJackpotMoneyMajor: this.form.maxJackpotMoneyMajor,
-          maxJackpotMoneyOrdinary: this.form.maxJackpotMoneyOrdinary,
-          maxJackpotMoneySerious: this.form.maxJackpotMoneySerious,
-          informCentralManIdMajor: this.options11Value,
-          informCentralManIdOrdinary: this.options9Value,
-          informCentralManIdSerious: this.options10Value,
-          informCityManIdMajor: this.options5Value,
-          informCityManIdOrdinary: this.options3Value,
-          informCityManIdSerious: this.options4Value,
-          informProvinceManIdMajor: this.options8Value,
-          informProvinceManIdOrdinary: this.options6Value,
-          informProvinceManIdSerious: this.options7Value,
-          informWayMajor: this.form.informWayMajor,
-          informWayOrdinary: this.form.informWayOrdinary,
-          informWaySerious: this.form.informWaySerious,
-          minJackpotMoneyMajor: this.form.minJackpotMoneyMajor,
-          minJackpotMoneyOrdinary: this.form.minJackpotMoneyOrdinary,
-          minJackpotMoneySerious: this.form.minJackpotMoneySerious
-        }
-      });
-       if (res && res.code == 0) {
-        this.$message({
-          message: '新增成功',
-          type: 'success'
-        });
-      }else{
-        this.$message.error('新增失败');
-      }
-    },
-    selectChange(val) {
-      // this.showeditBox = false;
-      this.type = val;
-      if (this.type) {
-        if (this.type.length > 0) {
-          this.showeditBox = true;
-        } else {
-          this.showeditBox = false;
-        }
-      }
-    },
       //普通通知方式
     changesOrdinary(val) {
      this.getInformIdByCheckValue(this.checkList,'informWayOrdinary');
@@ -618,8 +684,165 @@ export default {
         this.optionsNotifyCenterObjOfMajor = true;
         this.options11Value = "";
       }
+    },
+    handleChange(value) {
+      console.log(value);
+    },
+    onSubmit() {
+      this.cityRiskUpdate()
+    },
+    selectChange(val) {
+      this.type = val;
+      if (this.type) {
+        if (this.type.length > 0) {
+          this.showeditBox = true;
+        } else {
+          this.showeditBox = false;
+        }
+      }
+    },
+    //游戏风险指标新增
+    async cityRiskUpdate() {
+      const self = this;
+      this.form.alarmFrequencyMajor = this.tableData1[2].warningPl;
+      this.form.alarmFrequencySerious = this.tableData1[1].warningPl;
+      this.form.alarmFrequencyOrdinary = this.tableData1[0].warningPl;
+      const res = await self.$api.cityRiskUpdate({
+        data: {
+          alarmFrequencyMajor: this.form.alarmFrequencyMajor,
+          alarmFrequencyOrdinary: this.form.alarmFrequencyOrdinary,
+          alarmFrequencySerious: this.form.alarmFrequencySerious,
+          cityId: this.cityValue,
+          cityName: this.cityValue,
+          provinceId: this.proviceValue,
+          provinceName: this.proviceValue,
+          // collectFrequency: this.form.collectFrequency,
+          collectStatus: this.form.collectStatus,
+          informCentralManIdMajor: this.options11Value,
+          informCentralManIdOrdinary: this.options9Value,
+          informCentralManIdSerious: this.options10Value,
+          informCityManIdMajor: this.options5Value,
+          informCityManIdOrdinary: this.options3Value,
+          informCityManIdSerious: this.options4Value,
+          informProvinceManIdMajor: this.options8Value,
+          informProvinceManIdOrdinary: this.options6Value,
+          informProvinceManIdSerious: this.options7Value,
+          informWayMajor: this.form.informWayMajor,
+          informWayOrdinary: this.form.informWayOrdinary,
+          informWaySerious: this.form.informWaySerious,
+
+          highestSalesMoneyMajor: this.form.highestSalesMoneyMajor,
+          highestSalesMoneyOrdinary: this.form.highestSalesMoneyOrdinary,
+          highestSalesMoneySerious: this.form.highestSalesMoneySerious,
+
+          minimumOnlineCountsMajor: this.form.minimumOnlineCountsMajor,
+
+          minimumOnlineCountsOrdinary: this.form.minimumOnlineCountsOrdinary,
+          minimumOnlineCountsSerious: this.form.minimumOnlineCountsSerious,
+
+          minimumOperatingRateMajor: this.form.minimumOperatingRateMajor,
+          minimumOperatingRateOrdinary: this.form.minimumOperatingRateOrdinary,
+          minimumOperatingRateSerious: this.form.minimumOperatingRateSerious,
+
+          minimumSalesMoneyMajor: this.form.minimumSalesMoneyMajor,
+          minimumSalesMoneyOrdinary: this.form.minimumSalesMoneyOrdinary,
+          minimumSalesMoneySerious: this.form.minimumSalesMoneySerious,
+
+          minimumHallSaleMoneyMajor: this.form.minimumHallSaleMoneyMajor,
+          minimumHallSaleMoneyOrdinary: this.form.minimumHallSaleMoneyOrdinary,
+          minimumHallSaleMoneySerious: this.form.minimumHallSaleMoneySerious,
+          timingFirst:this.watchingTime1,
+          timingSecond:this.watchingTime2,
+          timingThird:this.watchingTime3,
+          timingFourth:this.watchingTime4,
+          businessKey:this.$route.query.id
+        }
+      });
+      if (res && res.code == 0) {
+        this.$message({
+          message: "修改成功",
+          type: "success"
+        });
+      } else {
+        this.$message.error("修改失败");
+      }
+    },
+    changeTime1(){
+      this.watchingTime2='';
+      this.watchingTime3='';
+      this.watchingTime4='';
+    },
+    async getDetailInfo() {
+      const id = this.$route.query.id;
+      const self = this;
+      const res = await self.$api.getCityRiskDetail({
+        data: {
+          businessKey: id
+        }
+      });
+      if (res && res.code == 0) {
+        this.form = res.data;
+        this.gameValue = res.data.gameId;
+        this.proviceValue = res.data.provinceId;
+        this.cityValue = res.data.cityId;
+        this.tableData1[2].warningPl = this.form.alarmFrequencyMajor;
+        this.tableData1[1].warningPl = this.form.alarmFrequencySerious;
+        this.tableData1[0].warningPl = this.form.alarmFrequencyOrdinary;
+        this.checkList2 = this.showInformType(this.form.informWayMajor);
+        this.checkList1 = this.showInformType(this.form.informWaySerious);
+        this.checkList = this.showInformType(this.form.informWayOrdinary);
+        this.options3Value = this.form.informCityManIdOrdinary;
+        this.options11Value = this.form.informCentralManIdMajor;
+        this.options9Value = this.form.informCentralManIdOrdinary;
+        this.options10Value = this.form.informCentralManIdSerious;
+        this.options5Value = this.form.informCityManIdMajor;
+        this.options3Value = this.form.informCityManIdOrdinary;
+        this.options4Value = this.form.informCityManIdSerious;
+        this.options8Value = this.form.informProvinceManIdMajor;
+        this.options6Value = this.form.informProvinceManIdOrdinary;
+        this.options7Value = this.form.informProvinceManIdSerious;
+        this.watchingTime1=res.data.timingFirst;
+        this.watchingTime2=res.data.timingSecond;
+        this.watchingTime3=res.data.timingThird;
+        this.watchingTime4=res.data.timingFourth;
+      }
+    },
+     showInformType(type) {
+      var list;
+      switch (type) {
+        case 1:
+          list = ["站内"];
+          break;
+        case 2:
+          list = ["邮件"];
+          break;
+        case 3:
+          list = ["短信"];
+          break;
+        case 4:
+          list = ["邮件", "邮件"];
+          break;
+        case 5:
+          list = ["站内", "短信"];
+          break;
+        case 6:
+          list = ["邮件", "短信"];
+          break;
+        case 7:
+          list = ["站内", "邮件", "短信"];
+          break;
+      }
+      return list;
     }
-  }
+  },created() {
+       //默认全选
+    this.$nextTick(() => {
+      for (let i = 0; i < this.tableData.length; i++) {
+        this.$refs.multipleTable.toggleRowSelection(this.tableData[i], true);
+      }
+    });
+    this.getDetailInfo();
+  },
 };
 </script>
 

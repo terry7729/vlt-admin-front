@@ -10,6 +10,23 @@
 <script>
 export default {
   name:'userDetails',
+ async created() {
+    let id = this.$route.query.id
+    let reslt =await this.$api.getUserDestils(id)
+    console.log(reslt)
+    if(reslt.code === 0){
+        let arr = Object.keys(reslt.data)
+        this.destail.forEach(item => {
+            arr.forEach(i =>{
+              if(item.prop === i){
+                item.value = reslt.data[i]
+              }
+            })
+        });
+
+    }
+    console.log(reslt)
+  },
   data() {
     
     return {
@@ -17,17 +34,17 @@ export default {
         {
           title: "姓名",
           value: "超级管理员",
-          prop:''
+          prop:'userName'
         },
         {
           title: "手机号码",
           value: "138468,1413",
-          prop:''
+          prop:'mobile'
         },
         {
           title: "邮箱",
           value: "165685,6831@,qq.com",
-          prop:''
+          prop:'email'
         },
         {
           title: "所属机构",
@@ -37,37 +54,37 @@ export default {
         {
           title: "用户账号",
           value: "admin",
-          prop:''
+          prop:'account'
         },
         {
           title: "部门",
           value: "中心管理部",
-          prop:''
+          prop:'departName'
         },
         {
           title: "所属机构编码",
           value: "11530",
-          prop:''
+          prop:'insName'
         },
         {
           title: "用户状态",
           value: "启用",
-           prop:''
+           prop:'userStatus'
          },
         {
           title: "创建人",
           value: "sdfs",
-          prop:''     
+          prop:'createBy'     
         },
        {
           title: "创建时间",
           value: "2.19,-2,-32",
-          prop:''
+          prop:'createTime'
         },
         {
           title: "用户角色",
           value: "A部门B部门,",
-          prop:''
+          prop:'roleName'
         },
         {
           title: "最近登陆次数",
@@ -77,12 +94,12 @@ export default {
         {
           title: "更新人",
           value: "sddde",
-          prop:''
+          prop:'updateBy'
         },
         {
           title: "更新时间",
           value: "2018-2,4-15-, 15-2-33",
-          prop:''
+          prop:'updateTime'
         },
         {
           title: "最近登陆时间",

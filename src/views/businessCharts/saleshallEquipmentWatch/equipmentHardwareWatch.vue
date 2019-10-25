@@ -362,9 +362,6 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp {
-  text-align: right;
-}
 .main-body .el-table {
   /deep/ td.peripheralStatus > .cell {
     color: blue;

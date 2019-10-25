@@ -40,8 +40,7 @@ export default {
         { title: "状态", value: "", prop: "collectStatus" }
 
       ],
-      gameInfoList: [{ title: "游戏ID", value: "", prop: "gameID" }],
-      detaillist: []
+     
     };
   },
   components: {},
@@ -60,11 +59,61 @@ export default {
           for(var i=0;i<this.planList.length;i++){
             if(item===this.planList[i].prop){
               this.planList[i].value=res.data[item]
+               if (
+                item === "informWayOrdinary" ||
+                item === "informWaySerious" ||
+                item === "informWayMajor" ||
+                item==="collectStatus"
+              ) {
+                this.planList[i].value = this.getInformationType(item,
+                  res.data[item]
+                );
+              }
+              break;
             }
           }
         }   
     
       }
+    },
+    getInformationType(item, type) {
+      var InformType;
+      if (item != "collectStatus") {
+        switch (type) {
+          case 1:
+            InformType = "站内";
+            break;
+          case 2:
+            InformType = "邮件";
+            break;
+          case 3:
+            InformType = "短信";
+            break;
+          case 4:
+            InformType = "站内+邮件";
+            break;
+          case 5:
+            InformType = "站内+短信";
+            break;
+          case 6:
+            InformType = "邮件+短信";
+            break;
+          case 7:
+            InformType = "站内+邮件+短信";
+            break;
+        }
+      } else {
+        switch (type) {
+          case 0:
+            InformType = "生效";
+            break;
+          case 1:
+            InformType = "停止";
+            break;
+        }
+      }
+
+      return InformType;
     }
   },
   mounted() {
@@ -74,10 +123,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.plan-check {
-  background: white;
-  margin: 20px 20px;
-  border-radius: 8px;
-  padding: 25px;
+/deep/ .base-info .info-list .title{
+  min-width: unset;
 }
 </style>

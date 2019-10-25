@@ -199,23 +199,19 @@ export default {
         { type: "input", title: "菜单路径", prop: "actionUrl", value: "" },
         { type: "input", title: "路由英文名", prop: "moduleNameEn", value: "" },
         { type: "input", title: "菜单编码", prop: "moduleCode", value: "" },
-        {
-          type: "select",
+        { type: "select",
           title: "节点类型",
           prop: "moduleType",
           value: "",
-          options: [{ label: "子系统", value: 2 },{ label: "菜单", value: 3 }, { label: "按钮", value: 4 }]
-        },
-        {
-          type: "select",
+          options: [{ label: "子系统", value: 2 },{ label: "菜单", value: 3 }, { label: "按钮", value: 4 }]},
+        { type: "select",
           title: "图标",
           prop: "icon",
           value: "",
           options: [
             { label: "图标一", value: "0" },
             { label: "图标二", value: "1" }
-          ]
-        },
+          ]},
         { type: "input", prop: "sort", value: "", title: "排序值" },
         {
           type: "switch",
@@ -225,39 +221,16 @@ export default {
         },
         { type: "switch", prop: "isShow", value: true, title: "是否启用" }
       ],
-      rules: {
-        //验证对象
-        minMultiple: [
-          { required: true,
-            message: "请输入名称" }],
-        mixBet: [
-          {
-            required: true,
-            message: "请输入路径"
-          }
-        ],
-        bet: [
-          {
-            required: true,
-            message: "请输入路由英文名"
-          }
-        ],
-        logOff: [
-          {
-            required: true,
-            message: "请选择图标"
-          }
-        ],
-        textarea: [
-          {
-            required: true,
-            message: "请输入排序值"
-          }
-        ]
+      rules: {//验证对象
+        moduleName: [{ required: true,message: "请输入名称" }],
+        actionUrl: [{ required: true,message: "请输入路径"}],
+        moduleNameEn: [{required: true, message: "请输入路由英文名"} ],
+        icon: [{required: true, message: "请选择图标" }],
+        sort: [{required: true, message: "请输入排序值"}]
       },
       nodeTreeData: [], //节点树数据
       slelectifo: "", //当前选中节点名称
-      parent: {},
+      // parent: {},
       // menuType: "0", // 0 菜单 1 按钮
       dialogFormVisible: false, //弹框控制
       dialogFormVisible2: false,
@@ -278,7 +251,7 @@ export default {
               this.nodeTreeData = res.data;
       }
     },
-    handelClose(){
+    handelClose(){//弹窗关闭时的回调
       this.slelectifo = ''//关闭弹框时置空当前选中节点信息
     },
     deselect() {
@@ -306,10 +279,9 @@ async submitAdd() {
           addfrom.isSensitivity = 1;
         } else {
           addfrom.isSensitivity = 0;
-        }
-       
+        } 
             let data = {
-              parentId: this.parent.id,
+              parentId: this.nowNodeObject.id,
               sysCode: "VLT_BMS",
               ...addfrom
             };
@@ -457,50 +429,65 @@ async submitModifine(val) {
     },
 async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
       console.log(val)
-      this.parent = val;
+      // this.parent = val;
       this.nowNodeObject = val;
-      let res = await this.$api.QueryModuleDetail(val.id);//菜单详情
-      console.log('菜单详情信息',res)
-      this.slelectifo = val.text;
-      if(res.code === 0){
-        if (res.data.isSensitivity === 0) {
-        res.data.isSensitivity = true;
-      } else {
-        res.data.isSensitivity = false;
-      }
-      if (res.data.isShow === 0) {
-        res.data.isShow = true;
-      } else {
-        res.data.isShow = false;
-      }
-      let n = Object.keys(res.data);
-      this.moduleType = res.data.moduleType;
-      let arr = this.rightFrom;
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < n.length; j++) {
-          if (arr[i].prop ===n[j]) {
-            if(arr[i].prop === "moduleType"){
-              switch (res.data[n[j]]) {
-                case 1:
-                  arr[i].value = "项目根类型"
-                   break;
-                case 2:
-                  arr[i].value = "子系统";
-                  break;
-                case 3:
-                  arr[i].value = "菜单";
-                  break;
-                default:
-                  arr[i].value = "按钮";
-                  break;
-              }
-            }else{
-              arr[i].value = res.data[n[j]];
+       this.slelectifo = val.text;
+      try{
+        let res = await this.$api.QueryModuleDetail(val.id);//菜单详情
+          console.log('菜单详情信息',res)
+          if(res.code === 0){
+           
+            if (res.data.isSensitivity === 0) {
+              res.data.isSensitivity = true;
+            } else {
+              res.data.isSensitivity = false;
             }
-            
+            if (res.data.isShow === 0) {
+              res.data.isShow = true;
+            } else {
+              res.data.isShow = false;
+            }
+          let n = Object.keys(res.data);
+          this.moduleType = res.data.moduleType;
+          let arr = this.rightFrom;
+            for (var i = 0; i < arr.length; i++) {
+              for (var j = 0; j < n.length; j++) {
+                if (arr[i].prop ===n[j]) {
+                  if(arr[i].prop === "moduleType"){
+                    switch (res.data[n[j]]) {
+                      case 1:
+                        arr[i].value = "项目根类型"
+                        break;
+                      case 2:
+                        arr[i].value = "子系统";
+                        break;
+                      case 3:
+                        arr[i].value = "菜单";
+                        break;
+                      default:
+                        arr[i].value = "按钮";
+                        break;
+                    }
+                  }else{
+                    arr[i].value = res.data[n[j]];
+                  }
+                  
+                }
+              }
+            }
+          }else{
+        
+              this.$alert('请求异常:code_'+res.code+'!', "提示！", {
+              confirmButtonText: "确定",
+              callback: action => {
+                this.slelectifo = '';
+                close();
+                }
+              });
           }
-        }
-      }
+
+      } catch(err){
+        console.log(err)
       }
     },
     getCheckifo(res, val) {//复选框选中状态变化事件
@@ -509,13 +496,13 @@ async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
 
   },
   watch: {
-    nowNodeObject: {
-      handler: function(val, oldval) {
-        this.$refs.tree.setChecked(val, true);
-        this.$refs.tree.setChecked(oldval, false);
-      },
-      deep: true // 对象内部的属性监听，也叫深度监听
-    },
+    // nowNodeObject: {
+    //   handler: function(val, oldval) {
+    //     this.$refs.tree.setChecked(val, true);
+    //     this.$refs.tree.setChecked(oldval, false);
+    //   },
+    //   deep: true // 对象内部的属性监听，也叫深度监听
+    // },
   },
 }
 </script>

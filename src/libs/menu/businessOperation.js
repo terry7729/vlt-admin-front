@@ -33,7 +33,7 @@ export default [{
         }
       ],
       icon: "el-icon-menu",
-      name: "渠道权限维护",
+      name: "渠道角色权限维护",
       url: 'PermissionMaintain'
     },
 
