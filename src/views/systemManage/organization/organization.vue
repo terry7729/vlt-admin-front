@@ -312,17 +312,24 @@ export default {
   components: {},
   methods: {
 async init() {
-      let reslt = await this.$api.QueryInsTree(); //机构树菜单
-        console.log('机构树菜单',reslt);
-          if(reslt.code === 0){
-            this.nodeTreeData = reslt.data;
-          }
+   
+        let reslt = await this.$api.QueryInsTree(); //机构树菜单
+      console.log('机构树菜单',reslt);
+        if(reslt.code === 0){
+          this.nodeTreeData = reslt.data;
+        }else{
+          this.open('机构树菜单code:'+reslt.code)
+        }
       let res = await this.$api.FindRegionTreeRoots(); //区域树查询
-        console.log('区域树查询',res);
+      console.log('区域树查询',res);
           if(res.code===0){
               this.region = res.data;
               this.OrganizationAdd[4].options = res.data;
+          }else{
+              this.open('区域树查询code:'+res.code)
           }
+  
+
     },
     departmenCancel() {
       //弹出框取消按钮
@@ -344,16 +351,19 @@ async init() {
     },
 
 async remove(node, date) {//机构状态冻结
-      console.log(node, date);
-      let data = {
-        insId: date.id,
-        status: 1
-      };
-      let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
-      console.log(reslt);
-      if (reslt.code === 0) {
-        this.init();
-      }
+          console.log(node, date);
+          let data = {
+            insId: date.id,
+            status: 1
+          };
+          let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
+          console.log(reslt);
+          if (reslt.code === 0) {
+            this.init();
+          }else{
+              this.open('机构状态冻结code:'+reslt.code)
+          }
+ 
     },
     hadnelClose(){ //关闭弹框时置空当前选中节点信息
         this.slelectifo = ''
@@ -416,7 +426,6 @@ async subsidiaryOrgan(num) {
       console.log('部门分页查询2',obj)
       if (resl.code === 0) {
         let arr2 = resl.data.records; 
-        //.panentOrgan
         obj.forEach(item => {
             item.status = !!item.status
         });
@@ -491,8 +500,6 @@ async OrganizationSubmit() {
 
 async selectBtn(val) {
       if (val.name === "添加部门") {//添加部门
-        // console.log(this.val.id);
-        // console.log(this.DepartmenParams);
         if(this.slelectifo != ""){
             this.addOrChange = "添加部门";
             this.dialogFormVisible = true;
@@ -513,13 +520,17 @@ async selectBtn(val) {
     },
     
     changeOrganizationIfo() {//更改机构信息
-    
-      if(this.val.status != 1){
-          this.dialogFormVisible2 = true;
-          this.addOrChange = "更改机构信息";
-      }else{
-        this.open("对不起，启用状态不可编缉！")
-      }
+          if(Object.keys(this.val).length === 0){
+            this.open('请选择要添加部门的机构')
+          }else if(this.val.status != 1 ){
+            console.log(this.val)
+            this.dialogFormVisible2 = true;
+            this.addOrChange = "更改机构信息";
+          }else{
+            this.open("对不起，启用状态不可编缉！")
+          }
+
+   
     },
     derparModifine(val) {
       this.dialogFormVisible = true;
@@ -538,33 +549,38 @@ async selectBtn(val) {
 
 async getnowNodeifo(val, s) {//获取当前点击节点信息 s为当前节点node
       console.log(val, s);
-      this.val = val;
-      let reslt = await this.$api.QueryInsInfo(val.id);//查询机构详情
-      console.log('查询机构详情',reslt)
-      if (reslt.code === 0) {
-        let arr = Object.entries(reslt.data);
-        let obj = arr.map(([key, val]) => {
-            if (
-              (key === "createTime" && val != null) ||
-              (key === "modifierTime" && val != null)
-            ) {
-              return { [key]: moment(val).format("YYYY-MM-DD HH:mm:ss") };
-            } else if (key === "status") {
-              if (val === 1) {
-                return { [key]: "启用" };
+      try{
+        this.val = val;
+        let reslt = await this.$api.QueryInsInfo(val.id);//查询机构详情
+        console.log('查询机构详情',reslt)
+        if (reslt.code === 0) {
+          let arr = Object.entries(reslt.data);
+          let obj = arr.map(([key, val]) => {
+              if (
+                (key === "createTime" && val != null) ||
+                (key === "modifierTime" && val != null)
+              ) {
+                return { [key]: moment(val).format("YYYY-MM-DD HH:mm:ss") };
+              } else if (key === "status") {
+                if (val === 1) {
+                  return { [key]: "启用" };
+                } else {
+                  return { [key]: "失效" };
+                }
               } else {
-                return { [key]: "失效" };
+                return { [key]: val };
               }
-            } else {
-              return { [key]: val };
-            }
-        });
-        this.slelectifo = reslt.data.insName;
-        this.parentId = reslt.data.parentId;
-        //当前节点父节点信息
-        this.addValue(obj, this.AgencyInformation);
-        this.addValue(obj, this.OrganizationChange);
-        this.subsidiaryOrgan();//分页控制
+          });
+          this.slelectifo = reslt.data.insName;
+          this.parentId = reslt.data.parentId;
+          //当前节点父节点信息
+          this.addValue(obj, this.AgencyInformation);
+          this.addValue(obj, this.OrganizationChange);
+          this.subsidiaryOrgan();//分页控制
+        }
+
+      } catch(err){
+        console.log('抛出异常为：',err)
       }
      
     },

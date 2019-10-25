@@ -4,7 +4,7 @@
       <h2 class="title" >{{title}}</h2>
       <div class="vlt-edit-wrap">
           <base-form
-              :formData="data1"
+              :formData="formParams"
               ref="baseForm"
               labelWidth="140px"
               :rules="rules"
@@ -23,44 +23,47 @@
 <script>
 export default {
  async created() {
-    console.log(this.$route.query.title)
-    this.title = this.$route.query.title
+    try{
+      console.log(this.$route.query.title)
+      this.title = this.$route.query.title
 
-    let reslt = await this.$api.QueryInsTree() //机构树查询
-     console.log('用户页机构树查询',reslt)
+      let reslt = await this.$api.QueryInsTree() //机构树查询
+      console.log('用户页机构树查询',reslt)
 
-    if(reslt.code === 0){
-      this.data1[4].options = reslt.data
-    }
+      if(reslt.code === 0){
+        this.formParams[4].options = reslt.data
+      }
 
-    let reslt2 = await this.$api.FindDeptTreeRoots()//部门树查询
-    console.log('用户页部门树查询',reslt2)
-    if(reslt.code === 0){
-      this.data[5].options = reslt2.data
-    }
+      let reslt2 = await this.$api.FindDeptTreeRoots()//部门树查询
+      console.log('用户页部门树查询',reslt2)
+      if(reslt.code === 0){
+        this.formParams[5].options = reslt2.data
+      }
 
-    let reslt3 = await this.$api.QueryAllRole()//查询全部可用角色
-    console.log('用户页面查询全部可用角色',reslt3)
-    if(reslt3 === 0){
-      this.data[8].options = reslt3.data
+      let reslt3 = await this.$api.QueryAllRole()//查询全部可用角色
+      console.log('用户页面查询全部可用角色',reslt3)
+      if(reslt3 === 0){
+        this.formParams[8].options = reslt3.data
+      }
+    } catch(err){
+        console.log("抛出异常为：",err)
     }
   },
   data() {
+    let obj1 = {roleId:1} ,obj2= { roleId:0}
     return {
       title:"",
       params:{},//表单对象
       rules:{},//表单验证对象
-      data1:[
-        { type: "input", title: "姓名", prop: "name" },
+      formParams:[
+        { type: "input", title: "姓名", prop: "userName" },
         { type: "input", title: "手机号码", prop: "mobile" },
         { type: "input", title: "邮箱", prop: "email" },
-        {
+        { title: "用户状态",
           type: "select",
-          title: "用户状态",
           prop: "userStatus",
-          options: [{ label: "无效", value: "0" }, { label: "有效", value: "1" }]
-        },
-        {
+          options: [{ label: "无效", value: 0}, { label: "有效", value: 1 }]},
+        { title: "所属机构",
           type: "cascader",
           setProps: {
             label: "text",
@@ -68,13 +71,11 @@ export default {
             children: "children",
             checkStrictly: true
           },
-          title: "所属机构",
-          prop: "insCode",
+          prop: "insInfoList",
           value: "",
           placeholder: "请选择",
-          options: []
-        },
-       {
+          options: []},
+        { title: "所属部门",
           type: "cascader",
           setProps: {
             label: "text",
@@ -82,20 +83,16 @@ export default {
             children: "children",
             checkStrictly: true
           },
-          title: "所属部门",
-          prop: "departmentId",
+          prop: "deptInfoList",
           value: "",
           placeholder: "请选择",
-          options: []
-        },
-        { type: "input", title: "所属机构编号", prop: "name" },
-        { type: "input", title: "用户账号", prop: "name" },
-        {
-          type: "select",
-          title: "用户角色",
-          prop: "sex",
-          options: []
-        },
+          options: []},
+        { type: "input", title: "所属机构编号", prop: "insCode" },
+        { type: "input", title: "用户账号", prop: "account" },
+        { title: "用户角色",
+          type: "select-multiple",
+          prop: "roleInfoList",
+         options: [{ label: "男", value:obj1 }, { label: "女", value:obj2}] },
       ]
     };
   },
@@ -105,10 +102,23 @@ async userSubmit(val) {
       console.log(val);
       if(this.title === "新建用户信息"){
           let data = JSON.parse(JSON.stringify(this.params))
-      let reslt = await this.$api.userRegist({data})
-      console.log(reslt)
+          data.userId = ''
+      
+          console.log(data)
+          let reslt = await this.$api.userRegist({data})
+          console.log(reslt)
           if(reslt.code === 0){
             this.params = {}
+          }else{
+            this.$alert('请求异常code'+reslt.code, '提示！', {
+                confirmButtonText: '确定',
+                callback: action => {
+                this.$message({
+                type: 'info',
+                message: `action: ${ action }`
+                });
+              }
+            });
           }
       }else if(this.title === "编缉用户信息"){
           console.log('编缉用户信息')
