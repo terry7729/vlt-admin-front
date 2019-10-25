@@ -5,7 +5,7 @@
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="tableData.total"
       labelWidth="100px"
     >
       <control-bar slot="extend-bar" position="left" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -20,7 +20,7 @@
       >
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column
-          v-for="(item,key) in tableDatas.tableKey"
+          v-for="(item,key) in tableKey"
           :key="key"
           :prop="item.value"
           :label="item.label"
@@ -31,7 +31,7 @@
             <!-- <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button> -->
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
             <el-button type="primary" size="mini" @click="toExport(scope.row)">导出</el-button>
-            <el-button type="danger" size="mini" @click="logout (scope.row) ">注销</el-button>
+            <el-button type="danger" size="mini" @click="logoutData (scope.row) ">注销</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -61,16 +61,7 @@ export default {
           type: "select",
           prop: "insId",
           value: "",
-          options: [
-            {
-              label: "机构1",
-              value: 1
-            },
-            {
-              label: "机构2",
-              value: 2
-            }
-          ]
+          options: [{ label: "中福彩", value: "1" }]
         },
         {
           title: "投注卡类型：",
@@ -78,14 +69,9 @@ export default {
           prop: "bettingCardType",
           value: "",
           options: [
-            {
-              label: "类型1",
-              value: 1
-            },
-            {
-              label: "类型2",
-              value: 2
-            }
+            { label: "普通卡", value: 1 },
+            { label: "会员卡", value: 2 },
+            { label: "试玩卡", value: 3 }
           ]
         }
       ],
@@ -227,16 +213,14 @@ export default {
           }
         ]
       },
-      tableDatas: {
-        tableKey: [
-          { label: "序号", value: "bettingCardId", width: "80" },
-          { label: "批次", value: "batch", width: "" },
-          { label: "投注卡类型", value: "bettingCardType", width: "100" },
-          { label: "所属机构", value: "insName", width: "" },
-          { label: "发卡数量", value: "cardMakingQuantity", width: "80" },
-          { label: "备注", value: "remark", width: "" }
-        ]
-      },
+      tableKey: [
+        { label: "序号", value: "bettingCardId", width: "80" },
+        { label: "批次", value: "batch", width: "" },
+        { label: "投注卡类型", value: "bettingCardType", width: "100" },
+        { label: "所属机构", value: "insName", width: "" },
+        { label: "发卡数量", value: "cardMakingQuantity", width: "80" },
+        { label: "备注", value: "remark", width: "" }
+      ],
       tableData: {
         records: [],
         total: 4,
@@ -245,49 +229,64 @@ export default {
         orders: [],
         searchCount: true,
         pages: 1
+      },
+      options: {
+        page: 1,
+        pageSize: 10,
+        param: {
+          batch: '',
+          bettingCardType: '',
+          insId: ''
+        }
       }
     };
   },
   created() {
-    this.initList();
+    this.initList(this.options);
   },
   methods: {
-    async initList(insId = 0, page = 1, size = 10, batch = '', bettingCardType = 0) {
-      let options = {
-        page: 0,
-        pageSize: 0,
-        param: {
-          batch: "",
-          bettingCardType: 0,
-          insId: 0
-        }
-      };
+    async initList(options) {
+      const _this = this;
       let data = JSON.parse(JSON.stringify(options));
+      console.log(data);
       let result = await this.$api.cardGenerationList({ data });
-      console.log("data", result);
+      console.log(result);
       if (result.code == 0) {
-        this.tableData = result.data;
+        _this.tableData = result.data;
+        _this.tableData.records = result.data.records.map(item => {
+          item.bettingCardType = _this.forMatType(item.bettingCardType);
+          // item.cardStatus = _this.forMatStatus(item.cardStatus);
+          return item;
+        });
+      } else {
+          _this.$message({
+            type: "error",
+            message: result.msg
+          });
       }
     },
     changeSelect(val) {
       console.log(this.form, val);
     },
     selectBtn(val) {
-      // console.log(val);
-      // this.showdialog = true;
       this.$router.push({
         name: "newCard"
       });
     },
     search(form) {
-      console.log("search", form);
-      // this.initList();
+      this.options.param = {
+        insId: form.insId,
+        batch: form.batch,
+        bettingCardType: form.bettingCardType
+      }
+      this.initList(this.options);
+      // console.log("search", form);
     },
     handleClick(row) {
       this.$router.push({
         name: "cardDetail",
         query: {
-          id: row.id
+          id: row.bettingCardId
         }
       });
     },
@@ -311,19 +310,62 @@ export default {
       this.multipleSelection = val;
     },
     handleSizeChange(pageSize) {
-      // this.tableData.size = pageSize
-      this.initList(0, 1, pageSize);
+      this.tableData.size = pageSize;
+      this.options.pageSize = pageSize;
+      this.initList(this.options);
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
-      this.initList(0, currentPage, 10);
+      this.options.page = currentPage;
+      this.initList(this.options);
     },
     changeForm(val) {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
     },
-    logout(row) {
-      console.log("注销", row);
+    async deleteBetting(id) {
+      const _this = this;
+      let result = await _this.$api.deleteCardGeneration(id);
+      return result;
+    },
+    logoutData(row) {
+      const _this = this;
+      _this
+        .$confirm("将永久注销此数据, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+        .then(() => {
+          let result = _this.deleteBetting(row.bettingCardId);
+          result.then(resp => {
+            console.log(resp);
+            if (resp.code == 0) {
+              _this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              // 删除之后再次刷新一下数据
+              _this.initList(_this.options);
+            }
+          });
+        })
+        .catch(() => {
+          _this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    forMatType(type) {
+      switch (type) {
+        case 1:
+          return (type = "普通卡");
+        case 2:
+          return (type = "会员卡");
+        case 3:
+          return (type = "试玩卡");
+      }
     }
   },
   components: {

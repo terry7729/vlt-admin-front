@@ -115,7 +115,7 @@ export default {
     async submit() {
       const _this = this;
       _this.showLoading = true;
-      let data = th_thisis.params;
+      let data = _this.params;
       data.status = data.status ? 1 : 2;
       let result = await _this.$api.createBettingRulesList({ data })
       if (result.code == 0) {

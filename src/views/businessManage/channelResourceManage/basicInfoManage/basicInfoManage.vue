@@ -4,29 +4,29 @@
      <h3>基本信息管理</h3>
      <el-tabs tab-position="left" style="height: 800px;">
        <el-tab-pane label="类型管理">
-        <search-bar class="search-bar-demo" @search="search" :options="typeInfoOptions" :total="999" labelWidth="80px"></search-bar>
+        <search-bar class="search-bar-demo" @search="search" :options="typeInfoOptions" :total="typeTotalCount" labelWidth="80px"></search-bar>
         <control-bar :options="controlOptions" @select="addEquipment" position="left"></control-bar>
           <el-table :data="typeData" border style="width: 100%">
             <el-table-column prop="id" label="序号" type="index" width='80px'></el-table-column>
-            <el-table-column prop="goodsCategory" label="物品类别"></el-table-column>
+            <el-table-column prop="goodsType" label="物品类别"></el-table-column>
             <el-table-column prop="goodsName" label="物品名称"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
-            <el-table-column prop="state" label="状态">
+            <el-table-column prop="status" label="状态">
               <template slot-scope="scope">
-                <el-switch class="switchStyle" @change="changeState($event,scope.row,scope.$index)" v-model="scope.row.state" active-color="#1890ff"
-                  active-text="开" inactive-color="#c0c0c0" inactive-text="关" :active-value="1" :inactive-value='0'>
+                <el-switch class="switchStyle" @change="changeState(scope.row.id,scope.row.status)" v-model="scope.row.status" active-color="#1890ff"
+                  active-text="开" inactive-color="#c0c0c0" inactive-text="关" :active-value="1" :inactive-value='2'>
                 </el-switch>
               </template>
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button @click="typeCheck(scope.row.id,scope.row.goodsCategory)" type="primary" v-prevent="2000" size="mini">查看</el-button>
+                <el-button @click="typeCheck(scope.row.id,scope.row.goodsType)" type="primary" v-prevent="2000" size="mini">查看</el-button>
                 <el-button @click="typeAmend(scope.row.id)" type="primary" v-prevent="2000" size="mini">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
-          <table-paging position="right" :total="999" :currentPage="1" :pageSize="10" 
-            @handleSizeChange="handleSizeChange" @handleCurrentChange="handleCurrentChange">
+          <table-paging position="right" :total="typeTotalCount" :currentPage="typeCurrentPage" :pageSize="10" 
+            @handleSizeChange="handleSizeChangeType" @handleCurrentChange="handleCurrentChangeType">
           </table-paging>
        </el-tab-pane>
        <el-tab-pane label="型号管理">
@@ -104,9 +104,8 @@ export default {
  data() {
  return {
    form:{},
-   total:400,
-   currentPage:6,
-   pageSize:20,
+   typeTotalCount:0,
+   typeCurrentPage:1,
    
    typeDialogFormVisible: false,
    modelDialogFormVisible:false,
@@ -114,9 +113,12 @@ export default {
    dialogVisible: false,
    params: {},
    typeInfoOptions:[
-     {title:'物品类别',type:'select',prop:'goodsCategory',value:'',options:[{label:'设备',value:'sb'},{label:'设施',value:'ss'}]},
-     {title:'物品名称',type:'select',prop:'goodsName',value:'',options:[{label:'xxx',value:'1'},{label:'xxxx',value:'2'}]},
-     {title:'物品状态',type:'select',prop:'goodsStates',value:'',options:[{label:'开',value:'1'},{label:'关',value:'0'}]},
+     {title:'物品类别',type:'select',prop:'goodsType',value:'',
+     options:[{label:'设备',value:1},{label:'配件',value:2},{label:'耗材',value:3},{label:'设施',value:4}]},
+
+     {title:'物品名称',type:'select',prop:'goodsId',value:'',options:[]},
+
+     {title:'物品状态',type:'select',prop:'status',value:'',options:[{label:'开',value:1},{label:'关',value:2}]},
    ],
    modelInfoOptions:[
      {title:'物品类别',type:'select',prop:'goodsCategory',value:'',options:[{label:'设备',value:'sb'},{label:'设施',value:'ss'}]},
@@ -127,20 +129,14 @@ export default {
    controlOptions:[
       { name: "新增", type: "primary", icon: "plus" }
    ],
-   typeData:[
-     {id:1,goodsCategory:'设备',goodsName:'xxx',remark:'',state:1},
-     {id:2,goodsCategory:'设施',goodsName:'xxx',remark:'',state:''},
-     {id:3,goodsCategory:'耗材',goodsName:'xxx',remark:'',state:''},
-     {id:3,goodsCategory:'配件',goodsName:'xxx',remark:'',state:''},
-
-   ],
+   typeData:[],
    modelData:[
      {id:1,goodsCategory:'设备',goodsName:'xxx',goodsModel:'xxx',state:''},
    ],
 
   modelAmendData:[
     {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'设备',value:'1'},{label:'配件',value:'2'}]},
-    {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''}]},
     {title:'设备型号',type:'input',prop:'equipmentModel', value:''},
     {title:'设备单价',type:'select',prop:'equipmentPrice',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
@@ -186,6 +182,15 @@ export default {
         //     "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
         // }
       ],
+      requestData:{
+        "page": 1,
+        "pageSize": 10,
+        "param": {
+          "goodsId": 0,
+          "goodsType": 0,
+          "status": 0
+        }
+      }
  }
  },
  components: {
@@ -198,15 +203,64 @@ export default {
       }
     }
  },
+ created(){
+   this.getTypeList(this.requestData)
+   this.getSelectOption()
+ },
  methods: {
    //类型管理
-   //状态改变
-   changeState($event,data,index){
-     console.log(data)
+   //状态修改
+   async changeState(id,state){
+     let data= {
+       id,
+       state
+     }
+     let res = await this.$api.statusUpdate({},data)
+     if(res.code == 0 ){
+       this.$message({
+         message:'状态修改成功',
+         type:'success'
+       })
+     }
+    },
+
+
+   //获取类型管理列表
+   async getTypeList(data){
+     let obj= {
+       1 :'设备',
+       2 :'配件',
+       3 :'耗材',
+       4 :'设施'
+     };
+     let res = await this.$api.getGoosType({data})
+     console.log(res)
+     if(res && res.code == 0){
+       this.typeData = res.data.records
+       this.typeData.forEach(item=>{
+         item.goodsType = obj[item.goodsType]
+       })
+       this.typeTotalCount = res.data.total
+     }
    },
-   
-   search(form) {
-    console.log("search", form);
+   //获取下拉框options
+   async getSelectOption(){
+     let res =await this.$api.getModelTree({})
+     if(res && res.code == 0){
+        res.data.forEach(item =>{
+        this.typeInfoOptions[1].options.push({label:item.goodsName,value:item.id})
+       })
+     }
+   },
+   //搜索
+   search(data) {
+    this.currentPage = 1
+    this.requestData.param = Object.assign({
+      page: this.currentPage,
+      pageSize: 10,
+      param: {}
+    }, data)
+    this.getTypeList(this.requestData)
   },
   //新增事件
   addEquipment(){
@@ -221,29 +275,30 @@ export default {
      console.log(id)
   },
   //设备查看
-  typeCheck(id,goodsCategory){
-    switch(goodsCategory){
-      case '设备':
+  typeCheck(id,goodsType){
+    console.log(goodsType)
+    switch(goodsType){
+      case "设备":
         this.$router.push({
-          name: 'equipmentCheck',
+          path: 'equipmentCheck',
           query: {id}
         });
         break;
-      case '设施':
+      case "设施":
         this.$router.push({
-          name: 'facilityCheck',
+          path: 'facilityCheck',
           query: {id}
         });
         break;
-      case '耗材':
+      case "耗材":
         this.$router.push({
-          name:'consumableCheck',
+          path:'consumableCheck',
           query:{id}
         });
         break;
-      case '配件':
+      case "配件":
         this.$router.push({
-          name:'mountingsCheck',
+          path:'mountingsCheck',
           query:{id}
         });
         break;
@@ -253,19 +308,21 @@ export default {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
   },
-  //分页事件
-  handleCurrentChange(currentPage) {
-        // this.confirmSearch.page = val
-        // this.query()
-        console.log(currentPage)
-      },
-  handleSizeChange(pageSize) {
-    // this.pageSize = val
-    // this.confirmSearch.limit = val
-    // this.confirmSearch.page = 1
-    // this.currentPage = 1
-    // this.query()
-    console.log(pageSize)
+  //类型管理分页
+  handleCurrentChangeType(currentPage) {
+    this.requestData.page = currentPage
+    this.getTypeList(this.requestData)
+  },
+  handleSizeChangeType(pageSize) {
+    this.requestData.pageSize = pageSize
+    this.getTypeList(this.requestData)
+  },
+  //型号管理分页
+  handleCurrentChange(currentPage){
+
+  },
+  handleSizeChange(pageSize){
+
   },
   //型号管理
   modelChangeForm(val) {
@@ -330,7 +387,7 @@ export default {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       }
- },
+ }
 }
 </script>
 
