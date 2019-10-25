@@ -76,6 +76,14 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 上市游戏列表查询列表
+  queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
+  // 游戏上市计划分页查询列表
+  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 上市记录查询列表
+  queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
+
+
   // 新建渠道
   creatChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
@@ -84,7 +92,7 @@ export default {
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
-  
+
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),

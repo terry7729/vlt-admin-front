@@ -937,6 +937,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/equipmentDesc',
     name: 'equipmentDesc',
     meta: {
+      parentName: 'equipment',
       title: '查看设备详情',
     },
     component: equipmentDesc
@@ -945,6 +946,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/equipmentResume',
     name: 'equipmentResume',
     meta: {
+      parentName: 'equipment',
       title: '设备履历',
     },
     component: equipmentResume
@@ -953,6 +955,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/accessoriesDesc',
     name: 'accessoriesDesc',
     meta: {
+      parentName: 'equipment',
       title: '查看配件详情',
     },
     component: accessoriesDesc
@@ -961,6 +964,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/accessoriesResume',
     name: 'accessoriesResume',
     meta: {
+      parentName: 'equipment',
       title: '配件履历',
     },
     component: accessoriesResume
