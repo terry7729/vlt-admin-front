@@ -181,9 +181,7 @@ async pagingControl(val){ //分页控制
           page:val||1,
           pageSize:this.pageSize
         }
-    
-
-        if(this.searchStatus != "搜索"){
+      if(this.searchStatus != "搜索"){
         console.log('我是默认',data)
           let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
         console.log("获取当前分页信息",reslt)

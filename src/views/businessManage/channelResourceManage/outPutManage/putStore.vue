@@ -9,9 +9,15 @@
           <el-table-column prop="goodsName" label="物品名称"></el-table-column>
           <el-table-column prop="goodsType" label="物品型号"></el-table-column>
           <el-table-column prop="goodsCode" label="物品编号"></el-table-column>
-          <el-table-column prop="miniNum" label="数量（小）"></el-table-column>
+          <el-table-column prop="miniNum" label="数量"></el-table-column>
           <el-table-column prop="money" label="单价（元）"></el-table-column>
           <el-table-column prop="remark" label="备注"></el-table-column>
+          <el-table-column prop="seriesNum" label="物品序列号" width="240">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.seriesNum" placeholder="请输入设备序列号" maxlength="50"
+              @blur="getSeriesNum(scope.row.id,scope.row.seriesNum)"></el-input>
+            </template>
+          </el-table-column>
       </el-table>
     </panel-static>
     <div class="inp-total">
@@ -40,14 +46,19 @@ export default {
         { title: "备注", value: "", prop: "remark" },
     ],
   goodsListData:[
-    {id:1,goodsName:'投注终端',goodsType:'xxxxx',goodsCode:'xxxxx',miniNum:'xxxx',money:'xxxx',remark:''}
-  ]
-
+    {id:1,goodsName:'投注终端',goodsType:'xxxxx',goodsCode:'xxxxx',miniNum:'xxxx',money:'xxxx',remark:'',seriesNum:'',}
+  ],
+    seriesNum:[]
  }
  },
  components: {
  },
  methods: {
+   getSeriesNum(id,value){
+     this.seriesNum.push(value)
+     this.goodsListData.seriesNum =''
+     console.log(this.seriesNum)
+   },
    putStore(){
      console.log(32123)
    },

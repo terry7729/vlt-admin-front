@@ -1,25 +1,24 @@
 <template>
   <!-- 设备管理 - 配件列表 -->
-  <div class="">
+  <div class>
     <search-bar
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="tableData.total"
       labelWidth="80px"
-    >
-    </search-bar>
+    ></search-bar>
 
     <el-row class="card-table">
       <el-table
-        :data="tableDatas.tableData"
+        :data="tableData.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
         class="table-box"
       >
         <el-table-column
-          v-for="(item,key) in tableDatas.tableKey"
+          v-for="(item,key) in tableKey"
           :key="key"
           :prop="item.value"
           :label="item.label"
@@ -36,9 +35,9 @@
 
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableData.total"
+      :currentPage="tableData.current"
+      :pageSize="tableData.size"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
@@ -54,253 +53,122 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "selectName",
+          prop: "spraresName",
           value: "",
           title: "配件名称：",
           placeholder: "请选择",
           options: [
-            {
-              label: "设备1",
-              value: 1
-            },
-            {
-              label: "设备2",
-              value: 2
-            }
+            {label: "机器猫",value: '机器猫'},
+            {label: "投注机",value: '投注机'}
           ]
         },
-        {
-          type: "select",
-          prop: "selectName2",
-          value: "",
-          title: "配件型号：",
-          placeholder: "请选择",
-          options: [
-            {
-              label: "型号1",
-              value: 1
-            },
-            {
-              label: "型号2",
-              value: 2
-            },
-            {
-              label: "型号3",
-              value: 3
-            }
+        {type: "select",prop: "spraresType",value: "",title: "配件型号：",placeholder: "请选择",options: [
+            {label: "123",value: '123'},
+            {label: "ED456",value: 'ED456'}
           ]
         },
-        {
-          type: "input",
-          prop: "inputName",
-          value: "",
-          title: "配件编码：",
-          placeholder: "请输入"
-        },
-        {
-          type: "input",
-          prop: "inputName2",
-          value: "",
-          title: "所属仓库：",
-          placeholder: "请输入"
-        },
-        {
-          type: "select",
-          prop: "selectName3",
-          value: "",
-          title: "配件状态：",
-          placeholder: "请选择",
+        {type: "input",prop: "spraresCode",value: "",title: "配件编码：",placeholder: "请输入"},
+        {type: "input",prop: "nameX",value: "",title: "所属仓库：",placeholder: "请输入"},
+        {type: "select",prop: "spraresStatus",value: "",title: "配件状态：",placeholder: "请选择",
           options: [
-            {
-              label: "状态1",
-              value: 1
-            },
-            {
-              label: "状态2",
-              value: 2
-            },
-            {
-              label: "状态3",
-              value: 3
-            }
+            {label: "正常",value: 1},
+            {label: "已损坏",value: 2},
+            {label: "故障",value: 3}
           ]
         }
       ],
-      tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 1,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 2,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 3,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 4,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 5,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 6,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 7,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 8,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          },
-          {
-            id: 9,
-            accessories: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            Warehousetype: '中彩仓库',
-            ownWarehouse: 'XXX仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常'
-          }
-        ],
-        tableKey: [
-          {
-            label: "序号",
-            value: "id",
-            width: "80"
-          },
-          {
-            label: "配件名称",
-            value: "accessories",
-            width: ""
-          },
-          {
-            label: "配件型号",
-            value: "type",
-            width: "100"
-          },
-          {
-            label: "配件编码",
-            value: "coding",
-            width: ""
-          },
-          {
-            label: "仓库类型",
-            value: "Warehousetype",
-            width: "80"
-          },
-          {
-            label: "所属仓库",
-            value: "ownWarehouse",
-            width: ""
-          },
-          {
-            label: "使用状态",
-            value: "useStatus",
-            width: ""
-          },
-          {
-            label: "配件状态",
-            value: "accessoryStatus",
-            width: ""
-          }
-        ]
+      tableKey: [
+        {label: "序号",value: "id",width: "80"},
+        {label: "配件名称",value: "spraresName",width: ""},
+        {label: "配件型号",value: "spraresType",width: "100"},
+        {label: "配件编码",value: "spraresCode",width: ""},
+        {label: "仓库类型",value: "typeX",width: "80"},
+        {label: "所属仓库",value: "nameX",width: ""},
+        {label: "使用状态",value: "usageStatus",width: ""},
+        {label: "配件状态",value: "spraresStatus",width: ""}
+      ],
+      tableData: {},
+      options: {
+        nameX: "",
+        page: 0,
+        pageSize: 0,
+        param: {},
+        spraresCode: "",
+        spraresName: "",
+        spraresStatus: 0,
+        spraresType: ""
       },
+      params: {}
     };
   },
   components: {},
+  created() {
+    this.initList(this.options);
+  },
   methods: {
+    async initList(options) {
+      console.log("this.options", options);
+      let data = JSON.parse(JSON.stringify(options));
+      let result = await this.$api.accessoriesListPage({ data });
+      console.log("data", result);
+      if (result.code === 0) {
+        this.tableData = result.data;
+        this.tableData.records = result.data.records.map(item => {
+          item.usageStatus = this.formatUseStatus(item.usageStatus);
+          item.spraresStatus = this.forMatStatus(item.spraresStatus);
+          return item;
+        });
+      }
+    },
+
     search(form) {
       console.log("search", form);
-    },  
+      Object.assign(this.params,this.options, form)
+      this.initList(this.params);
+    },
     handleClick(row) {
       this.$router.push({
-        name: 'equipmentDesc',
+        name: "accessoriesDesc",
         query: {
           id: row.id
         }
-      })
+      });
     },
-    resume (row) {
+    resume(row) {
       console.log(row);
       this.$router.push({
-        name: 'equipmentResume'
-      })
+        name: "accessoriesResume"
+      });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     handleSizeChange(pageSize) {
-      console.log(pageSize);
+      this.tableData.size = pageSize;
+      this.options.pageSize = pageSize
+      this.initList(this.options);
     },
     handleCurrentChange(currentPage) {
-      console.log(currentPage);
+      this.options.page = currentPage;
+      this.initList(this.options);
+    },
+    formatUseStatus(status) {
+      switch (status) {
+        case 1:
+          return (status = "闲置中");
+        case 2:
+          return (status = "运行中");
+      }
+    },
+    forMatStatus(status) {
+      switch (status) {
+        case 0:
+          return (status = "正常");
+        case 1:
+          return (status = "已损坏");
+        case 2:
+          return (status = "故障");
+      }
     }
   }
 };

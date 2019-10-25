@@ -109,23 +109,37 @@ export default {
       form: {},
       dialogImageUrl: '',
       dialogVisible: false,
-      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'},
-        {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
-
+      fileList: '1,2'
     }
   },
+  created() {
+    this.getGameStoreInfo()
+  },
   methods:{
-    getStoreList(row) {
+    // 获取游戏详情
+    getGameStoreInfo() {
       const self = this;
       const data = {
-        orderId: row.orderId
+        gameId: this.$route.query.gameId
       };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getGameStoreInfo({data})
 				if(res && res.code == 0) {
           self.$message.success('注销成功')
           row.orderStatus = 6;
           self.getLotteryList(self.param)
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 编辑游戏数据
+    editGameStore(data) {
+      const self = this;
+      (async (data)=>{
+				let res = await self.$api.editGameStore({data})
+				if(res && res.code == 0) {
+          
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -159,6 +173,8 @@ export default {
       const self = this;
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
+        let data = this.params;
+        self.editGameStore(data)
       });
     },
     cancel() {

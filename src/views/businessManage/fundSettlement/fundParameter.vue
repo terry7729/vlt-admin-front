@@ -27,7 +27,7 @@
         ></el-table-column>
         <el-table-column fixed="right" label="操作" width="130">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
+            <el-button type="primary" size="mini" @click="getDetail(scope.row)">查看</el-button>
             <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
@@ -53,271 +53,146 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "selectName",
+          prop: "gameCode",
           value: "",
           title: "游戏名称：",
-          placeholder: "请选择",
           options: [
             {
-              label: "游戏1",
-              value: 1
+              label: "王者荣耀1",
+              value: "王者荣耀1"
             },
             {
               label: "游戏2",
-              value: 2
+              value: "游戏2"
             }
           ]
         },
         {
           type: "input",
-          prop: "inputName",
+          prop: "createBy",
           value: "",
-          title: "创建人：",
-          placeholder: "请输入"
+          title: "创建人："
         },
         {
           title: "生效时间：",
-          type: "datetime-range",
-          prop: "date3",
-          value: ["2019-08-12 09:10:10", "2019-09-20 12:12:12"],
-          option: ["start", "end"]
+          type: "datetime",
+          prop: "effectiveTime",
+          value: ""
         },
         {
           title: "创建时间：",
-          type: "datetime-range",
-          prop: "date4",
-          value: ["2019-08-12 09:10:10", "2019-09-20 12:12:12"],
-          option: ["start", "end"]
-        },
+          type: "datetime",
+          prop: "createTime",
+          value: ""
+        }
       ],
       controlOptions: [
         { name: "全局参数", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
       tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 1,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 2,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 3,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 4,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 5,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 6,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 7,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 8,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          },
-          {
-            id: 9,
-            gameNumber: '1001',
-            gameName: 'A',
-            returnRate: '64%',
-            regulatoryFund: '2%',
-            agencySalesRate: '66%',
-            issuanceFunding: '19%',
-            communityFund: '15%',
-            pointExchange: '1:100',
-            status: '审核中',
-            founder: 'XX',
-            effectiveTime: '2019-12-25 01:50:06',
-            creationTime: '2019-02-25 01:50:06'
-          }
-        ],
+        tableData: [],
         tableKey: [
           {
             label: "序号",
             value: "id",
-            width: '50'
+            width: "50"
           },
           {
             label: "游戏编号",
-            value: "gameNumber",
-            width: '80'
+            value: "gameCode",
+            width: "80"
           },
           {
             label: "游戏名称",
             value: "gameName",
-            width: ''
+            width: ""
           },
           {
             label: "返奖率",
             value: "returnRate",
-            width: '60'
+            width: "60"
           },
           {
             label: "调节基金",
-            value: "regulatoryFund",
-            width: '80'
-          },{
+            value: "regulationFund",
+            width: "80"
+          },
+          {
             label: "代销费率",
-            value: "agencySalesRate",
-            width: ''
-          },{
+            value: "generationRate",
+            width: ""
+          },
+          {
             label: "发行经费",
-            value: "issuanceFunding",
-            width: ''
-          },{
+            value: "lssueFundPro",
+            width: ""
+          },
+          {
             label: "公益金",
-            value: "communityFund",
-            width: ''
-          },{
+            value: "publicFundPro",
+            width: ""
+          },
+          {
             label: "游戏点兑换比例",
-            value: "pointExchange",
-            width: ''
-          },{
+            value: "gameConPro",
+            width: ""
+          },
+          {
             label: "状态",
             value: "status",
-            width: '80'
-          },{
+            width: "80"
+          },
+          {
             label: "创建人",
-            value: "founder",
-            width: ''
-          },{
+            value: "createBy",
+            width: ""
+          },
+          {
             label: "生效时间",
             value: "effectiveTime",
-            width: ''
-          },{
+            width: ""
+          },
+          {
             label: "创建时间",
-            value: "creationTime",
-            width: ''
+            value: "createTime",
+            width: ""
           }
         ]
       }
     };
   },
-  components: {},
+  created() {
+    this.init();
+  },
+
   methods: {
-    search(form) {
-      console.log("search", form);
+    async init() {
+      let data = {
+        page: 1,
+        pageSize: 10,
+        param: {}
+      };
+      let res = await this.$api.getFundsParameter({ data });
+      if (res.code === 0) {
+        this.tableDatas.tableData = res.data.records;
+      }
+    },
+    async search(form) {
+      let data = {
+        page: 1,
+        pageSize: 10,
+        param: form
+      };
+      let res = await this.$api.getFundsParameter({ data });
+      if (res.code === 0) {
+        this.tableDatas.tableData = res.data.records;
+      }
     },
 
     selectBtn(val) {
       this.$router.push({
-        name: 'globalParameter'
-      })
+        name: "globalParameter"
+      });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -328,24 +203,24 @@ export default {
     handleCurrentChange(currentPage) {
       console.log(currentPage);
     },
-    handleClick(row) {
+    getDetail(row) {
       this.$router.push({
-        name: 'fundParameterDetail',
+        name: "fundParameterDetail",
         query: {
           id: row.id
         }
-      })
+      });
     },
-    edit (row) {
-      console.log(row);
+    edit(row) {
       this.$router.push({
-        name: 'fundParameterEdit',
+        name: "fundParameterEdit",
         query: {
           id: row.id
         }
-      })
-    },
-  }
+      });
+    }
+  },
+  components: {}
 };
 </script>
 

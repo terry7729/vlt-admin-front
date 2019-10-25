@@ -154,12 +154,7 @@ export default {
       selectValue: 1,
       equipmentData: [
         { title: "设备名称", type: "input", prop: "equipmentName", value: "" },
-        {
-          title: "设备单位",
-          type: "select",
-          prop: "equipmentUnit",
-          options: [{ label: "", value: "1" }, { label: "", value: "2" }]
-        },
+        { title: "设备单位", type: "input", prop: "equipmentUnit", value:''},
         {
           title: "是否标配",
           type: "radio",
@@ -185,18 +180,19 @@ export default {
           prop: "facilitiesUnitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        {
-          title: "设施大单位",
-          type: "select",
-          prop: "facilitiesBigUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
-        {
-          title: "设施小单位",
-          type: "select",
-          prop: "facilitiesSmallUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
+        { title: "设施单位", type: "input", prop: "facilitiesUnit", value:''},
+        // {
+        //   title: "设施大单位",
+        //   type: "select",
+        //   prop: "facilitiesBigUnit",
+        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
+        // },
+        // {
+        //   title: "设施小单位",
+        //   type: "select",
+        //   prop: "facilitiesSmallUnit",
+        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
+        // },
         {
           title: "供应商",
           type: "select",
@@ -217,18 +213,19 @@ export default {
           prop: "consumableUnitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        {
-          title: "设施大单位",
-          type: "select",
-          prop: "consumableBigUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
-        {
-          title: "设施小单位",
-          type: "select",
-          prop: "consumableSmallUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
+        { title: "耗材单位", type: "input", prop: "consumableUnit", value:''},
+        // {
+        //   title: "设施大单位",
+        //   type: "select",
+        //   prop: "consumableBigUnit",
+        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
+        // },
+        // {
+        //   title: "设施小单位",
+        //   type: "select",
+        //   prop: "consumableSmallUnit",
+        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
+        // },
         {
           title: "供应商",
           type: "select",
@@ -242,12 +239,7 @@ export default {
       ],
       mountingsData:[
         { title: "配件名称", type: "input", prop: "mountingsName", value: "" },
-        {
-          title: "配件单位",
-          type: "select",
-          prop: "mountingsUnit",
-          options: [{ label: "", value: "1" }, { label: "", value: "2" }]
-        },
+        { title: "配件单位", type: "select", prop: "mountingsUnit", value:''},
         {
           title: "是否回收",
           type: "radio",

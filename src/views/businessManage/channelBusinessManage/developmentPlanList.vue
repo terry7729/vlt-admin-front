@@ -1,17 +1,18 @@
 <template>
   <div class="vlt-card">
-    <search-bar class="search-bar-demo"
+    <!-- <search-bar class="search-bar-demo"
       @search="search"
       :options="searchOptions"
       :total="999"
       labelWidth="80px">
       <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
-    </search-bar>
+    </search-bar> -->
+    <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
     <el-table :data="tableData" border>
       <el-table-column label="序号" fixed type="index" width="60px"></el-table-column>
-      <el-table-column label="计划时间" prop="gameId" min-width="160px"></el-table-column>
-      <el-table-column label="新建销售厅" prop="gameName" min-width="140px"></el-table-column>
-      <el-table-column label="销售厅投注机" prop="gameCode" min-width="140px"></el-table-column>
+      <el-table-column label="计划年份" prop="planDate" min-width="160px"></el-table-column>
+      <el-table-column label="新建销售厅" prop="cityNewSellingHall" min-width="140px"></el-table-column>
+      <el-table-column label="销售厅投注机" prop="citySellingMachine" min-width="140px"></el-table-column>
       <el-table-column label="省属合作厅" prop="cycleType" min-width="140px"></el-table-column>
       <el-table-column label="省属合作厅投注机" prop="gameTypeName" min-width="140px"></el-table-column>
       <el-table-column label="市属合作厅" prop="cycleType" min-width="140px"></el-table-column>
@@ -42,25 +43,39 @@ export default {
         {name: '新建发展计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
         {name: '导出', type: '', icon: 's-promotion'},
       ],
-      tableData: [
-        {gameId:'2019-09-12 09：00：00',gameName: 'a',cycleType: 0,gameTypeName:'奖组型',status:'计划中'}
-      ]
+      tableData: []
     }
   },
-  components: {
+  created() {
+    let data = {
+      page: 1,
+      pageSize: 10,
+      param: {
+        insId: "27",
+        insLevel: "2" // 1为省级 2为市级
+      }
+    };
+    // 用户所在机构
+    if(true) {
+      // 省级用户 调省查市接口
+      // 市级数据 不能输入
+    }else{
+      // 市级用户
+      // 只需要市级数据  省级不用
+    }
+    this.getDevelopPlanList(data)
   },
   methods: {
-    getStoreList(row) {
+    search(data) {
+      this.getDevelopPlanList(data)
+    },
+    getDevelopPlanList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getDevelopPlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          console.log(res)
+          self.tableData = res.data.records
 				} else {
           // self.$message.warning(res.msg)
         }
