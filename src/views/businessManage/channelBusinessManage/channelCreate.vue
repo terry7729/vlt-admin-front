@@ -7,7 +7,7 @@
     <panel title="基本信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
-          <base-form :formData="formData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+          <base-form :formData="formData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeBaseForm"></base-form>
         </div>
       </div>
     </panel>
@@ -26,7 +26,7 @@
     <panel title="财务信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
-          <base-form :formData="financeData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+          <base-form :formData="financeOptions" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeFinanceForm"></base-form>
         </div>
       </div>
     </panel>
@@ -46,12 +46,12 @@
               <el-radio v-model="betCard.depositSet" label="2">按投注卡申请量收取</el-radio>
             </el-form-item>
             <el-form-item label="押金金额" v-if="betCard.depositSet==1">
-              <el-input v-model="betCard.amount" placeholder="请输入金额（元）"></el-input>
+              <el-input v-model="betCard.depositMoney" placeholder="请输入金额（元）"></el-input>
             </el-form-item>
             <el-form-item label="押金金额" v-if="betCard.depositSet==2">
               <div class="flex-wrap">
-                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.charge" placeholder="请输入数量（张）"></el-input></div>
-                <div class="flex-wrap"><span class="label">金额</span><el-input v-model="betCard.amount" placeholder="请输入金额（元）"></el-input></div>
+                <div class="flex-wrap"><span class="label">累计大于</span><el-input v-model="betCard.depositMoreThan" placeholder="请输入数量（张）"></el-input></div>
+                <div class="flex-wrap"><span class="label">金额</span><el-input v-model="betCard.depositMoney" placeholder="请输入金额（元）"></el-input></div>
               </div>
             </el-form-item>
           </el-form>
@@ -60,14 +60,14 @@
     </panel>
     <panel title="销售游戏" :show="true" style="margin-bottom:15px">
       <el-table :data="tableData" border class="table">
-        <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+        <el-table-column label="序号" type="index" width="55px"></el-table-column>
         <el-table-column label="游戏名称" prop="gameName"></el-table-column>
         <el-table-column label="投注权限">
           <template slot-scope="scope">
             <el-switch
-              v-model="scope.row.bet"
+              v-model="scope.row.throwRight"
               @change="changeSwitchBet"
-              :active-text="scope.row.bet?'允许':'禁止'"
+              :active-text="scope.row.throwRight?'允许':'禁止'"
               active-color="#409EFF"
               inactive-color="">
             </el-switch>
@@ -76,20 +76,34 @@
         <el-table-column label="兑奖权限">
           <template slot-scope="scope">
             <el-switch
-              v-model="scope.row.cash"
+              v-model="scope.row.cashRight"
               @change="changeSwitchCash"
-              :active-text="scope.row.cash?'允许':'禁止'"
+              :active-text="scope.row.cashRight?'允许':'禁止'"
               active-color="#409EFF"
               inactive-color="">
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="销售时间" width="360px">
+        <el-table-column label="开始销售时间" min-width="140px">
           <template slot-scope="scope">
-            <el-date-picker size="small" type="datetime"
-              v-model="scope.row.time"
-              placeholder="`请选择销售时间">
-            </el-date-picker>
+            <el-time-picker
+              v-model="scope.row.sellBeginTime"
+              :picker-options="{
+                selectableRange: '00:00:00 - 23:59:59'
+              }"
+              placeholder="请选择开始时间">
+            </el-time-picker>
+          </template>
+        </el-table-column>
+        <el-table-column label="结束销售时间" min-width="140px">
+          <template slot-scope="scope">
+            <el-time-picker
+              v-model="scope.row.sellEndTime"
+              :picker-options="{
+                selectableRange: '00:00:00 - 23:59:59'
+              }"
+              placeholder="请选择结束时间">
+            </el-time-picker>
           </template>
         </el-table-column>
       </el-table>
@@ -127,7 +141,7 @@
         :rules="rules"
         class="device-form">
         <el-form-item v-for="(item,index) in resourceData" :key="index" :label="`${item.title}${index+1}`">
-          <el-select v-model="item.type" placeholder="请选择资源类型" class="device-item">
+          <el-select v-model="item.goodsType" @change="selectResourceType(index)" placeholder="请选择资源类型" class="device-item">
             <el-option
               v-for="(list, index) in item.optionsType"
               :key="index"
@@ -135,23 +149,24 @@
               :value="list.value">
             </el-option>
           </el-select>
-          <el-select v-model="item.name" placeholder="请选择资源名称" class="device-item">
+          <el-select v-model="item.id" placeholder="请选择资源名称" class="device-item">
             <el-option
               v-for="(list,index) in item.optionsName"
               :key="index"
+              @click.native="selectResourceName(index)"
               :label="list.label"
               :value="list.value">
             </el-option>
           </el-select>
-          <el-select v-model="item.model" placeholder="请选择设备型号" class="device-item">
+          <el-select v-model="item.model" v-if="item.optionsModel.length>0" @change="selectResourceModel" placeholder="请选择设备型号" class="device-item">
             <el-option
               v-for="(list, index) in item.optionsModel"
               :key="index"
-              :label="list.label"
-              :value="list.value">
+              :label="list.deviceModel"
+              :value="list.modelId">
             </el-option>
           </el-select>
-          <el-input v-model="item.number" class="device-item" placeholder="请输入数量"></el-input>
+          <el-input v-model="item.num" class="device-item" placeholder="请输入数量"></el-input>
           <el-button v-if="index!==0" type="text" class="delete" @click="deleteResource(index)">删除</el-button>
         </el-form-item>
       </el-form>
@@ -190,16 +205,12 @@
 
 <script>
 import mixin from '@/utils/mixin';
+import moment from 'moment'
 const typeData = [
-  {label:'设备',value:'1'},
-  {label:'配件',value:'2'},
-  {label:'耗材',value:'3'},
-  {label:'设施',value:'3'},
-];
-const nameData = [
-  {label:'名称一',value:'4'},
-  {label:'名称二',value:'5'},
-  {label:'名称三',value:'6'},
+  {label:'设备',value:1},
+  {label:'配件',value:2},
+  {label:'耗材',value:3},
+  {label:'设施',value:4},
 ];
 const modelData = [
   {label:'型号一',value:'7'},
@@ -208,44 +219,52 @@ const modelData = [
 ];
 export default {
   name: "channelList",
-  mixins: [mixin],
+  // mixins: [mixin],
   data() {
     return {
       isAddMember: false,
       betCard: { // 投注卡的数据
-        num:'',
-        money:'',
+        charge:'20',
+        amount:'2',
         depositSet: '0', // 押金设置 0-不收费；1-收费，2-按投注卡申请量收费
-        num2: '',
-        amount: '' // 押金金额
+        depositMoreThan: '',
+        depositMoney: '' // 押金金额
       },
       resourceData: [ // 发放资源数据
-        {title:'资源类型',type:'',model:'',name:'',number:'',optionsType:typeData,optionsName:nameData,optionsModel:modelData,}
+        {title:'资源类型',goodsType:'',modelId:'',id:'',num:'',optionsType:typeData, optionsName:[],optionsModel:[],}
       ],
       radio: '1',
       fileList: [],
       activeName: "first",
       formData: [
-        {title: '所属机构', type: 'cascader', prop: 'insId', value: '',  options: []},
-        {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options:[{label:'自营厅',value:'1'},{label:'合作厅',value:'2'}]},
-        {title: '渠道编号', type: 'input', prop: 'channelNo', value: ''},
-        {title: '经营场所属性', type: 'select', prop: 'runField', value: '', options:[{label:'自有',value:'1'},{label:'租赁',value:'2'}]},
-        {title: '渠道面积', type: 'input', prop: 'pointArea', value: ''},
+        {title: '所属机构', type: 'cascader', prop: 'insId', value: '', options: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
+        },
+        {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options:[{label:'自营厅',value:0},{label:'合作厅',value:1}]},
+        {title: '渠道编号', type: 'input', prop: 'channelNo', value: 'sc001'},
+        {title: '经营场所属性', type: 'select', prop: 'runField', value: '', options:[{label:'自有',value:0},{label:'租赁',value:1}]},
+        {title: '渠道面积', type: 'input', prop: 'pointArea', value: '45'},
         {title: '渠道地址', type: 'address', prop: 'channelAddress', value: '',options:[]},
       ],
       workerData: [
-        [{title: '角色名称', type: 'select', prop: 'roleId', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
-        {title: '姓名', type: 'input', prop: 'accountName', value: ''},
-        {title: '性别', type: 'radio', prop: 'sex', value: '2', options: [{ label: '男', value: "1" }, { label: '女', value: "2" }]},
-        {title: '手机号码', type: 'input', prop: ' phone', value: ''},
-        {title: '身份证号码', type: 'input', prop: 'channelIdentity', value: ''},
+        [{title: '角色名称', type: 'select', prop: 'roleId', value: '', options:[]},
+        {title: '姓名', type: 'input', prop: 'accountName', value: '小李'},
+        {title: '性别', type: 'radio', prop: 'sex', value: '女', options: [{ label: '男', value: "男" }, { label: '女', value: "女" }]},
+        {title: '手机号码', type: 'input', prop: 'phone', value: '13012345678'},
+        {title: '身份证号码', type: 'input', prop: 'channelIdentity', value: '360788200010102020'},
         {title: '身份证照正面', type: 'upload', prop: 'photo', value: ''},
         {title: '身份证照背面', type: 'upload', prop: 'photo', value: ''}]
       ],
-      financeData: [
-        {title: '合作预交款', type: 'input', prop: 'coPrepareMoney', value: ''},
-        {title: '授信额度', type: 'input', prop: 'creditQuota', value: ''},
-        {title: '代销费费率', type: 'select', prop: 'agentSellRate', value: '', options:[{label:'大厅经理',value:'1'},{label:'普通职员',value:'2'}]},
+      financeOptions: [
+        {title: '合作预交款', type: 'input', prop: 'coPrepareMoney', value: 100},
+        {title: '授信额度', type: 'input', prop: 'creditQuota', value: 200},
+        {title: '代销费费率', type: 'input', prop: 'agentSellRate', value: 20},
         {title: '收款凭证', type: 'upload-drag', prop: 'evidence', value: ''}
       ],
       deviceData: [
@@ -255,14 +274,16 @@ export default {
       params: {
         workerList:[],
       },
-      tableData: [
-        {gameName:'a',bet: false,cash:true,time:''},
-        {gameName:'b',bet: false,cash:true,time:''},
-        {gameName:'c',bet: true,cash:false,time:''},
-      ],
+      nameData: [],
+      resourceDatas: [], // 点击资源类型 获取数据
+      tableData: [],
       formDevice:{},
-      deviceParam: [{type:'',model:''}], // 用于保存设备的参数
-      memberArray: [], // 用于保存人员信息数据
+      deviceParam: [], // 用于保存设备的参数
+      resourceIndex: '',
+      channelData: null, // 渠道基本信息参数
+      financeData: null, // 账户资金参数
+      channelFundData: [], // 人员信息参数
+      gameRightList: null, // 销售权限参数
     };
   },
   watch: {
@@ -272,9 +293,10 @@ export default {
         let params = []
         res.forEach((item)=>{
           // 保留你需要的参数
-          let param = (({type, name, model, number}) =>({type, name, model, number}))(item);
+          let param = (({goodsType, modelId, id, num}) =>({goodsType, modelId, id, num}))(item);
           params.push(param)
         })
+        this.deviceParam = params;
         console.log('params', params)
       },
       // 深度监听 监听对象，数组的变化
@@ -284,8 +306,87 @@ export default {
   created() {
     this.getInsData()
     this.getChannelGameList()
+    this.getAccountRole()
   },
   methods: {
+    changeBaseForm(val) {
+      console.log('基础信息表单', val)
+      this.channelData = val;
+    },
+    changeFinanceForm(val) {
+      console.log('财务信息表单', val)
+      this.financeData = val;
+    },
+    selectResourceType(index) {
+      console.log('选择的资源index', index)
+      this.resourceIndex = index;
+      console.log('下拉的index', this.resourceData[index].type)
+      let data = {
+        goodsType: this.resourceData[index].type
+      }
+      this.getModelTree(data)
+    },
+    selectResourceName(index) {
+      // console.log(index,this.resourceDatas[index])
+      // 重置后面下拉框的数据 清空
+      this.$set(this.resourceData[this.resourceIndex], 'model', '');
+      this.$set(this.resourceData[this.resourceIndex], 'number', '');
+      this.$set(this.resourceData[this.resourceIndex], 'optionsModel', this.resourceDatas[index].modelInfoVoList)
+  
+    },
+    selectResourceModel(val) {
+      // 重置后面输入框的数据 清空
+      this.$set(this.resourceData[0], 'number', '');
+      // console.log('设备型号', val)
+    },
+    // 角色名称
+    getAccountRole() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.accountRole({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          self.workerData[0][0].options = res.data
+          // self.$set(self.formData[1], 'options', res.data)
+          // self.formData[1].options = res.data;
+          self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 根据资源类型获取资源名称
+    getModelTree(data) {
+      const self = this;
+      // 重置后面下拉框的数据 清空
+      self.nameData =[];
+      self.$set(self.resourceData[this.resourceIndex], 'optionsName', []);
+      self.$set(self.resourceData[this.resourceIndex], 'name', '');
+      self.$set(self.resourceData[this.resourceIndex], 'model', '');
+      self.$set(self.resourceData[this.resourceIndex], 'number', '');
+      (async (data)=>{
+				let res = await self.$api.getModelTree({data})
+				if(res && res.code == 0) {
+          // console.log('res', res.data)
+          this.resourceDatas = res.data;
+          res.data.forEach((item, index)=>{
+            let obj = {};
+            obj.label = item.goodsName;
+            obj.value = item.id;
+            this.nameData.push(obj)
+          })
+          this.$set(this.resourceData[this.resourceIndex], 'optionsName', this.nameData)
+          // console.log('namedata', this.nameData)
+          // this.nameData = res.data;
+          // self.$set(self.formData[1], 'options', res.data)
+          // self.formData[1].options = res.data;
+          self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     // 获取渠道 销售游戏列表
     getChannelGameList() {
       const self = this;
@@ -294,6 +395,11 @@ export default {
 				let res = await self.$api.getChannelGameList({data})
 				if(res && res.code == 0) {
           console.log('res', res.data)
+          self.tableData = res.data;
+          self.tableData.forEach((item)=>{
+            item.throwRight = item.throwRight == 1 ? true : false; //0关闭 1开启
+            item.cashRight = item.cashRight == 1 ? true : false;//0关闭 1开启
+          })
           // self.$set(self.formData[1], 'options', res.data)
           // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
@@ -310,7 +416,7 @@ export default {
 				let res = await self.$api.QueryInsTree({data})
 				if(res && res.code == 0) {
           console.log('res', res.data)
-          self.$set(self.formData[1], 'options', res.data)
+          self.$set(self.formData[0], 'options', res.data)
           // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
 				} else {
@@ -318,13 +424,11 @@ export default {
         }
       })(data)
     },
-    creatChannel(row) {
+    // 新建渠道
+    createChannel(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.creatChannel({data})
+				let res = await self.$api.createChannel({data})
 				if(res && res.code == 0) {
 
 				} else {
@@ -338,11 +442,13 @@ export default {
     addResource() {
       let obj = {
         title:'资源类型',
-        type:'',model:'',
-        name:'',number:'',
-        optionsType:typeData,
-        optionsName:nameData,
-        optionsModel:modelData,
+        goodsType:'',
+        modelId:'',
+        id:'',
+        num:'',
+        optionsType: typeData,
+        optionsName: [],
+        optionsModel: [],
       }
       this.$set(this.resourceData, this.resourceData.length, obj);
     },
@@ -373,6 +479,7 @@ export default {
       this.$set(this.workerData, this.workerData.length, cloneData);
     },
     handleClick() {},
+    // 人员信息参数
     changeForm(val) {
       this.params = Object.assign(this.params, val)
       console.log('派发出来的参数', this.params)
@@ -386,15 +493,44 @@ export default {
         })
         array.push(obj)
       })
-      this.memberArray = array;
+      this.channelFundData = array;
       console.log('array', array)
-      console.log('member', this.memberArray)
+      console.log('member', this.channelFundData)
     },
     submit() {
+      console.log('渠道参数', this.memberArray)
+      console.log('人员参数', this.channelFundData)
+      console.log('投注参数', this.betCard)
       console.log('设备参数', this.deviceParam)
+      const self = this;
+      this.gameRightList = JSON.parse(JSON.stringify(this.tableData));
+      this.gameRightList.forEach(item=>{
+        item.cashRight = item.cashRight ? 1 : 0;
+        item.throwRight = item.throwRight ? 1 : 0;
+        item.sellBeginTime = moment(item.sellBeginTime).format("HH:mm:ss")
+        item.sellEndTime = moment(item.sellEndTime).format("HH:mm:ss")
+      })
+      console.log('销售游戏参数', this.gameRightList)
+      // 场所属性和面积 属于财务信息 需要切换
+      let channelData = Object.assign(this.channelData, {})
+      let financeData = Object.assign(this.financeData, {})
+      financeData.pointArea = channelData.pointArea;
+      financeData.runField = channelData.runField;
+      delete channelData.pointArea
+      delete channelData.runField
+      let data = {
+        channelData: this.channelData, // 渠道基本信息参数
+        financeData: this.financeData, // 账户资金参数
+        channelFundData: this.channelFundData[0], // 人员信息参数
+        gameRightList: this.gameRightList, // 销售权限参数
+        warehouseRecordingData: {
+          list: this.deviceParam
+        }
+      }
+      console.log('提交的参数', data)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
-        self.creatChannel();
+        self.createChannel(data);
       });
     },
   },
