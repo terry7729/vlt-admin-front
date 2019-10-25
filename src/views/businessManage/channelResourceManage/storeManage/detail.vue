@@ -10,16 +10,15 @@
 </template>
 
 <script type="text/javascript">
-import { async } from 'q';
 export default {
  name: "detail",
  data() {
  return {
     infoList: [
-      { title: "设备名称", value: "", prop: "storeName" },
-      { title: "设备单位", value: "", prop: "organization" },
-      { title: "仓库类型", value: "", prop: "storeType" },
-      { title: "仓库管理员", value: "", prop: "storeAdmin" },
+      { title: "仓库名称", value: "", prop: "nameX" },
+      { title: "所属机构", value: "", prop: "organName" },
+      { title: "仓库类型", value: "", prop: "typeX" },
+      { title: "仓库管理员", value: "", prop: "adminName" },
       { title: "备注", value: "", prop: "remark" }
     ]
 
@@ -34,17 +33,33 @@ export default {
    returnBtn(){
      this.$router.back();
    },
-   getDetail() {
+   getStoreType(val){
+     let optino = {
+       "1" : '中彩仓库',
+       "2" : '省中心仓库',
+       "3" : '地方仓库',
+       "4" : '销售大厅'
+     };
+     return optino[val]
+   },
+   async getDetail() {
      const data = {
        id:this.$route.query.id
      };
      console.log(data)
-     (async (data) =>{
-       let res = await this.$api.detailStore(data.id)
-      //  console.log(res)
-     })
+      let res = await this.$api.detailStore(data.id)
+      if(res && res.code == 0){
+        this.infoList.forEach(item =>{
+          item.value = res.data[item.prop] || '';
+          if (item.prop == 'typeX'){
+            item.value = this.getStoreType(res.data.typeX)
+          }
+        })
+      }
+       console.log(res)
+     }
    }
- },
+ 
 }
 </script>
 

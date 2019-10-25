@@ -152,26 +152,21 @@ export default {
       ],
       selectValue: 1,
       equipmentData: [
-        { title: "设备名称", type: "input", prop: "equipmentName", value: "" },
-        {
-          title: "设备单位",
-          type: "select",
-          prop: "equipmentUnit",
-          options: [{ label: "", value: "1" }, { label: "", value: "2" }]
-        },
+        { title: "设备名称", type: "input", prop: "goodsName", value: "" },
+        { title: "设备单位", type: "input", prop: "deviceUnit", value:''},
         {
           title: "是否标配",
           type: "radio",
           prop: "isStandard",
           value: "",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
         {
           title: "是否回收",
           type: "radio",
-          prop: "isRecycle",
+          prop: "isRecovery",
           value: "",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
         { title: "备注", type: "textarea", prop: "remark", value: "" }
       ],
@@ -184,18 +179,7 @@ export default {
           prop: "facilitiesUnitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        {
-          title: "设施大单位",
-          type: "select",
-          prop: "facilitiesBigUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
-        {
-          title: "设施小单位",
-          type: "select",
-          prop: "facilitiesSmallUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
+        { title: "设施单位", type: "input", prop: "facilitiesUnit", value:''},
         {
           title: "供应商",
           type: "select",
@@ -216,18 +200,7 @@ export default {
           prop: "consumableUnitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        {
-          title: "耗材大单位",
-          type: "select",
-          prop: "consumableBigUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
-        {
-          title: "耗材小单位",
-          type: "select",
-          prop: "consumableSmallUnit",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
+        { title: "耗材单位", type: "input", prop: "consumableUnit", value:''},
         {
           title: "供应商",
           type: "select",
@@ -241,12 +214,8 @@ export default {
       ],
       mountingsData:[
         { title: "配件名称", type: "input", prop: "mountingsName", value: "" },
-        {
-          title: "配件单位",
-          type: "select",
-          prop: "mountingsUnit",
-          options: [{ label: "", value: "1" }, { label: "", value: "2" }]
-        },
+        { title: "配件单位", type: "input", prop: "mountingsUnit", value:''},
+
         {
           title: "是否回收",
           type: "radio",
@@ -260,16 +229,16 @@ export default {
         goodsCategory: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        equipmentName: [
+        goodsName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        equipmentUnit: [
+        deviceUnit: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
         isStandard: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        isRecycle: [
+        isRecovery: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       }

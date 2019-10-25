@@ -1,7 +1,7 @@
 <template>
  <div class="vlt-card">
    <div class="content-block">
-     <search-bar class="search-bar-demo" @search="search" :options="searchOptions" :total="999" labelWidth="80px"></search-bar>
+     <search-bar class="search-bar-demo" @search="search" :options="searchOptions" :total="totalCount" labelWidth="80px"></search-bar>
      <control-bar slot="extend-bar" @select="addBtn" :options="controlOptions" position="left"></control-bar>
      <el-table :data="tableData" border>
         <el-table-column fixed label="序号" type="index" width="90px"></el-table-column>
@@ -55,20 +55,20 @@ export default {
      {title:'仓库类型',type:'select',prop:'typeX',value:'',options:[{label:'中彩仓库',value:1},{label:'省中心仓库',value:2},
      {label:'城市仓库',value:3},{label:'销售大厅',value:4}]},
      {title:'仓库管理员',type:'select',prop:'adminName',value:'',options:[{label:'张三',value:14},{label:'花花q',value:4}]},
-     {title:'所属机构',type:'select',prop:'organName',value:'',options:[{label:'上海',value:10},{label:'大鹏',value:2}]},
+     {title:'所属机构',type:'select',prop:'organId',value:'',options:[{label:'上海',value:10},{label:'大鹏',value:2}]},
    ],
    controlOptions:[{ name: "新建仓库", type: "primary", icon: "plus" }],
    tableData:[],
-   applydata:{
+   requestData:{
       page: 1,
       pageSize: 10,//每页显示数据调试
       param: {
-        nameX: "",
-        typeX: "",
-        adminName: '',
-        organName:''
+        "nameX": "",
+        "typeX": "",
+        "adminName": '',
+        "organId":''
       }
-    }
+    },
   //  basicInfo:[
   //    {title:'仓库名称',type:'input',prop:'storeName',value:''},
   //    {title:'所属机构',type:'select',prop:'organization',options:[{label:'深圳市',value:'sz'},{label:'广东市',value:'gd'}]},
@@ -96,31 +96,17 @@ export default {
  components: {
  },
  created(){
-   this.getStoreList(this.applydata)
+   this.getStoreList(this.requestData)
  },
  methods: {
    search(data) {
-     console.log("search", data);
-     this.applydata = {
-      // page: 1,
-      // pageSize: 10,
-      // param: {
-        nameX: "",
-        typeX: "",
-        adminName: '',
-        organName:''
-      // }
-     }
-     for(let key in data){
-       if(data[key] != '') {
-         let obj = {}
-         obj[key] = data[key]
-         this.applydata = Object.assign(this.applydata, obj)
-       }
-       console.log(this.applydata)
-     }
      this.currentPage = 1
-     this.getStoreList(this.applydata)
+    this.requestData.param = Object.assign({
+      page:this.currentPage,
+      pageSize:10,
+      param:{}
+    }, data)
+     this.getStoreList(this.requestData)
     },
   //新建仓库跳转
    addBtn(val) {
@@ -135,19 +121,19 @@ export default {
   //    this.dialogFormVisible = true;
   //    console.log(id)
   //  },
-   changeForm(val) {
-      Object.assign(this.params, val);
-      console.log("派发出来的参数", this.params);
-  },
+  //  changeForm(val) {
+  //     Object.assign(this.params, val);
+  //     console.log("派发出来的参数", this.params);
+  // },
   //切换分页条数
   handleSizeChange(pageSize) {
-      this.applydata.pageSize = pageSize
-      this.getStoreList(this.applydata)
+      this.requestData.pageSize = pageSize
+      this.getStoreList(this.requestData)
     },
   //点击分页
   handleCurrentChange(currentPage) {
-      this.applydata.page = currentPage
-      this.getStoreList(this.applydata)
+      this.requestData.page = currentPage
+      this.getStoreList(this.requestData)
   },
   getStoreList(data){
     let obj = {
