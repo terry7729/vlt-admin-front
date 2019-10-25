@@ -1,6 +1,6 @@
 <template>
   <div class="vlt-card">
-    <h3 class="headling">城市风险指标新增</h3>
+    <h3 class="headling">城市风险指标修改</h3>
     <div class="vlt-card select-box">
       <span>省份</span>
       <el-select v-model="proviceValue" placeholder="请选择">
@@ -23,6 +23,7 @@
       <el-table
         :data="tableData"
         border
+        ref="multipleTable"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
         @selection-change="selectChange"
@@ -141,7 +142,7 @@
         </div>
         <el-form-item>
           <div class="btn">
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
             <el-button>取消</el-button>
           </div>
         </el-form-item>
@@ -371,111 +372,111 @@ export default {
       ],
       options1: [
         {
-          value: "1",
+          value: 1,
           label: "广东"
         },
         {
-          value: "2",
+          value: 2,
           label: "广西"
         }
       ],
       options2: [
         {
-          value: "3",
+          value: 3,
           label: "深圳"
         },
         {
-          value: "4",
+          value: 4,
           label: "广州"
         }
       ],
-      options3: [
+       options3: [
         {
-          value: "11",
+          value: 11,
           label: "张三"
         },
         {
-          value: "12",
+          value: 12,
           label: "李四"
         }
       ],
       options4: [
         {
-          value: "35",
+          value: 35,
           label: "王五"
         },
         {
-          value: "36",
+          value: 36,
           label: "赵六"
         }
       ],
       options6: [
         {
-          value: "33",
+          value: 33,
           label: "孙7"
         },
         {
-          value: "34",
+          value: 34,
           label: "钱八"
         }
       ],
       options7: [
         {
-          value: "15",
+          value: 15,
           label: "孙7"
         },
         {
-          value: "16",
+          value: 16,
           label: "钱八"
         }
       ],
       options8: [
         {
-          value: "17",
+          value: 17,
           label: "孙7"
         },
         {
-          value: "18",
+          value: 18,
           label: "钱八"
         }
       ],
       options5: [
         {
-          value: "19",
+          value: 19,
           label: "孙7"
         },
         {
-          value: "20",
+          value: 20,
           label: "钱八"
         }
       ],
       options11: [
         {
-          value: "21",
+          value: 21,
           label: "孙7"
         },
         {
-          value: "22",
+          value: 22,
           label: "钱八"
         }
       ],
       options9: [
         {
-          value: "23",
+          value: 23,
           label: "孙7"
         },
         {
-          value: "24",
+          value: 24,
           label: "钱八"
         }
       ],
       options10: [
         {
-          value: "25",
+          value: 25,
           label: "孙7"
         },
         {
-          value: "26",
+          value: 26,
           label: "钱八"
         }
       ],
@@ -501,11 +502,11 @@ export default {
       checked8: true,
       checked9: true,
       optionsNotifyCityObjOfOrdinary1: false, //普通市级通知对象
-      optionsNotifyProObjOfOrdinary1: true, //普通省级通知对象
-      optionsNotifyCenterObjOfOrdinary1: true, //普通中央通知对象
+      optionsNotifyProObjOfOrdinary1: false, //普通省级通知对象
+      optionsNotifyCenterObjOfOrdinary1: false, //普通中央通知对象
       optionsNotifyCityObjOfSerious: false, //严重市级通知对象
       optionsNotifyProObjOfSerious: false, //严重省级通知对象
-      optionsNotifyCenterObjOfSerious: true, //严重中央通知对象
+      optionsNotifyCenterObjOfSerious: false, //严重中央通知对象
       optionsNotifyCityObjOfMajor: false, //重大市级通知对象
       optionsNotifyProObjOfMajor: false, //重大省级通知对象
       optionsNotifyCenterObjOfMajor: false, //重大中央通知对象
@@ -688,7 +689,7 @@ export default {
       console.log(value);
     },
     onSubmit() {
-      this.cityRiskInsert()
+      this.cityRiskUpdate()
     },
     selectChange(val) {
       this.type = val;
@@ -701,12 +702,12 @@ export default {
       }
     },
     //游戏风险指标新增
-    async cityRiskInsert() {
+    async cityRiskUpdate() {
       const self = this;
       this.form.alarmFrequencyMajor = this.tableData1[2].warningPl;
       this.form.alarmFrequencySerious = this.tableData1[1].warningPl;
       this.form.alarmFrequencyOrdinary = this.tableData1[0].warningPl;
-      const res = await self.$api.cityRiskInsert({
+      const res = await self.$api.cityRiskUpdate({
         data: {
           alarmFrequencyMajor: this.form.alarmFrequencyMajor,
           alarmFrequencyOrdinary: this.form.alarmFrequencyOrdinary,
@@ -753,24 +754,95 @@ export default {
           timingFirst:this.watchingTime1,
           timingSecond:this.watchingTime2,
           timingThird:this.watchingTime3,
-          timingFourth:this.watchingTime4
+          timingFourth:this.watchingTime4,
+          businessKey:this.$route.query.id
         }
       });
       if (res && res.code == 0) {
         this.$message({
-          message: "新增成功",
+          message: "修改成功",
           type: "success"
         });
       } else {
-        this.$message.error("新增失败");
+        this.$message.error("修改失败");
       }
     },
     changeTime1(){
       this.watchingTime2='';
       this.watchingTime3='';
       this.watchingTime4='';
+    },
+    async getDetailInfo() {
+      const id = this.$route.query.id;
+      const self = this;
+      const res = await self.$api.getCityRiskDetail({
+        data: {
+          businessKey: id
+        }
+      });
+      if (res && res.code == 0) {
+        this.form = res.data;
+        this.gameValue = res.data.gameId;
+        this.proviceValue = res.data.provinceId;
+        this.cityValue = res.data.cityId;
+        this.tableData1[2].warningPl = this.form.alarmFrequencyMajor;
+        this.tableData1[1].warningPl = this.form.alarmFrequencySerious;
+        this.tableData1[0].warningPl = this.form.alarmFrequencyOrdinary;
+        this.checkList2 = this.showInformType(this.form.informWayMajor);
+        this.checkList1 = this.showInformType(this.form.informWaySerious);
+        this.checkList = this.showInformType(this.form.informWayOrdinary);
+        this.options3Value = this.form.informCityManIdOrdinary;
+        this.options11Value = this.form.informCentralManIdMajor;
+        this.options9Value = this.form.informCentralManIdOrdinary;
+        this.options10Value = this.form.informCentralManIdSerious;
+        this.options5Value = this.form.informCityManIdMajor;
+        this.options3Value = this.form.informCityManIdOrdinary;
+        this.options4Value = this.form.informCityManIdSerious;
+        this.options8Value = this.form.informProvinceManIdMajor;
+        this.options6Value = this.form.informProvinceManIdOrdinary;
+        this.options7Value = this.form.informProvinceManIdSerious;
+        this.watchingTime1=res.data.timingFirst;
+        this.watchingTime2=res.data.timingSecond;
+        this.watchingTime3=res.data.timingThird;
+        this.watchingTime4=res.data.timingFourth;
+      }
+    },
+     showInformType(type) {
+      var list;
+      switch (type) {
+        case 1:
+          list = ["站内"];
+          break;
+        case 2:
+          list = ["邮件"];
+          break;
+        case 3:
+          list = ["短信"];
+          break;
+        case 4:
+          list = ["邮件", "邮件"];
+          break;
+        case 5:
+          list = ["站内", "短信"];
+          break;
+        case 6:
+          list = ["邮件", "短信"];
+          break;
+        case 7:
+          list = ["站内", "邮件", "短信"];
+          break;
+      }
+      return list;
     }
-  }
+  },created() {
+       //默认全选
+    this.$nextTick(() => {
+      for (let i = 0; i < this.tableData.length; i++) {
+        this.$refs.multipleTable.toggleRowSelection(this.tableData[i], true);
+      }
+    });
+    this.getDetailInfo();
+  },
 };
 </script>
 

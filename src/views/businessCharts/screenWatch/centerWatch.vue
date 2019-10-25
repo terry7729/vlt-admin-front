@@ -2,73 +2,78 @@
   <div class="centerWatch">
     <main>
       <section class="left">
-        <div class="one">
-          <div class="title">全国销量概况</div>
-          <span class="salesTitle">目前年任务完成率(%)</span>
-          <div class="topSales" id="topSales"></div>
-          <div class="salesNumber">
-            <div>
-              <section>
-                <p>今年任务</p>
-                <p>232424242</p>
-              </section>
-              <section>
-                <p>今年销售量</p>
-                <p>232424242</p>
-              </section>
-              <section>
-                <p>7月销售量</p>
-                <p>232424242</p>
-              </section>
+        <div>
+          <div class="one">
+            <div class="title">全国销量概况</div>
+            <span class="salesTitle">目前年任务完成率(%)</span>
+            <div class="topSales" id="topSales"></div>
+            <div class="salesNumber">
+              <div>
+                <section>
+                  <p>今年任务</p>
+                  <p>232424242</p>
+                </section>
+                <section>
+                  <p>今年销售量</p>
+                  <p>232424242</p>
+                </section>
+                <section>
+                  <p>7月销售量</p>
+                  <p>232424242</p>
+                </section>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="bottomGameMachine">
-          <div class="title">全国大厅游戏机情况</div>
-          <div class="bottomMachine" id="bottomMachine"></div>
+          <div class="bottomGameMachine">
+            <div class="title">全国大厅游戏机情况</div>
+            <div class="bottomMachine" id="bottomMachine"></div>
+          </div>
         </div>
       </section>
       <section class="center">
-        <div class="left_map" id="left_map" @click=""></div>
-        <div class="top5">
-          <span>全国销售top5</span>
-          <p v-for="itme in 5">
-            <span>浙江:</span>
-            <span>13555元</span>
-          </p>
-        </div>
-        <div class="salesNum">
-          <div class="title">全国大厅数量</div>
-          <div>全部大厅222</div>
-          <div>合作厅111</div>
-          <div>销售厅111</div>
+        <div>
+          <div class="left_map" id="left_map" @click></div>
+          <div class="top5">
+            <span>全国销售top5</span>
+            <p v-for="itme in 5">
+              <span>浙江:</span>
+              <span>13555元</span>
+            </p>
+          </div>
+          <div class="salesNum">
+            <div class="title">全国大厅数量</div>
+            <div>全部大厅222</div>
+            <div>合作厅111</div>
+            <div>销售厅111</div>
+          </div>
         </div>
       </section>
       <section class="right">
-        <div class="salesRanking">
-          <div class="title">全国大厅销量排名</div>
-          <div class="tableData" id="tableData">
-            <el-table
-              :data="tableData"
-              style="width: 100%"
-              :default-sort="{prop: 'date', order: 'descending'}"
-              :cell-style="tableRowStyle"
-              :header-cell-style="tableHeaderColor"
-            >
+        <div>
+          <div class="salesRanking">
+            <div class="title">全国大厅销量排名</div>
+            <div class="tableData" id="tableData">
+              <el-table
+                :data="tableData"
+                :default-sort="{prop: 'date', order: 'descending'}"
+                :cell-style="tableRowStyle"
+                :header-cell-style="tableHeaderColor"
               >
-              <el-table-column align="center" prop="date" label="大厅编号" fit></el-table-column>
-              <el-table-column align="center" prop="name" label="所属省份" fit></el-table-column>
-              <el-table-column align="center" prop="name" label="销售金额" fit sortable></el-table-column>
-              <el-table-column align="center" prop="name" label="中奖金额" fit sortable></el-table-column>
-              <el-table-column align="center" prop="name" label="兑奖金额" fit sortable></el-table-column>
-              <el-table-column align="center" prop="name" label="状态" fit></el-table-column>
-            </el-table>
+                >
+                <el-table-column align="center" prop="date" label="大厅编号" fit></el-table-column>
+                <el-table-column align="center" prop="name" label="所属省份" fit></el-table-column>
+                <el-table-column align="center" prop="name" label="销售金额" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="中奖金额" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="兑奖金额" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="状态" fit></el-table-column>
+              </el-table>
+            </div>
           </div>
-        </div>
-        <div class="marketShares">
-          <div class="title">全国游戏市场份额</div>
-          <div class="sharesMap" id="sharesMap"></div>
+          <div class="marketShares">
+            <div class="title">全国游戏市场份额</div>
+            <div class="sharesMap" id="sharesMap"></div>
+          </div>
         </div>
       </section>
     </main>
@@ -413,8 +418,8 @@ export default {
             }
           }
         ],
-        legend:{
-          top:'0'
+        legend: {
+          top: "0"
         }
       };
       myChart.setOption(option);
@@ -854,9 +859,9 @@ export default {
                 color: "rgba(37, 43, 61, .5)" //悬浮背景
               }
             },
-            top: '30%',
+            top: "30%"
           },
-          series: series,       
+          series: series
         };
       } else {
         var option = (option = {
@@ -936,14 +941,14 @@ export default {
               trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
               symbol: "arrow", //箭头图标
               symbolSize: 5, //图标大小
-              color:'#0ff'
+              color: "#0ff"
             },
             lineStyle: {
               normal: {
                 width: 1, //尾迹线条宽度
                 opacity: 1, //尾迹线条透明度
                 curveness: 0.3, //尾迹线条曲直度
-                color:'#0ff'
+                color: "#0ff"
               }
             },
             data: res
@@ -956,7 +961,7 @@ export default {
               //涟漪特效
               period: 4, //动画时间，值越小速度越快
               brushType: "stroke", //波纹绘制方式 stroke, fill
-              scale: 4, //波纹圆环最大限制，值越大波纹越大
+              scale: 4 //波纹圆环最大限制，值越大波纹越大
               // color:'#fff'
             },
             label: {
@@ -1067,9 +1072,8 @@ export default {
           ]);
         }
       }
-      console.log(res)
+      console.log(res);
       return res;
-      
     }
   },
   beforeDestroy() {
@@ -1086,6 +1090,7 @@ main {
   height: 1200px;
   display: flex;
   padding: 20px;
+  overflow-x：hidden,
   .title {
     height: 40px;
     color: #fff;
@@ -1095,6 +1100,12 @@ main {
   }
   > .left {
     flex: 20%;
+    position: relative;
+    > div {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
     .one {
       border: 1px solid #267ca6;
       border-radius: 3px;
@@ -1169,25 +1180,40 @@ main {
     margin: 0 20px;
     height: 81.5%;
     position: relative;
-    > .salesNum {
+    > div {
+      width: 100%;
+      height: 100%;
       position: absolute;
-      width: 120px;
-      height: 180px;
-      bottom: 5px;
-      right: 2px;
-      border: 1px solid #267ca6;
-      border-radius: 3px;
-      div:nth-child(n + 2) {
-        height: 38px;
-        line-height: 38px;
-        color: #267ca6;
-        border-bottom: #0d3153 solid 1px;
-        padding-left: 15px;
+      .left_map {
+        width: 100%;
+        height: 100%;
+      }
+      .salesNum {
+        position: absolute;
+        width: 120px;
+        height: 180px;
+        bottom: 5px;
+        right: 2px;
+        border: 1px solid #267ca6;
+        border-radius: 3px;
+        div:nth-child(n + 2) {
+          height: 38px;
+          line-height: 38px;
+          color: #267ca6;
+          border-bottom: #0d3153 solid 1px;
+          padding-left: 15px;
+        }
       }
     }
   }
   > .right {
     flex: 35%;
+    position: relative;
+    > div {
+      width: 100%;
+      position: absolute;
+      height: 100%;
+    }
     .salesRanking {
       width: 100%;
       border: 1px solid #267ca6;
@@ -1218,10 +1244,7 @@ main {
 /deep/ .main-body .el-table td > .cell {
   color: #fff !important;
 }
-.left_map {
-  width: 100%;
-  height: 100%;
-}
+
 .right_opetate {
   flex: 1;
   height: 100%;

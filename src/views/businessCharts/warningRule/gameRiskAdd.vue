@@ -111,8 +111,8 @@
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >
-        <el-table-column align="center" prop="warningLevel" label="告警等级" min-width="10%"></el-table-column>
-        <el-table-column align="center" prop="type" label="通知方式" min-width="22%">
+        <el-table-column align="center" prop="warningLevel" label="告警等级" min-width="5%"></el-table-column>
+        <el-table-column align="center" prop="type" label="通知方式" min-width="20%">
           <template slot-scope="scope">
             <div v-if="scope.row.warningLevel==='普通'">
               <el-checkbox-group v-model="checkList" @change="changesOrdinary" class="checkInfor">
@@ -140,7 +140,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="type" label="通知对象" min-width="48%">
+        <el-table-column align="center" prop="type" label="通知对象" min-width="45%">
           <template slot-scope="scope" >
             <div v-if="scope.row.warningLevel==='普通'" class="checkInfor">
                 <el-checkbox  size="medium" v-model="checked1" @change="cityPropleOrdinary">市</el-checkbox>
@@ -247,7 +247,7 @@
         </el-table-column>
         <el-table-column align="center" prop="warningPl" label="告警频率" min-width="10%">
           <template slot-scope="scope">
-            <el-input-number
+             <el-input-number
               v-model="scope.row.warningPl"
               controls-position="right"
               @change="handleChange"
@@ -320,93 +320,93 @@ export default {
           cityName: "广州"
         }
       ],
-      options3: [
+       options3: [
         {
-          value: "11",
+          value: 11,
           label: "张三"
         },
         {
-          value: "12",
+          value: 12,
           label: "李四"
         }
       ],
       options4: [
         {
-          value: "35",
+          value: 35,
           label: "王五"
         },
         {
-          value: "36",
+          value: 36,
           label: "赵六"
         }
       ],
       options6: [
         {
-          value: "33",
+          value: 33,
           label: "孙7"
         },
         {
-          value: "34",
+          value: 34,
           label: "钱八"
         }
       ],
       options7: [
         {
-          value: "15",
+          value: 15,
           label: "孙7"
         },
         {
-          value: "16",
+          value: 16,
           label: "钱八"
         }
       ],
       options8: [
         {
-          value: "17",
+          value: 17,
           label: "孙7"
         },
         {
-          value: "18",
+          value: 18,
           label: "钱八"
         }
       ],
       options5: [
         {
-          value: "19",
+          value: 19,
           label: "孙7"
         },
         {
-          value: "20",
+          value: 20,
           label: "钱八"
         }
       ],
       options11: [
         {
-          value: "21",
+          value: 21,
           label: "孙7"
         },
         {
-          value: "22",
+          value: 22,
           label: "钱八"
         }
       ],
       options9: [
         {
-          value: "23",
+          value: 23,
           label: "孙7"
         },
         {
-          value: "24",
+          value: 24,
           label: "钱八"
         }
       ],
       options10: [
         {
-          value: "25",
+          value: 25,
           label: "孙7"
         },
         {
-          value: "26",
+          value: 26,
           label: "钱八"
         }
       ],
