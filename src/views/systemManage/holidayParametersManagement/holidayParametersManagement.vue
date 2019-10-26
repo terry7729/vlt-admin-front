@@ -50,7 +50,7 @@
 </template>
 
 <script type="text/javascript">
-import moment from "moment";
+// import moment from "moment";
 export default {
   data() {
     return {
@@ -127,15 +127,19 @@ export default {
       //   console.log(result);
       // }
     },
-    search() {},
+    search(val) {
+      console.log(val);
+    },
+    //新增按钮
     Addclick() {
       this.$router.push({
         path: "holidayParametersManagement/holidayParametersAdd"
       });
     },
-    selectBtn(val) {
-      this.$emit("select", val);
-    },
+    // selectBtn(val) {
+    //   this.$emit("select", val);
+    // },
+    // 提交
     onSubmit() {
       let formData = {};
       for (let key in this.form) {

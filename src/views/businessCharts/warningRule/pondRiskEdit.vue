@@ -666,7 +666,7 @@ export default {
           list = ["短信"];
           break;
         case 4:
-          list = ["邮件", "邮件"];
+          list = ["站内", "邮件"];
           break;
         case 5:
           list = ["站内", "短信"];
