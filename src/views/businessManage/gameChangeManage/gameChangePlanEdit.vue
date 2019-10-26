@@ -53,6 +53,9 @@ export default {
     params: {},
   }
   },
+  created() {
+    
+  },
   methods: {
     getStoreList(row) {
       const self = this;

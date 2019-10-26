@@ -158,7 +158,7 @@
               :value="list.value">
             </el-option>
           </el-select>
-          <el-select v-model="item.model" v-if="item.optionsModel.length>0" @change="selectResourceModel" placeholder="请选择设备型号" class="device-item">
+          <el-select v-model="item.modelId" v-if="item.optionsModel.length>0" @change="selectResourceModel" placeholder="请选择设备型号" class="device-item">
             <el-option
               v-for="(list, index) in item.optionsModel"
               :key="index"

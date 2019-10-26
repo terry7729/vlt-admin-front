@@ -1620,6 +1620,7 @@ export default {
       formData.append('file', files.file);
       formData.append('refId', 1);
       formData.append('flag', true);
+      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {

@@ -19,9 +19,9 @@
         :model="eachBetForm"
         :rules="rules"
         class="eachBet-form">
-        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`${item.title}${index+1}`">
-          <el-input v-model="eachBetForm[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
-          <el-button v-if="index!==0" type="text" class="delete" @click="deleteBetMoney(index)">删除</el-button>
+        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`单次加注金额${index+1}`">
+          <el-input v-model="item.minAddBetsOne" placeholder="请输入单次加注金额"></el-input> 
+          <el-button v-if="index!==0" type="text" class="delete-text" @click="deleteBetMoney(index)">删除</el-button>
         </el-form-item>
       </el-form>
       <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
@@ -32,18 +32,18 @@
           <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
           <el-table-column label="兑奖名称" min-width="160px">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.model" placeholder="请输入兑奖名称"></el-input>
+              <el-input v-model="scope.row.name" placeholder="请输入兑奖名称"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="最大兑奖金额" min-width="160px">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.model" placeholder="请输入最大兑奖金额"></el-input>
+              <el-input v-model="scope.row.maxMoney" placeholder="请输入最大兑奖金额"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="兑奖说明" min-width="200px">
             <template slot-scope="scope">
               <el-input type="textarea"
-                :rows="2" v-model="scope.row.searl" placeholder="请输入兑奖说明"></el-input>
+                :rows="2" v-model="scope.row.desc" placeholder="请输入兑奖说明"></el-input>
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="80px">
@@ -115,7 +115,7 @@ export default {
         {title: '最大投注数', type: 'input',  prop: 'maxBets', value: ''},
       ],
       eachBetData: [
-        {title: '单次加注金额', type: 'input',  prop: 'minAddBetsOne', value: ''},
+        {minAddBetsOne: ''},
       ],
       fundsData: [
         {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: ''},
@@ -159,25 +159,37 @@ export default {
       fundsParams: {}, // 资金规则参数
       riskParams: {}, // 风控规则参数
       publishParams: {}, // 信息发布规则参数
+      awardSetParams: [], // 奖等设置参数
     }
   },
-  components: {
+  watch: {
+    tableData: {
+      handler(newValue, oldValue) {
+        // this.$emit("change", this.form)
+        console.log('监听table的数据变化', newValue)
+        // 计算价格
+        let res = JSON.parse(JSON.stringify(newValue));
+        let params = []
+        res.forEach((item)=>{
+          // 删除不需要的参数
+          delete item.options
+          // 保留你需要的参数
+          // let param = (({goodsId, searl, max, min, price, money, remark}) =>({goodsId, searl, max, min, price, money, remark}))(item);
+          params.push(item)
+        })
+        this.awardSetParams = params;
+        console.log('params', params)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
   },
   methods: {
     deleteGoods(index) {
       this.tableData.splice(index, 1);
     },
     addGoods() {
-      let obj = {
-        goodsId: '', 
-        options: resourceData,
-        model: '',
-        searl: '', 
-        min: '', 
-        max: '',
-        price: '0',
-        money: '0',
-        remark: ''}
+      let obj = {name:'',maxMoney:'',desc:''}
       this.$set(this.tableData, this.tableData.length, obj);
     },
     getStoreList(row) {
@@ -201,9 +213,8 @@ export default {
       console.log('删除', this.deviceData)
     },
     addBetMoney() {
-      let cloneData = JSON.parse(JSON.stringify(this.eachBetData[0]))
-      cloneData.prop = `${cloneData.eachAdd}${this.eachBetData.length}`
-      this.$set(this.eachBetData, this.eachBetData.length, cloneData);
+      let obj = {minAddBetsOne:''}
+      this.eachBetData.push(obj);
     },
     // 游戏规则参数
     changeRuleForm(val) {
@@ -229,12 +240,20 @@ export default {
       this.$emit('prev', this.params)
     },
     next() {
+      console.log('eachbet', this.eachBetData)
+      let array = []
+      this.eachBetData.forEach(item=>{
+        array.push(item.minAddBetsOne)
+      })
+      let str = array.join(',')
+      console.log('str', str)
       let data = {
         ruleParams: this.ruleParams,
         betParams: this.betParams,
         fundsParams: this.fundsParams,
         riskParams: this.riskParams,
         publishParams: this.publishParams,
+        awardSetParams: this.awardSetParams
       }
       this.$emit('next', data)
     }
@@ -249,7 +268,7 @@ export default {
   max-width: 350px;
   margin: 0 0 30px 16px;
 }
-.delete{
+.delete-text{
   margin-left: 20px;
 }
   .vlt-edit-btn{
@@ -266,4 +285,17 @@ export default {
     max-width: 900px;
     margin: 0 auto;
   }
+  .table-wrap{
+  padding: 10px;
+  text-align: center;
+}
+.addGoods{
+  width: 100%;
+  max-width: 490px;
+  margin: 10px 0 30px 20px;
+}
+.delete{
+  font-size: 22px;
+  cursor: pointer;
+}
 </style>

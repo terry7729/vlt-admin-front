@@ -93,6 +93,13 @@ export default {
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
+  // 查询变更计划列表
+  getChangePlan: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 查询变更计划详情
+  getChangePlanInfo: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
+  // 编辑变更计划
+  editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+  
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
