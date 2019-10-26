@@ -77,6 +77,9 @@ export default {
   getProvincePlanList: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanList', options),
   // 查询年度开展计划汇总省级信息
   getProvincePlanInfo: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanInfo', options),
+  //  修改年度发展计划审批信息
+  updateDevelopPlanApproval: (options = {}) => ajax.post('/developPlan/updateDevelopPlanApproval', options),
+
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
   // 查询年度开展计划汇总市级信息
