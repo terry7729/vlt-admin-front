@@ -55,6 +55,15 @@ const gameRiskAdd = () => import('@/views/businessCharts/warningRule/gameRiskAdd
 const gameRiskDetail = () => import('@/views/businessCharts/warningRule/gameRiskDetail')
 //奖池风险指标详情
 const pondRiskDetail = () => import('@/views/businessCharts/warningRule/pondRiskDetail')
+//城市风险指标详情
+const cityRiskDetail = () => import('@/views/businessCharts/warningRule/cityRiskDetail')
+//城市游戏风险指标编辑
+const gameRiskEdit = () => import('@/views/businessCharts/warningRule/gameRiskEdit')
+//城市风险指标编辑
+const cityRiskEdit = () => import('@/views/businessCharts/warningRule/cityRiskEdit')
+//奖池风险指标编辑
+const pondRiskEdit = () => import('@/views/businessCharts/warningRule/pondRiskEdit')
+
 
 export default [
   {
@@ -274,7 +283,42 @@ export default [
       parentName:'pondRisk'
     },
     component: pondRiskDetail
-  }, 
+  }, {
+    path: 'businessCharts/cityRiskDetail',
+    name: 'cityRiskDetail',
+    meta: {
+      title: '奖池风险指标详情',
+      parentName:'cityRisk'
+    },
+    component: cityRiskDetail
+  },
+  {
+    path: 'businessCharts/gameRiskEdit',
+    name: 'gameRiskEdit',
+    meta: {
+      title: '奖池风险指标编辑',
+      parentName:'cityGameRisk'
+    },
+    component: gameRiskEdit
+  },
+  {
+    path: 'businessCharts/cityRiskEdit',
+    name: 'cityRiskEdit',
+    meta: {
+      title: '城市风险指标编辑',
+      parentName:'cityRisk'
+    },
+    component: cityRiskEdit
+  },
+  {
+    path: 'businessCharts/pondRiskEdit',
+    name: 'pondRiskEdit',
+    meta: {
+      title: '城市风险指标编辑',
+      parentName:'pondRisk'
+    },
+    component: pondRiskEdit
+  },
    
   
 

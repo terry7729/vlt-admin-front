@@ -10,17 +10,19 @@ export default {
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //渠道资源管理模块
   //仓库管理列表
-  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page',options),
+  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page', options),
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare',options),
   //获取所属机构列表
   getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
-  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page',options),
+  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
   // 获取下拉选择框物品名称-型号树
   getModelTree:(options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree',options),
+  getModelTree: (options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree', options),
   // 获取类型管理查看详情
-  getDetail:(options = {}) => ajax.get('/goodsType/goodsType/details',options),
+  getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
   //类型管理状态修改
   statusUpdate:(options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/',options),
   //类型管理类型新增
@@ -32,6 +34,7 @@ export default {
   //出入库
   entryAndOut:(options = {}) => ajax.post('/warehouseRecording/entryAndOut',options),
   
+  statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
   // 设备管理
   // 设备分页查询列表
@@ -80,6 +83,8 @@ export default {
   editDevelopPlan: (options = {}) => ajax.post('/developPlan/updateDevelopPlanInfo', options),
   // 查询年度开展计划列表
   getDevelopPlanList: (options = {}) => ajax.post('/developPlan/queryDevelopPlanList', options),
+  // 年度发展计划详情
+  getQueryDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划详情
   getDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划汇总省级列表
@@ -100,20 +105,66 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 上市游戏列表查询列表
+  queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
+  // 游戏上市计划分页查询列表
+  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 上市记录查询列表
+  queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
+
+
+  // 查询上市计划列表
+  getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 查看游戏上市计划详情
+  getMarketPlanDetal: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+
+  // 新增上市计划
+  createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
+  // 查询变更计划列表
+  getChangePlan: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 查询变更计划详情
+  getChangePlanInfo: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
+  // 编辑变更计划
+  editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+
   // 新建渠道
-  creatChannel: (options = {}) => ajax.post('/create/save', options),
+  createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
   getChannelGameList: (options = {}) => ajax.post('/create/selectGameList', options),
   // 渠道列表
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
-  
+
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
+  // 根据资源类型获取资源名称---新建渠道
+  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
+  // 资金权限修改
+  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //资金参数列表分页查询
   getFundsParameter: (options = {}) => ajax.post('/tFundParameter/list', options),
   //资金参数详情查询
   getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
+  //资金参数修改
+  editFundsParameter: (options = {}) => ajax.post('/tFundParameter/update', options),
+
+  //渠道业务管理模块
+  //业务办理 
+  //保存资金权限信息
+  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //资源发放
+  channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/provide', options),
+  //资源发放分页查询
+  channelResProvidePageList: (options = {}) => ajax.post('/channelResProvide/channelResProvide/pageList', options),
+  //资源采购申请
+  channelResPurcApply: (options = {}) => ajax.post('/channelResPurc/channelResPurc/apply', options),
+  //资源采购分页查询
+  channelResPurcPageList: (options = {}) => ajax.post('/channelResPurc/channelResPurc/pageList', options),
+  //资源申请
+  channelResApply: (options = {}) => ajax.post('/channelResApply/channelRes/apply', options),
+  //资源申请分页查询
+  channelResApplyPageList: (options = {}) => ajax.post('/channelResApply/channelResApply/pageList', options),
+
 }

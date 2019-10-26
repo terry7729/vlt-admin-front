@@ -15,7 +15,13 @@
           ></base-form>
         </el-form>
         <el-row class="vlt-edit-btn">
-          <el-button type="primary" v-prevent="1000" size="medium" @click="submit" :loading="showLoading" >提交并保存</el-button>
+          <el-button
+            type="primary"
+            v-prevent="1000"
+            size="medium"
+            @click="submit"
+            :loading="showLoading"
+          >提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
         </el-row>
       </div>
@@ -32,27 +38,28 @@ export default {
     return {
       showLoading: false,
       params: {
-        channelId: "", 
-        channelName: "", 
-        circle: "", 
-        circleUnit: "", 
+        channelId: "",
+        channelName: "",
+        circle: "",
+        circleUnit: "",
         createBy: "",
-        createTime: "", 
+        createTime: "",
         id: 0,
-        insId: 0, 
-        insName: "", 
-        limitAmount: 0, 
-        limitNum: 0, 
-        limitPenNum: 0, 
-        status: 0, 
-        updateBy: "", 
-        updateTime: "" 
+        insId: 0,
+        insName: "",
+        limitAmount: 0,
+        limitNum: 0,
+        limitPenNum: 0,
+        status: 0,
+        updateBy: "",
+        updateTime: ""
       },
       data2: [
         {
           type: "select",
           title: "所属机构：",
           prop: "insId",
+          value: "1",
           options: [{ label: "中福彩", value: "1" }]
         },
         {
@@ -70,6 +77,7 @@ export default {
           title: "",
           prop: "circleUnit",
           class: "cycle-selection",
+          value: "day",
           options: [
             { label: "天", value: "day" },
             { label: "周", value: "week" },
@@ -79,16 +87,24 @@ export default {
         },
         { type: "input", title: "笔数", prop: "limitPenNum" },
         { type: "input", title: "限额", prop: "limitAmount" },
-        { type: "input", title: "限制次数", prop: "limitNum" },
-        { type: "switch", title: "是否启用", prop: "status" }
+        { type: "input", title: "限制次数", prop: "limitNum" }
       ],
 
       rules2: {
-        mixBet: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
-        ],
-        status: [
+        insId: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        circle: [
+          { required: false, validator: rules.numberVal, trigger: "blur" }
+        ],
+        limitPenNum: [
+          { required: false, validator: rules.numberVal, trigger: "blur" }
+        ],
+        limitAmount: [
+          { required: false, validator: rules.numberVal, trigger: "blur" }
+        ],
+        limitNum: [
+          { required: false, validator: rules.numberVal, trigger: "blur" }
         ]
       },
       form: {
@@ -117,12 +133,12 @@ export default {
       _this.showLoading = true;
       let data = _this.params;
       data.status = data.status ? 1 : 2;
-      let result = await _this.$api.createBettingRulesList({ data })
+      let result = await _this.$api.createBettingRulesList({ data });
       if (result.code == 0) {
         _this.showLoading = false;
         _this.$message({
           message: result.msg,
-          type: 'success'
+          type: "success"
         });
         setTimeout(() => {
           _this.$router.back();

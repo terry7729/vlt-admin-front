@@ -53,17 +53,17 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "gameName",
+          prop: "gameCode",
           value: "",
           title: "游戏名称：",
           options: [
             {
               label: "王者荣耀1",
-              value: "王者荣耀1"
+              value: "WZRY001"
             },
             {
-              label: "游戏2",
-              value: "游戏2"
+              label: "绝地求生",
+              value: "JDQS002"
             }
           ]
         },
@@ -212,7 +212,6 @@ export default {
       });
     },
     edit(row) {
-      console.log(row);
       this.$router.push({
         name: "fundParameterEdit",
         query: {

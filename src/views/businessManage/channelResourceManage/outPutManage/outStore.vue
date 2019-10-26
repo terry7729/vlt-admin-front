@@ -1,5 +1,5 @@
 <template>
- <div class="vlt-card outStore-page"> 
+  <div class="vlt-card outStore-page">
     <panel-static title="基本信息" style="margin-bottom:10px;">
       <base-info :infoList="infoList"></base-info>
     </panel-static>
@@ -22,7 +22,7 @@
       <el-button type="primary" class="mainBtn" @click="outStore">出库</el-button>
       <el-button @click="cancel">取消</el-button>
     </el-row>
- </div>
+  </div>
 </template>
 
 <script type="text/javascript">
@@ -89,25 +89,23 @@ export default {
 </script>
 
 <style lang="less">
-.outStore-page{
-  .inp-total{
-  margin-top: 20px;
-  margin-left: 20px;
-  .el-input{
-    width:500px
+.outStore-page {
+  .inp-total {
+    margin-top: 20px;
+    margin-left: 20px;
+    .el-input {
+      width: 500px;
+    }
+  }
+  .outStore {
+    .el-button {
+      margin: 10px;
+    }
+    .mainBtn {
+      margin-top: 80px;
+      margin-left: 1350px;
+      margin-bottom: 150px;
+    }
   }
 }
-.outStore{
-  .el-button{
-    margin:10px;
-  }
-  .mainBtn{
-    margin-top:80px;
-    margin-left: 1350px;
-    margin-bottom: 150px
-  }
-}
-  
-}
-
 </style>

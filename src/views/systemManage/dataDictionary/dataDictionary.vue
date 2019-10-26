@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <search-Bar :options="option"></search-Bar>
+      <search-Bar :options="option" @search="search"></search-Bar>
     </div>
     <div class="addlist">
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -10,16 +10,20 @@
       <tips-line>共搜索到8项数据</tips-line>
     </div>
     <div class="el_table">
-      <el-table :data="tableData" border>
-        <el-table-column prop="id" label="序号" width="100"></el-table-column>
+      <el-table :data="tableData" ref="multipleTable" border>
+        <el-table-column type="index" label="序号" width="100"></el-table-column>
         <el-table-column prop="keyName" label="数据字典名称"></el-table-column>
         <el-table-column prop="key" label="数据字典键"></el-table-column>
         <el-table-column prop="value" label="字典数据值"></el-table-column>
         <el-table-column prop="description" label="数据字典描述 "></el-table-column>
-        <el-table-column prop="createTime" label="创建时间 "></el-table-column>
+        <el-table-column label="创建时间 ">
+          <template slot-scope="scope">{{translateTime(scope.row.createTime)}}</template>
+        </el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
         <el-table-column prop="updateBy" label="更新人 "></el-table-column>
-        <el-table-column prop="updateTime" label="更新时间 "></el-table-column>
+        <el-table-column label="更新时间 ">
+          <template slot-scope="scope">{{translateTime(scope.row.updateTime)}}</template>
+        </el-table-column>
         <el-table-column prop="status" label="数据字典状态">
           <template slot-scope="scope">
             <tableRowStatus
@@ -30,14 +34,14 @@
               :rowName="scope.row.name"
               :option="{
                 enable:{
-                  apiName:'disable',
+                  apiName:'enable',
                   label:'启用',
-                  value:0
+                  value:1
                 },
                disable:{
-                  apiName:'enable',
+                  apiName:'disable',
                   label:'冻结',
-                  value:1
+                  value:0
                },
                
               }"
@@ -51,11 +55,11 @@
         </el-table-column>
       </el-table>
       <table-paging
-        :total="tableData.total"
-        :currentPage="tableData.current"
-        :pageSize="tableData.size"
-        @handleSizeChange="pageSizeChange"
-        @handleCurrentChange="pageCurrentChange"
+        :total="total"
+        :currentPage="currentPage"
+        :pageSize="pageSize"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
       ></table-paging>
     </div>
 
@@ -85,12 +89,14 @@
 </template>
 
 <script type="text/javascript">
+import moment from "moment";
 export default {
   name: "",
   data() {
     return {
       rules: {},
       dialogFormVisible: false,
+      multipleSelection: [],
       changeForm: "",
       controlOptions: [
         //按钮组
@@ -101,18 +107,18 @@ export default {
       option: [
         {
           title: "字典名称",
-          prop: "user",
+          prop: "key",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
-        {
-          title: "所属类别",
-          prop: "user",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        }
+        // {
+        //   title: "所属类别",
+        //   prop: "user",
+        //   type: "input",
+        //   value: "",
+        //   placeholder: "请输入" || ["请输入1", "请输入2"]
+        // }
       ],
       tableData: [
         {
@@ -123,49 +129,22 @@ export default {
           sort: "1",
           creater: "admin",
           createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 2,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 3,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 4,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
-        },
-        {
-          id: 5,
-          classes: "游戏类型",
-          dictionaryname: "主动型",
-          dictionarydata: "active",
-          sort: "1",
-          creater: "admin",
-          createrdate: "2019-10-12 10:0:0"
         }
       ],
-      total: 100,
-      pageSize: 20,
-      currentPage4: 0,
+      total: 0,
+      pageSize: 10,
+      currentPage: 0,
+      // Data:{
+      // page: 1,
+      // pageSize: 10,//每页显示数据调试
+      // param: {
+      //   "size": "",
+      //   "total": "",
+      //   "pages": '',
+      // }
+    // },
       formData: [
-        { title: "所属类型", type: "input", prop: "belongsType", value: "" },
+       
         { title: "字典名称", type: "input", prop: "keyName", value: "" },
         {
           title: "字典数据值",
@@ -173,28 +152,67 @@ export default {
           prop: "value",
           value: ""
         },
-        { title: "排序字段", type: "input", prop: "key", value: "" },
+        
         { title: "状态", type: "switch", prop: "status", value: "" },
-        { title: "详情描述", type: "description", prop: "all", value: "" }
+        { title: "详情描述", type: "textarea", prop: "description", value: "" }
       ]
     };
   },
   components: {},
   created() {
-    // let res = await this.$api.getAll({});
-    // console.log(res);
-    // this.tableData = res.data.records;
-    this.initList();
+    let data = {
+      param: {
+        size: "",
+        total: "",
+        pages: '',
+      }
+    };
+    this.getAll(data);
   },
   methods: {
-    async initList() {
-      let result = await this.$api.getAll({});
-      console.log(result);
-      if (result.code == 0) {
-        this.tableData = result.data.records;
+    translateTime(val) {
+      return moment(val).format("YYYY-MM-DD HH:mm:ss");
+    },
+    getAll(data) {
+      const that = this;
+      (async data => {
+        let res = await that.$api.getAll({ data });
+        console.log(res)
+        if (res && res.code == 0) {
+          that.tableData = res.data.records;
+          that.total = res.data.total;
+          that.pageSize = res.data.size
+          
+        } else {
+        }
+      })(data);
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
       }
     },
-    selectBtn() {
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val;
+    // },
+    handleSizeChange() {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange() {   
+    },
+    async search(val){
+      // console.log(val)
+      
+      let reslt = await this.$api.find();//查询接口
+      console.log('查询接口',reslt);  
+      
+    },
+    
+    selectBtn() {     //新建
       // this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       // });
@@ -210,28 +228,39 @@ export default {
       // });
       let result = await this.$api.edit;
     },
-    submit(val) {
-      this.$refs.baseForm.validate(val => {
-        console.log(val);
+    changeForm(form){
+      this.param = form;
+    },
+   async submit(val) {
+      // this.$refs.baseForm.validate(val => {
+      //   console.log(val);
         if (this.flag == true) {
+            let data = this.param;
+      
+            //let formData = this.$refs.baseForm.form;
+            let result= await this.$api.add({data});
+            
+            this.$refs.baseForm.resetForm();
+            console.log(result);
+            this.dialogFormVisible = false;
         } else {
         }
-      });
+      // });
     },
 
     cancel() {
       // this.$router.go(-1)
       this.dialogFormVisible = false;
     },
-    handler() {}
-    // async disable(id) {
-    //   let result = await this.$api.disable(id);
-    //   console.log(result);
-    // },
-    // async enable(id) {
-    //   let result = await this.$api.enable(id);
-    //   console.log(result);
-    // },
+    handler() {},
+    async disable(id) {
+      let result = await this.$api.disable(id);
+      console.log(result);
+    },
+    async enable(id) {
+      let result = await this.$api.enable(id);
+      console.log(result);
+    },
   }
 };
 </script>

@@ -5,7 +5,6 @@
         <div class="basic-info">
           <div class="basic-title">
             <h3>基础信息</h3>
-            <span @click="toEdit">编辑</span>
           </div>
           <base-info :infoList="basicInfoList"></base-info>
         </div>
@@ -41,37 +40,37 @@
 
 <script type="text/javascript">
 export default {
-  name: "globalParameter",
+  name: "",
   data() {
     return {
       activeName: "first",
       basicInfoList: [
         { title: "游戏编号", value: "", prop: "gameCode" },
         { title: "游戏名称", value: "", prop: "gameName" },
-        { title: "生效时间", value: "2132132", prop: "takeEffectTime" },
-        { title: "游戏兑换比例", value: "", prop: "gameConversionRation" },
-        { title: "代销费率", value: "", prop: "sellRate" },
-        { title: "状态", value: "", prop: "state" },
-        { title: "创建人", value: "", prop: "creator" },
+        { title: "生效时间", value: "", prop: "effectiveTime" },
+        { title: "游戏兑换比例", value: "", prop: "gameConPro" },
+        { title: "代销费率", value: "", prop: "generationRate" },
+        { title: "状态", value: "", prop: "status" },
+        { title: "创建人", value: "", prop: "createBy" },
         { title: "创建时间", value: "", prop: "createTime" }
       ],
       fundInfoList: [
-        { title: "返奖率", value: "", prop: "slipperRate" },
+        { title: "返奖率", value: "", prop: "returnRate" },
         { title: "调节基金", value: "", prop: "regulationFund" }
       ],
       issueInfoList: [
-        { title: "发行经费占比", value: "", prop: "offeringFunds" },
-        { title: "中福彩中心", value: "", prop: "lotteryCenter" },
-        { title: "省级福彩中心", value: "", prop: "provincialLottery" },
-        { title: "市级福彩中心", value: "", prop: "cityLottery" },
-        { title: "销售厅", value: "", prop: "salesHall" }
+        { title: "发行经费占比", value: "", prop: "lssueLotteryCenter" },
+        { title: "中福彩中心", value: "", prop: "lssueLotteryCenter" },
+        { title: "省级福彩中心", value: "", prop: "lssueProCenter" },
+        { title: "市级福彩中心", value: "", prop: "lssueMunCenter" },
+        { title: "销售厅", value: "", prop: "lssueSalesHall" }
       ],
       publicInfoList: [
-        { title: "公益金占比", value: "", prop: "publicFund" },
-        { title: "中福彩中心", value: "", prop: "lotteryCenter" },
-        { title: "省级福彩中心", value: "", prop: "provincialLottery" },
-        { title: "市级福彩中心", value: "", prop: "cityLottery" },
-        { title: "销售厅", value: "", prop: "salesHall" }
+        { title: "公益金占比", value: "", prop: "publicFundPro" },
+        { title: "中福彩中心", value: "", prop: "publicLotteryCenter" },
+        { title: "省级福彩中心", value: "", prop: "publicProCenter" },
+        { title: "市级福彩中心", value: "", prop: "publicMunCenter" },
+        { title: "销售厅", value: "", prop: "publicSalesHall" }
       ],
       payTaxesInfoList: [
         { title: "特殊资金时间", value: "", prop: "specialFundTime" }
@@ -84,24 +83,30 @@ export default {
 
   methods: {
     async init() {
-      let id = this.$route.query.id;
-      let res = await this.$api.getParameterDetail(id);
-      console.log(res);
-    },
-    
-    handleClick(tab, event) {},
-    //跳转编辑页面
-    toEdit() {
-      let query = this.$route.query;
-      if (query.hasOwnProperty("id")) {
-        this.$router.push({
-          name: "fundParameterEdit",
-          query: {
-            id: query.id
-          }
-        });
+      let data = {
+        id: this.$route.query.id
+      };
+      let res = await this.$api.getParameterDetail({ data });
+      if (res.code === 0) {
+        let keys = Object.keys(res.data);
+        let arr = [
+          ...this.payTaxesInfoList,
+          ...this.publicInfoList,
+          ...this.issueInfoList,
+          ...this.fundInfoList,
+          ...this.basicInfoList
+        ];
+        for (let item of arr) {
+          keys.forEach(index => {
+            if (index === item.prop) {
+              item.value = res.data[index];
+            }
+          });
+        }
       }
-    }
+    },
+
+    handleClick(tab, event) {}
   },
   components: {}
 };

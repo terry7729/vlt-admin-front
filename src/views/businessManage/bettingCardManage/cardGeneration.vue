@@ -274,11 +274,7 @@ export default {
       });
     },
     search(form) {
-      this.options.param = {
-        insId: form.insId,
-        batch: form.batch,
-        bettingCardType: form.bettingCardType
-      }
+      this.options.param = from
       this.initList(this.options);
       // console.log("search", form);
     },

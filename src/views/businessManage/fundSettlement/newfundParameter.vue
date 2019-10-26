@@ -1,6 +1,8 @@
 <template>
   <div class="vlt-card">
-    <fund-parameterForm @new="getData">
+
+    <div>111111111111111</div>
+    <!-- <fund-parameterForm @new="getData">
       <template v-slot:lastForm>
         <div class="vlt-edit-over">
           <h2 class="title">投注卡资金处理</h2>
@@ -11,12 +13,12 @@
           </div>
         </div>
       </template>
-    </fund-parameterForm>
+    </fund-parameterForm> -->
   </div>
 </template>
 
 <script type="text/javascript">
-import fundParameterForm from "@/views/businessManage/fundSettlement/components/fundParameterForm";
+// import fundParameterForm from "@/views/businessManage/fundSettlement/components/fundParameterForm";
 export default {
   name: "",
   data() {

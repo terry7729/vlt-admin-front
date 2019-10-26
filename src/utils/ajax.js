@@ -1,6 +1,7 @@
 // ajax.js
 import axios from 'axios'
 import qs from 'qs'
+import storage from './storage'
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
@@ -15,7 +16,7 @@ switch (process.env.VUE_APP_MODE) {
     break
     // 测试环境
   case 'testing':
-    axios.defaults.baseURL = '//192.168.0.1/test/api'
+    axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
     axios.defaults.baseURL = 'http://10.7.0.51:8080/bms/api' // 本地server环境 
@@ -28,9 +29,6 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
 }
-//http://10.7.0.88:8080/bms/api/vlt
-//http://10.6.0.103:8080/bms/api 测试
-// http://10.7.0.91:8080/bms/api 本地
 /**
  * @description http请求
  * @param  {String} method 请求方法
@@ -40,12 +38,13 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  // axios.defaults.headers.common['token'] = storage.get('token');
   return (async () => {
     try {
       let res;
       if (typeof options !== 'object') {
         const id = options;
-        res = await axios[method](`${url}/${id}`);/*  */
+        res = await axios[method](`${url}/${id}`); /*  */
       } else {
         const data = options.data || {}
         // 上传

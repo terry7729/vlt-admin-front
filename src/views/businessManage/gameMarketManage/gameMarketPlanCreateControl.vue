@@ -3,14 +3,14 @@
     <panel title="游戏规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="gameData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="gameData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeRuleForm"></base-form>
         </div>
       </div>
     </panel>
     <panel title="投注规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="betData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="betData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeBetForm"></base-form>
         </div>
       </div>
     </panel>
@@ -19,24 +19,53 @@
         :model="eachBetForm"
         :rules="rules"
         class="eachBet-form">
-        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`${item.title}${index+1}`">
-          <el-input v-model="eachBetForm[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
-          <el-button v-if="index!==0" type="text" class="delete" @click="deleteBetMoney(index)">删除</el-button>
+        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`单次加注金额${index+1}`">
+          <el-input v-model="item.minAddBetsOne" placeholder="请输入单次加注金额"></el-input> 
+          <el-button v-if="index!==0" type="text" class="delete-text" @click="deleteBetMoney(index)">删除</el-button>
         </el-form-item>
       </el-form>
       <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
     </panel>
+    <panel title="奖等设置" :show="true" style="margin-bottom:15px">
+      <div class="table-wrap">
+        <el-table :data="tableData" border class="table">
+          <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
+          <el-table-column label="兑奖名称" min-width="160px">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.name" placeholder="请输入兑奖名称"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="最大兑奖金额" min-width="160px">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.maxMoney" placeholder="请输入最大兑奖金额"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="兑奖说明" min-width="200px">
+            <template slot-scope="scope">
+              <el-input type="textarea"
+                :rows="2" v-model="scope.row.desc" placeholder="请输入兑奖说明"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="80px">
+            <template slot-scope="scope">
+              <i class="el-icon-delete delete" @click="deleteGoods(scope.$index)"></i>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-button class="addGoods" @click="addGoods" icon="el-icon-plus">新增奖等设置</el-button>
+      </div>
+    </panel>
     <panel title="资金规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="fundsData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="fundsData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeFundsForm"></base-form>
         </div>
       </div>
     </panel>
     <panel title="风控规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="riskData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="riskData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeRiskForm"></base-form>
         </div>
       </div>
     </panel>
@@ -46,7 +75,7 @@
     <panel title="信息发布设置" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
-          <base-form :formData="publishData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="publishData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changePublishForm"></base-form>
         </div>
       </div>
     </panel>
@@ -64,336 +93,105 @@ export default {
   data() {
     return {
       gameData: [
-        {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]},
-        {title: '消费模式', type: 'select',  prop: 'salesModel', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
-        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
-        {title: '兑奖权限', type: 'select',  prop: 'salesModel', value: '', options:[{label: '启用',value: '1'},{label: '禁用',value: '2'}]},
-        {title: '销售权限', type: 'select',  prop: 'status', value: '', options:[{label: '启用',value: '0'},{label: '禁用',value: '1'}]},
-        {title: 'Jackpot比率', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '返奖比率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '调节基金比率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '奖池比率', type: 'input',  prop: 'email', value: ''},
-        {title: '游戏兑换比例', type: 'input',  prop: 'rate', value: '',placeholder: '示例1:100 请用英文符号“ : ”'},
-        {title: '防沉迷', type: 'select',  prop: 'statusa', value: {label: '启用',value: '0'}, options:[{label: '启用',value: '0'},{label: '禁止',value: '1'}]},
-        {title: '游戏规则介绍', type: 'textarea',  prop: 'textarea', value: ''},
-        {title: '单次时长', type: 'input',  prop: 'faxaphone', value: ''},
-        {title: '单日限额', type: 'input',prop: 'address', value: ''},
+        // {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]}, //未找到
+        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: 1},{label: '试玩积分',value: 2}]},
+        // {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]}, //未找到
+        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
+        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 1}]},
+        {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: 10},
+        {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: 11},
+        {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: 12},
+        {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: 13},
+        {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: 14,placeholder: '示例1:100 请用英文符号“ : ”'},
+        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: {label: '启用',value: 1}, options:[{label: '启用',value: 1},{label: '禁止',value: 2}]},
+        {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: '游戏规则'},
+        {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: 120},
+        {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: 2000},
       ],
       betData: [
-        {title: '单注最小金额', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '最小投注数', type: 'input',  prop: 'email', value: ''},
-        {title: '单注最大金额', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '最大投注数', type: 'input',  prop: 'email', value: ''},
+        {title: '单注最小金额', type: 'input',  prop: 'minAmount', value: 2},
+        {title: '最小投注数', type: 'input',  prop: 'minBets', value: 1},
+        {title: '单注最大金额', type: 'input',  prop: 'maxAmount', value: 1000},
+        {title: '最大投注数', type: 'input',  prop: 'maxBets', value: 10},
       ],
       eachBetData: [
-        {title: '单次加注金额', type: 'input',  prop: 'eachAdd', value: ''},
+        {minAddBetsOne: ''},
       ],
       fundsData: [
-        {title: '总发行经费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '总公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '中福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '中福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '省福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '省福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '市福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '市福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '销售厅发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '销售厅公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: 20},
+        {title: '总公益金占比', type: 'input',  prop: 'totalWelfareRate', value: 20},
+        {title: '中福彩发行费占比', type: 'input',  prop: 'zhcPublishRate', value: 5},
+        {title: '中福彩公益金占比', type: 'input',  prop: 'zhcWelfareRate', value: 5},
+        {title: '省福彩发行费占比', type: 'input',  prop: 'proPublishRate', value: 4},
+        {title: '省福彩公益金占比', type: 'input',  prop: 'proWelfareRate', value: 4},
+        {title: '市福彩发行费占比', type: 'input',  prop: 'cityPublishRate', value: 3},
+        {title: '市福彩公益金占比', type: 'input',  prop: 'cityWelfareRate', value: 3},
+        {title: '销售厅发行费占比', type: 'input',  prop: 'marketPublishRate', value: 2},
+        {title: '销售厅公益金占比', type: 'input',  prop: 'marketWelfareRate', value: 2},
       ],
       riskData: [
-        {title: '最低中奖金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低返奖率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高中奖金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高返奖率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低奖池金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低销量', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高奖池金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高销量', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低开机率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低在线数量', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低中奖金额', type: 'input',  prop: 'minBonus', value: 5},
+        {title: '最低返奖率', type: 'input',  prop: 'minReturnRate', value: 2},
+        {title: '最高中奖金额', type: 'input',  prop: 'maxBonus', value: 10000},
+        {title: '最高返奖率', type: 'input',  prop: 'maxReturnRate', value: 40},
+        {title: '最低奖池金额', type: 'input',  prop: 'minPoolAmount', value: 30000},
+        {title: '最低销量', type: 'input',  prop: 'minSale', value: 2},
+        {title: '最高奖池金额', type: 'input',  prop: 'maxPoolAmount', value: 400000},
+        {title: '最高销量', type: 'input',  prop: 'maxSale', value: 200},
+        {title: '最低开机率', type: 'input',  prop: 'minStartRate', value: 20},
+        {title: '最低在线数量', type: 'input',  prop: 'minOnlineNum', value: 110},
       ],
       publishData: [
         {title: '发布标题', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '选择机构', type: 'cascader-multiple',  prop: 'eachAdd', value: '',options: [
-            {
-              value: "zhinan",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率"
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控"
-                    }
-                  ]
-                },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航"
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "zujian",
-              label: "组件",
-              children: [
-                {
-                  value: "basic",
-                  label: "Basic",
-                  children: [
-                    {
-                      value: "layout",
-                      label: "Layout 布局"
-                    },
-                    {
-                      value: "color",
-                      label: "Color 色彩"
-                    },
-                    {
-                      value: "typography",
-                      label: "Typography 字体"
-                    },
-                    {
-                      value: "icon",
-                      label: "Icon 图标"
-                    },
-                    {
-                      value: "button",
-                      label: "Button 按钮"
-                    }
-                  ]
-                },
-                {
-                  value: "form",
-                  label: "Form",
-                  children: [
-                    {
-                      value: "radio",
-                      label: "Radio 单选框"
-                    },
-                    {
-                      value: "checkbox",
-                      label: "Checkbox 多选框"
-                    },
-                    {
-                      value: "input",
-                      label: "Input 输入框"
-                    },
-                    {
-                      value: "input-number",
-                      label: "InputNumber 计数器"
-                    },
-                    {
-                      value: "select",
-                      label: "Select 选择器"
-                    },
-                    {
-                      value: "cascader",
-                      label: "Cascader 级联选择器"
-                    },
-                    {
-                      value: "switch",
-                      label: "Switch 开关"
-                    },
-                    {
-                      value: "slider",
-                      label: "Slider 滑块"
-                    },
-                    {
-                      value: "time-picker",
-                      label: "TimePicker 时间选择器"
-                    },
-                    {
-                      value: "date-picker",
-                      label: "DatePicker 日期选择器"
-                    },
-                    {
-                      value: "datetime-picker",
-                      label: "DateTimePicker 日期时间选择器"
-                    },
-                    {
-                      value: "upload",
-                      label: "Upload 上传"
-                    },
-                    {
-                      value: "rate",
-                      label: "Rate 评分"
-                    },
-                    {
-                      value: "form",
-                      label: "Form 表单"
-                    }
-                  ]
-                },
-                {
-                  value: "data",
-                  label: "Data",
-                  children: [
-                    {
-                      value: "table",
-                      label: "Table 表格"
-                    },
-                    {
-                      value: "tag",
-                      label: "Tag 标签"
-                    },
-                    {
-                      value: "progress",
-                      label: "Progress 进度条"
-                    },
-                    {
-                      value: "tree",
-                      label: "Tree 树形控件"
-                    },
-                    {
-                      value: "pagination",
-                      label: "Pagination 分页"
-                    },
-                    {
-                      value: "badge",
-                      label: "Badge 标记"
-                    }
-                  ]
-                },
-                {
-                  value: "notice",
-                  label: "Notice",
-                  children: [
-                    {
-                      value: "alert",
-                      label: "Alert 警告"
-                    },
-                    {
-                      value: "loading",
-                      label: "Loading 加载"
-                    },
-                    {
-                      value: "message",
-                      label: "Message 消息提示"
-                    },
-                    {
-                      value: "message-box",
-                      label: "MessageBox 弹框"
-                    },
-                    {
-                      value: "notification",
-                      label: "Notification 通知"
-                    }
-                  ]
-                },
-                {
-                  value: "navigation",
-                  label: "Navigation",
-                  children: [
-                    {
-                      value: "menu",
-                      label: "NavMenu 导航菜单"
-                    },
-                    {
-                      value: "tabs",
-                      label: "Tabs 标签页"
-                    },
-                    {
-                      value: "breadcrumb",
-                      label: "Breadcrumb 面包屑"
-                    },
-                    {
-                      value: "dropdown",
-                      label: "Dropdown 下拉菜单"
-                    },
-                    {
-                      value: "steps",
-                      label: "Steps 步骤条"
-                    }
-                  ]
-                },
-                {
-                  value: "others",
-                  label: "Others",
-                  children: [
-                    {
-                      value: "dialog",
-                      label: "Dialog 对话框"
-                    },
-                    {
-                      value: "tooltip",
-                      label: "Tooltip 文字提示"
-                    },
-                    {
-                      value: "popover",
-                      label: "Popover 弹出框"
-                    },
-                    {
-                      value: "card",
-                      label: "Card 卡片"
-                    },
-                    {
-                      value: "carousel",
-                      label: "Carousel 走马灯"
-                    },
-                    {
-                      value: "collapse",
-                      label: "Collapse 折叠面板"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "ziyuan",
-              label: "资源",
-              children: [
-                {
-                  value: "axure",
-                  label: "Axure Components"
-                },
-                {
-                  value: "sketch",
-                  label: "Sketch Templates"
-                },
-                {
-                  value: "jiaohu",
-                  label: "组件交互文档"
-                }
-              ]
-            }
-          ]},
+        {title: '选择机构', type: 'cascader-multiple',  prop: 'eachAdd', value: '',options: [],},
         {title: '发布时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
         {title: '发布内容', type: 'textarea',  prop: 'eachAdd', value: ''},
+      ],
+      tableData: [
+        {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
       ],
       eachBetForm: {},
       gameForm: {},
       rules: {},
-      params: {}
+      params: {},
+      ruleParams: {}, // 游戏规则参数
+      betParams: {}, // 投注规则参数
+      fundsParams: {}, // 资金规则参数
+      riskParams: {}, // 风控规则参数
+      publishParams: {}, // 信息发布规则参数
+      awardSetParams: [], // 奖等设置参数
     }
   },
-  components: {
+  watch: {
+    tableData: {
+      handler(newValue, oldValue) {
+        // this.$emit("change", this.form)
+        console.log('监听table的数据变化', newValue)
+        // 计算价格
+        let res = JSON.parse(JSON.stringify(newValue));
+        let params = []
+        res.forEach((item)=>{
+          // 删除不需要的参数
+          delete item.options
+          // 保留你需要的参数
+          // let param = (({goodsId, searl, max, min, price, money, remark}) =>({goodsId, searl, max, min, price, money, remark}))(item);
+          params.push(item)
+        })
+        this.awardSetParams = params;
+        console.log('params', params)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
   },
   methods: {
+    deleteGoods(index) {
+      this.tableData.splice(index, 1);
+    },
+    addGoods() {
+      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
+      this.$set(this.tableData, this.tableData.length, obj);
+    },
     getStoreList(row) {
       const self = this;
       const data = {
@@ -415,19 +213,50 @@ export default {
       console.log('删除', this.deviceData)
     },
     addBetMoney() {
-      let cloneData = JSON.parse(JSON.stringify(this.eachBetData[0]))
-      cloneData.prop = `${cloneData.eachAdd}${this.eachBetData.length}`
-      this.$set(this.eachBetData, this.eachBetData.length, cloneData);
+      let obj = {minAddBetsOne:''}
+      this.eachBetData.push(obj);
     },
-    changeForm(val) {
-      Object.assign(this.params, val)
-      console.log('派发出来的参数', this.params)
+    // 游戏规则参数
+    changeRuleForm(val) {
+      this.ruleParams = val;
+    },
+    // 投注规则参数
+    changeBetForm(val) {
+      this.betParams = val;
+    },
+    // 资金规则参数
+    changeFundsForm(val) {
+      this.fundsParams = val;
+    },
+    // 风控规则参数
+    changeRiskForm(val) {
+      this.riskParams = val;
+    },
+    // 信息发布规则
+    changePublishForm(val) {
+      this.publishParams = val;
     },
     prev() {
       this.$emit('prev', this.params)
     },
     next() {
-      this.$emit('next', this.params)
+      console.log('eachbet', this.eachBetData)
+      let array = []
+      this.eachBetData.forEach(item=>{
+        array.push(item.minAddBetsOne)
+      })
+      let str = array.join(',')
+      console.log('str', str)
+      this.ruleParams.minAddBetsOne = str;
+      let data = {
+        gameRuleVo: this.ruleParams,
+        gameBettingRuleVo: this.betParams,
+        gameFundRuleVo: this.fundsParams,
+        gameRiskRuleVo: this.riskParams,
+        // publishParams: this.publishParams,
+        gameExchangeSetVoList: this.awardSetParams
+      }
+      this.$emit('next', data)
     }
   },
 }
@@ -440,7 +269,7 @@ export default {
   max-width: 350px;
   margin: 0 0 30px 16px;
 }
-.delete{
+.delete-text{
   margin-left: 20px;
 }
   .vlt-edit-btn{
@@ -457,4 +286,17 @@ export default {
     max-width: 900px;
     margin: 0 auto;
   }
+  .table-wrap{
+  padding: 10px;
+  text-align: center;
+}
+.addGoods{
+  width: 100%;
+  max-width: 490px;
+  margin: 10px 0 30px 20px;
+}
+.delete{
+  font-size: 22px;
+  cursor: pointer;
+}
 </style>

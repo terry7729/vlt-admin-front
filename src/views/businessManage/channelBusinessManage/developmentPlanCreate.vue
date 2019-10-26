@@ -39,6 +39,15 @@ export default {
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
         },
+        // 作为省市层级筛选， 后边等数据好了 删除
+        {title: '省市层级', type: 'select', prop: 'insLevel', value: [], options: [{
+          label: 1,
+          value: 1
+        },{
+          label: 2,
+          value: 2
+        }
+        ],},
         {title: '新建销售厅数量', type: 'input', prop: 'newSellingHall', value: '20'},
         {title: '销售厅投注机数量', type: 'input', prop: 'sellingMachine', value: '200'},
         {title: '市合作厅数量', type: 'input', prop: 'cooperationHall', value: '30'},
@@ -125,14 +134,15 @@ export default {
       })(data)
     },
     changeForm(val) {
-      console.log('派发出来的参数', val)
+      // console.log('派发出来的参数', val)
       this.params = Object.assign(this.params, val);
+      console.log('派发出来的参数',this.params);
       if(this.params.planDate) {
         this.params.planDate = moment(this.params.planDate).format("YYYY")
       }
       
-      const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
-      console.log(instArr)
+      // const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
+      // console.log(instArr)
     },
     submit() {
       const self = this;

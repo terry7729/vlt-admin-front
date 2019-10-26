@@ -17,17 +17,16 @@ export default {
       operationAccountExamineData: [
         { title: "员工编号", value: "", prop: "accountCode" },
         { title: "年龄", value: "", prop: "age" },
-        { title: "账户ID", value: "", prop: "operationManageID" },
-        { title: "账户名称", value: "", prop: "accountName" },
+        { title: "角色名称", value: "", prop: "roleName" },
+        { title: "姓名", value: "", prop: "accountName" },
         { title: "账户权限", value: "", prop: "roleTypes" },
         { title: "手机号", value: "", prop: "phone" },
         { title: "身份证号", value: "", prop: "channelIdentity" },
-        { title: "所属渠道", value: "", prop: "channelName" },
-        { title: "账户地址", value: "", prop: "address" },
-        { title: "创建人", value: "", prop: "createBy" },
+        { title: "渠道编号", value: "", prop: "channelId" },
+        { title: "联系地址", value: "", prop: "address" },
+
         { title: "创建时间", value: "", prop: "createTime" },
-        { title: "更新人", value: "", prop: "updateBy" },
-        { title: "更新时间", value: "", prop: "updateTime" },
+
         { title: "账户状态", value: "", prop: "accountStatus" }
       ]
     };
@@ -59,7 +58,14 @@ export default {
     async getDetail() {
       let id = this.$route.query.id;
       let result = await this.$api.accountDetail(id);
-
+      console.log(result);
+      if (result.data.accountStatus === 1) {
+        result.data.accountStatus = "启用中";
+      } else if (result.data.accountStatus === 2) {
+        result.data.accountStatus = "禁用";
+      } else {
+        result.data.accountStatus = "注销";
+      }
       console.log(result);
       if (result.code === 0) {
         let arr = Object.keys(result.data);

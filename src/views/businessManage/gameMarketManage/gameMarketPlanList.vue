@@ -8,26 +8,26 @@
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table
-    border
-    ref="multipleTable"
-    :data="tableData"
-    tooltip-effect="dark"
-    style="width: 100%"
-    @selection-change="handleSelectionChange">
+      border
+      ref="multipleTable"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
       <!-- <el-table-column ty-pe="selection" width="55" fixed="left"></el-table-column> -->
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="code" label="上市计划编号" ></el-table-column>
-      <el-table-column prop="planName" label="上市计划名称"></el-table-column>
+      <el-table-column prop="gameListCode" label="上市计划编号" ></el-table-column>
+      <el-table-column prop="gameListName" label="上市计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
-      <el-table-column prop="sellRang" label="销售范围"></el-table-column>
-      <el-table-column prop="planState" label="计划状态"></el-table-column>
-      <el-table-column prop="startTime" label="开始销售时间"></el-table-column>
-      <el-table-column prop="endTime" label="结束销售时间 "></el-table-column>
-      <el-table-column prop="initiator" label="发起人"></el-table-column>
-      <el-table-column prop="initiateTime" label="发起时间"></el-table-column>
+      <el-table-column prop="gameSaleArea" label="销售范围"></el-table-column>
+      <el-table-column prop="gameListStatus" label="计划状态"></el-table-column>
+      <el-table-column prop="gameListTime" label="开始销售时间"></el-table-column>
+      <el-table-column prop="gameListTime" label="结束销售时间 "></el-table-column>
+      <el-table-column prop="createBy" label="发起人"></el-table-column>
+      <el-table-column prop="createTime" label="发起时间"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
+          <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row)">查看</el-button>
           <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
         </template>
       </el-table-column>
@@ -52,20 +52,7 @@ export default {
       controlOptions: [
         { name: "新建上市计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
-      tableData: [
-        {
-          id:"01",
-          code: 'SS001',
-          planName:'上市-基诺',
-          gameName:"基诺",
-          sellRang:"销售区域",
-          planState:"上市中",
-          startTime:"2018-8-9 09:12:50",
-          endTime:"2019-09-12 09:00:00",
-          initiator:"李明",
-          initiateTime:"2017-9-23 01:55:45",
-        },
-      ],
+      tableData: [],
       multipleSelection: [],
       totalCount:0,
       ruleForm: {
@@ -120,18 +107,17 @@ export default {
       currentPage: 1
     }
   },
+  created() {
+    let data = {};
+    this.getMarketPlanList(data)
+  },
   methods: {
-    getStoreList(row) {
+    getMarketPlanList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getMarketPlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          self.tableData = res.data.records;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -150,10 +136,10 @@ export default {
       this.multipleSelection = val;
     },
     //查看页面跳转
-    detail (id) {
+    detail (val) {
       this.$router.push({
         path: './gameMarketPlanDetail',
-        query: {id}
+        query: {gameId:val.gameId,id:val.id}
       })
     },
     selectBtn() {
@@ -175,17 +161,6 @@ export default {
       console.log(`当前页: ${val}`);
     },
   },
-  computed: {
-
-  },
-  created() {
-  
-  },
-  mounted() {
-    
-  },
-  components: {
-  }
 }
 </script>
 
