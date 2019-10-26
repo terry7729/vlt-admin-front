@@ -13,7 +13,27 @@
     </div>
     <div class="vlt-edit-single appendix" v-show="active==3">
       <div class="vlt-edit-wrap">
-        <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+        <el-form label-position="right" 
+          label-width="90px" 
+          ref="form"
+          class="soft-form">
+          <el-form-item label="上传附件">
+            <el-upload
+              class="upload-demo"
+              drag
+              multiple
+              action=""
+              :limit="10"
+              :show-file-list="true"
+              :on-remove="handleRemove"
+              :http-request="uploadFileOther">
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            </el-upload>
+          </el-form-item>
+        </el-form>
+        <!-- <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form> -->
         <el-row class="vlt-edit-btn">
           <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提 交</el-button>
@@ -41,9 +61,28 @@ export default {
       active: 1,
       rules: {},
       param: {},
+      filesId: '',
     }
   },
   methods: {
+     // 附件上传
+    async uploadFileOther(files) {
+      let formData = new FormData();
+      console.log('files', files.file.size/1024)
+      // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 1);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.filesId = res.data.fileId;
+    },
     createMarketPlan(data) {
       const self = this;
       (async (data)=>{
@@ -71,7 +110,15 @@ export default {
     submit() {
       console.log('提交的参数', this.param)
       let data = this.param;
-      this.createMarketPlan()
+      data.filesId = this.filesId;
+      data.gameRuleVo.gameId = data.gameListPlanVo.gameId;
+      data.gameBettingRuleVo.gameId = data.gameListPlanVo.gameId;
+      data.gameFundRuleVo.gameId = data.gameListPlanVo.gameId;
+      data.gameRiskRuleVo.gameId = data.gameListPlanVo.gameId;
+      // publishParams: this.publishParams,
+      data.gameExchangeSetVoList.gameId= data.gameListPlanVo.gameId;
+      
+      this.createMarketPlan(data)
     },
     handlePreview() {},
     handleRemove() {},

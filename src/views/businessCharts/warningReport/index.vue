@@ -80,7 +80,7 @@ export default {
     return {
       controlOptions: [{ name: "新增", type: "primary", icon: "plus" }],
       activeName: "first",
-      total: null,
+      totalCount: 100,
       listQuery: {
         page: 1,
         limit: 10

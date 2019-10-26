@@ -3,14 +3,16 @@
     <div class="time-line">
       <div v-for="item  in timeLiness" :key="item.id" class="list">
         <div class="date">
-          <h5>{{item.date.split(' ')[0]}}</h5>
-          <span>{{item.date.split(' ')[1]}}</span>
+          <h5>{{item.createTime}}</h5>
+          <!-- <span>{{item.outWarehouseTime}}</span> -->
           <i class="point"></i>
         </div>
         <div class="events-box">
-          <div v-for="n in item.resumeList" :key="n.id" class="events-item">
-            <p class="title">{{n.title}}</p>
-            <p class="content">{{n.desc}}</p>
+          <div class="events-item">
+            <p
+              class="title"
+            >由【{{item.entryWarehouseBy}}】发起 【{{item.documentToppic}}】 -- 【{{item.oplType}}】操作</p>
+            <p class="content">【{{item.nameX}}】</p>
           </div>
         </div>
       </div>
@@ -23,83 +25,37 @@ export default {
   name: "",
   data() {
     return {
-      timeLiness: [
-        {
-          id: 0,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              id: 0,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            },
-            {
-              id: 1,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 1,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              id: 0,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            },
-            {
-              id: 1,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 2,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 3,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              id: 0,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            },
-            {
-              id: 1,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 4,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        }
-      ]
+      timeLiness: [],
+      formatoplType:['资源采购','资源申请','资源发放','资源调拨','建厅发送','扯厅回收','资源报废']
     };
   },
   mounted() {},
+  created () {
+    const routerQuery = this.$route.query;
+    if (routerQuery && routerQuery.serial) {
+      const data = {
+        serial: routerQuery.serial
+      };
+      this.initList(data);
+    }
+  },
   components: {},
   methods: {
-    async initList () {
-      let result = await this.$api.equipmentRecord()
+    async initList(data) {
+      const _this = this;
+      let result = await _this.$api.equipmentRecord({ data });
+      if (result.code == 0 ) {
+        if ( result.data.length > 0 && result.data[0]!= null) {;
+          this.timeLiness =  result.data.map(item => {
+            item.oplType = _this.formatoplType[parseInt(item.oplType) - 1];
+            return item;
+          })
+        } else {
+          console.log('无数据');
+        }
+      } else {
+        _this.$message.warning(res.msg);
+      }
       // equipmentRecord
     }
   }

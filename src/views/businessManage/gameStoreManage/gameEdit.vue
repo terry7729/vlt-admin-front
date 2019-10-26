@@ -4,6 +4,7 @@
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
           <base-form :formData="baseData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+          <base-form :formData="developData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         </div>
       </div>
     </panel>
@@ -17,26 +18,26 @@
             <el-form-item label="上传游戏包">
               <el-upload
                 class="upload-demo"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :on-preview="handlePreview"
+                action=""
+                :limit="1"
+                :show-file-list="true"
                 :on-remove="handleRemove"
-                :before-remove="beforeRemove"
-                multiple
-                :limit="3"
-                :on-exceed="handleExceed"
-                :file-list="fileList">
+                :http-request="uploadFile">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
             </el-form-item>
             <el-form-item label="游戏图标">
               <el-upload
                 class="gameIcon-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action=""
+                :limit="1"
+                accept=".png,.jpg,jpeg"
                 :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload">
+                :on-remove="handleRemove"
+                :http-request="uploadFileImg">
                 <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
                 <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
               </el-upload>
             </el-form-item>
             <base-form :formData="softData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
@@ -69,6 +70,8 @@ export default {
         {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
         {title: '游戏简介', type: 'textarea',  prop: 'desc', value: ''},
         {title: '版权归属', type: 'input',  prop: 'name', value: ''},
+      ],
+      developData: [
         {title: '开发商名称', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
         {title: '联系人', type: 'input',  prop: 'linkMan', value: ''},
         {title: '手机号码', type: 'input',  prop: 'phoneNumber', value: ''},
@@ -125,9 +128,7 @@ export default {
       (async (data)=>{
 				let res = await self.$api.getGameStoreInfo({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+
 				} else {
           // self.$message.warning(res.msg)
         }

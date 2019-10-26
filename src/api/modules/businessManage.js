@@ -10,17 +10,33 @@ export default {
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //渠道资源管理模块
   //仓库管理列表
-  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page',options),
+  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page', options),
   //仓库详情查看
-  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare',options),
+  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
+  //获取所属机构列表
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
+  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
-  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page',options),
+  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTree:(options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree',options),
+  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
+  getModelTree: (options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree', options),
   // 获取类型管理查看详情
-  getDetail:(options = {}) => ajax.get('/goodsType/goodsType/details',options),
+  getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
   //类型管理状态修改
-  statusUpdate:(options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`,options),
+  statusUpdate: (options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/', options),
+  //类型管理类型新增
+  typeCreate: (options = {}) => ajax.post('/goodsType/goodsType/create', options),
+  //出入库管理列表获取
+  getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
+  //出入库详情
+  getOutPutDetail: (options = {}) => ajax.post('/warehouseRecording/detail', options),
+  //出入库
+  entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
+  //出入库导出
+  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExce', options),
+
+  statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
   // 设备管理
   // 设备分页查询列表
@@ -75,6 +91,9 @@ export default {
   getProvincePlanList: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanList', options),
   // 查询年度开展计划汇总省级信息
   getProvincePlanInfo: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanInfo', options),
+  //  修改年度发展计划审批信息
+  updateDevelopPlanApproval: (options = {}) => ajax.post('/developPlan/updateDevelopPlanApproval', options),
+
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
   // 查询年度开展计划汇总市级信息
@@ -101,6 +120,8 @@ export default {
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
+
+  getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称---新建渠道
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
   // 资金权限修改
@@ -110,7 +131,25 @@ export default {
   //资金参数列表分页查询
   getFundsParameter: (options = {}) => ajax.post('/tFundParameter/list', options),
   //资金参数详情查询
-  getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
+  getParameterDetail: (options = {}) => ajax.post(`/tFundParameter/detail`, options),
   //资金参数修改
-  editFundsParameter: (options = {},id) => ajax.post(`/tFundParameter/update/${id}`, options),
+  editFundsParameter: (options = {}) => ajax.post('/tFundParameter/update', options),
+
+  //渠道业务管理模块
+  //业务办理 
+  //保存资金权限信息
+  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //资源发放
+  channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/provide', options),
+  //资源发放分页查询
+  channelResProvidePageList: (options = {}) => ajax.post('/channelResProvide/channelResProvide/pageList', options),
+  //资源采购申请
+  channelResPurcApply: (options = {}) => ajax.post('/channelResPurc/channelResPurc/apply', options),
+  //资源采购分页查询
+  channelResPurcPageList: (options = {}) => ajax.post('/channelResPurc/channelResPurc/pageList', options),
+  //资源申请
+  channelResApply: (options = {}) => ajax.post('/channelResApply/channelRes/apply', options),
+  //资源申请分页查询
+  channelResApplyPageList: (options = {}) => ajax.post('/channelResApply/channelResApply/pageList', options),
+
 }

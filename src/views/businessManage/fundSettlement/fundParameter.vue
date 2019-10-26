@@ -59,11 +59,11 @@ export default {
           options: [
             {
               label: "王者荣耀1",
-              value: "王者荣耀1"
+              value: "WZRY001"
             },
             {
-              label: "游戏2",
-              value: "游戏2"
+              label: "绝地求生",
+              value: "JDQS002"
             }
           ]
         },
@@ -173,6 +173,7 @@ export default {
         param: {}
       };
       let res = await this.$api.getFundsParameter({ data });
+        console.log(res);
       if (res.code === 0) {
         this.tableDatas.tableData = res.data.records;
       }
@@ -184,6 +185,7 @@ export default {
         param: form
       };
       let res = await this.$api.getFundsParameter({ data });
+    
       if (res.code === 0) {
         this.tableDatas.tableData = res.data.records;
       }

@@ -1,14 +1,14 @@
-<template>
+  <template>
   <div class="vlt-card">
     <el-tabs tab-position="left" v-model="active">
       <el-tab-pane label="计划列表" name="1">
         <plan-list v-if="active=='1'"></plan-list>
       </el-tab-pane>
       <el-tab-pane label="计划汇总（省）" name="2">
-        <plan-city v-if="active=='2'"></plan-city>
+        <plan-province v-if="active=='2'"></plan-province>
       </el-tab-pane>
       <el-tab-pane label="计划汇总（地市）" name="3">
-        <plan-province v-if="active=='3'"></plan-province>
+        <plan-city v-if="active=='3'"></plan-city>
       </el-tab-pane>
     </el-tabs>
   </div>

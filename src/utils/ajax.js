@@ -1,6 +1,8 @@
 // ajax.js
 import axios from 'axios'
 import qs from 'qs'
+import storage from './storage'
+import {Message, Loading} from 'element-ui';
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
@@ -15,7 +17,7 @@ switch (process.env.VUE_APP_MODE) {
     break
     // 测试环境
   case 'testing':
-    axios.defaults.baseURL = '//192.168.0.1/test/api'
+    axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
@@ -29,6 +31,11 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     //axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
+
 }
 /**
  * @description http请求
@@ -39,11 +46,15 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  // 请求必传参数
+  if (storage.get('token')) {
+    axios.defaults.headers.common['Authorization'] = storage.get('token');
+  }
   return (async () => {
     try {
       let res;
-      if (typeof options !== 'object') {
-        const id = options;
+      if (typeof options.data !== 'object') {
+        const id = options.data;
         res = await axios[method](`${url}/${id}`); /*  */
       } else {
         const data = options.data || {}
@@ -58,11 +69,25 @@ const request = (method, url, options, extend) => {
               }
             }
           });
-          return res.data;
+          res.data;
+        } else {
+          res = await axios[method](url, method === 'get' ? {
+            params: data
+          } : data);
         }
-        res = await axios[method](url, method === 'get' ? {
-          params: data
-        } : data);
+      }
+      // 成功反馈
+      Message.closeAll();
+      if (res.data.code != 0) {
+        Message.error(res.data.msg);
+      } else {
+        if (options.message) {
+          if (typeof options.message === 'string') {
+            Message.success(options.message);
+          } else {
+            Message.success(res.data.msg);
+          }
+        }
       }
       return res.data;
     } catch (err) {

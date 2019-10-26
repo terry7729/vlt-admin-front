@@ -11,7 +11,7 @@
       <!-- 输入框 带icon-->
       <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" :filterable='item.filterable'  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
+      <el-select v-if="item.type=='select'" :filterable='item.filterable' :disabled="item.disabled"  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items.value">
@@ -130,16 +130,21 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
       <!-- 多个图片上传 -->
+      <div v-if="item.type=='upload-drag'">
       <el-upload
-        v-if="item.type=='upload-drag'"
         class="upload-demo"
         drag
-        action="https://jsonplaceholder.typicode.com/posts/"
-        multiple>
+        multiple
+        action=""
+        :limit="10"
+        :show-file-list="true"
+        :on-remove="handleRemove"
+        :http-request="uploadFile">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
       </el-upload>
+      </div>
     </el-form-item>
     
   </el-form> 
@@ -228,6 +233,26 @@ export default {
   components: {
   },
   methods: {
+    handleRemove() {
+
+    },
+    async uploadFile(files) {
+      let formData = new FormData();
+      console.log('files', files.file.size/1024)
+      this.softData[3].value = `${(files.file.size/1024).toFixed(1)} KB`
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 1);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      // this.gameBagId = res.data.fileId;
+    },
     changeCheckbox(val) {
       console.log(val);
     },

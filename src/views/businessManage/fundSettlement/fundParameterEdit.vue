@@ -140,8 +140,10 @@ export default {
   },
   methods: {
     async init() {
-      let id = this.$route.query.id;
-      let res = await this.$api.getParameterDetail(id);
+      let data = {
+        id: this.$route.query.id
+      };
+      let res = await this.$api.getParameterDetail({ data });
       if (res.code === 0) {
         let formKey = Object.keys(this.form);
         let resKey = Object.keys(res.data);
@@ -158,12 +160,12 @@ export default {
 
     async onSubmit() {
       this.showLoad = true;
-      let id = this.$route.query.id;
       let data = this.form;
-      console.log(data);
-      let res = await this.$api.editFundsParameter({data},id);
+      data.id = this.$route.query.id;
+      let res = await this.$api.editFundsParameter({ data });
       console.log(res);
       this.showLoad = false;
+      this.$router.push({ name: "fundParameter" });
     },
 
     resetForm(formName) {

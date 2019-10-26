@@ -2,12 +2,7 @@
   <div class="vlt-card">
     <div class="search">
       <searchBar :options="options" @search="search" :total="total">
-        <controlBar
-          slot="extend-bar"
-          @select="Addclick"
-          :options="Addbtn"
-          position="left"
-        ></controlBar>
+        <controlBar slot="extend-bar" @select="Addclick" :options="Addbtn" position="left"></controlBar>
       </searchBar>
       <!-- <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar> -->
     </div>
@@ -49,13 +44,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <tablePaging  :total="total" :currentPage="1" :pageSize="10"></tablePaging>
+      <tablePaging :total="total" :currentPage="1" :pageSize="10"></tablePaging>
     </div>
   </div>
 </template>
 
 <script type="text/javascript">
-import moment from "moment";
+// import moment from "moment";
 export default {
   data() {
     return {
@@ -115,35 +110,36 @@ export default {
       let data = {
         page: 1,
         pageSize: 10,
-        param: {
-          holidayName: "",
-          // holidayStatus: "",
-          // beginTime: "",
-          // endTime: "",
-          // marketStatus: "",
-          // discardBeginTime: "",
-          // discardEndTime: ""
-        }
+        holidayName: ""
       };
-      let result = await this.$api.queryHolInfoPage({data});
-      console.log(result)
-      if (result.code === 0) {
-        let tableData = result.data.records;
-        // this.tableData = arr;
-        // this.num = arr.length;
-        total=tableData.length;
-        console.log(result);
-      }
+      // let token = localStorage.getItem("data");
+      //console.log(token);
+      // data.headers = {
+      //   token: token
+      // };
+      let result = await this.$api.queryHolInfoPage({ data });
+      console.log(result);
+      // if (result.code === 0) {
+      //   let tableData = result.data.records;
+      //   // this.tableData = arr;
+      //   // this.num = arr.length;
+      //   total=tableData.length;
+      //   console.log(result);
+      // }
     },
-    search(){
-
+    search(val) {
+      console.log(val);
     },
-    Addclick(){
-      this.$router.push({path:"holidayParametersManagement/holidayParametersAdd"});
+    //新增按钮
+    Addclick() {
+      this.$router.push({
+        path: "holidayParametersManagement/holidayParametersAdd"
+      });
     },
-    selectBtn(val) {
-      this.$emit("select", val);
-    },
+    // selectBtn(val) {
+    //   this.$emit("select", val);
+    // },
+    // 提交
     onSubmit() {
       let formData = {};
       for (let key in this.form) {
