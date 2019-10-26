@@ -523,14 +523,21 @@ export default {
       financeData.runField = channelData.runField;
       delete channelData.pointArea
       delete channelData.runField
+      delete channelData.address
+      const {provinceName, cityName, townName, channelAddress} = this.channelData;
+
       let data = {
-        channelData: this.channelData, // 渠道基本信息参数
+        channelData: {
+          ...this.channelData,
+          channelAddress: provinceName + cityName + townName + channelAddress
+        }, // 渠道基本信息参数
         financeData: this.financeData, // 账户资金参数
         channelFundData: this.channelFundData[0], // 人员信息参数
         gameRightList: this.gameRightList, // 销售权限参数
         warehouseGoodsData: {
           list: this.deviceParam
         }
+        
       }
       console.log('提交的参数', data)
       this.$refs.baseForm.validate((val)=>{
