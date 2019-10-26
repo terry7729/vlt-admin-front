@@ -122,7 +122,4 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.vlt-card{
-  padding: 5px;
-}
 </style>

@@ -34,7 +34,7 @@
         <el-table-column label="操作" fixed="right" width="220px" fit align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
-            <el-button type="primary" @click size="mini">修改</el-button>
+            <el-button type="primary" @click.native="update(scope.row)" size="mini">修改</el-button>
             <el-button type="primary" @click.native="deleteInfo(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
@@ -312,11 +312,13 @@ export default {
         name: "gameRiskAdd"
       });
     },
+    //跳转新增页
     select(val) {
       if (val.name === "新增") {
         this.goToAdd();
       }
     },
+    //跳转详情页
     detail(row) {
       this.$router.push({
         name: "gameRiskDetail",
@@ -324,6 +326,14 @@ export default {
           id: row.businessKey
         }
       });
+    },
+    update(row){
+      this.$router.push({
+        name:'gameRiskEdit',
+        query:{
+          id: row.businessKey
+        }
+      })
     }
   },
   mounted() {
@@ -336,7 +346,4 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp {
-  text-align: right;
-}
 </style>

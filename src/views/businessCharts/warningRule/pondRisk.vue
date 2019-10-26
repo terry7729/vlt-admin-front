@@ -32,7 +32,7 @@
         <el-table-column label="操作" fixed="right" align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
-            <el-button type="primary" @click size="mini">修改</el-button>
+            <el-button type="primary" @click.native="update(scope.row)" size="mini">修改</el-button>
             <el-button type="primary" @click.native="deleteInfo(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
@@ -291,6 +291,14 @@ export default {
             message: '删除失败'
           });    
       }
+    },
+    update(row){
+      this.$router.push({
+        name:'pondRiskEdit',
+        query:{
+          id:row.businessKey
+        }
+      })
     }
   },
   mounted() {
@@ -303,7 +311,4 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp {
-  text-align: right;
-}
 </style>

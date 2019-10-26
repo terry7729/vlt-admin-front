@@ -8,6 +8,19 @@ export default {
   // 例
   getTest: (options = {}) => ajax.post('/test', options),
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
+  //渠道资源管理模块
+  //仓库管理列表
+  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page',options),
+  //仓库详情查看
+  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare',options),
+  //获取基本信息类型管理列表
+  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page',options),
+  // 获取下拉选择框物品名称-型号树
+  getModelTree:(options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree',options),
+  // 获取类型管理查看详情
+  getDetail:(options = {}) => ajax.get('/goodsType/goodsType/details',options),
+  //类型管理状态修改
+  statusUpdate:(options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`,options),
 
   // 设备管理
   // 设备分页查询列表
@@ -84,8 +97,15 @@ export default {
   queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
 
 
+  // 查询上市计划列表
+  getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 查看游戏上市计划详情
+  getMarketPlanDetal: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  
+  // 新增上市计划
+  createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 新建渠道
-  creatChannel: (options = {}) => ajax.post('/create/save', options),
+  createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
   getChannelGameList: (options = {}) => ajax.post('/create/selectGameList', options),
   // 渠道列表
@@ -94,10 +114,16 @@ export default {
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
+  // 根据资源类型获取资源名称---新建渠道
+  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
+  // 资金权限修改
+  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //资金参数列表分页查询
   getFundsParameter: (options = {}) => ajax.post('/tFundParameter/list', options),
   //资金参数详情查询
   getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
+  //资金参数修改
+  editFundsParameter: (options = {},id) => ajax.post(`/tFundParameter/update/${id}`, options),
 }

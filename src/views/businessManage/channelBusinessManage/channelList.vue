@@ -19,7 +19,7 @@
       <el-table-column label="创建时间" prop="createDate"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
+          <el-button type="primary" size="mini" @click="detail(scope.row.channelId, 'game-permission')">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -75,8 +75,13 @@ export default {
         }
       })(data)
     },
+    detail(channelId) {
+      this.$router.push({path:'./channelDetail',query:{channelId}})
+    },
     search(val) {
       console.log(val)
+      let data = val;
+      this.getChannelList(data)
     },
     select(val) {
       console.log(val)

@@ -308,7 +308,4 @@ export default {
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp{
-  text-align: right;
-}
 </style>
