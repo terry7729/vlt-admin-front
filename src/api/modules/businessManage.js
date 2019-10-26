@@ -117,10 +117,20 @@ export default {
   editFundsParameter: (options = {}, id) => ajax.post(`/tFundParameter/update/${id}`, options),
 
   //渠道业务管理模块
-  //业务办理
+  //业务办理 
   //保存资金权限信息
   addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //资源发放
+  channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/provide', options),
   //资源发放分页查询
-  channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/pageList', options),
+  channelResProvidePageList: (options = {}) => ajax.post('/channelResProvide/channelResProvide/pageList', options),
+  //资源采购申请
+  channelResPurcApply: (options = {}) => ajax.post('/channelResPurc/channelResPurc/apply', options),
+  //资源采购分页查询
+  channelResPurcPageList: (options = {}) => ajax.post('/channelResPurc/channelResPurc/pageList', options),
+  //资源申请
+  channelResApply: (options = {}) => ajax.post('/channelResApply/channelRes/apply', options),
+  //资源申请分页查询
+  channelResApplyPageList: (options = {}) => ajax.post('/channelResApply/channelResApply/pageList', options),
 
 }
