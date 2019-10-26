@@ -156,8 +156,9 @@ export default {
     async init() {
       let res = await this.$api.getParameterDetail(0);
       if (res.code === 0) {
+        // console.log(res.data);
         let keys = Object.keys(res.data);
-        let arr = [ 
+        let arr = [
           ...this.publicInfoList,
           ...this.issueInfoList,
           ...this.fundInfoList,

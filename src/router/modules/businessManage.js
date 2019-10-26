@@ -75,6 +75,8 @@ const channelSalesPermission = () => import('@/views/businessManage/channelBusin
 const channelFundsPermission = () => import('@/views/businessManage/channelBusinessManage/channelFundsPermission')
 const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
 const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
+const developmentPlanDetail = () => import('@/views/businessManage/channelBusinessManage/developmentPlanDetail')
+const developmentPlanEdit = () => import('@/views/businessManage/channelBusinessManage/developmentPlanEdit')
 const developmentPlanList = () => import('@/views/businessManage/channelBusinessManage/developmentPlanList')
 const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
 const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
@@ -635,6 +637,25 @@ export default [
       title: '年度发展计划',
     },
     component: developmentPlan,
+    children: []
+  },
+  {
+    path: 'businessManage/developmentPlanDetail',
+    name: 'developmentPlanDetail',
+    meta: {
+      title: '年度发展计划详情',
+    },
+    component: developmentPlanDetail,
+    children: []
+    
+  },{
+    
+    path: 'businessManage/developmentPlanEdit',
+    name: 'developmentPlanEdit',
+    meta: {
+      title: '编辑年度发展计划',
+    },
+    component: developmentPlanEdit,
     children: []
   },
   {

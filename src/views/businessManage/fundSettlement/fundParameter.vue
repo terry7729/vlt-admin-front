@@ -59,11 +59,11 @@ export default {
           options: [
             {
               label: "王者荣耀1",
-              value: "王者荣耀1"
+              value: "WZRY001"
             },
             {
-              label: "游戏2",
-              value: "游戏2"
+              label: "绝地求生",
+              value: "JDQS002"
             }
           ]
         },

@@ -3,14 +3,16 @@
     <div class="time-line">
       <div v-for="item  in timeLiness" :key="item.id" class="list">
         <div class="date">
-          <h5>{{item.date.split(' ')[0]}}</h5>
-          <span>{{item.date.split(' ')[1]}}</span>
+          <h5>{{item.createTime}}</h5>
+          <!-- <span>{{item.outWarehouseTime}}</span> -->
           <i class="point"></i>
         </div>
         <div class="events-box">
-          <div v-for="n in item.resumeList" :key="n.id" class="events-item">
-            <p class="title">{{n.title}}</p>
-            <p class="content">{{n.desc}}</p>
+          <div class="events-item">
+            <p
+              class="title"
+            >由【{{item.entryWarehouseBy}}】发起 【{{item.documentToppic}}】 -- 【{{item.oplType}}】操作</p>
+            <p class="content">【{{item.nameX}}】</p>
           </div>
         </div>
       </div>
@@ -23,87 +25,40 @@ export default {
   name: "",
   data() {
     return {
-      timeLiness: [
-        {
-          id: 0,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              id: 0,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            },
-            {
-              id: 1,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 1,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              id: 0,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            },
-            {
-              id: 1,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 2,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 3,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              id: 0,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            },
-            {
-              id: 1,
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        },
-        {
-          id: 4,
-          date: "2018-11-30 13:42:54",
-          resumeList: [
-            {
-              title: "由【朱朱】发起【采购】 - 【采购】操作",
-              desc: "【10-25中心】- 入库"
-            }
-          ]
-        }
-      ]
+      timeLiness: [],
+      formatoplType:['资源采购','资源申请','资源发放','资源调拨','建厅发送','扯厅回收','资源报废']
     };
   },
   mounted() {},
-  components: {},
+  created() {
+    const routerQuery = this.$route.query;
+    if (routerQuery && routerQuery.serial) {
+      const data = {
+        serial: routerQuery.serial
+      };
+      this.initList(data);
+    }
+  },
   methods: {
-    async initList () {
-      let result = await this.$api.accessoriesRecord()
-      console.log(result);
+    async initList(data) {
+      const _this = this;
+      let result = await _this.$api.accessoriesRecord({ data });
+      if (result.code == 0 ) {
+        if ( result.data.length > 0 && result.data[0]!= null) {
+          this.timeLiness =  result.data.map(item => {
+            item.oplType = _this.formatoplType[parseInt(item.oplType) - 1];
+            return item;
+          })
+        } else {
+          console.log('无数据');
+        }
+      } else {
+        _this.$message.warning(res.msg);
+      }
       // equipmentRecord
     }
-  }
+  },
+  components: {}
 };
 </script>
 
@@ -123,34 +78,34 @@ export default {
     height: 100%;
     background: #f1f1f1;
   }
-    .date {
-      // float: left;
-      position: absolute;
-      width: 170px;
-      margin-left: 30px;
-      padding-right: 30px;
-      color: #4c9fd0;
-      text-align: right;
-      h5 {
-        font-size: 16px;
-        line-height: 2;
-      }
-      p {
-        font-size: 12px;
-      }
-      &:after {
-        display: block;
-        content:'';
-        position: absolute;
-        right: -9px;
-        top: 20px;
-        width: 16px;
-        height: 16px;
-        border-radius: 10px;
-        border: 1px solid #4c9fd0;
-        background: #fff;
-      }
+  .date {
+    // float: left;
+    position: absolute;
+    width: 170px;
+    margin-left: 30px;
+    padding-right: 30px;
+    color: #4c9fd0;
+    text-align: right;
+    h5 {
+      font-size: 16px;
+      line-height: 2;
     }
+    p {
+      font-size: 12px;
+    }
+    &:after {
+      display: block;
+      content: "";
+      position: absolute;
+      right: -9px;
+      top: 20px;
+      width: 16px;
+      height: 16px;
+      border-radius: 10px;
+      border: 1px solid #4c9fd0;
+      background: #fff;
+    }
+  }
   .events-box {
     .events-item {
       // float: left;
@@ -165,7 +120,7 @@ export default {
         position: absolute;
         left: -20px;
         display: block;
-        content: '';
+        content: "";
         border-top: 10px transparent dashed;
         border-left: 10px transparent dashed;
         border-bottom: 10px transparent dashed;

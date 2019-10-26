@@ -48,6 +48,8 @@ const systemOperationLog = () => import('@/views/systemManage/systemLog/systemLo
 const systemSwitch = () => import('@/views/systemManage/systemSwitch/systemSwitch')
 //假日参数管理
 const holidayParametersManagement = () => import('@/views/systemManage/holidayParametersManagement/holidayParametersManagement')
+//假日增加
+const holidayParametersAdd = () => import('@/views/systemManage/holidayParametersManagement/holidayParametersAdd')
 //终端事件管理
 const TerminalEventControl = () => import('@/views/systemManage/TerminalEventManagement/TerminalEventManagement')
 //终端事件日志
@@ -250,6 +252,15 @@ export default [
     title: '假日参数管理',
   },
   component: holidayParametersManagement
+},
+{
+  path: 'systemManage/holidayParametersManagement/holidayParametersAdd',
+  name: 'holidayParametersAdd',
+  meta: {
+    parentName:"holidayParametersManagement",
+    title: '假日参数增加',
+  },
+  component: holidayParametersAdd
 },
 {
   path: 'systemManage/TerminalEventControl',

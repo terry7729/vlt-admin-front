@@ -29,19 +29,19 @@
               :rowName="scope.row.name"
               :option="{
                 enable:{
-                  apiName:'apiName',
+                  apiName:'roleAmend',
                   label:'启用',
-                  value:0
+                  value:1
                 },
                disable:{
-                  apiName:'apiName',
+                  apiName:'roleAmend',
                   label:'冻结',
-                  value:1
+                  value:2
                },
                logout:{
-                  apiName:'apiName',
+                  apiName:'roleAmend',
                   label:'注销',
-                  value:2
+                  value:3
                }
               }"
             ></tableRowStatus>
@@ -135,31 +135,10 @@ export default {
         {
           type: "radio",
           prop: "isManager",
-          title: "是否为经理",
-          value: 1,
+          title: "是否为负责人",
+          value: 2,
           options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
-        {
-          type: "select",
-          title: "角色状态",
-          prop: "accountStatus",
-          value: "",
-          options: [
-            {
-              label: "启用",
-              value: "0"
-            },
-            {
-              label: "冻结",
-              value: "1"
-            },
-            {
-              label: "注销",
-              value: "2"
-            }
-          ]
-        },
-
         {
           type: "cascader-multiple",
           prop: "sysCode",
@@ -183,7 +162,7 @@ export default {
         }
       ],
       // 定义当前页
-      currentPage: 0,
+      pageSize: 10,
 
       //权限设置弹框表单
       roleManageAuthorityWriteData: [
@@ -232,9 +211,9 @@ export default {
           title: "角色状态",
           placeholder: "请输入",
           options: [
-            { label: "启用", value: 0 },
-            { label: "禁用", value: 1 },
-            { label: "注销", value: 2 }
+            { label: "启用", value: 1 },
+            { label: "禁用", value: 2 },
+            { label: "注销", value: 3 }
           ]
         },
         {
@@ -267,11 +246,11 @@ export default {
   },
   methods: {
     //初始数据
-    async init() {
+    async init(val) {
       //console.log(val);
       let data = {
-        page: 0,
-        pageSize: 10,
+        page: val,
+        pageSize: this.pageSize,
         param: {
           createBy: "",
           createTime: "",
@@ -281,15 +260,17 @@ export default {
         }
       };
       let result = await this.$api.getRole({ data });
+      console.log(result);
       //console.log(result);
       let arr = result.data.records;
-      this.num = arr.length;
+      this.num = result.data.total;
       // this.roleManageoptions[0].options = arr.roleType;
       this.roleManagetableData = arr;
       //初始搜索用户角色数据
-      let resul = await this.$api.accountRole();
+      let searchResult = await this.$api.accountRole();
+      //console.log(searchResult);
       //console.log(resul);
-      this.roleManageoptions[0].options = resul.data;
+      this.roleManageoptions[0].options = searchResult.data;
     },
     //点击搜索
     async search(param) {
@@ -331,7 +312,7 @@ export default {
     // 获取编辑权限列表
     async getRoleTypes() {
       let res = await this.$api.channelLimit();
-      this.roleManageWriteData[3].options = res.data;
+      this.roleManageWriteData[2].options = res.data;
     },
     // 查看按钮
     roleManageLook(row) {
@@ -348,36 +329,48 @@ export default {
       this.limit = form;
     },
     handleSizeChange(size) {
-      console.log(size);
       //console.log(`每页 ${size} 条`);
+      this.pageSize = size;
+      this.init();
     },
     handleCurrentChange(val) {
       //console.log(`当前页: ${val}`);
-      this.currentPage = val;
+      // this.page = val;
+      this.init(val);
+      console.log(this.page);
     },
     //编辑表单弹框保存
     async HandelSave() {
       console.log(this.row.id);
       let id = this.row.id;
-      let data = JSON.parse(JSON.stringify(this.form));
+      let info = JSON.parse(JSON.stringify(this.form));
+      //console.log(info);
+      let data = { ...info, id };
+      // console.log(data);
       data.sysCode = data.sysCode.join(",");
       //console.log(data);
-      let response = await this.$api.roleAmend({ data }, id);
-      console.log(response);
-      this.init();
-      // this.$refs.baseForm.resetForm();
-      this.dialogFormVisible = false;
+      let response = await this.$api.roleAmend({ data });
+      if (response.code === 0) {
+        console.log(response);
+        this.init();
+        // this.$refs.baseForm.resetForm();
+        this.dialogFormVisible = false;
+      }
     },
     //权限设置弹框保存
     async save() {
       this.AuthoritydialogFormVisible = false;
-      let one = this.sycords;
+      let id = this.sycords;
 
-      console.log(one);
-      let data = JSON.parse(JSON.stringify(this.limit));
+      //console.log(one);
+      let info = JSON.parse(JSON.stringify(this.limit));
+      let data = { ...info, id };
       data.sysCode = data.sysCode.join(",");
-      let res = await this.$api.roleAmend({ data }, one);
-      this.init();
+      let res = await this.$api.roleAmend({ data });
+      if (res.code === 0) {
+        this.init();
+      }
+
       // console.log(res);
       // console.log(getAuthorityForm);
     }
