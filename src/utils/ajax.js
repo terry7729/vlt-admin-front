@@ -38,7 +38,7 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
-  axios.defaults.headers.common["token"] = storage.get('token');
+  // axios.defaults.headers.common['token'] = storage.get('token');
   return (async () => {
     try {
       let res;
