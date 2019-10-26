@@ -25,6 +25,7 @@
         <el-table-column align="center" prop="gameName" label="游戏"></el-table-column>
         <el-table-column align="center" prop="minimumReturnRateOrdinary" label="最低返奖率"></el-table-column>
         <el-table-column align="center" prop="highestReturnRateOrdinary" label="最高返奖率"></el-table-column>
+        <el-table-column align="center" prop="updatedTime" label="更新时间"></el-table-column>
         <el-table-column align="center" property="collectStatus" label="状态">
           <template slot-scope="scope">
             <span v-if="scope.row.collectStatus===0">生效</span>
