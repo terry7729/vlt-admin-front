@@ -41,6 +41,7 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  // 请求必传参数
   if (storage.get('token')) {
     axios.defaults.headers.common['Authorization'] = storage.get('token');
   }
