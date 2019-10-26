@@ -14,6 +14,7 @@
       <el-table
         :data="tableData"
         border
+        ref="multipleTable"
         style="width: 30%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
@@ -55,7 +56,6 @@
           </div>
         </el-form-item>
         <div class="editfrom">
-         
           <el-form-item prop label="监控频率">
             <el-input-number
               v-model="form.collectFrequency"
@@ -70,7 +70,7 @@
         </div>
         <el-form-item>
           <div class="btn">
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit">修改</el-button>
             <el-button>取消</el-button>
           </div>
         </el-form-item>
@@ -385,11 +385,11 @@ export default {
       checked8: true,
       checked9: true,
       optionsNotifyCityObjOfOrdinary1: false, //普通市级通知对象
-      optionsNotifyProObjOfOrdinary1: true, //普通省级通知对象
-      optionsNotifyCenterObjOfOrdinary1: true, //普通中央通知对象
+      optionsNotifyProObjOfOrdinary1: false, //普通省级通知对象
+      optionsNotifyCenterObjOfOrdinary1: false, //普通中央通知对象
       optionsNotifyCityObjOfSerious: false, //严重市级通知对象
       optionsNotifyProObjOfSerious: false, //严重省级通知对象
-      optionsNotifyCenterObjOfSerious: true, //严重中央通知对象
+      optionsNotifyCenterObjOfSerious: false, //严重中央通知对象
       optionsNotifyCityObjOfMajor: false, //重大市级通知对象
       optionsNotifyProObjOfMajor: false, //重大省级通知对象
       optionsNotifyCenterObjOfMajor: false, //重大中央通知对象
@@ -441,14 +441,15 @@ export default {
     };
   },
   methods: {
+    
     handleChange(value) {
       console.log(value);
     },
     onSubmit() {
-      this.pondRiskInsert();
+      this.pondRiskUpdate();
     },
-    async pondRiskInsert() {
-      const res = await this.$api.pondRiskInsert({
+    async pondRiskUpdate() {
+      const res = await this.$api.pondRiskUpdate({
         data: {
           alarmFrequencyMajor: this.tableData1[2].warningPl,
           alarmFrequencyOrdinary: this.tableData1[1].warningPl,
@@ -474,16 +475,17 @@ export default {
           informWaySerious: this.form.informWaySerious,
           minJackpotMoneyMajor: this.form.minJackpotMoneyMajor,
           minJackpotMoneyOrdinary: this.form.minJackpotMoneyOrdinary,
-          minJackpotMoneySerious: this.form.minJackpotMoneySerious
+          minJackpotMoneySerious: this.form.minJackpotMoneySerious,
+          businessKey:this.$route.query.id  
         }
       });
        if (res && res.code == 0) {
         this.$message({
-          message: '新增成功',
+          message: '修改成功',
           type: 'success'
         });
       }else{
-        this.$message.error('新增失败');
+        this.$message.error('修改失败');
       }
     },
     selectChange(val) {
@@ -618,8 +620,76 @@ export default {
         this.optionsNotifyCenterObjOfMajor = true;
         this.options11Value = "";
       }
+    },
+    async getDetailInfo() {
+      const id = this.$route.query.id;
+      const self = this;
+      const res = await self.$api.getPondRiskDetail({
+        data: {
+          businessKey: id
+        }
+      });
+      if (res && res.code == 0) {
+        this.form = res.data;
+        console.log(this.form)
+        this.gameValue = res.data.gameId;
+        this.proviceValue = res.data.provinceId;
+        this.cityValue = res.data.cityId;
+        this.tableData1[2].warningPl = this.form.alarmFrequencyMajor;
+        this.tableData1[1].warningPl = this.form.alarmFrequencySerious;
+        this.tableData1[0].warningPl = this.form.alarmFrequencyOrdinary;
+        this.checkList2 = this.showInformType(this.form.informWayMajor);
+        this.checkList1 = this.showInformType(this.form.informWaySerious);
+        this.checkList = this.showInformType(this.form.informWayOrdinary);
+        this.options3Value = this.form.informCityManIdOrdinary;
+        this.options11Value = this.form.informCentralManIdMajor;
+        this.options9Value = this.form.informCentralManIdOrdinary;
+        this.options10Value = this.form.informCentralManIdSerious;
+        this.options5Value = this.form.informCityManIdMajor;
+        this.options3Value = this.form.informCityManIdOrdinary;
+        this.options4Value = this.form.informCityManIdSerious;
+        this.options8Value = this.form.informProvinceManIdMajor;
+        this.options6Value = this.form.informProvinceManIdOrdinary;
+        this.options7Value = this.form.informProvinceManIdSerious;
+      }
+    },
+    showInformType(type) {
+      var list;
+      switch (type) {
+        case 1:
+          list = ["站内"];
+          break;
+        case 2:
+          list = ["邮件"];
+          break;
+        case 3:
+          list = ["短信"];
+          break;
+        case 4:
+          list = ["邮件", "邮件"];
+          break;
+        case 5:
+          list = ["站内", "短信"];
+          break;
+        case 6:
+          list = ["邮件", "短信"];
+          break;
+        case 7:
+          list = ["站内", "邮件", "短信"];
+          break;
+      }
+      return list;
     }
-  }
+  },
+  created() {
+       //默认全选
+    this.$nextTick(() => {
+      for (let i = 0; i < this.tableData.length; i++) {
+        this.$refs.multipleTable.toggleRowSelection(this.tableData[i], true);
+      }
+    });
+    this.getDetailInfo();
+  },
 };
 </script>
 

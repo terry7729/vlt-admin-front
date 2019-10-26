@@ -26,19 +26,25 @@
         :cell-style="{align:'center'}"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column align="center" prop="date" label="省份"></el-table-column>
-        <el-table-column align="center" prop="date" label="城市"></el-table-column>
-        <el-table-column align="center" prop="date" label="最高销量"></el-table-column>
-        <el-table-column align="center" prop="name" label="最低销量"></el-table-column>
-        <el-table-column align="center" prop="name" label="最低在线数量"></el-table-column>
-        <el-table-column align="center" prop="name" label="最低开机律"></el-table-column>
-        <el-table-column align="center" prop="name" label="最低单厅销量"></el-table-column>
-        <el-table-column align="center" prop="address" label="状态"></el-table-column>
-        <el-table-column label="操作" fixed="right"  align="center">
+        <el-table-column align="center" prop="provinceName" label="省份"></el-table-column>
+        <el-table-column align="center" prop="cityName" label="城市"></el-table-column>
+        <el-table-column align="center" prop="highestSalesMoneyOrdinary" label="最高销量"></el-table-column>
+        <el-table-column align="center" prop="minimumSalesMoneyOrdinary" label="最低销量"></el-table-column>
+        <el-table-column align="center" prop="minimumOnlineCountsOrdinary" label="最低在线数量"></el-table-column>
+        <el-table-column align="center" prop="minimumOperatingRateOrdinary" label="最低开机律"></el-table-column>
+        <el-table-column align="center" prop="minimumHallSaleMoneyOrdinary" label="最低单厅销量"></el-table-column>
+        <el-table-column align="center" prop="updatedTime" label="更新时间"></el-table-column>
+        <el-table-column align="center" prop="collectStatus" label="状态">
           <template slot-scope="scope">
-            <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
-            <el-button type="primary" @click size="mini">修改</el-button>
-            <el-button type="primary" @click size="mini">删除</el-button>
+            <span v-if="scope.row.collectStatus===0">生效</span>
+            <span v-if="scope.row.collectStatus===1">停止</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" fixed="right"  align="center" width='240px'>
+          <template slot-scope="scope">
+            <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
+            <el-button type="primary" @click.native='update(scope.row)' size="mini">修改</el-button>
+            <el-button type="primary" @click.native="deleteInfo(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -46,7 +52,7 @@
         style="margin-top:30px"
         :current-page="1"
         :page-size="10"
-        :total="100"
+        :total="totalCount"
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
@@ -60,6 +66,7 @@ export default {
   name: "areaDeal",
   data() {
     return {
+      totalCount:0,
       searchOptions: [
         {
           type: "select",
@@ -144,14 +151,62 @@ export default {
     };
   },
   methods: {
+    async getCityRiskList(){
+      let res =await this.$api.getCityRiskList({
+        data:{
+          pageNum: this.listQuery.page,
+          pageSize: this.listQuery.limit
+        }
+      })
+      if(res && res.code==0){
+        this.tableData=res.data.records
+        this.totalCount=res.total
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log("每页条数：", pageSize);
+      this.listQuery.limit=pageSize
+      this.getCityRiskList()
     },
     pageCurrentChange(currentPage) {
-      console.log("当前页：", currentPage);
+      this.listQuery.page=currentPage
+      this.getCityRiskList()
     },
     search(form) {
       console.log("search", form);
+    },
+    deleteInfo(row) {
+      this.$confirm(`确定要删除这条数据吗? `, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.cityRiskDelete(row.businessKey);
+        })
+        .catch(() => {
+          
+        });
+    },
+ 
+    async cityRiskDelete(id) {
+      const res = await this.$api.cityRiskDelete({
+        data: {
+          businessKey: id
+        }
+      });
+      if (res && res.code == 0) {
+        this.$message({
+          type: "success",
+          message: "删除成功!"
+        });
+        this.getCityRiskList()
+        this.getPondRiskList()
+      }else{
+          this.$message({
+            type: 'info',
+            message: '删除失败'
+          });    
+      }
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -159,6 +214,14 @@ export default {
       } else {
         this.$router.go(-1);
       }
+    },
+     detail(row) {
+      this.$router.push({
+        name: "cityRiskDetail",
+        query: {
+          id: row.businessKey
+        }
+      });
     },
     handleSizeChange(val) {
       this.listQuery.limit = val;
@@ -260,16 +323,24 @@ export default {
       this.$router.push({
         name: "cityRiskAdd"
       });
+    },
+    update(row){
+      this.$router.push({
+        name:'cityRiskEdit',
+        query:{
+          id:row.businessKey
+        }
+      })
     }
   },
+  created() {
+    this.getCityRiskList()
+  },
   mounted() {
-    // this.showcity();
+    
   }
 };
 </script>
 
 <style  lang="less" scoped>
-.control-bar-comp {
-  text-align: right;
-}
 </style>

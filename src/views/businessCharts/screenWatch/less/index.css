@@ -1,0 +1,186 @@
+main {
+  background-color: #02142c;
+  height: 1200px;
+  display: flex;
+  padding: 20px;
+}
+main overflow-x：hidden,
+main .title {
+  height: 40px;
+  color: #fff;
+  line-height: 40px;
+  background: linear-gradient(to right, #1868a9, #010c1b);
+  padding-left: 5px;
+}
+main > .left {
+  flex: 20%;
+  position: relative;
+}
+main > .left > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+main > .left .one {
+  border: 1px solid #267ca6;
+  border-radius: 3px;
+  height: 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+main > .left .one .salesTitle {
+  flex: 10%;
+  margin-top: 20px;
+  color: #1e98df;
+  font-size: 18px;
+  text-align: center;
+}
+main > .left .one .topSales {
+  flex: 60%;
+  width: 100%;
+}
+main > .left .one .salesNumber {
+  margin-bottom: 50px;
+}
+main > .left .one .salesNumber > div {
+  display: flex;
+}
+main > .left .one .salesNumber > div section {
+  font-size: 14px;
+  flex: 33.3%;
+  text-align: center;
+}
+main > .left .one .salesNumber > div section > p:first-child {
+  margin: 10px 10px 10px;
+}
+main > .left .one .salesNumber > div section:first-child > p:first-child {
+  color: #d8777f;
+}
+main > .left .one .salesNumber > div section:nth-child(2) > p:first-child {
+  color: #267ca6;
+}
+main > .left .one .salesNumber > div section:nth-child(3) > p:first-child {
+  color: #25b098;
+}
+main > .left .one .salesNumber > div section > p:last-child {
+  color: #fff;
+}
+main > .left .bottomGameMachine {
+  margin-top: 20px;
+  border: 1px solid #267ca6;
+  border-radius: 3px;
+  height: 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+main > .left .bottomGameMachine > .bottomMachine {
+  flex: 90%;
+}
+main > .center {
+  flex: 45%;
+  border: 1px solid #267ca6;
+  border-radius: 3px;
+  margin: 0 20px;
+  height: 81.5%;
+  position: relative;
+}
+main > .center > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+main > .center > div .left_map {
+  width: 100%;
+  height: 100%;
+}
+main > .center > div .salesNum {
+  position: absolute;
+  width: 120px;
+  height: 180px;
+  bottom: 5px;
+  right: 2px;
+  border: 1px solid #267ca6;
+  border-radius: 3px;
+}
+main > .center > div .salesNum div:nth-child(n + 2) {
+  height: 38px;
+  line-height: 38px;
+  color: #267ca6;
+  border-bottom: #0d3153 solid 1px;
+  padding-left: 15px;
+}
+main > .right {
+  flex: 35%;
+  position: relative;
+}
+main > .right > div {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+}
+main > .right .salesRanking {
+  width: 100%;
+  border: 1px solid #267ca6;
+  border-radius: 3px;
+  height: 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+main > .right .salesRanking .tableData {
+  flex: 90%;
+}
+main > .right .marketShares {
+  margin-top: 20px;
+  border: 1px solid #267ca6;
+  border-radius: 3px;
+  height: 40%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+main > .right .marketShares .sharesMap {
+  flex: 90%;
+  background-color: transparent;
+}
+ /deep/ .main-body .el-table td > .cell {
+  color: #fff !important;
+}
+.right_opetate {
+  flex: 1;
+  height: 100%;
+  background: #404a59;
+}
+.mianMap {
+  height: 100%;
+}
+.top5 {
+  background-color: #1c2c42;
+  padding: 0 5px;
+  position: absolute;
+  width: 150px;
+  height: 220px;
+  box-shadow: 2px 2px 13px 3px #fff;
+  top: 20px;
+  left: 15px;
+  color: #dadde0;
+  border-radius: 4px;
+  border: 1px solid #fff;
+}
+.top5 > span {
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  border-bottom: 1px solid #dadde0;
+  display: block;
+}
+.top5 p {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px dashed #dadde0;
+  height: 35px;
+  line-height: 35px;
+  font-size: 14px;
+}
