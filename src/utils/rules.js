@@ -23,10 +23,7 @@ export default {
     numberVal: (rule, value, callback) => {
       const _value = (value + '').trim()
       const test = (/(^[1-9]\d*$)/.test(_value)) ? true : false
-      if (!_value) {
-        return callback(new Error('值不能为空'));
-      }
-      if (!test) {
+      if (_value && !test) {
         return callback(new Error('值必须为正整数'));
       }
       callback();

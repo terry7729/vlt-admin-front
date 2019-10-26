@@ -73,9 +73,7 @@ export default {
       rule: {
         insId: [{ required: true, trigger: "blur" }],
         bettingCardType: [{ required: true, trigger: "blur" }],
-        cardMakingQuantity: [
-          { required: true, validator: rules.numberVal, trigger: "blur" }
-        ]
+        cardMakingQuantity: [{ required: false, validator: rules.numberVal, trigger: "blur" }]
       }
     };
   },
@@ -95,7 +93,7 @@ export default {
       _this.showLoading = true;
       let data = _this.params;
       console.log("提交的数据", data);
-      data.status = data.status ? 1 : 2;
+      // data.status = data.status ? 1 : 2;
       let result = await _this.$api.createCardGeneration({ data });
       if (result.code == 0) {
         _this.showLoading = false;

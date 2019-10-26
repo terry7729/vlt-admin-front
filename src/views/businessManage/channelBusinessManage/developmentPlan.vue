@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="vlt-card">
     <el-tabs tab-position="left" v-model="active">
       <el-tab-pane label="计划列表" name="1">

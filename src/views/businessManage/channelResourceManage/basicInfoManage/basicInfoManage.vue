@@ -115,9 +115,7 @@ export default {
    typeInfoOptions:[
      {title:'物品类别',type:'select',prop:'goodsType',value:'',
      options:[{label:'设备',value:1},{label:'配件',value:2},{label:'耗材',value:3},{label:'设施',value:4}]},
-
      {title:'物品名称',type:'select',prop:'goodsId',value:'',options:[]},
-
      {title:'物品状态',type:'select',prop:'status',value:'',options:[{label:'开',value:1},{label:'关',value:2}]},
    ],
    modelInfoOptions:[
@@ -190,6 +188,12 @@ export default {
           "goodsType": 0,
           "status": 0
         }
+      },
+      statusUpdate:{
+        "id": "",
+        "status": "",
+        "updateBy": "",
+        "updateTime": ""
       }
  }
  },
@@ -211,11 +215,14 @@ export default {
    //类型管理
    //状态修改
    async changeState(id,state){
-     let data= {
-       id,
-       state
+     console.log(id,state)
+     let data = {
+       "id":id,
+       "status": state,
+       "updateBy": "",
+       "updateTime": ""
      }
-     let res = await this.$api.statusUpdate({},data)
+     let res = await this.$api.statusUpdate({data})
      if(res.code == 0 ){
        this.$message({
          message:'状态修改成功',
@@ -223,7 +230,6 @@ export default {
        })
      }
     },
-
 
    //获取类型管理列表
    async getTypeList(data){
@@ -243,7 +249,7 @@ export default {
        this.typeTotalCount = res.data.total
      }
    },
-   //获取下拉框options
+   //获取类型管理物品名称
    async getSelectOption(){
      let res =await this.$api.getModelTree({})
      if(res && res.code == 0){

@@ -22,60 +22,25 @@
           v-if="this.selectValue === 1"
           :formData="equipmentData"
           labelWidth="140px"
-          ref="baseForm"
+          ref="baseForm1"
           :rules="rules2"
           direction="right"
           @change="changeForm"
         ></base-form>
-        <el-form v-else-if="this.selectValue === 2">
-          <base-form
-            :formData="facilitiesData"
-            labelWidth="140px"
-            ref="baseForm"
-            :rules="rules2"
-            direction="right"
-            @change="changeForm"
-          ></base-form>
-          <el-form-item label="上传图片" class="upload">
-            <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
-              <i slot="default" class="el-icon-plus"></i>
-              <div slot="file" slot-scope="{file}">
-                <img class="el-upload-list__item-thumbnail" :src="file.url" alt='' />
-                <span class="el-upload-list__item-actions">
-                  <span
-                    class="el-upload-list__item-preview"
-                    @click="handlePictureCardPreview(file)"
-                  >
-                    <i class="el-icon-zoom-in"></i>
-                  </span>
-                  <span
-                    v-if="!disabled"
-                    class="el-upload-list__item-delete"
-                    @click="handleDownload(file)"
-                  >
-                    <i class="el-icon-download"></i>
-                  </span>
-                  <span
-                    v-if="!disabled"
-                    class="el-upload-list__item-delete"
-                    @click="handleRemove(file)"
-                  >
-                    <i class="el-icon-delete"></i>
-                  </span>
-                </span>
-              </div>
-            </el-upload>
-            <!-- 放大 -->
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
-          </el-form-item>
-        </el-form>
+        <base-form
+          v-else-if="this.selectValue === 2"
+          :formData="mountingsData"
+          labelWidth="140px"
+          ref="baseForm1"
+          :rules="rules2"
+          direction="right"
+          @change="changeForm"
+        ></base-form>
         <el-form v-else-if="this.selectValue === 3">
           <base-form
             :formData="consumableData"
             labelWidth="140px"
-            ref="baseForm"
+            ref="baseForm1"
             :rules="rules2"
             direction="right"
             @change="changeForm"
@@ -115,17 +80,52 @@
             </el-dialog>
           </el-form-item>
         </el-form>
-        <base-form
-          v-else
-          :formData="mountingsData"
-          labelWidth="140px"
-          ref="baseForm"
-          :rules="rules2"
-          direction="right"
-          @change="changeForm"
-        ></base-form>
+        <el-form v-else>
+          <base-form
+            :formData="facilitiesData"
+            labelWidth="140px"
+            ref="baseForm1"
+            :rules="rules2"
+            direction="right"
+            @change="changeForm"
+          ></base-form>
+          <el-form-item label="上传图片" class="upload">
+            <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
+              <i slot="default" class="el-icon-plus"></i>
+              <div slot="file" slot-scope="{file}">
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt='' />
+                <span class="el-upload-list__item-actions">
+                  <span
+                    class="el-upload-list__item-preview"
+                    @click="handlePictureCardPreview(file)"
+                  >
+                    <i class="el-icon-zoom-in"></i>
+                  </span>
+                  <span
+                    v-if="!disabled"
+                    class="el-upload-list__item-delete"
+                    @click="handleDownload(file)"
+                  >
+                    <i class="el-icon-download"></i>
+                  </span>
+                  <span
+                    v-if="!disabled"
+                    class="el-upload-list__item-delete"
+                    @click="handleRemove(file)"
+                  >
+                    <i class="el-icon-delete"></i>
+                  </span>
+                </span>
+              </div>
+            </el-upload>
+            <!-- 放大 -->
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </el-form-item>
+        </el-form>
         <el-row class="vlt-edit-btn">
-          <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+          <el-button type="primary" v-prevent="1000" size="medium" @click="submit('form')">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
         </el-row>
       </div>
@@ -135,6 +135,7 @@
 
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
+import { async } from 'q';
 export default {
   name: "addEquipment",
   data() {
@@ -146,9 +147,9 @@ export default {
       params: {},
       options: [
         { value: 1, label: "设备" },
-        { value: 2, label: "设施" },
+        { value: 2, label: "配件" },
         { value: 3, label: "耗材" },
-        { value: 4, label: "配件" }
+        { value: 4, label: "设施" }
       ],
       selectValue: 1,
       equipmentData: [
@@ -171,55 +172,54 @@ export default {
         { title: "备注", type: "textarea", prop: "remark", value: "" }
       ],
       facilitiesData: [
-        { title: "设施名称", type: "input", prop: "facilitiesName", value: "" },
-        { title: "设施编号", type: "input", prop: "facilitiesCode", value: "" },
+        { title: "设施名称", type: "input", prop: "goodsName", value: "" },
+        { title: "设施编号", type: "input", prop: "code", value: "" },
         {
           title: "设施单价",
           type: "select",
-          prop: "facilitiesUnitPrice",
+          prop: "unitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        { title: "设施单位", type: "input", prop: "facilitiesUnit", value:''},
+        { title: "设施单位", type: "input", prop: "deviceUnit", value:''},
         {
           title: "供应商",
           type: "select",
-          prop: "supplier",
+          prop: "providerId",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
         { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
         { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
-        { title: "厂家信息", type: "input", prop: "factoryInfo", value: "" },
+        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: "" },
         { title: "备注", type: "textarea", prop: "remark", value: "" }
       ],
       consumableData:[
-        { title: "耗材名称", type: "input", prop: "consumableName", value: "" },
-        { title: "耗材编号", type: "input", prop: "consumableCode", value: "" },
+        { title: "耗材名称", type: "input", prop: "goodsName", value: "" },
+        { title: "耗材编号", type: "input", prop: "code", value: "" },
         {
           title: "耗材单价",
           type: "select",
-          prop: "consumableUnitPrice",
+          prop: "unitPrice",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        { title: "耗材单位", type: "input", prop: "consumableUnit", value:''},
+        { title: "耗材单位", type: "input", prop: "deviceUnit", value:''},
         {
           title: "供应商",
           type: "select",
-          prop: "supplier",
+          prop: "providerId",
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
         { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
         { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
-        { title: "厂家信息", type: "input", prop: "factoryInfo", value: "" },
+        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: "" },
         { title: "备注", type: "textarea", prop: "remark", value: "" }
       ],
       mountingsData:[
-        { title: "配件名称", type: "input", prop: "mountingsName", value: "" },
-        { title: "配件单位", type: "input", prop: "mountingsUnit", value:''},
-
+        { title: "配件名称", type: "input", prop: "goodsName", value: "" },
+        { title: "配件单位", type: "input", prop: "deviceUnit", value:''},
         {
           title: "是否回收",
           type: "radio",
-          prop: "isRecycle",
+          prop: "isRecovery",
           value: "",
           options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
         },
@@ -240,25 +240,45 @@ export default {
         ],
         isRecovery: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        upperLimit: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        lowerLimit: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       }
     };
   },
   components: {},
   methods: {
-    submit() {
-      console.log(this.params);
+    changeOption() {
+      console.log(this.selectValue);
+    },
+     submit(formName) {
+      this.$refs['baseForm1'].validate(async valid=>{
+        if(valid=='true') {
+          let data = this.params;
+          let res = await this.$api.typeCreate({data})
+          console.log(res)
+          if(res || res.code == 0){
+            this.$message({
+              message:'新增成功',
+              type:'success'
+            })
+          }
+        }
+      })
     },
     cancel() {
       this.$router.back();
     },
     changeForm(val) {
-      Object.assign(this.params, val);
       console.log("派发出来的参数", val);
+      this.params = Object.assign({goodsType:this.selectValue}, val);
+      console.log('param', this.params)
     },
-    changeOption() {
-      console.log(this.selectValue);
-    },
+    
 
     handleRemove(file) {
       console.log(file);
