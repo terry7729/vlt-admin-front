@@ -12,7 +12,6 @@
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="mini" v-prevent="2000" @click="storeDetail(scope.row.id)">查看</el-button>
-            <!-- <el-button type="text" size="mini" v-prevent="2000" @click="storeEdit(scope.row.id)">编辑</el-button> -->
           </template>
         </el-table-column>
     </el-table>
@@ -25,15 +24,6 @@
         @handleCurrentChange="handleCurrentChange"
       >
       </table-paging>
-    <!-- <div class="vlt-edit-single">
-      <el-dialog title="基本信息" :visible.sync="dialogFormVisible">
-        <base-form :formData="basicInfo" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right" @change="changeForm" ></base-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">保 存</el-button>
-        </div>
-      </el-dialog>
-    </div> -->
    </div>
  </div>
 </template>
