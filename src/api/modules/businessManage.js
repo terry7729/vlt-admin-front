@@ -12,28 +12,30 @@ export default {
   //仓库管理列表
   getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page', options),
   //仓库详情查看
-  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare',options),
+  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
-  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
   getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTree:(options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree',options),
+  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
   getModelTree: (options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree', options),
   // 获取类型管理查看详情
   getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
   //类型管理状态修改
-  statusUpdate:(options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/',options),
+  statusUpdate: (options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/', options),
   //类型管理类型新增
-  typeCreate:(options = {}) => ajax.post('/goodsType/goodsType/create',options),
+  typeCreate: (options = {}) => ajax.post('/goodsType/goodsType/create', options),
   //出入库管理列表获取
-  getOutPutList:(options = {}) => ajax.post('/warehouseRecording/page',options),
+  getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
-  getOutPutDetail:(options = {}) => ajax.post('/warehouseRecording/detail',options),
+  getOutPutDetail: (options = {}) => ajax.post('/warehouseRecording/detail', options),
   //出入库
-  entryAndOut:(options = {}) => ajax.post('/warehouseRecording/entryAndOut',options),
-  
+  entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
+  //出入库导出
+  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExce', options),
+
   statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
   // 设备管理
