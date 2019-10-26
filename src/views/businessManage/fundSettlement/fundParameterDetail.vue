@@ -83,8 +83,10 @@ export default {
 
   methods: {
     async init() {
-      let id = this.$route.query.id;
-      let res = await this.$api.getParameterDetail(id); 
+      let data = {
+        id: this.$route.query.id
+      };
+      let res = await this.$api.getParameterDetail({ data });
       if (res.code === 0) {
         let keys = Object.keys(res.data);
         let arr = [
