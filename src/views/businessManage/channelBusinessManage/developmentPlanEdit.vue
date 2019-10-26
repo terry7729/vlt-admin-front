@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="vlt-edit-single">
-      <h2 class="title">基础信息</h2>
+      <h2 class="title">编辑年度发展计划</h2>
       <div class="vlt-edit-wrap">
         <base-form ref="baseForm"
           :formData="formData" 
@@ -87,8 +87,29 @@ export default {
     }
     // 获取所属机构数据
     this.getInsData()
+
+    const routerQuery = this.$route.query;
+    if (routerQuery && routerQuery.id) {
+      const data = {
+        id: routerQuery.id,
+        insLevel: routerQuery.insLevel
+      };
+      this.getQueryDevelopPlanInfo(data);
+    }
   },
   methods: {
+    // 获取信息 回填到输入框中， 如果此数据是省级数据  则市级数据显示但输入框不能修改， 如果是市级数据 则隐藏省级的数据填写 
+    getQueryDevelopPlanInfo(data) {
+      const self = this;
+      (async data => {
+        let res = await self.$api.getQueryDevelopPlanInfo({ data });
+        if (res && res.code == 0) {
+          console.log(res.data);
+        } else {
+          self.$message.warning(res.msg);
+        }
+      })(data);
+    },
     // 省级用户查询市级数据
     getProvinceCityPlan(data) {
       const self = this;

@@ -8,26 +8,26 @@
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table
-    border
-    ref="multipleTable"
-    :data="tableData"
-    tooltip-effect="dark"
-    style="width: 100%"
-    @selection-change="handleSelectionChange">
-      <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="code" label="变更计划编号" ></el-table-column>
-      <el-table-column prop="planName" label="变更计划名称"></el-table-column>
-      <el-table-column prop="gameName" label="游戏名称"></el-table-column>
-      <el-table-column prop="sellRang" label="销售区域"></el-table-column>
-      <el-table-column prop="planState" label="计划状态"></el-table-column>
-      <el-table-column prop="initiator" label="创建人"></el-table-column>
-      <el-table-column prop="initiateTime" label="创建时间"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
-          <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
-        </template>
-      </el-table-column>
+      border
+      ref="multipleTable"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
+        <el-table-column label="序号" type="index" width="55"></el-table-column>
+        <el-table-column prop="code" label="变更计划编号" ></el-table-column>
+        <el-table-column prop="planName" label="变更计划名称"></el-table-column>
+        <el-table-column prop="gameName" label="游戏名称"></el-table-column>
+        <el-table-column prop="sellRang" label="销售区域"></el-table-column>
+        <el-table-column prop="planState" label="计划状态"></el-table-column>
+        <el-table-column prop="initiator" label="创建人"></el-table-column>
+        <el-table-column prop="initiateTime" label="创建时间"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="150">
+          <template slot-scope="scope">
+            <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
+            <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
+          </template>
+        </el-table-column>
     </el-table>
     <table-paging
       position="right"

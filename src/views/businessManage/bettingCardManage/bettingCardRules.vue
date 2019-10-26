@@ -5,7 +5,7 @@
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="tableData.total"
       labelWidth="100px"
     >
       <control-bar slot="extend-bar" position="left" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -48,7 +48,7 @@
 </template>
 
 <script type="text/javascript">
-import editBettingRule from '@/views/businessManage/bettingCardManage/editBettingRule'
+import editBettingRule from "@/views/businessManage/bettingCardManage/editBettingRule";
 export default {
   name: "",
   data() {
@@ -61,7 +61,7 @@ export default {
           title: "所属机构：",
           prop: "insId",
           options: [{ label: "中福彩", value: "1" }]
-        },
+        }
         // {
         //   type: "datetime-range",
         //   prop: "date4",
@@ -71,14 +71,6 @@ export default {
         // }
       ],
       controlOptions: [{ name: "新建", type: "primary", icon: "plus" }],
-      tableData: {
-        records: [],
-        total: 4,
-        size: 15,
-        current: 1,
-        searchCount: true,
-        pages: 1
-      },
       tableDatas: {
         tableKey: [
           { label: "序号", value: "id", width: "80" },
@@ -90,15 +82,30 @@ export default {
           { label: "限制次数", value: "limitNum", width: "" }
         ]
       },
+      tableData: {
+        records: [],
+        total: 4,
+        size: 10,
+        current: 1,
+        searchCount: true,
+        pages: 1
+      },
+      options: {
+        page: 1,
+        pageSize: 10,
+        param: {
+          insId: 0
+        }
+      },
       rowData: {}
     };
   },
   components: {
-    'edit-betting-rule': editBettingRule
+    "edit-betting-rule": editBettingRule
   },
   created() {
     // this.getList(1, 2);
-    this.getList();
+    this.getList(this.options);
   },
   methods: {
     selectBtn(val) {
@@ -108,17 +115,11 @@ export default {
     },
     search(form) {
       console.log("search", form);
-      this.getList(form.insId)
+      this.options.param.insId = Number(form.insId);
+      this.getList(this.options);
     },
 
-    async getList(insId = 0, page=1, size=10) {
-      let options = {
-        page: page,
-        pageSize: size,
-        param: {
-          insId: insId
-        }
-      };
+    async getList(options) {
       let data = JSON.parse(JSON.stringify(options));
       let result = await this.$api.getBettingRulesList({ data });
       console.log("data", result);
@@ -152,7 +153,7 @@ export default {
               });
             }
             // 删除之后再次刷新一下数据
-            this.getList();
+            this.getList(this.options);
           });
         })
         .catch(() => {
@@ -166,15 +167,17 @@ export default {
       this.multipleSelection = val;
     },
     handleSizeChange(pageSize) {
-      this.getList(0, 1, pageSize);
+      this.options.pageSize = pageSize;
+      this.getList(this.options);
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
-      this.getList(0, currentPage, 10);
+      this.options.page = currentPage;
+      this.getList(this.options);
     },
-    closeDia () {
+    closeDia() {
       this.showformDia = false;
-      this.getList();
+      this.getList(this.options);
     }
   }
 };

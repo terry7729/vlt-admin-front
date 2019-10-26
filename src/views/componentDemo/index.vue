@@ -1629,9 +1629,10 @@ export default {
     },
     async uploadFile(files) {
       let formData = new FormData();
-      formData.append("file", files.file);
-      formData.append("refId", 1);
-      formData.append("flag", true);
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
