@@ -137,7 +137,10 @@ export default {
     resume(row) {
       console.log(row);
       this.$router.push({
-        name: "accessoriesResume"
+        name: "accessoriesResume",
+        query: {
+          serial: row.serial
+        }
       });
     },
     handleSelectionChange(val) {

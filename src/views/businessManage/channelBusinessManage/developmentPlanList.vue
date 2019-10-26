@@ -13,16 +13,18 @@
       <el-table-column label="计划年份" prop="planDate" min-width="160px"></el-table-column>
       <el-table-column label="新建销售厅" prop="cityNewSellingHall" min-width="140px"></el-table-column>
       <el-table-column label="销售厅投注机" prop="citySellingMachine" min-width="140px"></el-table-column>
-      <el-table-column label="省属合作厅" prop="cycleType" min-width="140px"></el-table-column>
-      <el-table-column label="省属合作厅投注机" prop="gameTypeName" min-width="140px"></el-table-column>
-      <el-table-column label="市属合作厅" prop="cycleType" min-width="140px"></el-table-column>
-      <el-table-column label="市属合作厅投注机" prop="gameTypeName" min-width="140px"></el-table-column>
-      <el-table-column label="发展预算（亿）" prop="status" min-width="140px"></el-table-column>
+      <!-- 如果查询的是市属数据，那就隐藏下边两调省属数据 -->
+      <el-table-column label="省属合作厅" prop="provinceCooperationHall" min-width="140px"></el-table-column>
+      <el-table-column label="省属合作厅投注机" prop="provinceSellingMachine" min-width="140px"></el-table-column>
+     <!--  -->
+     <el-table-column label="市属合作厅" prop="cityCooperationHall" min-width="140px"></el-table-column>
+      <el-table-column label="市属合作厅投注机" prop="citySellingMachine" min-width="140px"></el-table-column>
+      <el-table-column label="发展预算（亿）" prop="developBudget" min-width="140px"></el-table-column>
       <el-table-column label="状态" prop="status" min-width="140px"></el-table-column>
       <el-table-column label="操作" fixed="right" min-width="140px">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="detail(scope.row, 'game-permission')">查看</el-button>
-          <el-button size="mini" @click="detail(scope.row, 'game-permission')">编辑</el-button>
+          <el-button type="primary" size="mini" @click="detail(scope.row, 'developmentPlanDetail')">查看</el-button>
+          <el-button size="mini" @click="edit(scope.row, 'developmentPlanEdit')">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -43,7 +45,8 @@ export default {
         {name: '新建发展计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
         {name: '导出', type: '', icon: 's-promotion'},
       ],
-      tableData: []
+      tableData: [],
+      status: ['计划中','已通过']
     }
   },
   created() {
@@ -51,7 +54,7 @@ export default {
       page: 1,
       pageSize: 10,
       param: {
-        insId: "27",
+        insId: "106",
         insLevel: "2" // 1为省级 2为市级
       }
     };
@@ -74,8 +77,12 @@ export default {
       (async (data)=>{
 				let res = await self.$api.getDevelopPlanList({data})
 				if(res && res.code == 0) {
-          console.log(res)
-          self.tableData = res.data.records
+          if (res.data != null) {
+            self.tableData = res.data.records.map(item => {
+              item.status = self.status[item.status]
+              return item;
+            })
+          }
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -85,7 +92,25 @@ export default {
       if(val.name=='新建发展计划') {
         this.$router.push({name:'developmentPlanCreate',query:{id:123}})
       }
-    }
+    },
+    detail (row, name) {
+      this.$router.push({
+        name: name,
+        query: {
+          id: row.id,
+          insLevel: 2 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
+        }
+      })
+    },
+    edit  (row, name) {
+      this.$router.push({
+        name: name,
+        query: {
+          id: row.id,
+          insLevel: 2 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
+        }
+      })
+    },
   },
 }
 </script>

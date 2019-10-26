@@ -139,8 +139,8 @@ export default {
   },
   methods: {
     async initList(options) {
-      console.log('this.options', options);
       let data = JSON.parse(JSON.stringify(options));
+      console.log('this.options', data);
       let result = await this.$api.equipmentListPage({ data });
       console.log("data", result);
       if (result.code === 0) {
@@ -168,7 +168,10 @@ export default {
     resume(row) {
       console.log(row);
       this.$router.push({
-        name: "equipmentResume"
+        name: "equipmentResume",
+        query: {
+          serial: row.serial
+        }
       });
     },
     handleSelectionChange(val) {

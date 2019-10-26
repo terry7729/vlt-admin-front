@@ -7,20 +7,22 @@
       <el-table :data="goodsListData" border style="width: 100%">
         <el-table-column prop="id" label="序号" type="index" width='80'></el-table-column>
           <el-table-column prop="goodsName" label="物品名称"></el-table-column>
-          <el-table-column prop="goodsType" label="物品型号"></el-table-column>
+          <el-table-column prop="goodsModel" label="物品型号"></el-table-column>
           <el-table-column prop="goodsCode" label="物品编号"></el-table-column>
-          <el-table-column prop="miniNum" label="数量"></el-table-column>
-          <el-table-column prop="money" label="单价（元）"></el-table-column>
+          <el-table-column prop="num" label="数量"></el-table-column>
+          <el-table-column prop="unitPrice" label="单价"></el-table-column>
+          <el-table-column prop="amount" label="金额"></el-table-column>
           <el-table-column prop="remark" label="备注"></el-table-column>
+          <el-table-column prop="serialNumber" label="物品序列号"></el-table-column>
       </el-table>
     </panel-static>
     <div class="inp-total">
-      <span>合计金额：<el-input v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
+      <span>合计金额：<el-input :disabled ='true' v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
     </div>
-    <el-row class="putStore">
+    <!-- <el-row class="putStore">
       <el-button type="primary" class="mainBtn" @click="putStoreClick">确定</el-button>
       <el-button @click="cancel">取消</el-button>
-    </el-row>
+    </el-row> -->
  </div>
 </template>
 
@@ -29,31 +31,46 @@ export default {
  name: "alreadyPutDetail",
  data() {
  return {
-   totalMoney:'',
+   totalMoney:0,
    infoList: [
-        { title: "单据编号", value: "", prop: "billCode" },
-        { title: "单据主题", value: "", prop: "billTitle" },
-        { title: "申请人员", value: "", prop: "applyPerson" },
-        { title: "申请日期", value: "", prop: "applyDate" },
-        { title: "出库仓库", value: "", prop: "outStore" },
-        { title: "入库仓库", value: "", prop: "putStore" },
+        { title: "单据编号", value: "", prop: "documentNumber" },
+        { title: "单据主题", value: "", prop: "documentToppic" },
+        { title: "入库人员", value: "", prop: "userName" },
+        { title: "入库日期", value: "", prop: "createTime" },
+        { title: "出库仓库", value: "", prop: "outWarehouseName" },
+        { title: "入库仓库", value: "", prop: "entryWarehouseName" },
         { title: "备注", value: "", prop: "remark" },
     ],
-  goodsListData:[
-    {id:1,goodsName:'投注终端',goodsType:'xxxxx',goodsCode:'xxxxx',miniNum:'xxxx',money:'xxxx',remark:''}
-  ]
+  goodsListData:[]
 
  }
  },
  components: {
  },
+ created(){
+   this.putStoreDetail()
+ },
  methods: {
-   putStoreClick(){
-     console.log(32123)
-   },
-   cancel(){
-     this.$router.back();
-   }
+  async putStoreDetail(){
+    let data = {
+      documentNumber: this.$route.query.documentNumber
+    }
+    let res = await this.$api.getOutPutDetail(data.documentNumber)
+    console.log(res)
+    if(res && res.code == 0){
+      this.infoList.forEach(item =>{
+        this.totalMoney = res.data.totalPrice
+        item.value = res.data[item.prop]
+        this.goodsListData = res.data.list
+      })
+    }
+  },
+  putStoreClick(){
+    console.log(32123)
+  },
+  cancel(){
+    this.$router.back();
+  }
  },
 }
 </script>

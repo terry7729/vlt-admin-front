@@ -1,7 +1,7 @@
 <template>
-  <div class="vlt-card  vlt-edit-single">
+  <div class="vlt-card  vlt-edit-single equipment-info">
     <div class="vlt-edit-wrap">
-      <panel-static title="彩票信息">
+      <panel-static title="设备信息">
         <base-info :infoList="infoList"></base-info>
       </panel-static>
     </div>
@@ -14,33 +14,16 @@ export default {
   name: "equipmentDetail",
   data() {
     return {
-      form: {
-        name: "",
-        type: "",
-        coding: "",
-        location: "",
-        useStatus: "",
-        accessoryStatus: "",
-        storageTime: ''
-      },
       params: {},
       infoList: [
-        { title: "游戏编码", value: "", prop: "gameCode" },
-        { title: "周期类型", value: "", prop: "cycleType" },
-        { title: "游戏状态", value: "", prop: "gameStatus" },
-        { title: "游戏名称", value: "", prop: "gameName" },
-        { title: "游戏类型", value: "", prop: "officialEndSale" }
+        { title: "设备名称", value: "", prop: "deviceName" },
+        { title: "设备型号", value: "", prop: "deviceModel" },
+        { title: "设备编码", value: "", prop: "deviceCode" },
+        { title: "存放位置", value: "", prop: "nameX" },
+        { title: "使用状态", value: "", prop: "useStatus" },
+        { title: "设备状态", value: "", prop: "status" },
+        { title: "入库时间", value: "", prop: "warehouseEntryTime" }
       ],
-      setData: {
-            id: 0,
-            device: 'xxx',
-            type: 'xxx',
-            coding: 'xxx',
-            location: '中彩仓库',
-            useStatus: '运行中',
-            accessoryStatus: '正常',
-            storageTime: '2019-09-09'
-      }
     };
   },
   created () {
@@ -53,19 +36,45 @@ export default {
   components: {},
   methods: {
     async initDetail (id) {
-      let result = await this.$api.equipmentInfoDetail(id)
+      let data = {
+        id: id
+      }
+      let result = await this.$api.equipmentInfoDetail({data})
        if (result.code === 0) {
+         console.log(result);
         this.infoList.forEach(item => {
           item.value = result.data[item.prop]
+          if (item.prop == "useStatus") {
+            item.value = this.formatUseStatus(result.data[item.prop]);
+          } 
+           if (item.prop == "status"){
+            item.value = this.forMatStatus(result.data[item.prop]);
+          }
         })
+      }
+    },
+    formatUseStatus(status) {
+      switch (status) {
+        case '0':
+          return (status = "闲置中");
+        case '1':
+          return (status = "运行中");
+      }
+    },
+    forMatStatus(status) {
+      switch (status) {
+        case "0":
+          return (status = "正常");
+        case "1":
+          return (status = "已损坏");
+        case "2":
+          return (status = "故障");
       }
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
-.vlt-card {
-  padding: 20px;
-}
+<style lang="less">
+@import "./less/equiment.less";
 </style>

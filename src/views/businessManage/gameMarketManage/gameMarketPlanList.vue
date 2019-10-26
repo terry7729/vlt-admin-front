@@ -139,7 +139,7 @@ export default {
     detail (val) {
       this.$router.push({
         path: './gameMarketPlanDetail',
-        query: {gameId:val.gameId,gameListCode:val.gameListCode}
+        query: {gameId:val.gameId,id:val.id}
       })
     },
     selectBtn() {

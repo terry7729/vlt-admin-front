@@ -75,6 +75,8 @@ const channelSalesPermission = () => import('@/views/businessManage/channelBusin
 const channelFundsPermission = () => import('@/views/businessManage/channelBusinessManage/channelFundsPermission')
 const developmentPlan = () => import('@/views/businessManage/channelBusinessManage/developmentPlan')
 const developmentPlanCreate = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCreate')
+const developmentPlanDetail = () => import('@/views/businessManage/channelBusinessManage/developmentPlanDetail')
+const developmentPlanEdit = () => import('@/views/businessManage/channelBusinessManage/developmentPlanEdit')
 const developmentPlanList = () => import('@/views/businessManage/channelBusinessManage/developmentPlanList')
 const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
 const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
@@ -638,6 +640,25 @@ export default [
     children: []
   },
   {
+    path: 'businessManage/developmentPlanDetail',
+    name: 'developmentPlanDetail',
+    meta: {
+      title: '年度发展计划详情',
+    },
+    component: developmentPlanDetail,
+    children: []
+    
+  },{
+    
+    path: 'businessManage/developmentPlanEdit',
+    name: 'developmentPlanEdit',
+    meta: {
+      title: '编辑年度发展计划',
+    },
+    component: developmentPlanEdit,
+    children: []
+  },
+  {
     path: 'businessManage/developmentPlanCreate',
     name: 'developmentPlanCreate',
     meta: {
@@ -937,6 +958,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/equipmentDesc',
     name: 'equipmentDesc',
     meta: {
+      parentName: 'equipment',
       title: '查看设备详情',
     },
     component: equipmentDesc
@@ -945,6 +967,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/equipmentResume',
     name: 'equipmentResume',
     meta: {
+      parentName: 'equipment',
       title: '设备履历',
     },
     component: equipmentResume
@@ -953,6 +976,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/accessoriesDesc',
     name: 'accessoriesDesc',
     meta: {
+      parentName: 'equipment',
       title: '查看配件详情',
     },
     component: accessoriesDesc
@@ -961,6 +985,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment/accessoriesResume',
     name: 'accessoriesResume',
     meta: {
+      parentName: 'equipment',
       title: '配件履历',
     },
     component: accessoriesResume
