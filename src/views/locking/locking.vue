@@ -35,10 +35,7 @@ export default {
   methods: {
     showMessage(msg) {
       this.$message.closeAll();
-      this.$message({
-        message: msg,
-        type: 'warning'
-      });
+      this.$message.error(msg);
     },
     submit() {
       if (!this.password.trim()) {

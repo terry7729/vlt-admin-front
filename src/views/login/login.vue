@@ -1,14 +1,14 @@
 <template>
   <div class="login-container vlt-card">
     <div class="mid">
-      <img src="./../../assets/img/companyLogo.png" class="companyLogo" />
-      <img src="./../../assets/img/title.png" class="title" />
+      <img :src="logoImg" class="companyLogo" />
+      <img :src="titleImg" class="title" />
       <div class="vlt-edit-single">
         <div class="inputAll">
           <base-form
-            :formData="data1"
+            :formData="loginForm"
             labelWidth="140px"
-            ref="baseForm"
+            ref="loginForm"
             :rules="rules"
             direction="top"
             @change="changeForm"
@@ -16,7 +16,7 @@
         </div>
         <div class="registerPwd">
           <!-- <span class="register">注册</span> -->
-          <el-link :underline="false" class="register">注册</el-link>
+          <!-- <el-link :underline="false" class="register">注册</el-link> -->
           <!-- <span class="forgetPwd">忘记密码</span> -->
           <el-link :underline="false" class="forgetPwd" @click="handleForgetPwd">忘记密码</el-link>
           <el-row>
@@ -50,15 +50,17 @@
 </template>
 
 <script>
-import rules from "../../utils/rules";
-import storage from "@/utils/storage";
+import rules from "@/utils/rules"
+import storage from "@/utils/storage"
+
 export default {
   name: "login",
   data() {
     return {
+      logoImg: require('@/assets/img/companyLogo.png'),
+      titleImg: require('@/assets/img/title.png'),
       dialogFormVisible: false,
-
-      data1: [
+      loginForm: [
         {
           type: "input-icon",
           title: "",
@@ -123,22 +125,21 @@ export default {
   mounted() {},
   methods: {
     async login() {
-      // this.$router.push({
-      //   path: "entry"
-      // });
-
-      let data = JSON.parse(JSON.stringify(this.param));
-      // data.headers = {
-      //   data: _this.token
-      // };
-      console.log(data);
-      let result = await this.$api.getLogin({ data });
-      console.log(result);
-      if (result.code === 0) {
-        let token = result.data.token;
+      if (!this.param.password.trim() || !this.param.account.trim()) {
+        this.$message.closeAll();
+        this.$message.error('用户名或密码不能为空');
+        return;
+      }
+      const data = this.param;
+      const res = await this.$api.getLogin({
+        message: '登录成功',
+        data
+       });
+      if (res && res.code === 0) {
+        const token = res.data.token;
         storage.set("token", token);
         this.$router.push({
-          path: "entry"
+          name: "entry"
         });
       }
     },
@@ -150,6 +151,7 @@ export default {
     },
     //点击忘记密码
     handleForgetPwd() {
+      return;
       this.dialogFormVisible = true;
     },
     // 弹框取消
