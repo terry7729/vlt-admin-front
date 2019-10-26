@@ -23,6 +23,7 @@
         <el-table-column align="center" prop="gameName" label="游戏"></el-table-column>
         <el-table-column align="center" prop="maxJackpotMoneyOrdinary" label="最高奖池金额"></el-table-column>
         <el-table-column align="center" prop="minJackpotMoneyOrdinary" label="最低奖池金额"></el-table-column>
+        <el-table-column align="center" prop="updatedTime" label="更新时间"></el-table-column>
         <el-table-column align="center" prop="collectStatus" label="状态">
           <template slot-scope="scope">
             <span v-if="scope.row.collectStatus===0">生效</span>

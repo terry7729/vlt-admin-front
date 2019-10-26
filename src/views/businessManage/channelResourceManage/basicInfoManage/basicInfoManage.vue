@@ -214,22 +214,22 @@ export default {
  methods: {
    //类型管理
    //状态修改
-   async changeState(id,state){
-     console.log(id,state)
-     let data = {
-       "id":id,
-       "status": state,
-       "updateBy": "",
-       "updateTime": ""
-     }
-     let res = await this.$api.statusUpdate({data})
-     if(res.code == 0 ){
-       this.$message({
-         message:'状态修改成功',
-         type:'success'
-       })
-     }
-    },
+  async changeState(id,state){
+    console.log(id,state)
+    let data = {
+      "id":id,
+      "status": state,
+      "updateBy": "",
+      "updateTime": ""
+    }
+    let res = await this.$api.statusUpdate({data})
+    if(res.code == 0 ){
+      this.$message({
+        message:'状态修改成功',
+        type:'success'
+      })
+    }
+  },
 
    //获取类型管理列表
    async getTypeList(data){

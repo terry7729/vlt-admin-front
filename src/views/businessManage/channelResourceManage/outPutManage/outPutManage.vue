@@ -226,7 +226,7 @@ export default {
       // }
     };
   },
-  // components: {},
+  components: {},
   created() {
     this.puthandleClick({
       supActiveIndex: 0,

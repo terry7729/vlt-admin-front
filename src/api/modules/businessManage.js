@@ -14,7 +14,14 @@ export default {
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
+<<<<<<< HEAD
   getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
+=======
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  // 获取管理员列表
+  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  // 仓库管理详情查看
+>>>>>>> af82f69d5c12e4041d9bc7ddc64ff3313040464c
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
   getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
@@ -24,7 +31,11 @@ export default {
   // 获取类型管理查看详情
   getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
   //类型管理状态修改
+<<<<<<< HEAD
   statusUpdate: (options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/', options),
+=======
+  statusUpdate:(options = {}) => ajax.post('/goodsType/goodsType/statusUpdate',options),
+>>>>>>> af82f69d5c12e4041d9bc7ddc64ff3313040464c
   //类型管理类型新增
   typeCreate: (options = {}) => ajax.post('/goodsType/goodsType/create', options),
   //出入库管理列表获取
