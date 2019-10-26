@@ -10,14 +10,14 @@
           <el-radio v-model="gameSaleChannel" label="1">区域内全部大厅</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="gameSaleChannel" label="2">区域内指定大厅</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
+            <el-input v-model="gameSaleChannelCode" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
           </div>
         </el-form-item>
         <el-form-item label="销售终端">
           <el-radio v-model="gameSaleTerminal" label="1">大厅内全部终端</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="gameSaleTerminal" label="2">大厅内指定终端</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
+            <el-input v-model="gameSaleTerminalCode" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
           </div>
         </el-form-item>
         <el-row class="vlt-edit-btn">
@@ -30,16 +30,17 @@
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 
 export default {
   name: "",
   data() {
     return {
       baseData: [
-        {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '', placeholder: '请输入上市计划名称'},
-        {title: '上市时间', type: 'datetime-range',  prop: '', value: '', options:['gameListPlanTimestart', 'gameListPlanTimeend']},
-        {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '', placeholder: '请输入上市计划简介'},
-        {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+        {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '上市计划名称1', placeholder: '请输入上市计划名称'},
+        {title: '上市时间', type: 'datetime',  prop: 'gameListPlanTime', value: ''},
+        {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '计划简介1', placeholder: '请输入上市计划简介'},
+        {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[{label: '网易',value: 71}]},
         {title: '销售区域', type: 'cascader-multiple',  prop: 'gameSaleArea', value: '', options: [],
           setProps: {
             label: "text",
@@ -53,10 +54,15 @@ export default {
       rules: {},
       gameSaleChannel: '1',
       gameSaleTerminal: '1',
+      gameSaleChannelCode: '',
+      gameSaleTerminalCode: '',
       options: [{label:'男', value:'1'},{label:'女',value:'2'}],
       checkList: [],
       textarea: '',
-      param: null,
+      param: {
+        gameSaleChannel: '',
+        gameSaleTerminal: '',
+      },
     }
   },
   created() {
@@ -97,8 +103,19 @@ export default {
       this.param = val;
     },
     next() {
+      if(this.gameSaleChannel=='1') {
+        this.param.gameSaleChannel = 'all';
+      }else{
+        this.param.gameSaleChannel = this.gameSaleChannelCode;
+      }
+      if(this.gameSaleTerminal=='1') {
+        this.param.gameSaleTerminal = 'all';
+      }else{
+        this.param.gameSaleTerminal = this.gameSaleTerminalCode;
+      }
+      this.param.gameListPlanTime = moment(this.param.gameListPlanTime).format("YYYY-MM-DD HH:mm:ss")
       let data = {
-        baseInfo: this.param
+        gameListPlanVo: this.param
       }
       this.$emit('next', data)
     },

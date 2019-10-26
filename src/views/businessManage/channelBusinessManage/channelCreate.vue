@@ -166,6 +166,7 @@
               :value="list.modelId">
             </el-option>
           </el-select>
+          <el-input v-model="item.unitPrice" class="device-item" disabled placeholder="物品单价"></el-input>
           <el-input v-model="item.num" class="device-item" placeholder="请输入数量"></el-input>
           <el-button v-if="index!==0" type="text" class="delete" @click="deleteResource(index)">删除</el-button>
         </el-form-item>
@@ -231,7 +232,7 @@ export default {
         depositMoney: '' // 押金金额
       },
       resourceData: [ // 发放资源数据
-        {title:'资源类型',goodsType:'',modelId:'',id:'',num:'',optionsType:typeData, optionsName:[],optionsModel:[],}
+        {title:'资源类型',goodsType:'',modelId:'',id:'',num:'',unitPrice: '',optionsType:typeData, optionsName:[],optionsModel:[],}
       ],
       radio: '1',
       fileList: [],
@@ -293,7 +294,7 @@ export default {
         let params = []
         res.forEach((item)=>{
           // 保留你需要的参数
-          let param = (({goodsType, modelId, id, num}) =>({goodsType, modelId, id, num}))(item);
+          let param = (({goodsType, modelId, id, unitPrice, num}) =>({goodsType, modelId, id, unitPrice, num}))(item);
           params.push(param)
         })
         this.deviceParam = params;
@@ -317,6 +318,7 @@ export default {
       console.log('财务信息表单', val)
       this.financeData = val;
     },
+    // 选择资源类型
     selectResourceType(index) {
       console.log('选择的资源index', index)
       this.resourceIndex = index;
@@ -326,17 +328,19 @@ export default {
       }
       this.getModelTree(data)
     },
+    // 选择资源名称
     selectResourceName(index) {
       // console.log(index,this.resourceDatas[index])
       // 重置后面下拉框的数据 清空
-      this.$set(this.resourceData[this.resourceIndex], 'model', '');
-      this.$set(this.resourceData[this.resourceIndex], 'number', '');
+      this.$set(this.resourceData[this.resourceIndex], 'modelId', '');
+      this.$set(this.resourceData[this.resourceIndex], 'num', '');
+      this.$set(this.resourceData[this.resourceIndex], 'unitPrice', this.resourceDatas[index].unitPrice);
       this.$set(this.resourceData[this.resourceIndex], 'optionsModel', this.resourceDatas[index].modelInfoVoList)
   
     },
     selectResourceModel(val) {
       // 重置后面输入框的数据 清空
-      this.$set(this.resourceData[0], 'number', '');
+      this.$set(this.resourceData[0], 'num', '');
       // console.log('设备型号', val)
     },
     // 角色名称
@@ -446,6 +450,7 @@ export default {
         modelId:'',
         id:'',
         num:'',
+        unitPrice:'',
         optionsType: typeData,
         optionsName: [],
         optionsModel: [],
@@ -523,7 +528,7 @@ export default {
         financeData: this.financeData, // 账户资金参数
         channelFundData: this.channelFundData[0], // 人员信息参数
         gameRightList: this.gameRightList, // 销售权限参数
-        warehouseRecordingData: {
+        warehouseGoodsData: {
           list: this.deviceParam
         }
       }

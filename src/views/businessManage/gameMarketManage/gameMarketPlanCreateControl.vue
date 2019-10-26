@@ -94,52 +94,52 @@ export default {
     return {
       gameData: [
         // {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]}, //未找到
-        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
+        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: 1},{label: '试玩积分',value: 2}]},
         // {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]}, //未找到
-        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: '1'},{label: '禁用',value: '2'}]},
-        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: '0'},{label: '禁用',value: '1'}]},
-        {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
-        {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
-        {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
-        {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: ''},
-        {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: '',placeholder: '示例1:100 请用英文符号“ : ”'},
-        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: {label: '启用',value: '0'}, options:[{label: '启用',value: '0'},{label: '禁止',value: '1'}]},
-        {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: ''},
-        {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: ''},
-        {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: ''},
+        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
+        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 1}]},
+        {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: 10},
+        {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: 11},
+        {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: 12},
+        {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: 13},
+        {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: 14,placeholder: '示例1:100 请用英文符号“ : ”'},
+        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: {label: '启用',value: 1}, options:[{label: '启用',value: 1},{label: '禁止',value: 2}]},
+        {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: '游戏规则'},
+        {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: 120},
+        {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: 2000},
       ],
       betData: [
-        {title: '单注最小金额', type: 'input',  prop: 'minAmount', value: ''},
-        {title: '最小投注数', type: 'input',  prop: 'minBets', value: ''},
-        {title: '单注最大金额', type: 'input',  prop: 'maxAmount', value: ''},
-        {title: '最大投注数', type: 'input',  prop: 'maxBets', value: ''},
+        {title: '单注最小金额', type: 'input',  prop: 'minAmount', value: 2},
+        {title: '最小投注数', type: 'input',  prop: 'minBets', value: 1},
+        {title: '单注最大金额', type: 'input',  prop: 'maxAmount', value: 1000},
+        {title: '最大投注数', type: 'input',  prop: 'maxBets', value: 10},
       ],
       eachBetData: [
         {minAddBetsOne: ''},
       ],
       fundsData: [
-        {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: ''},
-        {title: '总公益金占比', type: 'input',  prop: 'totalWelfareRate', value: ''},
-        {title: '中福彩发行费占比', type: 'input',  prop: 'zhcPublishRate', value: ''},
-        {title: '中福彩公益金占比', type: 'input',  prop: 'zhcWelfareRate', value: ''},
-        {title: '省福彩发行费占比', type: 'input',  prop: 'proPublishRate', value: ''},
-        {title: '省福彩公益金占比', type: 'input',  prop: 'proWelfareRate', value: ''},
-        {title: '市福彩发行费占比', type: 'input',  prop: 'cityPublishRate', value: ''},
-        {title: '市福彩公益金占比', type: 'input',  prop: 'cityWelfareRate', value: ''},
-        {title: '销售厅发行费占比', type: 'input',  prop: 'marketPublishRate', value: ''},
-        {title: '销售厅公益金占比', type: 'input',  prop: 'marketWelfareRate', value: ''},
+        {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: 20},
+        {title: '总公益金占比', type: 'input',  prop: 'totalWelfareRate', value: 20},
+        {title: '中福彩发行费占比', type: 'input',  prop: 'zhcPublishRate', value: 5},
+        {title: '中福彩公益金占比', type: 'input',  prop: 'zhcWelfareRate', value: 5},
+        {title: '省福彩发行费占比', type: 'input',  prop: 'proPublishRate', value: 4},
+        {title: '省福彩公益金占比', type: 'input',  prop: 'proWelfareRate', value: 4},
+        {title: '市福彩发行费占比', type: 'input',  prop: 'cityPublishRate', value: 3},
+        {title: '市福彩公益金占比', type: 'input',  prop: 'cityWelfareRate', value: 3},
+        {title: '销售厅发行费占比', type: 'input',  prop: 'marketPublishRate', value: 2},
+        {title: '销售厅公益金占比', type: 'input',  prop: 'marketWelfareRate', value: 2},
       ],
       riskData: [
-        {title: '最低中奖金额', type: 'input',  prop: 'minBonus', value: ''},
-        {title: '最低返奖率', type: 'input',  prop: 'minReturnRate', value: ''},
-        {title: '最高中奖金额', type: 'input',  prop: 'maxBonus', value: ''},
-        {title: '最高返奖率', type: 'input',  prop: 'maxReturnRate', value: ''},
-        {title: '最低奖池金额', type: 'input',  prop: 'minPoolAmount', value: ''},
-        {title: '最低销量', type: 'input',  prop: 'minSale', value: ''},
-        {title: '最高奖池金额', type: 'input',  prop: 'maxPoolAmount', value: ''},
-        {title: '最高销量', type: 'input',  prop: 'maxSale', value: ''},
-        {title: '最低开机率', type: 'input',  prop: 'minStartRate', value: ''},
-        {title: '最低在线数量', type: 'input',  prop: 'minOnlineNum', value: ''},
+        {title: '最低中奖金额', type: 'input',  prop: 'minBonus', value: 5},
+        {title: '最低返奖率', type: 'input',  prop: 'minReturnRate', value: 2},
+        {title: '最高中奖金额', type: 'input',  prop: 'maxBonus', value: 10000},
+        {title: '最高返奖率', type: 'input',  prop: 'maxReturnRate', value: 40},
+        {title: '最低奖池金额', type: 'input',  prop: 'minPoolAmount', value: 30000},
+        {title: '最低销量', type: 'input',  prop: 'minSale', value: 2},
+        {title: '最高奖池金额', type: 'input',  prop: 'maxPoolAmount', value: 400000},
+        {title: '最高销量', type: 'input',  prop: 'maxSale', value: 200},
+        {title: '最低开机率', type: 'input',  prop: 'minStartRate', value: 20},
+        {title: '最低在线数量', type: 'input',  prop: 'minOnlineNum', value: 110},
       ],
       publishData: [
         {title: '发布标题', type: 'input',  prop: 'eachAdd', value: ''},
@@ -148,7 +148,7 @@ export default {
         {title: '发布内容', type: 'textarea',  prop: 'eachAdd', value: ''},
       ],
       tableData: [
-        {name:'',maxMoney:'',desc:''}
+        {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
       ],
       eachBetForm: {},
       gameForm: {},
@@ -189,7 +189,7 @@ export default {
       this.tableData.splice(index, 1);
     },
     addGoods() {
-      let obj = {name:'',maxMoney:'',desc:''}
+      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
       this.$set(this.tableData, this.tableData.length, obj);
     },
     getStoreList(row) {
@@ -247,13 +247,14 @@ export default {
       })
       let str = array.join(',')
       console.log('str', str)
+      this.ruleParams.minAddBetsOne = str;
       let data = {
-        ruleParams: this.ruleParams,
-        betParams: this.betParams,
-        fundsParams: this.fundsParams,
-        riskParams: this.riskParams,
-        publishParams: this.publishParams,
-        awardSetParams: this.awardSetParams
+        gameRuleVo: this.ruleParams,
+        gameBettingRuleVo: this.betParams,
+        gameFundRuleVo: this.fundsParams,
+        gameRiskRuleVo: this.riskParams,
+        // publishParams: this.publishParams,
+        gameExchangeSetVoList: this.awardSetParams
       }
       this.$emit('next', data)
     }
