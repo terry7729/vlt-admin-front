@@ -44,8 +44,8 @@
       <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
     </panel>
     <el-row class="vlt-edit-btn">
-      <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
-      <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
+      <el-button size="medium" @click="prev" class="cancel">上一步</el-button>
+      <el-button type="primary" v-prevent="1000" size="medium" @click="next">下一步</el-button>
     </el-row>
   </div>
 </template>
@@ -57,51 +57,53 @@ export default {
   data() {
     return {
       gameData: [
-        {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]},
-        {title: '消费模式', type: 'select',  prop: 'salesModel', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
-        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
-        {title: 'Jackpot比率', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '返奖率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '调节基金比率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '奖池比率', type: 'input',  prop: 'email', value: ''},
-        {title: '游戏兑换比例', type: 'input',  prop: 'rate', value: '',placeholder: '示例1:100 请用英文符号“ : ”'},
-        {title: '防沉迷', type: 'select',  prop: 'statusa', value: {label: '启用',value: '0'}, options:[{label: '启用',value: '0'},{label: '禁止',value: '1'}]},
-        {title: '游戏规则介绍', type: 'textarea',  prop: 'textarea', value: ''},
-        {title: '单次时长', type: 'input',  prop: 'faxaphone', value: ''},
-        {title: '单日限额', type: 'input',prop: 'address', value: ''},
+        {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]}, //未找到
+        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
+        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]}, //未找到
+        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: '1'},{label: '禁用',value: '2'}]},
+        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: '0'},{label: '禁用',value: '1'}]},
+        {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
+        {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
+        {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
+        {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: ''},
+        {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: '',placeholder: '示例1:100 请用英文符号“ : ”'},
+        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: {label: '启用',value: '0'}, options:[{label: '启用',value: '0'},{label: '禁止',value: '1'}]},
+        {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: ''},
+        {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: ''},
+        {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: ''},
       ],
       betData: [
-        {title: '单注最小金额', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '最小投注数', type: 'input',  prop: 'email', value: ''},
-        {title: '单注最大金额', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '最大投注数', type: 'input',  prop: 'email', value: ''},
+        {title: '单注最小金额', type: 'input',  prop: 'minAmount', value: ''},
+        {title: '最小投注数', type: 'input',  prop: 'minBets', value: ''},
+        {title: '单注最大金额', type: 'input',  prop: 'maxAmount', value: ''},
+        {title: '最大投注数', type: 'input',  prop: 'maxBets', value: ''},
       ],
       eachBetData: [
-        {title: '单次加注金额', type: 'input',  prop: 'eachAdd', value: ''},
+        {minAddBetsOne: ''},
       ],
       fundsData: [
-        {title: '总发行经费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '总公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '中福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '中福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '省福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '省福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '市福彩发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '市福彩公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '销售厅发行费占比', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '销售厅公益金占比', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: ''},
+        {title: '总公益金占比', type: 'input',  prop: 'totalWelfareRate', value: ''},
+        {title: '中福彩发行费占比', type: 'input',  prop: 'zhcPublishRate', value: ''},
+        {title: '中福彩公益金占比', type: 'input',  prop: 'zhcWelfareRate', value: ''},
+        {title: '省福彩发行费占比', type: 'input',  prop: 'proPublishRate', value: ''},
+        {title: '省福彩公益金占比', type: 'input',  prop: 'proWelfareRate', value: ''},
+        {title: '市福彩发行费占比', type: 'input',  prop: 'cityPublishRate', value: ''},
+        {title: '市福彩公益金占比', type: 'input',  prop: 'cityWelfareRate', value: ''},
+        {title: '销售厅发行费占比', type: 'input',  prop: 'marketPublishRate', value: ''},
+        {title: '销售厅公益金占比', type: 'input',  prop: 'marketWelfareRate', value: ''},
       ],
       riskData: [
-        {title: '最低中奖金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低返奖率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高中奖金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高返奖率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低奖池金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低销量', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高奖池金额', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最高销量', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低开机率', type: 'input',  prop: 'eachAdd', value: ''},
-        {title: '最低在线数量', type: 'input',  prop: 'eachAdd', value: ''},
+        {title: '最低中奖金额', type: 'input',  prop: 'minBonus', value: ''},
+        {title: '最低返奖率', type: 'input',  prop: 'minReturnRate', value: ''},
+        {title: '最高中奖金额', type: 'input',  prop: 'maxBonus', value: ''},
+        {title: '最高返奖率', type: 'input',  prop: 'maxReturnRate', value: ''},
+        {title: '最低奖池金额', type: 'input',  prop: 'minPoolAmount', value: ''},
+        {title: '最低销量', type: 'input',  prop: 'minSale', value: ''},
+        {title: '最高奖池金额', type: 'input',  prop: 'maxPoolAmount', value: ''},
+        {title: '最高销量', type: 'input',  prop: 'maxSale', value: ''},
+        {title: '最低开机率', type: 'input',  prop: 'minStartRate', value: ''},
+        {title: '最低在线数量', type: 'input',  prop: 'minOnlineNum', value: ''},
       ],
       eachBetForm: {},
       gameForm: {},
@@ -164,14 +166,14 @@ export default {
     text-align: right;
     margin: 40px 0 40px;
     .el-button{
-      // width: 120px;
+      width: 120px;
     }
     .cancel{
-      // margin: 0 30px 0 0;
+      margin: 0 30px 0 0;
     }
   }
   .wrap{
-    // max-width: 900px;
-    // margin: 0 auto;
+    max-width: 900px;
+    margin: 0 auto;
   }
 </style>

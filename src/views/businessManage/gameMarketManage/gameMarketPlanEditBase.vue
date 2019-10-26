@@ -7,13 +7,11 @@
         class="baseInfo">
         <base-form :formData="baseData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
         <el-form-item label="销售渠道">
-          <el-radio-group v-model="gameSaleChannel">
-            <el-radio  label="1">区域内全部大厅</el-radio>
-            <div class="flex-wrap">
-              <el-radio  label="2">区域内指定大厅</el-radio>
-              <!-- <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input> -->
-            </div>
-          </el-radio-group>
+          <el-radio v-model="gameSaleChannel" label="1">区域内全部大厅</el-radio>
+          <div class="flex-wrap">
+            <el-radio v-model="gameSaleChannel" label="2">区域内指定大厅</el-radio>
+            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
+          </div>
         </el-form-item>
         <el-form-item label="销售终端">
           <el-radio v-model="gameSaleTerminal" label="1">大厅内全部终端</el-radio>

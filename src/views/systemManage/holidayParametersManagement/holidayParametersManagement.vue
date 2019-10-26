@@ -112,11 +112,11 @@ export default {
         pageSize: 10,
         holidayName: ""
       };
-      let token = localStorage.getItem("data");
-      console.log(token);
-      data.headers = {
-        token: token
-      };
+      // let token = localStorage.getItem("data");
+      //console.log(token);
+      // data.headers = {
+      //   token: token
+      // };
       let result = await this.$api.queryHolInfoPage({ data });
       console.log(result);
       // if (result.code === 0) {

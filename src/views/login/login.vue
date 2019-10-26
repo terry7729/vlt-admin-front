@@ -51,6 +51,7 @@
 
 <script>
 import rules from "../../utils/rules";
+import storage from "@/utils/storage";
 export default {
   name: "login",
   data() {
@@ -135,7 +136,7 @@ export default {
       console.log(result);
       if (result.code === 0) {
         let token = result.data.token;
-        localStorage.setItem("data", token);
+        storage.set("token", token);
         this.$router.push({
           path: "entry"
         });

@@ -82,7 +82,11 @@ export default {
         {title: '奖池类型', type: 'select', prop: 'selectName3', value: '', options: []},
         {title: '最近更新时间', type: 'datepicker-range', prop: '', value: '', options: ['start', 'end']} 
       ],
-      currentPage: 1
+      currentPage: 1,
+      params: {
+        pageSize: 10,
+        size: 1,
+      }
     }
     
   },
@@ -155,7 +159,12 @@ export default {
       this.$router.push({path: './gameEdit',query: {gameId}})
     },
     search(form) {
-    console.log('search', form)
+      console.log('search', form)
+      let data = {
+        pageSize: 1,
+        params: form
+      }
+      this.getGameStoreList(data)
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
