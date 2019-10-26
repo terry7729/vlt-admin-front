@@ -16,9 +16,9 @@ export default {
   // 获取左侧导航
   getMenu: (options = {}) => ajax.post('/menu', options),
   //登录
-  getLogin: (options = {}) => ajax.get('/login', options),
+  getLogin: (options = {}) => ajax.post('/login', options),
   // 登出
-  getLoginOut: (options = {}) => ajax.post('/logout', options),
+  getLogOut: (options = {}) => ajax.post('/logout', options),
   // 上传范例
   testUpload: (options = {}) => ajax.upload('/game/uploading', options),
 
