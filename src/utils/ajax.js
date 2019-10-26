@@ -1,6 +1,7 @@
 // ajax.js
 import axios from 'axios'
 import qs from 'qs'
+import storage from './storage'
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
@@ -37,6 +38,7 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  axios.defaults.headers.common["token"] = storage.get('token');
   return (async () => {
     try {
       let res;
