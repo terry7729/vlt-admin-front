@@ -23,7 +23,12 @@
         :total="999"
         labelWidth="80px"
       >
-        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions" position="left"></control-bar>
+        <control-bar
+          slot="extend-bar"
+          @select="selectBtn"
+          :options="controlOptions"
+          position="left"
+        ></control-bar>
       </search-bar>
     </section>
 
@@ -46,50 +51,19 @@
         :pageSize="10"
         @handleSizeChange="handleSizeChange"
         @handleCurrentChange="handleCurrentChange"
-      >
-      </table-paging>
+      ></table-paging>
     </section>
 
     <section class="comp-item">
       <h4 class="comp-title">表格状态</h4>
-      <el-table
-        :data="tableData"
-        border
-        style="width: 100%; margin-top: 10px">
-        <el-table-column
-          prop="date"
-          label="日期"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="province"
-          label="省份"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="city"
-          label="市区"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="zip"
-          label="邮编"
-        >
-        </el-table-column>
-        <el-table-column
-          label="状态"
-          align="center"
-        >
+      <el-table :data="tableData" border style="width: 100%; margin-top: 10px">
+        <el-table-column prop="date" label="日期"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="province" label="省份"></el-table-column>
+        <el-table-column prop="city" label="市区"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="zip" label="邮编"></el-table-column>
+        <el-table-column label="状态" align="center">
           <template slot-scope="scope">
             <table-row-status
               :scope="scope"
@@ -113,8 +87,7 @@
                   value: '-1'
                 }
               }"
-            >
-            </table-row-status>
+            ></table-row-status>
           </template>
         </el-table-column>
       </el-table>
@@ -124,13 +97,16 @@
       <h4 class="comp-title">文件上传</h4>
       <div class="mt10">
         <el-upload
-          action=""
+          action
           :limit="1"
           :show-file-list="true"
           :on-remove="handleRemove"
           :http-request="uploadFile"
         >
-          <el-button size="small" type="danger">上传应用<i class="el-icon-upload el-icon--right"></i></el-button>
+          <el-button size="small" type="danger">
+            上传应用
+            <i class="el-icon-upload el-icon--right"></i>
+          </el-button>
         </el-upload>
       </div>
     </section>
@@ -262,10 +238,34 @@ export default {
         }
       ],
       data1: [
-        {title: "日期", type: "datepicker-range", prop: "date4",value: "",options: ["start", "end"]},
-        {title: "日期5", type: "datepicker-range", prop: "date5",value: "",options: ["start5", "end5"]},
-        {title: "日期时间", type: "datetime-range", prop: "time4",value: "",options: ["time", "endTime"]},
-        {title: "日期时间5", type: "datetime-range", prop: "time5",value: "",options: ["time5", "endTime5"]},
+        {
+          title: "日期",
+          type: "datepicker-range",
+          prop: "date4",
+          value: "",
+          options: ["start", "end"]
+        },
+        {
+          title: "日期5",
+          type: "datepicker-range",
+          prop: "date5",
+          value: "",
+          options: ["start5", "end5"]
+        },
+        {
+          title: "日期时间",
+          type: "datetime-range",
+          prop: "time4",
+          value: "",
+          options: ["time", "endTime"]
+        },
+        {
+          title: "日期时间5",
+          type: "datetime-range",
+          prop: "time5",
+          value: "",
+          options: ["time5", "endTime5"]
+        },
         { type: "input", title: "姓名", prop: "name" },
         {
           type: "select",
@@ -360,7 +360,18 @@ export default {
           prop: "status",
           options: [{ label: "男", value: "0" }, { label: "女", value: "1" }]
         },
-        {title: '试玩渠道',type: 'radio-textarea', prop: '', props: ['radio', 'radioText'], value: ['1', 'aa'], options:[{label:'区域内全部大厅',value:'1'},{label:'区域内指定大厅',value:'2'}],placeholder:'随便说点啥'},
+        {
+          title: "试玩渠道",
+          type: "radio-textarea",
+          prop: "",
+          props: ["radio", "radioText"],
+          value: ["1", "aa"],
+          options: [
+            { label: "区域内全部大厅", value: "1" },
+            { label: "区域内指定大厅", value: "2" }
+          ],
+          placeholder: "随便说点啥"
+        },
         { type: "textarea", title: "说明", prop: "all" },
         { type: "switch", title: "兑奖权限", prop: "isShow" },
         { type: "datepicker", prop: "date1", value: "", title: "日期选择" },
@@ -1252,13 +1263,13 @@ export default {
           type: "datetime",
           prop: "date3",
           value: "",
-          title: "日期时间",
+          title: "日期时间"
         },
         {
           type: "datetime-range",
           prop: "date4",
           value: "",
-          title: "日期时间",
+          title: "日期时间"
         },
         {
           type: "cascader",
@@ -1559,12 +1570,13 @@ export default {
         { name: "导出", type: "success", icon: "upload" },
         { name: "导出", type: "warning", icon: "download" }
       ],
-      tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
           zip: 200333
         }
       ]
@@ -1606,10 +1618,10 @@ export default {
       console.log("search", form);
     },
     handleSizeChange(pageSize) {
-      console.log(pageSize)
+      console.log(pageSize);
     },
     handleCurrentChange(currentPage) {
-      console.log(currentPage)
+      console.log(currentPage);
     },
     // 文件上传
     handleRemove(file, fileList) {
@@ -1624,10 +1636,10 @@ export default {
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
-          console.log('上传进度事件:', evt)
+          console.log("上传进度事件:", evt);
         }
-      })
-      console.log('uploadFile', res);
+      });
+      console.log("uploadFile", res);
     }
   },
   components: {}

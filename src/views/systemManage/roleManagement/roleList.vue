@@ -17,7 +17,7 @@
         <el-table-column prop="roleName" label="用户角色"></el-table-column>
         <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" ></el-table-column>
         <el-table-column prop="roleType" label="角色类型"></el-table-column>
         <el-table-column prop="updateBy" label="修改人"></el-table-column>
         <el-table-column prop="updateTime" label="修改时间"></el-table-column>

@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <search-Bar :options="option"></search-Bar>
+      <search-Bar :options="option" @search="search"></search-Bar>
     </div>
     <div class="addlist">
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -11,7 +11,7 @@
     </div>
     <div class="el_table">
       <el-table :data="tableData" ref="multipleTable" border>
-        <el-table-column prop="id" label="序号" width="100"></el-table-column>
+        <el-table-column type="index" label="序号" width="100"></el-table-column>
         <el-table-column prop="keyName" label="数据字典名称"></el-table-column>
         <el-table-column prop="key" label="数据字典键"></el-table-column>
         <el-table-column prop="value" label="字典数据值"></el-table-column>
@@ -34,14 +34,14 @@
               :rowName="scope.row.name"
               :option="{
                 enable:{
-                  apiName:'disable',
+                  apiName:'enable',
                   label:'启用',
-                  value:0
+                  value:1
                 },
                disable:{
-                  apiName:'enable',
+                  apiName:'disable',
                   label:'冻结',
-                  value:1
+                  value:0
                },
                
               }"
@@ -55,11 +55,11 @@
         </el-table-column>
       </el-table>
       <table-paging
-        :total="999"
-        :currentPage="1"
-        :pageSize="10"
-        @handleSizeChange="pageSizeChange"
-        @handleCurrentChange="pageCurrentChange"
+        :total="total"
+        :currentPage="currentPage"
+        :pageSize="pageSize"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
       ></table-paging>
     </div>
 
@@ -107,18 +107,18 @@ export default {
       option: [
         {
           title: "字典名称",
-          prop: "user",
+          prop: "key",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
-        {
-          title: "所属类别",
-          prop: "user",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        }
+        // {
+        //   title: "所属类别",
+        //   prop: "user",
+        //   type: "input",
+        //   value: "",
+        //   placeholder: "请输入" || ["请输入1", "请输入2"]
+        // }
       ],
       tableData: [
         {
@@ -131,11 +131,20 @@ export default {
           createrdate: "2019-10-12 10:0:0"
         }
       ],
-      total: 100,
-      pageSize: 20,
-      currentPage4: 0,
+      total: 0,
+      pageSize: 10,
+      currentPage: 0,
+      // Data:{
+      // page: 1,
+      // pageSize: 10,//每页显示数据调试
+      // param: {
+      //   "size": "",
+      //   "total": "",
+      //   "pages": '',
+      // }
+    // },
       formData: [
-        { title: "所属类型", type: "input", prop: "belongsType", value: "" },
+       
         { title: "字典名称", type: "input", prop: "keyName", value: "" },
         {
           title: "字典数据值",
@@ -143,15 +152,21 @@ export default {
           prop: "value",
           value: ""
         },
-        { title: "排序字段", type: "input", prop: "key", value: "" },
+        
         { title: "状态", type: "switch", prop: "status", value: "" },
-        { title: "详情描述", type: "description", prop: "all", value: "" }
+        { title: "详情描述", type: "textarea", prop: "description", value: "" }
       ]
     };
   },
   components: {},
   created() {
-    let data = {};
+    let data = {
+      param: {
+        size: "",
+        total: "",
+        pages: '',
+      }
+    };
     this.getAll(data);
   },
   methods: {
@@ -165,6 +180,9 @@ export default {
         console.log(res)
         if (res && res.code == 0) {
           that.tableData = res.data.records;
+          that.total = res.data.total;
+          that.pageSize = res.data.size
+          
         } else {
         }
       })(data);
@@ -178,16 +196,23 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    handleSizeChange(val) {
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val;
+    // },
+    handleSizeChange() {
       console.log(`每页 ${val} 条`);
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    handleCurrentChange() {   
     },
-    selectBtn() {
+    async search(val){
+      // console.log(val)
+      
+      let reslt = await this.$api.find();//查询接口
+      console.log('查询接口',reslt);  
+      
+    },
+    
+    selectBtn() {     //新建
       // this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       // });
@@ -203,28 +228,39 @@ export default {
       // });
       let result = await this.$api.edit;
     },
-    submit(val) {
-      this.$refs.baseForm.validate(val => {
-        console.log(val);
+    changeForm(form){
+      this.param = form;
+    },
+   async submit(val) {
+      // this.$refs.baseForm.validate(val => {
+      //   console.log(val);
         if (this.flag == true) {
+            let data = this.param;
+      
+            //let formData = this.$refs.baseForm.form;
+            let result= await this.$api.add({data});
+            
+            this.$refs.baseForm.resetForm();
+            console.log(result);
+            this.dialogFormVisible = false;
         } else {
         }
-      });
+      // });
     },
 
     cancel() {
       // this.$router.go(-1)
       this.dialogFormVisible = false;
     },
-    handler() {}
-    // async disable(id) {
-    //   let result = await this.$api.disable(id);
-    //   console.log(result);
-    // },
-    // async enable(id) {
-    //   let result = await this.$api.enable(id);
-    //   console.log(result);
-    // },
+    handler() {},
+    async disable(id) {
+      let result = await this.$api.disable(id);
+      console.log(result);
+    },
+    async enable(id) {
+      let result = await this.$api.enable(id);
+      console.log(result);
+    },
   }
 };
 </script>

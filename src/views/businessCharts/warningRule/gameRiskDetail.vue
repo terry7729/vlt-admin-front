@@ -123,12 +123,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.plan-check {
-  background: white;
-  margin: 20px 20px;
-  border-radius: 8px;
-  padding: 25px;
-}
 /deep/ .base-info .info-list .title{
   min-width: unset;
 }

@@ -160,10 +160,10 @@ export default {
       this.showLoad = true;
       let id = this.$route.query.id;
       let data = this.form;
-      console.log(data);
-      let res = await this.$api.editFundsParameter({data},id);
+      let res = await this.$api.editFundsParameter({ data }, id);
       console.log(res);
       this.showLoad = false;
+      this.$router.push({ name: "fundParameter" });
     },
 
     resetForm(formName) {
