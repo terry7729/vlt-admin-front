@@ -24,16 +24,16 @@ export default {
   insData:[],    //  所属机构数据
   formData:[
     {title:"仓库名称",type:'input',prop:'nameX',value:'',},
-    {title: '所属机构', type: 'cascader', prop: 'insId', value: '', options: [],
+    {title: '所属机构', type: 'cascader', prop: 'organId', value: '', options: [],
       setProps: {
-      label: "text",
-      value: "id",
-      children: "children",
-      // multiple: true, // 多选
-      checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+        label: "text",
+        value: "id",
+        children: "children",
+        // multiple: true, // 多选
+        checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
       }
       },
-    {title:'仓库类型',type:'select',prop:'typeX',options:[{label:'',value:'1'},{label:'',value:'2'}]},
+    {title:'仓库类型',type:'select',prop:'typeX',disabled:true,options:[{label:'',value:'1'},{label:'',value:'2'}]},
     {title:'仓库管理员',type:'select',prop:'adminId',options:[{label:'',value:'1'},{label:'',value:'2'}]},
     {title:'备注',type:'textarea',prop:'remark',value:''},
   ],
@@ -59,10 +59,16 @@ components: {
 },
 created(){
   this.getInsData()
+  this.getAdminList()
 },
 methods: {
    // 获取所属机构列表
   getInsData() {
+    let type= {
+      0: '中彩仓库',
+      1: '省中心仓库',
+      2: '地市仓库'
+    }
     const data = {};
     (async (data)=>{
       let res = await this.$api.getInsList({data})
@@ -75,7 +81,18 @@ methods: {
         // self.$message.warning(res.msg)
       }
       })(data)
-    },
+  },
+  // 获取仓库管理员数据
+  getAdminList(){
+    const data ={
+      id: 65
+    };
+    (async (data)=>{
+      let res = await this.$api.getAdminList(65)
+      console.log(res)
+    })(data)
+  },
+
   submit(){
     console.log(this.params )
   },
