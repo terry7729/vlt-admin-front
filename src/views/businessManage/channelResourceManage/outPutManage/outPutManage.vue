@@ -20,7 +20,7 @@
             <control-bar
               :options="controlOptions"
               position="left"
-              @select="outSelectBtn"
+              @select="selectBtn"
               v-show="supItem.activeName === childItem.name"
             ></control-bar>
           </div>
@@ -278,71 +278,61 @@ export default {
       this.currentTab.pageSize = 10;
       console.log("search", form);
     },
-    methods: {
-      //入库管理
-      puthandleClick(tab, event) {
-        console.log(tab, event);
-      },
-      putSearch(form) {
-        console.log("search", form);
-      },
-      putSelectBtn(val) {
-        console.log(val);
-      },
-      handleCurrentChange(currentPage) {
-        console.log(currentPage);
-        this.getOutPutList({
-          page: currentPage,
-          pageSize: this.currentTab.pageSize,
-          param: this.requestData.param
-        });
-        this.currentTab.currentPage = currentPage;
-      },
-      handleSizeChange(pageSize) {
-        this.getOutPutList({
-          pageSize: pageSize,
-          param: this.requestData.param
-        });
-        this.currentTab.pageSize = pageSize;
-        console.log(pageSize);
-      },
+    handleCurrentChange(currentPage) {
+      console.log(currentPage);
+      this.getOutPutList({
+        page: currentPage,
+        pageSize: this.currentTab.pageSize,
+        param: this.requestData.param
+      });
+      this.currentTab.currentPage = currentPage;
+    },
+    handleSizeChange(pageSize) {
+      this.getOutPutList({
+        pageSize: pageSize,
+        param: this.requestData.param
+      });
+      this.currentTab.pageSize = pageSize;
+      console.log(pageSize);
+    },
 
-      changeForm(val) {
-        Object.assign(this.params, val);
-        console.log("派发出来的参数", this.params);
-      },
-      outSelectBtn(val) {
-        console.log(val);
-      },
-
-      //入库跳转
-      putStore(documentNumber) {
-        this.$router.push({
-          path: "putStore",
-          query: { documentNumber }
-        });
-      },
-      //出库跳转
-      outStore(documentNumber) {
-        this.$router.push({
-          path: "outStore",
-          query: { documentNumber }
-        });
-      },
-      //  入库详情
-      alreadyPutDetail(documentNumber) {
-        this.$router.push({
-          path: "alreadyPutDetail",
-          query: { documentNumber }
-        });
-      },
-      //出库详情
-      alreadyOutDetail(documentNumber) {
-        this.$router.push({
-          path: "alreadyOutDetail",
-          query: { documentNumber }
-        });
+    changeForm(val) {
+      Object.assign(this.params, val);
+      console.log("派发出来的参数", this.params);
+    },
+    selectBtn(val) {
+      if (val.name == "导出") {
       }
+      console.log(val);
+    },
+
+    //入库跳转
+    putStore(documentNumber) {
+      this.$router.push({
+        path: "putStore",
+        query: { documentNumber }
+      });
+    },
+    //出库跳转
+    outStore(documentNumber) {
+      this.$router.push({
+        path: "outStore",
+        query: { documentNumber }
+      });
+    },
+    //  入库详情
+    alreadyPutDetail(documentNumber) {
+      this.$router.push({
+        path: "alreadyPutDetail",
+        query: { documentNumber }
+      });
+    },
+    //出库详情
+    alreadyOutDetail(documentNumber) {
+      this.$router.push({
+        path: "alreadyOutDetail",
+        query: { documentNumber }
+      });
     }
   }
 };
