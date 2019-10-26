@@ -56,12 +56,12 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
-      changeForm: "",
+
       data1: [
         {
           type: "input-icon",
           title: "",
-          prop: "username",
+          prop: "account",
           value: "",
           placeholder: "请输入用户账号",
           icon: "user"
@@ -113,44 +113,49 @@ export default {
           { required: true, validator: rules.checkAccount, trigger: "blur" }
         ],
         pwd: [{ required: true, validator: rules.checkPwd, trigger: "blur" }]
-      }
+      },
+      param: null
     };
   },
   computed: {},
   created() {},
   mounted() {},
   methods: {
-    // login() {
-    //   this.$router.push({
-    //     path: "entry"
-    //   });
-    // },
     async login() {
-      let result = await this.$api.getLogin({});
+      // this.$router.push({
+      //   path: "entry"
+      // });
+
+      let data = JSON.parse(JSON.stringify(this.param));
+      // data.headers = {
+      //   data: _this.token
+      // };
+      console.log(data);
+      let result = await this.$api.getLogin({ data });
       console.log(result);
-      this.$refs.baseForm.validate(val => {
-        if (val) {
-          if (this.username == "qwe" && this.password == "qwe") {
-            
-            this.$router.push("/entry");
-          } else {
-            this.$message({
-              type: "error",
-              message: "用户名或密码错误",
-            });
-          }
-        } else {
-          return false;
-        }
-      });
+      if (result.code === 0) {
+        let token = result.data.token;
+        localStorage.setItem("data", token);
+        this.$router.push({
+          path: "entry"
+        });
+      }
     },
 
+    //表单change事件
+    changeForm(val) {
+      this.param = val;
+      console.log(this.param);
+    },
+    //点击忘记密码
     handleForgetPwd() {
       this.dialogFormVisible = true;
     },
+    // 弹框取消
     cancel() {
       this.dialogFormVisible = false;
     },
+    // 弹框提交
     submit() {
       this.$refs.baseForm.validate(val => {
         console.log(val);
