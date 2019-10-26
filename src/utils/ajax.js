@@ -15,7 +15,7 @@ switch (process.env.VUE_APP_MODE) {
     break
     // 测试环境
   case 'testing':
-    axios.defaults.baseURL = '//192.168.0.1/test/api'
+    axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
 
