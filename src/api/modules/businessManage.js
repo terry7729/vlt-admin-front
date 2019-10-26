@@ -10,17 +10,17 @@ export default {
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //渠道资源管理模块
   //仓库管理列表
-  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page',options),
+  getStoreList: (options = {}) => ajax.post('/channelResManage/warehouse/page', options),
   //仓库详情查看
-  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare',options),
+  detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
-  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page',options),
+  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTree:(options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree',options),
+  getModelTree: (options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree', options),
   // 获取类型管理查看详情
-  getDetail:(options = {}) => ajax.get('/goodsType/goodsType/details',options),
+  getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
   //类型管理状态修改
-  statusUpdate:(options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`,options),
+  statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
   // 设备管理
   // 设备分页查询列表
@@ -97,7 +97,7 @@ export default {
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
-  
+
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
@@ -106,5 +106,13 @@ export default {
   //资金参数详情查询
   getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
   //资金参数修改
-  editFundsParameter: (options = {},id) => ajax.post(`/tFundParameter/update/${id}`, options),
+  editFundsParameter: (options = {}, id) => ajax.post(`/tFundParameter/update/${id}`, options),
+
+  //渠道业务管理模块
+  //业务办理
+  //保存资金权限信息
+  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //资源发放分页查询
+  channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/pageList', options),
+
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="vlt-card fund-edit">
-    <el-form class="comp-item" :model="form" :rules="rules" ref="ruleForm" label-width="140px">
+    <el-form class="comp-item" :model="form" ref="ruleForm" label-width="140px">
       <div class="vlt-edit-over">
         <h2 class="title">基础信息</h2>
         <div class="vlt-edit-wrap fund-edit-double">
-          <el-row >
+          <el-row>
             <el-col :span="8">
               <el-form-item label="代销费率">
-                <el-input v-model="form.agencySalesRate" placeholder="请输入"></el-input>
+                <el-input v-model="form.generationRate" placeholder="请输入"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="16">
@@ -20,12 +20,12 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="游戏兑换比例">
-                <el-input v-model="form.gameExchangeRatio" placeholder="请输入"></el-input>
+                <el-input v-model="form.gameConPro" placeholder="请输入"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="生效时间" prop="effectiveDate">
-                <el-date-picker v-model="form.effectiveDate" type="date" placeholder="选择日期"></el-date-picker>
+              <el-form-item label="生效时间">
+                <el-date-picker v-model="form.effectiveTime" type="datetime" placeholder="选择日期"></el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
@@ -38,7 +38,7 @@
             <el-input v-model="form.returnRate" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="调节基金：">
-            <el-input v-model="form.adjustmentFund" placeholder="请输入"></el-input>
+            <el-input v-model="form.regulationFund" placeholder="请输入"></el-input>
           </el-form-item>
         </div>
       </div>
@@ -46,19 +46,19 @@
         <h2 class="title">发行经费</h2>
         <div class="vlt-edit-wrap fund-edit-normal">
           <el-form-item label="发行经费占比">
-            <el-input v-model="distributionFunds" placeholder="请输入" :disabled="true"></el-input>
+            <el-input v-model="lssueFundPro" placeholder="请输入" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="中福彩中心：">
-            <el-input v-model="form.distribution.zhongfucaiCenter" placeholder="请输入"></el-input>
+            <el-input v-model="form.lssueLotteryCenter" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="省级福彩中心：">
-            <el-input v-model="form.distribution.provincialWelfareCenter" placeholder="请输入"></el-input>
+            <el-input v-model="form.lssueProCenter" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="市级福彩中心：">
-            <el-input v-model="form.distribution.cityWelfareCenter" placeholder="请输入"></el-input>
+            <el-input v-model="form.lssueMunCenter" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="销售厅：">
-            <el-input v-model="form.distribution.salesHall" placeholder="请输入"></el-input>
+            <el-input v-model="form.lssueSalesHall" placeholder="请输入"></el-input>
           </el-form-item>
         </div>
       </div>
@@ -66,26 +66,31 @@
         <h2 class="title">公益金</h2>
         <div class="vlt-edit-wrap fund-edit-normal">
           <el-form-item label="公益金占比：">
-            <el-input v-model="publicWelfareFunds" placeholder="请输入" :disabled="true"></el-input>
+            <el-input v-model="publicFundPro" placeholder="请输入" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="中福彩中心：">
-            <el-input v-model="form.publicWelfare.zhongfucaiCenter"  placeholder="请输入"></el-input>
+            <el-input v-model="form.publicLotteryCenter" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="省级福彩中心：">
-            <el-input v-model="form.publicWelfare.provincialWelfareCenter"  placeholder="请输入"></el-input>
+            <el-input v-model="form.publicProCenter" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="市级福彩中心：">
-            <el-input v-model="form.publicWelfare.cityWelfareCenter"  placeholder="请输入"></el-input>
+            <el-input v-model="form.publicMunCenter" placeholder="请输入"></el-input>
           </el-form-item>
           <el-form-item label="销售厅：">
-            <el-input v-model="form.publicWelfare.salesHall"  placeholder="请输入"></el-input>
+            <el-input v-model="form.publicSalesHall" placeholder="请输入"></el-input>
           </el-form-item>
         </div>
       </div>
       <div class="vlt-edit-over">
         <h2 class="title">纳税</h2>
         <div class="vlt-edit-wrap add-wrap">
-          <el-form-item class="computed" v-for="(item, index) in form.taxRate" :key="item.id" :name="index">
+          <el-form-item
+            class="computed"
+            v-for="(item, index) in form.taxRate"
+            :key="item.id"
+            :name="index"
+          >
             <el-input v-model="item.balance1" placeholder="请输入"></el-input>至
             <el-input v-model="item.balance2" placeholder="请输入"></el-input>税率：
             <el-input v-model="item.toTax" placeholder="请输入"></el-input>
@@ -108,7 +113,7 @@
 </template>
 
 <script type="text/javascript">
-import rules from '@/utils/rules'
+import rules from "@/utils/rules";
 export default {
   name: "",
   data() {
@@ -116,26 +121,24 @@ export default {
       showLoad: false,
       params: {},
       form: {
-        agencySalesRate: "",
+        gameConPro: "",
+        effectiveTime: "",
+        generationRate: "",
+        lssueFundPro: "",
+        lssueLotteryCenter: "",
+        lssueMunCenter: "",
+        lssueProCenter: "",
+        lssueSalesHall: "",
+        publicFundPro: "",
+        publicLotteryCenter: "",
+        publicMunCenter: "",
+        publicProCenter: "",
+        publicSalesHall: "",
+        regulationFund: "",
+        returnRate: "",
+        status: "",
         abandonmentSetting: "",
-        gameExchangeRatio: "",
-        effectiveDate: "",
-        returnRate:'',
-        adjustmentFund:'',
-        distribution: {
-          distributionFunds: '',
-          zhongfucaiCenter: '0%',
-          provincialWelfareCenter: '0%',
-          cityWelfareCenter: '0%',
-          salesHall: '0%'
-        },
-        publicWelfare: {
-          publicWelfareFunds: '',
-          zhongfucaiCenter: '0%',
-          provincialWelfareCenter: '0%',
-          cityWelfareCenter: '0%',
-          salesHall: '0%'
-        },
+
         taxRate: [
           {
             id: 0,
@@ -150,33 +153,28 @@ export default {
             toTax: ""
           }
         ]
-      },
-      rules: {
-        effectiveDate: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ]
       }
     };
   },
-  components: {},
+  created() {
+    this.init();
+  },
   computed: {
-    distributionFunds () {
-     return  this.form.distribution.distributionFunds = parseInt(this.form.distribution.zhongfucaiCenter) +  
-      parseInt(this.form.distribution.provincialWelfareCenter) +  
-      parseInt(this.form.distribution.cityWelfareCenter) + 
-      parseInt(this.form.distribution.salesHall) + '%'
+    lssueFundPro() {
+      return (this.form.lssueFundPro =
+        parseInt(this.form.lssueLotteryCenter) +
+        parseInt(this.form.lssueProCenter) +
+        parseInt(this.form.lssueMunCenter) +
+        parseInt(this.form.lssueSalesHall) +
+        "%");
     },
-    publicWelfareFunds () {
-     return  this.form.publicWelfare.publicWelfareFunds = parseInt(this.form.publicWelfare.zhongfucaiCenter) +  
-      parseInt(this.form.publicWelfare.provincialWelfareCenter) +  
-      parseInt(this.form.publicWelfare.cityWelfareCenter) + 
-      parseInt(this.form.publicWelfare.salesHall) + '%'
-      
+    publicFundPro() {
+      return (this.form.publicFundPro =
+        parseInt(this.form.publicLotteryCenter) +
+        parseInt(this.form.publicProCenter) +
+        parseInt(this.form.publicMunCenter) +
+        parseInt(this.form.publicSalesHall) +
+        "%");
     }
   },
   watch: {
@@ -186,15 +184,57 @@ export default {
         let res = JSON.parse(JSON.stringify(newValue.taxRate));
         let params = [];
         res.forEach(item => {
-          let param = (({id, balance1, balance2, toTax}) => ({id, balance1, balance2, toTax})) (item);
-          params.push(param)
+          let param = (({ id, balance1, balance2, toTax }) => ({
+            id,
+            balance1,
+            balance2,
+            toTax
+          }))(item);
+          params.push(param);
         });
-        // console.log('params', params);
       },
       deep: true
     }
   },
   methods: {
+    async init() {
+      let res = await this.$api.getParameterDetail(0);
+      if (res.code === 0) {
+        let formKey = Object.keys(this.form);
+        let resKey = Object.keys(res.data);
+        for (let index of formKey) {
+          resKey.forEach(key => {
+            if (index === key) {
+              this.form[index] = res.data[key];
+            }
+          });
+        }
+      }
+    },
+    async onSubmit() {
+      this.showLoad = true;
+      let data = this.form;
+      console.log(data);
+      let res = await this.$api.editFundsParameter({ data }, 0);
+      if (res.code === 0) {
+        alert(res.msg);
+      } else {
+        alert(res.msg);
+      }
+      this.showLoad = false;
+      this.$router.push({ name: "fundParameter" });
+    },
+
+    deleteResource(index) {
+      if (this.form.taxRate.length < 2) {
+        return;
+      }
+      this.form.taxRate.splice(index, 1);
+    },
+
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
     addResource() {
       let aTaxRate = this.form.taxRate;
       let newTaxRate = {
@@ -202,34 +242,9 @@ export default {
         balance1: "",
         balance2: "",
         toTax: ""
-      }
-      // this.$set(this.form, 'taxRate', newTaxRate)
+      };
+
       this.form.taxRate.push(newTaxRate);
-    },
-    deleteResource(index) {
-      if (this.form.taxRate.length < 2) {
-        return;
-      }
-      this.form.taxRate.splice(index, 1);
-       
-    },
-    onSubmit() {
-      this.showLoad = true;
-      console.log(this.params);
-      setTimeout(()=> {
-        this.showLoad =  false;
-      }, 1000)
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     alert("submit!");
-      //   } else {
-      //     console.log("error submit!!");
-      //     return false;
-      //   }
-      // });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
     }
   }
 };
