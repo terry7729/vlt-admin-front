@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <searchBar :options="options" @search="search" :total="total">
+      <searchBar :options="options" @search="search" :total="this.num">
         <controlBar slot="extend-bar" @select="Addclick" :options="Addbtn" position="left"></controlBar>
       </searchBar>
       <!-- <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar> -->
@@ -46,7 +46,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <tablePaging :total="total" :currentPage="1" :pageSize="10"></tablePaging>
+      <tablePaging :total="this.num" :currentPage="1" :pageSize="10"></tablePaging>
     </div>
   </div>
 </template>
@@ -57,6 +57,7 @@ import moment from "moment";
 export default {
   data() {
     return {
+      num: 0,
       value1: true,
       value2: true,
       form: {
@@ -66,21 +67,30 @@ export default {
       options: [
         {
           type: "select",
-          prop: "holidayName",
+          prop: "holidayType",
           value: "",
           title: "假日名称",
           placeholder: "请输入",
-          options: []
+          options: [
+            { label: "春节", value: 0 },
+            { label: "清明节", value: 1 },
+            { label: "中秋节", value: 2 },
+            { label: "国庆节", value: 3 }
+          ]
         }
       ],
       value: "",
+      page: {
+        page: 1,
+        pageSize: 10
+      },
 
       controlOptions: [
         { name: "新增", type: "primary", icon: "plus" },
         { name: "保存", type: "success" }
       ],
       tableData: [],
-      total: 400,
+
       row: "",
       param: null
     };
@@ -94,49 +104,52 @@ export default {
       return moment(val).format("YYYY-MM-DD HH:mm:ss");
     },
     async init() {
-      this.getHolidayList();
-      this.getTableData();
-    },
-    async getTableData() {
       //初始查询列表的参数
-      let data = {
-        page: 1,
-        pageSize: 10,
-        holidayName: ""
-      };
+      let data = this.page;
+      //console.log(data);
       let result = await this.$api.queryHolInfoPage({ data: data });
+
       console.log(result);
       if (result.code === 0) {
         let arr = result.data.records;
         this.tableData = arr;
       }
     },
-    //获取假日名称列表数据
-    async getHolidayList() {
-      let res = await this.$api.getHolidayList();
-      console.log(res);
-    },
 
-    search(val) {
-      console.log(val);
+    async search(val) {
+      let info = val;
+      console.log();
+      let res = {
+        ...this.page,
+        ...info
+      };
+
+      let resul = await this.$api.queryHolInfoPage({ data: res });
+      console.log(resul);
+      if (resul.code === 0) {
+        this.tableData = resul.data.records;
+        this.num = resul.data.total;
+        console.log(this.num);
+        console.log(resul);
+      }
     },
     //新增按钮
     Addclick() {
       this.$router.push({
-        path: "holidayParametersManagement/holidayParametersAdd"
+        path: "holidayParametersAdd"
       });
-    },
+    }
     // selectBtn(val) {
     //   this.$emit("select", val);
     // },
     // 提交
-    onSubmit() {
-      let formData = {};
-      for (let key in this.form) {
-        if (this.form[key] !== "") formData[key] = this.form[key];
-      }
-      this.$emit("search", formData);
-    }
+    // onSubmit() {
+    //   let formData = {};
+    //   for (let key in this.form) {
+    //     if (this.form[key] !== "") formData[key] = this.form[key];
+    //   }
+    //   this.$emit("search", formData);
+    // }
   }
 };
 </script>
