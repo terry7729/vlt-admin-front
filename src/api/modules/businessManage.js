@@ -17,6 +17,9 @@ export default {
   getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
   // 获取管理员列表
   getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  // 新增仓库
+  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare',options),
+
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
