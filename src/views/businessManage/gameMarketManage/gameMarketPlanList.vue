@@ -16,7 +16,7 @@
       @selection-change="handleSelectionChange">
       <!-- <el-table-column ty-pe="selection" width="55" fixed="left"></el-table-column> -->
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="gameListCode" label="上市计划编号" ></el-table-column>
+      <el-table-column prop="id" label="上市计划ID" ></el-table-column>
       <el-table-column prop="gameListName" label="上市计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
       <el-table-column prop="gameSaleArea" label="销售范围"></el-table-column>
