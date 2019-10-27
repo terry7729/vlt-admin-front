@@ -192,7 +192,6 @@ async pagingControl(val){ //分页控制
           let Arr = JSON.parse(JSON.stringify(arr))
           this.dataProcessing(Arr);//处理数据
           }
-          console.log('我是默认',n)
       }else{
         console.log('我是搜索',data)
           let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
@@ -268,13 +267,7 @@ async pagingControl(val){ //分页控制
           }
         })
       })
-      // for(var i = 0 ; i<len.length ; i++){
-      //   for(var j = 0 ; j< arr.length ; j++){
-      //     if(arr[j]===len[i].prop){
-      //       len[i].value = val[arr[j]]
-      //     }
-      //   }
-      // }
+  
     },
     selectBtn(val) {//新增删除事件
       if (val.name === "新建角色") {
