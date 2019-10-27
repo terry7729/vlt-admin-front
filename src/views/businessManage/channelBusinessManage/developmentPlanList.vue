@@ -8,6 +8,7 @@
       <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
     </search-bar> -->
     <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
+   
     <el-table :data="tableData" border>
       <el-table-column label="序号" fixed type="index" width="60px"></el-table-column>
       <el-table-column label="计划年份" prop="planDate" min-width="160px"></el-table-column>
@@ -54,8 +55,8 @@ export default {
       page: 1,
       pageSize: 10,
       param: {
-        insId: "106",
-        insLevel: "2" // 1为省级 2为市级
+        insId: "60",
+        insLevel: "1" // 1为省级 2为市级
       }
     };
     // 用户所在机构

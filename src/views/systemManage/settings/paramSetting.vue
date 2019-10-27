@@ -56,15 +56,12 @@ export default {
   name: "",
   data() {
     return {
-      params1:{},
-      params2:{},
-      params3:{},
-      params4:{},
+      
       damessageReminding: [
         {
           title: "发送提醒",
           type: "radio",
-          prop: "keyType",
+          prop: "sendReminder",
           value: "",
           options: [
             { label: "开启", value: "1" },
@@ -160,43 +157,62 @@ export default {
       ],
       radio: "1",
       rules1: {},
-      formall: {},
+      params1:{},
+      params2:{},
+      params3:{}, 
+      params4:{},
+      formall:{sysConfigVoList:[]},
+      // form1:{},
+      // form2:{},
+      // form3:{},
+      // form4:{},  
     };
   },
   components: {},
   created() {
-    // let reslt = await this.$api.config();
-    // console.log(reslt)
-    // this.init();
   },
   methods: {
     changeForm1(val) {
-        Object.assign(this.params1, val);
-        
+      this.params1 = val;
+        // Object.assign(this.params1, val);
+        // this.form1[0]=this.params1
+      // this.formall.=this.params1
+      console.log(123,this.params1)
     },
     changeForm2(val) {
-        Object.assign(this.params2, val);
-
+        this.params2 = val;
+        // this.formall[1]=this.params2
     },
     changeForm3(val) {
-        Object.assign(this.params3, val);
-
+         this.params3 = val;
+        // this.formall[2]=this.params3
     },
     changeForm4(val) {
-        Object.assign(this.params4, val);
-
+         this.params4 = val;
+        // this.formall[3]=this.params4
     },
-
     async submit() {
-      let data={...this.params1,...this.params2,...this.params3,...this.params4}
-      console.log(data)
+      // this.formall.list1=this.form1
+      // this.formall.list2=this.form2
+      // this.formall.list3=this.form3
+      // this.formall.list4=this.form4
+    
+      // param.list1=this.formall.list
+      //  console.log(777,this.form1)
+      
+      this.formall.sysConfigVoList.push(this.params1)
+      this.formall.sysConfigVoList.push(this.params2)
+      this.formall.sysConfigVoList.push(this.params3)
+      this.formall.sysConfigVoList.push(this.params4)
+      let data=this.formall
+        console.log(666,data)
+      //console.log(data)
       //  console.log(this.formall)
         // console.log(val);
         // let data = JSON.parse(JSON.stringify(this.formall));
         // let data= {...this.formall}
-
         let reslt = await this.$api.config({data});
-        //console.log(reslt);
+        console.log(reslt);
       
     }
   }
@@ -208,3 +224,4 @@ export default {
   border-color: #fff;
 }
 </style>
+

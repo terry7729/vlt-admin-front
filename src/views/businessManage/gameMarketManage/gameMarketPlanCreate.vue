@@ -61,7 +61,7 @@ export default {
       active: 1,
       rules: {},
       param: {},
-      filesId: '',
+      fileIds: '',
     }
   },
   methods: {
@@ -81,13 +81,17 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.filesId = res.data.fileId;
+      this.fileIds = res.data.fileId;
     },
     createMarketPlan(data) {
       const self = this;
       (async (data)=>{
 				let res = await self.$api.createMarketPlan({data})
 				if(res && res.code == 0) {
+          self.$message.success('提交成功')
+          setTimeout(()=>{
+            self.$router.push({path:'./gameMarketPlanList'})
+          },700)
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -110,13 +114,13 @@ export default {
     submit() {
       console.log('提交的参数', this.param)
       let data = this.param;
-      data.filesId = this.filesId;
+      data.fileIds = String(this.fileIds);
       data.gameRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameBettingRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameFundRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameRiskRuleVo.gameId = data.gameListPlanVo.gameId;
       // publishParams: this.publishParams,
-      data.gameExchangeSetVoList.gameId= data.gameListPlanVo.gameId;
+      // data.gameExchangeSetVoList.gameId= data.gameListPlanVo.gameId;
       
       this.createMarketPlan(data)
     },

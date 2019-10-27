@@ -235,15 +235,17 @@ export default {
   },
   methods: {
     async getOutPutList(data) {
+      console.log(data);
       Object.assign(this.requestData, data);
       const param = data.param || {};
+      this.currentSearchParam = {
+        ...param,
+        status: this.currentTab.statusCode
+      };
       let res = await this.$api.getOutPutList({
         data: {
           ...this.requestData,
-          param: {
-            ...param,
-            status: this.currentTab.statusCode
-          }
+          param: this.currentSearchParam
         }
       });
       if (res && res.code == 0) {
@@ -301,11 +303,37 @@ export default {
       console.log("派发出来的参数", this.params);
     },
     selectBtn(val) {
-      if (val.name == "导出") {
+      if (val.name === "导出") {
+        this.getOut();
       }
-      console.log(val);
     },
-
+    //
+    async getOut() {
+      const requestData = JSON.parse(JSON.stringify(this.requestData));
+      const param = requestData.param || {};
+      delete requestData.param;
+      let result = await this.$api.outExport({
+        data: {
+          ...requestData,
+          ...this.currentSearchParam
+        },
+        responseType: "blob"
+      });
+      var blob = new Blob([result], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "入库管理数据.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      console.log(result);
+      //console.log("res", result);
+    },
     //入库跳转
     putStore(documentNumber) {
       this.$router.push({
@@ -337,7 +365,6 @@ export default {
   }
 };
 </script>
-
 <style lang="less">
 h3 {
   margin-bottom: 20px;

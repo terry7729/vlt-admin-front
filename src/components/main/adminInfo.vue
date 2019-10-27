@@ -83,11 +83,6 @@ export default {
     })
   },
   methods: {
-    // openConfirm(){
-      // this.$router.push({
-      //   path:'/login'
-      // })
-    // },
     openConfirm() {
       this.$confirm('是否退出登录?', '提示', {
         confirmButtonText: '确定',
@@ -100,25 +95,20 @@ export default {
       });
     },
     async loginOut() {
-      
       const self = this;
       const res = await self.$api.getLogOut({
         data: {
+          message: '退出成功',
           userId: self.user.id
         }
       });
       if (res && res.code == 0) {
-        self.$message({
-          message: '退出成功',
-          type: 'success'
-        });
         storage.remove('token');
         this.$router.push({
           path:'/login'
         })
         return;
       }
-      self.$message.error('退出登录失败');
     },
     lock() {
       this.eventBus.$emit('lock', true);
