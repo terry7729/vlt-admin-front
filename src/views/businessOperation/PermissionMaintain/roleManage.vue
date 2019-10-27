@@ -268,16 +268,20 @@ export default {
       this.roleManagetableData = arr;
       //初始搜索用户角色数据
       let searchResult = await this.$api.accountRole();
+      if (searchResult.code === 0) {
+        this.roleManageoptions[0].options = searchResult.data;
+      }
       //console.log(searchResult);
       //console.log(resul);
-      this.roleManageoptions[0].options = searchResult.data;
     },
     //点击搜索
     async search(param) {
       let obj = this.searchData;
       let data = { ...obj, param };
       let result = await this.$api.getRole({ data });
-      this.roleManagetableData = result.data.records;
+      if (result.code === 0) {
+        this.roleManagetableData = result.data.records;
+      }
     },
     // 新增按钮
     roleManageAddclick() {

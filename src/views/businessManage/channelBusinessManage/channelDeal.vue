@@ -73,7 +73,7 @@ export default {
       } else if(val.title=='资源申请') {
         this.$router.push({path:'./resourceApply',query:{id:123}})
       } else if(val.title=='资源发放') {
-        this.$router.push({path:'./resourceProvide',query:{id:123}})
+        this.$router.push({path:'./resourceProvide',query:{id:3}})
       } 
     }
   },

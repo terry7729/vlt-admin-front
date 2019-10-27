@@ -123,7 +123,7 @@ export default {
     async roleManageAddSubmit() {
       let data = this.param;
       let resul = await this.$api.roleAdd({ data });
-      this.$router.push("roleManage");
+      this.$router.push("roleManage");   
     },
     //表单取消
     roleManageAddCancel() {

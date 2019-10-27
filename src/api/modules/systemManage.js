@@ -89,7 +89,10 @@ export default {
   //获取全部数据
   getAll: (options = {}) => ajax.post('/dictData/getAll', options),
   //通过keyCode查询
-  find: (options = {}) => ajax.get('/dictData/find/{keyCode}', options),
+  find:(options = {}) =>ajax.get('/dictData/find/{keyCode}',options),
+  //数据字典条件搜索
+  getByCondition:(options = {}) =>ajax.post('/dictData/getByCondition',options),
+ 
 
   //系统设置
   //系统参数设置
