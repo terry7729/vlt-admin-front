@@ -192,10 +192,10 @@ export default {
         // this.formall[3]=this.params4
     },
     async submit() {
-      // this.formall.list1=this.form1
-      // this.formall.list2=this.form2
-      // this.formall.list3=this.form3
-      // this.formall.list4=this.form4
+      this.formall.list1=this.form1
+      this.formall.list2=this.form2
+      this.formall.list3=this.form3
+      this.formall.list4=this.form4
     
       // param.list1=this.formall.list
       //  console.log(777,this.form1)
