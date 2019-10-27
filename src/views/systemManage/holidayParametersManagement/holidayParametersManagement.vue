@@ -50,7 +50,7 @@
 </template>
 
 <script type="text/javascript">
-// import moment from "moment";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -119,6 +119,10 @@ export default {
       // };
       let result = await this.$api.queryHolInfoPage({ data });
       console.log(result);
+      if (result.code === 0) {
+        let arr = result.data.records;
+        this.tableData = arr;
+      }
       // if (result.code === 0) {
       //   let tableData = result.data.records;
       //   // this.tableData = arr;

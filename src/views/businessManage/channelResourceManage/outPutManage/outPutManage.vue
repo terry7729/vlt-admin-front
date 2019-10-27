@@ -235,6 +235,7 @@ export default {
   },
   methods: {
     async getOutPutList(data) {
+      console.log(data);
       Object.assign(this.requestData, data);
       const param = data.param || {};
       let res = await this.$api.getOutPutList({
@@ -301,11 +302,23 @@ export default {
       console.log("派发出来的参数", this.params);
     },
     selectBtn(val) {
-      if (val.name == "导出") {
+      if (val.name === "导出") {
+        this.getOut();
       }
-      console.log(val);
     },
+    async getOut() {
+      const requestData = JSON.parse(JSON.stringify(this.requestData));
 
+      const param = requestData.param || {};
+      delete requestData.param;
+      let result = await this.$api.outExport({
+        data: {
+          ...requestData,
+          ...param
+        }
+      });
+      console.log("res", result);
+    },
     //入库跳转
     putStore(documentNumber) {
       this.$router.push({

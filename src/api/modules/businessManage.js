@@ -34,7 +34,7 @@ export default {
   //出入库
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
-  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExce', options),
+  outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
 
   statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
