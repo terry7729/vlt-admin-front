@@ -56,7 +56,7 @@ const request = (method, url, options, extend) => {
     try {
       let res;
       const responseType = options.responseType || '';
-      if (typeof options.data !== 'object') {
+      if (options.data && typeof options.data !== 'object') {
         res = await axios[method](`${url}/${options.data}`); /*RESTful传参*/
       } else {
         const data = options.data || {}
