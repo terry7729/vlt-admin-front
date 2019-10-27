@@ -34,8 +34,8 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
-    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
-    axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
+    axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
 
 }
@@ -48,7 +48,7 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
-  // 请求必传参数
+  // 基本参数
   if (storage.get('token')) {
     axios.defaults.headers.common['Authorization'] = storage.get('token');
   }
@@ -57,8 +57,7 @@ const request = (method, url, options, extend) => {
       let res;
       const responseType = options.responseType || null;
       if (typeof options.data !== 'object') {
-        const id = options.data;
-        res = await axios[method](`${url}/${id}`); /*  */
+        res = await axios[method](`${url}/${options.data}`); /*RESTful传参*/
       } else {
         const data = options.data || {}
         // 上传
@@ -83,7 +82,7 @@ const request = (method, url, options, extend) => {
           });
         }
       }
-      // message反馈
+      // message提示
       Message.closeAll();
       if (res.data && res.data.code != 0) {
         res.data.msg && Message.error(res.data.msg);
@@ -97,7 +96,6 @@ const request = (method, url, options, extend) => {
         }
       }
       return res.data;
-
     } catch (err) {
       console.warn('api请求错误：', err);
     }
