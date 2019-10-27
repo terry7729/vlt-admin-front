@@ -81,6 +81,7 @@ const developmentPlanList = () => import('@/views/businessManage/channelBusiness
 const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
 const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
 const developmentPlanProvinceDetail = () =>import('@/views/businessManage/channelBusinessManage/developmentPlanProvinceDetail')
+const developmentPlanCityDetail = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCityDetail');
 const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
 const resourceApply = () => import('@/views/businessManage/channelBusinessManage/resourceApply')
 const resourceProvide = () => import('@/views/businessManage/channelBusinessManage/resourceProvide')
@@ -674,6 +675,14 @@ export default [
       title: '年度发展计划汇总省级详情',
     },
     component: developmentPlanProvinceDetail,
+    children: []
+  },{
+    path: 'businessManage/developmentPlanCityDetail',
+    name: 'developmentPlanCityDetail',
+    meta: {
+      title: '年度发展计划汇总市级详情',
+    },
+    component: developmentPlanCityDetail,
     children: []
   },
   {
