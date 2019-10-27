@@ -39,7 +39,7 @@
 
     <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
-      <control-bar :options="controlOptions" position="left"></control-bar>
+      <control-bar :options="controlOptions" position="left" @select="export"></control-bar>
     </section>
 
     <section class="comp-item">
@@ -1640,6 +1640,21 @@ export default {
         }
       });
       console.log("uploadFile", res);
+    },
+
+    async export() {
+      const res = await this.$api.outExport({
+        data: {
+          page: 1,
+          pageSize: 10,
+          all: false,
+          status: 1,
+          documentNumber: '',
+          documentToppic: ''
+        },
+        responseType: 'blob'
+      });
+      console.log(res)
     }
   },
   components: {}
