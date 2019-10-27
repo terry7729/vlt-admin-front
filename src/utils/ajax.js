@@ -36,6 +36,7 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
 
 }
 /**
@@ -56,6 +57,7 @@ const request = (method, url, options, extend) => {
       let res;
       if (typeof options.data !== 'object') {
         const id = options.data;
+        
         res = await axios[method](`${url}/${id}`); /*  */
       } else {
         const data = options.data || {}

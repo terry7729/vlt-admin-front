@@ -94,9 +94,9 @@ methods: {
       })(data)
   },
   // 获取仓库管理员数据
-  getAdminList(id){
-    (async (id)=>{
-      let res = await this.$api.getAdminList(id)
+  getAdminList(data){
+    (async (data)=>{
+      let res = await this.$api.getAdminList({data})
       console.log('admin', res.data[0].list)
       let array = []
       res.data[0].list.forEach((item)=>{
@@ -106,7 +106,7 @@ methods: {
         array.push(obj)
       })
       this.$set(this.formData2[0],'options',array);
-    })(id)
+    })(data)
   },
 
   submit(){
@@ -115,12 +115,11 @@ methods: {
     }
     Object.assign(data,this.param,this.param2)
     this.createWare(data)
-    
   },
   createWare(data) {
     (async (data)=>{
       let res = await this.$api.createWare({data})
-      if(res&&res.code==0) {
+      if(res && res.code==0) {
         this.$message.success('提交成功');
         this.$router.push({path:'storeManage'})
       }
@@ -196,7 +195,7 @@ methods: {
     // this.$refs.baseForm.resetForm()
     this.typeX = typeValue
     this.typeName = type[typeValue]
-    console.log(this.typeX)
+    console.log(this.typeName)
     // this.$set(this.formData[1], 'value', array)
     // this.$set(this.formData2[2], 'value', name)
   },
