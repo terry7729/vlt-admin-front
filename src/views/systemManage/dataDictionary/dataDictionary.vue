@@ -138,19 +138,9 @@ export default {
       // },
       formData: [
         { title: "字典名称", type: "input", prop: "keyName", value: "" },
-        {
-          title: "数据字典键",
-          type: "input",
-          prop: "key",
-          value: ""
-        },
-        {
-          title: "字典数据值",
-          type: "input",
-          prop: "value",
-          value: ""
-        },
-        { title: "状态", type: "switch", prop: "status", value: "" },
+        { title: "数据字典键",type: "input",prop: "key",value: ""},
+        { title: "字典数据值",type: "input",prop: "value",value: ""},
+        { title: "状态", type: "switch", prop: "status", value: 0 },
         { title: "详情描述", type: "textarea", prop: "description", value: "" }
       ],
       data: {

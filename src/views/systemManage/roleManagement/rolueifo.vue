@@ -11,7 +11,7 @@ export default {
   name: "rolueifo",
  async created() {
     let id = this.$route.query.id
-    let reslt =  await this.$api.QueryRoleInfoDetail(id)//查询角色详情
+    let reslt =  await this.$api.QueryRoleInfoDetail({data:id})//查询角色详情
     // this.infoList = reslt.data
      console.log('查询角色详情',reslt)
     if(reslt.code === 0){

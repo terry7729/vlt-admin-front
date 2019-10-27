@@ -69,9 +69,9 @@ export default {
       } else if(val.title=='资金权限') {
         this.$router.push({path:'./channelFundsPermission',query:{id:123}})
       } else if(val.title=='资源采购') {
-        this.$router.push({path:'./resourcePurchase',query:{id:123}})
+        this.$router.push({path:'./resourcePurchase',query:{id:1}})
       } else if(val.title=='资源申请') {
-        this.$router.push({path:'./resourceApply',query:{id:123}})
+        this.$router.push({path:'./resourceApply',query:{id:2}})
       } else if(val.title=='资源发放') {
         this.$router.push({path:'./resourceProvide',query:{id:3}})
       } 

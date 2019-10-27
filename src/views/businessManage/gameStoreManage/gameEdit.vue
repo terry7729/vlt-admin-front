@@ -139,6 +139,7 @@ export default {
       gameBagId: '', // 游戏包上传id
       imgId: '', // 图标上传id
       gameOtherId: '', // 附件上传id
+      fileList: [],
     }
   },
   created() {
@@ -210,7 +211,17 @@ export default {
       (async (data)=>{
 				let res = await self.$api.getGameStoreInfo({data})
 				if(res && res.code == 0) {
-          self.baseData.forEach()
+          // 基本信息
+          self.baseData.forEach((item)=>{
+            item.value = res.data.gameInfoVo[item.prop]
+          })
+          self.developData.forEach((item)=>{
+            item.value = res.data.developerInfo[item.prop]
+          })
+          self.softData.forEach((item)=>{
+            item.value = res.data.tSoftwareInfo[item.prop]
+          })
+          self.fileList = res.data.fileList
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -263,5 +274,8 @@ export default {
 .submit-wrap{
   text-align: right;
   padding: 10px 0;
+}
+.soft-form{
+  padding: 20px 10px;
 }
 </style>
