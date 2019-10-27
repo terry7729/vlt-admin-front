@@ -23,11 +23,10 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
-    // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
-    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.167:8080/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.87:8080/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.49:8080/bms/api'
@@ -37,7 +36,7 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
-    axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境
+    axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
 
 }
@@ -57,12 +56,9 @@ const request = (method, url, options, extend) => {
   return (async () => {
     try {
       let res;
-      const responseType = {
-        responseType: options.responseType
-      } || {};
       if (typeof options.data !== 'object') {
         const id = options.data;
-        res = await axios[method](`${url}/${id}`);
+        res = await axios[method](`${url}/${id}`); /*  */
       } else {
         const data = options.data || {}
         // 上传
@@ -80,12 +76,10 @@ const request = (method, url, options, extend) => {
         } else {
           res = await axios[method](url, method === 'get' ? {
             params: data
-          } : data, responseType);
+          } : data);
         }
       }
-      return res.data;
-      console.log('res: ', res, res.data)
-      // message反馈
+      // 成功反馈
       Message.closeAll();
       if (res.data.code != 0) {
         Message.error(res.data.msg);
@@ -98,8 +92,7 @@ const request = (method, url, options, extend) => {
           }
         }
       }
-
-
+      return res.data;
     } catch (err) {
       console.warn('api请求错误：', err);
     }

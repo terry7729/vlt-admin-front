@@ -1629,10 +1629,10 @@ export default {
     },
     async uploadFile(files) {
       let formData = new FormData();
-      formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
+      formData.append("file", files.file);
+      formData.append("refId", 1);
+      formData.append("flag", true);
+      formData.append("busType", 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -1652,9 +1652,11 @@ export default {
           documentNumber: "",
           documentToppic: ""
         },
-        responseType: 'blob'
+        responseType: "blob"
       });
-      var blob = new Blob([res], {type: 'application/vnd.ms-excel;charset=utf-8'})
+      var blob = new Blob([res], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
       var url = window.URL.createObjectURL(blob);
       var aLink = document.createElement("a");
       aLink.style.display = "none";
@@ -1664,7 +1666,7 @@ export default {
       aLink.click();
       document.body.removeChild(aLink); //下载完成移除元素
       window.URL.revokeObjectURL(url); //释放掉blob对象
-      console.log(res)
+      console.log(res);
     }
   },
   components: {}
