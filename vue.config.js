@@ -7,6 +7,11 @@ module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   outputDir: process.env.BASE_URL,
   assetsDir: 'static',
+  chainWebpack: config => {
+    // 移除 prefetch 插件
+    config.plugins.delete('prefetch')
+    config.plugins.delete('preload')
+  },
   configureWebpack: {
     performance: {
       hints: false

@@ -202,6 +202,7 @@ export default {
             this.eachList(this.betData, res.data.gameBettingRuleVo);
             this.eachList(this.fundsData, res.data.gameFundRuleVo);
             this.eachList(this.riskData, res.data.gameRiskRuleVo);
+            this.eachList(this.softwareInfo, res.data.softwareInfo);
              this.fileList = res.data.fileList
           } else {
             self.$message.warning(res.data.msg);

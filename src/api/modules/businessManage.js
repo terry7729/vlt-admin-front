@@ -14,7 +14,13 @@ export default {
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
-  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  // 获取管理员列表
+  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  // 新增仓库
+  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare',options),
+
+  // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
   getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
@@ -34,7 +40,7 @@ export default {
   //出入库
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
-  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExce', options),
+  outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
 
   statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
@@ -108,10 +114,23 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 查看游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 所有游戏列表
+  getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
+  // 上市游戏列表查询列表
+  queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
+  // 游戏上市计划分页查询列表
+  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 上市记录查询列表
+  queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
+  // 查看游戏上市计划详情 
+  getMarketPlanDetal: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
+  // 游戏变更计划分页查询列表
+  getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
@@ -120,6 +139,8 @@ export default {
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
+  // 渠道附件上传
+  uploadChannelFiles: (options = {}) => ajax.post('/channel/uploading', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称---新建渠道

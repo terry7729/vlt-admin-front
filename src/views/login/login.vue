@@ -112,10 +112,10 @@ export default {
         }
       ],
       rules: {
-        username: [
+        account: [
           { required: true, validator: rules.checkAccount, trigger: "blur" }
         ],
-        pwd: [{ required: true, validator: rules.checkPwd, trigger: "blur" }]
+        password: [{ required: true, validator: rules.checkPwd, trigger: "blur" }]
       },
       param: null
     };
@@ -124,26 +124,24 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    async login() {
-      if (!this.param.password.trim() || !this.param.account.trim()) {
-        this.$message.closeAll();
-        this.$message.error('用户名或密码不能为空');
-        return;
-      }
-      const data = this.param;
-      const res = await this.$api.getLogin({
-        message: '登录成功',
-        data
-       });
-      if (res && res.code === 0) {
-        const token = res.data.token;
-        storage.set("token", token);
-        this.$router.push({
-          name: "entry"
-        });
-      }
+    login() {
+      this.$refs.loginForm.validate(async val => {
+        if (val === 'true') {
+          const data = this.param;
+          const res = await this.$api.getLogin({
+            message: '登录成功',
+            data
+          });
+          if (res && res.code === 0) {
+            const token = res.data.token;
+            storage.set("token", token);
+            this.$router.push({
+              name: "entry"
+            });
+          }
+        }
+      })
     },
-
     //表单change事件
     changeForm(val) {
       this.param = val;
@@ -172,7 +170,7 @@ export default {
 
 <style lang="less" scoped>
 @import "./less/login.less";
-.login-container.vlt-card {
+.login-container{
   background-image: url(./../../assets/img/backgroundImage.png);
   width: 100%;
   height: 100%;

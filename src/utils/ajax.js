@@ -2,7 +2,10 @@
 import axios from 'axios'
 import qs from 'qs'
 import storage from './storage'
-import {Message, Loading} from 'element-ui';
+import {
+  Message,
+  Loading
+} from 'element-ui';
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
@@ -24,17 +27,19 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    //axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.167:8080/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.87:8080/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.49:8080/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.91:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
-    //axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境
-    axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api/' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api/' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
+    axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api' // 本地server环境 
 
 }
 /**
@@ -46,16 +51,16 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
-  // 请求必传参数
+  // 基本参数
   // if (storage.get('token')) {
   //   axios.defaults.headers.common['Authorization'] = storage.get('token');
   // }
   return (async () => {
     try {
       let res;
+      const responseType = options.responseType || '';
       if (typeof options.data !== 'object') {
-        const id = options.data;
-        res = await axios[method](`${url}/${id}`); /*  */
+        res = await axios[method](`${url}/${options.data}`); /*RESTful传参*/
       } else {
         const data = options.data || {}
         // 上传
@@ -69,17 +74,20 @@ const request = (method, url, options, extend) => {
               }
             }
           });
-          res.data;
         } else {
           res = await axios[method](url, method === 'get' ? {
-            params: data
-          } : data);
+            params: data,
+            responseType
+          } : {
+            ...data,
+            responseType
+          });
         }
       }
-      // 成功反馈
+      // message提示
       Message.closeAll();
-      if (res.data.code != 0) {
-        Message.error(res.data.msg);
+      if (res.data && res.data.code != 0) {
+        res.data.msg && Message.error(res.data.msg);
       } else {
         if (options.message) {
           if (typeof options.message === 'string') {

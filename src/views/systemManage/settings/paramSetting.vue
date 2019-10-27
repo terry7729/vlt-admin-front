@@ -52,7 +52,6 @@
 </template>
 <script type="text/javascript">
 import rules from "../../../utils/rules";
-import { listeners } from 'cluster';
 export default {
   name: "",
   data() {
@@ -162,7 +161,7 @@ export default {
       params2:{},
       params3:{}, 
       params4:{},
-      formall:[],
+      formall:{sysConfigVoList:[]},
       // form1:{},
       // form2:{},
       // form3:{},
@@ -174,22 +173,23 @@ export default {
   },
   methods: {
     changeForm1(val) {
-        Object.assign(this.params1, val);
+      this.params1 = val;
+        // Object.assign(this.params1, val);
         // this.form1[0]=this.params1
-      this.formall[0]=this.params1
+      // this.formall.=this.params1
       console.log(123,this.params1)
     },
     changeForm2(val) {
-        Object.assign(this.params2, val);
-        this.formall[1]=this.params2
+        this.params2 = val;
+        // this.formall[1]=this.params2
     },
     changeForm3(val) {
-         Object.assign(this.params3, val);
-        this.formall[2]=this.params3
+         this.params3 = val;
+        // this.formall[2]=this.params3
     },
     changeForm4(val) {
-         Object.assign(this.params4, val);
-        this.formall[3]=this.params4
+         this.params4 = val;
+        // this.formall[3]=this.params4
     },
     async submit() {
       // this.formall.list1=this.form1
@@ -200,6 +200,10 @@ export default {
       // param.list1=this.formall.list
       //  console.log(777,this.form1)
       
+      this.formall.sysConfigVoList.push(this.params1)
+      this.formall.sysConfigVoList.push(this.params2)
+      this.formall.sysConfigVoList.push(this.params3)
+      this.formall.sysConfigVoList.push(this.params4)
       let data=this.formall
         console.log(666,data)
       //console.log(data)
