@@ -69,6 +69,8 @@ export default {
   editDevelopPlan: (options = {}) => ajax.post('/developPlan/updateDevelopPlanInfo', options),
   // 查询年度开展计划列表
   getDevelopPlanList: (options = {}) => ajax.post('/developPlan/queryDevelopPlanList', options),
+  // 年度发展计划详情
+  getQueryDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划详情
   getDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划汇总省级列表
@@ -91,8 +93,19 @@ export default {
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
+  // 上市游戏列表查询列表
+  queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
+  // 游戏上市计划分页查询列表
+  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 上市记录查询列表
+  queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
+
+
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
+  // 查看游戏上市计划详情
+  getMarketPlanDetal: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 查询变更计划列表
@@ -110,6 +123,8 @@ export default {
   getChannelList: (options = {}) => ajax.post('/channel/queryListByPage', options),
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
+  // 渠道附件上传
+  uploadChannelFiles: (options = {}) => ajax.post('/channel/uploading', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称---新建渠道

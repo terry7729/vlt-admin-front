@@ -19,6 +19,37 @@
         </div>
         <div class="vlt-edit-wrap">
           <base-form :formData="workerData[index]" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+           <el-form label-position="right" 
+            label-width="90px" 
+            ref="form"
+            class="device-form">
+            <el-form-item  label="身份证照正面">
+              <el-upload
+                class="avatar-uploader"
+                action=""
+                :limit="1"
+                accept=".png,.jpg,jpeg"
+                :show-file-list="false"
+                :on-remove="handleRemove"
+                :http-request="uploadFileImg">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+            <el-form-item  label="身份证照正面">
+              <el-upload
+                class="avatar-uploader"
+                action=""
+                :limit="1"
+                accept=".png,.jpg,jpeg"
+                :show-file-list="false"
+                :on-remove="handleRemove"
+                :http-request="uploadFileImg">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
       <el-button class="addMember" @click="addMember" v-show="isAddMember" icon="el-icon-plus">添加成员</el-button>
@@ -27,6 +58,26 @@
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
           <base-form :formData="financeOptions" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeFinanceForm"></base-form>
+          <el-form label-position="right" 
+            label-width="90px" 
+            ref="form"
+            class="">
+            <el-form-item  label="收款凭证">
+              <el-upload
+                class="upload-demo"
+                drag
+                multiple
+                action=""
+                :limit="10"
+                :show-file-list="true"
+                :on-remove="handleRemove"
+                :http-request="uploadFileOther">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
+              </el-upload>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
     </panel>
@@ -173,24 +224,24 @@
       </el-form>
       <el-button class="addDevice" @click="addResource" icon="el-icon-plus">添加设备</el-button>
     </panel>
-    <panel title="其他附件" :show="true" style="margin-bottom:15px">
+    <panel title="上传附件" :show="true" style="margin-bottom:15px">
       <el-form label-position="right" 
         label-width="90px" 
         ref="form"
         class="device-form">
-        <el-form-item  label="附件上传">
+        <el-form-item label="上传附件">
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
+            drag
             multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            action=""
+            :limit="10"
+            :show-file-list="true"
+            :on-remove="handleRemove"
+            :http-request="uploadFileOther">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
           </el-upload>
         </el-form-item>
       </el-form>
@@ -225,8 +276,8 @@ export default {
     return {
       isAddMember: false,
       betCard: { // 投注卡的数据
-        charge:'20',
-        amount:'2',
+        charge: '',
+        amount: '',
         depositSet: '0', // 押金设置 0-不收费；1-收费，2-按投注卡申请量收费
         depositMoreThan: '',
         depositMoney: '' // 押金金额
@@ -248,25 +299,27 @@ export default {
           }
         },
         {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options:[{label:'自营厅',value:0},{label:'合作厅',value:1}]},
-        {title: '渠道编号', type: 'input', prop: 'channelNo', value: 'sc001'},
+        {title: '渠道编号', type: 'input', prop: 'channelNo', value: ''},
         {title: '经营场所属性', type: 'select', prop: 'runField', value: '', options:[{label:'自有',value:0},{label:'租赁',value:1}]},
-        {title: '渠道面积', type: 'input', prop: 'pointArea', value: '45'},
-        {title: '渠道地址', type: 'address', prop: 'channelAddress', value: '',options:[]},
+        {title: '渠道面积', type: 'input', prop: 'pointArea', value: ''},
+        // {title: '渠道地址', type: 'address', prop: 'channelAddress', value: '',options:[]},
+        {title: '渠道地址', type: 'input', prop: 'channelAddress', value: ''},
       ],
       workerData: [
         [{title: '角色名称', type: 'select', prop: 'roleId', value: '', options:[]},
-        {title: '姓名', type: 'input', prop: 'accountName', value: '小李'},
+        {title: '姓名', type: 'input', prop: 'accountName', value: ''},
         {title: '性别', type: 'radio', prop: 'sex', value: '女', options: [{ label: '男', value: "男" }, { label: '女', value: "女" }]},
-        {title: '手机号码', type: 'input', prop: 'phone', value: '13012345678'},
-        {title: '身份证号码', type: 'input', prop: 'channelIdentity', value: '360788200010102020'},
-        {title: '身份证照正面', type: 'upload', prop: 'photo', value: ''},
-        {title: '身份证照背面', type: 'upload', prop: 'photo', value: ''}]
+        {title: '手机号码', type: 'input', prop: 'phone', value: ''},
+        {title: '身份证号码', type: 'input', prop: 'channelIdentity', value: ''},
+        // {title: '身份证照正面', type: 'upload', prop: 'photo', value: ''},
+        // {title: '身份证照背面', type: 'upload', prop: 'photo', value: ''}
+        ]
       ],
       financeOptions: [
-        {title: '合作预交款', type: 'input', prop: 'coPrepareMoney', value: 100},
-        {title: '授信额度', type: 'input', prop: 'creditQuota', value: 200},
-        {title: '代销费费率', type: 'input', prop: 'agentSellRate', value: 20},
-        {title: '收款凭证', type: 'upload-drag', prop: 'evidence', value: ''}
+        {title: '合作预交款', type: 'input', prop: 'coPrepareMoney', value: ''},
+        {title: '授信额度', type: 'input', prop: 'creditQuota', value: ''},
+        {title: '代销费费率', type: 'input', prop: 'agentSellRate', value: ''},
+        // {title: '收款凭证', type: 'upload-drag', prop: 'evidence', value: ''}
       ],
       deviceData: [
         {title:'设备', propType: 'type', propModel: 'model', optionsType:[{label:'类型一',value:1},{label:'类型二',value:2}],optionsModel:[{label:'型号三',value:3},{label:'型号四',value:4}]}
@@ -285,6 +338,7 @@ export default {
       financeData: null, // 账户资金参数
       channelFundData: [], // 人员信息参数
       gameRightList: null, // 销售权限参数
+      imageUrl: ''
     };
   },
   watch: {
@@ -295,6 +349,7 @@ export default {
         res.forEach((item)=>{
           // 保留你需要的参数
           let param = (({goodsType, modelId, id, unitPrice, num}) =>({goodsType, modelId, id, unitPrice, num}))(item);
+          param.num = Number(param.num)
           params.push(param)
         })
         this.deviceParam = params;
@@ -310,6 +365,41 @@ export default {
     this.getAccountRole()
   },
   methods: {
+    // 图标上传
+    async uploadFileImg(files) {
+      let formData = new FormData();
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 1);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.imgId = res.data.fileId;
+      let imgUrl = res.data.filePath;
+    },
+    // 附件上传
+    async uploadFileOther(files) {
+      let formData = new FormData();
+      console.log('files', files.file.size/1024)
+      // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 1);
+      const res = await this.$api.uploadChannelFiles({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.gameOtherId = res.data.fileId;
+    },
     changeBaseForm(val) {
       console.log('基础信息表单', val)
       this.channelData = val;
@@ -322,10 +412,10 @@ export default {
     selectResourceType(index) {
       console.log('选择的资源index', index)
       this.resourceIndex = index;
-      console.log('下拉的index', this.resourceData[index].type)
+      console.log('下拉的index', this.resourceData[index].goodsType)
       let data = {
-        goodsType: this.resourceData[index].type
-      }
+        goodsType: this.resourceData[index].goodsType
+      };
       this.getModelTree(data)
     },
     // 选择资源名称
@@ -363,12 +453,13 @@ export default {
     // 根据资源类型获取资源名称
     getModelTree(data) {
       const self = this;
-      // 重置后面下拉框的数据 清空
+      // 重置后面下拉框的数据 清空 
       self.nameData =[];
       self.$set(self.resourceData[this.resourceIndex], 'optionsName', []);
-      self.$set(self.resourceData[this.resourceIndex], 'name', '');
-      self.$set(self.resourceData[this.resourceIndex], 'model', '');
-      self.$set(self.resourceData[this.resourceIndex], 'number', '');
+      self.$set(self.resourceData[this.resourceIndex], 'id', '');
+      self.$set(self.resourceData[this.resourceIndex], 'modelId', '');
+      self.$set(self.resourceData[this.resourceIndex], 'num', '');
+      self.$set(self.resourceData[this.resourceIndex], 'unitPrice', '');
       (async (data)=>{
 				let res = await self.$api.getModelTree({data})
 				if(res && res.code == 0) {
@@ -434,7 +525,10 @@ export default {
       (async (data)=>{
 				let res = await self.$api.createChannel({data})
 				if(res && res.code == 0) {
-
+          self.$message.success('提交成功')
+          setTimeout(()=>{
+            self.$router.push({path:'./channelList'})
+          },700)
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -508,13 +602,29 @@ export default {
       console.log('投注参数', this.betCard)
       console.log('设备参数', this.deviceParam)
       const self = this;
+      // 把参数里面的字符串改成数字类型
+      for(let key in this.betCard){
+        this.betCard[key] = Number(this.betCard[key])
+      }
+      for(let key in this.financeData){
+        this.financeData[key] = Number(this.financeData[key])
+      }
+      let checkEmpty = false;
       this.gameRightList = JSON.parse(JSON.stringify(this.tableData));
       this.gameRightList.forEach(item=>{
         item.cashRight = item.cashRight ? 1 : 0;
         item.throwRight = item.throwRight ? 1 : 0;
-        item.sellBeginTime = moment(item.sellBeginTime).format("HH:mm:ss")
-        item.sellEndTime = moment(item.sellEndTime).format("HH:mm:ss")
+        if(item.sellBeginTime&&item.sellEndTime) {
+          item.sellBeginTime = moment(item.sellBeginTime).format("HH:mm:ss")
+          item.sellEndTime = moment(item.sellEndTime).format("HH:mm:ss")
+        } else {
+          checkEmpty = true;
+        }
       })
+      if(checkEmpty) {
+        this.$message.warning('请选择销售时间');
+        return
+      }
       console.log('销售游戏参数', this.gameRightList)
       // 场所属性和面积 属于财务信息 需要切换
       let channelData = Object.assign(this.channelData, {})
@@ -526,11 +636,10 @@ export default {
       let data = {
         channelData: this.channelData, // 渠道基本信息参数
         financeData: this.financeData, // 账户资金参数
+        cardRuleData: this.betCard, // 投注卡参数
         channelFundData: this.channelFundData[0], // 人员信息参数
         gameRightList: this.gameRightList, // 销售权限参数
-        warehouseGoodsData: {
-          list: this.deviceParam
-        }
+        warehouseGoodsData: this.deviceParam // 发放资源
       }
       console.log('提交的参数', data)
       this.$refs.baseForm.validate((val)=>{

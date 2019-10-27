@@ -1,10 +1,35 @@
 <template>
   <div class="vlt-card">
-    <panel title="试玩计划" :show="true">
+    <panel title="上市计划" :show="true">
       <base-info :infoList="planData"></base-info>
     </panel>
     <panel title="游戏信息" :show="true">
       <base-info :infoList="gameData"></base-info>
+    </panel>
+    <panel title="游戏开发商" :show="true">
+      <base-info :infoList="developerInfo"></base-info>
+    </panel>
+    <panel title="版本信息" :show="true">
+      <base-info :infoList="softwareInfo">
+        <!-- 这是 具名插槽  需要填写链接信息 -->
+        <ul slot="msg-content" class="info-list">
+          <li class="info-item">
+            <span class="title">版本记录：</span>
+            <p  class="content"><el-link type="primary" :underline="false" tag="p" style="font-size: 12px;" @click="toVersion">查看</el-link></p>
+          </li>
+        </ul>
+      </base-info>
+    </panel>
+    <!-- fileList -->
+    <panel title="附件信息" :show="fileList.lenght > 0">
+      <base-info :infoList="fileList">
+        <ul class="info-list" slot="msg-content">
+          <li class="info-item" v-for="(item, index) in fileList" :key="index">
+              <span class="title">{{item.fileName}}：</span>
+              <el-link :href="item.filePath" type="primary" target="_blank">下载</el-link>
+          </li>
+        </ul>
+      </base-info>
     </panel>
     <panel title="游戏规则" :show="true">
       <base-info :infoList="ruleData"></base-info>
@@ -18,10 +43,10 @@
     <panel title="风控规则" :show="true">
       <base-info :infoList="riskData"></base-info>
     </panel>
-    <panel title="自定义配置" :show="true">
+    <!-- <panel title="自定义配置" :show="true">
       <base-info :infoList="customData"></base-info>
-    </panel>
-    <panel title="问卷调查" :show="true">
+    </panel>-->
+    <!-- <panel title="问卷调查" :show="true">
       <el-table
         border
         ref="multipleTable"
@@ -36,140 +61,181 @@
         <el-table-column prop="time" label="生效时间"></el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看问卷统计</el-button>
-            <!-- <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">去除</el-button> -->
-          </template>
+            <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看问卷统计</el-button>          </template>
         </el-table-column>
       </el-table>
-    </panel>
-    <panel title="上市信息发布" :show="true">
+    </panel>-->
+    <!-- <panel title="上市信息发布" :show="true">
       <base-info :infoList="publishData"></base-info>
-    </panel>
+    </panel>-->
   </div>
 </template>
 <script type="text/javascript">
 export default {
   name: "gameMarketPlanDetail",
   data() {
-    return { 
-      planData:[
-        {title:'计划名称',value:'',prop:'planName'},
-        {title:'计划编号',value:'',prop:'planCode'},
-        {title:'计划状态',value:'',prop:'planState'},
-        {title:'试玩时间',value:'',prop:'startTime'},
-        {title:'试玩群体',value:'',prop:'rang'},
-        {title:'试玩范围',value:'',prop:'rang'},
-        {title:'试玩区域',value:'',prop:'area'},
-        {title:'试玩渠道',value:'',prop:'channel'},
-        {title:'试玩终端',value:'',prop:'terminal'},
-        {title:'计划简介',value:'',prop:'planExplain'},
-        {title:'创建人',value:'',prop:'planExplain'},
-        {title:'创建时间',value:'',prop:'planExplain'}
+    return {
+      planData: [
+        { title: "计划名称", value: "", prop: "gameListName" },
+        { title: "上市计划编号", value: "", prop: "gameListCode" },
+        { title: "销售区域", value: "", prop: "gameSaleArea" },
+        { title: "上市时间", value: "", prop: "gameListTime" },
+        { title: "上市游戏", value: "", prop: "gameName" },
+        { title: "销售渠道", value: "", prop: "gameSaleChannel" },
+        { title: "上市计划说明", value: "", prop: "gameSaleDesc" },
+        { title: "计划状态", value: "", prop: "gameListStatus" },
+        { title: "销售终端", value: "", prop: "gameSaleTerminal" },
+        { title: "创建人", value: "", prop: "createBy" },
+        { title: "创建时间", value: "", prop: "createTime" }
       ],
-      gameData:[
-        {title:'游戏ID',value:'',prop:'gameID'},
-        {title:'游戏名称',value:'',prop:'gameName'},
-        {title:'游戏类型',value:'',prop:'gameType'},
-        {title:'游戏状态',value:'',prop:'gameID'},
-        {title:'游戏奖池',value:'',prop:'gameName'},
-        {title:'游戏版权',value:'',prop:'gameType'},
-        {title:'游戏简介',value:'',prop:'gameID'},
-        {title:'软件名称',value:'',prop:'gameName'},
-        {title:'软件大小',value:'',prop:'gameType'},
-        {title:'软件版本',value:'',prop:'gameID'},
-        {title:'版本号',value:'',prop:'gameName'},
-        {title:'上传时间',value:'',prop:'gameType'},
-        {title:'软件描述',value:'',prop:'gameType'},
-        {title:'新版特性',value:'',prop:'gameType'},
+      gameData: [
+        { title: "游戏ID", value: "", prop: "id" },
+        { title: "游戏名称", value: "", prop: "gameName" },
+        { title: "游戏类型", value: "", prop: "gameType" },
+        { title: "游戏状态", value: "", prop: "gameStatus" },
+        { title: "游戏版权", value: "", prop: "gameGenlot" },
+        { title: "游戏奖池", value: "", prop: "jackpotType" },
+        { title: "游戏简介", value: "", prop: "gameDesc" },
+        { title: "创建人", value: "", prop: "createUser" },
+        { title: "创建时间", value: "", prop: "createTime" },
+        { title: "更新人", value: "", prop: "updateUser" },
+        { title: "更新时间", value: "", prop: "updateTime" }
       ],
-      ruleData:[
-          {title:'游戏兑换比例',value:'',prop:'miniMoney'},
-          {title:'消费模式',value:'',prop:'miniNumber'},
-          {title:'奖池比率',value:'',prop:'addMoney'},
-          {title:'Jackpot比率',value:'',prop:'miniMoney'},
-          {title:'返奖率',value:'',prop:'miniNumber'},
-          {title:'调节基金比率',value:'',prop:'addMoney'},
-          {title:'防沉迷',value:'',prop:'addMoney'},
-          {title:'单日限额',value:'',prop:'miniMoney'},
-          {title:'单次时长',value:'',prop:'miniNumber'},
-          {title:'游戏规则介绍',value:'',prop:'addMoney'},
+      developerInfo: [
+        { title: "开发商名称", value: "", prop: "developerName" },
+        { title: "电子邮箱：", value: "", prop: "email" },
+        { title: "传真电话：", value: "", prop: "faxPhone" },
+        { title: "联系人：", value: "", prop: "person" },
+        { title: "联系地址：", value: "", prop: "address" },
+        { title: "手机号码：", value: "", prop: "cellPhone" }
       ],
-      betData:[
-        {title:'单注最小金额',value:'',prop:'miniMoney'},
-        {title:'最小注数',value:'',prop:'miniNumber'},
-        {title:'单注加注金额',value:'',prop:'addMoney'},
-        {title:'单注最大金额',value:'',prop:'totalIssueMoney'},
-        {title:'最大投注数',value:'',prop:'totalBenefitMoney'}
+      softwareInfo: [
+        { title: "软件名称", value: "", prop: "softwareName" },
+        { title: "软件大小", value: "", prop: "softwareSize" },
+        { title: "新版特性", value: "", prop: "newFeatures" },
+        { title: "软件版本", value: "", prop: "versionName" },
+        { title: "软件描述", value: "", prop: "softwareDesc" },
+        { title: "版本号", value: "", prop: "versionNumber" },
       ],
-      fundsData:[
-        {title:'总发行经费占比',value:'',prop:'miniWinningMoney'},
-        {title:'中福彩发行费占比',value:'',prop:'miniReturnRate'},
-        {title:'省福彩发行费占比',value:'',prop:'miniPondMoney'},
-        {title:'市福彩发行费占比',value:'',prop:'miniReturnRate'},
-        {title:'销售厅发行费占比',value:'',prop:'miniPondMoney'},
-        {title:'总公益金占比',value:'',prop:'miniWinningMoney'},
-        {title:'中福彩公益金占比',value:'',prop:'miniReturnRate'},
-        {title:'省福彩公益金占比',value:'',prop:'miniPondMoney'},
-        {title:'市福彩公益金占比',value:'',prop:'miniReturnRate'},
-        {title:'销售厅公益金占比',value:'',prop:'miniPondMoney'},
+      fileList:[
+        { title: "文档一.doc", value: "下载", prop: "newCharacter" }
       ],
-      riskData:[
-        {title:'最低中奖金额',value:'',prop:'awardSetting'},
-        {title:'最低返奖率',value:'',prop:'awardSetting'},
-        {title:'最低奖池金额',value:'',prop:'awardSetting'},
-        {title:'最高中奖金额',value:'',prop:'playingMethod'},
-        {title:'最高返奖率',value:'',prop:'awardSetting'},
-        {title:'最高奖池金额',value:'',prop:'playingMethod'},
-        {title:'最低销量',value:'',prop:'awardSetting'},
-        {title:'最低开机率',value:'',prop:'playingMethod'},
-        {title:'最低在线数量',value:'',prop:'awardSetting'},
-        {title:'最高销量',value:'',prop:'playingMethod'},
+      ruleData: [
+        { title: "游戏状态", value: "", prop: "miniMoney" },
+        { title: "游戏兑换比例", value: "", prop: "miniNumber" },
+        { title: "消费模式", value: "", prop: "conPattern" },
+        { title: "防沉迷", value: "", prop: "indulgeSwitch" },
+        { title: "奖池类型", value: "", prop: "rewardPoolRate" },
+        { title: "Jackpot比率", value: "", prop: "jackpotRate" },
+        { title: "奖池比率", value: "", prop: "miniNumber" },
+        { title: "单次时长", value: "", prop: "dayLimitTime" },
+        { title: "单日限额", value: "", prop: "dayLimitPrize" },
+        { title: "游戏规则介绍", value: "", prop: "ruleDesc" }
       ],
-      customData:[
-        {title:'奖级设置',value:'',prop:'serveAddress'}
+      betData: [
+        { title: "单注最小金额", value: "", prop: "minAmount" },
+        { title: "最小注数", value: "", prop: "minBets" },
+        { title: "单注加注金额", value: "", prop: "minAddBets" },
+        { title: "单注最大金额", value: "", prop: "maxAmount" },
+        { title: "最大投注数", value: "", prop: "maxBets" }
       ],
-      tableData: [
-        {id: 'a',name:'b',type:'c',pond: 'd',time:'2019-09-12 09:00:00'}
+      fundsData: [
+        { title: "总发行经费占比", value: "", prop: "totalPublishRate" },
+        { title: "中福彩发行费占比", value: "", prop: "zhcPublishRate" },
+        { title: "省福彩发行费占比", value: "", prop: "proPublishRate" },
+        { title: "市福彩发行费占比", value: "", prop: "cityPublishRate" },
+        { title: "销售厅发行费占比", value: "", prop: "marketPublishRate" },
+        { title: "总公益金占比", value: "", prop: "totalWelfareRate" },
+        { title: "中福彩公益金占比", value: "", prop: "zhcWelfareRate" },
+        { title: "省福彩公益金占比", value: "", prop: "proWelfareRate" },
+        { title: "市福彩公益金占比", value: "", prop: "cityWelfareRate" },
+        { title: "销售厅公益金占比", value: "", prop: "marketPublishRate" }
       ],
-      publishData: [
-        {title:'发布标题',value:'',prop:'awardSetting'},
-        {title:'发布机构',value:'',prop:'awardSetting'},
-        {title:'发布时间',value:'',prop:'awardSetting'},
-        {title:'发布内容',value:'',prop:'playingMethod'},
+      riskData: [
+        { title: "最低中奖金额", value: "", prop: "minBonus" },
+        { title: "最低返奖率", value: "", prop: "minReturnRate" },
+        { title: "最低奖池金额", value: "", prop: "minPoolAmount" },
+        { title: "最高中奖金额", value: "", prop: "maxBonus" },
+        { title: "最高返奖率", value: "", prop: "maxReturnRate" },
+        { title: "最高奖池金额", value: "", prop: "maxPoolAmount" },
+        { title: "最低销量", value: "", prop: "minSale" },
+        { title: "最低开机率", value: "", prop: "minStartRate" },
+        { title: "最低在线数量", value: "", prop: "minOnlineNum" },
+        { title: "最高销量", value: "", prop: "maxSale" }
       ]
+      // customData:[
+      //   {title:'奖级设置',value:'',prop:'serveAddress'}
+      // ],
+      // tableData: [
+      //   {id: 'a',name:'b',type:'c',pond: 'd',time:'2019-09-12 09:00:00'}
+      // ],
+      // publishData: [
+      //   {title:'发布标题',value:'',prop:'awardSetting'},
+      //   {title:'发布机构',value:'',prop:'awardSetting'},
+      //   {title:'发布时间',value:'',prop:'awardSetting'},
+      //   {title:'发布内容',value:'',prop:'playingMethod'},
+      // ]
+    };
+  },
+  created() {
+    const routerQuery = this.$route.query;
+    if (routerQuery && routerQuery.id && routerQuery.gameId) {
+      const data = {
+        gameId: routerQuery.gameId,
+        id: routerQuery.id
+      };
+      this.getGameStoreInfo(data);
     }
   },
   methods: {
-    getStoreList(row) {
+    getGameStoreInfo(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
-      (async (data)=>{
-				let res = await self.$api.getStoreList({data})
-				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
-				} else {
-          // self.$message.warning(res.msg)
+      (async data => {
+        let res = await self.$api.getMarketPlanDetal({ data });
+        console.log(res);
+        if (res && res.code == 0) {
+          if (res.data.gameInfoVo != null) {
+            this.eachList(this.planData, res.data.gameListPlanVo);
+            this.eachList(this.gameData, res.data.gameInfoVo);
+            this.eachList(this.developerInfo, res.data.developerInfo);
+            this.eachList(this.ruleData, res.data.gameRuleVo);
+            this.eachList(this.betData, res.data.gameBettingRuleVo);
+            this.eachList(this.fundsData, res.data.gameFundRuleVo);
+            this.eachList(this.riskData, res.data.gameRiskRuleVo);
+             this.fileList = res.data.fileList
+          } else {
+            self.$message.warning(res.data.msg);
+          }
+        } else {
+          self.$message.warning(res.msg);
         }
-      })(data)
+      })(data);
     },
-  },
-}
+    handleSelectionChange() {},
+    eachList(arr, obj) {
+      arr.forEach(item => {
+        item.value = obj[item.prop];
+        if (item.prop == "jackpotType") {
+          // item.value = this.formatJackpotType(obj[item.prop])
+        }
+      });
+    },
+    toVersion () {
+      console.log('跳转到版本记录');
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
-.plan-check{
+.plan-check {
   background: white;
-  margin:20px 20px;
+  margin: 20px 20px;
   border-radius: 8px;
-  padding: 25px
+  padding: 25px;
 }
 
-.panel{
-    margin-bottom: 20px;
+.panel {
+  margin-bottom: 20px;
 }
-
 </style>

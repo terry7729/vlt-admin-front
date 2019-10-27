@@ -49,8 +49,8 @@
       :total="999"
       :currentPage="1"
       :pageSize="10"
-      @handleSizeChange="handleSizeChange"
-      @handleCurrentChange="handleCurrentChange">
+      @handleSizeChange="changeSize"
+      @handleCurrentChange="changeCurrent">
     </table-paging>
   </div>
 </template>
@@ -75,12 +75,11 @@ export default {
         limit: 10
       },
       searchOptions:[
-        {title: '游戏编码', type: 'input', prop: 'inputName', value: '',},
-        {title: '游戏名称', type: 'input', prop: 'inputName2', value: '',},
-        {title: '游戏类型', type: 'select', prop: 'selectName', value: '', options: []},
-        {title: '游戏状态', type: 'select', prop: 'selectName2', value: '', options: []},
-        {title: '奖池类型', type: 'select', prop: 'selectName3', value: '', options: []},
-        {title: '最近更新时间', type: 'datepicker-range', prop: '', value: '', options: ['start', 'end']} 
+        {title: '游戏编码', type: 'input', prop: 'gameCode', value: '',},
+        {title: '游戏名称', type: 'input', prop: 'gameName', value: '',},
+        {title: '游戏类型', type: 'select', prop: 'gameType', value: '', options: [{label:'概率型',value:1},{label:'奖组型',value:2}]},
+        {title: '游戏状态', type: 'select', prop: 'gameStatus', value: '', options: [{label:'储备',value:1},{label:'试玩',value:2},{label:'上市',value:3},{label:'退市',value:4}]},
+        {title: '奖池类型', type: 'select', prop: 'jackpotType', value: '', options: [{label:'无奖池',value:1},{label:'单奖池',value:2},{label:'多奖池',value:3}]}, 
       ],
       currentPage: 1,
       params: {
@@ -166,10 +165,10 @@ export default {
       }
       this.getGameStoreList(data)
     },
-    handleSizeChange(val) {
+    changeSize(val) {
       console.log(`每页 ${val} 条`);
     },
-    handleCurrentChange(val) {
+    changeCurrent(val) {
       console.log(`当前页: ${val}`);
     },
   },

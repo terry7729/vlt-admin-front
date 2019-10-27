@@ -23,6 +23,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <table-paging
+      position="right"
+      :total="999"
+      :currentPage="1"
+      :pageSize="10"
+      @handleSizeChange="changeSize"
+      @handleCurrentChange="changeCurrent">
+    </table-paging>
   </div>
 </template>
 
@@ -32,9 +40,10 @@ export default {
   data() {
     return {
       searchOptions: [
-        {type: 'input', prop: 'inputName', value: '', title: '姓名'},
-        {
-          type: 'select', prop: 'selectName', value: '', title: '选择框',
+        {title: '渠道编号', type: 'input', prop: 'channelNo', value: '', },
+        {title: '渠道名称', type: 'input', prop: 'channelName', value: '', },
+        { type: 'select', prop: 'selectName', value: '', title: '选择框',
+         
           options: [
             {
               label: '选项1',
@@ -85,6 +94,12 @@ export default {
     },
     select(val) {
       console.log(val)
+    },
+    changeSize(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    changeCurrent(val) {
+      console.log(`当前页: ${val}`);
     },
     add() {
       console.log('a')
