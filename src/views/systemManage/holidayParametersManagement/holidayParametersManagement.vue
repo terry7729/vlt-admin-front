@@ -96,12 +96,6 @@ export default {
     async init() {
       this.getHolidayList();
       this.getTableData();
-
-      // let token = localStorage.getItem("data");
-      //console.log(token);
-      // data.headers = {
-      //   token: token
-      // };
     },
     async getTableData() {
       //初始查询列表的参数
@@ -117,9 +111,9 @@ export default {
         this.tableData = arr;
       }
     },
+    //获取假日名称列表数据
     async getHolidayList() {
-      let data = {};
-      let res = await this.$api.getHolidayList({ data });
+      let res = await this.$api.getHolidayList();
       console.log(res);
     },
 
