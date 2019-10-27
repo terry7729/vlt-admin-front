@@ -80,6 +80,7 @@ const developmentPlanEdit = () => import('@/views/businessManage/channelBusiness
 const developmentPlanList = () => import('@/views/businessManage/channelBusinessManage/developmentPlanList')
 const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
 const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
+const developmentPlanProvinceDetail = () =>import('@/views/businessManage/channelBusinessManage/developmentPlanProvinceDetail')
 const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
 const resourceApply = () => import('@/views/businessManage/channelBusinessManage/resourceApply')
 const resourceProvide = () => import('@/views/businessManage/channelBusinessManage/resourceProvide')
@@ -666,6 +667,14 @@ export default [
       title: '新建年度发展计划',
     },
     component: developmentPlanCreate
+  },{
+    path: 'businessManage/developmentPlanProvinceDetail',
+    name: 'developmentPlanProvinceDetail',
+    meta: {
+      title: '年度发展计划汇总省级详情',
+    },
+    component: developmentPlanProvinceDetail,
+    children: []
   },
   {
     path: 'businessManage/channelResourceManage/inventoryManage',

@@ -5,23 +5,25 @@
     </panel-static>
     <panel-static title="物品列表">
       <el-table :data="goodsListData" border style="width: 100%">
-        <el-table-column prop="id" label="序号" type="index" width='80'></el-table-column>
+          <el-table-column prop="id" label="序号" type="index" width='80'></el-table-column>
           <el-table-column prop="goodsName" label="物品名称"></el-table-column>
-          <el-table-column prop="goodsType" label="物品型号"></el-table-column>
+          <el-table-column prop="goodsModel" label="物品型号"></el-table-column>
           <el-table-column prop="goodsCode" label="物品编号"></el-table-column>
-          <el-table-column prop="miniNum" label="数量"></el-table-column>
-          <el-table-column prop="money" label="单价（元）"></el-table-column>
+          <el-table-column prop="num" label="数量"></el-table-column>
+          <el-table-column prop="unitPrice" label="单价"></el-table-column>
+          <el-table-column prop="amount" label="金额"></el-table-column>
           <el-table-column prop="remark" label="备注"></el-table-column>
           <el-table-column prop="seriesNum" label="物品序列号" width="240">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.seriesNum" placeholder="请输入设备序列号" maxlength="50"
+              <el-input v-model="scope.row.seriesNum" ref="input" placeholder="请输入物品序列号" maxlength="50"
               @blur="getSeriesNum(scope.row.id,scope.row.seriesNum)"></el-input>
+              <el-button type="primary" @click="addSeriesNum(scope.row)" size="small">添加</el-button>
             </template>
           </el-table-column>
       </el-table>
     </panel-static>
     <div class="inp-total">
-      <span>合计金额：<el-input v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
+      <span>合计金额：<el-input :disabled = true v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
     </div>
     <el-row class="putStore">
       <el-button type="primary" class="mainBtn" @click="putStore">入库</el-button>
@@ -35,36 +37,78 @@ export default {
  name: "putStore",
  data() {
  return {
-   totalMoney:'',
+   totalMoney:0,
    infoList: [
-        { title: "单据编号", value: "", prop: "billCode" },
-        { title: "单据主题", value: "", prop: "billTitle" },
-        { title: "申请人员", value: "", prop: "applyPerson" },
-        { title: "申请日期", value: "", prop: "applyDate" },
-        { title: "出库仓库", value: "", prop: "outStore" },
-        { title: "入库仓库", value: "", prop: "putStore" },
+        { title: "单据编号", value: "", prop: "documentNumber" },
+        { title: "单据主题", value: "", prop: "documentToppic" },
+        { title: "申请人员", value: "", prop: "userName" },
+        { title: "申请日期", value: "", prop: "createTime" },
+        { title: "出库仓库", value: "", prop: "outWarehouseName" },
+        { title: "入库仓库", value: "", prop: "entryWarehouseName" },
         { title: "备注", value: "", prop: "remark" },
     ],
-  goodsListData:[
-    {id:1,goodsName:'投注终端',goodsType:'xxxxx',goodsCode:'xxxxx',miniNum:'xxxx',money:'xxxx',remark:'',seriesNum:'',}
-  ],
-    seriesNum:[]
+    goodsListData:[],
+    seriesNum:[],
+    
+    requestData:{
+      "documentNumber": "",     //单据编号
+	    "list":
+        {
+          "goodsCode": "",     //物品编号 
+          "goodsInfoId": 0,    //  物品详情id
+          "serialNumber": ""   // 物品序列号
+        },
+      "oplBy": "1",           // 出入库操作人id
+      "oplType": 1,          // 操作类型
+      "warehouseId": 10     // 仓库id
+    }
  }
  },
  components: {
  },
+ created(){
+  this.getInfolist()
+ },
  methods: {
-   getSeriesNum(id,value){
-     this.seriesNum.push(value)
-     this.goodsListData.seriesNum =''
-     console.log(this.seriesNum)
-   },
-   putStore(){
-     console.log(32123)
-   },
-   cancel(){
-     this.$router.back();
-   }
+  async  getInfolist(){
+    const data = {
+      documentNumber: this.$route.query.documentNumber
+    }
+    console.log(data.documentNumber)
+    let res = await this.$api.getOutPutDetail(data.documentNumber)
+    console.log(res)
+    if(res && res.code == 0){
+      this.infoList.forEach(item =>{
+        this.totalMoney = res.data.totalPrice
+        this.goodsListData = res.data.list
+        item.value = res.data[item.prop]
+
+        this.requestData.documentNumber = res.data.documentNumber
+        this.requestData.oplType = res.data.oplType
+      })
+    }
+      
+  },
+  getSeriesNum(id,value){
+    this.seriesNum.push(value)
+    console.log(this.$refs.input.value)
+    console.log(this.seriesNum)
+  },
+  addSeriesNum(row){
+    console.log(row)
+  },
+  //入库
+  async putStore(){
+    let data= {
+      ...this.requestData
+    }
+    let res = await this.$api.entryAndOut({data})
+    console.log(res)
+
+  },
+  cancel(){
+    this.$router.back();
+  }
  },
 }
 </script>

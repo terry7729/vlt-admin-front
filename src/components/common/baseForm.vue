@@ -11,7 +11,7 @@
       <!-- 输入框 带icon-->
       <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" :filterable='item.filterable'  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
+      <el-select v-if="item.type=='select'" :filterable='item.filterable' :disabled="item.disabled"  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items.value">

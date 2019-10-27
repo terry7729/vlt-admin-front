@@ -19,14 +19,14 @@
         <panel title="发放物品" :show="true" style="margin-bottom:15px">
           <div class="table-wrap">
             <el-table :data="tableData" border class="table">
-              <el-table-column label="序号" fixed type="index" width="60px"></el-table-column>
+              <el-table-column prop="id" label="序号" fixed width="60px"></el-table-column>
               <el-table-column label="物品名称" min-width="160px">
                 <template slot-scope="scope">
                   <el-select v-model="scope.row.goodsName" filterable placeholder="请选择">
                     <el-option
                       v-for="(item, index) in options"
                       :key="item.value"
-                      @click.native="changeGoods(index)"
+                      @click.native="changeGoods(index,scope.row)"
                       :label="item.label"
                       :value="item.value"
                     ></el-option>
@@ -48,22 +48,13 @@
                   ></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="物品数量（大）" min-width="160px">
+              <el-table-column label="物品数量" min-width="160px">
                 <template slot-scope="scope">
                   <el-input v-model="scope.row.num" placeholder="请输入数量"></el-input>
                 </template>
               </el-table-column>
-              <el-table-column label="物品数量（小）" min-width="160px">
-                <template slot-scope="scope">
-                  <el-input v-model="scope.row.num" placeholder="请输入数量"></el-input>
-                </template>
-              </el-table-column>
-              <el-table-column label="单价（元）" min-width="100px">
-                <template slot-scope="scope">{{scope.row.unitPrice}}</template>
-              </el-table-column>
-              <el-table-column label="金额（元）" min-width="100px">
-                <template slot-scope="scope">{{scope.row.amount}}</template>
-              </el-table-column>
+              <el-table-column prop="unitPrice" label="单价（元）" min-width="100px"></el-table-column>
+              <el-table-column prop="amount" label="金额（元）" min-width="100px"></el-table-column>
               <el-table-column label="备注" min-width="200px">
                 <template slot-scope="scope">
                   <el-input placeholder="请输入备注" v-model="scope.row.remark"></el-input>
@@ -122,93 +113,39 @@
 </template>
 
 <script type="text/javascript">
+import moment, { now } from "moment";
 const resourceData = [
   {
-    value: "选项1",
-    label: "黄金糕",
-    price: "1"
+    value: "001",
+    label: "柜员机",
+    unitPrice: "100"
   },
   {
-    value: "选项2",
-    label: "双皮奶",
-    price: "2"
+    value: "002",
+    label: "投注机",
+    unitPrice: "200"
   },
   {
-    value: "选项3",
-    label: "蚵仔煎",
-    price: "3"
-  },
-  {
-    value: "选项4",
-    label: "龙须面",
-    price: "4"
-  },
-  {
-    value: "选项5",
-    label: "北京烤鸭",
-    price: "5"
+    value: "003",
+    label: "显示屏",
+    unitPrice: "300"
   }
 ];
 export default {
   name: "",
-  rules: { rule: "" },
-  watch: {
-    tableData: {
-      handler(newValue, oldValue) {
-        // this.$emit("change", this.form)
-        console.log("监听table的数据变化", newValue);
-        // 计算价格
-        newValue.forEach(item => {
-          item.money = item.number * item.price;
-        });
-        let res = JSON.parse(JSON.stringify(newValue));
-        let params = [];
-        res.forEach(item => {
-          // 删除不需要的参数
-          delete item.options;
-          // 保留你需要的参数
-          // let param = (({goodsId, searl, max, min, price, money, remark}) =>({goodsId, searl, max, min, price, money, remark}))(item);
-          params.push(item);
-        });
-        console.log("params", params);
-      },
-      // 深度监听 监听对象，数组的变化
-      deep: true
-    }
-  },
   data() {
     return {
-      totalData: [
-        {
-          title: "合计金额",
-          type: "input",
-          prop: "title",
-          value: "",
-          disabled: true
-        },
-        { title: "采购说明", type: "textarea", prop: "title", value: "" }
-      ],
       formData: [
-        { title: "单据编号", type: "input", prop: "documentNumber", value: "" },
-        {
-          title: "入库仓库",
-          type: "select",
-          prop: "entryWarehouseName",
-          value: "",
-          options: [
-            { label: "仓库一", value: "仓库一" },
-            { label: "仓库二", value: "仓库二" }
-          ]
-        },
         {
           title: "申请标题",
           type: "input",
           prop: "resourceApplyTitle",
-          value: ""
+          value: "资源发放申请"
         },
+
         {
           title: "申请日期",
-          type: "datepicker",
+          type: "datetime",
           prop: "preReceivDate",
           value: ""
         }
@@ -216,63 +153,107 @@ export default {
       options: resourceData,
       tableData: [
         {
-          goodsCode: "11",
-          goodsModel: "22",
-          amount: "33",
-          goodsName: "还好",
-          num: "55",
-          unitPrice: "10",
-          documentNumber: "330",
-          remark: "",
-          params: {}
+          id: "1",
+          goodsName: "",
+          goodsModel: "",
+          goodsCode: "",
+          num: "",
+          unitPrice: "",
+          amount: "",
+          remark: ""
         }
       ],
-      tableForm: [
-        { goodsId: "", model: "", number: "", price: "", money: "", remark: "" }
+      totalData: [
+        {
+          title: "合计金额",
+          type: "input",
+          prop: "totalMoney",
+          value: "",
+          disabled: true
+        },
+        { title: "采购说明", type: "textarea", prop: "title", value: "" }
       ],
       activeName: "1",
-      rules: {},
+      rules: { rule: "" },
       form: {}
     };
   },
+  watch: {
+    tableData: {
+      // 深度监听 监听对象，数组的变化
+      handler(newValue, oldValue) {
+        newValue.forEach((item, index) => {
+          item.amount = item.unitPrice * item.num;
+        });
+        let num = 0;
+        for (let i = 0; i < newValue.length; i++) {
+          num = num + newValue[i].amount;
+        }
+        this.totalData[0].value = num;
+
+        let params = JSON.parse(JSON.stringify(newValue));
+      },
+
+      deep: true
+    }
+  },
   methods: {
     async submit() {
-      // this.form.params = this.tableForm;
-      // console.log(this.form);
-      // let data = {
-      //   page: 1,
-      //   pageSize: 10,
-      //   param: {
-      //     documentNumber: "2222"
-      //   }
-      // };
-      // let res = await this.$api.channelResProvide({ data });
-      // console.log(res);
+      // console.log()
+      const self = this;
+      let totalMoney = this.totalData[0].value;
+      let time = moment(self.form.preReceivDate).format("YYYY-MM-DD HH:mm:ss");
+      let data = {
+        attachId: "1",
+        cDate: time,
+        cUserId: "1",
+        cUserName: "1",
+        checkStatus: 0,
+        entryWarehouseId: "1",
+        entryWarehouseName: "1",
+        mDate: time,
+        mUserId: "22",
+        mUserName: "333",
+        operStatus: 0,
+        oplType: 0,
+        outWarehouseId: "111",
+        outWarehouseName: "222",
+        ownUserId: "333",
+        ownUserName: "11",
+        preReceivDate: time,
+        remark: "",
+        resourceApplyDirect: 1,
+        resourceApplyTitle: "333",
+        resourceWareStatus: 0,
+        totalMoney: totalMoney,
+        warehouseGoodsInfoList: self.tableData
+      };
+      let res = await this.$api.channelResProvide({ data });
+      console.log(res);
     },
 
     changeForm(val) {
       this.form = val;
-      console.log(val);
     },
+    changeLaterForm(val) {},
 
-    changeGoods(val, index) {
-      console.log(this.tableData, val.row, val.$index);
-      val.row.price = val.row.options[index].price;
-      val.row.number = 1;
+    //选择、添加、删除物品
+    changeGoods(index, row) {
+      row.unitPrice = this.options[index].unitPrice;
+      row.num = 1;
     },
     deleteGoods(index) {
       this.tableData.splice(index, 1);
     },
     addGoods() {
       let obj = {
-        goodsId: "",
-
-        model: "",
-        searl: "",
-        min: "",
-        max: "",
-        price: "0",
-        money: "0",
+        id: "",
+        goodsName: "",
+        goodsModel: "",
+        goodsCode: "",
+        num: "",
+        unitPrice: 2,
+        amount: "",
         remark: ""
       };
       this.$set(this.tableData, this.tableData.length, obj);
@@ -281,8 +262,7 @@ export default {
     handlePreview() {},
     handleRemove() {},
     beforeRemove() {},
-    handleExceed() {},
-    changeLaterForm() {}
+    handleExceed() {}
   }
 };
 </script>

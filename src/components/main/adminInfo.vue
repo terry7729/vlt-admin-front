@@ -100,24 +100,25 @@ export default {
       });
     },
     async loginOut() {
+      
+      const self = this;
+      const res = await self.$api.getLogOut({
+        data: {
+          userId: self.user.id
+        }
+      });
+      if (res && res.code == 0) {
+        self.$message({
+          message: '退出成功',
+          type: 'success'
+        });
+        storage.remove('token');
         this.$router.push({
-        path:'/login'
-      })
-      // const self = this;
-      // const res = await self.$api.getLoginOut({
-      //   data: {
-      //     userId: self.user.id
-      //   }
-      // });
-      // if (res && res.code == 0) {
-      //   self.$message({
-      //     message: '退出成功',
-      //     type: 'success'
-      //   });
-      //   self.eventBus.$emit('loginOut', '手动登出');
-      //   return;
-      // }
-      // self.$message.error('退出登录失败');
+          path:'/login'
+        })
+        return;
+      }
+      self.$message.error('退出登录失败');
     },
     lock() {
       this.eventBus.$emit('lock', true);
