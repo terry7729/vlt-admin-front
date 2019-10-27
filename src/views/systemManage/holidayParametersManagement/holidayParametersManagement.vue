@@ -53,6 +53,7 @@
 
 <script type="text/javascript">
 import moment from "moment";
+// import storage from "@/utils/storage";
 export default {
   data() {
     return {
@@ -69,11 +70,7 @@ export default {
           value: "",
           title: "假日名称",
           placeholder: "请输入",
-          options: [
-            { label: "", value: 0 },
-            { label: "", value: 1 },
-            { label: "", value: 2 }
-          ]
+          options: []
         }
       ],
       value: "",
@@ -82,18 +79,7 @@ export default {
         { name: "新增", type: "primary", icon: "plus" },
         { name: "保存", type: "success" }
       ],
-      tableData: [
-        // {
-        //   id: 1,
-        //   holidayName: "春节",
-        //   startTime: "2019-10-11 10:0:0",
-        //   endTime: "2019-10-11 12:0:0",
-        //   abandonstartTime: "2019-11-12",
-        //   abandonendTime: "2019-10-15",
-        //   switch1: 1,
-        //   switch2: 0
-        // }
-      ],
+      tableData: [],
       total: 400,
       row: "",
       param: null
@@ -108,31 +94,35 @@ export default {
       return moment(val).format("YYYY-MM-DD HH:mm:ss");
     },
     async init() {
+      this.getHolidayList();
+      this.getTableData();
+
+      // let token = localStorage.getItem("data");
+      //console.log(token);
+      // data.headers = {
+      //   token: token
+      // };
+    },
+    async getTableData() {
       //初始查询列表的参数
       let data = {
         page: 1,
         pageSize: 10,
         holidayName: ""
       };
-      // let token = localStorage.getItem("data");
-      //console.log(token);
-      // data.headers = {
-      //   token: token
-      // };
-      let result = await this.$api.queryHolInfoPage({ data });
+      let result = await this.$api.queryHolInfoPage({ data: data });
       console.log(result);
       if (result.code === 0) {
         let arr = result.data.records;
         this.tableData = arr;
       }
-      // if (result.code === 0) {
-      //   let tableData = result.data.records;
-      //   // this.tableData = arr;
-      //   // this.num = arr.length;
-      //   total=tableData.length;
-      //   console.log(result);
-      // }
     },
+    async getHolidayList() {
+      let data = {};
+      let res = await this.$api.getHolidayList({ data });
+      console.log(res);
+    },
+
     search(val) {
       console.log(val);
     },
