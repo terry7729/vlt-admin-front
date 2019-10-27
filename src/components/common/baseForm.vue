@@ -29,6 +29,8 @@
         v-if="item.type=='switch'"
         v-model="form[item.prop]"
         :active-text="form[item.prop]?'开启':'关闭'"
+        :inactive-value="0"
+        :active-value="1"
         active-color="#409EFF"
         inactive-color="">
       </el-switch>
@@ -220,14 +222,16 @@ export default {
           }
         }
         // console.log('param', param)
-        this.$emit("change", param)
+       
+          this.$emit("change", param)
+        
       },
       // 深度监听 监听对象，数组的变化
       deep: true
     },
     formData: {
       handler(newValue, oldValue) {
-        this.form = {};
+        // this.form = {};
         this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
@@ -331,6 +335,7 @@ export default {
       })
     },
     changeSwitch(val) {
+      debugger;
       this.switchText = val ? '开启' : '关闭'
     },
     changeSelect(val) {
@@ -352,11 +357,11 @@ export default {
             console.log('时间参数', self.timeParam)
           }
         }else if(item.type=='switch') {
-          if(!item.value) { // 数据回填
+          if(item.value!='') { // 数据回填
             self.changeSwitch(item.value)
             self.$set(self.form, item.prop, item.value)
           }else{
-            self.$set(self.form, item.prop, true)
+            self.$set(self.form, item.prop, 0)
           }
         }else if(item.type=='radio') {
           if(item.value !='') { // 数据回填
