@@ -68,9 +68,7 @@ export default {
           title: "假日名称",
           placeholder: "请输入",
           options: [
-            { label: "", value: 0 },
-            { label: "", value: 1 },
-            { label: "", value: 2 }
+          
           ]
         }
       ],

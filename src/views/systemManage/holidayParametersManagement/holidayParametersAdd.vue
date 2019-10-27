@@ -113,14 +113,14 @@ export default {
     // 新增表单change事件
     AddChangeForm(form) {
       this.param = form;
-      // console.log(this.param);
+       console.log( 2222,this.param);
     },
     // 提交按钮
     async AddSubmit() {
       // console.log(this.formData);
       let data = this.param;
-      let result = await this.$api.addAccount({ data });
-      this.$router.push("operationAccountManage");
+      let result = await this.$api.addHolInfo({ data });
+      this.$router.push("holidayParametersManagement");
       console.log(result);
       //console.log(this.$refs.baseForm.form);
       //console.log(formdata);

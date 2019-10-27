@@ -52,7 +52,7 @@
 </template>
 <script type="text/javascript">
 import rules from "../../../utils/rules";
-import { listeners } from 'cluster';
+
 export default {
   name: "",
   data() {
@@ -162,11 +162,11 @@ export default {
       params2:{},
       params3:{}, 
       params4:{},
-      formall:[],
-      // form1:{},
-      // form2:{},
-      // form3:{},
-      // form4:{},  
+      formall:{},
+      form1:[],
+      form2:[],
+      form3:[],
+      form4:[],  
     };
   },
   components: {},
@@ -174,28 +174,31 @@ export default {
   },
   methods: {
     changeForm1(val) {
-        Object.assign(this.params1, val);
+        // Object.assign(this.params1, val);
         // this.form1[0]=this.params1
-      this.formall[0]=this.params1
-      console.log(123,this.params1)
+      this.form1[0]=val
+      console.log(123,this.form1)
     },
     changeForm2(val) {
-        Object.assign(this.params2, val);
-        this.formall[1]=this.params2
+        // Object.assign(this.params2, val);
+        // this.formall[1]=this.params2
+        this.form2[0]=val
     },
     changeForm3(val) {
-         Object.assign(this.params3, val);
-        this.formall[2]=this.params3
+        //  Object.assign(this.params3, val);
+        // this.formall[2]=this.params3
+        this.form3[0]=val
     },
     changeForm4(val) {
-         Object.assign(this.params4, val);
-        this.formall[3]=this.params4
+        //  Object.assign(this.params4, val);
+        // this.formall[3]=this.params4
+        this.form4[0]=val
     },
     async submit() {
-      // this.formall.list1=this.form1
-      // this.formall.list2=this.form2
-      // this.formall.list3=this.form3
-      // this.formall.list4=this.form4
+      this.formall.list1=this.form1
+      this.formall.list2=this.form2
+      this.formall.list3=this.form3
+      this.formall.list4=this.form4
     
       // param.list1=this.formall.list
       //  console.log(777,this.form1)
