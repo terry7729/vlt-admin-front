@@ -24,14 +24,33 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="date" label="告警源"></el-table-column>
-        <el-table-column align="center" prop="date" label="描述"></el-table-column>
-        <el-table-column align="center" prop="name" label="警报等级"></el-table-column>
-        <el-table-column align="center" prop="address" label="告警次数"></el-table-column>
-        <el-table-column align="center" prop="address" label="最新时间"></el-table-column>
-        <el-table-column align="center" prop="address" label="告警历时"></el-table-column>
-        <el-table-column align="center" prop="address" label="通知状态"></el-table-column>
-        <el-table-column align="center" prop="address" label="处理状态"></el-table-column>
+        <el-table-column align="center" prop="source" label="告警源"></el-table-column>
+        <el-table-column align="center" prop="describe" label="描述"></el-table-column>
+        <el-table-column align="center" prop="alarmLevel" label="警报等级">
+          <template slot-scope="scope">
+            <span v-if="scope.row.alarmLevel==0">普通</span>
+            <span v-if="scope.row.alarmLevel==1">严重</span>
+            <span v-if="scope.row.alarmLevel==2">重大</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="alarmCount" label="告警次数"></el-table-column>
+        <el-table-column align="center" prop="lastAlarmTime" label="最新时间"></el-table-column>
+        <el-table-column align="center" prop="alarmDuration" label="告警历时"></el-table-column>
+        <el-table-column align="center" prop="notificationStatus" label="通知状态">
+          <template slot-scope="scope">
+            <span v-if="scope.row.notificationStatus==0">未通知</span>
+            <span v-if="scope.row.notificationStatus==1">已通知</span>
+            <span v-if="scope.row.notificationStatus==2">通知失败</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" prop="processingStatus" label="处理状态">
+          <template slot-scope="scope">
+            <span v-if="scope.row.processingStatus==0">未处理</span>
+            <span v-if="scope.row.processingStatus==1">处理中</span>
+            <span v-if="scope.row.processingStatus==2">已处理</span>
+          </template>
+
+        </el-table-column>
         <el-table-column label="操作" fixed="right" width="120px" align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
@@ -39,12 +58,12 @@
           </template>
         </el-table-column>
       </el-table>
-      
+
       <table-paging
         style="margin-top:30px"
         :current-page="1"
         :page-size="10"
-        :total="100"
+        :total="totalCount"
         @handleSizeChange="pageSizeChange"
         @handleCurrentChange="pageCurrentChange"
       ></table-paging>
@@ -53,48 +72,54 @@
 </template>
 
 <script>
+import moment  from 'moment'
 export default {
   name: "warningWatch",
   data() {
     return {
+      totalCount:0,
       searchOptions: [
         {
           type: "datetime-range",
-          prop: "date4",
+          prop: "timeList",
           value: "",
           title: "日期时间",
           placeholder: ["开始时间", "结束时间"]
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "alarmLevel",
           value: "",
           title: "告警类别",
           placeholder: "请选择",
           options: [
             {
-              label: "选项1",
+              label: "普通",
+              value: 0
+            },
+            {
+              label: "严重",
               value: 1
             },
             {
-              label: "选项2",
+              label: "重大",
               value: 2
             }
           ]
         },
         {
           type: "select",
-          prop: "selectName1",
+          prop: "timeRange",
           value: "",
           title: "时间范围",
           placeholder: "请选择",
           options: [
             {
-              label: "选项1",
+              label: "1天",
               value: 1
             },
             {
-              label: "选项2",
+              label: "2天",
               value: 2
             }
           ]
@@ -119,7 +144,8 @@ export default {
       total: null,
       listQuery: {
         page: 1,
-        limit: 10
+        limit: 10,
+        param: {}
       },
       tableData: [
         {
@@ -146,11 +172,25 @@ export default {
     };
   },
   methods: {
+    async getWarniingList(options) {
+      let data = JSON.parse(JSON.stringify(options));
+      let res = await this.$api.getWarniingList({
+        data
+      });
+      // console.log("data", result);
+      if(res && res.code==0){
+        console.log(res)
+        this.tableData=res.data.records
+        this.totalCount=res.data.total;
+      }
+    },
     pageSizeChange(pageSize) {
-      console.log("每页条数：", pageSize);
+      this.listQuery.limit=pageSize
+      this.getWarniingList(this.listQuery)
     },
     pageCurrentChange(currentPage) {
-      console.log("当前页：", currentPage);
+      this.listQuery.page=currentPage
+      this.getWarniingList(this.listQuery)
     },
     //查看页面跳转
     detail(id) {
@@ -167,6 +207,14 @@ export default {
     },
     search(form) {
       console.log("search", form);
+      // console.log("search", form);
+      this.listQuery.param = {
+        alarmLevel: form.alarmLevel,
+        timeRange: form.timeRange,
+        warningTimeStart:form.timeList? moment(form.timeList[0]).format("YYYY-MM-DD HH:mm:ss"):'',
+        warningTimeEnd:form.timeList? moment(form.timeList[1]).format("YYYY-MM-DD HH:mm:ss"):''
+      };
+      this.getWarniingList(this.listQuery);
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -175,16 +223,10 @@ export default {
         this.$router.go(-1);
       }
     },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      //   this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      //   this.getList();
-    }
   },
-  mounted() {}
+  mounted() {
+    this.getWarniingList(this.listQuery)
+  }
 };
 </script>
 
