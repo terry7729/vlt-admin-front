@@ -335,9 +335,9 @@ export default {
       });
     }
   }
-};
+ 
+}
 </script>
-
 <style lang="less">
 h3 {
   margin-bottom: 20px;
