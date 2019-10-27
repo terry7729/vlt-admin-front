@@ -5,7 +5,7 @@
         <div class="vlt-edit-wrap">
             <base-form :formData="formData" labelWidth="140px" ref="baseForm" :rules="rules2" 
             direction="right" @change="changeForm"></base-form>
-            <el-form 
+            <!-- <el-form 
               label-position="right" 
               label-width="140px" 
               ref="form"
@@ -15,7 +15,7 @@
               </el-form-item>
             </el-form>
             <base-form :formData="formData2" labelWidth="140px" ref="baseForm" :rules="rules2" 
-            direction="right" @change="changeForm2"></base-form>
+            direction="right" @change="changeForm2"></base-form> -->
           <el-row class="vlt-edit-btn">
             <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
             <el-button size="medium" @click="cancel">取消</el-button>
@@ -44,11 +44,13 @@ return {
         // multiple: true, // 多选
         checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
       }
-      },
-  ],
-  formData2:[
+    },
+    {title:'仓库类型1',type:'input',disabled:true,prop:'typeX',value:''},
     {title:'仓库管理员',type:'select',prop:'adminId',options:[]},
     {title:'备注',type:'textarea',prop:'remark',value:''},
+  ],
+  formData2:[
+    
   ],
   rules2: {
     nameX: [
@@ -93,9 +95,9 @@ methods: {
       })(data)
   },
   // 获取仓库管理员数据
-  getAdminList(id){
-    (async (id)=>{
-      let res = await this.$api.getAdminList(id)
+  getAdminList(data){
+    (async (data)=>{
+      let res = await this.$api.getAdminList({data})
       console.log('admin', res.data[0].list)
       let array = []
       res.data[0].list.forEach((item)=>{
@@ -105,7 +107,7 @@ methods: {
         array.push(obj)
       })
       this.$set(this.formData2[0],'options',array);
-    })(id)
+    })(data)
   },
 
   submit(){
@@ -144,6 +146,7 @@ methods: {
     if( typeof(val.organId)=='number') {
       this.getAdminList(val.organId)
     }
+    // debugger
     let array = [];
     let typeValue = '';
     array.push(this.insData.id)
@@ -197,7 +200,8 @@ methods: {
     this.typeName = type[typeValue]
     console.log(this.typeX)
     // this.$set(this.formData[1], 'value', array)
-    // this.$set(this.formData2[2], 'value', name)
+    // debugger
+    // this.$set(this.formData[2], 'value', this.typeName)
   },
 },
 }

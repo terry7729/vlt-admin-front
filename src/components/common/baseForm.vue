@@ -220,14 +220,16 @@ export default {
           }
         }
         // console.log('param', param)
-        this.$emit("change", param)
+       
+          this.$emit("change", param)
+        
       },
       // 深度监听 监听对象，数组的变化
       deep: true
     },
     formData: {
       handler(newValue, oldValue) {
-        this.form = {};
+        // this.form = {};
         this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
