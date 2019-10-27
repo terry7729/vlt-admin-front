@@ -29,6 +29,8 @@
         v-if="item.type=='switch'"
         v-model="form[item.prop]"
         :active-text="form[item.prop]?'开启':'关闭'"
+        :inactive-value="0"
+        :active-value="1"
         active-color="#409EFF"
         inactive-color="">
       </el-switch>
@@ -69,10 +71,17 @@
       </el-date-picker>
       <!-- 支持文本域 -->
       <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
-      <!-- 级联选择 -->
+      <!-- 级联选择 返回id-->
       <el-cascader  v-if="item.type=='cascader'" size="small" 
         v-model="form[item.prop]" 
         :value="item.value" 
+        :options="item.options" 
+        :props="item.setProps"
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
+      <!-- 级联选择 返回对象-->
+      <el-cascader  v-if="item.type=='cascader-object'" size="small" 
+        v-model="form[item.prop]" 
+        :value="item" 
         :options="item.options" 
         :props="item.setProps"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
@@ -213,14 +222,16 @@ export default {
           }
         }
         // console.log('param', param)
-        this.$emit("change", param)
+       
+          this.$emit("change", param)
+        
       },
       // 深度监听 监听对象，数组的变化
       deep: true
     },
     formData: {
       handler(newValue, oldValue) {
-        this.form = {};
+        // this.form = {};
         this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
@@ -324,6 +335,7 @@ export default {
       })
     },
     changeSwitch(val) {
+      debugger;
       this.switchText = val ? '开启' : '关闭'
     },
     changeSelect(val) {
@@ -345,11 +357,11 @@ export default {
             console.log('时间参数', self.timeParam)
           }
         }else if(item.type=='switch') {
-          if(!item.value) { // 数据回填
+          if(item.value!='') { // 数据回填
             self.changeSwitch(item.value)
             self.$set(self.form, item.prop, item.value)
           }else{
-            self.$set(self.form, item.prop, true)
+            self.$set(self.form, item.prop, 0)
           }
         }else if(item.type=='radio') {
           if(item.value !='') { // 数据回填
@@ -408,6 +420,13 @@ export default {
             self.$set(self.form, item.prop, [])
           }
           self.$set(self.cascaderParam, item.prop , '');
+        }else if(item.type=='cascader-object'){
+          if(item.value !='') { // 数据回填
+            self.$set(self.form, item.prop, item.value)
+          }else{
+            self.$set(self.form, item.prop, [])
+          }
+          // self.$set(self.cascaderParam, item.prop , '');
         }else{
           if(item.value !='') { // 数据回填
             self.$set(self.form, item.prop, item.value)

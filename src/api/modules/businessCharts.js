@@ -56,4 +56,7 @@ export default {
   getCityRiskDetail: (options = {}) => ajax.post('/city/risk/detail', options),
   //城市风险指标修改
   cityRiskUpdate: (options = {}) => ajax.post('/city/risk/update', options),
+
+  //告警监控列表
+  getWarniingList:(options = {}) => ajax.post('/warn/info/list', options),
 }

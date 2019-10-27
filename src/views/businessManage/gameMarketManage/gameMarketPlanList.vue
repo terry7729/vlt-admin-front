@@ -16,7 +16,7 @@
       @selection-change="handleSelectionChange">
       <!-- <el-table-column ty-pe="selection" width="55" fixed="left"></el-table-column> -->
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="gameListCode" label="上市计划编号" ></el-table-column>
+      <el-table-column prop="id" label="上市计划ID" ></el-table-column>
       <el-table-column prop="gameListName" label="上市计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
       <el-table-column prop="gameSaleArea" label="销售范围"></el-table-column>
@@ -28,7 +28,7 @@
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row)">查看</el-button>
-          <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
+          <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -136,7 +136,7 @@ export default {
       this.multipleSelection = val;
     },
     //查看页面跳转
-    detail (val) {
+    detail(val) {
       this.$router.push({
         path: './gameMarketPlanDetail',
         query: {gameId:val.gameId,id:val.id}
@@ -145,10 +145,10 @@ export default {
     selectBtn() {
       this.$router.push({path: './gameMarketPlanCreate'})
     },
-    edit (id) {
+    edit(val) {
       this.$router.push({
         path: './gameMarketPlanEdit',
-        query: {id}
+        query: {gameId:val.gameId,id:val.id}
       })
     },
     search(form) {

@@ -52,7 +52,6 @@
 </template>
 <script type="text/javascript">
 import rules from "../../../utils/rules";
-
 export default {
   name: "",
   data() {
@@ -162,11 +161,11 @@ export default {
       params2:{},
       params3:{}, 
       params4:{},
-      formall:{},
-      form1:[],
-      form2:[],
-      form3:[],
-      form4:[],  
+      formall:{sysConfigVoList:[]},
+      // form1:{},
+      // form2:{},
+      // form3:{},
+      // form4:{},  
     };
   },
   components: {},
@@ -174,25 +173,23 @@ export default {
   },
   methods: {
     changeForm1(val) {
+      this.params1 = val;
         // Object.assign(this.params1, val);
         // this.form1[0]=this.params1
-      this.form1[0]=val
-      console.log(123,this.form1)
+      // this.formall.=this.params1
+      console.log(123,this.params1)
     },
     changeForm2(val) {
-        // Object.assign(this.params2, val);
+        this.params2 = val;
         // this.formall[1]=this.params2
-        this.form2[0]=val
     },
     changeForm3(val) {
-        //  Object.assign(this.params3, val);
+         this.params3 = val;
         // this.formall[2]=this.params3
-        this.form3[0]=val
     },
     changeForm4(val) {
-        //  Object.assign(this.params4, val);
+         this.params4 = val;
         // this.formall[3]=this.params4
-        this.form4[0]=val
     },
     async submit() {
       this.formall.list1=this.form1
@@ -203,6 +200,10 @@ export default {
       // param.list1=this.formall.list
       //  console.log(777,this.form1)
       
+      this.formall.sysConfigVoList.push(this.params1)
+      this.formall.sysConfigVoList.push(this.params2)
+      this.formall.sysConfigVoList.push(this.params3)
+      this.formall.sysConfigVoList.push(this.params4)
       let data=this.formall
         console.log(666,data)
       //console.log(data)

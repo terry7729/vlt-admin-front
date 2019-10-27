@@ -37,10 +37,10 @@ export default {
   data() {
     return {
       baseData: [
-        {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '上市计划名称1', placeholder: '请输入上市计划名称'},
-        {title: '上市时间', type: 'datetime',  prop: 'gameListPlanTime', value: ''},
-        {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '计划简介1', placeholder: '请输入上市计划简介'},
-        {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[{label: '网易',value: 71}]},
+        {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '', placeholder: '请输入上市计划名称'},
+        {title: '上市时间', type: 'datetime',  prop: 'gameListTime', value: ''},
+        {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '', placeholder: '请输入上市计划简介'},
+        {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[]},
         {title: '销售区域', type: 'cascader-multiple',  prop: 'gameSaleArea', value: '', options: [],
           setProps: {
             label: "text",
@@ -66,9 +66,35 @@ export default {
     }
   },
   created() {
-    this.getInsData()
+    this.getInsData();
+    this.getAllGameList()
   },
   methods: {
+    
+    // 获取所有游戏列表
+    getAllGameList() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.getAllGameList({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          let gameData = res.data;
+          let array = []
+          gameData.forEach(item => {
+            let obj = {};
+            obj.label = item.gameName;
+            obj.value = item.id;
+            array.push(obj)
+          });
+          self.$set(self.baseData[3], 'options', array)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     // 获取机构数据
     getInsData() {
       const self = this;
@@ -114,6 +140,7 @@ export default {
         this.param.gameSaleTerminal = this.gameSaleTerminalCode;
       }
       this.param.gameListPlanTime = moment(this.param.gameListPlanTime).format("YYYY-MM-DD HH:mm:ss")
+      this.param.gameSaleArea = this.param.gameSaleArea.join(',');
       let data = {
         gameListPlanVo: this.param
       }
