@@ -53,11 +53,6 @@
                   <el-input v-model="scope.row.num" placeholder="请输入数量"></el-input>
                 </template>
               </el-table-column>
-              <!-- <el-table-column label="物品数量（小）" min-width="160px">
-                <template slot-scope="scope">
-                  <el-input v-model="scope.row.num" placeholder="请输入数量"></el-input>
-                </template>
-              </el-table-column>-->
               <el-table-column prop="unitPrice" label="单价（元）" min-width="100px"></el-table-column>
               <el-table-column prop="amount" label="金额（元）" min-width="100px"></el-table-column>
               <el-table-column label="备注" min-width="200px">
@@ -118,7 +113,7 @@
 </template>
 
 <script type="text/javascript">
-import { now } from "moment";
+import moment, { now } from "moment";
 const resourceData = [
   {
     value: "001",
@@ -142,37 +137,15 @@ export default {
     return {
       formData: [
         {
-          title: "单据编号",
-          type: "input",
-          prop: "documentNumber",
-          value: "2222"
-        },
-        {
-          title: "入库仓库",
-          type: "select",
-          prop: "entryWarehouseName",
-          value: "",
-          options: [
-            { label: "仓库一", value: "101" },
-            { label: "仓库二", value: "102" }
-          ]
-        },
-        {
           title: "申请标题",
           type: "input",
           prop: "resourceApplyTitle",
           value: "资源发放申请"
         },
-        {
-          title: "操作类型",
-          type: "input",
-          prop: "oplType",
-          value: "资源发放",
-          disabled: true
-        },
+
         {
           title: "申请日期",
-          type: "datepicker",
+          type: "datetime",
           prop: "preReceivDate",
           value: ""
         }
@@ -194,14 +167,13 @@ export default {
         {
           title: "合计金额",
           type: "input",
-          prop: "title",
+          prop: "totalMoney",
           value: "",
           disabled: true
         },
         { title: "采购说明", type: "textarea", prop: "title", value: "" }
       ],
       activeName: "1",
-
       rules: { rule: "" },
       form: {}
     };
@@ -210,11 +182,16 @@ export default {
     tableData: {
       // 深度监听 监听对象，数组的变化
       handler(newValue, oldValue) {
-        newValue.forEach(item => {
+        newValue.forEach((item, index) => {
           item.amount = item.unitPrice * item.num;
         });
+        let num = 0;
+        for (let i = 0; i < newValue.length; i++) {
+          num = num + newValue[i].amount;
+        }
+        this.totalData[0].value = num;
+
         let params = JSON.parse(JSON.stringify(newValue));
-        console.log(params);
       },
 
       deep: true
@@ -222,52 +199,34 @@ export default {
   },
   methods: {
     async submit() {
-      console.log(this.form);
-      let time = new Date().toLocaleDateString();
-      console.log(time);
+      // console.log()
+      const self = this;
+      let totalMoney = this.totalData[0].value;
+      let time = moment(self.form.preReceivDate).format("YYYY-MM-DD HH:mm:ss");
       let data = {
-        checkStatus: 1,
-        entryWarehouseId: "101",
-        entryWarehouseName: "深圳仓",
-        operStatus: 2,
-        oplType: 3,
-        ownUserId: "111",
-        ownUserName: "天天",
+        attachId: "1",
+        cDate: time,
+        cUserId: "1",
+        cUserName: "1",
+        checkStatus: 0,
+        entryWarehouseId: "1",
+        entryWarehouseName: "1",
+        mDate: time,
+        mUserId: "22",
+        mUserName: "333",
+        operStatus: 0,
+        oplType: 0,
+        outWarehouseId: "111",
+        outWarehouseName: "222",
+        ownUserId: "333",
+        ownUserName: "11",
         preReceivDate: time,
-        resourceApplyTitle: "发放",
-        resourceWareStatus: 2,
-        totalMoney: 200,
-        documentNumber: "2222",
-        warehouseGoodsInfoList: [
-          {
-            amount: 100,
-            createBy: "33",
-            createTime: time,
-            documentNumber: "2222",
-            goodsCode: "777",
-            goodsModel: "model1",
-            goodsName: "柜员机",
-            goodsType: 0,
-            id: 1,
-            num: 1,
-            remark: "",
-            unitPrice: 100
-          },
-          {
-            amount: 100,
-            createBy: "33",
-            createTime: time,
-            documentNumber: "2222",
-            goodsCode: "888",
-            goodsModel: "model2",
-            goodsName: "投注机",
-            goodsType: 0,
-            id: 2,
-            num: 1,
-            remark: "",
-            unitPrice: 100
-          }
-        ]
+        remark: "",
+        resourceApplyDirect: 1,
+        resourceApplyTitle: "333",
+        resourceWareStatus: 0,
+        totalMoney: totalMoney,
+        warehouseGoodsInfoList: self.tableData
       };
       let res = await this.$api.channelResProvide({ data });
       console.log(res);
@@ -276,6 +235,7 @@ export default {
     changeForm(val) {
       this.form = val;
     },
+    changeLaterForm(val) {},
 
     //选择、添加、删除物品
     changeGoods(index, row) {
@@ -302,8 +262,7 @@ export default {
     handlePreview() {},
     handleRemove() {},
     beforeRemove() {},
-    handleExceed() {},
-    changeLaterForm() {}
+    handleExceed() {}
   }
 };
 </script>

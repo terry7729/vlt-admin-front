@@ -36,12 +36,12 @@
                 enable:{
                   apiName:'enable',
                   label:'启用',
-                  value:1
+                  value:0
                 },
                disable:{
                   apiName:'disable',
                   label:'冻结',
-                  value:0
+                  value:1
                },
                
               }"
@@ -97,7 +97,7 @@ export default {
       rules: {},
       dialogFormVisible: false,
       multipleSelection: [],
-      changeForm: "",
+
       controlOptions: [
         //按钮组
         { name: "新建流程", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
@@ -107,18 +107,11 @@ export default {
       option: [
         {
           title: "字典名称",
-          prop: "key",
+          prop: "keyName",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        // {
-        //   title: "所属类别",
-        //   prop: "user",
-        //   type: "input",
-        //   value: "",
-        //   placeholder: "请输入" || ["请输入1", "请输入2"]
-        // }
+        }
       ],
       tableData: [
         {
@@ -142,31 +135,40 @@ export default {
       //   "total": "",
       //   "pages": '',
       // }
-    // },
+      // },
       formData: [
-       
         { title: "字典名称", type: "input", prop: "keyName", value: "" },
+        {
+          title: "数据字典键",
+          type: "input",
+          prop: "key",
+          value: ""
+        },
         {
           title: "字典数据值",
           type: "input",
           prop: "value",
           value: ""
         },
-        
         { title: "状态", type: "switch", prop: "status", value: "" },
         { title: "详情描述", type: "textarea", prop: "description", value: "" }
-      ]
+      ],
+      data: {
+        page: 0,
+        pageSize: 0,
+        param: {}
+      }
+      // search:{
+
+      //     param: {
+      //       keyName: "",
+      //     }
+      // },
     };
   },
   components: {},
   created() {
-    let data = {
-      param: {
-        size: "",
-        total: "",
-        pages: '',
-      }
-    };
+    let data = this.data;
     this.getAll(data);
   },
   methods: {
@@ -177,12 +179,11 @@ export default {
       const that = this;
       (async data => {
         let res = await that.$api.getAll({ data });
-        console.log(res)
+        console.log('全部数据',res);
         if (res && res.code == 0) {
           that.tableData = res.data.records;
           that.total = res.data.total;
-          that.pageSize = res.data.size
-          
+          that.pageSize = res.data.size;
         } else {
         }
       })(data);
@@ -202,17 +203,23 @@ export default {
     handleSizeChange() {
       console.log(`每页 ${val} 条`);
     },
-    handleCurrentChange() {   
+    handleCurrentChange() {},
+
+    async search(val) {
+      //搜索接口
+      // let obj=this.search.param
+      //console.log(val)
+      let data = {
+        param: val
+      };
+      //  let data1={...obj,param}
+      let result = await this.$api.getByCondition({ data });
+      console.log(result);
+      this.tableData = result.data.records;
     },
-    async search(val){
-      // console.log(val)
-      
-      let reslt = await this.$api.find();//查询接口
-      console.log('查询接口',reslt);  
-      
-    },
-    
-    selectBtn() {     //新建
+
+    selectBtn() {
+      //新建
       // this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       // });
@@ -222,29 +229,34 @@ export default {
     async edit(val) {
       this.dialogFormVisible = true;
       this.newcreate = 0;
+      this.flag=false;
       //this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       //   query:{id}
       // });
       let result = await this.$api.edit;
     },
-    changeForm(form){
-      this.param = form;
+    //表单change事件
+    changeForm(val) {
+      this.param = val;
+      console.log(1111,this.param);
     },
-   async submit(val) {
+    async submit(val) {
       // this.$refs.baseForm.validate(val => {
       //   console.log(val);
-        if (this.flag == true) {
-            let data = this.param;
-      
-            //let formData = this.$refs.baseForm.form;
-            let result= await this.$api.add({data});
-            
-            this.$refs.baseForm.resetForm();
-            console.log(result);
-            this.dialogFormVisible = false;
-        } else {
-        }
+      let data = this.param
+      if (this.flag == true) {
+        //let formData = this.$refs.baseForm.form;
+        let result = await this.$api.add({ data });
+        // this.$refs.baseForm.resetForm();
+        console.log(result);
+        this.dialogFormVisible = false;
+      } else if(this.flag==false){
+        let result = await this.$api.edit({ data });
+        this.$refs.baseForm.resetForm();
+        console.log(result);
+        this.dialogFormVisible = false;
+      }
       // });
     },
 
@@ -253,14 +265,17 @@ export default {
       this.dialogFormVisible = false;
     },
     handler() {},
-    async disable(id) {
-      let result = await this.$api.disable(id);
-      console.log(result);
-    },
-    async enable(id) {
-      let result = await this.$api.enable(id);
-      console.log(result);
-    },
+    // async disable(val) {
+    //   this.id=val
+    //   cosole.log(1111,id)
+    //   let data=id
+    //   let result = await this.$api.disable(id);
+    //   console.log(22222,result);
+    // },
+    // async enable(id) {
+    //   let result = await this.$api.enable(id);
+    //   console.log(result);
+    // }
   }
 };
 </script>

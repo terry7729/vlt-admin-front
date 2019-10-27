@@ -39,7 +39,7 @@
 
     <section class="comp-item">
       <h4 class="comp-title">页面操作</h4>
-      <control-bar :options="controlOptions" position="left" @select="export"></control-bar>
+      <control-bar :options="controlOptions" position="left" @select="exportExcel"></control-bar>
     </section>
 
     <section class="comp-item">
@@ -1642,18 +1642,28 @@ export default {
       console.log("uploadFile", res);
     },
 
-    async export() {
+    async exportExcel() {
       const res = await this.$api.outExport({
         data: {
           page: 1,
           pageSize: 10,
           all: false,
           status: 1,
-          documentNumber: '',
-          documentToppic: ''
+          documentNumber: "",
+          documentToppic: ""
         },
         responseType: 'blob'
       });
+      var blob = new Blob([res], {type: 'application/vnd.ms-excel;charset=utf-8'})
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "excel.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
       console.log(res)
     }
   },
