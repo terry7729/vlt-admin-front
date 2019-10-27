@@ -385,29 +385,8 @@ export default {
     OrganizationChangeForm(val) {
       //机构表单对象
       console.log(val);
-      // if(val.regionName !=""){
-      //   val.regionCode = val.regionName
-      //    Object.assign(this.OrganizationParams, val);
-      // }else{
-        console.log(val);
       Object.assign(this.OrganizationParams, val);
-      // }
-      // if (this.addOrChange != "更改机构信息") {
-      //   if (val.regionName.length > 1) {
-      //     let code = val.regionName[val.regionName.length - 1];
-      //     val.regionCode = code;
-      //     Object.assign(this.OrganizationParams, val);
-      //   } else {
 
-      //     Object.assign(this.OrganizationParams, val);
-      //   }
-      // } else {
-      // val.regionCode = val.regionName;
-      // this.$set(this.OrganizationAdd[5], 'value', val.regionName)
-      // debugger;
-      // this.OrganizationAdd[5].value = val.regionName;
-
-      // }
     },
     pageSizeChange(val) {
       //每页显示条数
@@ -548,14 +527,22 @@ export default {
       this.addOrChange = "更改部门信息";
       this.departmenIfo = val;
       let arr = Object.keys(val);
-      let len = this.AddDepartment;
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < len.length; j++) {
-          if (arr[i] === len[j].prop) {
-            len[j].value = val[arr[i]];
+      let changeDepartment = this.AddDepartment;
+      changeDepartment.forEach(item=>{
+        arr.forEach(i=>{
+          if(item.prop === i){
+            item.value = val[i]
           }
-        }
-      }
+        })
+      })
+
+      // for (var i = 0; i < arr.length; i++) {
+      //   for (var j = 0; j < len.length; j++) {
+      //     if (arr[i] === len[j].prop) {
+      //       len[j].value = val[arr[i]];
+      //     }
+      //   }
+      // }
     },
 
     async getnowNodeifo(val, s) {
