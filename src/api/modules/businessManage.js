@@ -128,6 +128,8 @@ export default {
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
+  // 上市计划详情
+  getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表

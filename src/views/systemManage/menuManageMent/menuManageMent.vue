@@ -245,7 +245,8 @@ export default {
   methods: {
     async init() {
       //节点树请求
-      let res = await this.$api.QueryModuleTree({});//菜单树查询
+      let data = {}
+      let res = await this.$api.QueryModuleTree({data});//菜单树查询
       console.log('菜单树查询',res)
       if(res.code === 0){
               this.nodeTreeData = res.data;
@@ -399,16 +400,18 @@ async submitModifine(val) {
             let data = arr.map(item => {
               return { moduleId: item.id };
             });
-            let reslt = await this.$api.DeleteModule({ data });//批量删除
+            console.log(data)
+            let reslt = await this.$api.DeleteModule(data );//批量删除
             console.log('批量删除',reslt)
             if (reslt.code === 0) {
               this.init();
               this.slelectifo=""
+              this.$message({
+                  type: "success",
+                  message: "删除成功!"
+              });
             }
-            this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
+         
           })
           .catch(() => {
             this.$message({
@@ -433,7 +436,8 @@ async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
       this.nowNodeObject = val;
        this.slelectifo = val.text;
       try{
-        let res = await this.$api.QueryModuleDetail(val.id);//菜单详情
+         
+        let res = await this.$api.QueryModuleDetail({data:val.id});//菜单详情
           console.log('菜单详情信息',res)
           if(res.code === 0){
            
