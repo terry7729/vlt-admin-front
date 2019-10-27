@@ -43,22 +43,20 @@ export default {
      return optino[val]
    },
    async getDetail() {
-     const data = {
-       id:this.$route.query.id
-     };
-     console.log(data)
-      let res = await this.$api.detailStore(data.id)
-      if(res && res.code == 0){
-        this.infoList.forEach(item =>{
-          item.value = res.data[item.prop] || '';
-          if (item.prop == 'typeX'){
-            item.value = this.getStoreType(res.data.typeX)
-          }
-        })
-      }
-       console.log(res)
-     }
-   }
+    const data = this.$route.query.id
+    console.log(data)
+    let res = await this.$api.detailStore({data})
+    if(res && res.code == 0){
+      this.infoList.forEach(item =>{
+        item.value = res.data[item.prop] || '';
+        if (item.prop == 'typeX'){
+          item.value = this.getStoreType(res.data.typeX)
+        }
+      })
+    }
+      console.log(res)
+    }
+  }
  
 }
 </script>

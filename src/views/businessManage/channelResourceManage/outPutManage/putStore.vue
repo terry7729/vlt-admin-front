@@ -13,11 +13,9 @@
           <el-table-column prop="unitPrice" label="单价"></el-table-column>
           <el-table-column prop="amount" label="金额"></el-table-column>
           <el-table-column prop="remark" label="备注"></el-table-column>
-          <el-table-column prop="seriesNum" label="物品序列号" width="240">
+          <el-table-column label="物品序列号" width="240">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.seriesNum" ref="input" placeholder="请输入物品序列号" maxlength="50"
-              @blur="getSeriesNum(scope.row.id,scope.row.seriesNum)"></el-input>
-              <el-button type="primary" @click="addSeriesNum(scope.row)" size="small">添加</el-button>
+              <el-input v-model="scope.row.serialNumber" ref="input" placeholder="请输入物品序列号" maxlength="50"></el-input>
             </template>
           </el-table-column>
       </el-table>
@@ -67,41 +65,69 @@ export default {
  components: {
  },
  created(){
-  this.getInfolist()
+  this.getInfolist(this.$route.query.documentNumber)
  },
  methods: {
-  async  getInfolist(){
-    const data = {
-      documentNumber: this.$route.query.documentNumber
-    }
-    console.log(data.documentNumber)
-    let res = await this.$api.getOutPutDetail(data.documentNumber)
+  async  getInfolist(data){
+    let res = await this.$api.getOutPutDetail({data})
     console.log(res)
     if(res && res.code == 0){
+      this.totalMoney = res.data.totalPrice
+      this.requestData.documentNumber = res.data.documentNumber
+      this.requestData.oplType = res.data.oplType
       this.infoList.forEach(item =>{
-        this.totalMoney = res.data.totalPrice
-        this.goodsListData = res.data.list
         item.value = res.data[item.prop]
-
-        this.requestData.documentNumber = res.data.documentNumber
-        this.requestData.oplType = res.data.oplType
       })
+      // let array =[]
+      res.data.list.forEach((item)=>{
+        item.num = 5
+        for(let i=0;i<item.num;i++){
+          let obj = JSON.parse(JSON.stringify(item))
+          obj.serialNumber = ''
+          this.goodsListData.push(obj)
+        }
+      })
+      // this.goodsListData = array;
+      console.log('array',this.goodsListData)
     }
       
   },
-  getSeriesNum(id,value){
-    this.seriesNum.push(value)
-    console.log(this.$refs.input.value)
-    console.log(this.seriesNum)
-  },
-  addSeriesNum(row){
-    console.log(row)
-  },
+
   //入库
   async putStore(){
-    let data= {
-      ...this.requestData
+    let obj={}
+    let array = []
+    this.goodsListData.forEach(item=>{
+      if(obj[item.goodId]){
+        obj[item.goodId].push(item.serialNumber)
+      }else{
+        obj[item.goodId] = [];
+        obj[item.goodId].push(item.serialNumber)
+        let param = {
+          goodId: item.goodId,
+          goodCode: item.goodCode,
+          serialNumber: ''
+        }
+        array.push(param)
+      }
+      
+    })
+    for(let key in obj) {
+      obj[key]=obj[key].join(';')
     }
+    console.log('obj',obj)
+    array.forEach((item)=>{
+      item.serialNumber=obj[item.goodId]
+    })
+    console.log('提交参数',array)
+    let data= {
+      documentNumber: this.$route.query.documentNumber,
+      list: array,
+      oplBy: "",
+      oplType: 0,
+      warehouseId: 0
+    }
+    console.log('提交参数2',data)
     let res = await this.$api.entryAndOut({data})
     console.log(res)
 

@@ -65,7 +65,7 @@ export default {
       activeName: "first",
       params: {},
       basicInfoList: [
-        { title: "生效时间", value: "2132132", prop: "effectiveTime" },
+        { title: "生效时间", value: "", prop: "effectiveTime" },
         { title: "游戏兑换比例", value: "", prop: "gameConPro" },
         { title: "弃奖规则", value: "", prop: "abandonPrizeRule" },
         { title: "代销费率", value: "", prop: "generationRate" },
@@ -154,9 +154,9 @@ export default {
 
   methods: {
     async init() {
-      let res = await this.$api.getParameterDetail(0);
+      let res = await this.$api.getParameterDetail({ data: 1 });
       if (res.code === 0) {
-        // console.log(res.data);
+     
         let keys = Object.keys(res.data);
         let arr = [
           ...this.publicInfoList,

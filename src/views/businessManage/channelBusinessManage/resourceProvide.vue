@@ -17,6 +17,9 @@
           </div>
         </panel>
         <panel title="发放物品" :show="true" style="margin-bottom:15px">
+          <div class="tr">
+            <el-button type="primary" size="small" @click="intoGoods">导入</el-button>
+          </div>
           <div class="table-wrap">
             <el-table :data="tableData" border class="table">
               <el-table-column prop="id" label="序号" fixed width="60px"></el-table-column>
@@ -199,7 +202,6 @@ export default {
   },
   methods: {
     async submit() {
-      // console.log()
       const self = this;
       let totalMoney = this.totalData[0].value;
       let time = moment(self.form.preReceivDate).format("YYYY-MM-DD HH:mm:ss");
@@ -215,7 +217,7 @@ export default {
         mUserId: "22",
         mUserName: "333",
         operStatus: 0,
-        oplType: 0,
+        oplType: 3,
         outWarehouseId: "111",
         outWarehouseName: "222",
         ownUserId: "333",
@@ -229,7 +231,9 @@ export default {
         warehouseGoodsInfoList: self.tableData
       };
       let res = await this.$api.channelResProvide({ data });
-      console.log(res);
+      if (res.code === 0) {
+        alert(res.msg);
+      }
     },
 
     changeForm(val) {
@@ -252,12 +256,13 @@ export default {
         goodsModel: "",
         goodsCode: "",
         num: "",
-        unitPrice: 2,
+        unitPrice: "",
         amount: "",
         remark: ""
       };
       this.$set(this.tableData, this.tableData.length, obj);
     },
+    intoGoods() {},
     handleClick() {},
     handlePreview() {},
     handleRemove() {},
@@ -280,5 +285,9 @@ export default {
 }
 .delete {
   font-size: 22px;
+}
+.tr {
+  padding: 10px 10px 0;
+  text-align: right;
 }
 </style>
