@@ -3,8 +3,8 @@
     <panel title="基本信息" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
         <div class="vlt-edit-wrap">
-          <base-form :formData="baseData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
-          <base-form :formData="developData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+          <base-form :formData="baseData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeBaseForm"></base-form>
+          <base-form :formData="developData" labelWidth="90px" ref="baseForm" :rules="rules" direction="right" @change="changeDevelopForm"></base-form>
         </div>
       </div>
     </panel>
@@ -40,13 +40,33 @@
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
               </el-upload>
             </el-form-item>
-            <base-form :formData="softData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+            <base-form :formData="softData" ref="baseForm" :rules="rules" direction="right" @change="changeSoftForm"></base-form>
           </el-form>
         </div>
       </div>
     </panel>
     <panel title="其他附件" :show="false" style="margin-bottom:15px">
-      <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm" class="appendix-wrap"></base-form>
+      <el-form label-position="right" 
+          label-width="90px" 
+          ref="form"
+          class="soft-form">
+          <el-form-item label="上传附件">
+            <el-upload
+              class="upload-demo"
+              drag
+              multiple
+              action=""
+              :limit="10"
+              :show-file-list="true"
+              :on-remove="handleRemove"
+              :http-request="uploadFileOther">
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
+            </el-upload>
+          </el-form-item>
+        </el-form>
+      <!-- <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm" class="appendix-wrap"></base-form> -->
     </panel>
     <div class="submit-wrap">
       <el-row class="vlt-edit-btn">
@@ -65,27 +85,28 @@ export default {
   data(){
     return{
       baseData: [
-        {title: '游戏名称', type: 'input',  prop: 'name', value: ''},
-        {title: '游戏类型', type: 'select',  prop: 'type', value: '', options:[{label: '概率型',value: '0'},{label: '奖组型',value: '1'},]},
-        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]},
-        {title: '游戏简介', type: 'textarea',  prop: 'desc', value: ''},
-        {title: '版权归属', type: 'input',  prop: 'name', value: ''},
+        {title: '游戏名称', type: 'input',  prop: 'gameName', value: ''},
+        {title: '游戏编码', type: 'input',  prop: 'gameCode', value: ''},
+        {title: '游戏类型', type: 'select',  prop: 'gameType', value: '', options:[{label: '概率型',value: 1},{label: '奖组型',value: 2},]},
+        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: 1},{label: '单奖池',value: 3},{label: '多奖池',value: 2}]},
+        {title: '游戏简介', type: 'textarea',  prop: 'gameDesc', value: ''},
+        {title: '版权归属', type: 'input',  prop: 'gameGenlot', value: ''},
       ],
       developData: [
-        {title: '开发商名称', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
-        {title: '联系人', type: 'input',  prop: 'linkMan', value: ''},
-        {title: '手机号码', type: 'input',  prop: 'phoneNumber', value: ''},
+        {title: '开发商名称', type: 'input',  prop: 'developerName', value: ''},
+        {title: '联系人', type: 'input',  prop: 'person', value: ''},
+        {title: '手机号码', type: 'input',  prop: 'cellPhone', value: ''},
         {title: '电子邮箱', type: 'input',  prop: 'email', value: ''},
-        {title: '传真电话', type: 'input',  prop: 'faxaphone', value: ''},
-        {title: '联系地址', type: 'address',prop: 'address', value: ''},
+        {title: '传真电话', type: 'input',  prop: 'faxPhone', value: ''},
+        {title: '联系地址', type: 'input',prop: 'address', value: ''},
       ],
       softData: [
-        {title: '软件名称', type: 'input',  prop: 'name', value: '', placeholder:'apk填写软件包名'},
-        {title: '版本名称', type: 'input',  prop: 'name', value: '', placeholder:'字符串版本（示例：V1.0.0）'},
-        {title: '版本号', type: 'input',  prop: 'email', value: '', placeholder:'版本整型（示例：100）'},
-        {title: '软件大小', type: 'input',  prop: 'phoneNumber', value: ''},
-        {title: '软件描述', type: 'textarea',  prop: 'desc', value: ''},
-        {title: '新版特性', type: 'textarea',  prop: 'desc', value: ''},
+        {title: '软件名称', type: 'input',  prop: 'softwareName', value: '', placeholder:'apk填写软件包名'},
+        {title: '版本名称', type: 'input',  prop: 'versionName', value: '', placeholder:'字符串版本（示例：V1.0.0）'},
+        {title: '版本号', type: 'input',  prop: 'versionNumber', value: '', placeholder:'版本整型（示例：100）'},
+        {title: '软件大小', type: 'input',  prop: 'softwareSize', value: '', disabled: true, placeholder: '单位（KB）'},
+        {title: '软件描述', type: 'textarea',  prop: 'softwareDesc', value: ''},
+        {title: '新版特性', type: 'textarea',  prop: 'newFeatures', value: ''},
       ],
       appendixData: [
         {title: '附件上传', type: 'upload-drag',  prop: 'appendix', value: ''},
@@ -108,27 +129,88 @@ export default {
           { required: true, validator: rules.checkEmpty, trigger: 'blur' }
         ]
       },
-      params: {},
-      form: {},
-      dialogImageUrl: '',
-      dialogVisible: false,
-      fileList: '1,2'
+      params: {
+        fileIds: '',
+        gameInfoVo: '',
+        developerInfoVo: '',
+        softwareInfoVo: '',
+      },
+      imageUrl: '',
+      gameBagId: '', // 游戏包上传id
+      imgId: '', // 图标上传id
+      gameOtherId: '', // 附件上传id
     }
   },
   created() {
     this.getGameStoreInfo()
   },
   methods:{
+    handleRemove() {
+
+    },
+    // 游戏包上传
+    async uploadFile(files) {
+      let formData = new FormData();
+      console.log('files', files.file.size/1024)
+      this.softData[3].value = `${(files.file.size/1024).toFixed(1)}`
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 9);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.gameBagId = res.data.fileId;
+    },
+    // 图标上传
+    async uploadFileImg(files) {
+      let formData = new FormData();
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 9);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.imgId = res.data.fileId;
+      let imgUrl = res.data.filePath;
+    },
+    // 附件上传
+    async uploadFileOther(files) {
+      let formData = new FormData();
+      console.log('files', files.file.size/1024)
+      // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
+      formData.append('file', files.file);
+      formData.append('refId', 1);
+      formData.append('flag', true);
+      formData.append('busType', 9);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.gameOtherId = res.data.fileId;
+    },
     // 获取游戏详情
     getGameStoreInfo() {
       const self = this;
       const data = {
-        gameId: this.$route.query.gameId
+        id: this.$route.query.gameId
       };
       (async (data)=>{
 				let res = await self.$api.getGameStoreInfo({data})
 				if(res && res.code == 0) {
-
+          self.baseData.forEach()
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -146,36 +228,25 @@ export default {
         }
       })(data)
     },
-    onSubmit(){
-        console.log(this.form)
+    changeDevelopForm(val) {
+      this.params.developerInfoVo = val
+      console.log('表单的参数', val)
     },
-    //上传文件
-    handlePreview(file) {
-    console.log(file);
+    changeBaseForm(val) {
+      this.params.gameInfoVo = val
+      console.log('表单的参数', val)
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    changeSoftForm(val) {
+      this.params.softwareInfoVo = val
+      console.log('表单的参数', val)
     },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    changeForm(val) {
-      Object.assign(this.params, val)
-      console.log('派发出来的参数', this.params)
-    },
-    submit(formName){
+    submit(){
       const self = this;
+      this.params.fileIds = `${this.gameBagId},${this.imgId},${this.gameOtherId}`;
+      console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
-        let data = this.params;
-        self.editGameStore(data)
+        self.createGameStore(this.params)
       });
     },
     cancel() {

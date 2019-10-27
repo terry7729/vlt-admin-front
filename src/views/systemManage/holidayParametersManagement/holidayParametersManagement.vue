@@ -17,7 +17,9 @@
         <el-table-column label="开始时间" sortable width="190">
           <template slot-scope="scope">{{translateTime(scope.row.beginTime)}}</template>
         </el-table-column>
-        <el-table-column prop="endTime" label="结束时间" sortable width="190"></el-table-column>
+        <el-table-column prop="endTime" label="结束时间" sortable width="190">
+          <template slot-scope="scope">{{translateTime(scope.row.beginTime)}}</template>
+        </el-table-column>
         <el-table-column prop="discardBeginTime" label="弃奖开始日期" sortable width="130"></el-table-column>
         <el-table-column prop="discardEndTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
 
@@ -50,7 +52,7 @@
 </template>
 
 <script type="text/javascript">
-// import moment from "moment";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -119,6 +121,10 @@ export default {
       // };
       let result = await this.$api.queryHolInfoPage({ data });
       console.log(result);
+      if (result.code === 0) {
+        let arr = result.data.records;
+        this.tableData = arr;
+      }
       // if (result.code === 0) {
       //   let tableData = result.data.records;
       //   // this.tableData = arr;

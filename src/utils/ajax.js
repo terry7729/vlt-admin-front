@@ -2,7 +2,10 @@
 import axios from 'axios'
 import qs from 'qs'
 import storage from './storage'
-import {Message, Loading} from 'element-ui';
+import {
+  Message,
+  Loading
+} from 'element-ui';
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
 
@@ -20,20 +23,21 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
-    // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
-    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    //axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.167:8080/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.87:8080/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.49:8080/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.91:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
-    //axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
-    // axios.defaults.baseURL = 'http://10.7.0.68:8081/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
     axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
+
 }
 /**
  * @description http请求
@@ -54,7 +58,7 @@ const request = (method, url, options, extend) => {
       const responseType = options.responseType || null;
       if (typeof options.data !== 'object') {
         const id = options.data;
-        res = await axios[method](`${url}/${id}`);
+        res = await axios[method](`${url}/${id}`); /*  */
       } else {
         const data = options.data || {}
         // 上传
@@ -73,7 +77,10 @@ const request = (method, url, options, extend) => {
           res = await axios[method](url, method === 'get' ? {
             params: data,
             responseType
-          } : {...data, responseType});
+          } : {
+            ...data,
+            responseType
+          });
         }
       }
       // message反馈
@@ -90,7 +97,7 @@ const request = (method, url, options, extend) => {
         }
       }
       return res.data;
-      
+
     } catch (err) {
       console.warn('api请求错误：', err);
     }
