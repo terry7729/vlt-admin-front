@@ -48,11 +48,12 @@
 </template>
 
 <script type="text/javascript">
+import moment from "moment";
 export default {
   name: "",
   data() {
     return {
-      form: "",
+      form: {},
       rule1: { rule: "" },
       activeName: "1",
       formData: [
@@ -60,13 +61,22 @@ export default {
         { title: "原兑奖额度", type: "input", prop: "originalCashQuota" },
         { title: "现兑奖额度", type: "input", prop: "currentCashQuota" },
         { title: "原充值额度", type: "input", prop: "originalRechargeQuota" },
-        { title: "现充值额度", type: "input", prop: "currentRechargeQuota" },
+        { title: "现充值额度", type: "input", prop: "currentRechargeQuota" }
       ]
     };
   },
   methods: {
     async submit() {
-      let data = this.form;
+      let time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+      let data = {
+        ...this.form,
+        createBy: "11",
+        createTime: time,
+        fid: 1,
+        updateBy: "12",
+        updateTime: time
+      };
+      console.log(data);
       let res = await this.$api.addFundRight({ data });
       console.log(res);
     },

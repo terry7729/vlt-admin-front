@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
-        :total="999"
+        :total="totalCount"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
@@ -49,14 +49,13 @@
             <span v-if="scope.row.processingStatus==1">处理中</span>
             <span v-if="scope.row.processingStatus==2">已处理</span>
           </template>
-
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120px" align="center">
+        <!-- <el-table-column label="操作" fixed="right" width="120px" align="center">
           <template slot-scope="scope">
             <el-button type="primary" @click.native="detail(scope.row.id)" size="mini">详情</el-button>
             <el-button type="primary" @click.native="edit(scope.row.id)" size="mini">编辑</el-button>
           </template>
-        </el-table-column>
+        </el-table-column>-->
       </el-table>
 
       <table-paging
@@ -72,12 +71,12 @@
 </template>
 
 <script>
-import moment  from 'moment'
+import moment from "moment";
 export default {
   name: "warningWatch",
   data() {
     return {
-      totalCount:0,
+      totalCount: 0,
       searchOptions: [
         {
           type: "datetime-range",
@@ -115,12 +114,40 @@ export default {
           placeholder: "请选择",
           options: [
             {
-              label: "1天",
+              label: "15分钟",
               value: 1
             },
             {
-              label: "2天",
+              label: "30分钟",
               value: 2
+            },
+            {
+              label: "1小时",
+              value: 3
+            },
+            {
+              label: "2小时",
+              value: 4
+            },
+            {
+              label: "6小时",
+              value: 6
+            },
+            {
+              label: "12小时",
+              value: 7
+            },
+            {
+              label: "1天",
+              value: 8
+            },
+            {
+              label: "2天",
+              value: 9
+            },
+            {
+              label: "3天",
+              value: 10
             }
           ]
         }
@@ -137,14 +164,15 @@ export default {
       cityList: [],
       datacityList: [],
       cityCode: "",
+      timeMinite: null,
 
       countryList: [],
       datacountryList: [],
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10,
+        pageNum: 1,
+        pageSize: 10,
         param: {}
       },
       tableData: [
@@ -178,19 +206,19 @@ export default {
         data
       });
       // console.log("data", result);
-      if(res && res.code==0){
-        console.log(res)
-        this.tableData=res.data.records
-        this.totalCount=res.data.total;
+      if (res && res.code == 0) {
+        console.log(res);
+        this.tableData = res.data.records;
+        this.totalCount = res.data.total;
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit=pageSize
-      this.getWarniingList(this.listQuery)
+      this.listQuery.pageSize = pageSize;
+      this.getWarniingList(this.listQuery);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page=currentPage
-      this.getWarniingList(this.listQuery)
+      this.listQuery.pageNum = currentPage;
+      this.getWarniingList(this.listQuery);
     },
     //查看页面跳转
     detail(id) {
@@ -206,13 +234,34 @@ export default {
       });
     },
     search(form) {
-      console.log("search", form);
-      // console.log("search", form);
+      if (form.timeRange) {
+      this.searchOptions.forEach(v => {
+          if (v.prop == "timeRange") {
+            v.options.forEach(s => {
+              if (s.value == form.timeRange) {
+                this.timeMinite = s.label;
+              }
+            });
+          }
+        });       
+        if (this.timeMinite.indexOf("天") != -1) {
+          this.timeMinite = parseInt(this.timeMinite) * 24 * 60;
+        }else if(this.timeMinite.indexOf("小时") != -1){
+          this.timeMinite = parseInt(this.timeMinite) * 60;
+        }else{
+          this.timeMinite = parseInt(this.timeMinite)
+        }        
+      }
+
       this.listQuery.param = {
         alarmLevel: form.alarmLevel,
-        timeRange: form.timeRange,
-        warningTimeStart:form.timeList? moment(form.timeList[0]).format("YYYY-MM-DD HH:mm:ss"):'',
-        warningTimeEnd:form.timeList? moment(form.timeList[1]).format("YYYY-MM-DD HH:mm:ss"):''
+        timeRange: this.timeMinite,
+        warningTimeStart: form.timeList
+          ? moment(form.timeList[0]).format("YYYY-MM-DD HH:mm:ss")
+          : "",
+        warningTimeEnd: form.timeList
+          ? moment(form.timeList[1]).format("YYYY-MM-DD HH:mm:ss")
+          : ""
       };
       this.getWarniingList(this.listQuery);
     },
@@ -222,10 +271,10 @@ export default {
       } else {
         this.$router.go(-1);
       }
-    },
+    }
   },
   mounted() {
-    this.getWarniingList(this.listQuery)
+    this.getWarniingList(this.listQuery);
   }
 };
 </script>

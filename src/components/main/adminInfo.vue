@@ -66,7 +66,7 @@ export default {
       isFull: false,
       user: {
         avatar: require('@/assets/img/avatar.jpg'),
-        institutionName: '',
+        institutionName: '机构名称',
         lastLoginTime: '2019-10-07',
         loginAddress: '深圳市',
         loginIp: '10.9.0.110',
