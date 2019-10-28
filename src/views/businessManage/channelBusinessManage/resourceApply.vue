@@ -232,12 +232,12 @@ export default {
         totalMoney: totalMoney,
         warehouseGoodsInfoList: self.tableData
       };
-
+      console.log(data);
       let res = await this.$api.channelResApply({ data });
       console.log(res);
-      // if (res.code === 0) {
-      //   alert(res.msg);
-      // }
+      if (res.code === 0) {
+        alert(res.msg);
+      }
     },
 
     changeForm(val) {
