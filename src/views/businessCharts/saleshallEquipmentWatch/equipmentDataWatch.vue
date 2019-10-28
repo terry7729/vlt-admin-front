@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
-        :total="999"
+        :total="totalCount"
         labelWidth="80px"
       >
       <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
