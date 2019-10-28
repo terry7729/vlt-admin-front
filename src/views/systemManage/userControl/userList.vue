@@ -13,7 +13,7 @@
       </search-bar>
     </div>
     <div class="role-table">
-      <el-table :data="userList" border style="width: 100%; margin-top: 10px;">
+      <el-table :data="userList" border style="width: 100%; margin-top: 10px;"  @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column type="index" prop="id" label="序号"></el-table-column>
         <el-table-column prop="account" label="账号"></el-table-column>
@@ -36,19 +36,19 @@
               :rowName="scope.row.name"
               :option="{
                 'enable': {
-                  apiName: 'userEnable', // 接口名称
+                  apiName: 'userStatus', // 接口名称
                   label: '启用', // 按钮文字
                   value: 0// 接口字段传值
                 },
                 'disable': {
-                  apiName: 'userDisable',
+                  apiName: 'userStatus',
                   label: '冻结',
                   value: 1
                 },
                 'logout': {
-                  apiName: 'apiName',
+                  apiName: 'userStatus',
                   label: '注销',
-                  value: -1
+                  value: 2
                 }
               }"
             ></table-row-status>
@@ -192,7 +192,8 @@ export default {
         }
       ],
       searchFrom:{},
-      searchStatus:''
+      searchStatus:'',
+      userId:[]
 
     };
   },
@@ -234,6 +235,13 @@ async init(val){
           this.pageSize = val;
           this.init()
       },
+      handleSelectionChange(val){
+        // this.userId.push(val.userId)
+        val.forEach(item => {
+          this.userId.push(item.userId)
+        });
+        // console.log(val)
+      },
       pageCurrentChange(val) {
         //当前显示页数
         this.currentPage4 = val;
@@ -254,7 +262,17 @@ async init(val){
         if(val.name==='新建用户'){
           this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
         }
-        console.log(val);
+        if(val.name === "批量删除"){
+          
+            
+            (async ()=>{
+              let data = {}
+              data.userId = this.userId
+              let reslt = await this.$api.delByIds({data})//批量删除
+              
+              console.log(reslt)
+            })()
+        }
       },
      async search(val) {
         //搜索事件

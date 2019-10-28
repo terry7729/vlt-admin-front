@@ -14,9 +14,10 @@
               node-key="id"
               @node-click="getnowNodeifo"
               @check-change="getCheckifo"
+              :default-expanded-keys="[1,2]"
               :default-expand-all="false"
               ref="attrList"
-              :expand-on-click-node="false"
+              :expand-on-click-node="true"
             >
               <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}</span>
@@ -99,7 +100,7 @@
       </el-main>
     </el-container>
     <!--弹出框-->
-    <el-dialog title :visible.sync="dialogFormVisible" custom-class="organiDialog">
+    <el-dialog title :visible.sync="dialogFormVisible" custom-class="organiDialog"  @close="hadnelClose">
       <div class="vlt-edit-single">
         <h2 class="title">添加部门信息</h2>
         <div class="vlt-edit-wrap">
@@ -376,6 +377,10 @@ export default {
     hadnelClose() {
       //关闭弹框时置空当前选中节点信息
       this.slelectifo = "";
+      this.AgencyInformation.forEach(item=>{
+        item.value = ''
+      })
+      this.val = {}
     },
     DepartmentChangeForm(val) {
       //部门表单对象
@@ -401,9 +406,9 @@ export default {
       this.$alert(val, "温馨提示！", {
         confirmButtonText: "确定",
         callback: action => {
-         
           close();
-           this.val ={}
+          this.slelectifo = '';
+          this.val= {}
         }
       });
     },
@@ -497,6 +502,7 @@ export default {
     },
 
     async selectBtn(val) {
+      console.log(this.slelectifo)
       if (val.name === "添加部门") {
         //添加部门
         if (this.slelectifo != "") {
@@ -513,6 +519,7 @@ export default {
       }
       if (val.name === "刷新") {
         this.init();
+        this.hadnelClose()
       }
     },
 

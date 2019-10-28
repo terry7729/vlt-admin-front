@@ -50,7 +50,7 @@ export default {
     }
   },
   data() {
-    let obj1 = {roleId:1} ,obj2= { roleId:0}
+   
     return {
       title:"",
       params:{},//表单对象
@@ -92,7 +92,7 @@ export default {
         { title: "用户角色",
           type: "select-multiple",
           prop: "roleInfoList",
-         options: [{ label: "男", value:obj1 }, { label: "女", value:obj2}] },
+         options: [{ label: "男", value:0 }, { label: "女", value:1}] },
       ]
     };
   },
