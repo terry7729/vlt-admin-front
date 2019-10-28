@@ -141,7 +141,7 @@ export default {
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
   // 渠道附件上传
-  uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
+  uploadChannelFiles: (options = {}) => ajax.upload('/fileUpload/upload', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称
