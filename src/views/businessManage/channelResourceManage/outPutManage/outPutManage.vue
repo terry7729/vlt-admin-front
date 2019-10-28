@@ -2,7 +2,7 @@
   <div class="vlt-card">
     <div class="tabs-content">
       <h3>出入库管理</h3>
-      <el-tabs tab-position="left" style="height: 800px;" @tab-click="sideTab" v-model="activeName">
+      <el-tabs tab-position="left" style="height: 1000px;" @tab-click="sideTab" v-model="activeName">
         <el-tab-pane
           :label="supItem.label"
           :name="supItem.name"

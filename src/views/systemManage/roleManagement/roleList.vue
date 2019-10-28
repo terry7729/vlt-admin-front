@@ -192,7 +192,6 @@ async pagingControl(val){ //分页控制
           let Arr = JSON.parse(JSON.stringify(arr))
           this.dataProcessing(Arr);//处理数据
           }
-          console.log('我是默认',n)
       }else{
         console.log('我是搜索',data)
           let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
@@ -259,15 +258,16 @@ async pagingControl(val){ //分页控制
       this.currentStatus = "编缉";
       this.val = val ;
       let arr = Object.keys(val)
-      let len  = this.updataFrom
+      let upDataFrom  = this.updataFrom
       console.log(val.roleType)
-      for(var i = 0 ; i<len.length ; i++){
-        for(var j = 0 ; j< arr.length ; j++){
-          if(arr[j]===len[i].prop){
-            len[i].value = val[arr[j]]
+      upDataFrom.forEach(item=>{
+        arr.forEach(i=>{
+          if(item.prop === i){
+            item.value = val[i]
           }
-        }
-      }
+        })
+      })
+  
     },
     selectBtn(val) {//新增删除事件
       if (val.name === "新建角色") {
@@ -278,9 +278,8 @@ async pagingControl(val){ //分页控制
 async search(val) {//搜索事件
       console.log(val)
         this.searchFrom = val;
-          this.searchStatus = "搜索"
-            this.init()
-      let data = JSON.parse(JSON.stringify(val));
+        this.searchStatus = "搜索"
+        this.init()
      
     },
     dataProcessing(arr) {//数据处理

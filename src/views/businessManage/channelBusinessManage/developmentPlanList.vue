@@ -108,7 +108,7 @@ export default {
         name: name,
         query: {
           id: row.id,
-          insLevel: 2 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
+          insLevel: 1 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
         }
       })
     },

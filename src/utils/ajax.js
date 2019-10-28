@@ -36,6 +36,7 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
 
 }
+
 /**
  * @description http请求
  * @param  {String} method 请求方法
@@ -46,13 +47,15 @@ switch (process.env.VUE_APP_MODE) {
  */
 const request = (method, url, options, extend) => {
   // 基本参数
-  if (storage.get('token')) {
-    axios.defaults.headers.common['Authorization'] = storage.get('token');
-  }
+  // if (storage.get('token')) {
+  //   axios.defaults.headers.common['Authorization'] = storage.get('token');
+  // }
   return (async () => {
     try {
       let res;
-      const responseType = {responseType: options.responseType} || {};
+      const responseType = {
+        responseType: options.responseType
+      } || {};
       if (options.data && typeof options.data !== 'object') {
         res = await axios[method](`${url}/${options.data}`); /*RESTful传参*/
       } else {

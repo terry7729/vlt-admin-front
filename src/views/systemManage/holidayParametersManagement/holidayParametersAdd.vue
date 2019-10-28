@@ -12,12 +12,7 @@
             @change="AddChangeForm"
           ></base-form>
           <el-row class="el-form-item vlt-edit-btn">
-            <el-button
-              type="primary"
-              v-prevent="1000"
-              size="medium"
-              @click="AddSubmit"
-            >提交并保存</el-button>
+            <el-button type="primary" v-prevent="1000" size="medium" @click="AddSubmit">提交并保存</el-button>
             <el-button size="medium" @click="AddCancel">取消</el-button>
           </el-row>
         </div>
@@ -27,20 +22,25 @@
 </template>
 
 <script type="text/javascript">
-
 export default {
   name: "",
   data() {
     return {
       // formData: [],
       // 新增表单类型
-      
+
       AddData: [
         {
-          type: "input",
+          type: "select",
           title: "假日名称",
           value: "",
-          prop: "holidayName"
+          prop: "holidayName",
+          options: [
+            { label: "春节", value: 0 },
+            { label: "清明节", value: 1 },
+            { label: "中秋节", value: 2 },
+            { label: "国庆节", value: 3 }
+          ]
         },
         {
           type: "datetime",
@@ -73,54 +73,70 @@ export default {
           title: "是否停销",
           value: "",
           prop: "channelIdentity",
-          options: [{ label:"是", value: "1" }, { label: "否", value: "0" }]
+          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
         },
         {
           type: "switch",
           title: "是否停用",
           value: "",
           prop: "address",
-          options: [{ label:"是", value: "1" }, { label: "否", value: "0" }]
-        },
-    
+          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+        }
       ],
       // 新增表单验证
-    
-        // operationManageLimit: [
-        //   {
-        //     type: "array",
-        //     required: true,
-        //     message: "请选择账号权限",
-        //     trigger: "change"
-        //   }
-        // ]
-      
+
+      // operationManageLimit: [
+      //   {
+      //     type: "array",
+      //     required: true,
+      //     message: "请选择账号权限",
+      //     trigger: "change"
+      //   }
+      // ]
+
       param: null,
+      holidayType: "",
+      holidayName: ""
     };
   },
   created() {
-    this.init();
+    //this.init();
   },
 
   components: {},
   methods: {
     //获得账户角色数据
-    async init() {
-      let resul = await this.$api.addHolInfo();
-      console.log(resul);
-      this.AddData= resul.data;
-    },
+    // async init() {
+    //   let resul = await this.$api.addHolInfo();
+    //   console.log(resul);
+    //   this.AddData= resul.data;
+    // },
     // 新增表单change事件
     AddChangeForm(form) {
       this.param = form;
-      // console.log(this.param);
+      let options = {
+        0: "春节",
+        1: "清明节",
+        2: "中秋节",
+        3: "国庆"
+      };
+      this.holidayType = this.param.holidayName;
+      this.holidayName = options[this.param.holidayName];
+      // this.param.holidayType = this.param.holidayName
+      // this.param.holidayName = options[this.param.holidayType];
+      // console.log("param:", this.param);
+      console.log(this.holidayType, this.holidayName);
     },
     // 提交按钮
     async AddSubmit() {
       // console.log(this.formData);
       let data = this.param;
-      let result = await this.$api.addAccount({ data });
-      this.$router.push("operationAccountManage");
+      data.holidayType = this.holidayType;
+      data.holidayName = this.holidayName;
+      console.log(data);
+      let result = await this.$api.addHolInfo({ data: data });
+      //this.$router.push("operationAccountManage");
+      this.$router.go(-1);
       console.log(result);
       //console.log(this.$refs.baseForm.form);
       //console.log(formdata);

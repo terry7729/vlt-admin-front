@@ -274,7 +274,7 @@ export default {
       });
     },
     search(form) {
-      this.options.param = from
+      this.options.param = form
       this.initList(this.options);
       // console.log("search", form);
     },

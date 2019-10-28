@@ -41,21 +41,18 @@ export default {
         { title: "入库仓库", value: "", prop: "entryWarehouseName" },
         { title: "备注", value: "", prop: "remark" },
     ],
-  goodsListData:[]
-
+  goodsListData:[],
+  documentNumber: this.$route.query.documentNumber
  }
  },
  components: {
  },
  created(){
-   this.putStoreDetail()
+   this.putStoreDetail(this.documentNumber)
  },
  methods: {
-  async putStoreDetail(){
-    let data = {
-      documentNumber: this.$route.query.documentNumber
-    }
-    let res = await this.$api.getOutPutDetail(data.documentNumber)
+  async putStoreDetail(data){
+    let res = await this.$api.getOutPutDetail({data})
     console.log(res)
     if(res && res.code == 0){
       this.infoList.forEach(item =>{
@@ -65,9 +62,9 @@ export default {
       })
     }
   },
-  putStoreClick(){
-    console.log(32123)
-  },
+  // putStoreClick(){
+  //   console.log(32123)
+  // },
   cancel(){
     this.$router.back();
   }

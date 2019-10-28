@@ -71,10 +71,12 @@ export default {
           ]
         },
       params: {},
+      planData: {},
     }
   },
   created() {
-    this.getMarketPlanDetail()
+     
+    // this.getMarketPlanDetail()
   },
   methods: {
     // 附件上传
@@ -105,6 +107,7 @@ export default {
 				let res = await self.$api.getMarketPlanDetail({data})
 				if(res && res.code == 0) {
           // self.$message.success('注销成功')
+          this.planData = res.data;
           
 				} else {
           // self.$message.warning(res.msg)

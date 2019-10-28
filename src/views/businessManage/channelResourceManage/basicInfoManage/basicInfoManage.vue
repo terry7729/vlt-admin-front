@@ -206,12 +206,12 @@ export default {
         body: this.form
       }
     }
- },
- created(){
-   this.getTypeList(this.requestData)
-   this.getSelectOption()
- },
- methods: {
+},
+created(){
+  this.getTypeList(this.requestData)
+  this.getSelectOption()
+},
+methods: {
    //类型管理
    //状态修改
   async changeState(id,state){
@@ -223,7 +223,7 @@ export default {
       "updateTime": ""
     }
     let res = await this.$api.statusUpdate({data})
-    if(res.code == 0 ){
+    if(res && res.code == 0 ){
       this.$message({
         message:'状态修改成功',
         type:'success'
@@ -232,34 +232,34 @@ export default {
   },
 
    //获取类型管理列表
-   async getTypeList(data){
-     let obj= {
-       1 :'设备',
-       2 :'配件',
-       3 :'耗材',
-       4 :'设施'
-     };
-     let res = await this.$api.getGoosType({data})
-     console.log(res)
-     if(res && res.code == 0){
-       this.typeData = res.data.records
-       this.typeData.forEach(item=>{
-         item.goodsType = obj[item.goodsType]
-       })
-       this.typeTotalCount = res.data.total
-     }
-   },
+  async getTypeList(data){
+    let obj= {
+      1 :'设备',
+      2 :'配件',
+      3 :'耗材',
+      4 :'设施'
+    };
+    let res = await this.$api.getGoosType({data})
+    console.log(res)
+    if(res && res.code == 0){
+      this.typeData = res.data.records
+      this.typeData.forEach(item=>{
+        item.goodsType = obj[item.goodsType]
+      })
+      this.typeTotalCount = res.data.total
+    }
+  },
    //获取类型管理物品名称
-   async getSelectOption(){
-     let res =await this.$api.getModelTree({})
-     if(res && res.code == 0){
-        res.data.forEach(item =>{
-        this.typeInfoOptions[1].options.push({label:item.goodsName,value:item.id})
-       })
-     }
-   },
+  async getSelectOption(){
+    let res =await this.$api.getModelTrees()
+    if(res && res.code == 0){
+      res.data.forEach(item =>{
+      this.typeInfoOptions[1].options.push({label:item.goodsName,value:item.id})
+      })
+    }
+  },
    //搜索
-   search(data) {
+  search(data) {
     this.currentPage = 1
     this.requestData.param = Object.assign({
       page: this.currentPage,
@@ -278,7 +278,7 @@ export default {
       name:'modification',
       query:{id}
     })
-     console.log(id)
+    console.log(id)
   },
   //设备查看
   typeCheck(id,goodsType){
