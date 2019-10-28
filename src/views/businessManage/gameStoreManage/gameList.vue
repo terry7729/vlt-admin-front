@@ -15,10 +15,8 @@
       :data="tableData"
       tooltip-effect="dark"
       style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" width="55" fixed></el-table-column>
-      <el-table-column label="序号" type="index" width="55"></el-table-column>
+      @selection-change="handleSelectionChange">
+      <el-table-column label="序号" type="index" fixed width="55"></el-table-column>
       <el-table-column prop="gameId" label="游戏ID" min-width="100px"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称" min-width="120px"></el-table-column>
       <el-table-column label="游戏类型" min-width="100px">
@@ -33,7 +31,7 @@
       <el-table-column prop="gameVersion" label="游戏版本" min-width="120px"></el-table-column>
       <el-table-column label="游戏图标" min-width="120px">
         <template slot-scope="scope">
-          {{scope.row.filePath}}
+          <img :src="scope.row.filePath" class="game-icon"/>
           <!-- <img src="scope.row.filePath" alt /> -->
         </template>
       </el-table-column>
@@ -73,8 +71,7 @@ export default {
     return {
       controlOptions: [
         { name: "新建游戏", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-        { name: "批量删除", type: "", icon: "delete" },
-        { name: "导出", type: "", icon: "download" }
+        { name: "导出", type: "", icon: "download" },
       ],
       tableData: [],
       multipleSelection: [],
@@ -137,31 +134,44 @@ export default {
     this.getGameStoreList(data);
   },
   methods: {
+    // 导出列表
+    async exportExcel() {
+      const res = await this.$api.exportGameExcel({
+        data: {
+          param:this.params.param
+        },
+        responseType: "blob"
+      });
+      var blob = new Blob([res], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "游戏储备信息.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      console.log(res);
+    },
+    // 转换类型
     translateGameType (val) {
-      let options = {
-        1: "概率型",
-        2: '奖组型'
-      }
+      let options = {1: "概率型",2: '奖组型'}
       return options[val]
     },
+    // 转换类型
     translateJackpotType(val) {
-      let options = {
-        1: "无奖池",
-        2: "单奖池",
-        3: "多奖池"
-      };
+      let options = {1: "无奖池",2: "单奖池",3: "多奖池"};
       return options[val];
     },
+    // 转换类型
     translateStatus(val) {
-      let options = {
-        1: "储备",
-        2: "试玩",
-        3: "上市",
-        4: "变更",
-        5: "退市"
-      };
+      let options = {1: "储备",2: "试玩",3: "上市",4: "变更",5: "退市"};
       return options[val];
     },
+    // 转换类型
     translateTime(val) {
       if (val != null) {
         return moment(val).format("YYYY-MM-DD HH:mm:ss");
@@ -169,6 +179,7 @@ export default {
         return "";
       }
     },
+    // 获取游戏储备列表
     getGameStoreList(data) {
       const self = this;
       (async data => {
@@ -186,15 +197,12 @@ export default {
       })(data);
     },
     selectBtn(val) {
+      console.log(val)
       if (val.name == "新建游戏") {
-        this.$router.push({
-          path: "./gameCreate",
-          query: {
-            // regionCode: data.regionCode,
-            // instId: data.id,
-            // instCode: data.insCode
-          }
-        });
+        this.$router.push({path: "./gameCreate",});
+      } else {
+        // 导出列表
+        this.exportExcel();
       }
     },
     toggleSelection(rows) {
@@ -223,12 +231,10 @@ export default {
       //   }
 
       // console.log('search', data)
-      let datas = {
-        page: 0,
-        pageSize: 0,
-        param: form
-      };
-      this.getGameStoreList(datas);
+      this.params.size = 1;
+      this.params.pageSize = 10;
+      this.params.param = form;
+      this.getGameStoreList(this.params);
     },
     changeSize(val) {
       console.log(`每页 ${val} 条`);
@@ -241,6 +247,11 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 @import "./less/index.less";
+.game-icon{
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+}
 </style>
