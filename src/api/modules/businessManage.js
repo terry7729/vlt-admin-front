@@ -96,6 +96,12 @@ export default {
   getProvincePlanInfo: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanInfo', options),
   //  修改年度发展计划审批信息
   updateDevelopPlanApproval: (options = {}) => ajax.post('/developPlan/updateDevelopPlanApproval', options),
+  // 导出年度发展计划列表信息 
+  exportDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportDevelopPlanList', options),
+  // 导出年度发展计划汇总省级列表信息
+  exportProvinceDevelopPlanList : (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
+  // 导出年度发展计划汇总市级列表信息
+  exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
 
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
