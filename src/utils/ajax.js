@@ -105,8 +105,8 @@ const request = (method, url, options, extend) => {
               res = await axios[method](`${url}?${qs.stringify(options.data)}`);
               break;
             case 'delete':
-                res = await axios[method](url, {params: data});
-                break;
+              res = await axios[method](url, {params: data});
+              break;
             default:
               res = await axios[method](url, data, responseType);
           }
