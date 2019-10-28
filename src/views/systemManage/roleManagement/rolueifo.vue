@@ -7,11 +7,13 @@
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 export default {
+
   name: "rolueifo",
  async created() {
     let id = this.$route.query.id
-    let reslt =  await this.$api.QueryRoleInfoDetail(id)//查询角色详情
+    let reslt =  await this.$api.QueryRoleInfoDetail({data:id})//查询角色详情
     // this.infoList = reslt.data
      console.log('查询角色详情',reslt)
     if(reslt.code === 0){
@@ -20,7 +22,12 @@ export default {
     for(var i = 0 ; i < len.length ; i++ ){
       for(var j = 0 ; j< arr.length ; j++){
         if(arr[j]===len[i].prop){
-          len[i].value = reslt.data[arr[j]]
+          if(arr[j] === 'createTime' || arr[j] === 'updateTime'){
+           len[i].value = moment(reslt.data[arr[j]]).format("YYYY-MM-DD HH:mm:ss")
+          }else{
+            len[i].value = reslt.data[arr[j]]
+          }
+          
         }
       }
     }

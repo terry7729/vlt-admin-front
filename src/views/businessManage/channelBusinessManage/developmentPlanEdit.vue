@@ -34,6 +34,7 @@
 import moment from "moment";
 import { getCascaderCheckedItem } from "@/utils/getCascaderCheckedItem.js";
 import rules from "@/utils/rules.js";
+import { stringify } from 'querystring';
 
 export default {
   name: "",
@@ -82,7 +83,7 @@ export default {
         {
           title: "省属新建销售厅数量",
           type: "input",
-          prop: "provinceNewSellingHall",
+          prop: "newSellingHall",
           value: ""
         },
         {
@@ -94,7 +95,7 @@ export default {
         {
           title: "省属销售厅投注机数量",
           type: "input",
-          prop: "provinceSellingMachine",
+          prop: "sellingMachine",
           value: ""
         },
         {
@@ -106,7 +107,7 @@ export default {
         {
           title: "省合作厅数量",
           type: "input",
-          prop: "provinceCooperationHall",
+          prop: "cooperationHall",
           value: ""
         },
         {
@@ -118,7 +119,7 @@ export default {
         {
           title: "省合作厅投注数量",
           type: "input",
-          prop: "provinceCooperationMachine",
+          prop: "cooperationMachine",
           value: ""
         },
         {
@@ -141,7 +142,7 @@ export default {
           type: "datepicker",
           prop: "planDate",
           dateType: "year",
-          value: ""
+          value: "",
         },
         {
           type: "cascader",
@@ -188,7 +189,7 @@ export default {
           title: "市属新建销售厅数量",
           type: "input",
           prop: "newSellingHall",
-          value: ""
+          value: "",
         },
         {
           title: "市属销售厅投注机数量",
@@ -224,7 +225,7 @@ export default {
         all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
       },
       cascaderOptions: [],
-      isPrivice: true
+      isPrivice: false
     };
   },
   created() {
@@ -237,6 +238,16 @@ export default {
         planDate: "2019"
       };
       this.getProvinceCityPlan(data);
+      this.formData.forEach(item => {
+        if (
+          item.prop == "cityNewSellingHall" ||
+          item.prop == "citySellingMachine" ||
+          item.prop == "cityCooperationHall" ||
+          item.prop == "cityCooperationMachine"
+        ) {
+          item.disabled = true;
+        }
+      });
     } else {
       let data = {
         insId: "61",
@@ -255,30 +266,39 @@ export default {
           id: routerQuery.id,
           insLevel: routerQuery.insLevel
         };
-        this.getQueryDevelopPlanInfo(data);
+        this.getDevelopPlanInfo(data);
       }
-    })
+    });
   },
   methods: {
     // 获取信息 回填到输入框中， 如果此数据是省级数据  则市级数据显示但输入框不能修改， 如果是市级数据 则隐藏省级的数据填写
-    getQueryDevelopPlanInfo(data) {
+    getDevelopPlanInfo(data) {
       const self = this;
       (async data => {
-        let res = await self.$api.getQueryDevelopPlanInfo({ data });
+        let res = await self.$api.getDevelopPlanInfo({ data });
         if (res && res.code == 0) {
-          console.log('sssssss', res);
           // 根据返回 返回的数据判断是否是省级所属机构， 然后根据回填数据
-          let dataList= this.isPrivice ? this.formData : formDataCity;
-          let dataArr = Object.keys(res.data);
-          for (let i = 0; i < dataList.length; i++ ) {
-            for(let j = 0; j < dataArr.length; j++) {
-              if (dataList[i].prop == dataArr[j]) {
-                // console.log(res.data[dataArr[j]]);
-                dataList[i].value = res.data[dataArr[j]]
+          let dataList = this.isPrivice ? this.formData : this.formDataCity;
+          let dataObj = res.data;
+          console.log(dataObj)
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceNewSellingHall/g, 'newSellingHall'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceSellingMachine/g, 'sellingMachine'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationHall/g, 'cooperationHall'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationMachine/g, 'cooperationMachine'))
+
+ dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityNewSellingHall/g, 'newSellingHall'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/citySellingMachine/g, 'sellingMachine'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityCooperationHall/g, 'cooperationHall'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityCooperationMachine/g, 'cooperationMachine'))
+          let dataArr = Object.keys(dataObj);
+
+          for (let i = 0; i < dataList.length; i++) {
+            for (let j = 0; j < dataArr.length; j++) {
+              if (dataList[i].prop == (dataArr[j])) {
+                dataList[i].value = dataObj[dataArr[j]];
               }
             }
           }
-          console.log(dataList);
         } else {
           self.$message.warning(res.msg);
         }
@@ -288,24 +308,14 @@ export default {
     getProvinceCityPlan(data) {
       const self = this;
       (async data => {
+        console.log(2222);
         let res = await self.$api.getProvinceCityPlan({ data });
         if (res && res.code == 0) {
-          console.log("res", res.data);
+          // console.log("res", res.data);
           // self.$set(self.formData[1], 'options', res.data)
           // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
           // 遍历把市的值填到输入框中
-          self.formData.forEach(item => {
-            if (
-              item.prop == "cityNewSellingHall" ||
-              item.prop == "citySellingMachine" ||
-              item.prop == "cityCooperationHall" ||
-              item.prop == "cityCooperationMachine"
-            ) {
-              item.value = res.data[item.prop];
-              item.disabled = true;
-            }
-          });
         } else {
           self.$message.warning(res.msg);
         }
@@ -317,8 +327,9 @@ export default {
       const data = {};
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
+        console.log('ssss', res);
         if (res && res.code == 0) {
-          // console.log("res", res.data);
+          console.log("res", res.data);
           self.$set(self.formData[1], "options", res.data);
           // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
@@ -327,14 +338,16 @@ export default {
         }
       })(data);
     },
-    // 新建发展计划
-    createDevelopPlan() {
+    // 修改发展计划
+    editDevelopPlan() {
       const self = this;
+      this.params.id = this.$route.query.id;
       const data = this.params;
+      // console.log(data);
       (async data => {
-        let res = await self.$api.createDevelopPlan({ data });
+        let res = await self.$api.editDevelopPlan({ data });
         if (res && res.code == 0) {
-          self.$message.success("提交成功");
+          self.$message.success("修改成功");
           setTimeout(() => {
             self.$router.push({ name: "developmentPlan" });
           }, 500);
@@ -356,10 +369,10 @@ export default {
     },
     submit() {
       const self = this;
-      console.log("提交的参数", this.params);
+      // console.log("提交的参数", this.params);
       self.$refs.baseForm.validate(val => {
         console.log(val);
-        self.createDevelopPlan();
+        self.editDevelopPlan();
       });
     },
     changeSelect(val) {

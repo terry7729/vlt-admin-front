@@ -30,7 +30,7 @@ export default {
   components: {},
   async created() {
     let id = this.$route.query.id;
-    let result = await this.$api.roleDetail(id);
+    let result = await this.$api.roleDetail({ data: id });
     result.data.roleTypes = result.data.roleTypes.join(",");
     console.log(result);
     if (result.data.status === "1") {

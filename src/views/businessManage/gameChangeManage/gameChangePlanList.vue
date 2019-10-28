@@ -3,25 +3,29 @@
     <search-bar class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="tableData.total"
       labelWidth="86px">
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table
       border
       ref="multipleTable"
-      :data="tableData"
+      :data="tableData.records"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange">
         <el-table-column label="序号" type="index" width="55"></el-table-column>
-        <el-table-column prop="code" label="变更计划编号" ></el-table-column>
-        <el-table-column prop="planName" label="变更计划名称"></el-table-column>
+        <el-table-column prop="changePlanCode" label="变更计划编号" ></el-table-column>
+        <el-table-column prop="changePlanName" label="变更计划名称"></el-table-column>
         <el-table-column prop="gameName" label="游戏名称"></el-table-column>
-        <el-table-column prop="sellRang" label="销售区域"></el-table-column>
-        <el-table-column prop="planState" label="计划状态"></el-table-column>
-        <el-table-column prop="initiator" label="创建人"></el-table-column>
-        <el-table-column prop="initiateTime" label="创建时间"></el-table-column>
+        <el-table-column prop="gameSaleArea" label="销售区域"></el-table-column>
+        <el-table-column prop="changePlanStatus" label="计划状态">
+          <template slot-scope="scope">
+            {{translateChangeStatus(scope.row.changePlanStatus)}}
+          </template>
+        </el-table-column>
+        <el-table-column prop="createBy" label="创建人"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
@@ -31,9 +35,9 @@
     </el-table>
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableData.total"
+      :currentPage="tableData.size"
+      :pageSize="tableData.current"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange">
     </table-paging>
@@ -49,20 +53,7 @@ export default {
       controlOptions: [
         { name: "新建变更计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
-      tableData: [
-        {
-          id:"01",
-          code: 'SS001',
-          planName:'上市-基诺',
-          gameName:"基诺",
-          sellRang:"销售区域",
-          planState:"上市中",
-          startTime:"2018-8-9 09:12:50",
-          endTime:"2019-09-12 09:00:00",
-          initiator:"李明",
-          initiateTime:"2017-9-23 01:55:45",
-        },
-      ],
+      tableData: [],
       multipleSelection: [],
       totalCount:0,
       ruleForm: {
@@ -70,65 +61,39 @@ export default {
         limit: 10
       },
       searchOptions:[
-        {type: 'input', prop: 'inputName', value: '', title: '游戏ID', placeholder: '请输入'},
-        {type: 'input', prop: 'inputName2', value: '', title: '游戏名称', placeholder: '请输入'},
-        {
-          type: 'select', prop: 'selectName', value: '', title: '游戏类型', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {
-          type: 'select', prop: 'selectName2', value: '', title: '游戏状态', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {
-          type: 'select', prop: 'selectName3', value: '', title: '奖池类型', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '上市时间', placeholder: ['开始日期', '结束日期']},
-          
+        {title: '游戏ID', type: 'input', prop: 'inputName', value: ''},
+        {title: '游戏名称', type: 'input', prop: 'inputName2', value: ''},
+        {title: '游戏类型', type: 'select', prop: 'selectName', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '游戏状态',type: 'select', prop: 'selectName2', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '奖池类型', type: 'select', prop: 'selectName3', value: '',options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '上市时间',type: 'datepicker-range', prop: 'date2', value: '', options: ['start', 'end']},
       ],
-      currentPage: 1
+      currentPage: 1,
+      requestOptions: {
+
+      }
     }
   },
+  created() {
+  
+  },
+  mounted() {
+    this.getStoreList({})
+  },
   methods: {
-    getStoreList(row) {
+    getChangePlanList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getChangePlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          console.log(res);
+          if (res.data && res.data.records.length > 0) {
+            this.tableData = res.data;
+          }
+          // this.tableData = r
+          // self.$message.success('注销成功')
+          // row.orderStatus = 6;
+          // self.getLotteryList(self.param)
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -171,15 +136,18 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
+    translateChangeStatus(val) {
+      let options = {
+        1: "审批中",
+        2: "审批拒绝",
+        3: "待生效",
+        4: '已生效'
+      };
+      return options[val];
+    },
   },
   computed: {
 
-  },
-  created() {
-  
-  },
-  mounted() {
-    
   },
   components: {
   }

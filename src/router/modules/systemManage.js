@@ -27,6 +27,8 @@ const processClassifyModify = () => import('@/views/systemManage/businessProcess
 
 //用户列表
 const userList = () => import('@/views/systemManage/userControl/userList')
+// 用户设置
+const userSetting = () => import('@/views/systemManage/userControl/userSetting')
 //用户详情
 const userDestails = () => import('@/views/systemManage/userControl/userDetails')
 //用户编缉
@@ -167,17 +169,22 @@ export default [
     component:dataDictionaryEdit
   },
   {
-
     path: 'systemManage/userList',
     name: 'userList',
     meta: {
       title: '用户列表',
     },
     component: userList,
-
-
-  }, {
-
+  },
+  {
+    path: 'systemManage/userSetting',
+    name: 'userSetting',
+    meta: {
+      title: '用户设置',
+    },
+    component: userSetting,
+  },
+  {
     path: 'systemManage/userList/userDestails',
     name: 'userDestails',
     meta: {

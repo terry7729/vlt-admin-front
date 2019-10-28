@@ -142,7 +142,7 @@
         </div>
         <el-form-item>
           <div class="btn">
-            <el-button type="primary" @click="onSubmit">修改</el-button>
+            <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
             <el-button>取消</el-button>
           </div>
         </el-form-item>

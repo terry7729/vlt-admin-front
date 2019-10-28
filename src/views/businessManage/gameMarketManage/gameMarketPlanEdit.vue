@@ -2,12 +2,12 @@
  <div class="vlt-card">
     <el-tabs v-model="activeName"  @tab-click="handleClick">
       <el-tab-pane label="基础信息" name="1">
-        <base-info @next="next"></base-info>
+        <base-info :planData="planData" :insData="insData" :insArray="insArray" @submit="submit"></base-info>
       </el-tab-pane>
       <el-tab-pane label="游戏配置" name="2">
-        <game-set @next="next" @prev="prev"></game-set>
+        <game-set :planData="planData" @submit="submit"></game-set>
       </el-tab-pane>
-      <el-tab-pane label="上传附件" name="4">
+      <el-tab-pane label="上传附件" name="3">
         <div class="vlt-edit-single appendix">
           <div class="vlt-edit-wrap">
             <el-form label-position="right" 
@@ -33,7 +33,7 @@
             <!-- <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form> -->
             <el-row class="vlt-edit-btn">
               <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
-              <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
+              <el-button size="medium" @click="cancel" class="cancel">取 消</el-button>
             </el-row>
           </div>
         </div>
@@ -71,12 +71,95 @@ export default {
           ]
         },
       params: {},
+      planData: {},
+      insData: [],
+      insArray: [],
     }
   },
   created() {
     this.getMarketPlanDetail()
+    // this.getInsData()
   },
   methods: {
+    // 获取计划详情
+    getMarketPlanDetail() {
+      const self = this;
+      const data = {
+        id: this.$route.query.id,
+        gameId: this.$route.query.gameId
+      };
+      (async (data)=>{
+        let res = await self.$api.getMarketPlanDetail({data})
+				if(res && res.code == 0) {
+          // self.$message.success('注销成功')
+          this.planData = res.data;
+          this.insId = res.data.gameListPlanVo.gameSaleArea.split(',');
+          self.getInsData();
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 返回机构完整数组
+    getInsArray(id, obj) {
+      let array = [];
+      array.push(obj.id)
+      if(id&&id!=obj.id) {
+        obj.children.forEach((item)=>{
+          if(item.id == id) {
+            array[1] = item.id
+            return array
+          }else{
+            item.children&&item.children.forEach((list)=>{
+              if(list.id==id) {
+                array[1] = item.id
+                array[2] = list.id
+                return array
+              }else{
+                list.children&&list.children.forEach((el)=>{
+                  if(el.id==id) {
+                    array[1] = item.id
+                    array[2] = list.id
+                    array[3] = el.id
+                    return array
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+      this.insArray.push(array);
+      console.log('getInsArray',array)
+      console.log('getInsArrays',this.insArray)
+      return array
+    },
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data =>  {
+        let res = await self.$api.QueryInsTree({data})
+        if(res && res.code == 0) {
+          console.log('res', res.data)
+          self.insData = res.data;
+          // self.$set(self.baseData[4], 'options', res.data)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+          self.insId&&self.insId.forEach((item)=>{
+            self.getInsArray(item, res.data[0]) // 传入id 和对象
+          })
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    handleClick() {
+
+    },
+    handleRemove() {
+
+    },
     // 附件上传
     async uploadFileOther(files) {
       let formData = new FormData();
@@ -95,22 +178,6 @@ export default {
       console.log('uploadFile', res);
       this.gameOtherId = res.data.fileId;
     },
-    getMarketPlanDetail() {
-      const self = this;
-      const data = {
-        id: this.$route.query.id,
-        gameId: this.$route.query.gameId
-      };
-      (async (data)=>{
-				let res = await self.$api.getMarketPlanDetail({data})
-				if(res && res.code == 0) {
-          // self.$message.success('注销成功')
-          
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
-    },
     next(){
       this.active ++
     },
@@ -122,11 +189,12 @@ export default {
       console.log('派发出来的参数', this.params)
     },
     //保存
-    submit(formName){
+    submit(param){
       const self = this;
-      this.$refs.baseForm1.validate((val)=>{
-        console.log(val)
-      });
+      console.log('部分数据', param)
+      console.log('总共的参数', this.planData)
+      Object.assign(this.planData.gameListPlanVo, param)
+      
     },
     cancel() {
       console.log('取消')
