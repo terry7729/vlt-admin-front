@@ -22,7 +22,9 @@
           </div>
           <div class="table-wrap">
             <el-table :data="tableData" border class="table">
-              <el-table-column prop="id" label="序号" fixed width="60px"></el-table-column>
+              <el-table-column prop="id" label="序号" fixed width="60px">
+                <template slot-scope="scope">{{scope.row.id=scope.row.goodsModel}}</template>
+              </el-table-column>
               <el-table-column label="物品名称" min-width="160px">
                 <template slot-scope="scope">
                   <el-select v-model="scope.row.goodsName" filterable placeholder="请选择">
@@ -156,7 +158,7 @@ export default {
       options: resourceData,
       tableData: [
         {
-          id: "1",
+          id: "",
           goodsName: "",
           goodsModel: "",
           goodsCode: "",
@@ -232,6 +234,7 @@ export default {
       };
       console.log(data);
       let res = await this.$api.channelResPurcApply({ data });
+      console.log(res);
       if (res.code === 0) {
         alert(res.msg);
       }

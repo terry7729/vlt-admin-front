@@ -90,13 +90,14 @@ const request = (method, url, options, extend) => {
             }
           });
         } else {
-          res = await axios[method](url, method === 'get' ? {
-            params: data,
-            ...responseType
-          } : {
-            ...data,
-            ...responseType
-          });
+          if (method === 'get') {
+            res = await axios[method](url, {
+              params: data,
+              ...responseType
+            });
+          } else {
+            res = await axios[method](url, data, responseType);
+          }
         }
       }
       // message提示

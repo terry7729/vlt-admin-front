@@ -115,27 +115,29 @@ export default {
   createGameStore: (options = {}) => ajax.post('/game/insertGameInfo', options),
   // 编辑游戏储备
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
-  // 查看游戏储备详情
+  // 游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
-  // 上市游戏列表查询列表
+  // 上市游戏列表
   queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
-  // 游戏上市计划分页查询列表
-  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 上市记录查询列表
   queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
-  // 查看游戏上市计划详情 
-  getMarketPlanDetal: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
 
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
-  // 游戏变更计划分页查询列表
-  getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  // 查询变更计划列表
+  getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 变更计划详情
+  getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
+  // 编辑变更计划
+  editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+  
+
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
@@ -145,10 +147,10 @@ export default {
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
   // 渠道附件上传
-  uploadChannelFiles: (options = {}) => ajax.post('/channel/uploading', options),
+  uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
-  // 根据资源类型获取资源名称---新建渠道
+  // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
   // 资金权限修改
   addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),

@@ -215,6 +215,9 @@ export default {
     },
     next() {
       this.$emit('next', this.params)
+    },
+    addGoods() {
+      
     }
   },
 }

@@ -112,9 +112,6 @@ export default {
       }
     },
 
-    // handleCommand (command) {
-    //   console.log(command);
-    // },
     // 导出年度发展计划信息
     async exportExcel(val) {
         // console.log(val);

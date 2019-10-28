@@ -37,9 +37,9 @@ export default {
     return {
       baseData: [
         {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '', placeholder: '请输入上市计划名称'},
-        {title: '上市时间', type: 'datetime-range',  prop: '', value: '', options:['gameListPlanTimestart', 'gameListPlanTimeend']},
+        {title: '上市时间', type: 'datetime',  prop: 'gameListPlanTime', value: ''},
         {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '', placeholder: '请输入上市计划简介'},
-        {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+        {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[]},
         {title: '销售区域', type: 'cascader-multiple',  prop: 'gameSaleArea', value: '', options: [],
           setProps: {
             label: "text",
@@ -58,9 +58,106 @@ export default {
       checkList: [],
       textarea: '',
       param: null,
+      insData: [],
+      planData:{}
     }
   },
+  created() {
+    this.getAllGameList();
+    // this.getInsData()
+  },
   methods: {
+    // 获取计划详情
+    getMarketPlanDetail() {
+      const self = this;
+      const data = {
+        id: this.$route.query.id,
+        gameId: this.$route.query.gameId
+      };
+      (async (data)=>{
+				let res = await self.$api.getMarketPlanDetail({data})
+				if(res && res.code == 0) {
+          // self.$message.success('注销成功')
+          this.planData = res.data;
+          
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 返回机构完整数组
+    getInsArray(id, obj) {
+      let array = [];
+      array.push(obj.id)
+      if(id&&id!=obj.id) {
+        obj.children.forEach((item)=>{
+          if(item.id == id) {
+            array[1] = item.id
+            return array
+          }else{
+            item.children&&item.children.forEach((list)=>{
+              if(list.id==id) {
+                array[1] = item.id
+                array[2] = list.id
+                return array
+              }else{
+                list.children&&list.children.forEach((el)=>{
+                  if(el.id==id) {
+                    array[1] = item.id
+                    array[2] = list.id
+                    array[3] = el.id
+                    return array
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+      console.log('getInsArray',array)
+      return array
+    },
+    // 获取所有游戏列表
+    getAllGameList() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.getAllGameList({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          let gameData = res.data;
+          let array = []
+          gameData.forEach(item => {
+            let obj = {};
+            obj.label = item.gameName;
+            obj.value = item.id;
+            array.push(obj)
+          });
+          self.$set(self.baseData[3], 'options', array)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.QueryInsTree({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          this.insData = res.data;
+          self.$set(self.baseData[4], 'options', res.data)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     getStoreList(row) {
       const self = this;
       const data = {
