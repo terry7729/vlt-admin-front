@@ -60,7 +60,7 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
           title: "区域",
           placeholder: "请选择省份",
@@ -77,14 +77,14 @@ export default {
         },
         {
           type: "select",
-          prop: "province",
+          prop: "cityId",
           value: "",
-          title: "",
-          placeholder: "请选择市",
+          title: "市",
+          placeholder: "请选择",
           options: [
             {
               label: "选项1",
-              value: 1
+              value: 3
             },
             {
               label: "选项2",
@@ -94,7 +94,7 @@ export default {
         },
         {
           type: "select",
-          prop: "province",
+          prop: "gameId",
           value: "",
           title: "游戏",
           placeholder: "请选择游戏",
@@ -130,8 +130,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -159,13 +160,11 @@ export default {
   },
   methods: {
     //获取游戏风险指标列表
-    async getGameRiskList() {
+    async getGameRiskList(options) {
       const self = this;
+      let data = JSON.parse(JSON.stringify(options));
       const res = await self.$api.getGameRiskList({
-        data: {
-          pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+        data
       });
       if (res && res.code == 0) {
         self.tableData = res.data.records;
@@ -192,28 +191,34 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.getGameRiskList()
+        // this.$message({
+        //   type: "success",
+        //   message: "删除成功!"
+        // });
+        this.getGameRiskList(this.listQuery)
       } else {
-        this.$message({
-          type: "info",
-          message: "删除失败"
-        });
+        // this.$message({
+        //   type: "info",
+        //   message: "删除失败"
+        // });
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit = pageSize;
-      this.getGameRiskList();
+      this.listQuery.pageSize = pageSize;
+      this.getGameRiskList(this.listQuery);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page = currentPage;
-      this.getGameRiskList();
+      this.listQuery.pageNum = currentPage;
+      this.getGameRiskList(this.listQuery);
     },
     search(form) {
       console.log("search", form);
+      this.listQuery.param={
+        provinceId:form.provinceId,
+        cityId:form.cityId,
+        gameId:form.gameId
+      }
+       this.getGameRiskList(this.listQuery);
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -221,14 +226,6 @@ export default {
       } else {
         this.$router.go(-1);
       }
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -341,7 +338,7 @@ export default {
     // this.showcity();
   },
   created() {
-    this.getGameRiskList();
+    this.getGameRiskList(this.listQuery);
   }
 };
 </script>
