@@ -25,21 +25,12 @@ switch (process.env.VUE_APP_MODE) {
   default:
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境
     // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
-<<<<<<< HEAD
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境
     //axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
     axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境
-=======
-    // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
-    // axios.defaults.baseURL = 'http://10.7.0.88:8081/bms/api/vlt' // 本地server环境 
-    // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
-    axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境 
->>>>>>> 29f2d0a6b3f4007a27b41f21b07c24d15399d22c
     //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
     // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
@@ -84,10 +75,7 @@ const request = (method, url, options, extend) => {
           res = await axios[method](url, method === 'get' ? {
             params: data,
             ...responseType
-          } : {
-            ...data,
-            ...responseType
-          });
+          } : data, responseType);
         }
       }
       // message提示
