@@ -23,17 +23,32 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
-    // 本地server环境
-    // axios.defaults.baseURL = 'http://10.7.0.187:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api' // 本地server环境 
+    //axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
+    // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
+    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    //axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.88:8081/bms/api/vlt'
-    axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
-    //axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
+    //axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
+    //  axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.187:8080/bms/api' 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api'
+
 
 }
 /**
@@ -50,8 +65,8 @@ const request = (method, url, options, extend) => {
     axios.defaults.headers.common['Authorization'] = storage.get('token');
   }
   const loading = Loading.service({
-    fullscreen: true, 
-    text: '正在加载', 
+    fullscreen: true,
+    text: '正在加载',
     spinner: "el-icon-loading iconfont icon-loading",
     background: 'rgba(0,0,0,0)',
     customClass: 'gb-loading'
@@ -79,20 +94,22 @@ const request = (method, url, options, extend) => {
           });
         } else {
           switch (method) {
-            case 'get': 
+            case 'get':
               res = await axios[method](url, {
                 params: data,
                 ...responseType
               });
               break;
-            case 'post': 
+            case 'post':
               res = await axios[method](url, data, responseType);
               break;
             case 'put':
               res = await axios[method](url, data);
               break;
             case 'delete':
-              res = await axios[method](url, {params: data});
+              res = await axios[method](url, {
+                params: data
+              });
               break;
             default:
               res = await axios[method](url, data, responseType);

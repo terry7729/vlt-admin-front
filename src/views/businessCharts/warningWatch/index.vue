@@ -233,12 +233,14 @@ export default {
         query: { id }
       });
     },
-    search(form) {
-      if (form.timeRange) {
+    //计算多少分钟
+    getMinite(timeRange){
+      this.timeMinite=''
+      if (timeRange) {
       this.searchOptions.forEach(v => {
           if (v.prop == "timeRange") {
             v.options.forEach(s => {
-              if (s.value == form.timeRange) {
+              if (s.value == timeRange) {
                 this.timeMinite = s.label;
               }
             });
@@ -252,7 +254,9 @@ export default {
           this.timeMinite = parseInt(this.timeMinite)
         }        
       }
-
+    },
+    search(form) {
+     this.getMinite(form.timeRange)      
       this.listQuery.param = {
         alarmLevel: form.alarmLevel,
         timeRange: this.timeMinite,
@@ -265,13 +269,6 @@ export default {
       };
       this.getWarniingList(this.listQuery);
     },
-    back() {
-      if (this.$route.query.noGoBack) {
-        this.$router.push({ path: "/dashboard" });
-      } else {
-        this.$router.go(-1);
-      }
-    }
   },
   mounted() {
     this.getWarniingList(this.listQuery);

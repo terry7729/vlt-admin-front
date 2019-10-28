@@ -199,7 +199,7 @@ export default {
   },
   methods: {
     async init() {
-      let res = await this.$api.getParameterDetail({ data: 0 });
+      let res = await this.$api.getParameterDetail({ data: "0" });
       if (res.code === 0) {
         let formKey = Object.keys(this.form);
         let resKey = Object.keys(res.data);
@@ -215,19 +215,17 @@ export default {
     async onSubmit() {
       this.showLoad = true;
       let data = this.form;
-      data.id = 0;
+      data.id = "0";
       data.effectiveTime = moment(data.effectiveTime).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      console.log(data);
       let res = await this.$api.editFundsParameter({ data });
       if (res.code === 0) {
         alert(res.msg);
+        this.$router.push({ name: "fundParameter" });
       } else {
-        alert(res.msg);
       }
       this.showLoad = false;
-      this.$router.push({ name: "fundParameter" });
     },
 
     deleteResource(index) {

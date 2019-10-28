@@ -56,10 +56,10 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
-          title: "区域",
-          placeholder: "请选择省",
+          title: "省份",
+          placeholder: "请选择省份",
           options: [
             {
               label: "选项1",
@@ -73,9 +73,9 @@ export default {
         },
         {
           type: "select",
-          prop: "selectNam1",
+          prop: "cityId",
           value: "",
-          title: "",
+          title: "城市",
           placeholder: "请选择市",
           options: [
             {
@@ -90,10 +90,10 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName2",
+          prop: "hallNo",
           value: "",
-          title: "",
-          placeholder: "请选择销售厅",
+          title: "销售厅",
+          placeholder: "请选择",
           options: [
             {
               label: "选项1",
@@ -123,8 +123,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -152,13 +153,10 @@ export default {
   },
   methods: {
     //获取销售厅账户数据列表
-    async getHallAccount() {
+    async getHallAccount(options) {
       const self = this;
       const res = await self.$api.getHallAccount({
-        data: {
-          pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+        data: options
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
@@ -166,12 +164,12 @@ export default {
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit = pageSize;
-      this.getHallAccount();
+      this.listQuery.pageSize = pageSize;
+      this.getHallAccount(this.listQuery);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page = currentPage;
-      this.getHallAccount();
+      this.listQuery.pageNum = currentPage;
+      this.getHallAccount(this.listQuery);
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -179,14 +177,6 @@ export default {
       } else {
         this.$router.go(-1);
       }
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -262,12 +252,18 @@ export default {
     },
     search(form) {
       console.log("search", form);
+      this.listQuery.param={
+        provinceId:form.provinceId,
+        cityId:form.cityId,
+        hallNo:form.hallNo
+      }
+      this.getHallAccount(this.listQuery)
     }
   },
   mounted() {
     // this.showcity();
   },created() {
-    this.getHallAccount();
+    this.getHallAccount(this.listQuery);
   },
 };
 </script>
