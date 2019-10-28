@@ -122,14 +122,20 @@ export default {
   queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 上市记录查询列表
   queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
-
-
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  // 查询变更计划列表
+  getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 变更计划详情
+  getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
+  // 编辑变更计划
+  editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+  
+
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
@@ -139,7 +145,7 @@ export default {
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
   // 渠道附件上传
-  uploadChannelFiles: (options = {}) => ajax.post('/channel/uploading', options),
+  uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称---新建渠道

@@ -233,7 +233,8 @@ export default {
       (async (data)=>{
 				let res = await self.$api.editGameStore({data})
 				if(res && res.code == 0) {
-          
+          self.$message.success('提交成功')
+          self.$route.push({path:'./gameList'})
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -257,7 +258,7 @@ export default {
       console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
-        self.createGameStore(this.params)
+        self.editGameStore(this.params)
       });
     },
     cancel() {

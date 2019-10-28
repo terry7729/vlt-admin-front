@@ -245,7 +245,8 @@ export default {
   methods: {
     async init() {
       //节点树请求
-      let res = await this.$api.QueryModuleTree({});//菜单树查询
+      let data = {};
+      let res = await this.$api.QueryModuleTree({data});//菜单树查询
       console.log('菜单树查询',res)
       if(res.code === 0){
               this.nodeTreeData = res.data;

@@ -49,20 +49,7 @@ export default {
       controlOptions: [
         { name: "新建变更计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
-      tableData: [
-        {
-          id:"01",
-          code: 'SS001',
-          planName:'上市-基诺',
-          gameName:"基诺",
-          sellRang:"销售区域",
-          planState:"上市中",
-          startTime:"2018-8-9 09:12:50",
-          endTime:"2019-09-12 09:00:00",
-          initiator:"李明",
-          initiateTime:"2017-9-23 01:55:45",
-        },
-      ],
+      tableData: [],
       multipleSelection: [],
       totalCount:0,
       ruleForm: {
@@ -70,65 +57,28 @@ export default {
         limit: 10
       },
       searchOptions:[
-        {type: 'input', prop: 'inputName', value: '', title: '游戏ID', placeholder: '请输入'},
-        {type: 'input', prop: 'inputName2', value: '', title: '游戏名称', placeholder: '请输入'},
-        {
-          type: 'select', prop: 'selectName', value: '', title: '游戏类型', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {
-          type: 'select', prop: 'selectName2', value: '', title: '游戏状态', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {
-          type: 'select', prop: 'selectName3', value: '', title: '奖池类型', placeholder: '请选择',
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {type: 'datepicker-range', prop: 'date2', value: '', title: '上市时间', placeholder: ['开始日期', '结束日期']},
-          
+        {title: '游戏ID', type: 'input', prop: 'inputName', value: ''},
+        {title: '游戏名称', type: 'input', prop: 'inputName2', value: ''},
+        {title: '游戏类型', type: 'select', prop: 'selectName', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '游戏状态',type: 'select', prop: 'selectName2', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '奖池类型', type: 'select', prop: 'selectName3', value: '',options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '上市时间',type: 'datepicker-range', prop: 'date2', value: '', options: ['start', 'end']},
       ],
       currentPage: 1
     }
   },
+  created() {
+    let data = {};
+    this.getChangePlanList(data)
+  },
   methods: {
-    getStoreList(row) {
+    getChangePlanList(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getChangePlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          // self.$message.success('注销成功')
+          self.tableData= res.data.records;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -171,17 +121,6 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-  },
-  computed: {
-
-  },
-  created() {
-  
-  },
-  mounted() {
-    
-  },
-  components: {
   }
 }
 </script>
