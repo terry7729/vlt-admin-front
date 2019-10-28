@@ -19,11 +19,11 @@
           trigger="click"
         >
           <span slot="reference">
-            <span class="user-name">{{user.name}}</span>
             <span class="avatar">
               <img v-if="user.avatar" :src="user.avatar" @error="user.avatar = ''">
               <i v-else class="iconfont icon-touxiang"></i>
             </span>
+            <span class="user-name">{{user.name}}</span>
           </span>
           <el-card class="box-card user-info-content">
             <div slot="header" class="clearfix">

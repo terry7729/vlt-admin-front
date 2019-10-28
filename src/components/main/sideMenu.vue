@@ -160,7 +160,7 @@ export default {
     .menu-wrapper{
       position: absolute;
       left: 0;
-      top: 60px;
+      top: 64px;
       bottom: 0;
       width: 100%;
       overflow: auto;
@@ -252,14 +252,14 @@ export default {
 
     .menu-logo{
       color: #ffffff;
-      line-height: 60px;
+      line-height: 64px;
       font-size: 0;
       text-align: center;
       background-color: #002553;
       box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
       .ct{
-        height: 60px;
-        line-height: 60px;
+        height: 64px;
+        line-height: 64px;
         overflow: hidden;
         word-break: keep-all;
         white-space: nowrap;
