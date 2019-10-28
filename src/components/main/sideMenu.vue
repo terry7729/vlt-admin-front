@@ -182,8 +182,8 @@ export default {
         line-height: 50px;
       }
       .el-submenu .el-menu-item{
-        height: 40px;
-        line-height: 40px;
+        height: 44px;
+        line-height: 44px;
       }
     }
     .el-row,.menu-group,.el-menu{
