@@ -28,7 +28,7 @@
                 class="avatar-uploader"
                 action=""
                 :limit="1"
-                accept=".png,.jpg,jpeg"
+                accept=".png,.jpg,.jpeg"
                 :show-file-list="false"
                 :on-remove="handleRemove"
                 :http-request="uploadFileImg">
@@ -36,12 +36,12 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
-            <el-form-item  label="身份证照正面">
+            <el-form-item  label="身份证照背面">
               <el-upload
                 class="avatar-uploader"
                 action=""
                 :limit="1"
-                accept=".png,.jpg,jpeg"
+                accept=".png,.jpg,.jpeg"
                 :show-file-list="false"
                 :on-remove="handleRemove"
                 :http-request="uploadFileImg">
@@ -392,7 +392,7 @@ export default {
       formData.append('file', files.file);
       formData.append('refId', 1);
       formData.append('flag', true);
-      formData.append('busType', 9);
+      formData.append('busType', 1);
       const res = await this.$api.uploadChannelFiles({
         data: formData,
         onUploadProgress(evt) {

@@ -53,20 +53,21 @@ export default {
 
 <style lang="less" scoped>
   .header-container{
-    box-shadow:0 0 12px -2px rgba(61,77,89,0.2);
+    box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.2);
     position: relative;
     z-index: 9;
     text-align: left;
     .top-bd{
       background-color: #fff;
-      height: 60px;
+      height: 64px;
+      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     }
     .headling{
       font-size: 18px;
     }
     .menu-collapse{
       cursor: pointer;
-      line-height: 60px;
+      line-height: 64px;
       padding: 0 20px;
       font-size: 24px;
       transition: all 0.2s ease 0s;

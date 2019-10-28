@@ -31,7 +31,7 @@
                 class="gameIcon-uploader"
                 action=""
                 :limit="1"
-                accept=".png,.jpg,jpeg"
+                accept=".png,.jpg,.jpeg"
                 :show-file-list="false"
                 :on-remove="handleRemove"
                 :http-request="uploadFileImg">
@@ -88,7 +88,7 @@ export default {
         {title: '游戏名称', type: 'input',  prop: 'gameName', value: ''},
         {title: '游戏编码', type: 'input',  prop: 'gameCode', value: ''},
         {title: '游戏类型', type: 'select',  prop: 'gameType', value: '', options:[{label: '概率型',value: 1},{label: '奖组型',value: 2},]},
-        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: 1},{label: '单奖池',value: 3},{label: '多奖池',value: 2}]},
+        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: 1},{label: '单奖池',value: 2},{label: '多奖池',value: 3}]},
         {title: '游戏简介', type: 'textarea',  prop: 'gameDesc', value: ''},
         {title: '版权归属', type: 'input',  prop: 'gameGenlot', value: ''},
       ],
@@ -135,11 +135,14 @@ export default {
         developerInfoVo: '',
         softwareInfoVo: '',
       },
+      gameId: this.$route.query.gameId,
       imageUrl: '',
-      gameBagId: '', // 游戏包上传id
-      imgId: '', // 图标上传id
-      gameOtherId: '', // 附件上传id
+      gameBagId: [], // 游戏包上传id
+      imgId: [], // 图标上传id
+      gameOtherId: [], // 附件上传id
       fileList: [],
+      developerId: '',
+      softwareId: '',
     }
   },
   created() {
@@ -155,7 +158,7 @@ export default {
       console.log('files', files.file.size/1024)
       this.softData[3].value = `${(files.file.size/1024).toFixed(1)}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
+      formData.append('refId', this.gameId);
       formData.append('flag', true);
       formData.append('busType', 9);
       const res = await this.$api.testUpload({
@@ -165,15 +168,15 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameBagId = res.data.fileId;
+      this.gameBagId.push(res.data.fileId);
     },
     // 图标上传
     async uploadFileImg(files) {
       let formData = new FormData();
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 9);
+      formData.append('refId', this.gameId); //业务关联id（游戏id，渠道id，试玩id 上市id 变更id）新增的时候 可不填 编辑 必填
+      formData.append('flag', true); //是否修改文件 true 是 false否  必填
+      formData.append('busType', 9); //业务类型 (1-游戏储备 2-游戏试玩 3-上市 4-变更 5-退市 6-物品类型 7-物品型号 8-) 必填
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -181,7 +184,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId = res.data.fileId;
+      this.imgId.push(res.data.fileId);
       let imgUrl = res.data.filePath;
     },
     // 附件上传
@@ -190,7 +193,7 @@ export default {
       console.log('files', files.file.size/1024)
       // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
+      formData.append('refId', this.gameId);
       formData.append('flag', true);
       formData.append('busType', 9);
       const res = await this.$api.testUpload({
@@ -200,7 +203,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameOtherId = res.data.fileId;
+      this.gameOtherId.push(res.data.fileId);
     },
     // 获取游戏详情
     getGameStoreInfo() {
@@ -217,9 +220,11 @@ export default {
           })
           self.developData.forEach((item)=>{
             item.value = res.data.developerInfo[item.prop]
+            self.developerId = res.data.developerInfo.id
           })
           self.softData.forEach((item)=>{
-            item.value = res.data.tSoftwareInfo[item.prop]
+            item.value = res.data.softwareInfo[item.prop]
+            self.softwareId = res.data.softwareInfo.id
           })
           self.fileList = res.data.fileList
 				} else {
@@ -234,7 +239,7 @@ export default {
 				let res = await self.$api.editGameStore({data})
 				if(res && res.code == 0) {
           self.$message.success('提交成功')
-          self.$route.push({path:'./gameList'})
+          self.$router.push({path:'./gameList'})
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -254,8 +259,11 @@ export default {
     },
     submit(){
       const self = this;
-      this.params.fileIds = `${this.gameBagId},${this.imgId},${this.gameOtherId}`;
+      this.params.fileIds = this.gameBagId.concat(this.imgId, this.gameOtherId).join(',');
       console.log('提交的参数', this.params)
+      this.params.gameInfoVo.id = this.gameId;
+      this.params.developerInfoVo.id = this.developerId;
+      this.params.softwareInfoVo.id = this.softwareId;
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
         self.editGameStore(this.params)

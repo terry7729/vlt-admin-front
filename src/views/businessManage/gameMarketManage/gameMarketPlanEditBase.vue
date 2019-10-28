@@ -79,7 +79,7 @@ export default {
 				if(res && res.code == 0) {
           // self.$message.success('注销成功')
           this.planData = res.data;
-          
+          self.getInsData();
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -153,6 +153,7 @@ export default {
           self.$set(self.baseData[4], 'options', res.data)
           // self.formData[1].options = res.data;
           // self.cascaderOptions = res.data;
+          self.getInsArray('', res.data)
 				} else {
           // self.$message.warning(res.msg)
         }

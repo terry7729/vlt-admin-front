@@ -1568,7 +1568,8 @@ export default {
         { name: "打印", type: "primary", icon: "printer" },
         { name: "导出", type: "danger", icon: "download" },
         { name: "导出", type: "success", icon: "upload" },
-        { name: "导出", type: "warning", icon: "download" }
+        { name: "导出", type: "warning", icon: "download" },
+        { name: "更多操作", type: "more", icon: "", options:[{label:'打印当前',value:'1'},{label:'打印全部',value:'2'}]}
       ],
       tableData: [
         {
