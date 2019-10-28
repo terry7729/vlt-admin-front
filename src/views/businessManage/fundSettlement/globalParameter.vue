@@ -154,9 +154,9 @@ export default {
 
   methods: {
     async init() {
-      let res = await this.$api.getParameterDetail({ data: 1 });
+      let res = await this.$api.getParameterDetail({ data: "0" });
+      console.log(res);
       if (res.code === 0) {
-     
         let keys = Object.keys(res.data);
         let arr = [
           ...this.publicInfoList,

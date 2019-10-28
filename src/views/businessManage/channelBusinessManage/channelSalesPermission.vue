@@ -13,21 +13,22 @@
                 class="device-form"
               >
                 <el-form-item label="修改方式">
-                  <el-select v-model="form.type" placeholder="请选择">
-                    <el-option label="渠道区域" value="area"></el-option>
-                    <el-option label="渠道编码" value="num"></el-option>
+                  <el-select v-model="form.updateType" placeholder="请选择">
+                    <el-option label="渠道区域" value="channelNo"></el-option>
+                    <el-option label="渠道编码" value="regCode"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="渠道区域" v-show="form.type=='area'">
+                <el-form-item label="渠道区域" v-show="form.updateType=='channelNo'">
                   <el-cascader
                     size="small"
-                    v-model="form.channel"
+                    v-model="form.channelNo"
                     :options="areaData"
+                    :props="setProps"
                     placeholder="请选择渠道区域"
                   ></el-cascader>
                 </el-form-item>
-                <el-form-item label="渠道编码" v-show="form.type=='num'">
-                  <el-input v-model="form.channelCode" placeholder="请输入渠道编码"></el-input>
+                <el-form-item label="渠道编码" v-show="form.updateType=='regCode'">
+                  <el-input v-model="form.regCode" placeholder="请输入渠道编码"></el-input>
                 </el-form-item>
               </el-form>
             </div>
@@ -113,30 +114,47 @@ export default {
         { gameName: "c", bet: true, cash: false, time: "" }
       ],
       form: {
-        type: "num",
-        channel: "",
-        channelCode: ""
+        updateType: "channelNo",
+        channelNo: "",
+        regCode: ""
       },
       areaData: [],
+      setProps: {
+        label: "text",
+        value: "id",
+        children: "children",
+        checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+      },
       fileList: []
     };
   },
   created() {
-    // this.init();
+    this.getInsData();
   },
   methods: {
-    async init() {
-      let res = await this.$api.queryGameRight({
-        data: {
-          channelNo: this.form.channelCode
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        if (res && res.code == 0) {
+          this.areaData = res.data;
+        } else {
         }
-      });
+      })(data);
+    },
+    async submit() {
+      let form = this.form;
+      let data = {
+        channelNo: form.channelNo.slice(form.channelNo.length - 1),
+        updateType: form.updateType
+      };
+      let res = await this.$api.queryGameRight({ data });
       console.log(res);
     },
-    submit() {
-      this.init();
-    },
+
     changeSwitchBet(val) {
+      console.log(val);
       // this.switchBetText = val ? '允许' : '禁止'
     },
     changeSwitchCash(val) {
