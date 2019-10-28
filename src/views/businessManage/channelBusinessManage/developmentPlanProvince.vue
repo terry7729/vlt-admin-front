@@ -127,6 +127,14 @@ export default {
         }
       })(data);
     },
+    // 导出年度发展计划 省级信息
+
+// exportProvinceDevelopPlanList
+
+
+
+
+
     detail (row, name) {
       this.$router.push({
         name: name,
