@@ -15,7 +15,7 @@ export default {
   /* 请务必注释每个接口所属名称 */
   // 获取左侧导航
   getMenu: (options = {}) => ajax.post('/menu', options),
-  //登录
+  // 登录
   getLogin: (options = {}) => ajax.post('/login', options),
   // 登出
   getLogOut: (options = {}) => ajax.post('/logout', options),

@@ -14,7 +14,6 @@
 <script>
 import storage from '@/utils/storage'
 
-
 export default {
   name: 'locking',
   data() {
@@ -37,13 +36,23 @@ export default {
       this.$message.closeAll();
       this.$message.error(msg);
     },
-    submit() {
+    async submit() {
       if (!this.password.trim()) {
         this.showMessage('请输入密码');
         return;
       }
-      this.$router.back();
-      storage.remove('locked');
+      const res = await this.$api.getLogin({
+        data: {
+          account: storage.get('userInfo').account,
+          password: this.password
+        }
+      });
+      if (res && res.code === 0) {
+        storage.set("token", res.data.token);
+        storage.set("userInfo", res.data);
+        this.$router.back();
+        storage.remove('locked');
+      }
     }
   }
 }

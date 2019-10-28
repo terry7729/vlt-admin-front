@@ -39,7 +39,7 @@ export default {
   //出入库
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
-  outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
+  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExcel', options),
 
   // 设备管理
   // 设备分页查询列表
@@ -117,6 +117,8 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 导出游戏列表
+  exportGameExcel: (options = {}) => ajax.post('/game/exportExcel', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
   // 上市游戏列表
@@ -147,8 +149,10 @@ export default {
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
   // 渠道附件上传
-  uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
-
+  uploadChannelFiles: (options = {}) => ajax.upload('/fileUpload/upload', options),
+  // 渠道列表导出
+  exportChannelExcel: (options = {}) => ajax.post('/channel/exportExcel', options),
+  
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),

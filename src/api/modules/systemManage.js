@@ -111,4 +111,8 @@ export default {
   addHolInfo: (options = {}) => ajax.post('/hol/addHolInfo', options),
   //修改夏日状态接口
   updateHolStatus: (options = {}) => ajax.post('/hol/updateHolStatus', options),
+
+  // 用户设置
+  // 修改密码
+  updateUserPassword: (options = {}) => ajax.post('/updateUserPassword', options),
 }

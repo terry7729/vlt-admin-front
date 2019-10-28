@@ -2,10 +2,10 @@
  <div class="vlt-card">
     <el-tabs v-model="activeName"  @tab-click="handleClick">
       <el-tab-pane label="基础信息" name="1">
-        <base-info @next="next"></base-info>
+        <base-info></base-info>
       </el-tab-pane>
       <el-tab-pane label="游戏配置" name="2">
-        <game-set @next="next" @prev="prev"></game-set>
+        <game-set></game-set>
       </el-tab-pane>
       <el-tab-pane label="上传附件" name="4">
         <div class="vlt-edit-single appendix">
@@ -79,6 +79,9 @@ export default {
     // this.getMarketPlanDetail()
   },
   methods: {
+    handleClick() {
+
+    },
     // 附件上传
     async uploadFileOther(files) {
       let formData = new FormData();

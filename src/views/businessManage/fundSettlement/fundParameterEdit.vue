@@ -141,11 +141,8 @@ export default {
   },
   methods: {
     async init() {
-      // let data = {
-      //   id: this.$route.query.id
-      // };
       let res = await this.$api.getParameterDetail({
-        data: this.$route.query.id
+        data: String(this.$route.query.id)
       });
       if (res.code === 0) {
         let formKey = Object.keys(this.form);
@@ -157,7 +154,6 @@ export default {
             }
           });
         }
-        // console.log(this.form);
       }
     },
 
@@ -167,12 +163,14 @@ export default {
       data.effectiveTime = moment(data.effectiveTime).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      data.id = this.$route.query.id;
-      console.log(data);
+      data.id = String(this.$route.query.id);
+
       let res = await this.$api.editFundsParameter({ data });
-      console.log(res);
+      if (res && res.code === 0) {
+        alert(res.msg);
+        this.$router.push({ name: "fundParameter" });
+      }
       this.showLoad = false;
-      this.$router.push({ name: "fundParameter" });
     },
 
     resetForm(formName) {

@@ -636,3 +636,49 @@
   top: 50px;
   background-color: #c5d5e6;
 }
+.control-bar-comp .more{
+  width: 100px;
+  height: 34px;
+  .el-input__inner{
+    width: 100%;
+    height: 34px;
+    font-size: 12px;
+  }
+  .el-input__icon{
+    line-height: 34px;
+  }
+  input::-webkit-input-placeholder {
+    color: #606266;
+  }
+  input::-moz-input-placeholder {
+    color: #606266;
+  }
+  input::-ms-input-placeholder {
+    color: #606266;
+  }
+}
+/*请求loading*/
+.gb-loading{
+  &.is-fullscreen{
+    .el-loading-spinner{
+      margin-top: -100px !important;
+    }
+  }
+  .el-loading-spinner{
+    padding-top: 10px;
+    border-radius: 6px;
+    width: 100px;
+    left: 50%;
+    margin-left: -50px;
+
+  }
+  .el-loading-spinner i{
+    font-size: 40px;
+    color: #409EFF;
+  }
+  .el-loading-spinner .el-loading-text{
+    color: #409EFF;
+    margin: 7px 0 10px;
+    font-size: 13px;
+  }
+}
