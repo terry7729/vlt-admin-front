@@ -15,12 +15,14 @@
           <div class="base-info">
             <ul class="info-list">
               <li class="info-item" v-for="(item, index) in appendixInfo" :key="index">
-                <span class="title">{{item.title}}：</span>
-                <el-button
+                <!-- {{item}} -->
+              <span class="title">{{item.fileName}}：</span>
+              <el-link :href="item.filePath" type="primary" target="_blank">下载</el-link>
+                <!-- <el-button
                   type="text"
                   class="text"
                   v-html="(item.value === null ? '' : item.value) + (item.unit || '')"
-                ></el-button>
+                ></el-button> -->
               </li>
             </ul>
           </div>
@@ -156,37 +158,37 @@ export default {
     return {
       activeName: "first",
       baseInfo: [
-        { title: "游戏ID", value: "", prop: "gameCode" },
+        { title: "游戏ID", value: "", prop: "id" },
         { title: "游戏名称", value: "", prop: "gameName" },
-        { title: "游戏类型", value: "", prop: "officialEndSale" },
+        { title: "游戏类型", value: "", prop: "gameType" },
         { title: "游戏状态", value: "", prop: "gameStatus" },
-        { title: "游戏版权", value: "", prop: "gamesCopyright" },
-        { title: "游戏奖池", value: "", prop: "gamesPond" },
-        { title: "游戏简介", value: "", prop: "gamesAbout" },
-        { title: "创建人", value: "", prop: "softwareName" },
-        { title: "创建时间", value: "", prop: "softwareSize" },
-        { title: "更新人", value: "", prop: "softwareVersions" },
-        { title: "更新时间", value: "", prop: "Versions" }
+        { title: "游戏版权", value: "", prop: "gameGenlot" },
+        { title: "游戏奖池", value: "", prop: "jackpotType" },
+        { title: "游戏简介", value: "", prop: "gameDesc" },
+        { title: "创建人", value: "", prop: "createUser" },
+        { title: "创建时间", value: "", prop: "createTime" },
+        { title: "更新人", value: "", prop: "updateUser" },
+        { title: "更新时间", value: "", prop: "updateTime" }
       ],
       developerInfo: [
         { title: "开发商名称", value: "", prop: "developerName" },
-        { title: "联系人", value: "", prop: "contacts" },
-        { title: "手机号码", value: "", prop: "phoneNumber" },
+        { title: "联系人", value: "", prop: "person" },
+        { title: "手机号码", value: "", prop: "cellPhone" },
         { title: "电子邮箱", value: "", prop: "email" },
-        { title: "传真电话", value: "", prop: "phototelephony" },
+        { title: "传真电话", value: "", prop: "faxPhone" },
         { title: "详细地址", value: "", prop: "address" }
       ],
       editionInfo: [
         { title: "软件名称", value: "", prop: "softwareName" },
         { title: "软件大小", value: "", prop: "softwareSize" },
-        { title: "软件版本", value: "", prop: "softwareVersions" },
-        { title: "版本号", value: "", prop: "Versions" },
-        { title: "上传时间", value: "", prop: "uploadingTime" },
-        { title: "软件描述", value: "", prop: "softwareDescribe" },
-        { title: "新版特性", value: "", prop: "newCharacter" }
+        { title: "软件版本", value: "", prop: "versionName" },
+        { title: "版本号", value: "", prop: "versionNumber" },
+        { title: "上传时间", value: "", prop: "updateTime" },
+        { title: "软件描述", value: "", prop: "softwareDesc" },
+        { title: "新版特性", value: "", prop: "newFeatures" }
       ],
       appendixInfo: [
-        { title: "文档一.doc", value: "下载", prop: "newCharacter" }
+        
       ],
       //试玩列表
       demoList: [
@@ -380,14 +382,16 @@ export default {
     getGameStoreInfo() {
       const self = this;
       const data = {
-        gameId: this.$route.query.gameId
+        id: this.$route.query.gameId
       };
       (async data => {
         let res = await self.$api.getGameStoreInfo({ data });
         if (res && res.code == 0) {
-          self.$message.success("注销成功");
-          row.orderStatus = 6;
-          self.getLotteryList(self.param);
+          self.eachList(self.baseInfo,  res.data.gameInfoVo)
+          self.eachList(self.developerInfo,  res.data.developerInfo)
+          self.eachList(self.editionInfo,  res.data.tSoftwareInfo)
+          this.appendixInfo = res.data.fileList;
+          self.eachList(self.appendixInfo,  res.data.fileList)
         } else {
           self.$message.warning(res.msg)
         }
@@ -400,8 +404,46 @@ export default {
       
     },
     handleCurrentChange(val) {
-
-    }
+    },
+    eachList(arr, obj) {
+      arr.forEach(item => {
+        item.value = obj[item.prop];
+        if (item.prop == 'gameType') {
+          item.value = this.translateGameType(obj[item.prop])
+        }
+        if (item.prop == 'gameStatus') {
+          item.value = this.translateStatus(obj[item.prop])
+        }
+        if (item.prop == "jackpotType") {
+          item.value = this.translateJackpotType(obj[item.prop])
+        }
+      });
+    },
+    translateGameType (val) {
+      let options = {
+        1: "概率型",
+        2: '奖组型'
+      }
+      return options[val]
+    },
+    translateStatus(val) {
+      let options = {
+        1: "储备",
+        2: "试玩",
+        3: "上市",
+        4: "变更",
+        5: "退市"
+      };
+      return options[val];
+    },
+    translateJackpotType(val) {
+      let options = {
+        1: "无奖池",
+        2: "单奖池",
+        3: "多奖池"
+      };
+      return options[val];
+    },
   }
 };
 </script>

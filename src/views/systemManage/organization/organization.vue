@@ -27,8 +27,8 @@
                     type="text"
                     size="mini"
                     @click="() => remove(node, data)"
-                    v-if="(data.id != 1) && (data.status !=0)"
-                  >冻结</el-button>
+                    v-if="(data.id != 1)"
+                  >{{data.status !=0 ? '冻结' : '解除'}}</el-button>
                 </span>
               </span>
             </el-tree>
@@ -70,7 +70,7 @@
                   <el-table-column property="status" label="状态">
                     <template slot-scope="scope">
                       <el-switch
-                        v-model="tableList[scope.$index].status"
+                        v-model="scope.row.status"
                         active-color="#13ce66"
                         inactive-color="#ff4949"
                         disabled
@@ -327,17 +327,13 @@ export default {
       console.log("机构树菜单", reslt);
       if (reslt.code === 0) {
         this.nodeTreeData = reslt.data;
-      } else {
-        this.open("机构树菜单code:" + reslt.code);
-      }
+      } 
       let res = await this.$api.FindRegionTreeRoots(); //区域树查询
       console.log("区域树查询", res);
       if (res.code === 0) {
         this.region = res.data;
         this.OrganizationAdd[4].options = res.data;
-      } else {
-        this.open("区域树查询code:" + res.code);
-      }
+      } 
     },
     departmenCancel() {
       //弹出框取消按钮
@@ -361,18 +357,33 @@ export default {
 
     async remove(node, date) {
       //机构状态冻结
-      console.log(node, date);
-      let data = {
-        insId: date.id,
-        status: 0
-      };
-      let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
-      console.log(reslt);
-      if (reslt.code === 0) {
-        this.init();
-      } else {
-        this.open("机构状态冻结code:" + reslt.code);
-      }
+      this.$confirm(date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          console.log(node, date);
+          let data = {
+          insId: date.id,
+          status: Number(!date.status)
+          };
+          let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
+            console.log(reslt);
+          if (reslt.code === 0) {
+              this.init();
+              this.$message({
+                type: 'success',
+                message: '冻结成功!'
+              });
+          } 
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: data.status?'冻结失败':'解冻失败'
+          });          
+        });
+
+    
     },
     hadnelClose() {
       //关闭弹框时置空当前选中节点信息
@@ -441,6 +452,7 @@ export default {
         data.departmentId = this.departmenIfo.departmentId;
 
         let reslt = await this.$api.UpdateDeptInfo({ data }); //更新部门信息
+        console.log('更新部门信息',reslt)
         if (reslt.code === 0) {
           this.subsidiaryOrgan();
           this.dialogFormVisible = false;
@@ -541,7 +553,8 @@ export default {
       this.addOrChange = "更改部门信息";
       this.departmenIfo = val;
       let arr = Object.keys(val);
-      let changeDepartment = this.AddDepartment;
+      console.log(val)
+      let changeDepartment = this.AddDepartment.slice(1,6);
       changeDepartment.forEach(item=>{
         arr.forEach(i=>{
           if(item.prop === i){

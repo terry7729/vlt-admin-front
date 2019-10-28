@@ -16,9 +16,7 @@
         </div>
         <div class="registerPwd">
           <!-- <span class="register">注册</span> -->
-          <!-- <el-link :underline="false" class="register">注册</el-link> -->
-          <!-- <span class="forgetPwd">忘记密码</span> -->
-          <el-link :underline="false" class="forgetPwd" @click="handleForgetPwd">忘记密码</el-link>
+          <el-link :underline="false" class="forgetPwd" @click="handleForgetPwd">修改密码</el-link>
           <el-row>
             <el-button class="btn" @click="login">登录</el-button>
           </el-row>
@@ -31,7 +29,7 @@
           <h2 class="title">修改密码</h2>
           <div class="vlt-edit-wrap">
             <base-form
-              :formData="formData"
+              :formData="forgetForm"
               labelWidth="120px"
               ref="baseForm"
               :rules="rules"
@@ -56,10 +54,20 @@ import storage from "@/utils/storage"
 export default {
   name: "login",
   data() {
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.newPassword) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
       logoImg: require('@/assets/img/companyLogo.png'),
       titleImg: require('@/assets/img/title.png'),
       dialogFormVisible: false,
+      newPassword: '',
       loginForm: [
         {
           type: "input-icon",
@@ -78,44 +86,59 @@ export default {
           icon: "lock"
         }
       ],
-      formData: [
+      forgetForm: [
         {
           title: "请选择你的操作",
           type: "radio",
-          prop: "emailSend",
-          value: "",
+          prop: "passwordType",
+          value: 1,
           options: [
-            { label: "操作密码", value: "1" },
-            { label: "登录密码", value: "0" }
+            { label: "操作密码", value: 1 },
+            { label: "登录密码", value: 2 }
           ]
         },
         {
-          title: "请输入原始登录密码",
+          title: "请输入原始密码",
           type: "password",
-          prop: "serverSite",
+          prop: "oldPassword",
           value: "",
-          placeholder: "请输入"
+          placeholder: "请输入",
+          icon: "lock"
         },
         {
-          title: "请输入新登录密码",
+          title: "请输入新密码",
           type: "password",
-          prop: "portNumber",
+          prop: "newPassword",
           value: "",
-          placeholder: "请输入"
+          placeholder: "请输入",
+          icon: "lock"
         },
         {
-          title: "请重复新登录密码",
+          title: "请重复新密码",
           type: "password",
-          prop: "userName",
+          prop: "rePassword",
           value: "",
-          placeholder: "请输入"
+          placeholder: "请输入",
+          icon: "lock"
         }
       ],
       rules: {
         account: [
-          { required: true, validator: rules.checkAccount, trigger: "blur" }
+          { required: true, validator: rules.checkAccount, trigger: "blur"}
         ],
-        password: [{ required: true, validator: rules.checkPwd, trigger: "blur" }]
+        password: [
+          { required: true, validator: rules.checkPwd, trigger: "blur" }
+        ],
+        oldPassword: [
+          { required: true, validator: rules.checkPwd, trigger: "blur" }
+        ],
+        newPassword: [
+          { required: true, validator: rules.checkPwd, trigger: "blur" }
+        ],
+        rePassword: [
+          { required: true, validator: validatePass2, trigger: "blur" }
+        ],
+        
       },
       param: null
     };
@@ -145,11 +168,11 @@ export default {
     //表单change事件
     changeForm(val) {
       this.param = val;
+      this.newPassword = val.newPassword;
       console.log(this.param);
     },
     //点击忘记密码
     handleForgetPwd() {
-      return;
       this.dialogFormVisible = true;
     },
     // 弹框取消

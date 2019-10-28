@@ -14,11 +14,11 @@ export default {
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
-  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
   // 获取管理员列表
-  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId', options),
   // 新增仓库
-  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare',options),
+  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare', options),
 
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
@@ -96,6 +96,12 @@ export default {
   getProvincePlanInfo: (options = {}) => ajax.post('/developPlan/queryProvinceDevelopPlanInfo', options),
   //  修改年度发展计划审批信息
   updateDevelopPlanApproval: (options = {}) => ajax.post('/developPlan/updateDevelopPlanApproval', options),
+  // 导出年度发展计划列表信息 
+  exportDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportDevelopPlanList', options),
+  // 导出年度发展计划汇总省级列表信息
+  exportProvinceDevelopPlanList : (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
+  // 导出年度发展计划汇总市级列表信息
+  exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
 
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
@@ -109,17 +115,14 @@ export default {
   createGameStore: (options = {}) => ajax.post('/game/insertGameInfo', options),
   // 编辑游戏储备
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
-  // 查看游戏储备详情
+  // 游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
-  // 上市游戏列表查询列表
+  // 上市游戏列表
   queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
-  // 游戏上市计划分页查询列表
-  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 上市记录查询列表
   queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
-
 
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
@@ -127,6 +130,14 @@ export default {
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  // 查询变更计划列表
+  getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 变更计划详情
+  getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
+  // 编辑变更计划
+  editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+  
+
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
   // 新建渠道--销售游戏列表
@@ -136,13 +147,12 @@ export default {
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
   // 渠道附件上传
-  uploadChannelFiles: (options = {}) => ajax.post('/channel/uploading', options),
+  uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
-  // 根据资源类型获取资源名称---新建渠道
+  // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
-  // 资金权限修改
-  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //资金参数列表分页查询
@@ -154,8 +164,12 @@ export default {
 
   //渠道业务管理模块
   //业务办理 
-  //保存资金权限信息
-  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //保存资金权限信息  
+  addFundRight: (options = {}) => ajax.put('/fund/addFundRight', options),
+  //游戏销售权限
+  queryGameRight: (options = {}) => ajax.post('/sale/queryGameRight', options),
+
+
   //资源发放
   channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/provide', options),
   //资源发放分页查询

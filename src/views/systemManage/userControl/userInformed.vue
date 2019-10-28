@@ -26,7 +26,15 @@ export default {
     try{
       console.log(this.$route.query.title)
       this.title = this.$route.query.title
-
+      let arr = Object.keys(this.$route.query.ifo)
+      let formParams = this.formParams;
+      arr.forEach(item=>{
+        formParams.forEach(i=>{
+          if(item === i.prop){
+            i.value = this.$route.query.ifo[item]
+          }
+        })
+      })
       let reslt = await this.$api.QueryInsTree() //机构树查询
       console.log('用户页机构树查询',reslt)
 
@@ -109,20 +117,17 @@ async userSubmit(val) {
           console.log(reslt)
           if(reslt.code === 0){
             this.params = {}
-          }else{
-            this.$alert('请求异常code'+reslt.code, '提示！', {
-                confirmButtonText: '确定',
-                callback: action => {
-                this.$message({
-                type: 'info',
-                message: `action: ${ action }`
-                });
-              }
-            });
+            this.$router.push({name:'userList'})
           }
       }else if(this.title === "编缉用户信息"){
           console.log('编缉用户信息')
         let data = JSON.parse(JSON.stringify(this.params))
+        console.log(data)
+        let reslt = await this.$api.userEdit({data})
+        console.log('编缉用户信息',reslt)
+        if(reslt.code === 0){
+            this.params = {}
+          }
         //  let reslt = await this.$api.userRegist({data})
       }
 

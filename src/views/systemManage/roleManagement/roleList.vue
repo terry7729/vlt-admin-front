@@ -102,7 +102,7 @@ export default {
             { label: "子管理员", value: 2 },
             { label: "普通角色", value: 3 }
           ]},
-        { type: "switch", title: "角色状态", prop: "status", value: true },
+        { type: "switch", title: "角色状态", prop: "status", value: 1 },
         { type: "input", title: "角色编码", prop: "roleCode", value: '' },
         { title: "角色权限",
           type: "cascader-multiple",
