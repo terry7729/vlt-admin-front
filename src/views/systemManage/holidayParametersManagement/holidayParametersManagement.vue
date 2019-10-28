@@ -130,6 +130,7 @@ export default {
       console.log(result);
       if (result.code === 0) {
         let arr = result.data.records;
+        let num = result.data.total;
         this.tableData = arr;
       }
     },
