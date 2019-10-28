@@ -14,11 +14,11 @@ export default {
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
-  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
   // 获取管理员列表
-  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId', options),
   // 新增仓库
-  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare',options),
+  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare', options),
 
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
@@ -39,7 +39,7 @@ export default {
   //出入库
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
-  outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
+  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExcel', options),
 
   // 设备管理
   // 设备分页查询列表

@@ -11,42 +11,55 @@
         :data="tableData"
         style="width: 100%"
         :default-sort="{prop: 'id', order: 'descending'}"
+        border
       >
         <el-table-column prop="id" type="index" label="序号" width="100"></el-table-column>
         <el-table-column prop="holidayName" label="假日名称" width="100"></el-table-column>
         <el-table-column label="开始时间" sortable width="190">
           <template slot-scope="scope">{{translateTime(scope.row.beginTime)}}</template>
         </el-table-column>
-        <el-table-column prop="endTime" label="结束时间" sortable width="190">
-          <template slot-scope="scope">{{translateTime(scope.row.beginTime)}}</template>
+        <el-table-column label="结束时间" sortable width="190">
+          <template slot-scope="scope">{{translateTime(scope.row.endTime)}}</template>
         </el-table-column>
-        <el-table-column prop="discardBeginTime" label="弃奖开始日期" sortable width="130"></el-table-column>
-        <el-table-column prop="discardEndTime" label="弃奖结束日期 " sortable width="130"></el-table-column>
+        <el-table-column label="弃奖开始日期" sortable width="130">
+          <template slot-scope="scope">{{translateTime(scope.row.discardBeginTime)}}</template>
+        </el-table-column>
+        <el-table-column label="弃奖结束日期 " sortable width="130">
+          <template slot-scope="scope">{{translateTime(scope.row.discardEndTime)}}</template>
+        </el-table-column>
 
         <el-table-column label="销售状态" prop="marketStatus">
           <template slot-scope="scope">
             <el-switch
-              v-model="scope.row.switch1"
+              v-model="scope.row.marketStatus"
               inactive-text="停销"
               active-text="不停销"
               :active-value="1"
               :inactive-value="0"
+              @change="switchMarketChange(scope.row)"
             ></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="启用状态" prop="holidayStatus">
           <template slot-scope="scope">
             <el-switch
-              v-model="scope.row.switch2"
+              v-model="scope.row.holidayStatus"
               active-text="已启用"
               inactive-text="已停用"
               :active-value="1"
               :inactive-value="0"
+              @change="switchChange(scope.row)"
             ></el-switch>
           </template>
         </el-table-column>
       </el-table>
-      <tablePaging :total="this.num" :currentPage="1" :pageSize="10"></tablePaging>
+      <tablePaging
+        :total="this.num"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></tablePaging>
     </div>
   </div>
 </template>
@@ -58,8 +71,8 @@ export default {
   data() {
     return {
       num: 0,
-      value1: true,
-      value2: true,
+      // value1: true,
+      // value2: true,
       form: {
         name: ""
       },
@@ -92,7 +105,12 @@ export default {
       tableData: [],
 
       row: "",
-      param: null
+      param: null,
+      data: {
+        marketStatus: "",
+        holidayStatus: "",
+        id: ""
+      }
     };
   },
   created() {
@@ -136,21 +154,61 @@ export default {
     //新增按钮
     Addclick() {
       this.$router.push({
-        path: "holidayParametersAdd"
+        path: "holidayParametersManagement/holidayParametersAdd"
       });
+    },
+    switchMarketChange(val) {
+      //this.MarketChange = !val.marketStatus;
+      console.log(val.marketStatus);
+      if (this.data) {
+        this.data.marketStatus = val.marketStatus;
+        this.data.holidayStatus = val.holidayStatus;
+        this.data.id = val.id;
+        this.getUpdata();
+      }
+
+      //console.log(this.data);
+    },
+    //改变状态
+    switchChange(val) {
+      if (this.data) {
+        this.data.marketStatus = val.marketStatus;
+        this.data.holidayStatus = val.holidayStatus;
+        this.data.id = val.id;
+        this.getUpdata();
+      }
+
+      console.log(val.holidayStatus);
+      // console.log(this.change);
+    },
+    async getUpdata() {
+      if (this.data) {
+        let data = {
+          ...this.data
+        };
+        let res = await this.$api.updateHolStatus({ data: data });
+      }
+
+      //console.log(res);
+    },
+    handleSizeChange(size) {
+      console.log(size);
+    },
+    handleCurrentChange(val) {
+      console.log(val);
     }
-    // selectBtn(val) {
-    //   this.$emit("select", val);
-    // },
-    // 提交
-    // onSubmit() {
-    //   let formData = {};
-    //   for (let key in this.form) {
-    //     if (this.form[key] !== "") formData[key] = this.form[key];
-    //   }
-    //   this.$emit("search", formData);
-    // }
   }
+  // selectBtn(val) {
+  //   this.$emit("select", val);
+  // },
+  // 提交
+  // onSubmit() {
+  //   let formData = {};
+  //   for (let key in this.form) {
+  //     if (this.form[key] !== "") formData[key] = this.form[key];
+  //   }
+  //   this.$emit("search", formData);
+  // }
 };
 </script>
 <style lang="less" scoped>

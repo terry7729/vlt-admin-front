@@ -22,6 +22,7 @@
 </template>
 
 <script type="text/javascript">
+import moment from "moment";
 export default {
   name: "",
   data() {
@@ -72,15 +73,15 @@ export default {
           type: "switch",
           title: "是否停销",
           value: "",
-          prop: "channelIdentity",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          prop: "marketStatus",
+          options: [{ label: "是", value: "0" }, { label: "否", value: "1" }]
         },
         {
           type: "switch",
           title: "是否停用",
           value: "",
-          prop: "address",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          prop: "holidayStatus",
+          options: [{ label: "是", value: "0" }, { label: "否", value: "1" }]
         }
       ],
       // 新增表单验证
@@ -96,7 +97,13 @@ export default {
 
       param: null,
       holidayType: "",
-      holidayName: ""
+      holidayName: "",
+      time: {
+        discardBeginTime: "",
+        discardEndTime: "",
+        beginTime: "",
+        endTime: ""
+      }
     };
   },
   created() {
@@ -122,6 +129,8 @@ export default {
       };
       this.holidayType = this.param.holidayName;
       this.holidayName = options[this.param.holidayName];
+      console.log(this.param);
+
       // this.param.holidayType = this.param.holidayName
       // this.param.holidayName = options[this.param.holidayType];
       // console.log("param:", this.param);
@@ -133,7 +142,14 @@ export default {
       let data = this.param;
       data.holidayType = this.holidayType;
       data.holidayName = this.holidayName;
-      console.log(data);
+      if (data) {
+        data.beginTime = Date.parse(data.beginTime);
+        data.endTime = Date.parse(data.endTime);
+        data.discardBeginTime = Date.parse(data.discardBeginTime);
+        data.discardEndTime = Date.parse(data.discardEndTime);
+        console.log(data);
+      }
+
       let result = await this.$api.addHolInfo({ data: data });
       //this.$router.push("operationAccountManage");
       this.$router.go(-1);

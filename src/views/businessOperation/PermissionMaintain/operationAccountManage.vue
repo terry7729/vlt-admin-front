@@ -27,7 +27,13 @@
           </template>
         </el-table-column>
       </el-table>
-      <tablePaging :total="this.num" :currentPage="1" :pageSize="10"></tablePaging>
+      <tablePaging
+        :total="this.num"
+        :currentPage="1"
+        :pageSize="10"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></tablePaging>
       <!-- <el-dialog title="新增账号" :visible.sync="dialogFormVisible">
         <div class="vlt-edit-single">
           <base-form
@@ -259,10 +265,10 @@ export default {
   components: {},
 
   methods: {
-    async init() {
+    async init(val) {
       //初始查询列表的参数
       let data = {
-        page: 0,
+        page: val,
         pageSize: 10,
         param: {
           accountName: "",
@@ -273,7 +279,7 @@ export default {
           roleId: ""
         }
       };
-      let result = await this.$api.getAccount({ data });
+      let result = await this.$api.getAccount({ data: data });
       console.log(result);
       //let arr = result.data.records;
       let arr = result.data.records;
@@ -297,6 +303,13 @@ export default {
         this.operationManageoptions[4].options = resul.data;
       }
     },
+    //
+    handleCurrentChange(val) {
+      this.init(val);
+    },
+    handleSizeChange(size) {
+      this.init();
+    },
     //点击搜索
     async search(param) {
       let obj = this.searchData;
@@ -305,7 +318,7 @@ export default {
       let data = { ...obj, param };
       // console.log(data);
 
-      let result = await this.$api.getAccount({ data });
+      let result = await this.$api.getAccount({ data: data });
       console.log(result);
       this.operationManageTableData = result.data.records;
       //console.log(result);
