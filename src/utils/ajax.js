@@ -115,6 +115,7 @@ const request = (method, url, options, extend) => {
       loading.close();
       return res.data;
     } catch (err) {
+      Message.closeAll();
       Message.error('接口请求错误！')
       loading.close();
     }
