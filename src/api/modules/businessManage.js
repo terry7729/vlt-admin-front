@@ -14,11 +14,11 @@ export default {
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
-  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
   // 获取管理员列表
-  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId', options),
   // 新增仓库
-  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare',options),
+  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare', options),
 
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
@@ -144,8 +144,7 @@ export default {
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称---新建渠道
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
-  // 资金权限修改
-  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //资金参数列表分页查询
@@ -157,8 +156,12 @@ export default {
 
   //渠道业务管理模块
   //业务办理 
-  //保存资金权限信息
+  //保存资金权限信息  
   addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //游戏销售权限
+  queryGameRight: (options = {}) => ajax.post('/sale/queryGameRight', options),
+
+  
   //资源发放
   channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/provide', options),
   //资源发放分页查询
