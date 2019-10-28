@@ -102,7 +102,7 @@ const request = (method, url, options, extend) => {
               res = await axios[method](url, data, responseType);
               break;
             case 'put':
-              res = await axios[method](`${url}?${qs.stringify(options.data)}`);
+              res = await axios[method](`${url}?${qs.stringify(data)}`);
               break;
             case 'delete':
               res = await axios[method](url, {params: data});
