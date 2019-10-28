@@ -28,7 +28,7 @@
                 class="avatar-uploader"
                 action=""
                 :limit="1"
-                accept=".png,.jpg,jpeg"
+                accept=".png,.jpg,.jpeg"
                 :show-file-list="false"
                 :on-remove="handleRemove"
                 :http-request="uploadFileImg">
@@ -36,12 +36,12 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
-            <el-form-item  label="身份证照正面">
+            <el-form-item  label="身份证照背面">
               <el-upload
                 class="avatar-uploader"
                 action=""
                 :limit="1"
-                accept=".png,.jpg,jpeg"
+                accept=".png,.jpg,.jpeg"
                 :show-file-list="false"
                 :on-remove="handleRemove"
                 :http-request="uploadFileImg">
@@ -338,7 +338,9 @@ export default {
       financeData: null, // 账户资金参数
       channelFundData: [], // 人员信息参数
       gameRightList: null, // 销售权限参数
-      imageUrl: ''
+      imageUrl: '',
+      otherId:[],
+      imgId: [],
     };
   },
   watch: {
@@ -371,15 +373,15 @@ export default {
       formData.append('file', files.file);
       formData.append('refId', 1);
       formData.append('flag', true);
-      formData.append('busType', 1);
-      const res = await this.$api.testUpload({
+      formData.append('busType', 9);
+      const res = await this.$api.uploadChannelFiles({
         data: formData,
         onUploadProgress(evt) {
           console.log('上传进度事件:', evt)
         }
       })
       console.log('uploadFile', res);
-      this.imgId = res.data.fileId;
+      this.imgId.push(res.data.fileId);
       let imgUrl = res.data.filePath;
     },
     // 附件上传
@@ -398,7 +400,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameOtherId = res.data.fileId;
+      this.otherId.push(res.data.fileId);
     },
     changeBaseForm(val) {
       console.log('基础信息表单', val)
@@ -635,7 +637,7 @@ export default {
       delete channelData.runField
       delete channelData.address
       const {provinceName, cityName, townName, channelAddress} = this.channelData;
-
+      let fileIds = this.imgId.concat(this.otherId).join(',')
       let data = {
         channelData: {
           ...this.channelData,
@@ -645,7 +647,8 @@ export default {
         cardRuleData: this.betCard, // 投注卡参数
         channelFundData: this.channelFundData[0], // 人员信息参数
         gameRightList: this.gameRightList, // 销售权限参数
-        warehouseGoodsData: this.deviceParam // 发放资源
+        warehouseGoodsData: this.deviceParam, // 发放资源
+        fileIds, // 上传附件
       }
       console.log('提交的参数', data)
       this.$refs.baseForm.validate((val)=>{

@@ -86,7 +86,10 @@ export default [{
         icon: '',
         name: '用户列表',
         url: 'userList',
-
+      }, {
+        icon: '',
+        name: '用户设置',
+        url: 'userSetting',
       }]
     },
     {

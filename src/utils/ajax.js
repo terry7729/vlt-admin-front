@@ -65,9 +65,9 @@ switch (process.env.VUE_APP_MODE) {
  */
 const request = (method, url, options, extend) => {
   // 基本参数
-  // if (storage.get('token')) {
-  //   axios.defaults.headers.common['Authorization'] = storage.get('token');
-  // }
+  if (storage.get('token')) {
+    axios.defaults.headers.common['Authorization'] = storage.get('token');
+  }
   return (async () => {
     try {
       let res;
@@ -90,13 +90,27 @@ const request = (method, url, options, extend) => {
             }
           });
         } else {
-          res = await axios[method](url, method === 'get' ? {
-            params: data,
-            ...responseType
-          } : {
-            ...data,
-            ...responseType
-          });
+          switch (method) {
+            case 'get':
+              res = await axios[method](url, {
+                params: data,
+                ...responseType
+              });
+              break;
+            case 'post':
+              res = await axios[method](url, data, responseType);
+              break;
+            case 'put':
+              res = await axios[method](url, data);
+              break;
+            case 'delete':
+              res = await axios[method](url, {
+                params: data
+              });
+              break;
+            default:
+              res = await axios[method](url, data, responseType);
+          }
         }
       }
       // message提示
@@ -128,6 +142,12 @@ export default {
   },
   upload(url, options) {
     return request('post', url, options, 'upload');
+  },
+  put(url, options) {
+    return request('put', url, options);
+  },
+  delete(url, options) {
+    return request('delete', url, options);
   },
   axios
 }
