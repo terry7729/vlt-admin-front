@@ -55,6 +55,7 @@ export default {
           prop: "insId",
           value: [],
           options: [],
+          disabled: true,
           setProps: {
             label: "text",
             value: "id",
@@ -147,8 +148,9 @@ export default {
         {
           type: "cascader",
           prop: "insId",
-          value: "61",
+          value: "61", // 此处需要获取到用户的信息返回的机构 填写到value中
           title: "所属机构",
+          disabled: true,
           options: [
             {
               value: "1",
@@ -286,7 +288,7 @@ export default {
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationHall/g, 'cooperationHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationMachine/g, 'cooperationMachine'))
 
- dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityNewSellingHall/g, 'newSellingHall'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityNewSellingHall/g, 'newSellingHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/citySellingMachine/g, 'sellingMachine'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityCooperationHall/g, 'cooperationHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityCooperationMachine/g, 'cooperationMachine'))
@@ -327,11 +329,10 @@ export default {
       const data = {};
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
-        console.log('ssss', res);
         if (res && res.code == 0) {
-          console.log("res", res.data);
+          // console.log("res", res.data, self.formData[1]);
+          
           self.$set(self.formData[1], "options", res.data);
-          // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
         } else {
           // self.$message.warning(res.msg)
@@ -357,15 +358,11 @@ export default {
       })(data);
     },
     changeForm(val) {
-      // console.log('派发出来的参数', val)
       this.params = Object.assign(this.params, val);
       // console.log('派发出来的参数',this.params);
       if (this.params.planDate) {
         this.params.planDate = moment(this.params.planDate).format("YYYY");
       }
-
-      // const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
-      // console.log(instArr)
     },
     submit() {
       const self = this;

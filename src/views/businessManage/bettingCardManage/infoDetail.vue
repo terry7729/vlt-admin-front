@@ -34,7 +34,9 @@ export default {
   methods: {
     async initDetail(id) {
       const _this = this;
-      let result = await this.$api.bettingCardInfoDetail(id);
+      let result = await this.$api.bettingCardInfoDetail({
+        data: id
+      });
       console.log(result);
       if (result.code === 0) {
         _this.infoList.forEach(item => {

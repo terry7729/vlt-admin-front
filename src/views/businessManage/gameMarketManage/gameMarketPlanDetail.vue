@@ -121,13 +121,13 @@ export default {
         { title: "文档一.doc", value: "下载", prop: "newCharacter" }
       ],
       ruleData: [
-        { title: "游戏状态", value: "", prop: "miniMoney" },
-        { title: "游戏兑换比例", value: "", prop: "miniNumber" },
+        { title: "游戏状态", value: "", prop: "gameStatus" },
+        { title: "游戏兑换比例", value: "", prop: "returnPrizeRate" },
         { title: "消费模式", value: "", prop: "conPattern" },
         { title: "防沉迷", value: "", prop: "indulgeSwitch" },
         { title: "奖池类型", value: "", prop: "rewardPoolRate" },
         { title: "Jackpot比率", value: "", prop: "jackpotRate" },
-        { title: "奖池比率", value: "", prop: "miniNumber" },
+        { title: "奖池比率", value: "", prop: "rewardPoolRate" },
         { title: "单次时长", value: "", prop: "dayLimitTime" },
         { title: "单日限额", value: "", prop: "dayLimitPrize" },
         { title: "游戏规则介绍", value: "", prop: "ruleDesc" }
@@ -162,7 +162,13 @@ export default {
         { title: "最低开机率", value: "", prop: "minStartRate" },
         { title: "最低在线数量", value: "", prop: "minOnlineNum" },
         { title: "最高销量", value: "", prop: "maxSale" }
-      ]
+      ],
+      formatGameStatus:['存储', '试玩', '上市', '变更', '退市'],
+      formatGameType: ['概率型','奖组型'],
+      formatPoolRate:['无奖池','单奖池', '多奖池'],
+      formatPlanStatus: ['审批中', '审批拒绝', '待上市', '已上市'],
+      formatConPattern: ['测试账户', '试玩积分'],
+      formatIndulgeSwitch: ['启用','禁用']
       // customData:[
       //   {title:'奖级设置',value:'',prop:'serveAddress'}
       // ],
@@ -186,24 +192,29 @@ export default {
       };
       this.getGameStoreInfo(data);
     }
+    this.getInsData();
   },
   methods: {
     getGameStoreInfo(data) {
       const self = this;
       (async data => {
-        let res = await self.$api.getMarketPlanDetal({ data });
-        console.log(res);
+        let res = await self.$api.getMarketPlanDetail({ data });
+        // console.log(res);
         if (res && res.code == 0) {
           if (res.data.gameInfoVo != null) {
-            this.eachList(this.planData, res.data.gameListPlanVo);
-            this.eachList(this.gameData, res.data.gameInfoVo);
-            this.eachList(this.developerInfo, res.data.developerInfo);
-            this.eachList(this.ruleData, res.data.gameRuleVo);
-            this.eachList(this.betData, res.data.gameBettingRuleVo);
-            this.eachList(this.fundsData, res.data.gameFundRuleVo);
-            this.eachList(this.riskData, res.data.gameRiskRuleVo);
-            this.eachList(this.softwareInfo, res.data.softwareInfo);
-             this.fileList = res.data.fileList
+            self.eachList(self.planData, res.data.gameListPlanVo);
+            self.eachList(self.gameData, res.data.gameInfoVo);
+            self.eachList(self.developerInfo, res.data.developerInfo);
+            self.eachList(self.ruleData, res.data.gameRuleVo);
+            self.eachList(self.betData, res.data.gameBettingRuleVo);
+            self.eachList(self.fundsData, res.data.gameFundRuleVo);
+            self.eachList(self.riskData, res.data.gameRiskRuleVo);
+            self.eachList(self.softwareInfo, res.data.softwareInfo);
+            self.fileList = res.data.fileList
+            
+            // console.log(self.ruleData);
+            this.insetData (self.ruleData, '游戏状态', res.data.gameInfoVo, 'gameStatus');
+            this.insetData(self.ruleData, '游戏兑换比例', res.data.gameFundRuleVo, 'returnPrizeRate')
           } else {
             self.$message.warning(res.data.msg);
           }
@@ -214,15 +225,51 @@ export default {
     },
     handleSelectionChange() {},
     eachList(arr, obj) {
+      const _this = this;
       arr.forEach(item => {
         item.value = obj[item.prop];
-        if (item.prop == "jackpotType") {
-          // item.value = this.formatJackpotType(obj[item.prop])
+        if (item.prop == "gameStatus") {
+          item.value = _this.formatGameStatus[parseInt(obj[item.prop]) - 1]
+        }else if (item.prop == 'gameType') {
+          item.value = _this.formatGameType[parseInt(obj[item.prop]) - 1];
+        } else if (item.prop == 'jackpotType') {
+          item.value = _this.formatPoolRate[parseInt(obj[item.prop]) - 1];
+        } else if (item.prop == 'gameListStatus') {
+          item.value = _this.formatPlanStatus[parseInt(obj[item.prop]) - 1];
+        } else if (item.prop == 'conPattern') {
+          item.value = _this.formatConPattern[parseInt(obj[item.prop]) - 1];
+        } else if (item.prop == 'indulgeSwitch') {
+          item.value = _this.formatIndulgeSwitch[parseInt(obj[item.prop]) - 1];
         }
+        // 
       });
     },
     toVersion () {
       console.log('跳转到版本记录');
+    },
+    //需要 把区域的数据和渠道的机构的数据遍历配置 然后 替换区域数字 
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.QueryInsTree({data})
+				if(res && res.code == 0) {
+          // console.log('res', res.data)
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    insetData (list, str, dataObj, getData) {
+      let key = Object.keys(dataObj)
+      list.forEach(item => {
+        if (item.title == str) {
+          item.value = dataObj[getData]
+        }
+        if (item.prop == "gameStatus" && dataObj[getData]!= null) {
+          item.value = this.formatGameStatus[parseInt(dataObj[getData]) - 1]
+        }
+      }) 
     }
   }
 };

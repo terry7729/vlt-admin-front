@@ -20,8 +20,8 @@ export default {
         { title: "设备型号", value: "", prop: "deviceModel" },
         { title: "设备编码", value: "", prop: "deviceCode" },
         { title: "存放位置", value: "", prop: "nameX" },
-        { title: "使用状态", value: "", prop: "useStatus" },
-        { title: "设备状态", value: "", prop: "status" },
+        { title: "使用状态", value: "", prop: "useStatusName" },
+        { title: "设备状态", value: "", prop: "statusName" },
         { title: "入库时间", value: "", prop: "warehouseEntryTime" }
       ],
     };

@@ -67,6 +67,8 @@ export default {
   cardGenerationDetail: (options = {}) => ajax.post('/bettingCardGeneration/detail', options),
   // 投注卡生成列表分页查询
   cardGenerationList: (options = {}) => ajax.post('/bettingCardGeneration/list', options),
+  // 根据投注卡生成ID查询投注卡信息列表
+  bettingCardList: (options = {}) => ajax.post('/bettingCardGeneration/bettingCardList', options),
 
   // 投注卡信息列表分页查询
   bettingCardInfoList: (options = {}) => ajax.post('/bettingCardInfo/list', options),
@@ -74,6 +76,8 @@ export default {
   bettingCardInfoDetail: (options = {}) => ajax.post('/bettingCardInfo/detail', options),
   // 投注卡信息注销
   deleteBettingCardInfo: (options = {}) => ajax.post('/bettingCardInfo/delete', options),
+  // 投注卡信息导出Excel 
+  bettingCardExportExcel: (options = {}) => ajax.post('/bettingCardGeneration/exportExcel', options),
 
   // 投注卡管理
   getBettingRulesList: (options = {}) => ajax.post('/bettingCardRechargeRules/list', options),
@@ -106,6 +110,8 @@ export default {
   exportProvinceDevelopPlanList : (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
   // 导出年度发展计划汇总市级列表信息
   exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
+
+  // 查询当前登录用户的机构信息
 
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
