@@ -146,8 +146,7 @@ export default {
 
 // 
 
- async exportExcel(val) {
-        // console.log(val);
+    async exportExcel(val) {
       if (val == 'now') {
         console.log('导出当前数据');
         // planDate 和机构 insId 都是通过筛选出来的 默认 为当前年份和机构 后续更改 

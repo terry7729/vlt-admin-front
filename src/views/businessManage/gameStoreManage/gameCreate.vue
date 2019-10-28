@@ -37,7 +37,7 @@
               class="gameIcon-uploader"
               action=""
               :limit="1"
-              accept=".png,.jpg,jpeg"
+              accept=".png,.jpg,.jpeg"
               :show-file-list="false"
               :on-remove="handleRemove"
               :http-request="uploadFileImg">
@@ -98,7 +98,7 @@ export default {
         {title: '游戏名称', type: 'input',  prop: 'gameName', value: ''},
         {title: '游戏编码', type: 'input',  prop: 'gameCode', value: ''},
         {title: '游戏类型', type: 'select',  prop: 'gameType', value: '', options:[{label: '概率型',value: 1},{label: '奖组型',value: 2},]},
-        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: 1},{label: '单奖池',value: 3},{label: '多奖池',value: 2}]},
+        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: 1},{label: '单奖池',value: 2},{label: '多奖池',value: 3}]},
         {title: '游戏简介', type: 'textarea',  prop: 'gameDesc', value: ''},
         {title: '版权归属', type: 'input',  prop: 'gameGenlot', value: ''},
       ],
@@ -128,9 +128,9 @@ export default {
       },
       active: 0,
       fileIds: [],
-      gameBagId: '', // 游戏包上传id
-      imgId: '', // 图标上传id
-      gameOtherId: '', // 附件上传id
+      gameBagId: [], // 游戏包上传id
+      imgId: [], // 图标上传id
+      gameOtherId: [], // 附件上传id
       imageUrl: '',
       params: {
         softwareInfoVo: '',
@@ -157,7 +157,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameBagId = res.data.fileId;
+      this.gameBagId.push(res.data.fileId);
     },
     // 图标上传
     async uploadFileImg(files) {
@@ -173,7 +173,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId = res.data.fileId;
+      this.imgId.push(res.data.fileId);
       let imgUrl = res.data.filePath;
     },
     // 附件上传
@@ -192,7 +192,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameOtherId = res.data.fileId;
+      this.gameOtherId.push(res.data.fileId);
     },
     createGameStore(data) {
       const self = this;
@@ -239,7 +239,7 @@ export default {
     },
     submit(){
       const self = this;
-      this.params.fileIds = `${this.gameBagId},${this.imgId},${this.gameOtherId}`;
+      this.params.fileIds = this.gameBagId.concat(this.imgId,this.gameOtherId).join(',');
       console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)

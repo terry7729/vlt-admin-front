@@ -389,7 +389,7 @@ export default {
         if (res && res.code == 0) {
           self.eachList(self.baseInfo,  res.data.gameInfoVo)
           self.eachList(self.developerInfo,  res.data.developerInfo)
-          self.eachList(self.editionInfo,  res.data.tSoftwareInfo)
+          self.eachList(self.editionInfo,  res.data.softwareInfo)
           this.appendixInfo = res.data.fileList;
           self.eachList(self.appendixInfo,  res.data.fileList)
         } else {

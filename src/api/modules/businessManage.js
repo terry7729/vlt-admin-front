@@ -14,11 +14,11 @@ export default {
   //仓库详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取所属机构列表
-  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree',options),
+  getInsList: (options = {}) => ajax.post('/ins/queryInsAndRegionTree', options),
   // 获取管理员列表
-  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId',options),
+  getAdminList: (options = {}) => ajax.post('/dept/findDeptUserByInsId', options),
   // 新增仓库
-  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare',options),
+  createWare: (options = {}) => ajax.post('/channelResManage/warehouse/createWare', options),
 
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
@@ -63,6 +63,8 @@ export default {
   cardGenerationDetail: (options = {}) => ajax.post('/bettingCardGeneration/detail', options),
   // 投注卡生成列表分页查询
   cardGenerationList: (options = {}) => ajax.post('/bettingCardGeneration/list', options),
+  // 根据投注卡生成ID查询投注卡信息列表
+  bettingCardList: (options = {}) => ajax.post('/bettingCardGeneration/bettingCardList', options),
 
   // 投注卡信息列表分页查询
   bettingCardInfoList: (options = {}) => ajax.post('/bettingCardInfo/list', options),
@@ -70,6 +72,8 @@ export default {
   bettingCardInfoDetail: (options = {}) => ajax.post('/bettingCardInfo/detail', options),
   // 投注卡信息注销
   deleteBettingCardInfo: (options = {}) => ajax.post('/bettingCardInfo/delete', options),
+  // 投注卡信息导出Excel 
+  bettingCardExportExcel: (options = {}) => ajax.post('/bettingCardGeneration/exportExcel', options),
 
   // 投注卡管理
   getBettingRulesList: (options = {}) => ajax.post('/bettingCardRechargeRules/list', options),
@@ -119,6 +123,8 @@ export default {
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
   // 游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
+  // 导出游戏列表
+  exportGameExcel: (options = {}) => ajax.post('/game/exportExcel', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
   // 上市游戏列表
@@ -149,13 +155,14 @@ export default {
   // 渠道详情
   getChannelDetail: (options = {}) => ajax.post('/channel/queryDetailById', options),
   // 渠道附件上传
-  uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
-
+  uploadChannelFiles: (options = {}) => ajax.upload('/fileUpload/upload', options),
+  // 渠道列表导出
+  exportChannelExcel: (options = {}) => ajax.post('/channel/exportExcel', options),
+  
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
-  // 资金权限修改
-  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   //资金参数列表分页查询
@@ -167,8 +174,12 @@ export default {
 
   //渠道业务管理模块
   //业务办理 
-  //保存资金权限信息
-  addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
+  //保存资金权限信息  
+  addFundRight: (options = {}) => ajax.put('/fund/addFundRight', options),
+  //游戏销售权限
+  queryGameRight: (options = {}) => ajax.post('/sale/queryGameRight', options),
+
+
   //资源发放
   channelResProvide: (options = {}) => ajax.post('/channelResProvide/channelResProvide/provide', options),
   //资源发放分页查询

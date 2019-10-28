@@ -23,12 +23,14 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
+    //axios.defaults.baseURL = 'http://10.7.0.187:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
-    axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
+    // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
 }
 /**
  * @description http请求
@@ -65,13 +67,24 @@ const request = (method, url, options, extend) => {
             }
           });
         } else {
-          if (method === 'get') {
-            res = await axios[method](url, {
-              params: data,
-              ...responseType
-            });
-          } else {
-            res = await axios[method](url, data, responseType);
+          switch (method) {
+            case 'get': 
+              res = await axios[method](url, {
+                params: data,
+                ...responseType
+              });
+              break;
+            case 'post': 
+              res = await axios[method](url, data, responseType);
+              break;
+            case 'put':
+              res = await axios[method](url, data);
+              break;
+            case 'delete':
+              res = await axios[method](url, {params: data});
+              break;
+            default:
+              res = await axios[method](url, data, responseType);
           }
         }
       }
@@ -104,6 +117,12 @@ export default {
   },
   upload(url, options) {
     return request('post', url, options, 'upload');
+  },
+  put(url, options) {
+    return request('put', url, options);
+  },
+  delete(url, options) {
+    return request('delete', url, options);
   },
   axios
 }

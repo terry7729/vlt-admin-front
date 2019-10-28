@@ -212,6 +212,8 @@ export default {
         cDate: time,
         cUserId: "1",
         cUserName: "1",
+        createBy: "1",
+        updateBy: "1",
         checkStatus: 0,
         entryWarehouseId: "1",
         entryWarehouseName: "1",
@@ -232,11 +234,11 @@ export default {
         totalMoney: totalMoney,
         warehouseGoodsInfoList: self.tableData
       };
-      console.log(data);
+
       let res = await this.$api.channelResApply({ data });
-      console.log(res);
-      if (res.code === 0) {
-        alert(res.msg);
+
+      if (res && res.code === 0) {
+        self.$message.success("提交成功");
       }
     },
 
