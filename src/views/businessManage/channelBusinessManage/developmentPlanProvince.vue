@@ -1,14 +1,21 @@
 <template>
-  <div class="vlt-card">
+  <div class="vlt-card plan-list">
     <search-bar
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="getDatas.total"
       labelWidth="80px"
     >
       <control-bar slot="extend-bar" @select="select" :options="controlOptions"></control-bar>
     </search-bar>
+    <!-- <el-dropdown @command="exportExcel" class="plan-export-btn">
+      <el-button  size="small"> <i class="el-icon-s-promotion"></i>导出</el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command ="now">当页数据</el-dropdown-item>
+        <el-dropdown-item command ="all">全部数据</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown> -->
     <el-table :data="tableData" border>
       <el-table-column label="序号" fixed type="index" width="60px"></el-table-column>
       <el-table-column label="所属机构" prop="insName" min-width="120px"></el-table-column>
@@ -27,6 +34,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <table-paging
+      position="right"
+      :total="getDatas.total"
+      :currentPage="getDatas.current"
+      :pageSize="getDatas.size"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange">
+    </table-paging>
     <approval-dialog :showDia="approvalData"></approval-dialog>
   </div>
 </template>
@@ -58,7 +73,8 @@ export default {
             }]},
       ],
       controlOptions: [
-        { name: "导出", type: "", icon: "s-promotion" } // type为按钮的五种颜色， icon为具体的图标
+         {name: '导出当页数据', type: 'primary', icon: 's-promotion'}, 
+        {name: '导出全部数据', type: '', icon: 's-promotion'}
       ],
       tableData: [
         {
@@ -83,7 +99,9 @@ export default {
       status: ['计划中','已通过'],
       approvalData: {
         showApproval: false
-      }
+      },
+      outData: {},
+      getDatas: {}
     };
   },
   created() {
@@ -100,19 +118,27 @@ export default {
        if(form.planDate) {
         form.planDate = moment(form.planDate).format("YYYY")
       }
+  
       this.options.param = Object.assign(this.options.param, form);
       this.options.param.insId = '60';
-       console.log(this.options);
+      //  console.log(this.options);
       this.getProvincePlanList(this.options);
     },
-    select() {},
+    select(val) {
+      if (val.name == '导出当页数据') {
+        this.exportExcel('now');
+      } else if (val.name == '导出全部数据') {
+        this.exportExcel('all');
+      }
+    },
     getProvincePlanList(data) {
       const self = this;
       (async data => {
         console.log(data);
         let res = await self.$api.getProvincePlanList({ data });
-        console.log("ssssss", res);
+        // console.log("ssssss", res);
         if (res && res.code == 0) {
+            self.getDatas = res.data;
           if (res.data.records && res.data.records.length > 0) {
             console.log(res);
               self.tableData = res.data.records.map(item => {
@@ -130,11 +156,54 @@ export default {
     // 导出年度发展计划 省级信息
 
 // exportProvinceDevelopPlanList
+  // 导出年度发展计划信息
+    async exportExcel(val) {
+        // console.log(val);
+      if (val == 'now') {
+        console.log('导出当前数据');
+        // planDate 和机构 insId 都是通过筛选出来的 默认 为当前页
+        this.outData = {
+          page: this.getDatas.current,
+          pageSize: this.getDatas.size,
+          param: {
+            all: false,
+            insId: "60",
+            insLevel: "1",
+            planDate: '2019'
+          }
+        }
+      } else if (val == 'all'){
+        this.outData = {
+          page: 0,
+          pageSize: 0,
+          param: {
+            all: true,
+            insId: "60",
+            insLevel: "1" ,
+            planDate: '2019'
+          }
+        }
+      }
 
-
-
-
-
+      const data = JSON.parse(JSON.stringify(this.outData));
+      let result = await this.$api.exportProvinceDevelopPlanList({
+        data,
+        responseType: 'blob'
+      });
+      var blob = new Blob([result], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "年度发展计划列表.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      //console.log("res", result);
+    },
     detail (row, name) {
       this.$router.push({
         name: name,
@@ -149,7 +218,17 @@ export default {
         showApproval: true,
         id: row.id
       } 
-    }
+    },
+    handleSizeChange(val) {
+      this.options.pageSize = val
+      this.getDevelopPlanList(this.options)
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.options.page = val
+      this.getDevelopPlanList(this.options)
+      console.log(`当前页: ${val}`);
+    },
   },
   components: {
     'approval-dialog': approvalDialog

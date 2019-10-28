@@ -103,6 +103,8 @@ export default {
   // 导出年度发展计划汇总市级列表信息
   exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
 
+  // 查询当前登录用户的机构信息
+
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
   // 查询年度开展计划汇总市级信息

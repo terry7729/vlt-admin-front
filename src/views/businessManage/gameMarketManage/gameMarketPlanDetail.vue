@@ -191,7 +191,7 @@ export default {
     getGameStoreInfo(data) {
       const self = this;
       (async data => {
-        let res = await self.$api.getMarketPlanDetal({ data });
+        let res = await self.$api.getMarketPlanDetail({ data });
         console.log(res);
         if (res && res.code == 0) {
           if (res.data.gameInfoVo != null) {
