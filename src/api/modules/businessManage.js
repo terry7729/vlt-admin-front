@@ -25,13 +25,17 @@ export default {
   //获取基本信息类型管理列表
   getGoosType: (options = {}) => ajax.post('/goodsType/pageList', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTrees: (options = {}) => ajax.get('/goodsModel/ModelTree', options),
+  getModelTrees: (options = {}) => ajax.get('/goodsModel/goodsNameTree', options),
   // 获取类型管理查看详情
   getDetail: (options = {}) => ajax.get('/goodsType/details', options),
   //类型管理状态修改
   statusUpdate: (options = {}) => ajax.post('/goodsType/statusUpdate', options),
   //类型管理类型新增
   typeCreate: (options = {}) => ajax.post('/goodsType/create', options),
+  //类型管理-图片上传
+  uploadGoodsType: (options = {}) => ajax.upload('/goodsType/imgFileUpload', options),
+  // 类型管理修改
+  modification: (options = {}) => ajax.post('/goodsType/update', options),
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
