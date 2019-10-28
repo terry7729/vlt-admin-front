@@ -14,7 +14,7 @@
               node-key="id"
               @node-click="getnowNodeifo"
               @check-change="getCheckifo"
-              default-expand-all
+              :default-expand-all="false"
               ref="attrList"
               :expand-on-click-node="false"
             >
@@ -363,7 +363,7 @@ export default {
       console.log(node, date);
       let data = {
         insId: date.id,
-        status: 1
+        status: 0
       };
       let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
       console.log(reslt);
@@ -385,29 +385,8 @@ export default {
     OrganizationChangeForm(val) {
       //机构表单对象
       console.log(val);
-      // if(val.regionName !=""){
-      //   val.regionCode = val.regionName
-      //    Object.assign(this.OrganizationParams, val);
-      // }else{
-        console.log(val);
       Object.assign(this.OrganizationParams, val);
-      // }
-      // if (this.addOrChange != "更改机构信息") {
-      //   if (val.regionName.length > 1) {
-      //     let code = val.regionName[val.regionName.length - 1];
-      //     val.regionCode = code;
-      //     Object.assign(this.OrganizationParams, val);
-      //   } else {
 
-      //     Object.assign(this.OrganizationParams, val);
-      //   }
-      // } else {
-      // val.regionCode = val.regionName;
-      // this.$set(this.OrganizationAdd[5], 'value', val.regionName)
-      // debugger;
-      // this.OrganizationAdd[5].value = val.regionName;
-
-      // }
     },
     pageSizeChange(val) {
       //每页显示条数
@@ -422,7 +401,9 @@ export default {
       this.$alert(val, "温馨提示！", {
         confirmButtonText: "确定",
         callback: action => {
+         
           close();
+           this.val ={}
         }
       });
     },
@@ -436,7 +417,7 @@ export default {
       let resl = await this.$api.QueryDeptInfoPage({ data }); //部门分页查询
       console.log("部门分页查询1", resl);
       let obj = JSON.parse(JSON.stringify(resl.data.records));
-      console.log("部门分页查询2", obj);
+      // console.log("部门分页查询2", obj);
       if (resl.code === 0) {
         let arr2 = resl.data.records;
         obj.forEach(item => {
@@ -462,22 +443,26 @@ export default {
           this.DepartmenParams = {}; //表单对象重置为空
         }
       } else if (this.addOrChange === "添加部门") {
-        this.DepartmenParams.created = "添加部门";
-        let data = JSON.parse(JSON.stringify(this.DepartmenParams));
-        data.insId = this.val.id;
-        console.log(data);
-        if (data.parentId.length === 0) {
-          data.parentId = "";
-        }
-        data.status = Number(data.status);
+        if(Object.keys(this.val).length != 0){
+            this.DepartmenParams.created = "添加部门";
+            let data = JSON.parse(JSON.stringify(this.DepartmenParams));
+            data.insId = this.val.id;
+            console.log(data);
+            if (data.parentId.length === 0) {
+              data.parentId = "";
+            }
+            data.status = Number(data.status);
 
-        let reslt = await this.$api.AddDeptInfo({ data }); //添加部门
-        console.log(reslt);
-        if (reslt.code === 0) {
-          this.subsidiaryOrgan();
-          this.dialogFormVisible = false;
-          this.$refs.DepartmentBaseForm.resetForm();
-          this.DepartmenParams = {};
+            let reslt = await this.$api.AddDeptInfo({ data }); //添加部门
+            console.log(reslt);
+            if (reslt.code === 0) {
+              this.subsidiaryOrgan();
+              this.dialogFormVisible = false;
+              this.$refs.DepartmentBaseForm.resetForm();
+              this.DepartmenParams = {};
+            }
+        }else{
+          this.open('请选择要添加部门的机构！')
         }
       }
     },
@@ -517,7 +502,7 @@ export default {
         if (this.slelectifo != "") {
           this.addOrChange = "添加部门";
           this.dialogFormVisible = true;
-          let res = await this.$api.FindDeptTreeRoots(this.val.id); //部门树查询
+          let res = await this.$api.FindDeptTreeRoots({data:this.val.id}); //部门树查询
           console.log("部门树查询", res);
           if (res.code === 0) {
             this.AddDepartment[0].options = res.data;
@@ -533,6 +518,7 @@ export default {
 
     changeOrganizationIfo() {
       //更改机构信息
+        console.log(this.val)
       if (Object.keys(this.val).length === 0) {
         this.open("请选择要添加部门的机构");
       } else if (this.val.status != 1) {
@@ -548,14 +534,14 @@ export default {
       this.addOrChange = "更改部门信息";
       this.departmenIfo = val;
       let arr = Object.keys(val);
-      let len = this.AddDepartment;
-      for (var i = 0; i < arr.length; i++) {
-        for (var j = 0; j < len.length; j++) {
-          if (arr[i] === len[j].prop) {
-            len[j].value = val[arr[i]];
+      let changeDepartment = this.AddDepartment;
+      changeDepartment.forEach(item=>{
+        arr.forEach(i=>{
+          if(item.prop === i){
+            item.value = val[i]
           }
-        }
-      }
+        })
+      })
     },
 
     async getnowNodeifo(val, s) {
@@ -563,7 +549,7 @@ export default {
       console.log(val, s);
       try {
         this.val = val;
-        let reslt = await this.$api.QueryInsInfo(val.id); //查询机构详情
+        let reslt = await this.$api.QueryInsInfo({data:val.id}); //查询机构详情
         console.log("查询机构详情", reslt);
         if (reslt.code === 0) {
           let arr = Object.entries(reslt.data);

@@ -59,23 +59,24 @@ export default {
   components: {},
   methods: {
     handleClose () {
-      console.log(1);
+      // this.$emit('hideDia')
+      this.dialogVisible = false
     },
     changeForm (val) {
       Object.assign(this.params, val)
     },
     submit () {
       let self = this;
-      // console.log(this.params);
       let data = this.params;
       console.log('this.data', data);
       (async (data)=>{
 				let res = await self.$api.updateDevelopPlanApproval({data})
 				if(res && res.code == 0) {
           self.$message.success('提交成功')
-          this.$emit('hideDia')
+
+         self.handleClose ();
 				} else {
-          // self.$message.warning(res.msg)
+          self.$message.warning(res.msg)
         }
       })(data)
     }

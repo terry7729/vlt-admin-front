@@ -23,16 +23,15 @@ export default {
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
-  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
+  getGoosType: (options = {}) => ajax.post('/goodsType/pageList', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
-  getModelTree: (options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree', options),
+  getModelTrees: (options = {}) => ajax.get('/goodsModel/ModelTree', options),
   // 获取类型管理查看详情
-  getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
+  getDetail: (options = {}) => ajax.get('/goodsType/details', options),
   //类型管理状态修改
-  statusUpdate: (options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/', options),
+  statusUpdate: (options = {}) => ajax.post('/goodsType/statusUpdate', options),
   //类型管理类型新增
-  typeCreate: (options = {}) => ajax.post('/goodsType/goodsType/create', options),
+  typeCreate: (options = {}) => ajax.post('/goodsType/create', options),
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
@@ -41,8 +40,6 @@ export default {
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
   outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
-
-  statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
   // 设备管理
   // 设备分页查询列表
@@ -122,12 +119,15 @@ export default {
   queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 上市记录查询列表
   queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
-
+  // 查看游戏上市计划详情 
+  getMarketPlanDetal: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
 
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
+  // 游戏变更计划分页查询列表
+  getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
   // 新建渠道

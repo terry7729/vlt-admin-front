@@ -46,22 +46,18 @@ export default {
     "oplBy": "1",      //出库操作人id
     "oplType": 2,    
     "warehouseId": 10,
-  }
-
+  },
+  documentNumber: this.$route.query.documentNumber
  }
  },
  components: {
  },
  created(){
-   this.getInfoList()
+   this.getInfoList(this.documentNumber)
  },
  methods: {
-  async getInfoList(){
-    const data = {
-      documentNumber: this.$route.query.documentNumber
-    }
-    console.log(data)
-    let res = await this.$api.getOutPutDetail(data.documentNumber)
+  async getInfoList(data){
+    let res = await this.$api.getOutPutDetail({data})
     console.log(res )
     if(res && res.code == 0){
       this.infoList.forEach(item =>{
