@@ -38,7 +38,7 @@
         <div class="submit-wrap">
           <el-row class="vlt-edit-btn">
             <el-button type="primary" size="medium" @click="submit">提交并保存</el-button>
-            <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+            <el-button size="medium" @click="cancel">取消</el-button>
           </el-row>
         </div>
       </el-tab-pane>
@@ -69,16 +69,16 @@ export default {
     async submit() {
       let time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
       let data = {
-        ...this.form,
-        createBy: "11",
-        createTime: time,
-        fid: 1,
-        updateBy: "12",
-        updateTime: time
+        ...this.form
       };
-      console.log(data);
       let res = await this.$api.addFundRight({ data });
-      console.log(res);
+      if (res.code === 0) {
+        alert(res.data.msg);
+        this.$router.push({ path: "channelDeal" });
+      }
+    },
+    cancel() {
+      this.$router.push({ path: "channelDeal" });
     },
     changeForm(val) {
       this.form = val;

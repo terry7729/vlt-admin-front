@@ -48,7 +48,7 @@
                   <el-input
                     type="textarea"
                     :rows="2"
-                    v-model="scope.row.goodsCode"
+                    v-model="scope.row.goodsSerialNumber"
                     placeholder="请输入序列号"
                   ></el-input>
                 </template>
@@ -108,7 +108,7 @@
         <div class="submit-wrap">
           <el-row class="vlt-edit-btn">
             <el-button type="primary" size="medium" @click="submit">提交并保存</el-button>
-            <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+            <el-button size="medium" @click="cancel">取消</el-button>
           </el-row>
         </div>
       </el-tab-pane>
@@ -161,7 +161,9 @@ export default {
           id: "",
           goodsName: "",
           goodsModel: "",
-          goodsCode: "",
+          goodCode: "",
+          goodsType: "",
+          goodsSerialNumber: "",
           num: "",
           unitPrice: "",
           amount: "",
@@ -209,6 +211,7 @@ export default {
       let time = moment(self.form.preReceivDate).format("YYYY-MM-DD HH:mm:ss");
       let data = {
         attachId: "1",
+        ownChannelId: "",
         cDate: time,
         cUserId: "1",
         cUserName: "1",
@@ -236,10 +239,13 @@ export default {
       };
 
       let res = await this.$api.channelResApply({ data });
-
       if (res && res.code === 0) {
-        self.$message.success("提交成功");
+        alert("提交成功");
+        this.$router.push({ path: "channelDeal" });
       }
+    },
+    cancel() {
+      this.$router.push({ path: "channelDeal" });
     },
 
     changeForm(val) {
@@ -260,7 +266,9 @@ export default {
         id: "",
         goodsName: "",
         goodsModel: "",
-        goodsCode: "",
+        goodCode: "",
+        goodsSerialNumber: "",
+        goodsType: "",
         num: "",
         unitPrice: "",
         amount: "",

@@ -7,7 +7,9 @@
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 export default {
+
   name: "rolueifo",
  async created() {
     let id = this.$route.query.id
@@ -20,7 +22,12 @@ export default {
     for(var i = 0 ; i < len.length ; i++ ){
       for(var j = 0 ; j< arr.length ; j++){
         if(arr[j]===len[i].prop){
-          len[i].value = reslt.data[arr[j]]
+          if(arr[j] === 'createTime' || arr[j] === 'updateTime'){
+           len[i].value = moment(reslt.data[arr[j]]).format("YYYY-MM-DD HH:mm:ss")
+          }else{
+            len[i].value = reslt.data[arr[j]]
+          }
+          
         }
       }
     }

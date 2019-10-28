@@ -39,7 +39,7 @@ export default {
   //出入库
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
-  outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
+  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExcel', options),
 
   // 设备管理
   // 设备分页查询列表

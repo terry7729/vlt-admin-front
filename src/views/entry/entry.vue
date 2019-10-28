@@ -3,7 +3,9 @@
     <div class="entry-hd">
       <div class="hd-logo">
         <span class="ct">
-          <i class="iconfont icon-B-fulicaipiao"></i>
+          <span class="logo-box">
+            <i class="iconfont icon-B-fulicaipiao"></i>
+          </span>
           <strong class="name">{{title}}</strong>
         </span>
       </div>
@@ -79,7 +81,7 @@ export default {
   name: 'entry',
   data() {
     return {
-      title: '中国福利彩票'
+      title: '视频彩票运营管理平台'
     }
   },
   computed: {

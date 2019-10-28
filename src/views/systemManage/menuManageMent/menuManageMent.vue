@@ -263,6 +263,7 @@ export default {
     cancel() {
       //关闭弹窗
       this.slelectifo = "";
+       this.$refs.baseForm.resetForm();
       this.dialogFormVisible = false;
       this.dialogFormVisible2 = false;
     },
@@ -271,15 +272,16 @@ async submitAdd() {
         // console.log(this.parent)
         this.AddInsInfoParms.created = "添加子节点";
         let addfrom = JSON.parse(JSON.stringify(this.AddInsInfoParms));
-        if (addfrom.isShow === true) {
+        console.log(addfrom)
+        if (addfrom.isShow) {
           addfrom.isShow = 0;
         } else {
           addfrom.isShow = 1;
         }
-        if (addfrom.isSensitivity === false) {
-          addfrom.isSensitivity = 1;
-        } else {
+        if (addfrom.isSensitivity) {
           addfrom.isSensitivity = 0;
+        } else {
+          addfrom.isSensitivity =1;
         } 
             let data = {
               parentId: this.nowNodeObject.id,
@@ -323,6 +325,7 @@ async submitModifine(val) {
       console.log('更改机构信息',reslt)
           if (reslt.code === 0) {
             this.AddInsInfoParms = {}
+            // debugger
             this.$refs.baseForm.resetForm();
             this.slelectifo=""
             this.init();

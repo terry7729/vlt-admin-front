@@ -56,10 +56,10 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
-          title: "区域",
-          placeholder: "请选择省",
+          title: "省份",
+          placeholder: "请选择",
           options: [
             {
               label: "选项1",
@@ -73,10 +73,10 @@ export default {
         },
         {
           type: "select",
-          prop: "selectNam1",
+          prop: "cityId",
           value: "",
-          title: "",
-          placeholder: "请选择市",
+          title: "城市",
+          placeholder: "请选择",
           options: [
             {
               label: "选项1",
@@ -90,10 +90,10 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName2",
+          prop: "hallNo",
           value: "",
-          title: "",
-          placeholder: "请选择销售厅",
+          title: "销售厅",
+          placeholder: "请选择",
           options: [
             {
               label: "选项1",
@@ -123,8 +123,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -152,13 +153,10 @@ export default {
   },
   methods: {
     //获取中央交易数据列表
-    async getAreaDeal() {
+    async getAreaDeal(options) {
       const self = this;
       const res = await self.$api.getAreaDeal({
-        data: {
-          pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+        data:options
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
@@ -166,30 +164,21 @@ export default {
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit = pageSize;
-      this.getAreaDeal();
+      this.listQuery.pageSize = pageSize;
+      this.getAreaDeal(this.listQuery);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page = currentPage;
-      this.getAreaDeal();
+      this.listQuery.pageNum = currentPage;
+      this.getAreaDeal(this.listQuery);
     },
     search(form) {
       console.log("search", form);
-    },
-    back() {
-      if (this.$route.query.noGoBack) {
-        this.$router.push({ path: "/dashboard" });
-      } else {
-        this.$router.go(-1);
+      this.listQuery.param={
+        provinceId:form.provinceId,
+        cityId:form.cityId,
+        hallNo:form.hallNo
       }
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
+      this.getAreaDeal(this.listQuery)
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -268,8 +257,8 @@ export default {
     }
   },
   mounted() {
-    this.getAreaDeal();
-    this.showcity();
+    this.getAreaDeal(this.listQuery);
+    // this.showcity();
   }
 };
 </script>

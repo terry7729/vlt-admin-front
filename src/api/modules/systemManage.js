@@ -58,21 +58,21 @@ export default {
 
   //用户管理
   //用户新增
-  userRegist: (options = {}) => ajax.post('/user/regist', options),
+  userRegist: (options = {}) => ajax.post('/vlt/user/regist', options),
   //用户搜索
-  userPage: (options = {}) => ajax.post('/user/query/page', options),
+  userPage: (options = {}) => ajax.post('/vlt/user/query/page', options),
   //用户详情
-  getUserDestils: (options = {}) => ajax.get("/user/query", options),
+  getUserDestils: (options = {}) => ajax.get("/vlt/user/query", options),
   //密码重置
-  restPassWord: (options = {}) => ajax.post("/user/resetPass", options),
-  //用户冻结
-  userDisable: (options = {}) => ajax.post('/user/disable', options),
-  //用户注销
-  userCanceel: (options = {}) => ajax.post('/user/cancel', options),
-  //用户启用
-  userEnable: (options = {}) => ajax.post('/user/enable', options),
+  restPassWord: (options = {}) => ajax.post("/vlt/user/resetPass", options),
   //所有用户信息
-  getUserAll: (options = {}) => ajax.post('/user/getAll', options),
+  getUserAll: (options = {}) => ajax.post('/vlt/user/getAllUser', options),
+  //用户状态
+  userStatus:(options = {}) => ajax.post('/vlt/user/status',options),
+  //用户删除
+  delByIds:(options = {}) => ajax.delete('/vlt/user/delByIds',options),
+  //用户编缉
+  userEdit:(options = {}) => ajax.post('/vlt /user/edit',options),
 
 
 
@@ -111,4 +111,8 @@ export default {
   addHolInfo: (options = {}) => ajax.post('/hol/addHolInfo', options),
   //修改夏日状态接口
   updateHolStatus: (options = {}) => ajax.post('/hol/updateHolStatus', options),
+
+  // 用户设置
+  // 修改密码
+  updateUserPassword: (options = {}) => ajax.post('/updateUserPassword', options),
 }
