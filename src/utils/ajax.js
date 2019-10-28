@@ -42,9 +42,16 @@ switch (process.env.VUE_APP_MODE) {
  */
 const request = (method, url, options, extend) => {
   // 基本参数
-  // if (storage.get('token')) {
-  //   axios.defaults.headers.common['Authorization'] = storage.get('token');
-  // }
+  if (storage.get('token')) {
+    axios.defaults.headers.common['Authorization'] = storage.get('token');
+  }
+  const loading = Loading.service({
+    fullscreen: true,
+    text: '正在加载',
+    spinner: "el-icon-loading iconfont icon-loading",
+    background: 'rgba(0,0,0,0)',
+    customClass: 'gb-loading'
+  });
   return (async () => {
     try {
       let res;
@@ -68,20 +75,22 @@ const request = (method, url, options, extend) => {
           });
         } else {
           switch (method) {
-            case 'get': 
+            case 'get':
               res = await axios[method](url, {
                 params: data,
                 ...responseType
               });
               break;
-            case 'post': 
+            case 'post':
               res = await axios[method](url, data, responseType);
               break;
             case 'put':
               res = await axios[method](url, data);
               break;
             case 'delete':
-              res = await axios[method](url, {params: data});
+              res = await axios[method](url, {
+                params: data
+              });
               break;
             default:
               res = await axios[method](url, data, responseType);
@@ -101,9 +110,12 @@ const request = (method, url, options, extend) => {
           }
         }
       }
+      loading.close();
       return res.data;
     } catch (err) {
-      console.warn('api请求错误：', err);
+      Message.closeAll();
+      Message.error('接口请求错误！')
+      loading.close();
     }
   })();
 }

@@ -39,7 +39,7 @@ export default {
   //出入库
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
-  outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
+  outExport: (options = {}) => ajax.post('/warehouseRecording/exportExcel', options),
 
   // 设备管理
   // 设备分页查询列表
@@ -125,6 +125,8 @@ export default {
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
   // 导出游戏列表
   exportGameExcel: (options = {}) => ajax.post('/game/exportExcel', options),
+  // 下载游戏附件
+  downGameLoad: (options = {}) => ajax.post('/game/downloading', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
   // 上市游戏列表
@@ -138,6 +140,7 @@ export default {
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  
   // 查询变更计划列表
   getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
   // 变更计划详情

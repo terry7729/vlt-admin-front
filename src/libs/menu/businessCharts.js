@@ -14,12 +14,7 @@ export default [{
           name: "中心监控",
           url: 'centerWatch'
         },
-        {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "省级监控",
-          url: 'provinceWatch'
-        }
+       
       ],
 
     },
@@ -133,6 +128,7 @@ export default [{
           icon: "el-icon-menu",
           name: "告警规则",
           url: 'provinceWatch'
+        
         }
       ],
 

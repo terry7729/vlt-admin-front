@@ -16,7 +16,7 @@ export default {
   //渠道权限接口
   channelLimit: (options = {}) => ajax.post('/tChannelModuleInfo', options),
   //角色修改接口
-  roleAmend: (options = {}, id) => ajax.post('/tChannelRoleInfo/update', options),
+  roleAmend: (options = {}) => ajax.post('/tChannelRoleInfo/update', options),
   //角色详情接口
   roleDetail: (options = {}) => ajax.post('/tChannelRoleInfo/detail', options),
 

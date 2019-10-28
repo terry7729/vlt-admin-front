@@ -78,6 +78,30 @@ export default {
     }
   },
   methods: {
+    // 获取所有游戏列表
+    getAllGameList() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.getAllGameList({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          let gameData = res.data;
+          let array = []
+          gameData.forEach(item => {
+            let obj = {};
+            obj.label = item.gameName;
+            obj.value = item.id;
+            array.push(obj)
+          });
+          self.$set(self.baseData[3], 'options', array)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     getStoreList(row) {
       const self = this;
       const data = {

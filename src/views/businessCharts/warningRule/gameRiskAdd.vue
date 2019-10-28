@@ -97,7 +97,7 @@
         </div>
         <el-form-item>
           <div class="btn">
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" v-prevent="1000" @click="onSubmit">立即创建</el-button>
             <el-button>取消</el-button>
           </div>
         </el-form-item>
@@ -715,12 +715,12 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        this.$message({
-          message: '新增成功',
-          type: 'success'
-        });
+        // this.$message({
+        //   message: '新增成功',
+        //   type: 'success'
+        // });
       }else{
-        this.$message.error('新增失败');
+        // this.$message.error('新增失败');
       }
     },
     selectChange(val) {
