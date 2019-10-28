@@ -245,7 +245,7 @@ export default {
   methods: {
     async init() {
       //节点树请求
-      let data = {};
+      let data = {}
       let res = await this.$api.QueryModuleTree({data});//菜单树查询
       console.log('菜单树查询',res)
       if(res.code === 0){
@@ -397,21 +397,28 @@ async submitModifine(val) {
         })
           .then(async () => {
             let arr = this.$refs.tree.getCheckedNodes();
-            let data = arr.map(item => {
-              return { moduleId: item.id };
+           
+             let moduleId = []
+            let  array = arr.map(item => {
+                 return moduleId.push(item.id)
             });
-            let reslt = await this.$api.DeleteModule({ data });//批量删除
+             let data = {  }
+             data.delModuleList = moduleId
+            console.log(data)
+            let reslt = await this.$api.DeleteModule({data} );//批量删除
             console.log('批量删除',reslt)
             if (reslt.code === 0) {
               this.init();
               this.slelectifo=""
+              this.$message({
+                  type: "success",
+                  message: "删除成功!"
+              });
             }
-            this.$message({
-              type: "success",
-              message: "删除成功!"
-            });
+         
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err)
             this.$message({
               type: "info",
               message: "已取消删除"
@@ -434,19 +441,19 @@ async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
       this.nowNodeObject = val;
        this.slelectifo = val.text;
       try{
-        let res = await this.$api.QueryModuleDetail(val.id);//菜单详情
+         
+        let res = await this.$api.QueryModuleDetail({data:val.id});//菜单详情
           console.log('菜单详情信息',res)
           if(res.code === 0){
-           
             if (res.data.isSensitivity === 0) {
-              res.data.isSensitivity = true;
+              res.data.isSensitivity = 1;
             } else {
-              res.data.isSensitivity = false;
+              res.data.isSensitivity = 0;
             }
             if (res.data.isShow === 0) {
-              res.data.isShow = true;
+              res.data.isShow = 1;
             } else {
-              res.data.isShow = false;
+              res.data.isShow = 0;
             }
           let n = Object.keys(res.data);
           this.moduleType = res.data.moduleType;

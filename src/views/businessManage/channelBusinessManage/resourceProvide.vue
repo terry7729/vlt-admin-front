@@ -17,9 +17,14 @@
           </div>
         </panel>
         <panel title="发放物品" :show="true" style="margin-bottom:15px">
+          <div class="tr">
+            <el-button type="primary" size="small" @click="intoGoods">导入</el-button>
+          </div>
           <div class="table-wrap">
             <el-table :data="tableData" border class="table">
-              <el-table-column prop="id" label="序号" fixed width="60px"></el-table-column>
+              <el-table-column prop="id" label="序号" fixed width="60px">
+                <template slot-scope="scope">{{scope.row.id=scope.row.goodsModel}}</template>
+              </el-table-column>
               <el-table-column label="物品名称" min-width="160px">
                 <template slot-scope="scope">
                   <el-select v-model="scope.row.goodsName" filterable placeholder="请选择">
@@ -153,7 +158,7 @@ export default {
       options: resourceData,
       tableData: [
         {
-          id: "1",
+          id: "",
           goodsName: "",
           goodsModel: "",
           goodsCode: "",
@@ -199,9 +204,8 @@ export default {
   },
   methods: {
     async submit() {
-      // console.log()
       const self = this;
-      let totalMoney = this.totalData[0].value;
+      let totalMoney = self.totalData[0].value;
       let time = moment(self.form.preReceivDate).format("YYYY-MM-DD HH:mm:ss");
       let data = {
         attachId: "1",
@@ -215,7 +219,7 @@ export default {
         mUserId: "22",
         mUserName: "333",
         operStatus: 0,
-        oplType: 0,
+        oplType: 3,
         outWarehouseId: "111",
         outWarehouseName: "222",
         ownUserId: "333",
@@ -228,8 +232,12 @@ export default {
         totalMoney: totalMoney,
         warehouseGoodsInfoList: self.tableData
       };
+      console.log(data);
       let res = await this.$api.channelResProvide({ data });
       console.log(res);
+      if (res.code === 0) {
+        alert(res.msg);
+      }
     },
 
     changeForm(val) {
@@ -252,12 +260,13 @@ export default {
         goodsModel: "",
         goodsCode: "",
         num: "",
-        unitPrice: 2,
+        unitPrice: "",
         amount: "",
         remark: ""
       };
       this.$set(this.tableData, this.tableData.length, obj);
     },
+    intoGoods() {},
     handleClick() {},
     handlePreview() {},
     handleRemove() {},
@@ -280,5 +289,9 @@ export default {
 }
 .delete {
   font-size: 22px;
+}
+.tr {
+  padding: 10px 10px 0;
+  text-align: right;
 }
 </style>

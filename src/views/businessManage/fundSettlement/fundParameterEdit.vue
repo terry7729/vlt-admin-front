@@ -101,6 +101,7 @@
 
 <script type="text/javascript">
 import rules from "@/utils/rules";
+import moment from "moment";
 export default {
   name: "",
   data() {
@@ -140,10 +141,12 @@ export default {
   },
   methods: {
     async init() {
-      let data = {
-        id: this.$route.query.id
-      };
-      let res = await this.$api.getParameterDetail({ data });
+      // let data = {
+      //   id: this.$route.query.id
+      // };
+      let res = await this.$api.getParameterDetail({
+        data: this.$route.query.id
+      });
       if (res.code === 0) {
         let formKey = Object.keys(this.form);
         let resKey = Object.keys(res.data);
@@ -161,7 +164,11 @@ export default {
     async onSubmit() {
       this.showLoad = true;
       let data = this.form;
+      data.effectiveTime = moment(data.effectiveTime).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
       data.id = this.$route.query.id;
+      console.log(data);
       let res = await this.$api.editFundsParameter({ data });
       console.log(res);
       this.showLoad = false;

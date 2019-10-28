@@ -27,32 +27,35 @@
         </template>
       </el-table-column>
     </el-table>
-    <approval-dialog :showDia="approvalData" @hideDia="hideDialog"></approval-dialog>
+    <approval-dialog :showDia="approvalData"></approval-dialog>
   </div>
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 import approvalDialog from '@/views/businessManage/channelBusinessManage/approvalDialog.vue'
 export default {
   name: "",
   data() {
     return {
       searchOptions: [
-        {
-          type: "datetime-range",
-          prop: "date4",
-          value: "",
-          title: "日期时间",
-          placeholder: ["开始时间", "结束时间"]
-        },
+         {title: '计划年份', type: 'datepicker', prop: 'planDate', dateType:'year', value: ''},
         {
           type: "cascader",
-          prop: "cascader1",
-          value: "",
-          title: "级联选择",
-          placeholder: "请选择",
-          options: []
-        }
+          prop: "insId",
+          value: "61",
+          title: "所属机构",
+          options: [
+            {
+              value: "1",
+              label: "中福彩",
+              children: [
+                {
+                  value: "60",
+                  label: "湖南"
+                }
+              ]
+            }]},
       ],
       controlOptions: [
         { name: "导出", type: "", icon: "s-promotion" } // type为按钮的五种颜色， icon为具体的图标
@@ -73,7 +76,7 @@ export default {
           all: false,
           id: 0,
           insId: "",
-          insLevel: "",
+          insLevel: '1',
           planDate: "2019"
         }
       },
@@ -84,14 +87,23 @@ export default {
     };
   },
   created() {
+    // 根据stoage里边存储的个人数据 拿到用户的insId，然后根据id获取到他的下一级的机构信息
+    // console.log(storage.get());
     const fullYear = new Date().getFullYear();
     this.options.param.planDate = fullYear;
     // 搜索里面只查询两级 中心到省级机构
     this.getProvincePlanList(this.options);
   },
   methods: {
-    search(data) {
-      this.getProvincePlanList(data);
+    search(form) {
+      // 请求数据修改格式
+       if(form.planDate) {
+        form.planDate = moment(form.planDate).format("YYYY")
+      }
+      this.options.param = Object.assign(this.options.param, form);
+      this.options.param.insId = '60';
+       console.log(this.options);
+      this.getProvincePlanList(this.options);
     },
     select() {},
     getProvincePlanList(data) {
@@ -103,10 +115,12 @@ export default {
         if (res && res.code == 0) {
           if (res.data.records && res.data.records.length > 0) {
             console.log(res);
-              self.tableData = self.tableData = res.data.records.map(item => {
+              self.tableData = res.data.records.map(item => {
                 item.status = self.status[item.status]
                 return item;
               })
+          } else {
+            self.tableData = []
           }
         } else {
           // self.$message.warning(res.msg)
@@ -127,9 +141,6 @@ export default {
         showApproval: true,
         id: row.id
       } 
-    },
-    hideDialog () {
-      this.approvalData.showApproval = false;
     }
   },
   components: {

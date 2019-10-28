@@ -40,21 +40,20 @@ export default {
         { title: "入库仓库", value: "", prop: "entryWarehouseName" },
         { title: "备注", value: "", prop: "remark" },
     ],
-  goodsListData:[]
+  goodsListData:[],
+  documentNumber: this.$route.query.documentNumber
+
 
  }
  },
  components: {
  },
  created(){
-   this.outStoreDetail()
+   this.outStoreDetail(this.documentNumber)
  },
  methods: {
-  async outStoreDetail(){
-    let data = {
-      documentNumber: this.$route.query.documentNumber
-    }
-    let res = await this.$api.getOutPutDetail(data.documentNumber)
+  async outStoreDetail(data){
+    let res = await this.$api.getOutPutDetail({data})
     console.log(res)
     if(res && res.code == 0){
       this.infoList.forEach(item =>{

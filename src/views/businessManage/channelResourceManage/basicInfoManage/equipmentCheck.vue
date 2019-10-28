@@ -24,38 +24,36 @@ export default {
  },
  components: {
  },
- created(){
-   this.getDetail()
- },
- methods: {
-   async getDetail(){
-     let isRecovery ={
-       1:'是',
-       2:'否'
-     }
-     let isStandard ={
-       1:'是',
-       2:'否'
-     }
-     const data ={
-       id:this.$route.query.id
-     }
-     console.log(data)
-     let res = await this.$api.getDetail(data.id)
-     console.log(res)
-     if(res && res.code == 0){
-       this.infoList.forEach(item=>{
-         item.value = res.data[item.prop]
-         if(item.prop == 'isStandard'){
-           item.value = isStandard[res.data.isStandard]
-         }
-         if(item.prop == 'isRecovery'){
-           item.value = isRecovery[res.data.isRecovery]
-         }
-       })
-     }
-   }
- },
+created(){
+  this.getDetail()
+},
+methods: {
+  async getDetail(){
+    let isRecovery ={
+      1:'是',
+      2:'否'
+    }
+    let isStandard ={
+      1:'是',
+      2:'否'
+    }
+    const data = this.$route.query.id
+    console.log(data)
+    let res = await this.$api.getDetail({data})
+    console.log(res)
+    if(res && res.code == 0){
+      this.infoList.forEach(item=>{
+        item.value = res.data[item.prop]
+        if(item.prop == 'isStandard'){
+          item.value = isStandard[res.data.isStandard]
+        }
+        if(item.prop == 'isRecovery'){
+          item.value = isRecovery[res.data.isRecovery]
+        }
+      })
+    }
+  }
+},
 }
 </script>
 

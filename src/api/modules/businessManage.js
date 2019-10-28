@@ -23,16 +23,15 @@ export default {
   // 仓库管理详情查看
   detailStore: (options = {}) => ajax.get('/channelResManage/warehouse/detailWare', options),
   //获取基本信息类型管理列表
-  getGoosType: (options = {}) => ajax.post('/goodsType/goodsType/page', options),
+  getGoosType: (options = {}) => ajax.post('/goodsType/pageList', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
-  getModelTree: (options = {}) => ajax.post('/goodsModel/goodsModel/queryModelTree', options),
+  getModelTrees: (options = {}) => ajax.get('/goodsModel/ModelTree', options),
   // 获取类型管理查看详情
-  getDetail: (options = {}) => ajax.get('/goodsType/goodsType/details', options),
+  getDetail: (options = {}) => ajax.get('/goodsType/details', options),
   //类型管理状态修改
-  statusUpdate: (options = {}) => ajax.post('/goodsType/goodsType/statusUpdate/', options),
+  statusUpdate: (options = {}) => ajax.post('/goodsType/statusUpdate', options),
   //类型管理类型新增
-  typeCreate: (options = {}) => ajax.post('/goodsType/goodsType/create', options),
+  typeCreate: (options = {}) => ajax.post('/goodsType/create', options),
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
@@ -41,8 +40,6 @@ export default {
   entryAndOut: (options = {}) => ajax.post('/warehouseRecording/entryAndOut', options),
   //出入库导出
   outExport: (options = {}) => ajax.get('/warehouseRecording/excel', options),
-
-  statusUpdate: (options = {}, param) => ajax.post(`/goodsType/goodsType/statusUpdate/${param.id}/${param.state}`, options),
 
   // 设备管理
   // 设备分页查询列表
@@ -112,16 +109,15 @@ export default {
   createGameStore: (options = {}) => ajax.post('/game/insertGameInfo', options),
   // 编辑游戏储备
   editGameStore: (options = {}) => ajax.post('/game/updateGameInfo', options),
-  // 查看游戏储备详情
+  // 游戏储备详情
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
-  // 上市游戏列表查询列表
+  // 上市游戏列表
   queryGameListPlanPage: (options = {}) => ajax.post('/gameListPlan/queryGameListPlanPage', options),
-  // 游戏上市计划分页查询列表
-  queryListPlanByPage: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 上市记录查询列表
   queryPlanByGameId: (options = {}) => ajax.post('/gameListPlan/queryPlanByGameId', options),
+
   // 查询上市计划列表
   getMarketPlanList: (options = {}) => ajax.post('/gameListPlan/queryListPlanByPage', options),
   // 新增上市计划
@@ -148,7 +144,7 @@ export default {
   uploadChannelFiles: (options = {}) => ajax.post('/fileUpload/uploading', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
-  // 根据资源类型获取资源名称---新建渠道
+  // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
   // 资金权限修改
   addFundRight: (options = {}) => ajax.post('/fund/addFundRight', options),
@@ -157,7 +153,7 @@ export default {
   //资金参数列表分页查询
   getFundsParameter: (options = {}) => ajax.post('/tFundParameter/list', options),
   //资金参数详情查询
-  getParameterDetail: (options = {}) => ajax.post(`/tFundParameter/detail`, options),
+  getParameterDetail: (options = {}) => ajax.post('/tFundParameter/detail', options),
   //资金参数修改
   editFundsParameter: (options = {}) => ajax.post('/tFundParameter/update', options),
 

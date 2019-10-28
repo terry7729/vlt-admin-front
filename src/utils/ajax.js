@@ -47,14 +47,16 @@ switch (process.env.VUE_APP_MODE) {
  */
 const request = (method, url, options, extend) => {
   // 基本参数
-  if (storage.get('token')) {
-    axios.defaults.headers.common['Authorization'] = storage.get('token');
-  }
+  // if (storage.get('token')) {
+  //   axios.defaults.headers.common['Authorization'] = storage.get('token');
+  // }
   return (async () => {
     try {
       let res;
-      const responseType = options.responseType || '';
-      if (typeof options.data !== 'object') {
+      const responseType = {
+        responseType: options.responseType
+      } || {};
+      if (options.data && typeof options.data !== 'object') {
         res = await axios[method](`${url}/${options.data}`); /*RESTful传参*/
       } else {
         const data = options.data || {}
@@ -72,10 +74,10 @@ const request = (method, url, options, extend) => {
         } else {
           res = await axios[method](url, method === 'get' ? {
             params: data,
-            responseType
+            ...responseType
           } : {
             ...data,
-            responseType
+            ...responseType
           });
         }
       }

@@ -89,10 +89,10 @@ export default {
   //获取全部数据
   getAll: (options = {}) => ajax.post('/dictData/getAll', options),
   //通过keyCode查询
-  find:(options = {}) =>ajax.get('/dictData/find/{keyCode}',options),
+  find: (options = {}) => ajax.get('/dictData/find/{keyCode}', options),
   //数据字典条件搜索
-  getByCondition:(options = {}) =>ajax.post('/dictData/getByCondition',options),
- 
+  getByCondition: (options = {}) => ajax.post('/dictData/getByCondition', options),
+
 
   //系统设置
   //系统参数设置
@@ -105,6 +105,8 @@ export default {
   //假日参数
   //假日分页接口
   queryHolInfoPage: (options = {}) => ajax.post('/hol/queryHolInfoPage', options),
+  //获取假日名称列表数据
+  getHolidayList: (options = {}) => ajax.post('/hol/queryHolNameAll', options),
   //添加假日接口
   addHolInfo: (options = {}) => ajax.post('/hol/addHolInfo', options),
   //修改夏日状态接口

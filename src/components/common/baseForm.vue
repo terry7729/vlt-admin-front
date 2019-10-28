@@ -335,6 +335,7 @@ export default {
       })
     },
     changeSwitch(val) {
+      // debugger;
       this.switchText = val ? '开启' : '关闭'
     },
     changeSelect(val) {
