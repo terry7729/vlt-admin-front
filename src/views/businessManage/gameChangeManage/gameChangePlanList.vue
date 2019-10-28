@@ -83,7 +83,6 @@ export default {
   methods: {
     getChangePlanList(data) {
       const self = this;
-      let data = row;
       (async (data)=>{
 				let res = await self.$api.getChangePlanList({data})
 				if(res && res.code == 0) {
