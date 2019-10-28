@@ -22,7 +22,9 @@
           </div>
           <div class="table-wrap">
             <el-table :data="tableData" border class="table">
-              <el-table-column prop="id" label="序号" fixed width="60px"></el-table-column>
+              <el-table-column prop="id" label="序号" fixed width="60px">
+                <template slot-scope="scope">{{scope.row.id=scope.row.goodsModel}}</template>
+              </el-table-column>
               <el-table-column label="物品名称" min-width="160px">
                 <template slot-scope="scope">
                   <el-select v-model="scope.row.goodsName" filterable placeholder="请选择">
@@ -46,7 +48,7 @@
                   <el-input
                     type="textarea"
                     :rows="2"
-                    v-model="scope.row.goodsCode"
+                    v-model="scope.row.goodsSerialNumber"
                     placeholder="请输入序列号"
                   ></el-input>
                 </template>
@@ -106,7 +108,7 @@
         <div class="submit-wrap">
           <el-row class="vlt-edit-btn">
             <el-button type="primary" size="medium" @click="submit">提交并保存</el-button>
-            <el-button size="medium" @click="editShow = !editShow">取消</el-button>
+            <el-button size="medium" @click="cancel">取消</el-button>
           </el-row>
         </div>
       </el-tab-pane>
@@ -156,10 +158,12 @@ export default {
       options: resourceData,
       tableData: [
         {
-          id: "1",
+          id: "",
           goodsName: "",
           goodsModel: "",
           goodsCode: "",
+          goodsType: "",
+          goodsSerialNumber: "",
           num: "",
           unitPrice: "",
           amount: "",
@@ -203,13 +207,16 @@ export default {
   methods: {
     async submit() {
       const self = this;
-      let totalMoney = this.totalData[0].value;
+      let totalMoney = self.totalData[0].value;
       let time = moment(self.form.preReceivDate).format("YYYY-MM-DD HH:mm:ss");
       let data = {
         attachId: "1",
+        ownChannelId: "",
         cDate: time,
         cUserId: "1",
         cUserName: "1",
+        createBy: "1",
+        updateBy: "1",
         checkStatus: 0,
         entryWarehouseId: "1",
         entryWarehouseName: "1",
@@ -230,10 +237,16 @@ export default {
         totalMoney: totalMoney,
         warehouseGoodsInfoList: self.tableData
       };
+      console.log(data);
       let res = await this.$api.channelResProvide({ data });
-      if (res.code === 0) {
+      console.log(res);
+      if (res && res.code === 0) {
         alert(res.msg);
+        this.$router.push({ path: "channelDeal" });
       }
+    },
+    cancel() {
+      this.$router.push({ path: "channelDeal" });
     },
 
     changeForm(val) {
@@ -255,6 +268,8 @@ export default {
         goodsName: "",
         goodsModel: "",
         goodsCode: "",
+        goodsSerialNumber: "",
+        goodsType: "",
         num: "",
         unitPrice: "",
         amount: "",

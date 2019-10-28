@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
-        :total="999"
+        :total="totalCount"
         labelWidth="80px"
       >
         <control-bar slot="extend-bar" @select="select" :options="controlOptions" position="right"></control-bar>
@@ -60,7 +60,7 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
           title: "游戏",
           placeholder: "请选择游戏",
@@ -97,8 +97,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -125,13 +126,10 @@ export default {
     };
   },
   methods: {
-    async getPondRiskList() {
+    async getPondRiskList(options) {
       const self = this;
       const res = await self.$api.getPondRiskList({
-        data: {
-          pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+        data: options
       });
       if (res && res.code == 0) {
         self.tableData = res.data.records;
@@ -140,15 +138,19 @@ export default {
     },
 
     pageSizeChange(pageSize) {
-      this.listQuery.limit = pageSize;
-      this.getPondRiskList();
+      this.listQuery.pageSize = pageSize;
+      this.getPondRiskList(this.listQuery);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page = currentPage;
-      this.getPondRiskList();
+      this.listQuery.pageNum = currentPage;
+      this.getPondRiskList(this.listQuery);
     },
     search(form) {
       console.log("search", form);
+      this.listQuery.param={
+        provinceId:form.provinceId
+      },
+      this.getPondRiskList(this.listQuery)
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -156,14 +158,6 @@ export default {
       } else {
         this.$router.go(-1);
       }
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -285,7 +279,7 @@ export default {
           type: "success",
           message: "删除成功!"
         });
-        this.getPondRiskList()
+        this.getPondRiskList(this.listQuery)
       }else{
           this.$message({
             type: 'info',
@@ -306,7 +300,7 @@ export default {
     // this.showcity();
   },
   created() {
-    this.getPondRiskList();
+    this.getPondRiskList(this.listQuery);
   }
 };
 </script>

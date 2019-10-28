@@ -41,44 +41,44 @@ export default {
       { title: "备注", value: "", prop: "remark" },
   ],
   goodsListData:[],
-  requestData:{
-    "documentNumber": "",
-    "oplBy": "1",      //出库操作人id
-    "oplType": 2,    
-    "warehouseId": 10,
-  }
-
+  
+  documentNumber: this.$route.query.documentNumber,
+  warehouseId:10
  }
  },
  components: {
  },
  created(){
-   this.getInfoList()
+   this.getInfoList(this.documentNumber)
  },
  methods: {
-  async getInfoList(){
-    const data = {
-      documentNumber: this.$route.query.documentNumber
-    }
-    console.log(data)
-    let res = await this.$api.getOutPutDetail(data.documentNumber)
+  async getInfoList(data){
+    let res = await this.$api.getOutPutDetail({data})
     console.log(res )
     if(res && res.code == 0){
       this.infoList.forEach(item =>{
         this.totalMoney = res.data.totalPrice
+        this.warehouseId = res.data.outWarehouseId
         this.goodsListData = res.data.list
         item.value = res.data[item.prop]
       })
     }
   },
   //出库
-  async outStore(data){
-    let res = await this.$api.entryAndOut({
-      data: {
-        ...this.requestData,
-        documentNumber: this.$route.query.documentNumber
+  async outStore(){
+    let data = {
+        documentNumber: 4,   // this.$route.query.documentNumber,
+        oplType: 2,
+        warehouseId: 10  // this.warehouseId
       }
-    })
+      console.log(data)
+    let res = await this.$api.entryAndOut({data})
+    if(res && res.code == 0){
+      this.$message({
+        message: '出库成功',
+        type: 'success'
+      })
+    }
     console.log(res)
   },
   cancel(){

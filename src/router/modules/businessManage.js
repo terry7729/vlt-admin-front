@@ -81,6 +81,7 @@ const developmentPlanList = () => import('@/views/businessManage/channelBusiness
 const developmentPlanProvince = () => import('@/views/businessManage/channelBusinessManage/developmentPlanProvince')
 const developmentPlanCity = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCity')
 const developmentPlanProvinceDetail = () =>import('@/views/businessManage/channelBusinessManage/developmentPlanProvinceDetail')
+const developmentPlanCityDetail = () => import('@/views/businessManage/channelBusinessManage/developmentPlanCityDetail');
 const dossierManage = () => import('@/views/businessManage/channelBusinessManage/dossierManage')
 const resourceApply = () => import('@/views/businessManage/channelBusinessManage/resourceApply')
 const resourceProvide = () => import('@/views/businessManage/channelBusinessManage/resourceProvide')
@@ -140,7 +141,7 @@ const outStore = () => import('@/views/businessManage/channelResourceManage/outP
 //已出库详情
 const alreadyOutDetail = () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyOutDetail')
 //仓库管理新增仓库
-const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStores')
+const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
 
 
@@ -674,6 +675,14 @@ export default [
       title: '年度发展计划汇总省级详情',
     },
     component: developmentPlanProvinceDetail,
+    children: []
+  },{
+    path: 'businessManage/developmentPlanCityDetail',
+    name: 'developmentPlanCityDetail',
+    meta: {
+      title: '年度发展计划汇总市级详情',
+    },
+    component: developmentPlanCityDetail,
     children: []
   },
   {

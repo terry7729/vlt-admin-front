@@ -17,10 +17,17 @@
         <el-table-column prop="roleName" label="用户角色"></el-table-column>
         <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" ></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" >
+          <template slot-scope="scope">
+          {{timeCycle(tableData[scope.$index].createTime)}}
+        </template></el-table-column>
         <el-table-column prop="roleType" label="角色类型"></el-table-column>
         <el-table-column prop="updateBy" label="修改人"></el-table-column>
-        <el-table-column prop="updateTime" label="修改时间"></el-table-column>
+        <el-table-column prop="updateTime" label="修改时间">
+          <template slot-scope="scope">
+            {{timeCycle(tableData[scope.$index].updateTime)}}
+          </template>
+          </el-table-column>
         <el-table-column label="角色状态" prop="status" >
           <template slot-scope="scope">
             <el-switch
@@ -95,7 +102,7 @@ export default {
             { label: "子管理员", value: 2 },
             { label: "普通角色", value: 3 }
           ]},
-        { type: "switch", title: "角色状态", prop: "status", value: true },
+        { type: "switch", title: "角色状态", prop: "status", value: 1 },
         { type: "input", title: "角色编码", prop: "roleCode", value: '' },
         { title: "角色权限",
           type: "cascader-multiple",
@@ -192,7 +199,6 @@ async pagingControl(val){ //分页控制
           let Arr = JSON.parse(JSON.stringify(arr))
           this.dataProcessing(Arr);//处理数据
           }
-          console.log('我是默认',n)
       }else{
         console.log('我是搜索',data)
           let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
@@ -226,6 +232,7 @@ async pagingControl(val){ //分页控制
                     status:Number(val.status),
                     roleId:val.roleId
                   }
+                  console.log(data)
                   let reslt = await this.$api.UpdateRoleStatusInfo({data})
                   console.log('更改角色状态',reslt)
                   if(reslt.code === 0){
@@ -254,20 +261,24 @@ async pagingControl(val){ //分页控制
       this.currentPage4 = val;
       this.pagingControl(val)
     },
+    timeCycle(val){  
+      return  moment(val).format("YYYY-MM-DD HH:mm:ss")
+    } ,
     handelskip(val) {
       this.dialogFormVisible = true;
       this.currentStatus = "编缉";
       this.val = val ;
       let arr = Object.keys(val)
-      let len  = this.updataFrom
+      let upDataFrom  = this.updataFrom
       console.log(val.roleType)
-      for(var i = 0 ; i<len.length ; i++){
-        for(var j = 0 ; j< arr.length ; j++){
-          if(arr[j]===len[i].prop){
-            len[i].value = val[arr[j]]
+      upDataFrom.forEach(item=>{
+        arr.forEach(i=>{
+          if(item.prop === i){
+            item.value = val[i]
           }
-        }
-      }
+        })
+      })
+  
     },
     selectBtn(val) {//新增删除事件
       if (val.name === "新建角色") {
@@ -278,37 +289,28 @@ async pagingControl(val){ //分页控制
 async search(val) {//搜索事件
       console.log(val)
         this.searchFrom = val;
-          this.searchStatus = "搜索"
-            this.init()
-      let data = JSON.parse(JSON.stringify(val));
+        this.searchStatus = "搜索"
+        this.init()
      
     },
     dataProcessing(arr) {//数据处理
         arr.forEach(item => {      
               item.status = !!item.status;
         });
-        //  console.log(arr)
       let obj = arr.map(item => {
-        // console.log(item);
         if (item.roleType === 1) {
           return {
             ...item,
-            createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
-            updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
             roleType: "管理员"
           };
         } else if (item.roleType === 2) {
           return {
             ...item,
-            createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
-            updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
             roleType: "子管理员"
           };
         } else {
           return {
             ...item,
-            createTime: moment(item.createTime).format("YYYY-MM-DD HH:mm:ss"),
-            updateTime: moment(item.updateTime).format("YYYY-MM-DD HH:mm:ss"),
             roleType: "普通角色"
           };
         }

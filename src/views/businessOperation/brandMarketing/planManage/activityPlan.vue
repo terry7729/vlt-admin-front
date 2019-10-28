@@ -151,7 +151,7 @@
                 <el-input v-model="item.give" placeholder="输入赠送金额"></el-input>
               </el-form-item>
             </el-form>
-            <div class="add-rule">+新增规则</div>
+            <el-button class="add-rule" icon="el-icon-plus">新增规则</el-button>
           </div>
         </panel>
 

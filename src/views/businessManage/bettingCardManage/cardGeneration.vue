@@ -30,7 +30,7 @@
           <template slot-scope="scope">
             <!-- <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button> -->
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
-            <el-button type="primary" size="mini" @click="toExport(scope.row)">导出</el-button>
+            <el-button type="primary" size="mini" @click="exportExcel(scope.row)">导出</el-button>
             <el-button type="danger" size="mini" @click="logoutData (scope.row) ">注销</el-button>
           </template>
         </el-table-column>
@@ -238,7 +238,8 @@ export default {
           bettingCardType: '',
           insId: ''
         }
-      }
+      },
+      outData: {}
     };
   },
   created() {
@@ -274,7 +275,7 @@ export default {
       });
     },
     search(form) {
-      this.options.param = from
+      this.options.param = form
       this.initList(this.options);
       // console.log("search", form);
     },
@@ -294,14 +295,14 @@ export default {
         }
       });
     },
-    toExport(val) {
-      this.$router.push({
-        name: "exportCard",
-        query: {
-          id: val.id
-        }
-      });
-    },
+    // toExport(val) {
+    //   this.$router.push({
+    //     name: "exportCard",
+    //     query: {
+    //       id: val.id
+    //     }
+    //   });
+    // },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -317,12 +318,42 @@ export default {
     },
     changeForm(val) {
       Object.assign(this.params, val);
-      console.log("派发出来的参数", this.params);
+      // console.log("派发出来的参数", this.params);
     },
     async deleteBetting(id) {
       const _this = this;
       let result = await _this.$api.deleteCardGeneration(id);
       return result;
+    },
+
+    async exportExcel(row) {
+        this.outData = {
+          page: 0,
+          pageSize: 0,
+          param: {
+            all: true,
+            batch: "",
+            bettingCardId: row.bettingCardId
+          }
+        }
+      const data = JSON.parse(JSON.stringify(this.outData));
+      let result = await this.$api.bettingCardExportExcel({
+        data,
+        responseType: 'blob'
+      });
+      var blob = new Blob([result], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "年度发展计划列表.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      //console.log("res", result);
     },
     logoutData(row) {
       const _this = this;

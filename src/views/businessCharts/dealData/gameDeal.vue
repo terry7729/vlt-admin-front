@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
-        :total="999"
+        :total="totalCount"
         labelWidth="40px"
       >
       <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
@@ -57,14 +57,14 @@ export default {
        searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
           title: "区域",
           placeholder: "请选择省",
           options: [
             {
-              areaName: "选项1",
-              provinceCode: 1
+              label: "选项1",
+              value: 1
             },
             {
               label: "选项2",
@@ -74,7 +74,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "cityId",
           value: "",
           title: "",
           placeholder: "请选择市",
@@ -91,7 +91,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "hallNo",
           value: "",
           title: "",
           placeholder: "请选择销售厅",
@@ -108,7 +108,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "terminalId",
           value: "",
           title: "",
           placeholder: "请选择终端",
@@ -125,7 +125,7 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName",
+          prop: "gameId",
           value: "",
           title: "游戏",
           placeholder: "请选择游戏",
@@ -161,8 +161,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -190,13 +191,10 @@ export default {
   },
   methods: {
     //获取中央交易数据列表
-    async getGameDeal() {
+    async getGameDeal(options) {
       const self = this;
       const res = await self.$api.getGameDeal({
-        data: {
-          pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+        data: options
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
@@ -204,15 +202,23 @@ export default {
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit=pageSize
-      this.getGameDeal()
+      this.listQuery.pageSize=pageSize
+      this.getGameDeal(this.listQuery)
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page=currentPage
-      this.getGameDeal()
+      this.listQuery.pageNum=currentPage
+      this.getGameDeal(this.listQuery)
     },
      search(form) {
       console.log('search', form)
+      this.listQuery.param={
+        provinceId:form.provinceId,
+        cityId:form.cityId,
+        hallNo:form.hallNo,
+        gameId:form.gameId,
+        terminalId:form.terminalId
+      }
+      this.getGameDeal(this.listQuery)
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -307,7 +313,7 @@ export default {
     // this.showcity();
   },
   created() {
-    this.getGameDeal();
+    this.getGameDeal(this.listQuery);
   },
 };
 </script>

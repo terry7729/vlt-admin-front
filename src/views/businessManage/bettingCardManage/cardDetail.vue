@@ -4,42 +4,35 @@
     <panel-static title="基本信息">
       <base-info :infoList="infoList"></base-info>
     </panel-static>
-    <!-- <panel-static title="基本信息">
-      <base-info :infoList="infoList2"></base-info>
-    </panel-static> -->
     <control-bar :options="controlOptions" @select="selectBtn" position="left"></control-bar>
 
-    <!-- <el-row class="card-table">
+    <el-row class="card-table">
       <el-table
-        :data="tableDatas.tableData"
+        :data="tableData.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
         class="table-box"
       >
         <el-table-column
-          v-for="(item,key) in tableDatas.tableKey"
+          v-for="(item,key) in tableKey"
           :key="key"
           :prop="item.value"
           :label="item.label"
           :width="item.width"
         ></el-table-column>
       </el-table>
-    </el-row> -->
+    </el-row>
 
-    <!-- <table-paging
+    <table-paging
       position="left"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableData.total"
+      :currentPage="tableData.current"
+      :pageSize="tableData.size"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
-    ></table-paging> -->
-    <dialog-form 
-    :showForm="showdialog"
-    :formDatas="data2"
-    :rule="rules2"
-     @closeDia="hideDia"></dialog-form>
+    ></table-paging>
+    <dialog-form :showForm="showdialog" :formDatas="data2" :rule="rules2" @closeDia="hideDia"></dialog-form>
   </div>
 </template>
 
@@ -52,37 +45,27 @@ export default {
     return {
       showdialog: false,
       infoList: [
-        { title: "批次", value: '', prop: "batch" },
-        { title: "投注卡类型", value: '', prop: "bettingCardType" },
-        { title: "所属机构", value: '', prop: "insName" },
-        { title: "发卡数量", value:'', prop: "cardMakingQuantity" }
+        { title: "批次", value: "", prop: "batch" },
+        { title: "投注卡类型", value: "", prop: "bettingCardType" },
+        { title: "所属机构", value: "", prop: "insName" },
+        { title: "发卡数量", value: "", prop: "cardMakingQuantity" }
       ],
-      controlOptions: [{ name: "导出", type: "primary", icon: "download" }],
-      tableDatas: {
-        tableData: [
-          {
-            id: 0,
-            ardType: "F01",
-            batch: 3,
-          },
-          {
-            id: 1,
-            ardType: "F01",
-          }
-        ],
-        tableKey: [
-          {
-            label: "序号",
-            value: "id",
-            width: ""
-          },
-          {
-            label: "投注卡编号",
-            value: "ardType",
-            width: ""
-          }
-        ]
-      },
+      controlOptions: [
+        { name: "导出当前页数据", type: "primary", icon: "download" },
+        { name: "导出全部数据", type: "", icon: "download" }],
+      tableData: [],
+      tableKey: [
+        {
+          label: "序号",
+          value: "rownum",
+          width: "80"
+        },
+        {
+          label: "投注卡编号",
+          value: "cardNumber",
+          width: ""
+        }
+      ],
       data2: [
         {
           title: "所属机构：",
@@ -95,7 +78,10 @@ export default {
           type: "select",
           title: "投注卡类型：",
           prop: "status",
-          options: [{ label: "类型1", value: "0" }, { label: "类型2", value: "1" }]
+          options: [
+            { label: "类型1", value: "0" },
+            { label: "类型2", value: "1" }
+          ]
         },
         {
           type: "select",
@@ -110,52 +96,114 @@ export default {
           title: "有效日期：",
           options: ["start", "end"]
         },
-        { type: "textarea", title: "备注", prop: "all" },
+        { type: "textarea", title: "备注", prop: "all" }
       ],
       rules2: {
-        address: [{required: true,trigger: "blur" }],
+        address: [{ required: true, trigger: "blur" }],
         status: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       },
-      id: '',
-      dataList: {}
+      id: "",
+      dataList: {},
+      requestOptions: {
+        page: 1,
+        pageSize: 10,
+        param: {
+          all: false,
+          batch: "",
+          bettingCardId: 0
+        }
+      },
+      outData: {}
     };
   },
   components: {
     "dialog-form": dialogForm
-    },
-  created () {
+  },
+  created() {
     let id = this.$route.query.id;
     if (id) {
       this.id = id;
-      this.getInfo(this.id)
+      this.getInfo(this.id);
+      this.requestOptions.param.bettingCardId = this.id;
+      this.getBettingCardList(this.requestOptions);
     }
   },
   methods: {
     async getInfo(id) {
       const _this = this;
-      let result = await _this.$api.cardGenerationDetail(id);
+      let result = await _this.$api.cardGenerationDetail({ data: id });
       if (result.code === 0) {
-        console.log(result.data);
         _this.infoList.forEach(item => {
-          // result.data
-          item.value = result.data[item.prop]
-          if (item.prop == 'bettingCardType') {
+          item.value = result.data[item.prop];
+          if (item.prop == "bettingCardType") {
             item.value = _this.forMatType(result.data[item.prop]);
           }
-        })
+        });
       }
     },
-    selectBtn () {
-      this.$router.push({
-        name: 'exportCard',
-        query: {
-          id:  this.id
+    getBettingCardList(data) {
+      const self = this;
+      (async data => {
+        let res = await self.$api.bettingCardList({ data });
+        if (res && res.code == 0) {
+          this.tableData = res.data;
+        } else {
+          self.$message.warning(res.msg);
         }
-      })
+      })(data);
     },
-    hideDia () {
+    selectBtn(val) {
+      if(val.name == '导出当前页数据') {
+        this.exportExcel('now');
+      } else if (val.name == '导出全部数据') {
+        this.exportExcel('all');
+      }
+    },
+    async exportExcel(val) {
+      if (val == 'now') {
+        this.outData = {
+          page: this.requestOptions.page,
+          pageSize: this.requestOptions.pageSize,
+          param: {
+            all: false,
+            batch: "",
+            bettingCardId: this.id
+          }
+        }
+      } else if (val == 'all'){
+        this.outData = {
+          page: 0,
+          pageSize: 0,
+          param: {
+            all: true,
+            batch: "",
+            bettingCardId: this.id
+          }
+        }
+      }
+
+      const data = JSON.parse(JSON.stringify(this.outData));
+      let result = await this.$api.bettingCardExportExcel({
+        data,
+        responseType: 'blob'
+      });
+      var blob = new Blob([result], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "年度发展计划列表.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      //console.log("res", result);
+    },
+    hideDia() {
       this.showdialog = false;
     },
     handleSelectionChange(val) {
@@ -163,8 +211,13 @@ export default {
     },
     handleSizeChange(pageSize) {
       console.log(pageSize);
+      this.requestOptions.pageSize = pageSize;
+      this.getBettingCardList(this.requestOptions);
     },
     handleCurrentChange(currentPage) {
+      
+      this.requestOptions.page = currentPage;
+      this.getBettingCardList(this.requestOptions);
       console.log(currentPage);
     },
     forMatType(type) {

@@ -23,6 +23,8 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
+    //axios.defaults.baseURL = 'http://10.7.0.187:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
@@ -34,6 +36,10 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = 'http://10.7.0.88:8081/bms/api/vlt' // 本地server环境 
    
 
+    // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
+    // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
 }
 /**
  * @description http请求
@@ -48,10 +54,19 @@ const request = (method, url, options, extend) => {
   if (storage.get('token')) {
     axios.defaults.headers.common['Authorization'] = storage.get('token');
   }
+  const loading = Loading.service({
+    fullscreen: true,
+    text: '正在加载',
+    spinner: "el-icon-loading iconfont icon-loading",
+    background: 'rgba(0,0,0,0)',
+    customClass: 'gb-loading'
+  });
   return (async () => {
     try {
       let res;
-      const responseType = {responseType: options.responseType} || {};
+      const responseType = {
+        responseType: options.responseType
+      } || {};
       if (options.data && typeof options.data !== 'object') {
         res = await axios[method](`${url}/${options.data}`); /*RESTful传参*/
       } else {
@@ -68,13 +83,27 @@ const request = (method, url, options, extend) => {
             }
           });
         } else {
-          res = await axios[method](url, method === 'get' ? {
-            params: data,
-            ...responseType
-          } : {
-            ...data,
-            ...responseType
-          });
+          switch (method) {
+            case 'get':
+              res = await axios[method](url, {
+                params: data,
+                ...responseType
+              });
+              break;
+            case 'post':
+              res = await axios[method](url, data, responseType);
+              break;
+            case 'put':
+              res = await axios[method](url, data);
+              break;
+            case 'delete':
+              res = await axios[method](url, {
+                params: data
+              });
+              break;
+            default:
+              res = await axios[method](url, data, responseType);
+          }
         }
       }
       // message提示
@@ -90,9 +119,12 @@ const request = (method, url, options, extend) => {
           }
         }
       }
+      loading.close();
       return res.data;
     } catch (err) {
-      console.warn('api请求错误：', err);
+      Message.closeAll();
+      Message.error('接口请求错误！')
+      loading.close();
     }
   })();
 }
@@ -106,6 +138,12 @@ export default {
   },
   upload(url, options) {
     return request('post', url, options, 'upload');
+  },
+  put(url, options) {
+    return request('put', url, options);
+  },
+  delete(url, options) {
+    return request('delete', url, options);
   },
   axios
 }

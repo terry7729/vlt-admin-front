@@ -12,6 +12,7 @@ import Print from "@/utils/print";
 import storage from '@/utils/storage'
 
 
+
 Vue.use(commonComponents)
 Vue.use(ElementUI)
 Vue.use(Print); // 注册

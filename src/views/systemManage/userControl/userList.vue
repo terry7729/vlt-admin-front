@@ -13,7 +13,7 @@
       </search-bar>
     </div>
     <div class="role-table">
-      <el-table :data="userList" border style="width: 100%; margin-top: 10px;">
+      <el-table :data="userList" border style="width: 100%; margin-top: 10px;"  @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column type="index" prop="id" label="序号"></el-table-column>
         <el-table-column prop="account" label="账号"></el-table-column>
@@ -22,8 +22,9 @@
         <el-table-column prop="roleName" label="用户角色"></el-table-column>
         <el-table-column prop="userName" label="姓名"></el-table-column>
         <el-table-column prop="mobile" label="手机号码"></el-table-column>
-        <el-table-column prop="latelyFrequency" label="最近登陆次数"></el-table-column>
-        <el-table-column prop="latelyTime" label="最近登录时间"></el-table-column>
+         <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column prop="latelyFrequency" label="最近登陆次数" width="100"></el-table-column>
+        <el-table-column prop="latelyTime" label="最近登录时间" width="100"></el-table-column>
         <el-table-column prop="latelyIP" label="最近登陆IP"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="用户状态" align="center" width="200">
@@ -36,19 +37,19 @@
               :rowName="scope.row.name"
               :option="{
                 'enable': {
-                  apiName: 'userEnable', // 接口名称
+                  apiName: 'userStatus', // 接口名称
                   label: '启用', // 按钮文字
                   value: 0// 接口字段传值
                 },
                 'disable': {
-                  apiName: 'userDisable',
+                  apiName: 'userStatus',
                   label: '冻结',
                   value: 1
                 },
                 'logout': {
-                  apiName: 'apiName',
+                  apiName: 'userStatus',
                   label: '注销',
-                  value: -1
+                  value: 2
                 }
               }"
             ></table-row-status>
@@ -58,7 +59,7 @@
           <template  slot-scope="scope">
             <el-button type="primary" size="mini" @click="handelides(scope.row)">查看</el-button>
             <el-button type="success" size="mini" @click="handelifo(scope.$index,scope.row)">编缉</el-button>
-            <el-button type="success" size="mini" @click="dialogFormVisible=true">重置密码</el-button>
+            <el-button type="success" size="mini" @click="resetPassWord(scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,13 +80,13 @@
         <el-form :model="restpaswordfrom">
           <el-form-item label="请选择你的操作" label-width="120px">
             <el-radio-group v-model="restpaswordfrom.radio">
-              <el-radio :label="3">操作密码</el-radio>
-              <el-radio :label="6">登陆密码</el-radio>
+              <el-radio :label="1">操作密码</el-radio>
+              <el-radio :label="0">登陆密码</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item :label="restpaswordfrom.radio===3?'请输入操作密码':'请输入登陆密码'" label-width="120px">
-            <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
-          </el-form-item>
+          <!-- <el-form-item :label="restpaswordfrom.radio===3?'请输入操作密码':'请输入登陆密码'" label-width="120px">
+            <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password :></el-input>
+          </el-form-item> -->
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -102,8 +103,8 @@ export default {
   data() {
     return {
       restpaswordfrom: {
-        radio: 3,
-        password: ""
+        radio: 0,
+       
       },
       //测试数据
       total:0,
@@ -192,7 +193,9 @@ export default {
         }
       ],
       searchFrom:{},
-      searchStatus:''
+      searchStatus:'',
+      data:{userId:[]},
+      restParam:{}
 
     };
   },
@@ -234,6 +237,13 @@ async init(val){
           this.pageSize = val;
           this.init()
       },
+      handleSelectionChange(val){
+        // this.userId.push(val.userId)
+        val.forEach(item => {
+          this.data.userId.push(item.userId)
+        });
+        // console.log(val)
+      },
       pageCurrentChange(val) {
         //当前显示页数
         this.currentPage4 = val;
@@ -241,7 +251,9 @@ async init(val){
       
       },
       handelifo(val,obj) {
-        this.$router.push({name:"userInformed",query:{title:"编缉用户信息"}});
+        console.log(val,obj)
+        // return
+        this.$router.push({name:"userInformed",query:{title:"编缉用户信息",ifo:obj}});
       },
 
       handelides(val) {
@@ -254,7 +266,18 @@ async init(val){
         if(val.name==='新建用户'){
           this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
         }
-        console.log(val);
+        if(val.name === "批量删除"){
+            let data = {
+              ...this.data,
+            }
+            
+            (async ()=>{
+            
+              let reslt = await this.$api.delByIds({data})//批量删除
+              
+              console.log(reslt)
+            })()
+        }
       },
      async search(val) {
         //搜索事件
@@ -266,22 +289,33 @@ async init(val){
       pagingControl(){
 
       },
-      dialogFormVisibleEnter() {  
-        if(this.restpaswordfrom.radio === 3){
+      resetPassWord(val){
+        this.dialogFormVisible = true;
+        this.restParam = val;
+        console.log(val)
+      },
+     async dialogFormVisibleEnter() {  
+        if(this.restpaswordfrom.radio === 1){
           //操作密码重置
           console.log(this.restpaswordfrom)
           let data = {
             ...this.restpaswordfrom,
           }
-          let reslt = this.$api.restPassWord()
+          data.userId = this.restParam.userId
+          data.account = this.restParam.account
+          let reslt =await this.$api.restPassWord({data})
+
+          console.log(reslt)
 
         }else{
           //登陆密码重置
-           console.log(this.restpaswordfrom)
            let data = {
              ...this.restpaswordfrom,
            }
-           let reslt = this.$api.restPassWord()
+           data.userId = this.restParam.userId
+            data.account = this.restParam.account
+           let reslt =await this.$api.restPassWord({data})
+           console.log(reslt)
 
         }
         // this.dialogFormVisible = false;

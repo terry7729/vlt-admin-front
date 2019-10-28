@@ -82,9 +82,9 @@ export default {
   },
 
   methods: {
-    async init() {
+    async init() {  
       let res = await this.$api.getParameterDetail({
-        data: this.$route.query.id
+        data: String(this.$route.query.id)
       });
       if (res.code === 0) {
         let keys = Object.keys(res.data);

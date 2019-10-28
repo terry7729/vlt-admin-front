@@ -5,8 +5,8 @@
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
-        :total="999"
-        labelWidth="80px"
+        :total="totalCount"
+        labelWidth="60px"
       >
         <control-bar slot="extend-bar" :options="controlOptions" position="right"></control-bar>
       </search-bar>
@@ -107,10 +107,10 @@ export default {
       searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
-          title: "区域",
-          placeholder: "请选择省",
+          title: "省份",
+          placeholder: "请选择",
           options: [
             {
               label: "选项1",
@@ -124,9 +124,9 @@ export default {
         },
         {
           type: "select",
-          prop: "selectNam1",
+          prop: "cityId",
           value: "",
-          title: "",
+          title: "市",
           placeholder: "请选择市",
           options: [
             {
@@ -141,9 +141,9 @@ export default {
         },
         {
           type: "select",
-          prop: "selectName2",
+          prop: "hallNo",
           value: "",
-          title: "",
+          title: "销售厅",
           placeholder: "请选择销售厅",
           options: [
             {
@@ -174,8 +174,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -247,13 +248,10 @@ export default {
       }
     },
     //销售厅设备硬件信息列表
-    async getHallEqHardware() {
+    async getHallEqHardware(options) {
       const self = this;
       const res = await self.$api.getHallEqHardware({
-        data: {
-          pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+        data: options
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
@@ -261,20 +259,14 @@ export default {
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit = pageSize;
-      this.getHallEqHardware();
+      this.listQuery.pageSize = pageSize;
+      this.getHallEqHardware(this.options);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page = currentPage;
-      this.getHallEqHardware();
+      this.listQuery.pageNum = currentPage;
+      this.getHallEqHardware(this.listQuery);
     },
-    back() {
-      if (this.$route.query.noGoBack) {
-        this.$router.push({ path: "/dashboard" });
-      } else {
-        this.$router.go(-1);
-      }
-    },
+   
     showcity() {
       //let cityArr=JSON.parse(city);
       //console.log(city);
@@ -349,6 +341,12 @@ export default {
     },
     search(form) {
       console.log("search", form);
+      this.listQuery.param={
+        provinceId:form.provinceId,
+        cityId:form.cityId,
+        hallNo:form.hallNo
+      }
+      this.getHallEqHardware(this.listQuery)
     }
   },
 
@@ -356,7 +354,7 @@ export default {
     // this.showcity();
   },
   created() {
-    this.getHallEqHardware();
+    this.getHallEqHardware(this.listQuery);
   }
 };
 </script>

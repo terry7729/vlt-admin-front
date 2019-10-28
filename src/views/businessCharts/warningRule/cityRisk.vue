@@ -5,7 +5,7 @@
         class="search-bar-demo"
         @search="search"
         :options="searchOptions"
-        :total="999"
+        :total="totalCount"
         labelWidth="80px"
       >
         <control-bar
@@ -40,10 +40,10 @@
             <span v-if="scope.row.collectStatus===1">停止</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right"  align="center" width='240px'>
+        <el-table-column label="操作" fixed="right" align="center" width="240px">
           <template slot-scope="scope">
             <el-button type="primary" @click.native="detail(scope.row)" size="mini">详情</el-button>
-            <el-button type="primary" @click.native='update(scope.row)' size="mini">修改</el-button>
+            <el-button type="primary" @click.native="update(scope.row)" size="mini">修改</el-button>
             <el-button type="primary" @click.native="deleteInfo(scope.row)" size="mini">删除</el-button>
           </template>
         </el-table-column>
@@ -66,46 +66,45 @@ export default {
   name: "areaDeal",
   data() {
     return {
-      totalCount:0,
+      totalCount: 0,
       searchOptions: [
         {
           type: "select",
-          prop: "province",
+          prop: "provinceId",
           value: "",
-          title: "区域",
-          placeholder: "请选择省份",
+          title: "省份",
+          placeholder: "请选择",
           options: [
             {
-              label: "选项1",
+              label: "广东",
               value: 1
             },
             {
-              label: "选项2",
+              label: "广西",
               value: 2
             }
           ]
         },
         {
           type: "select",
-          prop: "province",
+          prop: "cityId",
           value: "",
           title: "",
           placeholder: "请选择市",
           options: [
             {
-              label: "选项1",
-              value: 1
+              label: "深圳",
+              value: 3
             },
             {
-              label: "选项2",
-              value: 2
+              label: "广州",
+              value: 4
             }
           ]
         }
       ],
       controlOptions: [
-        { name: "新增", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
-      
+        { name: "新增", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
       //记录省市县
       provinceList: [],
@@ -123,8 +122,9 @@ export default {
       countryCode: "",
       total: null,
       listQuery: {
-        page: 1,
-        limit: 10
+        pageNum: 1,
+        pageSize: 10,
+        param: {}
       },
       tableData: [
         {
@@ -151,28 +151,30 @@ export default {
     };
   },
   methods: {
-    async getCityRiskList(){
-      let res =await this.$api.getCityRiskList({
-        data:{
-          pageNum: this.listQuery.page,
-          pageSize: this.listQuery.limit
-        }
-      })
-      if(res && res.code==0){
-        this.tableData=res.data.records
-        this.totalCount=res.total
+    async getCityRiskList(options) {
+      let res = await this.$api.getCityRiskList({
+        data:options
+      });
+      if (res && res.code == 0) {
+        this.tableData = res.data.records;
+        this.totalCount = res.total;
       }
     },
     pageSizeChange(pageSize) {
-      this.listQuery.limit=pageSize
-      this.getCityRiskList()
+      this.listQuery.limit = pageSize;
+      this.getCityRiskList(this.listQuery);
     },
     pageCurrentChange(currentPage) {
-      this.listQuery.page=currentPage
-      this.getCityRiskList()
+      this.listQuery.pageNum = currentPage;
+      this.getCityRiskList(this.listQuery);
     },
     search(form) {
       console.log("search", form);
+      this.listQuery.param = {
+        provinceId: form.provinceId,
+        cityId: form.cityId
+      };
+      this.getCityRiskList(this.listQuery)
     },
     deleteInfo(row) {
       this.$confirm(`确定要删除这条数据吗? `, "提示", {
@@ -183,30 +185,18 @@ export default {
         .then(() => {
           this.cityRiskDelete(row.businessKey);
         })
-        .catch(() => {
-          
-        });
+        .catch(() => {});
     },
- 
+
     async cityRiskDelete(id) {
       const res = await this.$api.cityRiskDelete({
         data: {
           businessKey: id
         }
       });
-      if (res && res.code == 0) {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.getCityRiskList()
-        this.getPondRiskList()
-      }else{
-          this.$message({
-            type: 'info',
-            message: '删除失败'
-          });    
-      }
+      if (res && res.code == 0) {        
+        this.getCityRiskList(this.listQuery);
+      } 
     },
     back() {
       if (this.$route.query.noGoBack) {
@@ -215,21 +205,13 @@ export default {
         this.$router.go(-1);
       }
     },
-     detail(row) {
+    detail(row) {
       this.$router.push({
         name: "cityRiskDetail",
         query: {
           id: row.businessKey
         }
       });
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      // this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      // this.getList();
     },
     showcity() {
       //let cityArr=JSON.parse(city);
@@ -324,21 +306,19 @@ export default {
         name: "cityRiskAdd"
       });
     },
-    update(row){
+    update(row) {
       this.$router.push({
-        name:'cityRiskEdit',
-        query:{
-          id:row.businessKey
+        name: "cityRiskEdit",
+        query: {
+          id: row.businessKey
         }
-      })
+      });
     }
   },
   created() {
-    this.getCityRiskList()
+    this.getCityRiskList(this.listQuery);
   },
-  mounted() {
-    
-  }
+  mounted() {}
 };
 </script>
 
