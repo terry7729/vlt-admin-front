@@ -125,6 +125,9 @@ export default [{
               url: 'userRisk'
             }
           ],
+          icon: "el-icon-menu",
+          name: "告警规则",
+          url: 'provinceWatch'
         
         }
       ],
