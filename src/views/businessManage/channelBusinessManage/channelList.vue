@@ -72,6 +72,33 @@ export default {
     this.getChannelList(data)
   },
   methods: {
+    // 导出列表
+    async exportExcel() {
+      const res = await this.$api.exportChannelExcel({
+        data: {
+          page: 1,
+          pageSize: 10,
+          all: false,
+          status: 1,
+          documentNumber: "",
+          documentToppic: ""
+        },
+        responseType: "blob"
+      });
+      var blob = new Blob([res], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "渠道信息.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      console.log(res);
+    },
     getChannelList(data) {
       const self = this;
       (async (data)=>{
@@ -93,6 +120,7 @@ export default {
       this.getChannelList(data)
     },
     select(val) {
+      this.exportExcel();
       console.log(val)
     },
     changeSize(val) {
