@@ -12,8 +12,10 @@
           >
           <li class="menu-logo">
             <span class="ct">
-              <i class="iconfont icon-B-fulicaipiao"></i>
-              <span class="name">{{entry.title}}</span>
+              <span class="logo-box">
+                <i class="iconfont icon-B-fulicaipiao"></i>
+              </span>
+              <span class="name">视频彩票运营管理平台</span>
             </span>
           </li>
           <li class="menu-wrapper">
@@ -148,7 +150,7 @@ export default {
     text-align: left;
     height: 100%;
     overflow: hidden;
-    background-color: #1F263E;
+    background-color: #001D41;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
     -khtml-user-select: none; /* Konqueror */
@@ -158,7 +160,7 @@ export default {
     .menu-wrapper{
       position: absolute;
       left: 0;
-      top: 80px;
+      top: 60px;
       bottom: 0;
       width: 100%;
       overflow: auto;
@@ -175,6 +177,14 @@ export default {
       &::-webkit-scrollbar-track {/*滚动条里面轨道*/
         background-color: transparent;
       }
+      .el-menu-item, .el-submenu__title{
+        height: 50px;
+        line-height: 50px;
+      }
+      .el-submenu .el-menu-item{
+        height: 40px;
+        line-height: 40px;
+      }
     }
     .el-row,.menu-group,.el-menu{
       height: 100%;
@@ -182,7 +192,7 @@ export default {
     .el-menu-item,.el-submenu__title{
       color: rgba(255,255,255,0.6);
       &:hover{
-        background-color: #303750;
+        background-color: #1b3054;
       }
     }
     .top-menu-item .iconfont{
@@ -198,13 +208,15 @@ export default {
     }
     .el-menu{
       border-right: none;
-      width: 220px;
+      width: 260px;
       background-color: transparent;
       .el-menu-item.is-active{
         color: rgba(255,255,255,1);
+        background-color: #003474;
         font-size: 15px;
         &:focus{
-          background-color: transparent;
+          background-color: #003474;
+          
         }
       }
       &.el-menu--collapse{
@@ -243,26 +255,37 @@ export default {
       line-height: 60px;
       font-size: 0;
       text-align: center;
+      background-color: #002553;
+      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
       .ct{
-        width: 200px;
         height: 60px;
+        line-height: 60px;
         overflow: hidden;
         word-break: keep-all;
         white-space: nowrap;
         display: inline-block;
         vertical-align: top;
-        border-bottom: 1px solid rgba(248,249,251,0.2);
       }
       .name{
-        font-size: 20px;
+        font-size: 18px;
         display: inline-block;
         vertical-align: top;
         word-break: keep-all;
         margin-left: 7px;
       }
+      .logo-box{
+        background-color: #fff;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+      }
       .iconfont{
         color: #E60012;
-        font-size: 36px;
+        font-size: 28px;
+        line-height: 36px;
+        vertical-align: top;
       }
     }
 
@@ -274,23 +297,13 @@ export default {
     }
     .top-menu-item{
       &.is-opened{
+        background-color: #001733;
         >.el-submenu__title{
           position: relative;
           color: rgba(255,255,255,1);
-          background-color: #303750;
           .iconfont,.el-submenu__icon-arrow{
             color: rgba(255,255,255,1);
           }
-        }
-        >.el-submenu__title:before{
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          display: block;
-          width: 4px;
-          height: 100%;
-          background-color: #409EFF;
         }
       }
   }

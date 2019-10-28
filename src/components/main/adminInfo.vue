@@ -28,11 +28,11 @@
           <el-card class="box-card user-info-content">
             <div slot="header" class="clearfix">
               <span>用户信息</span>
-              <el-button style="float: right; padding: 0;" type="text" @click="$router.push({name: 'information'})">用户设置</el-button>
+              <el-button style="float: right; padding: 0;" type="text" @click="$router.push({name: 'userSetting'})">用户设置</el-button>
             </div>
             <div class="info-item">
               <span class="title">所属机构：</span>
-              {{user.institutionName || '管理员'}}
+              {{user.institutionName}}
             </div>
             <div class="info-item">
               <span class="title">本次登录：</span>

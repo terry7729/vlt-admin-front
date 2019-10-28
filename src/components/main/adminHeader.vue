@@ -60,6 +60,7 @@ export default {
     .top-bd{
       background-color: #fff;
       height: 60px;
+      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
     }
     .headling{
       font-size: 18px;
