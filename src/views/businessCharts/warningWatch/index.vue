@@ -203,7 +203,7 @@ export default {
     async getWarniingList(options) {
       let data = JSON.parse(JSON.stringify(options));
       let res = await this.$api.getWarniingList({
-        data
+        data,baseURL:'http://10.7.0.90:8080/api'
       });
       // console.log("data", result);
       if (res && res.code == 0) {
