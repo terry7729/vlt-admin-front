@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <search-Bar :options="option"></search-Bar>
+      <!-- <search-Bar :options="option"></search-Bar> -->
       <search-Bar :options="option" :total="9"></search-Bar>
     </div>
     <div class="addlist">
