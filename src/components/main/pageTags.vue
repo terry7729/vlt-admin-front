@@ -72,21 +72,23 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.tagScroller = document.querySelector('.tags-scroller');
-      const tagList = document.querySelector('.tags-list'), 
-            tagMargin = 4;
       this.scrollX();
       // 窗口变化计算边界响应
-      let flag = true;
-      window.addEventListener('resize', () => {
-        if (flag) {
-          flag = false;
-          setTimeout(() => {
-            const boundaryDif = this.tagScroller.offsetWidth - tagList.offsetWidth - this.translateX;
-            this.translateX += boundaryDif - tagMargin;
-            flag = true;
-          }, 500)
-        }
-      })
+      // let flag = true;
+      // const tagList = document.querySelector('.tags-list'), 
+      //       tagMargin = 4;
+      // window.addEventListener('resize', () => {
+      //   if (flag) {
+      //     flag = false;
+      //     setTimeout(() => {
+      //       const boundaryDif = this.tagScroller.offsetWidth - tagList.offsetWidth - this.translateX;
+      //       if (tagList.offsetWidth > this.tagScroller.offsetWidth) {
+      //         this.translateX += boundaryDif - tagMargin;
+      //       }
+      //       flag = true;
+      //     }, 500)
+      //   }
+      // })
     })
   },
   methods: {
