@@ -69,15 +69,15 @@ export default {
  created(){
   //  this.$route.query.documentNumber
   this.getInfolist(this.$route.query.documentNumber)
- },
- methods: {
+},
+methods: {
   async  getInfolist(data){
     let res = await this.$api.getOutPutDetail({data})
     console.log(res)
     if(res && res.code == 0){
       this.totalMoney = res.data.totalPrice
       this.entryWarehouseId = res.data.entryWarehouseId
-      this.oplType = res.data.oplBy
+      this.oplType = res.data.oplType
       this.infoList.forEach(item =>{
         item.value = res.data[item.prop]
       })

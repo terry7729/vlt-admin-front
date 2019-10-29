@@ -1,5 +1,5 @@
 <template>
-<!-- 型号管理新增页面 -->
+<!-- 型号管理修改页面 -->
 <div class="vlt-card modelAdd-page">
   <div class="vlt-edit-single">
     <div class="vlt-edit-wrap">
@@ -92,7 +92,7 @@
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
 export default {
-name: "modelAdd",
+name: "modelModification",
 data() {
 return {
   selectValue:1,
@@ -199,11 +199,7 @@ return {
 
     // 上传文件超出个数
     handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-      );
+      
     },
     //提交保存
     submit(form){
