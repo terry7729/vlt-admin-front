@@ -71,7 +71,22 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      this.tagScroller = document.querySelector('.tags-scroller');
+      const tagList = document.querySelector('.tags-list'), 
+            tagMargin = 4;
       this.scrollX();
+      // 窗口变化计算边界响应
+      let flag = true;
+      window.addEventListener('resize', () => {
+        if (flag) {
+          flag = false;
+          setTimeout(() => {
+            const boundaryDif = this.tagScroller.offsetWidth - tagList.offsetWidth - this.translateX;
+            this.translateX += boundaryDif - tagMargin;
+            flag = true;
+          }, 500)
+        }
+      })
     })
   },
   methods: {
@@ -115,7 +130,7 @@ export default {
     scrollX() {
       // 标签栏滚动
       let x = 0;
-      const wrapper = document.querySelector('.tags-scroller'),
+      const wrapper = this.tagScroller,
             tags = document.querySelectorAll('.el-tag'),
             currentTag = tags[this.current],
             currentTagPosition = currentTag.getBoundingClientRect(),
