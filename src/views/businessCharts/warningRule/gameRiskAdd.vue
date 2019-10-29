@@ -715,10 +715,10 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        // this.$message({
-        //   message: '新增成功',
-        //   type: 'success'
-        // });
+        this.$message({
+          message: '新增成功',
+          type: 'success'
+        });
       }else{
         // this.$message.error('新增失败');
       }

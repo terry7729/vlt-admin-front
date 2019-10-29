@@ -191,10 +191,10 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        // this.$message({
-        //   type: "success",
-        //   message: "删除成功!"
-        // });
+        this.$message({
+          type: "success",
+          message: "删除成功!"
+        })
         this.getGameRiskList(this.listQuery)
       } else {
         // this.$message({
