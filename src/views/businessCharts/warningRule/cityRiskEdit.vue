@@ -142,6 +142,7 @@
         </div>
         <el-form-item>
           <div class="btn">
+            <p class="tips"><span>*</span>数值达到对应风险指标值即为触发</p>
             <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
             <el-button>取消</el-button>
           </div>

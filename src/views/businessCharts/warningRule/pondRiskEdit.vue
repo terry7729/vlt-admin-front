@@ -66,6 +66,7 @@
               :step="10"
               size="medium"
             ></el-input-number>
+             <p class="tip"><span>*</span>数值达到对应风险指标值即为触发</p>
           </el-form-item>
         </div>
         <el-form-item>
