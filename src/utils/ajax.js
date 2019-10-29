@@ -1,15 +1,7 @@
 // ajax.js
-<<
-<< << < HEAD
 import axios from "axios";
 import qs from "qs";
-import storage from "./storage"; ===
-=== =
-import axios from 'axios'
-import qs from 'qs'
-import storage from './storage'
-import Router from 'vue-router' >>>
->>> > 2 b20b49a5d74d866403da023f79e165eb7101357
+import storage from "./storage";
 import {
   Message,
   Loading
@@ -56,7 +48,7 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境
     // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
 }
 /**
  * @description http请求
