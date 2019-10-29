@@ -23,8 +23,8 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = '//10.6.0.103:8080/bms/api'
     break
   default:
-    // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境 
-    axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
+    axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境 
+    // axios.defaults.baseURL = 'http://10.6.0.103:8080/bms/api' // 本地server环境
 
 
 }
@@ -37,6 +37,10 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  // 覆盖默认api baseURL
+  if (typeof options.baseURL === 'string') {
+    axios.defaults.baseURL = options.baseURL;
+  }
   // 基本参数
   if (storage.get('token')) {
     axios.defaults.headers.common['Authorization'] = storage.get('token');
