@@ -31,7 +31,7 @@
               :option="{
                 enable:{
                   apiName:'enable',
-                  label:'启用',
+                  label:'启用', 
                   value:0
                 },
                disable:{
@@ -39,7 +39,6 @@
                   label:'冻结',
                   value:1
                },
-               
               }"
             ></tableRowStatus>
           </template>
@@ -96,9 +95,9 @@ export default {
 
       controlOptions: [
         //按钮组
-        { name: "新建流程", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
-        // { name: "导出", type: "success", icon: "download" },
-        // { name: "打印", type: "primary", icon: "printer" }
+        { name: "新建流程", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "导出", type: "success", icon: "download" },
+        { name: "打印", type: "primary", icon: "printer" }
       ],
       option: [
         {
@@ -109,30 +108,22 @@ export default {
           placeholder: "请输入" || ["请输入1", "请输入2"]
         }
       ],
-      tableData: [
-        
-      ],
+      tableData: [],
       total: 0,
       pageSize: 10,
       currentPage: 0,
       formData: [
         { title: "字典名称", type: "input", prop: "keyName", value: "" },
-        { title: "数据字典键",type: "input",prop: "key",value: ""},
-        { title: "字典数据值",type: "input",prop: "value",value: ""},
-        { title: "状态", type: "switch", prop: "status", value: "1", },
+        { title: "数据字典键", type: "input", prop: "key", value: "" },
+        { title: "字典数据值", type: "input", prop: "value", value: "" },
+        { title: "状态", type: "switch", prop: "status", value: "1" },
         { title: "详情描述", type: "textarea", prop: "description", value: "" }
       ],
       data: {
         page: 0,
-        pageSize:10,
-        param: {} 
+        pageSize: 10,
+        param: {}
       }
-      // search:{
-
-      //     param: {
-      //       keyName: "",
-      //     }
-      // },
     };
   },
   components: {},
@@ -145,46 +136,36 @@ export default {
       return moment(val).format("YYYY-MM-DD HH:mm:ss");
     },
     async getAll(data) {
-        // const that = this;
-       
-        let res = await this.$api.getAll({data});
-        console.log('全部数据',res);
-        if (res && res.code == 0) {
-          this.tableData = res.data.records;
-          this.total = res.data.total;
-          this.pageSize = res.data.pageSize;
-        } else {
-        }
-      
+      // const that = this;
+
+      let res = await this.$api.getAll({ data });
+      console.log("全部数据", res);
+      if (res && res.code == 0) {
+        this.tableData = res.data.records;
+        this.total = res.data.total;
+        this.pageSize = res.data.pageSize;
+      } else {
+      }
     },
-    // toggleSelection(rows) {
-    //   if (rows) {
-    //     rows.forEach(row => {
-    //       this.$refs.multipleTable.toggleRowSelection(row);
-    //     });
-    //   } else {
-    //     this.$refs.multipleTable.clearSelection();
-    //   }
-    // },
     // handleSelectionChange(val) {
     //   this.multipleSelection = val;
     // },
     handleSizeChange(val) {
-      console.log(999,val);
-      this.getAll({ 
-        pageSize:val,
+      console.log(999, val);
+      this.getAll({
+        pageSize: val,
         param: {}
       });
-      this.data.pageSize=val
+      this.data.pageSize = val;
     },
     handleCurrentChange(val) {
-      console.log(6666,val)
-       this.getAll({
-        page: val||1, 
+      console.log(6666, val);
+      this.getAll({
+        page: val || 1,
         pageSize: this.data.pageSize,
         param: {}
       });
-      this.currentPage=val
+      this.currentPage = val;
     },
 
     async search(val) {
@@ -195,53 +176,53 @@ export default {
         param: val
       };
       //  let data1={...obj,param}
-      let result = await this.$api.getByCondition({ data });
+      let result = await this.$api.getByCondition( {message:"搜索成功" , data });
       console.log(result);
       this.tableData = result.data.records;
       this.total = result.data.total;
     },
 
-    selectBtn() {
-      //新建
+    selectBtn(val) {
+      //新建流程
       // this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       // });
-      this.dialogFormVisible = true;
-      this.flag = true;
+      if (val.name == "新建流程") {
+        this.dialogFormVisible = true;
+        this.flag = true;
+      }
     },
-    async edit(val) {
+    edit(val) {
+      //编辑
+      // console.log(321,val)
       this.dialogFormVisible = true;
-      this.newcreate = 0;
-      this.flag=false;
-      //this.$router.push({
-      //   path: "dataDictionary/dataDictionaryEdit",
-      //   query:{id}
-      // });
-      let result = await this.$api.edit;
+      // this.newcreate = 0;
+      this.flag = false;
     },
     //表单change事件
     changeForm(val) {
       this.param = val;
       // console.log(1111,this.param);
-      
     },
     async submit(val) {
       // this.$refs.baseForm.validate(val => {
-      // if(this.param.status===0){
-      //   this.param.status===1
-      // }
-      console.log(2222,data);
-      let data = {...this.param}
+      if (this.param.status != 0) {
+        this.param.status = 0;
+      } else {
+        this.param.status = 1;
+      }
+      console.log(2222, data);
+      let data = { ...this.param };
       if (this.flag) {
         //let formData = this.$refs.baseForm.form;
         let result = await this.$api.add({ data });
         // this.$refs.baseForm.resetForm();
-        console.log(666,result);
+        console.log(666, result);
         this.dialogFormVisible = false;
-      }else{
+      } else {
         let result = await this.$api.edit({ data });
         // this.$refs.baseForm.resetForm();
-        console.log(777,result);
+        console.log(777, result);
         this.dialogFormVisible = false;
       }
       // });
@@ -251,18 +232,7 @@ export default {
       // this.$router.go(-1)
       this.dialogFormVisible = false;
     },
-    handler() {},
-    // async disable(val) {
-    //   this.id=val
-    //   cosole.log(1111,id)
-    //   let data=id
-    //   let result = await this.$api.disable(id);
-    //   console.log(22222,result);
-    // },
-    // async enable(id) {
-    //   let result = await this.$api.enable(id);
-    //   console.log(result);
-    // }
+    handler() {}
   }
 };
 </script>
