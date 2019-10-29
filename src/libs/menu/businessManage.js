@@ -6,7 +6,7 @@ export default [{
   url: '', // 前端路由名称
   childResources: [
     {
-      icon: "el-icon-menu",
+      icon: "icon-shouye",
       name: "首页",
       url: 'overview',
       childResources: [{
@@ -37,7 +37,7 @@ export default [{
       }]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-chubeiku",
       name: "游戏储备管理",
       url: 'gameStoreManage',
       childResources: [{
@@ -61,7 +61,7 @@ export default [{
       ]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-chanpinfahang1",
       name: "游戏发行管理",
       url: 'gameMarketManage',
       childResources: [
@@ -98,7 +98,7 @@ export default [{
       ]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-yewu",
       name: "渠道业务管理",
       url: 'channelBusinessManage',
       childResources: [
@@ -129,7 +129,7 @@ export default [{
       ],
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-ziyuanguanli",
       name: "渠道资源管理",
       url: 'channelResourceManage',
       childResources: [
@@ -166,7 +166,7 @@ export default [{
       ],
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-zhongduan",
       name: "渠道终端管理",
       url: 'channelTerminalManagement',
       childResources: [
@@ -209,7 +209,7 @@ export default [{
       ]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon--jiesuan",
       name: "资金结算管理",
       url: 'fundSettlement',
       childResources: [
@@ -222,7 +222,7 @@ export default [{
       ]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-kaguanli",
       name: "投注卡管理",
       url: 'bettingCardManage',
       childResources: [
@@ -271,7 +271,7 @@ export default [{
       ]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-hezuohuoban",
       name: "合作伙伴管理",
       url: 'cooperatorManage',
       childResources: [
@@ -302,7 +302,7 @@ export default [{
       ]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-zaixianpeixun-",
       name: "在线培训",
       url: 'trainingManage',
       childResources: [

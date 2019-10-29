@@ -2,7 +2,7 @@
 
 export default [{
   childResources: [{
-      icon: "el-icon-menu",
+      icon: "icon-xitongshezhi",
       name: "系统设置",
       url: 'settings',
       childResources: [{
@@ -32,7 +32,7 @@ export default [{
       ],
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-shujuzidian",
       name: "数据字典",
       url: 'dataDictionary',
       childResources: [{
@@ -43,7 +43,7 @@ export default [{
       }]
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-chanpindaohang_yewuliucheng",
       name: "业务流程",
       url: 'businessProcess',
       childResources: [
@@ -69,7 +69,7 @@ export default [{
       ],
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-zuzhijiagou",
       name: "组织架构",
       url: 'organization',
       childResources: [{
@@ -79,7 +79,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-yonghuguanli',
       name: '用户管理',
       url: 'userContorl',
       childResources: [{
@@ -93,7 +93,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-hezuohuoban1',
       name: '角色管理',
       url: 'roleManagement',
       childResources: [{
@@ -103,7 +103,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-caidanguanli',
       name: '菜单管理',
       url: 'menuManagement',
       childResources: [{
@@ -113,7 +113,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-xitongrizhi',
       name: '系统日志',
       url: 'systemLog',
       childResources: [{
@@ -123,7 +123,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-xitongkaiguan',
       name: '系统开关',
       url: 'systemSwitch',
       childResources: [{
@@ -133,7 +133,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-rili',
       name: '假日参数管理',
       url: 'holidayParametersManagement',
       childResources: [{
@@ -143,7 +143,7 @@ export default [{
       }]
     },
     {
-      icon: 'el-icon-menu',
+      icon: 'icon-zhongduanguanli',
       name: '终端事件管理',
       url: 'TerminalEventManagement',
       childResources: [{
