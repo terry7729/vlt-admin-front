@@ -15,25 +15,25 @@
       <ul class="entry-list">
         <li @click="toHome('业务管理', 1)">
           <dl>
-            <dt class="icon el-icon-menu"></dt>
+            <dt class="icon"></dt>
             <dd>业务管理</dd>
           </dl>
         </li>
         <li @click="toHome('业务运营', 2)">
           <dl>
-            <dt class="icon el-icon-menu"></dt>
+            <dt class="icon"></dt>
             <dd>业务运营</dd>
           </dl>
         </li>
         <li @click="toHome('业务监控', 3)">
           <dl>
-            <dt class="icon el-icon-menu"></dt>
+            <dt class="icon"></dt>
             <dd>业务监控</dd>
           </dl>
         </li>
         <li @click="toHome('系统管理', 4)">
           <dl>
-            <dt class="icon el-icon-menu"></dt>
+            <dt class="icon"></dt>
             <dd>系统管理</dd>
           </dl>
         </li>
@@ -41,27 +41,33 @@
       <el-row class="msg-con">
         <el-col :span="12" class="msg-bd">
           <div class="grid-content">
-            <div class="heading"><span class="title">我的待办</span></div>
-            <div class="msg-tips">
-              您有 <em>3</em> 条 需处理待办
+            <div class="heading">
+              <p class="msg-tips">
+                您有 <em class="red">3</em> 条 需处理待办
+                <span class="el-icon-refresh refresh"></span>
+              </p>
+              <span class="title">我的待办</span>
             </div>
+            
             <ul class="msg-list">
-              <router-link to="home" tag="li">[通知公告-F100908JKK]流程结束</router-link>
-              <router-link to="home" tag="li">[通知公告-F100908JKK]流程结束</router-link>
-              <router-link to="home" tag="li">[通知公告-F100908JKK]流程结束</router-link>
-              <router-link to="home" tag="li">[通知公告-F100908JKK]流程结束</router-link>
+              <li class="list-dot dot-red"><router-link tag="p" to="home">[通知公告-F100908JKK]流程结束</router-link></li>
+              <li class="list-dot dot-red"><router-link tag="p" to="home">[通知公告-F100908JKK]流程结束</router-link></li>
+              <li class="list-dot dot-red"><router-link tag="p" to="home">[通知公告-F100908JKK]流程结束</router-link></li>
             </ul>
           </div>
         </el-col>
         <el-col :span="12" class="msg-bd">
           <div class="grid-content">
-            <div class="heading"><span class="title">我的知会</span></div>
-            <div class="msg-tips">
-              您有 <em>3</em> 条 需处理待办
+            <div class="heading">
+              <p class="msg-tips">
+                您有 <em class="orange">2</em> 条 需处理待办
+                <span class="el-icon-refresh refresh"></span>
+              </p>
+              <span class="title">我的知会</span>
             </div>
             <ul class="msg-list">
-              <router-link to="home" tag="li">[通知公告-F100908JKK]流程结束</router-link>
-              <router-link to="home" tag="li">[通知公告-F100908JKK]流程结束</router-link>
+              <li class="list-dot dot-orange"><router-link tag="p" to="home">[通知公告-F100908JKK]流程结束</router-link></li>
+              <li class="list-dot dot-orange"><router-link tag="p" to="home">[通知公告-F100908JKK]流程结束</router-link></li>
             </ul>
           </div>
         </el-col>
