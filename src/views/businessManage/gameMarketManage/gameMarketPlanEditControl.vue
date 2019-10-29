@@ -32,18 +32,18 @@
           <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
           <el-table-column label="兑奖名称" min-width="160px">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.name" placeholder="请输入兑奖名称"></el-input>
+              <el-input v-model="scope.row.exchangeName" placeholder="请输入兑奖名称"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="最大兑奖金额" min-width="160px">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.maxMoney" placeholder="请输入最大兑奖金额"></el-input>
+              <el-input v-model="scope.row.exchangeMoney" placeholder="请输入最大兑奖金额"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="兑奖说明" min-width="200px">
             <template slot-scope="scope">
               <el-input type="textarea"
-                :rows="2" v-model="scope.row.desc" placeholder="请输入兑奖说明"></el-input>
+                :rows="2" v-model="scope.row.exchangeDesc" placeholder="请输入兑奖说明"></el-input>
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="80px">
@@ -162,9 +162,46 @@ export default {
       ],
     }
   },
-  components: {
+  props:{
+    planData: {
+      type: Object,
+      default: {}
+    }
+  },
+  watch: {
+    planData: {
+      handler(newValue, oldValue) {
+        // this.form = {};
+        this.init(newValue)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
   },
   methods: {
+    init(val) {
+      // 游戏规则
+      this.gameData.forEach((item)=>{
+        item.value = val.gameRuleVo[item.props]
+      })
+      // 投注规则
+      this.betData.forEach((item)=>{
+        item.value = val.gameBettingRuleVo[item.props]
+      })
+      // 资金规则
+      this.fundsData.forEach((item)=>{
+        item.value = val.gameFundRuleVo[item.props]
+      })
+      // 风控规则
+      this.riskData.forEach((item)=>{
+        item.value = val.gameRiskRuleVo[item.props]
+      })
+      // 奖等规则
+      this.riskData.forEach((item)=>{
+        // item.value = val.gameRiskRuleVo[item.props]
+        this.tableData = val.gameExchangeSetVoList;
+      })
+    },
     getStoreList(row) {
       const self = this;
       const data = {
@@ -234,13 +271,13 @@ export default {
   margin-left: 20px;
 }
   .vlt-edit-btn{
-    text-align: right;
-    margin: 40px 0 40px;
+    text-align: left;
+    margin: 40px 0 40px 20px;
     .el-button{
       // width: 120px;
     }
     .cancel{
-      // margin: 0 50px 0 0;
+      margin-left: 15px;
     }
   }
   .wrap{

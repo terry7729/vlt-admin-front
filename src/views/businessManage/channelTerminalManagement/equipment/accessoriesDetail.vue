@@ -20,8 +20,8 @@ export default {
         { title: "配件型号", value: "", prop: "spraresType" },
         { title: "配件编码", value: "", prop: "spraresCode" },
         { title: "存放位置", value: "", prop: "nameX" },
-        { title: "使用状态", value: "", prop: "usageStatus" },
-        { title: "配件状态", value: "", prop: "spraresStatus" },
+        { title: "使用状态", value: "", prop: "usageStatusName" },
+        { title: "配件状态", value: "", prop: "spraresStatusName" },
         { title: "入库时间", value: "", prop: "warehouseEntryTime" }
       ]
     };

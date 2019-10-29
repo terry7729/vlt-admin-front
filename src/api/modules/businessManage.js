@@ -25,13 +25,17 @@ export default {
   //获取基本信息类型管理列表
   getGoosType: (options = {}) => ajax.post('/goodsType/pageList', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTrees: (options = {}) => ajax.get('/goodsModel/ModelTree', options),
+  getModelTrees: (options = {}) => ajax.get('/goodsModel/goodsNameTree', options),
   // 获取类型管理查看详情
   getDetail: (options = {}) => ajax.get('/goodsType/details', options),
   //类型管理状态修改
   statusUpdate: (options = {}) => ajax.post('/goodsType/statusUpdate', options),
   //类型管理类型新增
   typeCreate: (options = {}) => ajax.post('/goodsType/create', options),
+  //类型管理-图片上传
+  uploadGoodsType: (options = {}) => ajax.upload('/goodsType/imgFileUpload', options),
+  // 类型管理修改
+  modification: (options = {}) => ajax.post('/goodsType/update', options),
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
@@ -63,6 +67,8 @@ export default {
   cardGenerationDetail: (options = {}) => ajax.post('/bettingCardGeneration/detail', options),
   // 投注卡生成列表分页查询
   cardGenerationList: (options = {}) => ajax.post('/bettingCardGeneration/list', options),
+  // 根据投注卡生成ID查询投注卡信息列表
+  bettingCardList: (options = {}) => ajax.post('/bettingCardGeneration/bettingCardList', options),
 
   // 投注卡信息列表分页查询
   bettingCardInfoList: (options = {}) => ajax.post('/bettingCardInfo/list', options),
@@ -70,6 +76,8 @@ export default {
   bettingCardInfoDetail: (options = {}) => ajax.post('/bettingCardInfo/detail', options),
   // 投注卡信息注销
   deleteBettingCardInfo: (options = {}) => ajax.post('/bettingCardInfo/delete', options),
+  // 投注卡信息导出Excel 
+  bettingCardExportExcel: (options = {}) => ajax.post('/bettingCardGeneration/exportExcel', options),
 
   // 投注卡管理
   getBettingRulesList: (options = {}) => ajax.post('/bettingCardRechargeRules/list', options),
@@ -103,6 +111,8 @@ export default {
   // 导出年度发展计划汇总市级列表信息
   exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
 
+  // 查询当前登录用户的机构信息
+
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
   // 查询年度开展计划汇总市级信息
@@ -119,6 +129,8 @@ export default {
   getGameStoreInfo: (options = {}) => ajax.post('/game/queryGameInfoById', options),
   // 导出游戏列表
   exportGameExcel: (options = {}) => ajax.post('/game/exportExcel', options),
+  // 下载游戏附件
+  downGameLoad: (options = {}) => ajax.post('/game/downloading', options),
   // 所有游戏列表
   getAllGameList: (options = {}) => ajax.post('/game/queryAllGameInfo', options),
   // 上市游戏列表
@@ -132,6 +144,7 @@ export default {
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  
   // 查询变更计划列表
   getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
   // 变更计划详情

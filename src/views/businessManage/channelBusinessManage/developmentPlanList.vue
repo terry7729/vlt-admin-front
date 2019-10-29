@@ -1,21 +1,12 @@
 <template>
-  <div class="vlt-card">
-    <!-- <search-bar class="search-bar-demo"
-      @search="search"
-      :options="searchOptions"
-      :total="999"
-      labelWidth="80px">
-      <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
-    </search-bar> -->
+  <div class="vlt-card plan-list">
+ 
     <control-bar slot="extend-bar" @select="select" :options="options"></control-bar>
 
-    <el-dropdown @command="exportExcel">
-      <el-button  size="small"> <i class="el-icon-s-promotion"></i>导出</el-button>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command ="now">当页数据</el-dropdown-item>
-        <el-dropdown-item command ="all">全部数据</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+     <p class="tips-item">
+          <i class="el-alert__icon el-icon-info"></i>
+          <span>共搜索到<em>{{getDatas.total}}</em>条数据</span>
+        </p>
 
     <el-table :data="tableData" border>
       <el-table-column label="序号" fixed type="index" width="60px"></el-table-column>
@@ -37,6 +28,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <table-paging
+      position="right"
+      :total="getDatas.total"
+      :currentPage="getDatas.current"
+      :pageSize="getDatas.size"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange">
+    </table-paging>
   </div>
 </template>
 
@@ -48,28 +47,30 @@ export default {
   data() {
     return {
       searchOptions: [
-        {type: 'datetime-range', prop: 'date4', value: '', title: '日期时间', placeholder: ['开始时间', '结束时间']},
-        {title: '状态', type: 'select', prop: 'status', value: '', options: [{label:'计划中',value:'1'},{label:'已通过',value:'2'},{label:'未通过',value:'3'}]},
+      
       ],
       options: [
         {name: '新建发展计划', type: 'primary', icon: 'plus'},  // type为按钮的五种颜色， icon为具体的图标
+        {name: '导出当页数据', type: 'primary', icon: 's-promotion'}, 
+        {name: '导出全部数据', type: '', icon: 's-promotion'},  
      
       ],
       tableData: [],
       status: ['计划中','已通过'],
       outData: {},
-      getDatas: {}
+      getDatas: {},
+      requestData: {
+        page: 1,
+        pageSize: 10,
+        param: {
+          insId: "60",
+          insLevel: "1" // 1为省级 2为市级
+        }
+      }
     }
   },
   created() {
-    let data = {
-      page: 1,
-      pageSize: 10,
-      param: {
-        insId: "60",
-        insLevel: "1" // 1为省级 2为市级
-      }
-    };
+    let data = this.requestData
     // 用户所在机构
     if(true) {
       // 省级用户 调省查市接口
@@ -102,13 +103,13 @@ export default {
         }
       })(data)
     },
-
-
-
-
     select(val) {
       if(val.name=='新建发展计划') {
         this.$router.push({name:'developmentPlanCreate',query:{id:123}})
+      } else if (val.name == '导出当页数据') {
+        this.exportExcel('now');
+      } else if (val.name == '导出全部数据') {
+        this.exportExcel('all');
       }
     },
 
@@ -127,6 +128,7 @@ export default {
           }
         }
       } else if (val == 'all'){
+        console.log('导出全部数据');
         this.outData = {
           page: 0,
           pageSize: 0,
@@ -174,6 +176,16 @@ export default {
           insLevel: 2 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
         }
       })
+    },
+    handleSizeChange(val) {
+      this.requestData.pageSize = val
+      this.getDevelopPlanList(this.requestData)
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.requestData.page = val
+      this.getDevelopPlanList(this.requestData)
+      console.log(`当前页: ${val}`);
     },
   },
 }

@@ -130,14 +130,27 @@ export default {
       ],
     }
   },
+  created () {
+    const id = this.$route.query.id;
+    if (id) {
+      this.getChangePlanDetail(id);
+    }
+  },
   methods: {
-    getStoreList(row) {
+    getChangePlanDetail(id) {
       const self = this;
       const data = {
-        orderId: row.orderId
+        id
       };
+      
+      // {
+// 	"gameId": 1,
+// 	"id": 2,
+//         "listPlanId": 25
+// }
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+        let res = await self.$api.getChangePlanDetail({data})
+        console.log(res);
 				if(res && res.code == 0) {
           self.$message.success('注销成功')
           row.orderStatus = 6;
@@ -147,6 +160,12 @@ export default {
         }
       })(data)
     },
+    handleSelectionChange () {
+
+    },
+    detail (id) {
+
+    }
   },
 }
 </script>

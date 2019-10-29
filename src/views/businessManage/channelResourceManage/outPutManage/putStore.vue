@@ -59,12 +59,15 @@ export default {
       "oplBy": "1",           // 出入库操作人id
       "oplType": 1,          // 操作类型
       "warehouseId": 10     // 仓库id
-    }
+    },
+    entryWarehouseId:0,
+    oplType:1,
  }
  },
  components: {
  },
  created(){
+  //  this.$route.query.documentNumber
   this.getInfolist(this.$route.query.documentNumber)
  },
  methods: {
@@ -73,17 +76,18 @@ export default {
     console.log(res)
     if(res && res.code == 0){
       this.totalMoney = res.data.totalPrice
-      this.requestData.documentNumber = res.data.documentNumber
-      this.requestData.oplType = res.data.oplType
+      this.entryWarehouseId = res.data.entryWarehouseId
+      this.oplType = res.data.oplBy
       this.infoList.forEach(item =>{
         item.value = res.data[item.prop]
       })
       // let array =[]
       res.data.list.forEach((item)=>{
-        item.num = 5
+        // item.num = 5
         for(let i=0;i<item.num;i++){
           let obj = JSON.parse(JSON.stringify(item))
-          obj.serialNumber = ''
+          obj.serialNumber = '';
+          obj.num = 1;
           this.goodsListData.push(obj)
         }
       })
@@ -98,38 +102,41 @@ export default {
     let obj={}
     let array = []
     this.goodsListData.forEach(item=>{
-      if(obj[item.goodId]){
-        obj[item.goodId].push(item.serialNumber)
-      }else{
-        obj[item.goodId] = [];
-        obj[item.goodId].push(item.serialNumber)
-        let param = {
-          goodId: item.goodId,
+      // if(obj[item.id]){
+      //   obj[item.id].push(item.serialNumber)
+      // }else{
+      //   obj[item.id] = [];
+      //   obj[item.id].push(item.serialNumber)
+      //   let param = {
+      //     goodsInfoId: item.id,
+      //     goodCode: item.goodCode,
+      //     serialNumber: ''
+      //   }
+      //   array.push(param)
+      // }
+      let param = {
+          goodsInfoId: item.id,
           goodCode: item.goodCode,
-          serialNumber: ''
+          serialNumber: item.serialNumber
         }
         array.push(param)
-      }
-      
-    })
-    for(let key in obj) {
-      obj[key]=obj[key].join(';')
-    }
-    console.log('obj',obj)
-    array.forEach((item)=>{
-      item.serialNumber=obj[item.goodId]
     })
     console.log('提交参数',array)
     let data= {
       documentNumber: this.$route.query.documentNumber,
       list: array,
-      oplBy: "",
-      oplType: 0,
-      warehouseId: 0
+      oplType: 1,
+      warehouseId: this.entryWarehouseId
     }
     console.log('提交参数2',data)
     let res = await this.$api.entryAndOut({data})
-    console.log(res)
+    if(res && res.code == 0){
+      this.$message({
+        type:'success',
+        message:'入库成功'
+      })
+      this.$router.push({path: 'outPutManage'})
+    }
 
   },
   cancel(){

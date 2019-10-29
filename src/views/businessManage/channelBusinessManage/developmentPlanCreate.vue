@@ -62,16 +62,16 @@ export default {
             }
           ]
         },
-        {title: '省属新建销售厅数量', type: 'input', prop: 'newSellingHall', value: '20'},
-        {title: '市属新建销售厅数量', type: 'input', prop: 'cityNewSellingHall', value: '20'},
-        {title: '省属销售厅投注机数量', type: 'input', prop: 'sellingMachine', value: '200'},
-        {title: '市属销售厅投注机数量', type: 'input', prop: 'citySellingMachine', value: '200'},
-        {title: '省合作厅数量', type: 'input', prop: 'cooperationHall', value: '30'},
-        {title: '市合作厅数量', type: 'input', prop: 'cityCooperationHall', value: '30'},
-        {title: '省合作厅投注数量', type: 'input', prop: 'cooperationMachine', value: '300'},
-        {title: '市合作厅投注数量', type: 'input', prop: 'cityCooperationMachine', value: '30'},
-        {title: '发展预算', type: 'input', prop: 'developBudget', value: '4000'},
-        {title: '计划说明',type: 'textarea', prop: 'planDesc', value: '说明'},
+        {title: '省属新建销售厅数量', type: 'input', prop: 'newSellingHall', value: ''},
+        {title: '市属新建销售厅数量', type: 'input', prop: 'cityNewSellingHall', value: ''},
+        {title: '省属销售厅投注机数量', type: 'input', prop: 'sellingMachine', value: ''},
+        {title: '市属销售厅投注机数量', type: 'input', prop: 'citySellingMachine', value: ''},
+        {title: '省合作厅数量', type: 'input', prop: 'cooperationHall', value: ''},
+        {title: '市合作厅数量', type: 'input', prop: 'cityCooperationHall', value: ''},
+        {title: '省合作厅投注数量', type: 'input', prop: 'cooperationMachine', value: ''},
+        {title: '市合作厅投注数量', type: 'input', prop: 'cityCooperationMachine', value: ''},
+        {title: '发展预算', type: 'input', prop: 'developBudget', value: ''},
+        {title: '计划说明',type: 'textarea', prop: 'planDesc', value: ''},
       ],
       formDataCity: [
         {title: '计划年份', type: 'datepicker', prop: 'planDate', dateType:'year', value: ''},
@@ -211,7 +211,7 @@ export default {
       })(data)
     },
     changeForm(val) {
-      console.log('派发出来的参数', val)
+      // console.log('派发出来的参数', val)
       this.params = Object.assign(this.params, val);
       // console.log('派发出来的参数',this.params);
       if(this.params.planDate) {
