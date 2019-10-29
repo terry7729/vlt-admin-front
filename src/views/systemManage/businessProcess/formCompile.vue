@@ -304,7 +304,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @import "./less/index.less";
 .el-switch {
   padding: 20px 40px;

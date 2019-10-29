@@ -1,5 +1,5 @@
 <template>
-  <div class="user-admin" v-if="user">
+  <div class="user-admin" v-if="userInfo">
     <el-tooltip effect="dark" content="全屏" placement="bottom" v-if="!isFull">
       <span class="iconfont icon-fullscreen" @click="fullScreen"></span>
     </el-tooltip>
@@ -20,10 +20,10 @@
         >
           <span slot="reference">
             <span class="avatar">
-              <img v-if="user.avatar" :src="user.avatar" @error="user.avatar = ''">
+              <img v-if="userInfo.avatar" :src="userInfo.avatar" @error="userInfo.avatar = ''">
               <i v-else class="iconfont icon-touxiang"></i>
             </span>
-            <span class="user-name">{{user.name}}</span>
+            <span class="user-name">{{userInfo.userName}}</span>
           </span>
           <el-card class="box-card user-info-content">
             <div slot="header" class="clearfix">
@@ -31,20 +31,20 @@
               <el-button style="float: right; padding: 0;" type="text" @click="$router.push({name: 'userSetting'})">用户设置</el-button>
             </div>
             <div class="info-item">
-              <span class="title">所属机构：</span>
-              {{user.institutionName}}
+              <span class="title">用户账号：</span>
+              {{userInfo.account}}
+            </div>
+            <div class="info-item">
+              <span class="title">手机号码：</span>
+              {{userInfo.mobile}}
             </div>
             <div class="info-item">
               <span class="title">本次登录：</span>
-              {{user.lastLoginTime}}
-            </div>
-            <div class="info-item">
-              <span class="title">登录地址：</span>
-              {{user.loginAddress}}
+              {{userInfo.lastLoginTime}}
             </div>
             <div class="info-item">
               <span class="title">登录IP：</span>
-              {{user.loginIp}}
+              {{userInfo.loginIp}}
             </div>
           </el-card>
         </el-popover>
@@ -57,21 +57,14 @@
 
 import storage from '@/utils/storage'
 import windowScreen from '@/utils/windowScreen'
-
+import moment from 'moment'
 
 export default {
   name: 'adminHeader',
   data() {
     return {
       isFull: false,
-      user: {
-        avatar: require('@/assets/img/avatar.jpg'),
-        institutionName: '机构名称',
-        lastLoginTime: '2019-10-07',
-        loginAddress: '深圳市',
-        loginIp: '10.9.0.110',
-        name: 'admin'
-      }
+      userInfo: storage.get('userInfo')
     }
   },
   
@@ -81,6 +74,13 @@ export default {
     }, () => {
       this.isFull = false;
     })
+    if (this.userInfo) {
+      this.$set(
+        this.userInfo, 
+        'lastLoginTime', 
+        moment(this.userInfo.lastLoginTime).format("YYYY-MM-DD HH:mm:ss")
+      );
+    }
   },
   methods: {
     openConfirm() {
@@ -98,12 +98,12 @@ export default {
       const self = this;
       const res = await self.$api.getLogOut({
         data: {
-          message: '退出成功',
-          userId: self.user.id
+          message: '退出成功'
         }
       });
       if (res && res.code == 0) {
         storage.remove('token');
+        storage.remove('userInfo');
         this.$router.push({
           path:'/login'
         })

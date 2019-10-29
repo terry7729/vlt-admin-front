@@ -1,11 +1,10 @@
 <template>
   <div class="vlt-card">
     <div class="search">
-      <search-Bar :options="option"></search-Bar>
-      <search-Bar :options="option" :total="9"></search-Bar>
-    </div>
-    <div class="addlist">
-      <el-button type="primary" icon="el-icon-plus" @click="add()">新建流程</el-button>
+      <!-- <search-Bar :options="option"></search-Bar> -->
+      <search-Bar :options="option" :total="9">
+        <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
+      </search-Bar>
     </div>
     <div class="el_table">
       <el-table :data="tableData" border>
@@ -41,35 +40,14 @@ export default {
     return {
       option: [
         {
-          title: "用户名称",
+          title: "流程名称",
           prop: "user",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
-          title: "用户名称",
-          prop: "user",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "用户姓名",
-          prop: "name",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "用户姓别",
-          prop: "set",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
-        },
-        {
-          title: "用户名称",
+          title: "所属类别",
           prop: "select",
           type: "select",
           options: [
@@ -82,10 +60,13 @@ export default {
               label: "上海"
             }
           ],
-
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
         }
+      ],
+      controlOptions: [
+        //按钮组
+        { name: "新建流程", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
       tableData: [
         {

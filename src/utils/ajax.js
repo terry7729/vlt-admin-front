@@ -1,7 +1,15 @@
 // ajax.js
+<<
+<< << < HEAD
 import axios from "axios";
 import qs from "qs";
-import storage from "./storage";
+import storage from "./storage"; ===
+=== =
+import axios from 'axios'
+import qs from 'qs'
+import storage from './storage'
+import Router from 'vue-router' >>>
+>>> > 2 b20b49a5d74d866403da023f79e165eb7101357
 import {
   Message,
   Loading
@@ -35,11 +43,20 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.7.0.49:8080/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api' // 本地server环境
     axios.defaults.baseURL = "http://10.7.0.51:8081/bms/api/"; // 本地server环境
+    //axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' 
+    // axios.defaults.baseURL = 'http://10.7.0.89:8080/bms/api' 
+    //axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' 
+    //axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' 
+    //axios.defaults.baseURL = 'http://10.7.0.103:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.49:8081/bms/api'
+
 
     // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' // 本地server环境 http://10.7.0.91:8080/bms/api
     // axios.defaults.baseURL = 'http://10.7.0.88:8080/bms/api/vlt' // 本地server环境
     // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
-    //axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
 }
 /**
  * @description http请求
@@ -50,6 +67,10 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  // 覆盖默认api baseURL
+  if (typeof options.baseURL === 'string') {
+    axios.defaults.baseURL = options.baseURL;
+  }
   // 基本参数
   if (storage.get("token")) {
     axios.defaults.headers.common["Authorization"] = storage.get("token");
@@ -118,6 +139,10 @@ const request = (method, url, options, extend) => {
             Message.success(res.data.msg);
           }
         }
+      }
+      // 未登录
+      if (res.data.code == 100) {
+        location.href = '#/login'
       }
       loading.close();
       return res.data;

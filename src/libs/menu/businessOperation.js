@@ -15,7 +15,7 @@ export default [{
           url: 'accountMoneyManage'
         }
       ],
-      icon: "el-icon-menu",
+      icon: "icon-chanpinfahang1",
       name: "渠道账户",
       url: 'screenWatch'
     },
@@ -32,7 +32,7 @@ export default [{
           url: 'operationAccountManage'
         }
       ],
-      icon: "el-icon-menu",
+      icon: "icon-houtaiweihu",
       name: "渠道角色权限维护",
       url: 'PermissionMaintain'
     },
@@ -59,7 +59,7 @@ export default [{
           url: 'winningCheck'
         }
       ],
-      icon: "el-icon-menu",
+      icon: "icon-daiduijiang",
       name: "彩票兑奖管理",
       url: 'LotteryManagement'
     },
@@ -81,7 +81,7 @@ export default [{
           url: 'MemberIntegralManagement'
         },
       ],
-      icon: "el-icon-menu",
+      icon: "icon-huiyuanguanli",
       name: "会员管理",
       url: 'MemberManagement'
     },
@@ -133,7 +133,7 @@ export default [{
     //       url: 'financialStatementYearFlow'
     //     },
     //   ],
-    //   icon: "el-icon-menu",
+    //   icon: "icon-caiwubaobiao",
     //   name: "财务报表",
     //   url: 'financialStatement'
     // },
@@ -165,7 +165,7 @@ export default [{
           url: 'activityResult'
         }
       ],
-      icon: "el-icon-menu",
+      icon: "icon-yingxiaotuiguang",
       name: "品牌与营销推广",
       url: ''
     },
@@ -176,7 +176,7 @@ export default [{
         name: "客户账户列表",
         url: 'customerAccount'
       }],
-      icon: "el-icon-menu",
+      icon: "icon-zhanghu1",
       name: "客户账户",
       url: 'customerAccount'
     },
@@ -218,7 +218,7 @@ export default [{
           url: 'fundsStatement'
         }
       ],
-      icon: "el-icon-menu",
+      icon: "icon-gongsizhanghujilu",
       name: "账户记录",
       url: ''
     },
@@ -231,7 +231,7 @@ export default [{
         name: "责任彩票列表",
         url: 'dutyLottery'
       }],
-      icon: "el-icon-menu",
+      icon: "icon-zeren",
       name: "责任彩票",
       url: ''
     },
@@ -263,7 +263,7 @@ export default [{
           url: 'infoPush'
         }
       ],
-      icon: "el-icon-menu",
+      icon: "icon-xinxifabu-OA",
       name: "公告信息发布",
       url: 'bulletinList'
     },
