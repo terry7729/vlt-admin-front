@@ -1,8 +1,6 @@
 // 业务监控系统路由配置
 // 中心监控
 const centerWatch = () => import('@/views/businessCharts/screenWatch/centerWatch')
-// 省级监控
-const provinceWatch = () => import('@/views/businessCharts/screenWatch/provinceWatch')
 //中央交易数据
 const centerDeal = () => import('@/views/businessCharts/dealData/centerDeal')
 //省级交易数据
@@ -63,8 +61,10 @@ const gameRiskEdit = () => import('@/views/businessCharts/warningRule/gameRiskEd
 const cityRiskEdit = () => import('@/views/businessCharts/warningRule/cityRiskEdit')
 //奖池风险指标编辑
 const pondRiskEdit = () => import('@/views/businessCharts/warningRule/pondRiskEdit')
-
-
+//用户风险指标编辑
+const userRiskAdd = () => import('@/views/businessCharts/warningRule/userRiskAdd')
+//userRiskEdit
+const userRiskEdit = () => import('@/views/businessCharts/warningRule/userRiskEdit')
 export default [
   {
     path: 'businessCharts/componentDemo',
@@ -96,14 +96,6 @@ export default [
       title: '大屏监控',
     },
     component: centerWatch
-  },
-  {
-    path: 'businessCharts/provinceWatch',
-    name: 'provinceWatch',
-    meta: {
-      title: '省级监控',
-    },
-    component: provinceWatch
   },
 
   {
@@ -219,7 +211,7 @@ export default [
     path: 'businessCharts/userRisk',
     name: 'userRisk',
     meta: {
-      title: '城市游戏风险指标',
+      title: '用户风险指标',
     },
     component: userRisk
   },
@@ -319,6 +311,25 @@ export default [
     },
     component: pondRiskEdit
   },
+  {
+    path: 'businessCharts/userRiskAdd',
+    name: 'userRiskAdd',
+    meta: {
+      title: '用户风险指标新增',
+      parentName:'userRisk'
+    },
+    component: userRiskAdd
+  },
+  {
+    path: 'businessCharts/userRiskEdit',
+    name: 'userRiskEdit',
+    meta: {
+      title: '用户风险指标编辑',
+      parentName:'userRisk'
+    },
+    component: userRiskEdit
+  },
+   
    
   
 

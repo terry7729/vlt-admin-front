@@ -77,7 +77,7 @@
         :value="item.value" 
         :options="item.options" 
         :props="item.setProps"
-        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-cascader>
+        :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :disabled="item.disabled"></el-cascader>
       <!-- 级联选择 返回对象-->
       <el-cascader  v-if="item.type=='cascader-object'" size="small" 
         v-model="form[item.prop]" 

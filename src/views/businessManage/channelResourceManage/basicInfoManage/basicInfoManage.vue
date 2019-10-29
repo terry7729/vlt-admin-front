@@ -8,7 +8,7 @@
         <control-bar :options="controlOptions" @select="addEquipment" position="left"></control-bar>
           <el-table :data="typeData" border style="width: 100%">
             <el-table-column prop="id" label="序号" type="index" width='80px'></el-table-column>
-            <el-table-column prop="goodsType" label="物品类别"></el-table-column>
+            <el-table-column prop="goodsTypeName" label="物品类别"></el-table-column>
             <el-table-column prop="goodsName" label="物品名称"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
             <el-table-column prop="status" label="状态">
@@ -21,7 +21,7 @@
             <el-table-column label="操作">
               <template slot-scope="scope">
                 <el-button @click="typeCheck(scope.row.id,scope.row.goodsType)" type="primary" v-prevent="2000" size="mini">查看</el-button>
-                <el-button @click="typeAmend(scope.row.id)" type="primary" v-prevent="2000" size="mini">修改</el-button>
+                <el-button @click="typeAmend(scope.row)" type="primary" v-prevent="2000" size="mini">修改</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -244,7 +244,7 @@ methods: {
     if(res && res.code == 0){
       this.typeData = res.data.records
       this.typeData.forEach(item=>{
-        item.goodsType = obj[item.goodsType]
+        item.goodsTypeName = obj[item.goodsType]
       })
       this.typeTotalCount = res.data.total
     }
@@ -273,36 +273,37 @@ methods: {
     this.$router.push({name:'addEquipment'})
   },
   //修改
-  typeAmend(id){
+  typeAmend(row){
     this.$router.push({
       name:'modification',
-      query:{id}
+      query:{
+        ...row
+      }
     })
-    console.log(id)
   },
   //设备查看
   typeCheck(id,goodsType){
     console.log(goodsType)
     switch(goodsType){
-      case "设备":
+      case  1:
         this.$router.push({
           path: 'equipmentCheck',
           query: {id}
         });
         break;
-      case "设施":
+      case 4:
         this.$router.push({
           path: 'facilityCheck',
           query: {id}
         });
         break;
-      case "耗材":
+      case 3:
         this.$router.push({
           path:'consumableCheck',
           query:{id}
         });
         break;
-      case "配件":
+      case 2:
         this.$router.push({
           path:'mountingsCheck',
           query:{id}

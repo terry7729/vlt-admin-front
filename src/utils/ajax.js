@@ -2,6 +2,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import storage from './storage'
+import Router from 'vue-router'
 import {
   Message,
   Loading
@@ -44,6 +45,10 @@ switch (process.env.VUE_APP_MODE) {
  * @return {Function} result promise
  */
 const request = (method, url, options, extend) => {
+  // 覆盖默认api baseURL
+  if (typeof options.baseURL === 'string') {
+    axios.defaults.baseURL = options.baseURL;
+  }
   // 基本参数
   if (storage.get('token')) {
     axios.defaults.headers.common['Authorization'] = storage.get('token');
@@ -113,9 +118,14 @@ const request = (method, url, options, extend) => {
           }
         }
       }
+      // 未登录
+      if (res.data.code == 100) {
+        location.href = '#/login'
+      }
       loading.close();
       return res.data;
     } catch (err) {
+      Message.closeAll();
       Message.error('接口请求错误！')
       loading.close();
     }

@@ -53,7 +53,7 @@ export default {
       controlOptions: [
         { name: "新建变更计划", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
       ],
-      tableData: [],
+      tableData: {},
       multipleSelection: [],
       totalCount:0,
       ruleForm: {
@@ -61,12 +61,12 @@ export default {
         limit: 10
       },
       searchOptions:[
-        {title: '游戏ID', type: 'input', prop: 'inputName', value: ''},
-        {title: '游戏名称', type: 'input', prop: 'inputName2', value: ''},
-        {title: '游戏类型', type: 'select', prop: 'selectName', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
-        {title: '游戏状态',type: 'select', prop: 'selectName2', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
-        {title: '奖池类型', type: 'select', prop: 'selectName3', value: '',options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
-        {title: '上市时间',type: 'datepicker-range', prop: 'date2', value: '', options: ['start', 'end']},
+        {title: '游戏ID', type: 'input', prop: 'gameId', value: ''},
+        {title: '游戏名称', type: 'input', prop: 'gameName', value: ''},
+        {title: '游戏类型', type: 'select', prop: 'gameType', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '游戏状态',type: 'select', prop: 'gameStatus', value: '', options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '奖池类型', type: 'select', prop: 'jackpotType', value: '',options: [{label: '选项1',value: 1},{label: '选项2',value: 2}]},
+        {title: '上市时间',type: 'datepicker-range', prop: 'gameListTime', value: '', options: ['start', 'end']},
       ],
       currentPage: 1,
       requestOptions: {
@@ -78,7 +78,7 @@ export default {
   
   },
   mounted() {
-    this.getStoreList({})
+    this.getChangePlanList({})
   },
   methods: {
     getChangePlanList(data) {
@@ -86,16 +86,12 @@ export default {
       (async (data)=>{
 				let res = await self.$api.getChangePlanList({data})
 				if(res && res.code == 0) {
-          console.log(res);
+          console.log('游戏变更计划',res);
           if (res.data && res.data.records.length > 0) {
             this.tableData = res.data;
           }
-          // this.tableData = r
-          // self.$message.success('注销成功')
-          // row.orderStatus = 6;
-          // self.getLotteryList(self.param)
 				} else {
-          // self.$message.warning(res.msg)
+          self.$message.warning(res.msg)
         }
       })(data)
     },
@@ -129,11 +125,21 @@ export default {
     },
     search(form) {
       console.log('search', form)
+      this.requestOptions = {
+        
+        ...form
+      }
+      console.log(this.requestOptions);
+      // this.getChangePlanList({});
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
+      this.requestOptions.size = val;
+      this.getChangePlanList(this.getChangePlanList);
     },
     handleCurrentChange(val) {
+      this.requestOptions.current = val;
+      this.getChangePlanList(this.getChangePlanList);
       console.log(`当前页: ${val}`);
     },
     translateChangeStatus(val) {

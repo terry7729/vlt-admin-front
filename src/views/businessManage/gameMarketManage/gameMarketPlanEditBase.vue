@@ -10,19 +10,19 @@
           <el-radio v-model="gameSaleChannel" label="1">区域内全部大厅</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="gameSaleChannel" label="2">区域内指定大厅</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
+            <el-input v-model="gameSaleChannelTextarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入大厅编号，多个大厅以“；”相隔"></el-input>
           </div>
         </el-form-item>
         <el-form-item label="销售终端">
           <el-radio v-model="gameSaleTerminal" label="1">大厅内全部终端</el-radio>
           <div class="flex-wrap">
             <el-radio v-model="gameSaleTerminal" label="2">大厅内指定终端</el-radio>
-            <el-input v-model="textarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
+            <el-input v-model="gameSaleTerminalTextarea" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入终端编号，多个终端以“；”相隔"></el-input>
           </div>
         </el-form-item>
         <el-row class="vlt-edit-btn">
-          <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
-          <el-button size="medium" @click="back" class="cancel">取 消</el-button>
+          <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+          <el-button size="medium" @click="cancel" class="cancel">取 消</el-button>
         </el-row>
       </el-form>
       </div>
@@ -30,6 +30,7 @@
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 
 export default {
   name: "",
@@ -37,7 +38,7 @@ export default {
     return {
       baseData: [
         {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '', placeholder: '请输入上市计划名称'},
-        {title: '上市时间', type: 'datetime',  prop: 'gameListPlanTime', value: ''},
+        {title: '上市时间', type: 'datetime',  prop: 'gameListTime', value: ''},
         {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '', placeholder: '请输入上市计划简介'},
         {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[]},
         {title: '销售区域', type: 'cascader-multiple',  prop: 'gameSaleArea', value: '', options: [],
@@ -53,69 +54,77 @@ export default {
       ],
       rules: {},
       gameSaleChannel: '1',
+      gameSaleChannelTextarea: '',
       gameSaleTerminal: '1',
+      gameSaleTerminalTextarea: '',
       options: [{label:'男', value:'1'},{label:'女',value:'2'}],
       checkList: [],
-      textarea: '',
       param: null,
-      insData: [],
-      planData:{}
+    }
+  },
+  props: {
+    planData: {
+      type: Object,
+      default: {}
+    },
+    insData: {
+      type: Array,
+      default: ()=>{}
+    },
+    insArray: {
+      type: Array,
+      default: ()=>{}
     }
   },
   created() {
     this.getAllGameList();
     // this.getInsData()
   },
-  methods: {
-    // 获取计划详情
-    getMarketPlanDetail() {
-      const self = this;
-      const data = {
-        id: this.$route.query.id,
-        gameId: this.$route.query.gameId
-      };
-      (async (data)=>{
-				let res = await self.$api.getMarketPlanDetail({data})
-				if(res && res.code == 0) {
-          // self.$message.success('注销成功')
-          this.planData = res.data;
-          self.getInsData();
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
+  watch: {
+    planData: {
+      handler(newValue, oldValue) {
+        // this.form = {};
+        this.init(newValue)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
     },
-    // 返回机构完整数组
-    getInsArray(id, obj) {
-      let array = [];
-      array.push(obj.id)
-      if(id&&id!=obj.id) {
-        obj.children.forEach((item)=>{
-          if(item.id == id) {
-            array[1] = item.id
-            return array
+    insData: {
+      handler(newValue, oldValue) {
+        this.$set(this.baseData[4], 'options', newValue)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
+    insArray(newValue, oldValue){
+      console.log('组件insarray', newValue, oldValue)
+      this.$set(this.baseData[4], 'value', newValue)
+
+    },
+  },
+  methods: {
+    init(val) {
+      this.baseData.forEach((item)=>{
+        if(item.prop == 'gameSaleArea') {
+          // this.$set(this.baseData[4], 'value', this.insArray)
+        }else if(item.prop=='gameSaleChannel'){
+          if(val.gameSaleChannel=='all') {
+            this.gameSaleChannel = '1'
           }else{
-            item.children&&item.children.forEach((list)=>{
-              if(list.id==id) {
-                array[1] = item.id
-                array[2] = list.id
-                return array
-              }else{
-                list.children&&list.children.forEach((el)=>{
-                  if(el.id==id) {
-                    array[1] = item.id
-                    array[2] = list.id
-                    array[3] = el.id
-                    return array
-                  }
-                })
-              }
-            })
+            this.gameSaleChannel = '2'
+            this.gameSaleChannelTextarea = val.gameSaleChannel
           }
-        })
-      }
-      console.log('getInsArray',array)
-      return array
+        }else if(item.prop=='gameSaleTerminal'){
+          if(val.gameSaleTerminal=='all') {
+            this.gameSaleTerminal = '1'
+          }else{
+            this.gameSaleTerminal = '2'
+            this.gameSaleTerminalTextarea = val.gameSaleTerminal
+          }
+        }else{
+          item.value = val.gameListPlanVo[item.prop]
+        }
+      })
     },
     // 获取所有游戏列表
     getAllGameList() {
@@ -141,24 +150,6 @@ export default {
         }
       })(data)
     },
-    // 获取机构数据
-    getInsData() {
-      const self = this;
-      const data = {};
-      (async (data)=>{
-				let res = await self.$api.QueryInsTree({data})
-				if(res && res.code == 0) {
-          console.log('res', res.data)
-          this.insData = res.data;
-          self.$set(self.baseData[4], 'options', res.data)
-          // self.formData[1].options = res.data;
-          // self.cascaderOptions = res.data;
-          self.getInsArray('', res.data)
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
-    },
     getStoreList(row) {
       const self = this;
       const data = {
@@ -179,8 +170,27 @@ export default {
       console.log('参数', val)
       this.param = val;
     },
-    next(val) {
-      this.$emit('next', this.param)
+    submit() {
+      if(this.gameSaleChannel=='1') {
+        this.param.gameSaleChannel = 'all'
+      }else{
+        this.param.gameSaleChannel = this.gameSaleChannelTextarea;
+      }
+      if(this.gameSaleTerminal=='1') {
+        this.param.gameSaleTerminal = 'all'
+      }else{
+        this.param.gameSaleTerminal = this.gameSaleTerminalTextarea;
+      }
+      this.param.gameSaleArea = this.param.gameSaleArea.join(',');
+      this.param.gameListTime = moment(this.param.gameListTime).format("YYYY-MM-DD HH:mm:ss")
+      this.$refs.baseForm.validate((val)=>{
+        console.log(val)
+
+      });
+      this.$emit('submit', this.param)
+    },
+    cancel() {
+
     }
   },
 }
@@ -193,13 +203,13 @@ export default {
     margin: 0 30px;
   }
   .vlt-edit-btn{
-    text-align: right;
-    margin: 60px 0 30px;
+    text-align: left;
+    margin: 60px 0 30px 30px;
     .el-button{
       // width: 120px;
     }
     .cancel{
-      // margin: 0 50px 0 80px;
+      margin-left: 15px;
     }
   }
   .flex-wrap{

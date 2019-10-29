@@ -141,7 +141,7 @@ const outStore = () => import('@/views/businessManage/channelResourceManage/outP
 //已出库详情
 const alreadyOutDetail = () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyOutDetail')
 //仓库管理新增仓库
-const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStores')
+const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
 
 

@@ -300,7 +300,8 @@ export default {
           endTime: "2019-10-2 09:55:12",
           initiator: "小明"
         }
-      ]
+      ],
+      formatJackpotType: ['无奖池', '单奖池', '多奖池']
     };
   },
   created() {
@@ -357,22 +358,9 @@ export default {
        arr.forEach(item => {
           item.value = obj[item.prop]
           if (item.prop == 'jackpotType') {
-            item.value = this.formatJackpotType(obj[item.prop])
+            item.value = this.formatJackpotType[obj[item.prop]]
           }
         })
-    },
-    formatJackpotType (status) {
-      switch(status){
-        case 1:
-        case "1": 
-        return status = '无奖池'
-        case 2:
-        case "2": 
-        return status = '单奖池'
-        case 3:
-        case "3": 
-        return status = '多奖池'
-      }
     }
   }
 };

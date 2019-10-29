@@ -12,7 +12,7 @@ export default {
   name:'userDetails',
  async created() {
     let id = this.$route.query.id
-    let reslt =await this.$api.getUserDestils(id)
+    let reslt =await this.$api.getUserDestils({data:id})
     console.log(reslt)
     if(reslt.code === 0){
         let arr = Object.keys(reslt.data)
