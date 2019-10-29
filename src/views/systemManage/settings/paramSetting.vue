@@ -161,8 +161,7 @@ export default {
       params2:{},
       params3:{}, 
       params4:{},
-      params:{},
-      formall:{},
+      formall:{sysConfigVoList:[]},
       // form1:{},
       // form2:{},
       // form3:{},
@@ -175,28 +174,26 @@ export default {
   methods: {
     changeForm1(val) {
       // this.params1 = val;
-       Object.assign(this.params, val);
+       Object.assign(this.params1, val);
         // this.form1[0]=this.params1
       // this.formall.=this.params1
-      console.log(123,this.params)
-      
     },
     changeForm2(val) {
         // this.params2 = val;
         // this.formall[1]=this.params2
-        Object.assign(this.params, val);
-        
+        Object.assign(this.params2, val);
+      
     },
     changeForm3(val) {
         //  this.params3 = val;
         // this.formall[2]=this.params3
-        Object.assign(this.params, val);
+        Object.assign(this.params3, val);
         
     },
     changeForm4(val) {
         //  this.params4 = val;
         // this.formall[3]=this.params4
-        Object.assign(this.params, val);
+        Object.assign(this.params4, val);
         
     },
     async submit() {
@@ -204,44 +201,40 @@ export default {
       // this.formall.list2=this.form2
       // this.formall.list3=this.form3
       // this.formall.list4=this.form4
+      console.log(123,this.params1)
       let form1={
         key:0,
-        value:{...this.params1}
+        val:this.params1
       }
-      console.log(33,...this.params1)
       console.log(999,form1)
       let form2={
         key:1,
-        value:{...this.params2}
+        val:this.params2
       }
-      console.log(222,form2)
       let form3={
         key:2,
-        value:{...this.params3}
+        val:this.params3
       }
       let form4={
         key:3,
-        value:{...this.params4}
+        val:this.params4
       }
-      // this.formall.sysConfigVoList.push(this.params1)
-      // this.formall.sysConfigVoList.push(this.params2)
-      // this.formall.sysConfigVoList.push(this.params3)
-      // this.formall.sysConfigVoList.push(this.params4)
+      this.formall.sysConfigVoList.push(form1,form2,form3,form4)
+      // this.formall.sysConfigVoList.push(form2)
+      // this.formall.sysConfigVoList.push(form3)
+      // this.formall.sysConfigVoList.push(form4)
       // let formall={}
+     
       // Object.assign(formall,this.params) 
-
-      // let data=formall
-      //   console.log(666,data)   
-      //console.log(data)
-      
+      console.log(321,this.formall)
+      let data=this.formall
+        console.log(666,data)         
       //  console.log(this.formall)
         // console.log(val);
         // let data = JSON.parse(JSON.stringify(this.formall));
         // let data= {...this.formall}
-
-        // let reslt = await this.$api.config({data});
-        // console.log(reslt);
-      
+        let reslt = await this.$api.config({data});
+        console.log(reslt);     
     }
   }
 };

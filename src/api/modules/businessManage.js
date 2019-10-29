@@ -107,7 +107,7 @@ export default {
   // 导出年度发展计划列表信息 
   exportDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportDevelopPlanList', options),
   // 导出年度发展计划汇总省级列表信息
-  exportProvinceDevelopPlanList : (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
+  exportProvinceDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
   // 导出年度发展计划汇总市级列表信息
   exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
 
@@ -151,7 +151,7 @@ export default {
   getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
   // 编辑变更计划
   editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
-  
+
 
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
@@ -165,7 +165,7 @@ export default {
   uploadChannelFiles: (options = {}) => ajax.upload('/fileUpload/upload', options),
   // 渠道列表导出
   exportChannelExcel: (options = {}) => ajax.post('/channel/exportExcel', options),
-  
+
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
@@ -184,7 +184,9 @@ export default {
   //保存资金权限信息  
   addFundRight: (options = {}) => ajax.put('/fund/addFundRight', options),
   //游戏销售权限
-  queryGameRight: (options = {}) => ajax.post('/sale/queryGameRight', options),
+  queryGameRight: (options = {}) => ajax.post('/sales/queryGameRight', options),
+  //游戏销售权限更改
+  updateGameRight: (options = {}) => ajax.post('/sales/update', options),
 
 
   //资源发放

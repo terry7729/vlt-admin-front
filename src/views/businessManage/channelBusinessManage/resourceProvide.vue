@@ -237,7 +237,6 @@ export default {
         totalMoney: totalMoney,
         warehouseGoodsInfoList: self.tableData
       };
-      console.log(data);
       let res = await this.$api.channelResProvide({ data });
       console.log(res);
       if (res && res.code === 0) {
