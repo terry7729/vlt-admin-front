@@ -36,6 +36,13 @@ export default {
   uploadGoodsType: (options = {}) => ajax.upload('/goodsType/imgFileUpload', options),
   // 类型管理修改
   modification: (options = {}) => ajax.post('/goodsType/update', options),
+  // 获取型号管理列表
+  getModelList: (options = {}) => ajax.post('/goodsModel/pageList', options),
+  // 型号管理状态修改
+  ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
+  // 型号管理新增
+  modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
+  
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情

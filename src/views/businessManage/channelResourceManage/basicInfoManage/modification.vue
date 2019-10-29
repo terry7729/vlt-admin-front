@@ -104,7 +104,19 @@
             @change="changeForm"
           ></base-form>
           <el-form-item label="上传图片" class="upload">
-            <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
+            <el-upload
+              class="gameIcon-uploader"
+              action=""
+              :limit="3"
+              accept=".png,.jpg,.jpeg"
+              :show-file-list="false"
+              :on-remove="handleRemove"
+              :http-request="uploadFileImg">
+              <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
+              <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
+            </el-upload>
+            <!-- <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{file}">
                 <img class="el-upload-list__item-thumbnail" :src="file.url" alt='' />
@@ -131,7 +143,7 @@
                   </span>
                 </span>
               </div>
-            </el-upload>
+            </el-upload> -->
             <!-- 放大 -->
             <!-- <el-dialog :visible.sync="dialogVisible">
               <img width="100%" :src="dialogImageUrl" alt="">
@@ -270,7 +282,7 @@ export default {
     };
   },
   components: {},
- async created() {
+ async created(data) {
     // 编辑回填
     let id = this.$route.query.id
     let reslt =await this.$api.getDetail({data:id})
@@ -302,7 +314,7 @@ export default {
           if(data.goodsType==3||data.goodsType==4) {
             data.imgInfo = self.imgId.join(',');
           }        
-          let res = await this.$api.modification({data})
+          let res = await this.$api.modification({data:id})
           console.log(res)
           console.log(this.params)
           if(res || res.code == 0){
@@ -310,6 +322,7 @@ export default {
               message:'修改成功',
               type:'success'
             })
+            this.$router.push({path: 'basicInfoManage'})
           }
         }
       })
@@ -346,9 +359,9 @@ export default {
       const self = this;
       let formData = new FormData();
       formData.append('file', files.file);
-      formData.append('refId', this.id);
-      formData.append('flag', true);
-      formData.append('busType', 6);
+      // formData.append('refId', this.id);
+      // formData.append('flag', true);
+      // formData.append('busType', 6);
       const res = await this.$api.uploadGoodsType({
         data: formData,
         onUploadProgress(evt) {

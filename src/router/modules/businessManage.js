@@ -132,6 +132,8 @@ const mountingsCheck = () => import('@/views/businessManage/channelResourceManag
 const modelCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelCheck')
 //类型管理新增
 const modelAdd = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelAdd')
+// 型号管理修改
+const modelModification = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelModification')
 //入库
 const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
 //入库详情
@@ -935,6 +937,16 @@ export default [
     },
     component: modelAdd
   },
+  {
+    path: 'businessManage/channelResourceManage/modelModification',
+    name: 'modelModification',
+    meta: {
+      parentName:'basicInfoManage',
+      title: '基本信息型号管理修改',
+    },
+    component: modelModification
+  },
+  
   {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
