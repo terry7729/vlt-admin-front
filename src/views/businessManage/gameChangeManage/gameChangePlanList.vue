@@ -28,7 +28,7 @@
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="150">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row.id)">查看</el-button>
+            <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row)">查看</el-button>
             <el-button  size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
           </template>
         </el-table-column>
@@ -108,10 +108,14 @@ export default {
       this.multipleSelection = val;
     },
     //查看页面跳转
-    detail (id) {
+    detail (row) {
       this.$router.push({
         path: './gameChangePlanDetail',
-        query: {id}
+        query: {
+          id: row.id,
+          gameId: row.gameId,
+          listPlanId: row.listPlanId
+        }
       })
     },
     selectBtn() {

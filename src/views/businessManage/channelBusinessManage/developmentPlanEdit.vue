@@ -215,7 +215,7 @@ export default {
         { title: "计划说明", type: "textarea", prop: "planDesc", value: "" }
       ],
       params: {
-        insLevel: "2"
+        insLevel: 2
       },
       rules: {
         test: [
@@ -266,7 +266,7 @@ export default {
       if (routerQuery && routerQuery.id) {
         const data = {
           id: routerQuery.id,
-          insLevel: routerQuery.insLevel
+          insLevel: parseInt(routerQuery.insLevel)
         };
         this.getDevelopPlanInfo(data);
       }
