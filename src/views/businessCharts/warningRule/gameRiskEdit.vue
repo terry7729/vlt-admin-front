@@ -94,6 +94,7 @@
               :step="10"
               size="medium"
             ></el-input-number>
+             <p class="tip"><span>*</span>数值达到对应风险指标值即为触发</p>
           </el-form-item>
         </div>
         <el-form-item>
@@ -144,11 +145,11 @@
         <el-table-column align="center" prop="type" label="通知对象" min-width="45%">
           <template slot-scope="scope">
             <div v-if="scope.row.warningLevel==='普通'" class="checkInfor">
-              <el-checkbox size="medium" v-model="checked1" @change="cityPropleOrdinary">市</el-checkbox>
+              <el-checkbox size="medium" v-model="checkCityOrdinary" @change="cityPropleOrdinary">市</el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyCityObjOfOrdinary1"
-                v-model="options3Value"
+                v-model="informPeopleCityOrdinary"
                 placeholder="请选择"
               >
                 <el-option
@@ -158,11 +159,11 @@
                   :value="item.value"
                 ></el-option>
               </el-select>
-              <el-checkbox label="省" v-model="checked2" @change="proPropleOrdinary" size="medium">省</el-checkbox>
+              <el-checkbox label="省" v-model="checkProOrdinary" @change="proPropleOrdinary" size="medium">省</el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyProObjOfOrdinary1"
-                v-model="options4Value"
+                v-model="informPeopleProOrdinary"
                 placeholder="请选择"
               >
                 <el-option
@@ -175,13 +176,13 @@
               <el-checkbox
                 label="中央"
                 @change="centerPropleOrdinary"
-                v-model="checked3"
+                v-model="checkCenterOrdinary"
                 size="medium"
               >中央</el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyCenterObjOfOrdinary1"
-                v-model="options5Value"
+                v-model="informPeopleCenterOrdinary"
                 placeholder="请选择"
               >
                 <el-option
@@ -193,10 +194,10 @@
               </el-select>
             </div>
             <div v-if="scope.row.warningLevel==='严重'" class="checkInfor">
-              <el-checkbox label="市" v-model="checked4" @change="cityPropleSerious" size="medium">市</el-checkbox>
+              <el-checkbox label="市" v-model="checkCitySerious" @change="cityPropleSerious" size="medium">市</el-checkbox>
               <el-select
                 size="mini"
-                v-model="options6Value"
+                v-model="informPeopleCitySerious"
                 :disabled="optionsNotifyCityObjOfSerious"
                 placeholder="请选择"
               >
@@ -207,11 +208,11 @@
                   :value="item.value"
                 ></el-option>
               </el-select>
-              <el-checkbox label="省" size="medium" v-model="checked5" @change="proPropleSerious"></el-checkbox>
+              <el-checkbox label="省" size="medium" v-model="checkProSerious" @change="proPropleSerious"></el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyProObjOfSerious"
-                v-model="options7Value"
+                v-model="informPeopleProSerious"
                 placeholder="请选择"
               >
                 <el-option
@@ -224,13 +225,13 @@
               <el-checkbox
                 label="中央"
                 size="medium"
-                v-model="checked6"
+                v-model="checkCenterSerious"
                 @change="centerPropleSerious"
               ></el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyCenterObjOfSerious"
-                v-model="options8Value"
+                v-model="informPeopleCenterSerious"
                 placeholder="请选择"
               >
                 <el-option
@@ -242,11 +243,11 @@
               </el-select>
             </div>
             <div v-if="scope.row.warningLevel==='重大'" class="checkInfor">
-              <el-checkbox label="市" v-model="checked7" @change="cityPropleMajor" size="medium"></el-checkbox>
+              <el-checkbox label="市" v-model="checkCityMajor" @change="cityPropleMajor" size="medium"></el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyCityObjOfMajor"
-                v-model="options9Value"
+                v-model="informPeopleCityMajor"
                 placeholder="请选择"
               >
                 <el-option
@@ -256,11 +257,11 @@
                   :value="item.value"
                 ></el-option>
               </el-select>
-              <el-checkbox label="省" v-model="checked8" @change="porPropleMajor" size="medium"></el-checkbox>
+              <el-checkbox label="省" v-model="checkProMajor" @change="porPropleMajor" size="medium"></el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyProObjOfMajor"
-                v-model="options10Value"
+                v-model="informPeopleProMajor"
                 placeholder="请选择"
               >
                 <el-option
@@ -270,11 +271,11 @@
                   :value="item.value"
                 ></el-option>
               </el-select>
-              <el-checkbox label="中央" v-model="checked9" @change="centerPropleMajor" size="medium"></el-checkbox>
+              <el-checkbox label="中央" v-model="checkCenterMajor" @change="centerPropleMajor" size="medium"></el-checkbox>
               <el-select
                 size="mini"
                 :disabled="optionsNotifyCenterObjOfMajor"
-                v-model="options11Value"
+                v-model="informPeopleCenterMajor"
                 placeholder="请选择"
               >
                 <el-option
@@ -362,117 +363,117 @@ export default {
           cityName: "广州"
         }
       ],
-      options3: [
+     options3: [
         {
-          value: 11,
-          label: "张三"
+          value: 3,
+          label: "3"
         },
         {
-          value: 12,
-          label: "李四"
+          value: 4,
+          label: "4"
         }
       ],
       options4: [
         {
-          value: 35,
-          label: "王五"
+          value: 5,
+          label: "5"
         },
         {
-          value: 36,
-          label: "赵六"
+          value: 6,
+          label: "6"
         }
       ],
       options6: [
         {
-          value: 33,
-          label: "孙7"
+          value: 7,
+          label: "7"
         },
         {
-          value: 34,
-          label: "钱八"
+          value: 8,
+          label: "8"
         }
       ],
       options7: [
         {
-          value: 15,
-          label: "孙7"
+          value: 9,
+          label: "9"
         },
         {
-          value: 16,
-          label: "钱八"
+          value: 10,
+          label: "10"
         }
       ],
       options8: [
         {
-          value: 17,
-          label: "孙7"
+          value: 11,
+          label: "11"
         },
         {
-          value: 18,
-          label: "钱八"
+          value: 12,
+          label: "12"
         }
       ],
       options5: [
         {
-          value: 19,
-          label: "孙7"
+          value: 13,
+          label: "13"
         },
         {
-          value: 20,
-          label: "钱八"
+          value: 14,
+          label: "14"
         }
       ],
       options11: [
         {
-          value: 21,
-          label: "孙7"
+          value: 15,
+          label: "15"
         },
         {
-          value: 22,
-          label: "钱八"
+          value: 16,
+          label: "16"
         }
       ],
       options9: [
         {
-          value: 23,
-          label: "孙7"
+          value: 17,
+          label: "17"
         },
         {
-          value: 24,
-          label: "钱八"
+          value: 18,
+          label: "18"
         }
       ],
       options10: [
         {
-          value: 25,
-          label: "孙7"
+          value: 19,
+          label: "19"
         },
         {
-          value: 26,
-          label: "钱八"
+          value: 20,
+          label: "20"
         }
       ],
       gameValue: "",
       cityValue: "",
       proviceValue: "",
-      options3Value: "",
-      options4Value: "",
-      options5Value: "",
-      options6Value: "",
-      options7Value: "",
-      options8Value: "",
-      options9Value: "",
-      options10Value: "",
-      options11Value: "",
-      checked1: true,
-      checked2: false,
-      checked3: false,
-      checked4: true,
-      checked5: true,
-      checked6: false,
-      checked7: true,
-      checked8: true,
-      checked9: true,
+      informPeopleCityOrdinary: "",
+      informPeopleProOrdinary: "",
+      informPeopleCenterOrdinary: "",
+      informPeopleCitySerious: "",
+      informPeopleProSerious: "",
+      informPeopleCenterSerious: "",
+      informPeopleCityMajor: "",
+      informPeopleProMajor: "",
+      informPeopleCenterMajor: "",
+      checkCityOrdinary: true,
+      checkProOrdinary: false,
+      checkCenterOrdinary: false,
+      checkCitySerious: true,
+      checkProSerious: true,
+      checkCenterSerious: false,
+      checkCityMajor: true,
+      checkProMajor: true,
+      checkCenterMajor: true,
       optionsNotifyCityObjOfOrdinary1: false, //普通市级通知对象
       optionsNotifyProObjOfOrdinary1: false, //普通省级通知对象
       optionsNotifyCenterObjOfOrdinary1: false, //普通中央通知对象
@@ -575,83 +576,83 @@ export default {
     },
     //勾选普通市级通知对象
     cityPropleOrdinary() {
-      if (this.checked1) {
+      if (this.checkCityOrdinary) {
         this.optionsNotifyCityObjOfOrdinary1 = false;
       } else {
         this.optionsNotifyCityObjOfOrdinary1 = true;
-        this.options3Value = "";
+        this.informPeopleCityOrdinary = "";
       }
     },
     //勾选普通省级通知对象
     proPropleOrdinary() {
-      if (this.checked2) {
+      if (this.checkProOrdinary) {
         this.optionsNotifyProObjOfOrdinary1 = false;
       } else {
         this.optionsNotifyProObjOfOrdinary1 = true;
-        this.options4Value = "";
+        this.informPeopleProOrdinary = "";
       }
     },
     //勾选普通中央通知对象
     centerPropleOrdinary() {
-      if (this.checked3) {
+      if (this.checkCenterOrdinary) {
         this.optionsNotifyCenterObjOfOrdinary1 = false;
       } else {
         this.optionsNotifyCenterObjOfOrdinary1 = true;
-        this.options5Value = "";
+        this.informPeopleCenterOrdinary = "";
       }
     },
     //勾选严重城市通知对象
     cityPropleSerious() {
-      if (this.checked4) {
+      if (this.checkCitySerious) {
         this.optionsNotifyCityObjOfSerious = false;
       } else {
         this.optionsNotifyCityObjOfSerious = true;
-        this.options6Value = "";
+        this.informPeopleCitySerious = "";
       }
     },
     //勾选严重省级通知对象
     proPropleSerious() {
-      if (this.checked5) {
+      if (this.checkProSerious) {
         this.optionsNotifyProObjOfSerious = false;
       } else {
         this.optionsNotifyProObjOfSerious = true;
-        this.options7Value = "";
+        this.informPeopleProSerious = "";
       }
     },
     //勾选严重中央通知对象
     centerPropleSerious() {
-      if (this.checked6) {
+      if (this.checkCenterSerious) {
         this.optionsNotifyCenterObjOfSerious = false;
       } else {
         this.optionsNotifyCenterObjOfSerious = true;
-        this.options8Value = "";
+        this.informPeopleCenterSerious = "";
       }
     },
     //勾选重大市级通知对象
     cityPropleMajor() {
-      if (this.checked7) {
+      if (this.checkCityMajor) {
         this.optionsNotifyCityObjOfMajor = false;
       } else {
         this.optionsNotifyCityObjOfMajor = true;
-        this.options9Value = "";
+        this.informPeopleCityMajor = "";
       }
     },
     //勾选重大省级通知对象
     porPropleMajor() {
-      if (this.checked8) {
+      if (this.checkProMajor) {
         this.optionsNotifyProObjOfMajor = false;
       } else {
         this.optionsNotifyProObjOfMajor = true;
-        this.options10Value = "";
+        this.informPeopleProMajor = "";
       }
     },
     //勾选重大中央通知对象
     centerPropleMajor() {
-      if (this.checked9) {
+      if (this.checkCenterMajor) {
         this.optionsNotifyCenterObjOfMajor = false;
       } else {
         this.optionsNotifyCenterObjOfMajor = true;
-        this.options11Value = "";
+        this.informPeopleCenterMajor = "";
       }
     },
 
@@ -685,15 +686,18 @@ export default {
           highestReturnRateMajor: this.form.highestReturnRateMajor,
           highestReturnRateOrdinary: this.form.highestReturnRateOrdinary,
           highestReturnRateSerious: this.form.highestReturnRateSerious,
-          informCentralManIdMajor: this.options11Value,
-          informCentralManIdOrdinary: this.options9Value,
-          informCentralManIdSerious: this.options10Value,
-          informCityManIdMajor: this.options5Value,
-          informCityManIdOrdinary: this.options3Value,
-          informCityManIdSerious: this.options4Value,
-          informProvinceManIdMajor: this.options8Value,
-          informProvinceManIdOrdinary: this.options6Value,
-          informProvinceManIdSerious: this.options7Value,
+            informCentralManIdMajor: this.informPeopleCenterMajor,
+          informProvinceManIdMajor: this.informPeopleProMajor,
+          informCityManIdMajor: this.informPeopleCityMajor,
+
+          informCentralManIdOrdinary: this.informPeopleCenterOrdinary,
+          informProvinceManIdOrdinary: this.informPeopleProOrdinary,
+          informCityManIdOrdinary: this.informPeopleCityOrdinary,
+
+          informCityManIdSerious: this.informPeopleCitySerious,
+          informCentralManIdSerious: this.informPeopleCenterSerious,
+          informProvinceManIdSerious: this.informPeopleProSerious,
+
           informWayMajor: this.form.informWayMajor,
           informWayOrdinary: this.form.informWayOrdinary,
           informWaySerious: this.form.informWaySerious,
@@ -708,6 +712,9 @@ export default {
           message: "修改成功",
           type: "success"
         });
+         this.$router.push({name:'gameRiskDetail',query:{
+            id:this.$route.query.id
+        }})
       } else {
         this.$message.error("修改失败");
       }
@@ -743,16 +750,17 @@ export default {
         this.checkList2 = this.showInformType(this.form.informWayMajor);
         this.checkList1 = this.showInformType(this.form.informWaySerious);
         this.checkList = this.showInformType(this.form.informWayOrdinary);
-        this.options3Value = this.form.informCityManIdOrdinary;
-        this.options11Value = this.form.informCentralManIdMajor;
-        this.options9Value = this.form.informCentralManIdOrdinary;
-        this.options10Value = this.form.informCentralManIdSerious;
-        this.options5Value = this.form.informCityManIdMajor;
-        this.options3Value = this.form.informCityManIdOrdinary;
-        this.options4Value = this.form.informCityManIdSerious;
-        this.options8Value = this.form.informProvinceManIdMajor;
-        this.options6Value = this.form.informProvinceManIdOrdinary;
-        this.options7Value = this.form.informProvinceManIdSerious;
+         this.informPeopleCityOrdinary = this.form.informCityManIdOrdinary;
+        this.informPeopleProOrdinary = this.form.informProvinceManIdOrdinary;
+        this.informPeopleCenterOrdinary = this.form.informCentralManIdOrdinary;
+        this.informPeopleCitySerious = this.form.informCityManIdSerious;
+        this.informPeopleProSerious = this.form.informProvinceManIdSerious;
+        this.informPeopleCenterSerious = this.form.informCentralManIdSerious;
+
+        this.informPeopleCityMajor = this.form.informCityManIdMajor;
+
+        this.informPeopleProMajor = this.form.informProvinceManIdMajor;
+        this.informPeopleCenterMajor = this.form.informCentralManIdMajor;
       }
     },
     showInformType(type) {

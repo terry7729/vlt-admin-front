@@ -140,6 +140,9 @@
           </el-form-item>
         </div>
         <el-form-item>
+          <p class="tips">
+            <span>*</span>数值达到对应风险指标值即为触发
+          </p>
           <div class="btn">
             <el-button type="primary" v-prevent="1000" @click="onSubmit">立即创建</el-button>
             <el-button>取消</el-button>
@@ -463,92 +466,92 @@ export default {
       ],
       options3: [
         {
-          value: "11",
-          label: "张三"
+          value: 3,
+          label: "3"
         },
         {
-          value: "12",
-          label: "李四"
+          value: 4,
+          label: "4"
         }
       ],
       options4: [
         {
-          value: "35",
-          label: "王五"
+          value: 5,
+          label: "5"
         },
         {
-          value: "36",
-          label: "赵六"
+          value: 6,
+          label: "6"
         }
       ],
       options6: [
         {
-          value: "33",
-          label: "孙7"
+          value: 7,
+          label: "7"
         },
         {
-          value: "34",
-          label: "钱八"
+          value: 8,
+          label: "8"
         }
       ],
       options7: [
         {
-          value: "15",
-          label: "孙7"
+          value: 9,
+          label: "9"
         },
         {
-          value: "16",
-          label: "钱八"
+          value: 10,
+          label: "10"
         }
       ],
       options8: [
         {
-          value: "17",
-          label: "孙7"
+          value: 11,
+          label: "11"
         },
         {
-          value: "18",
-          label: "钱八"
+          value: 12,
+          label: "12"
         }
       ],
       options5: [
         {
-          value: "19",
-          label: "孙7"
+          value: 13,
+          label: "13"
         },
         {
-          value: "20",
-          label: "钱八"
+          value: 14,
+          label: "14"
         }
       ],
       options11: [
         {
-          value: "21",
-          label: "孙7"
+          value: 15,
+          label: "15"
         },
         {
-          value: "22",
-          label: "钱八"
+          value: 16,
+          label: "16"
         }
       ],
       options9: [
         {
-          value: "23",
-          label: "孙7"
+          value: 17,
+          label: "17"
         },
         {
-          value: "24",
-          label: "钱八"
+          value: 18,
+          label: "18"
         }
       ],
       options10: [
         {
-          value: "25",
-          label: "孙7"
+          value: 19,
+          label: "19"
         },
         {
-          value: "26",
-          label: "钱八"
+          value: 20,
+          label: "20"
         }
       ],
       gameValue: "",
@@ -585,7 +588,7 @@ export default {
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
-     
+
       form: {
         alarmFrequencyMajor: "", //重大告警频次
         alarmFrequencyOrdinary: "", //普通告警频次
@@ -812,41 +815,41 @@ export default {
           this.showHighestSalesMoney = true;
         } else {
           this.showHighestSalesMoney = false;
-          this.form.highestSalesMoneyMajor=''
-          this.form.highestSalesMoneySerious='',
-          this.form.highestSalesMoneyOrdinary=''
+          this.form.highestSalesMoneyMajor = "";
+          (this.form.highestSalesMoneySerious = ""),
+            (this.form.highestSalesMoneyOrdinary = "");
         }
         if (list.includes("最低销量")) {
           this.showMinimumSalesMoney = true;
         } else {
           this.showMinimumSalesMoney = false;
-          this.form.minimumSalesMoneyMajor='',
-          this.form.minimumSalesMoneyOrdinary=''
-          this.form.minimumSalesMoneySerious=''
+          (this.form.minimumSalesMoneyMajor = ""),
+            (this.form.minimumSalesMoneyOrdinary = "");
+          this.form.minimumSalesMoneySerious = "";
         }
         if (list.includes("最低开机率")) {
           this.showMinimumOperatingRate = true;
         } else {
           this.showMinimumOperatingRate = false;
-          this.form.minimumOperatingRateMajor=''
-          this.form.minimumOperatingRateSerious=''
-          this.form.minimumOperatingRateOrdinary=''
+          this.form.minimumOperatingRateMajor = "";
+          this.form.minimumOperatingRateSerious = "";
+          this.form.minimumOperatingRateOrdinary = "";
         }
         if (list.includes("最低在线数量")) {
           this.showMinimumOnlineCounts = true;
         } else {
           this.showMinimumOnlineCounts = false;
-          this.form.minimumOnlineCountsMajor=''
-          this.form.minimumOnlineCountsSerious=''
-          this.form.minimumOnlineCountsOrdinary=''
+          this.form.minimumOnlineCountsMajor = "";
+          this.form.minimumOnlineCountsSerious = "";
+          this.form.minimumOnlineCountsOrdinary = "";
         }
         if (list.includes("最低单厅销量")) {
           this.showMinimumHallSaleMoney = true;
         } else {
           this.showMinimumHallSaleMoney = false;
-          this.form.minimumHallSaleMoneyMajor=''
-          this.form.minimumHallSaleMoneyOrdinary=''
-          this.form.minimumHallSaleMoneySerious=''
+          this.form.minimumHallSaleMoneyMajor = "";
+          this.form.minimumHallSaleMoneyOrdinary = "";
+          this.form.minimumHallSaleMoneySerious = "";
         }
       } else {
         this.showeditBox = false;
@@ -870,13 +873,15 @@ export default {
           // collectFrequency: this.form.collectFrequency,
           collectStatus: this.form.collectStatus,
           informCentralManIdMajor: this.informPeopleCenterMajor,
-          informCentralManIdOrdinary: this.informPeopleCityMajor,
-          informCentralManIdSerious: this.informPeopleProMajor,
-          informCityManIdMajor: this.informPeopleCenterOrdinary,
+          informProvinceManIdMajor: this.informPeopleProMajor,
+          informCityManIdMajor: this.informPeopleCityMajor,
+
+          informCentralManIdOrdinary: this.informPeopleCenterOrdinary,
+          informProvinceManIdOrdinary: this.informPeopleProOrdinary,
           informCityManIdOrdinary: this.informPeopleCityOrdinary,
-          informCityManIdSerious: this.informPeopleProOrdinary,
-          informProvinceManIdMajor: this.informPeopleCenterSerious,
-          informProvinceManIdOrdinary: this.informPeopleCitySerious,
+
+          informCityManIdSerious: this.informPeopleCitySerious,
+          informCentralManIdSerious: this.informPeopleCenterSerious,
           informProvinceManIdSerious: this.informPeopleProSerious,
           informWayMajor: this.form.informWayMajor,
           informWayOrdinary: this.form.informWayOrdinary,
@@ -913,6 +918,12 @@ export default {
         //   message: "新增成功",
         //   type: "success"
         // });
+        this.$router.push({
+          name: "cityRiskDetail",
+          query: {
+            id: res.data.businessKey
+          }
+        });
       } else {
         // this.$message.error("新增失败");
       }

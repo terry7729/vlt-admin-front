@@ -8,7 +8,7 @@
     <div class="create-plan">
       <span>新建活动计划</span>
     </div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName" @tab-click="tabClick">
       <el-tab-pane label="活动内容" name="activeContent">
         <panel title="基础信息" :show="true" class="vlt-edit-single">
           <div class="vlt-edit-wrap">
@@ -640,6 +640,7 @@ export default {
       this.taskForm = val;
     },
     resourceSearch() {},
+    tabClick() {},
 
     //附件上传
     beforeRemove() {},
@@ -651,16 +652,14 @@ export default {
     handlePictureCardPreview(file) {},
     handleCheckedChange(value) {
       // console.log(value);
-    },
-
-    handleClick() {}
+    }
   },
   computed: {},
   created() {},
   mounted() {},
   components: {},
   updated() {
-    // console.log(this.baseFormLater);
+  
   }
 };
 </script>
