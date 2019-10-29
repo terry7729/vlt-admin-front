@@ -97,9 +97,7 @@ export default {
     async loginOut() {
       const self = this;
       const res = await self.$api.getLogOut({
-        data: {
-          message: '退出成功'
-        }
+        message: '退出成功'
       });
       if (res && res.code == 0) {
         storage.remove('token');
