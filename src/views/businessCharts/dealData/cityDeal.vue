@@ -82,8 +82,9 @@ export default {
       const res = await self.$api.getCityDeal({
         data: {
           pageNum: self.listQuery.page,
-          pageSize: self.listQuery.limit
-        }
+          pageSize: self.listQuery.limit,                 
+        },
+        baseURL:'http://10.7.0.90:8080/api'
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;

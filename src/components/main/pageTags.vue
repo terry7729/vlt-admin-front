@@ -31,6 +31,7 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import windowScreen from '@/utils/windowScreen'
 
 export default {
   name: 'pageTags',
@@ -53,7 +54,8 @@ export default {
     $route(to, from) {
       const currentTag = {
         name: to.meta.title,
-        routerName: to.name
+        routerName: to.name,
+        query: to.query
       }
       this.setRouterTags(currentTag);
       this.setCurrentTag(currentTag);
@@ -70,21 +72,40 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
+      this.tagScroller = document.querySelector('.tags-scroller');
       this.scrollX();
+      // 窗口变化计算边界响应
+      // let flag = true, 
+      //     winWidth = windowScreen.getWidth();
+      // const tagList = document.querySelector('.tags-list'), 
+      //       tagMargin = 4;
+      // window.addEventListener('resize', () => {
+      //   if (flag) {
+      //     flag = false;
+      //     setTimeout(() => {
+      //       const dw = windowScreen.getWidth() - winWidth;
+      //       this.translateX += dw;
+      //       flag = true;
+      //       winWidth = windowScreen.getWidth();
+      //     }, 500)
+      //   }
+      // })
     })
   },
   methods: {
     init() {
       const currentTag = {
         name: this.$route.meta.title,
-        routerName: this.$route.name
+        routerName: this.$route.name,
+        query: this.$route.query
       }
       this.setRouterTags(currentTag);
       this.setCurrentTag(currentTag);
     },
     to(item) {
       this.$router.push({
-        name: item.routerName
+        name: item.routerName,
+        query: item.query
       })
     },
     close(item, index) {
@@ -112,7 +133,7 @@ export default {
     scrollX() {
       // 标签栏滚动
       let x = 0;
-      const wrapper = document.querySelector('.tags-scroller'),
+      const wrapper = this.tagScroller,
             tags = document.querySelectorAll('.el-tag'),
             currentTag = tags[this.current],
             currentTagPosition = currentTag.getBoundingClientRect(),
@@ -129,9 +150,9 @@ export default {
       } else if (currentTagPosition.left < wrapperPosition.left + boundary) {
         const prevTag = tags[this.current - 1];
         if (prevTag) {
-          x = wrapperPosition.left - prevTag.getBoundingClientRect().left;
+          x = wrapperPosition.left - prevTag.getBoundingClientRect().left + tagMargin;
         } else {
-          x = wrapperPosition.left - currentTagPosition.left;
+          x = wrapperPosition.left - currentTagPosition.left + tagMargin;
         }
       }
       this.translateX += x;
@@ -143,7 +164,7 @@ export default {
 
 <style lang="less">
   .page-tags-con{
-    padding: 5px 10px;
+    padding: 5px 10px 5px 0;
     position: relative;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Chrome/Safari/Opera */
@@ -168,7 +189,7 @@ export default {
     .el-tag{
       cursor: pointer;
       background-color: #fff;
-      margin-right: 4px;
+      margin-left: 4px;
       position: relative;
       overflow: hidden;
       &:before{

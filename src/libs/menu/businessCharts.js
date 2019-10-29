@@ -5,7 +5,7 @@ export default [{
   name: "业务监控",
   url: '', // 前端路由名称
   childResources: [{
-      icon: "el-icon-menu",
+      icon: "icon-shujujiankong",
       name: "大屏监控",
       url: 'screenWatch',
       childResources: [{
@@ -19,7 +19,7 @@ export default [{
 
     },
     {
-      icon: "el-icon-menu",
+      icon: "icon-shujuzidian",
       name: "交易数据监控",
       url: 'dealData',
       childResources: [{
@@ -55,7 +55,7 @@ export default [{
       ],
 
     }, {
-      icon: "el-icon-menu",
+      icon: "icon-xinxifabu-OA",
       name: "销售厅账户监控",
       url: 'accountWatch',
       childResources: [
@@ -63,7 +63,7 @@ export default [{
       ],
 
     }, {
-      icon: "el-icon-menu",
+      icon: "icon-jixiao",
       name: "销售厅设备监控",
       url: 'equipmentWatch',
       childResources: [
@@ -83,7 +83,7 @@ export default [{
 
     }, 
     {
-      icon: "el-icon-menu",
+      icon: "icon-yonghuguanli",
       name: "告警管理",
       url: 'warningManager',
       childResources: [{
@@ -133,7 +133,7 @@ export default [{
       ],
 
     },{
-      icon: "el-icon-menu",
+      icon: "icon-baobiao",
       name: "报表管理",
       url: 'reportManage',
       childResources: [

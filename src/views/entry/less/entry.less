@@ -1,5 +1,7 @@
 // entry
 .entry-container{
+  min-height: 100%;
+  background-color: #F3F6FC;
   .entry-hd{
     background-color: #001D41;
     height: 64px;
@@ -50,97 +52,130 @@
     padding-top: 64px;
     text-align: center;
     .entry-list{
-      width: 1074px;
-      margin: 6% auto;
+      width: 1230px;
+      margin: 40px auto 10px;
       overflow: hidden;
       li{
         float: left;
         font-size: 18px;
         cursor: pointer;
-        width: 230px;
-        height: 100px;
+        width: 380px;
+        height: 160px;
         line-height: 100px;
         border-radius: 4px;
         background-color: #fff;
         overflow: hidden;
-        box-shadow: 5px 5px 10px -5px rgba(0,0,0,0.2);
-        margin: 64px 64px 0;
+        margin: 0 15px 30px;
+        padding: 30px 40px;
         &:hover{
           opacity: 0.8;
         }
         &:nth-child(1) dt{
-          background-color: #f1a326;
+          background-image: url("../../../assets/img/icon/entry/busManage.png")
         }
         &:nth-child(2) dt{
-          background-color: #38b03f;
+          background-image: url("../../../assets/img/icon/entry/busOperation.png")
         }
         &:nth-child(3) dt{
-          background-color: #ea644a;
+          background-image: url("../../../assets/img/icon/entry/busWatch.png")
         }
         &:nth-child(4) dt{
-          background-color: #3cb8cf;
+          background-image: url("../../../assets/img/icon/entry/sysSetting.png")
         }
       }
       dl{
         overflow: hidden;
-        text-align: center;
+        text-align: left;
       }
       dt{
         float: left;
-        
-        width: 72px;
+        width: 100px;
         height: 100px;
-        line-height: 100px;
-        font-size: 36px;
-        color: #fff;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 40px;
       }
       dd{
         overflow: hidden;
+        color: #282E43;
       }
     }
     .msg-con{
-      width: 946px;
+      width: 1230px;
       margin: 0 auto;
     }
     .msg-bd{
       text-align: left;
-      width: 460px;
+      width: 595px;
       background-color: #fff;
-      border-radius: 10px;
+      border-radius: 4px;
       color: #666;
-      margin-right: 26px;
+      margin: 0 10px;
       &:last-child{
         margin-right: 0;
       }
+      @red: #F6625A;
+      @orange: #FFA53C;
+      .red{
+        color: @red;
+      }
+      .orange{
+        color: @orange;
+      }
+      .list-dot.dot-red{
+        &:before{
+          background-color: @red;
+        }
+      }
+      .list-dot.dot-orange{
+        &:before{
+          background-color: @orange;
+        }
+      }
       .heading{
         font-size: 16px;
-        border-left: 2px solid #FFA847;
-        margin: 5px 0;
-      }
-      .title{
-        display: block;
-        padding: 5px 10px;
-        border-bottom: 1px solid #eee;
+        height: 52px;
+        line-height: 52px;
+        padding: 0 20px;
+        color: #282E43;
+        border-bottom: 1px solid #E4E5EA;
       }
       .msg-tips{
-        padding: 15px;
+        float: right;
+        color: #6D737A;
+        font-size: 14px;
         em{
-          color: #FFA847;
+          font-style: normal;
           font-weight: bold;
+        }
+        .refresh{
+          cursor: pointer;
+          font-size: 16px;
         }
       }
       .msg-list{
-        padding: 0 15px 10px;
-        min-height: 165px;
+        padding: 15px 50px;
+        min-height: 162px;
         li{
-          padding: 12px 0;
+          font-size: 14px;
+          padding: 14px 0;
           cursor: pointer;
-          border-bottom: 1px dashed #FFA847;
-          &:hover{
-            text-decoration: underline;
+          position: relative;
+          &:before{
+            content: "";
+            display: inline-block;
+            vertical-align: baseline;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
           }
-          &:last-child{
-            border-bottom: none;
+          p{
+            display: inline;
+            &:hover{
+              text-decoration: underline;
+            }
           }
         }
       }
