@@ -106,7 +106,6 @@ export default {
     this.forMatMonth();
   },
   methods: {
-   
     forMatMonth() {
       let monthArr = [
         "Jan",

@@ -16,8 +16,8 @@
             <ul class="info-list">
               <li class="info-item" v-for="(item, index) in appendixInfo" :key="index">
                 <!-- {{item}} -->
-              <span class="title">{{item.fileName}}：</span>
-              <el-link :href="item.filePath" type="primary" target="_blank">下载</el-link>
+              <span class="title">{{`${item.fileName}.${item.fileType}`}}：</span>
+              <el-link :href="item.filePath" @click="downLoad(item)" type="primary" target="_blank">下载</el-link>
                 <!-- <el-button
                   type="text"
                   class="text"
@@ -379,6 +379,20 @@ export default {
     this.getGameStoreInfo();
   },
   methods: {
+    downLoad(val) {
+      let fileName = `${item.fileName}.${item.fileType}`
+      let data = {
+        fileName,
+      };
+      (async data => {
+        let res = await self.$api.downGameLoad({ data });
+        if (res && res.code == 0) {
+          console.log(res)
+        } else {
+          self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     getGameStoreInfo() {
       const self = this;
       const data = {
