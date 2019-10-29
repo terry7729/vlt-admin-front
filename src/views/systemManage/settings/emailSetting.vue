@@ -121,7 +121,6 @@ export default {
       sendContent: [
         {
           title: "发送内容",
-
           propType: "type",
           propDepartment: "department",
           propStaff: "staff",
