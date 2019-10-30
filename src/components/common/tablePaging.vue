@@ -46,8 +46,8 @@
       total(val) {
         this.TOTAL = val;
       },
-      page(val) {
-        this.CURRENTPAGE = page;
+      currentPage(val) {
+        this.CURRENTPAGE = val;
       },
     },
     methods: {
