@@ -151,6 +151,9 @@ export default {
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+  // 编辑上市计划
+  editMarketPlan: (options = {}) => ajax.post('/gameListPlan/updateGameListPlan', options),
+  
   
   // 查询变更计划列表
   getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),

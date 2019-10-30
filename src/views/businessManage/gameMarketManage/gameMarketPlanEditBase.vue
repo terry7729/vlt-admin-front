@@ -38,7 +38,7 @@ export default {
     return {
       baseData: [
         {title: '上市计划名称', type: 'input',  prop: 'gameListName', value: '', placeholder: '请输入上市计划名称'},
-        {title: '上市时间', type: 'datetime',  prop: 'gameListTime', value: ''},
+        {title: '上市时间', type: 'datetime',  prop: 'listPlanTime', value: ''},
         {title: '计划简介', type: 'textarea',  prop: 'gameSaleDesc', value: '', placeholder: '请输入上市计划简介'},
         {title: '上市游戏', type: 'select',  prop: 'gameId', value: '', options:[]},
         {title: '销售区域', type: 'cascader-multiple',  prop: 'gameSaleArea', value: '', options: [],
@@ -107,24 +107,27 @@ export default {
       this.baseData.forEach((item)=>{
         if(item.prop == 'gameSaleArea') {
           // this.$set(this.baseData[4], 'value', this.insArray)
-        }else if(item.prop=='gameSaleChannel'){
-          if(val.gameSaleChannel=='all') {
-            this.gameSaleChannel = '1'
-          }else{
-            this.gameSaleChannel = '2'
-            this.gameSaleChannelTextarea = val.gameSaleChannel
-          }
-        }else if(item.prop=='gameSaleTerminal'){
-          if(val.gameSaleTerminal=='all') {
-            this.gameSaleTerminal = '1'
-          }else{
-            this.gameSaleTerminal = '2'
-            this.gameSaleTerminalTextarea = val.gameSaleTerminal
-          }
+        }else if(item.prop=='listPlanTime') {
+          item.value = val.gameListPlanVo&&val.gameListPlanVo.gameListTime;
         }else{
-          item.value = val.gameListPlanVo[item.prop]
+          item.value = val.gameListPlanVo&&val.gameListPlanVo[item.prop]
         }
       })
+
+      if(val.gameListPlanVo.gameSaleChannel=='all') {
+        this.gameSaleChannel = '1'
+      }else{
+        this.gameSaleChannel = '2'
+        this.gameSaleChannelTextarea = val.gameListPlanVo.gameSaleChannel
+      }
+
+      if(val.gameListPlanVo.gameSaleTerminal=='all') {
+        this.gameSaleTerminal = '1'
+      }else{
+        this.gameSaleTerminal = '2'
+        this.gameSaleTerminalTextarea = val.gameListPlanVo.gameSaleTerminal
+      }
+
     },
     // 获取所有游戏列表
     getAllGameList() {
@@ -181,8 +184,10 @@ export default {
       }else{
         this.param.gameSaleTerminal = this.gameSaleTerminalTextarea;
       }
-      this.param.gameSaleArea = this.param.gameSaleArea.join(',');
-      this.param.gameListTime = moment(this.param.gameListTime).format("YYYY-MM-DD HH:mm:ss")
+      if(typeof this.param.gameSaleArea !== 'string') {
+        this.param.gameSaleArea = this.param.gameSaleArea.join(',');
+      }
+      this.param.listPlanTime = moment(this.param.listPlanTime).format("YYYY-MM-DD HH:mm:ss")
       this.$refs.baseForm.validate((val)=>{
         console.log(val)
 

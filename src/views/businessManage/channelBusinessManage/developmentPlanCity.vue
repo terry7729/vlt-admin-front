@@ -87,7 +87,7 @@ export default {
           all: false,
           id: 0,
           insId: "",
-          insLevel: "2",
+          insLevel: 2,
           planDate: new Date().getFullYear()
         }
       },
@@ -156,7 +156,7 @@ export default {
           param: {
             all: false,
             insId: "61",
-            insLevel: "2",
+            insLevel: 2,
             planDate: '2019'
           }
         }
@@ -167,7 +167,7 @@ export default {
           param: {
             all: true,
             insId: "61",
-            insLevel: "2",
+            insLevel: 2,
             planDate: '2019'
           }
         }

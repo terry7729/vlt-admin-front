@@ -65,7 +65,7 @@
       </el-table>
       <div class="pagintion">
         <table-paging
-          :currentPage="1"
+          :currentPage="page"
           :pageSize="pageSize"
           :total="total"
           @handleSizeChange="pageSizeChange"
@@ -213,25 +213,16 @@ async init(val){
       let data  = {  
        ...this.searchFrom,
         page:val||1,
-        pageSize:this.pageSize
+        pageSize:this.pageSize,
       }
-      // if(this.searchStatus != "搜索"){
-        // console.log('我是默认',data)
+     
          let reslt = await  this.$api.userPage({data})
           console.log(reslt)
           this.userList = reslt.data.records
+          this.page = reslt.data.current
           this.total = reslt.data.total;
           console.log('我是默认',reslt)
-      // }
-      // else{
-      //   console.log('我是搜索',data)
-      //    let reslt =await this.$api.userPage({data})
-      //       console.log('我是搜索',reslt)
-      //       this.userList = reslt.data.records
-      //       this.total = reslt.data.total;
-      // }
-     
-      // this.pageSize = n.data.pages
+ 
       },
       pageSizeChange(val) {
         //每页显示条数
@@ -268,19 +259,15 @@ async init(val){
         if(val.name==='新建用户'){
           this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
         }
-        if(val.name === "批量删除"){
-          
-            
+        if(val.name === "批量删除"){         
             (async ()=>{
               let data = {
-             
             }
-            data.userId = [...this.userId]
+            data.idList = [...this.userId]
             data = JSON.parse(JSON.stringify(data))
             console.log('data',data)
               let reslt = await this.$api.delByIds({data})//批量删除
-               console.log(reslt)
-              
+               console.log(reslt)         
             })()
         }
       },

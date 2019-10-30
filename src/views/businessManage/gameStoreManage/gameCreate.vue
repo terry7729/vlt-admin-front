@@ -136,7 +136,7 @@ export default {
         softwareInfoVo: '',
         developerInfoVo: '',
         gameInfoVo: '',
-        fileIds: ''
+        filePath: ''
       }
     }
   },
@@ -147,9 +147,6 @@ export default {
       console.log('files', files.file.size/1024)
       this.softData[3].value = `${(files.file.size/1024).toFixed(1)}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -157,15 +154,12 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameBagId.push(res.data.fileId);
+      this.gameBagId.push(res.data.filePath);
     },
     // 图标上传
     async uploadFileImg(files) {
       let formData = new FormData();
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -173,7 +167,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId.push(res.data.fileId);
+      this.imgId.push(res.data.filePath);
       let imgUrl = res.data.filePath;
     },
     // 附件上传
@@ -182,9 +176,6 @@ export default {
       console.log('files', files.file.size/1024)
       // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -192,7 +183,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameOtherId.push(res.data.fileId);
+      this.gameOtherId.push(res.data.filePath);
     },
     createGameStore(data) {
       const self = this;
@@ -239,7 +230,7 @@ export default {
     },
     submit(){
       const self = this;
-      this.params.fileIds = this.gameBagId.concat(this.imgId,this.gameOtherId).join(',');
+      this.params.filePath = this.gameBagId.concat(this.imgId,this.gameOtherId).join(',');
       console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)

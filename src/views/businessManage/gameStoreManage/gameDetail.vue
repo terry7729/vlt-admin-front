@@ -395,11 +395,11 @@ export default {
     },
     getGameStoreInfo() {
       const self = this;
-      const data = {
-        id: this.$route.query.gameId
+      let options = {
+        id: self.$route.query.gameId
       };
       (async data => {
-        let res = await self.$api.getGameStoreInfo({ data });
+        let res = await self.$api.getGameStoreInfo({data});
         if (res && res.code == 0) {
           self.eachList(self.baseInfo,  res.data.gameInfoVo)
           self.eachList(self.developerInfo,  res.data.developerInfo)
@@ -409,7 +409,7 @@ export default {
         } else {
           self.$message.warning(res.msg)
         }
-      })(data);
+      })(options);
     },
     handleClick(tab, event) {
       console.log(tab, event);

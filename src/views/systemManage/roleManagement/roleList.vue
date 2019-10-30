@@ -189,8 +189,7 @@ async pagingControl(val){ //分页控制
           page:val||1,
           pageSize:this.pageSize
         }
-      // if(this.searchStatus != "搜索"){
-        // console.log('我是默认',data)
+ 
           let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
         console.log("获取当前分页信息",reslt)
            if (reslt.code === 0) {
@@ -201,17 +200,7 @@ async pagingControl(val){ //分页控制
           let Arr = JSON.parse(JSON.stringify(arr))
           self.dataProcessing(Arr);//处理数据
           }
-      // }else{
-      //   console.log('我是搜索',data)
-      //     let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
-      //   console.log('角色查询接口',reslt);  
-      //   if (reslt.code === 0) {
-      //   let arr = reslt.data.records;
-      //   this.total = reslt.data.total;
-      //   let Arr = JSON.parse(JSON.stringify(arr))
-      //   this.dataProcessing(Arr);//处理数据
-      // }
-      // }
+
      },
     handelifo(val) {//路由跳转到角色详情
       this.$router.push({ name: "roleifometion", query: { id: val.roleId } });
@@ -291,11 +280,9 @@ async pagingControl(val){ //分页控制
 async search(val) {//搜索事件
       console.log(val)
         this.searchFrom = val;
-        // this.currentPage4 = 1;
         this.searchStatus = "搜索"
-        this.page = 1;
-        this.pagingControl(this.page)
-        console.log(this.page)
+        this.pagingControl()
+
     },
     dataProcessing(arr) {//数据处理
         arr.forEach(item => {      
