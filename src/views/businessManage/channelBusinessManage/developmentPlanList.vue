@@ -64,7 +64,7 @@ export default {
         pageSize: 10,
         param: {
           insId: "60",
-          insLevel: "1" // 1为省级 2为市级
+          insLevel: 1 // 1为省级 2为市级 类型为数字
         }
       }
     }
@@ -124,7 +124,7 @@ export default {
           param: {
             all: false,
             insId: "60",
-            insLevel: "1" 
+            insLevel: 1
           }
         }
       } else if (val == 'all'){
@@ -135,7 +135,7 @@ export default {
           param: {
             all: true,
             insId: "60",
-            insLevel: "1" 
+            insLevel: 1
           }
         }
       }

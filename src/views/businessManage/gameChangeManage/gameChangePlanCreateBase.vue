@@ -63,19 +63,19 @@ export default {
     return {
       baseData: [
         {title: '变更计划名称', type: 'input',  prop: 'changePlanName', value: '', placeholder: '请输入变更计划名称'},
-        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['changePlanTime', 'changePlanTime']},
+        {title: '生效时间', type: 'datetime',  prop: 'changeTime', value: ''},
         {title: '计划简介', type: 'textarea',  prop: 'changePlanDesc', value: '', placeholder: '请输入变更计划简介'},
-        {title: '变更游戏', type: 'select',  prop: 'gameId', value: '', options:[{label: '网易',value: 1},{label: '腾讯',value: 2},{label: '盛大',value: 3}]},
+        {title: '变更游戏', type: 'select',  prop: 'gameId', value: '', options:[]},
       ],
       channelData: [
         {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: []},
       ],
       rules: {},
-      radio: 1,
-      options: [{label:'男', value:'1'},{label:'女',value:'2'}],
-      checkList: [],
-      textarea: '',
+      param: {},
     }
+  },
+  created() {
+    this.getAllGameList()
   },
   methods: {
     // 获取所有游戏列表
@@ -118,10 +118,17 @@ export default {
         }
       })(data)
     },
-    changeForm() {
-
+    changeForm(val) {
+      console.log('参数', val)
+      this.param = val;
     },
     next(val) {
+      this.param.gameListPlanTime = moment(this.param.gameListPlanTime).format("YYYY-MM-DD HH:mm:ss")
+      this.param.gameSaleArea = this.param.gameSaleArea.join(',');
+      let data = {
+        gameListPlanVo: this.param
+      }
+      this.$emit('next', data)
       this.$emit('next', val)
     }
   },

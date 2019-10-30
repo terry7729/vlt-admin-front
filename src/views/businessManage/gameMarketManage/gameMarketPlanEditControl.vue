@@ -19,9 +19,9 @@
         :model="eachBetForm"
         :rules="rules"
         class="eachBet-form">
-        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`${item.title}${index+1}`">
-          <el-input v-model="eachBetForm[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
-          <el-button v-if="index!==0" type="text" class="delete" @click="deleteBetMoney(index)">删除</el-button>
+        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`单次加注金额${index+1}`">
+          <el-input v-model="item.minAddBets" placeholder="请输入单次加注金额"></el-input> 
+          <el-button v-if="index!==0" type="text" class="delete-text" @click="deleteBetMoney(index)">删除</el-button>
         </el-form-item>
       </el-form>
       <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
@@ -80,7 +80,7 @@
       </div>
     </panel>
     <el-row class="vlt-edit-btn">
-      <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
+      <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
       <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
     </el-row>
   </div>
@@ -93,17 +93,15 @@ export default {
   data() {
     return {
       gameData: [
-        {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]}, //未找到
-        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
-        {title: '游戏奖池', type: 'select',  prop: 'jackpotType', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]}, //未找到
-        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: '1'},{label: '禁用',value: '2'}]},
-        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: '0'},{label: '禁用',value: '1'}]},
+        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: 1},{label: '试玩积分',value: 2}]},
+        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
+        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
         {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
         {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
         {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
         {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: ''},
         {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: '',placeholder: '示例1:100 请用英文符号“ : ”'},
-        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: {label: '启用',value: '0'}, options:[{label: '启用',value: '0'},{label: '禁止',value: '1'}]},
+        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: '', options:[{label: '启用',value: 1},{label: '禁止',value: 2}]},
         {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: ''},
         {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: ''},
         {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: ''},
@@ -115,7 +113,7 @@ export default {
         {title: '最大投注数', type: 'input',  prop: 'maxBets', value: ''},
       ],
       eachBetData: [
-        {minAddBetsOne: ''},
+        {minAddBets: ''},
       ],
       fundsData: [
         {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: ''},
@@ -158,7 +156,7 @@ export default {
       publishParams: {}, // 信息发布规则参数
       awardSetParams: [], // 奖等设置参数
       tableData: [
-        {name:'',maxMoney:'',desc:''}
+        {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
       ],
     }
   },
@@ -177,29 +175,64 @@ export default {
       // 深度监听 监听对象，数组的变化
       deep: true
     },
+    tableData: {
+      handler(newValue, oldValue) {
+        // this.$emit("change", this.form)
+        console.log('监听table的数据变化', newValue)
+        // 计算价格
+        let res = newValue&&JSON.parse(JSON.stringify(newValue));
+        let params = []
+        res&&res.forEach((item)=>{
+          // 删除不需要的参数
+          delete item.options
+          item.exchangeMoney = Number(item.exchangeMoney)
+          // 保留你需要的参数
+          // let param = (({goodsId, searl, max, min, price, money, remark}) =>({goodsId, searl, max, min, price, money, remark}))(item);
+          params.push(item)
+        })
+        this.awardSetParams = params;
+        console.log('params', params)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
+  },
+  created() {
+    this.init(this.planData)
   },
   methods: {
     init(val) {
+      if(!val) return;
       // 游戏规则
       this.gameData.forEach((item)=>{
-        item.value = val.gameRuleVo[item.props]
+        if(item.prop=='reFundRate'||item.prop=='returnPrizeRate') {
+          item.value = val.gameFundRuleVo&&val.gameFundRuleVo[item.prop]
+        }else{
+          item.value = val.gameRuleVo&&val.gameRuleVo[item.prop]
+        }
       })
       // 投注规则
       this.betData.forEach((item)=>{
-        item.value = val.gameBettingRuleVo[item.props]
+        item.value = val.gameBettingRuleVo&&val.gameBettingRuleVo[item.prop]
       })
       // 资金规则
       this.fundsData.forEach((item)=>{
-        item.value = val.gameFundRuleVo[item.props]
+        item.value = val.gameFundRuleVo&&val.gameFundRuleVo[item.prop]
       })
       // 风控规则
       this.riskData.forEach((item)=>{
-        item.value = val.gameRiskRuleVo[item.props]
+        item.value = val.gameRiskRuleVo&&val.gameRiskRuleVo[item.prop]
       })
       // 奖等规则
       this.riskData.forEach((item)=>{
         // item.value = val.gameRiskRuleVo[item.props]
         this.tableData = val.gameExchangeSetVoList;
+      })
+      let array = val.gameBettingRuleVo&&val.gameBettingRuleVo.minAddBets.split(',');
+      this.eachBetData = []
+      array.forEach((item)=>{
+        let obj = {minAddBets: item};
+        this.eachBetData.push(obj)
       })
     },
     getStoreList(row) {
@@ -223,25 +256,38 @@ export default {
       console.log('删除', this.deviceData)
     },
     addBetMoney() {
-      let cloneData = JSON.parse(JSON.stringify(this.eachBetData[0]))
-      cloneData.prop = `${cloneData.eachAdd}${this.eachBetData.length}`
-      this.$set(this.eachBetData, this.eachBetData.length, cloneData);
+      let obj = {minAddBets:''}
+      this.eachBetData.push(obj);
     },
     // 游戏规则参数
     changeRuleForm(val) {
       this.ruleParams = val;
+      for(let key in this.ruleParams){
+        if(key!='ruleDesc') {
+          this.ruleParams[key] = Number(this.ruleParams[key])
+        }
+      }
     },
     // 投注规则参数
     changeBetForm(val) {
       this.betParams = val;
+      for(let key in this.betParams){
+        this.betParams[key] = Number(this.betParams[key])
+      }
     },
     // 资金规则参数
     changeFundsForm(val) {
       this.fundsParams = val;
+      for(let key in this.fundsParams){
+        this.fundsParams[key] = Number(this.fundsParams[key])
+      }
     },
     // 风控规则参数
     changeRiskForm(val) {
       this.riskParams = val;
+      for(let key in this.riskParams){
+        this.riskParams[key] = Number(this.riskParams[key])
+      }
     },
     // 信息发布规则
     changePublishForm(val) {
@@ -250,12 +296,37 @@ export default {
     prev() {
       this.$emit('prev', this.params)
     },
-    next() {
-      this.$emit('next', this.params)
+    submit() {
+      console.log('eachbet', this.eachBetData)
+      let array = []
+      this.eachBetData.forEach(item=>{
+        array.push(item.minAddBets)
+      })
+      let str = array.join(',')
+      console.log('str', str)
+      this.betParams.minAddBets = str;
+      // 把返奖率 调节基金参数 调换位置
+      this.fundsParams.reFundRate = this.ruleParams.reFundRate 
+      this.fundsParams.returnPrizeRate = this.ruleParams.returnPrizeRate
+      delete this.ruleParams.reFundRate
+      delete this.ruleParams.returnPrizeRate
+      let data = {
+        gameRuleVo: this.ruleParams,
+        gameBettingRuleVo: this.betParams,
+        gameFundRuleVo: this.fundsParams,
+        gameRiskRuleVo: this.riskParams,
+        // publishParams: this.publishParams,
+        gameExchangeSetVoList: this.awardSetParams
+      }
+      this.$emit('submit', data)
+    },
+    deleteGoods(index) {
+      this.tableData.splice(index, 1);
     },
     addGoods() {
-      
-    }
+      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''};
+      this.tableData.push(obj)
+    },
   },
 }
 </script>
@@ -284,4 +355,15 @@ export default {
     // max-width: 900px;
     // margin: 0 auto;
   }
+  .table-wrap{
+    text-align: center;
+  }
+.addGoods{
+  width: 100%;
+  max-width: 490px;
+  margin: 20px 0 30px 10px;
+}
+.delete-text{
+  margin-left: 20px;
+}
 </style>

@@ -287,7 +287,6 @@ export default {
       imgId: [],
       imageUrl: '',
       params: {},
-      falg:false,
     };
   },
   created() {
@@ -299,10 +298,9 @@ export default {
     async uploadFileImg(files) {
       let formData = new FormData();
       formData.append('file', files.file);
-      formData.append('refId', '');
-      formData.append('flag', true);
-      formData.append('busType', 6);
-      debugger
+      // formData.append('refId', '');
+      // formData.append('flag', true);
+      // formData.append('busType', 6);
       const res = await this.$api.uploadGoodsType({
         data: formData,
         onUploadProgress(evt) {
@@ -331,6 +329,7 @@ export default {
               message:'新增成功',
               type:'success'
             })
+            this.$router.push({path: 'basicInfoManage'})
           }
         }
       })
