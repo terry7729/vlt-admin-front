@@ -91,9 +91,7 @@ const request = (method, url, options, extend) => {
               res = await axios[method](url, data);
               break;
             case "delete":
-              res = await axios[method](url, {
-                params: data
-              });
+              res = await axios[method](url, data);
               break;
             default:
               res = await axios[method](url, data, responseType);

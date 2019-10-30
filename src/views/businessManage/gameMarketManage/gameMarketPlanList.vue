@@ -25,8 +25,8 @@
           {{translateStatus(scope.row.gameListStatus)}}
         </template>
       </el-table-column>
-      <el-table-column prop="gameListTime" label="开始销售时间"></el-table-column>
-      <el-table-column prop="gameListTime" label="结束销售时间 "></el-table-column>
+      <el-table-column prop="gameListTime" label="上市时间"></el-table-column>
+      <el-table-column prop="gameListTime" label="销售状态 "></el-table-column>
       <el-table-column prop="createBy" label="发起人"></el-table-column>
       <el-table-column prop="createTime" label="发起时间"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
