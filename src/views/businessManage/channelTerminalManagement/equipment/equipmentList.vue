@@ -52,27 +52,18 @@ export default {
       // 搜索组件配置
       searchOptions: [
         {
-          type: "select",
+          type: "input",
           prop: "deviceName",
           value: "",
           title: "设备名称：",
-          placeholder: "请选择",
-          options: [
-            { label: "投注机", value: "投注机" },
-            { label: "彩明机", value: "投注机" }
-          ]
+          placeholder: "请输入设备名称"
         },
         {
-          type: "select",
+          type: "input",
           prop: "deviceModel",
           value: "",
           title: "设备型号：",
-          placeholder: "请选择",
-          options: [
-            { label: "SD123", value: "SD123" },
-            { label: "SD456", value: "SD456" },
-            { label: "MODEL003", value: "MODEL003" }
-          ]
+          placeholder: "请输入设备型号"
         },
         {
           type: "input",
@@ -115,20 +106,17 @@ export default {
         { label: "设备名称", value: "deviceName", width: "" },
         { label: "设备型号", value: "deviceModel", width: "100" },
         { label: "设备编码", value: "deviceCode", width: "" },
-        { label: "仓库类型", value: "typeX", width: "80" },
+        { label: "仓库类型", value: "typeName", width: "80" },
         { label: "所属仓库", value: "nameX", width: "" },
-        { label: "使用状态", value: "useStatus", width: "" },
-        { label: "设备状态", value: "status", width: "" }
+        { label: "使用状态", value: "useStatusName", width: "" },
+        { label: "设备状态", value: "statusName", width: "" }
       ],
       options: {
         page: 1,
         pageSize: 10,
-        deviceCode: "",
-        deviceModel: "",
-        deviceName: "",
-        nameX: "",
-        status: "",
-        param: {}
+        param: {
+          deviceType: 1
+        }
       },
       params: {},
     };
@@ -154,8 +142,17 @@ export default {
     },
     search(form) {
       console.log("search", form);
-      Object.assign(this.params,this.options, form)
-      this.initList(this.params);
+      this.options = {
+        page: 1,
+        pageSize: 10,
+        param: {
+          deviceType: 1,
+          ...form
+        }
+      }
+      // console.log();
+      // Object.assign(this.params,this.options, form)
+      this.initList(this.options);
     },
     handleClick(row) {
       this.$router.push({

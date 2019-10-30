@@ -339,9 +339,9 @@ export default {
       this.switchText = val ? '开启' : '关闭'
     },
     changeSelect(val) {
-      console.log(val)
+      // console.log(val)
       this.form[val.prop] = this.selectParam[val.prop];
-      console.log(this.selectParam)
+      // console.log(this.selectParam)
     },
     init(data) {
       const self = this;
