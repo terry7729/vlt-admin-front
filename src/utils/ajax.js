@@ -2,6 +2,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import storage from './storage'
+import Router from 'vue-router'
 import {
   Message,
   Loading
@@ -25,9 +26,9 @@ switch (process.env.VUE_APP_MODE) {
   default:
     // 本地server环境 
     // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
-    // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
-    axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api'
 }
 /**
  * @description http请求
@@ -110,6 +111,10 @@ const request = (method, url, options, extend) => {
             Message.success(res.data.msg);
           }
         }
+      }
+      // 未登录
+      if (res.data.code == 100) {
+        location.href = '#/login'
       }
       loading.close();
       return res.data;

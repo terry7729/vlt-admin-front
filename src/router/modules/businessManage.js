@@ -953,6 +953,7 @@ export default [
     path: 'businessManage/channelTerminal/repairOrderDetails',
     name: 'repairOrderDetails',
     meta: {
+      parentName: 'maintenance',
       title: '维修工单详情',
     },
     component: repairOrderDetails
@@ -960,6 +961,7 @@ export default [
     path: 'businessManage/channelTerminal/reportStatistics',
     name: 'reportStatistics',
     meta: {
+      parentName: 'reportStatistics',
       title: '报表统计',
     },
     component: reportStatistics
@@ -968,6 +970,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment',
     name: 'equipment',
     meta: {
+      parentName: 'equipment',
       title: '设备管理',
     },
     component: equipment
@@ -1043,6 +1046,7 @@ export default [
     path: 'businessManage/channelTerminal/addFaultType',
     name: 'addFaultType',
     meta: {
+      parentName: 'configurationManagement',
       title: '新增故障类型 ',
     },
     component: addFaultType,
@@ -1067,6 +1071,7 @@ export default [
     path: 'businessManage/fundSettlement/fundParameterDetail',
     name: 'fundParameterDetail',
     meta: {
+      parentName: 'fundParameter',
       title: '资金参数管理详情',
     },
     component: fundParameterDetail
@@ -1075,6 +1080,7 @@ export default [
     path: 'businessManage/fundSettlement/fundParameterEdit',
     name: 'fundParameterEdit',
     meta: {
+      parentName: 'fundParameter',
       title: '资金参数管理编辑',
     },
     component: fundParameterEdit
@@ -1083,6 +1089,7 @@ export default [
     path: 'businessManage/fundSettlement/globalParameterEdit',
     name: 'globalParameterEdit',
     meta: {
+      parentName: 'fundParameter',
       title: '全局参数管理编辑',
     },
     component: globalParameterEdit
@@ -1091,6 +1098,7 @@ export default [
     path: 'businessManage/fundSettlement/newfundParameter',
     name: 'newfundParameter',
     meta: {
+      parentName: 'fundParameter',
       title: '新增全局参数管理',
     },
     component: newfundParameter
@@ -1100,6 +1108,7 @@ export default [
     path: 'businessManage/fundSettlement/globalParameter',
     name: 'globalParameter',
     meta: {
+      parentName: 'fundParameter',
       title: '资金参数全局参数',
     },
     component: globalParameter
