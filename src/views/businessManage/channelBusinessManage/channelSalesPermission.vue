@@ -13,35 +13,36 @@
                 class="device-form"
               >
                 <el-form-item label="修改方式">
-                  <el-select v-model="form.updateType" placeholder="请选择">
-                    <el-option label="渠道区域" value="channelNo"></el-option>
-                    <el-option label="渠道编码" value="regCode"></el-option>
+                  <el-select v-model="form.type" placeholder="请选择">
+                    <el-option label="渠道区域" value="1"></el-option>
+                    <el-option label="渠道编码" value="0"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="渠道区域" v-show="form.updateType=='channelNo'">
+                <el-form-item label="渠道区域" v-show="form.type=='1'">
                   <el-cascader
                     size="small"
-                    v-model="form.channelNo"
+                    v-model="form.insId"
                     :options="areaData"
                     :props="setProps"
+                    @change="insIdChange"
                     placeholder="请选择渠道区域"
                   ></el-cascader>
                 </el-form-item>
-                <el-form-item label="渠道编码" v-show="form.updateType=='regCode'">
-                  <el-input v-model="form.regCode" placeholder="请输入渠道编码"></el-input>
+                <el-form-item label="渠道编码" v-show="form.type=='0'">
+                  <el-input v-model="form.channelNo" placeholder="请输入渠道编码"></el-input>
                 </el-form-item>
               </el-form>
             </div>
           </div>
           <el-table :data="tableData" border class="table">
-            <el-table-column label="序号" type="index" width="80px"></el-table-column>
+            <el-table-column prop="id" label="序号" width="80px"></el-table-column>
             <el-table-column label="游戏名称" prop="gameName"></el-table-column>
             <el-table-column label="投注权限">
               <template slot-scope="scope">
                 <el-switch
-                  v-model="scope.row.bet"
+                  v-model="scope.row.throwRight"
                   @change="changeSwitchBet"
-                  :active-text="scope.row.bet?'允许':'禁止'"
+                  :active-text="scope.row.throwRight?'允许':'禁止'"
                   active-color="#409EFF"
                   inactive-color
                 ></el-switch>
@@ -50,22 +51,24 @@
             <el-table-column label="兑奖权限">
               <template slot-scope="scope">
                 <el-switch
-                  v-model="scope.row.cash"
+                  v-model="scope.row.cashRight"
                   @change="changeSwitchCash"
-                  :active-text="scope.row.cash?'允许':'禁止'"
+                  :active-text="scope.row.cashRight?'允许':'禁止'"
                   active-color="#409EFF"
                   inactive-color
                 ></el-switch>
               </template>
             </el-table-column>
-            <el-table-column label="销售时间" width="360px">
+            <el-table-column label="销售时间">
               <template slot-scope="scope">
-                <el-date-picker
-                  size="small"
-                  type="datetime"
+                <el-time-picker
+                  is-range
                   v-model="scope.row.time"
-                  placeholder="`请选择生效时间"
-                ></el-date-picker>
+                  range-separator="至"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  placeholder="选择时间范围"
+                ></el-time-picker>
               </template>
             </el-table-column>
           </el-table>
@@ -103,27 +106,24 @@
 </template>
 
 <script type="text/javascript">
+import moment from "moment";
 export default {
   name: "",
   data() {
     return {
       activeName: "1",
-      tableData: [
-        { gameName: "a", bet: false, cash: true, time: "" },
-        { gameName: "b", bet: false, cash: true, time: "" },
-        { gameName: "c", bet: true, cash: false, time: "" }
-      ],
+      tableData: [],
       form: {
-        updateType: "channelNo",
+        type: "1",
         channelNo: "",
-        regCode: ""
+        insId: ""
       },
       areaData: [],
       setProps: {
         label: "text",
         value: "id",
         children: "children",
-        checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+        checkStrictly: true
       },
       fileList: []
     };
@@ -132,6 +132,29 @@ export default {
     this.getInsData();
   },
   methods: {
+    async insIdChange() {
+      if (this.form.insId !== null) {
+        this.form.insId = this.form.insId[this.form.insId.length - 1];
+      }
+      let data = this.form;
+      let res = await this.$api.queryGameRight({ data });
+      if (res && res.code === 0) {
+        this.tableData = res.data;
+        for (let item of this.tableData) {
+          if (item.throwRight === 0) {
+            item.throwRight = false;
+          } else {
+            item.throwRight = true;
+          }
+          if (item.cashRight === 0) {
+            item.cashRight = false;
+          } else {
+            item.cashRight = true;
+          }
+        }
+      }
+    },
+
     getInsData() {
       const self = this;
       const data = {};
@@ -143,23 +166,30 @@ export default {
         }
       })(data);
     },
+
     async submit() {
-      let form = this.form;
-      let data = {
-        channelNo: form.channelNo.slice(form.channelNo.length - 1),
-        updateType: form.updateType
-      };
-      let res = await this.$api.queryGameRight({ data });
+      for (let item of this.tableData) {
+        if (item.time) {
+          item.sellBeginTime = item.time[0];
+          item.sellEndTime = item.time[1];
+        }
+        item.sellBeginTime = moment(item.sellBeginTime).format("HH:mm:ss");
+        item.sellEndTime = moment(item.sellEndTime).format("HH:mm:ss");
+        delete item.time;
+      }
+   
+      let res = await this.$api.updateGameRight({
+        data: {
+          ...this.form,
+          gameRights: this.tableData
+        }
+      });
       console.log(res);
     },
-
     changeSwitchBet(val) {
-      console.log(val);
-      // this.switchBetText = val ? '允许' : '禁止'
+      // console.log(val);
     },
-    changeSwitchCash(val) {
-      // this.switchBetText = val ? '允许' : '禁止'
-    },
+    changeSwitchCash(val) {},
     handleClick() {},
     handleExceed() {},
     beforeRemove() {},

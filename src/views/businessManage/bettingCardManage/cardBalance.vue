@@ -5,12 +5,12 @@
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="tableData.total"
+      :total="tableDatas.total"
       labelWidth="100px"
     ></search-bar>
     <el-row class="card-table">
       <el-table
-        :data="tableData.records"
+        :data="tableDatas.records"
         border
         style="width: 100%"
         @selection-change="handleSelectionChange"
@@ -34,9 +34,9 @@
     </el-row>
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="tableDatas.total"
+      :currentPage="tableDatas.current"
+      :pageSize="tableDatas.size"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>

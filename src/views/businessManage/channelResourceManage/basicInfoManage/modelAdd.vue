@@ -1,9 +1,9 @@
 <template>
 <!-- 型号管理新增页面 -->
- <div class="vlt-card modelAdd-page">
-   <div class="vlt-edit-single">
-     <div class="vlt-edit-wrap">
-       <span class="goods-cate">物品类别</span>
+<div class="vlt-card modelAdd-page">
+  <div class="vlt-edit-single">
+    <div class="vlt-edit-wrap">
+      <span class="goods-cate">物品类别</span>
         <el-form class="goods">
           <el-form-item>
             <el-select v-model="selectValue" placeholder="请选择" @change="changeOption">
@@ -16,11 +16,23 @@
             </el-select>
           </el-form-item>
         </el-form>
-       <el-form v-if="selectValue === 1" label-position="right" label-width="90px" :model="form1" ref="form1">
-          <base-form :formData="equipmentData" labelWidth="140px" ref="baseForm1" :rules="rules2" direction="right"
+      <el-form v-if="selectValue === 1" label-position="right" label-width="90px" :model="form1" ref="form1">
+          <base-form :formData="equipmentData" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right"
           @change="changeForm" ></base-form>
           <el-form-item label="上传图片" class='upLoadImg'>
             <el-upload
+              class="gameIcon-uploader"
+              action=""
+              :limit="3"
+              accept=".png,.jpg,.jpeg"
+              :show-file-list="false"
+              :on-remove="handleRemove"
+              :http-request="uploadFileImg">
+              <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
+              <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
+            </el-upload>
+            <!-- <el-upload
               class="upload-demo"
               ref="upload"
               action="https://jsonplaceholder.typicode.com/posts/"
@@ -40,17 +52,17 @@
             </el-upload>
             <el-dialog :visible.sync="dialogVisible">
               <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
+            </el-dialog> -->
           </el-form-item>
-       </el-form>
+      </el-form>
 
-       <el-form v-else label-position="right" label-width="90px" :model="form2" ref="form2">
-         <base-form :formData="mountingsData" labelWidth="140px" ref="baseForm2" :rules="rules2" direction="right"
+      <el-form v-else label-position="right" label-width="90px" :model="form2" ref="form2">
+        <base-form :formData="mountingsData" labelWidth="140px" ref="baseForm" :rules="rules2" direction="right"
           @change="changeForm" >
-         </base-form>
+        </base-form>
           <span class="goods-cate">可用机型</span>
-         <el-form-item class="typeSelect">
-           <el-select v-model="value" placeholder="请选择设备名称">
+        <el-form-item class="typeSelect">
+          <el-select v-model="value" placeholder="请选择设备名称">
             <el-option
               v-for="(item,index) in nameOptions"
               :key="index"
@@ -80,47 +92,47 @@
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
 export default {
- name: "modelAdd",
- data() {
- return {
-   selectValue:1,
-   value:'',
-   options:[
-     {value:1,label:'设备'},
-     {value:2,label:'配件'}
-   ],
+name: "modelAdd",
+data() {
+return {
+  selectValue:1,
+  value:'',
+  options:[
+    {value:1,label:'设备'},
+    {value:2,label:'配件'}
+  ],
    //可用机型选择框
-   nameOptions:[
-     {label:'',value:'1'},
-     {label:'',value:'2'},
-   ],
-   modelOptions:[
-     {label:'',value:'3'},
-     {label:'',value:'4'},
-   ],
-   params:'',
-   form1:{},
-   form2:{},
-   dialogImageUrl: '',
-   dialogVisible: false,
-   equipmentData:[
+  nameOptions:[
+    {label:'',value:'1'},
+    {label:'',value:'2'},
+  ],
+  modelOptions:[
+    {label:'',value:'3'},
+    {label:'',value:'4'},
+  ],
+  params:'',
+  form1:{},
+  form2:{},
+  dialogImageUrl: '',
+  dialogVisible: false,
+  equipmentData:[
     // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'设备名称',type:'select',prop:'equipmentName',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'设备型号',type:'input',prop:'equipmentModel', value:''},
-    {title:'设备单价',type:'select',prop:'equipmentPrice',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'设备名称',type:'select',prop:'goodsName',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'设备型号',type:'input',prop:'deviceModel', value:''},
+    {title:'设备单价',type:'select',prop:'unitPrice',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'供应商',type:'select',prop:'providerId',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'预警上限',type:'input',prop:'upperLimit', value:''},
     {title:'预警下限',type:'input',prop:'lowerLimit', value:''},
-    {title:'厂家信息',type:'input',prop:'factoryInfo', value:''},
+    {title:'厂家信息',type:'input',prop:'manufactorInfo', value:''},
     {title:'备注',type:'textarea',prop:'remark',value:''},
-   ],
-   mountingsData:[
-     {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
-     {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
-     {title:'配件单价',type:'select',prop:'fittingsPrice',options:[{label:'',value:''},{label:'',value:''}]},
-     {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
-   ],
-   rules2: {
+  ],
+  mountingsData:[
+    {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
+    {title:'配件单价',type:'select',prop:'fittingsPrice',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
+  ],
+  rules2: {
         equipmentName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
@@ -140,57 +152,51 @@ export default {
         url:
           "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
       },
-      // {
-      //   name: "food2.jpeg",
-      //   url:
-      //     "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-      // }
     ],
-
+    imageUrl: '',
+    imgUrl: '',
  }
  },
  components: {
  },
  computed:{
-   // 这里定义上传文件时携带的参数，即表单数据
-    upData: function() {
-      return {
-        body: this.form
-      }
-    }
  },
  methods: {
    changeForm(val) {
       Object.assign(this.params, val);
       console.log("派发出来的参数", this.params);
-    },
+  },
     changeOption() {
       console.log(this.selectValue);
     },
     handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
+
       },
     //  移除文件
     handleRemove(res, file, fileList) {
-      this.$message.warning(`移除当前${res.name}证书，请重新选择证书上传！`);
+
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`);
+;
     },
-    // 成功上传文件
-    upFile(res, file) {
-      if (res.status == 200) {
-        // 文件上传成功后的回调，比如一些提示信息或者页面跳转都写在这里
-        this.$message.success(res.info);
-      } else {
-        this.$message.warning(res.info);
-        let _this = this;
-        setTimeout(function() {
-          _this.$refs.upload.clearFiles();
-        }, 1000);
-      }
+    // 图标上传
+    async uploadFileImg(files) {
+      let formData = new FormData();
+      formData.append('file', files.file);
+      // formData.append('refId', '');
+      // formData.append('flag', true);
+      // formData.append('busType', 6);
+      const res = await this.$api.uploadGoodsType({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      
+      this.imgUrl = res.data.filePath;
     },
+
     // 上传文件超出个数
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -201,7 +207,21 @@ export default {
     },
     //提交保存
     submit(form){
-    this.modelDialogFormVisible = false
+      this.$refs['baseForm'].validate(async valid=>{
+        if(valid === 'true') {
+          let data = this.params;
+          data.files = this.imgUrl.join(',');
+          let res = await this.$api.modelCreate({data})
+          console.log(res)
+          if(res || res.code == 0){
+            this.$message({
+              message:'新增成功',
+              type:'success'
+            })
+            this.$router.push({path: 'basicInfoManage'})
+          }
+        }
+      })
     // this.$refs[form].validate(async valid => {
     //     if (valid) {
     //     // 表单验证通过后使用组件自带的方法触发上传事件

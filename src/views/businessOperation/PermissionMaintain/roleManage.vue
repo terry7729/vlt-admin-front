@@ -101,6 +101,7 @@
 </template>
 
 <script type="text/javascript">
+// import moment from "moment";
 import rules from "@/utils/rules.js";
 export default {
   name: "",
@@ -237,9 +238,10 @@ export default {
       form: "",
       //权限表单定义为空
       limit: ""
+      // tackTime: [{ startTime: "" }, { endTime: "" }]
     };
   },
-  components: {},
+
   created() {
     //初始表格数据
     this.init();
@@ -276,8 +278,21 @@ export default {
     },
     //点击搜索
     async search(param) {
-      let obj = this.searchData;
-      let data = { ...obj, param };
+      // moment(param).format("YYYY-MM-DD HH:mm:ss");
+      if (Object.keys(param).length > 0) {
+        // let info = this.roleManageoptions;
+        //console.log(param);
+        // let obj = {};
+        for (let item in param) {
+          if (item === "roleManageCreateDate") {
+            param.startTime = param[item][0];
+            param.endTime = param[item][1];
+          }
+        }
+      }
+      let search = this.searchData;
+      delete param.roleManageCreateDate;
+      let data = { ...search, param };
       let result = await this.$api.getRole({ data });
       if (result.code === 0) {
         this.roleManagetableData = result.data.records;
@@ -299,7 +314,9 @@ export default {
       this.row = row;
       this.dialogFormVisible = true;
       let name = Object.keys(this.row);
+
       let msg = this.roleManageWriteData;
+      debugger;
       for (var i = 0; i < msg.length; i++) {
         for (var j = 0; j < name.length; j++) {
           if (msg[i].prop === name[j]) {
@@ -325,8 +342,8 @@ export default {
 
     // 表单change事件
     changeForm(form) {
-      this.form = form;
-      //console.log(this.data);
+      //this.form = form;
+      console.log(form);
     },
     // 权限表单change事件
     AuthoritychangeForm(form) {

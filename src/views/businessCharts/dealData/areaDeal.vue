@@ -156,7 +156,8 @@ export default {
     async getAreaDeal(options) {
       const self = this;
       const res = await self.$api.getAreaDeal({
-        data:options
+        data:options,
+        baseURL:'http://10.7.0.90:8080/api'
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;

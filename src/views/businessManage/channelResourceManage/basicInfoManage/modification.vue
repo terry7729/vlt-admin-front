@@ -8,7 +8,7 @@
         <span class="goods-cate">物品类别</span>
         <el-form class="goods">
           <el-form-item>
-            <el-select v-model="selectValue" placeholder="请选择" @change="changeOption">
+            <el-select v-model="goodsType" :disabled="true"  placeholder="请选择" @change="changeOption">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -20,7 +20,7 @@
         </el-form>
 
         <base-form
-          v-if="this.selectValue === 1"
+          v-if="this.goodsType === 1"
           :formData="equipmentData"
           labelWidth="140px"
           ref="baseForm"
@@ -28,51 +28,16 @@
           direction="right"
           @change="changeForm"
         ></base-form>
-        <el-form v-else-if="this.selectValue === 2">
-          <base-form
-            :formData="facilitiesData"
-            labelWidth="140px"
-            ref="baseForm"
-            :rules="rules2"
-            direction="right"
-            @change="changeForm"
-          ></base-form>
-          <el-form-item label="上传图片" class="upload">
-            <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
-              <i slot="default" class="el-icon-plus"></i>
-              <div slot="file" slot-scope="{file}">
-                <img class="el-upload-list__item-thumbnail" :src="file.url" alt='' />
-                <span class="el-upload-list__item-actions">
-                  <span
-                    class="el-upload-list__item-preview"
-                    @click="handlePictureCardPreview(file)"
-                  >
-                    <i class="el-icon-zoom-in"></i>
-                  </span>
-                  <span
-                    v-if="!disabled"
-                    class="el-upload-list__item-delete"
-                    @click="handleDownload(file)"
-                  >
-                    <i class="el-icon-download"></i>
-                  </span>
-                  <span
-                    v-if="!disabled"
-                    class="el-upload-list__item-delete"
-                    @click="handleRemove(file)"
-                  >
-                    <i class="el-icon-delete"></i>
-                  </span>
-                </span>
-              </div>
-            </el-upload>
-            <!-- 放大 -->
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
-          </el-form-item>
-        </el-form>
-        <el-form v-else-if="this.selectValue === 3">
+        <base-form
+          v-else-if="this.goodsType === 2"
+          :formData="mountingsData"
+          labelWidth="140px"
+          ref="baseForm"
+          :rules="rules2"
+          direction="right"
+          @change="changeForm"
+        ></base-form>
+        <el-form v-else-if="this.goodsType === 3">
           <base-form
             :formData="consumableData"
             labelWidth="140px"
@@ -82,7 +47,20 @@
             @change="changeForm"
           ></base-form>
           <el-form-item label="上传图片" class="upload">
-            <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
+            <el-upload
+              class="gameIcon-uploader"
+              action=""
+              :limit="3"
+              accept=".png,.jpg,.jpeg"
+              :show-file-list="false"
+              :on-remove="handleRemove"
+              :http-request="uploadFileImg">
+              <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
+              <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
+            </el-upload>
+
+            <!-- <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
               <i slot="default" class="el-icon-plus"></i>
               <div slot="file" slot-scope="{file}">
                 <img class="el-upload-list__item-thumbnail" :src="file.url" alt='' />
@@ -109,22 +87,71 @@
                   </span>
                 </span>
               </div>
-            </el-upload>
+            </el-upload> -->
             <!-- 放大 -->
-            <el-dialog :visible.sync="dialogVisible">
+            <!-- <el-dialog :visible.sync="dialogVisible">
               <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
+            </el-dialog> -->
           </el-form-item>
         </el-form>
-        <base-form
-          v-else
-          :formData="mountingsData"
-          labelWidth="140px"
-          ref="baseForm"
-          :rules="rules2"
-          direction="right"
-          @change="changeForm"
-        ></base-form>
+        <el-form v-else-if="this.goodsType === 4">
+          <base-form
+            :formData="facilitiesData"
+            labelWidth="140px"
+            ref="baseForm"
+            :rules="rules2"
+            direction="right"
+            @change="changeForm"
+          ></base-form>
+          <el-form-item label="上传图片" class="upload">
+            <el-upload
+              class="gameIcon-uploader"
+              action=""
+              :limit="3"
+              accept=".png,.jpg,.jpeg"
+              :show-file-list="false"
+              :on-remove="handleRemove"
+              :http-request="uploadFileImg">
+              <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
+              <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
+            </el-upload>
+            <!-- <el-upload action="#" :limit='2' list-type="picture-card" :auto-upload="false">
+              <i slot="default" class="el-icon-plus"></i>
+              <div slot="file" slot-scope="{file}">
+                <img class="el-upload-list__item-thumbnail" :src="file.url" alt='' />
+                <span class="el-upload-list__item-actions">
+                  <span
+                    class="el-upload-list__item-preview"
+                    @click="handlePictureCardPreview(file)"
+                  >
+                    <i class="el-icon-zoom-in"></i>
+                  </span>
+                  <span
+                    v-if="!disabled"
+                    class="el-upload-list__item-delete"
+                    @click="handleDownload(file)"
+                  >
+                    <i class="el-icon-download"></i>
+                  </span>
+                  <span
+                    v-if="!disabled"
+                    class="el-upload-list__item-delete"
+                    @click="handleRemove(file)"
+                  >
+                    <i class="el-icon-delete"></i>
+                  </span>
+                </span>
+              </div>
+            </el-upload> -->
+            <!-- 放大 -->
+            <!-- <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog> -->
+          </el-form-item>
+        </el-form>
+        
+        
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -139,161 +166,226 @@ import rules from "@/utils/rules.js";
 export default {
   name: "modification",
   data() {
+    const self = this;
     return {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
-
+      id: self.$route.query.id,          //页面id
+      imgUrlList: self.$route.query.id,
+      imgId: [],
+      imageUrl: '',
       params: {},
       options: [
         { value: 1, label: "设备" },
-        { value: 2, label: "设施" },
+        { value: 2, label: "配件" },
         { value: 3, label: "耗材" },
-        { value: 4, label: "配件" }
+        { value: 4, label: "设施" }
       ],
-      selectValue: 1,
+      goodsType: Number(self.$route.query.goodsType),
       equipmentData: [
-        { title: "设备名称", type: "input", prop: "equipmentName", value: "" },
-        { title: "设备单位", type: "input", prop: "equipmentUnit", value:''},
+        {title: '设备类型',type: 'select',prop:'deviceType', disabled:true, value: self.$route.query.deviceType, 
+        options: 
+        [
+          {label: '终端机', value: 1},
+          {label: '柜员机', value: 2},
+          {label: '其它', value: 3}
+        ]},
+        { title: "设备名称", type: "input",disabled: true, prop: "goodsName", value: '' },
+        { title: "设备单位", type: "input", prop: "deviceUnit", value: ''},
         {
           title: "是否标配",
           type: "radio",
           prop: "isStandard",
-          value: "",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          value: 0,
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
         {
           title: "是否回收",
           type: "radio",
-          prop: "isRecycle",
-          value: "",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          prop: "isRecovery",
+          value: 0,
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
-        { title: "备注", type: "textarea", prop: "remark", value: "" }
+        { title: "备注", type: "textarea", prop: "remark", value: 0  }
       ],
       facilitiesData: [
-        { title: "设施名称", type: "input", prop: "facilitiesName", value: "" },
-        { title: "设施编号", type: "input", prop: "facilitiesCode", value: "" },
-        {
-          title: "设施单价",
-          type: "select",
-          prop: "facilitiesUnitPrice",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
-        { title: "设施单位", type: "input", prop: "facilitiesUnit", value:''},
-        // {
-        //   title: "设施大单位",
-        //   type: "select",
-        //   prop: "facilitiesBigUnit",
-        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        // },
-        // {
-        //   title: "设施小单位",
-        //   type: "select",
-        //   prop: "facilitiesSmallUnit",
-        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        // },
+        { title: "设施名称", type: "input", prop: "goodsName", value: ''},
+        { title: "设施编号", type: "input", prop: "code", value: ''},
+        { title: "设施单价", type: "input", prop: "unitPrice", value: ''},
+        { title: "设施单位", type: "input", prop: "deviceUnit", value: ''},
         {
           title: "供应商",
-          type: "select",
-          prop: "supplier",
+          type: "input",
+          prop: "providerId",
+          value: '',
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
-        { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
-        { title: "厂家信息", type: "input", prop: "factoryInfo", value: "" },
-        { title: "备注", type: "textarea", prop: "remark", value: "" }
+        { title: "预警上限", type: "input", prop: "upperLimit", value: ''},
+        { title: "预警下限", type: "input", prop: "lowerLimit", value: '' },
+        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: ''},
+        { title: "备注", type: "textarea", prop: "remark", value: '' }
       ],
       consumableData:[
-        { title: "耗材名称", type: "input", prop: "consumableName", value: "" },
-        { title: "耗材编号", type: "input", prop: "consumableCode", value: "" },
-        {
-          title: "设施单价",
-          type: "select",
-          prop: "consumableUnitPrice",
-          options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        },
-        { title: "耗材单位", type: "input", prop: "consumableUnit", value:''},
-        // {
-        //   title: "设施大单位",
-        //   type: "select",
-        //   prop: "consumableBigUnit",
-        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        // },
-        // {
-        //   title: "设施小单位",
-        //   type: "select",
-        //   prop: "consumableSmallUnit",
-        //   options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
-        // },
+        { title: "耗材名称", type: "input", prop: "goodsName", value: '' },
+        { title: "耗材编号", type: "input", prop: "code", value: '' },
+        { title: "设施单价", type: "input", prop: "unitPrice", value: ''},
+        { title: "耗材单位", type: "input", prop: "deviceUnit", value: ''},
         {
           title: "供应商",
           type: "select",
-          prop: "supplier",
+          prop: "providerId",
+          value: '',
           options: [{ label: "1", value: "1" }, { label: "2", value: "2" }]
         },
-        { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
-        { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
-        { title: "厂家信息", type: "input", prop: "factoryInfo", value: "" },
-        { title: "备注", type: "textarea", prop: "remark", value: "" }
+        { title: "预警上限", type: "input", prop: "upperLimit", value: '' },
+        { title: "预警下限", type: "input", prop: "lowerLimit", value: '' },
+        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: '' },
+        { title: "备注", type: "textarea", prop: "remark", value: '' }
       ],
       mountingsData:[
-        { title: "配件名称", type: "input", prop: "mountingsName", value: "" },
-        { title: "配件单位", type: "select", prop: "mountingsUnit", value:''},
+        { title: "配件名称", type: "input", prop: "goodsName", value: '' },
+        { title: "配件单位", type: "select", prop: "deviceUnit", value: ''},
         {
           title: "是否回收",
           type: "radio",
-          prop: "isRecycle",
-          value: "",
-          options: [{ label: "是", value: "1" }, { label: "否", value: "0" }]
+          prop: "isRecovery",
+          value: 0,
+          options: [{ label: "是", value: 1 }, { label: "否", value: 2 }]
         },
-        { title: "备注", type: "textarea", prop: "remark", value: "" }
+        { title: "备注", type: "textarea", prop: "remark", value: '' }
       ],
       rules2: {
-        goodsCategory: [
+        goodsName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        equipmentName: [
+        unitPrice: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        equipmentUnit: [
+        deviceUnit: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        upperLimit: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        lowerLimit: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
         isStandard: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        isRecycle: [
+        isRecovery: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
-      }
+      },
+      reslt:'',
     };
   },
   components: {},
+ async created(data) {
+    // 编辑回填
+    let id = this.$route.query.id
+    let reslt =await this.$api.getDetail({data:id})
+    this.reslt = reslt.data
+    let obj = [
+      ...this.mountingsData,
+      ...this.consumableData,
+      ...this.facilitiesData,
+      ...this.equipmentData
+    ]
+    let arr = Object.keys(reslt.data)
+    console.log(reslt)
+    arr.forEach(item=>{
+      obj.forEach(i=>{
+        if(item === i.prop){
+          i.value = reslt.data[item]
+        }
+      })
+    })
+
+
+  },
   methods: {
     submit() {
-      console.log(this.params);
+      const self = this;
+      this.$refs['baseForm'].validate(async valid=>{
+        if(valid === 'true') {
+          let data = this.params;
+          if(data.goodsType==3||data.goodsType==4) {
+            data.imgInfo = self.imgId.join(',');
+          }        
+          let res = await this.$api.modification({data:id})
+          console.log(res)
+          console.log(this.params)
+          if(res || res.code == 0){
+            this.$message({
+              message:'修改成功',
+              type:'success'
+            })
+            this.$router.push({path: 'basicInfoManage'})
+          }
+        }
+      })
     },
     cancel() {
       this.$router.back();
     },
     changeForm(val) {
-      Object.assign(this.params, val);
-      console.log("派发出来的参数", this.params);
+      this.equipmentData.forEach((item)=>{
+        item.value = val[item.prop]
+        this.$set(item, 'value', item.value)
+      })
+      if(val.deviceType != ''){
+        if(val.deviceType === 1){
+          this.$set(this.equipmentData[1], 'disabled', true)
+          this.$set(this.equipmentData[1], 'value','终端机')
+        }else if(val.deviceType === 2){
+          this.$set(this.equipmentData[1], 'disabled', true)
+          this.$set(this.equipmentData[1], 'value','柜员机')
+        }else{
+          // this.$set(this.equipmentData[1], 'value','')
+          this.equipmentData[1].disabled = false;
+        }
+        // console.log("派发出来的参数", val);
+        this.params = Object.assign({goodsType:this.goodsType},this.reslt, val);
+        console.log('param', this.params)
+      }
     },
     changeOption() {
-      console.log(this.selectValue);
+      console.log(this.goodsType);
+    },
+    // 图标上传
+    async uploadFileImg(files) {
+      const self = this;
+      let formData = new FormData();
+      formData.append('file', files.file);
+      // formData.append('refId', this.id);
+      // formData.append('flag', true);
+      // formData.append('busType', 6);
+      const res = await this.$api.uploadGoodsType({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      self.imgId.push(res.data.fileId)
+      let imgUrl = res.data.filePath;
+      console.log(this.imgId)
     },
 
-     handleRemove(file) {
-        console.log(file);
-      },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
-      handleDownload(file) {
-        console.log(file);
-      }
+    handleRemove(file) {
+      console.log(file);
+    },
+
+
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload(file) {
+      console.log(file);
+    }
   }
 };
 </script>

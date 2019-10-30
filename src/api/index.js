@@ -21,6 +21,11 @@ export default {
   getLogOut: (options = {}) => ajax.post('/logout', options),
   // 上传范例
   testUpload: (options = {}) => ajax.upload('/game/uploading', options),
+  // 覆盖默认api请求地址范例
+  testApiUrl: (options = {}) => ajax.post('/test', {
+    ...options,
+    baseURL: '//10.6.0.89:8080/bms/api'
+  }),
 
   ...businessCharts,
   ...businessManage,

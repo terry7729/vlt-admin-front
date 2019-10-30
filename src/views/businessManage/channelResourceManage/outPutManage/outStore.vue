@@ -16,11 +16,11 @@
       </el-table>
     </panel-static>
     <div class="inp-total">
-      <span>合计金额：<el-input :disabled="true" v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
+      <span>合计金额：<el-input size="small" :disabled="true" v-model="totalMoney" placeholder="请输入总金额"></el-input></span>
     </div>
     <el-row class="outStore">
-      <el-button type="primary" class="mainBtn" @click="outStore">出库</el-button>
-      <el-button @click="cancel">取消</el-button>
+      <el-button size="small" type="primary" class="mainBtn" @click="outStore">出库</el-button>
+      <el-button size="small" @click="cancel">取消</el-button>
     </el-row>
   </div>
 </template>
@@ -41,41 +41,53 @@ export default {
       { title: "备注", value: "", prop: "remark" },
   ],
   goodsListData:[],
-  requestData:{
-    "documentNumber": "",
-    "oplBy": "1",      //出库操作人id
-    "oplType": 2,    
-    "warehouseId": 10,
-  },
-  documentNumber: this.$route.query.documentNumber
+  
+  // documentNumber: this.$route.query.documentNumber,
+  warehouseId:10,
+  queryRequest: {
+    documentNumber: '',
+    oplType: ''
+  }
  }
  },
  components: {
  },
  created(){
-   this.getInfoList(this.documentNumber)
+  if (this.$route.query.documentNumber && this.$route.query.oplType) {
+    this.queryRequest = this.$route.query;
+    this.queryRequest.oplType = parseInt(this.queryRequest.oplType);
+  }
+  this.getInfoList(this.queryRequest)
  },
  methods: {
   async getInfoList(data){
     let res = await this.$api.getOutPutDetail({data})
-    console.log(res )
+    // console.log(res )
     if(res && res.code == 0){
       this.infoList.forEach(item =>{
         this.totalMoney = res.data.totalPrice
+        this.warehouseId = res.data.outWarehouseId
         this.goodsListData = res.data.list
         item.value = res.data[item.prop]
       })
     }
   },
   //出库
-  async outStore(data){
-    let res = await this.$api.entryAndOut({
-      data: {
-        ...this.requestData,
-        documentNumber: this.$route.query.documentNumber
+  async outStore(){
+    let data = {
+      ...this.queryRequest,
+      warehouseId: this.warehouseId  
       }
-    })
+      console.log(data)
+    let res = await this.$api.entryAndOut({data})
+    if(res && res.code == 0){
+      this.$message({
+        message: '出库成功',
+        type: 'success'
+      })
+    }
     console.log(res)
+    this.$router.back();
   },
   cancel(){
     this.$router.back();
@@ -90,7 +102,7 @@ export default {
     margin-top: 20px;
     margin-left: 20px;
     .el-input {
-      width: 500px;
+      width: 300px;
     }
   }
   .outStore {
@@ -99,7 +111,7 @@ export default {
     }
     .mainBtn {
       margin-top: 80px;
-      margin-left: 1350px;
+      margin-left: 150px;
       margin-bottom: 150px;
     }
   }

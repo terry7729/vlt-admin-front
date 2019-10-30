@@ -107,7 +107,8 @@ export default {
         data: {
           pageNum: self.listQuery.page,
           pageSize: self.listQuery.limit
-        }
+        },
+        baseURL:'http://10.7.0.90:8080/api'
       });
       if (res && res.code == 0) {
         console.log(res)

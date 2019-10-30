@@ -2,7 +2,12 @@
   <div class="vlt-card">
     <div class="tabs-content">
       <h3>出入库管理</h3>
-      <el-tabs tab-position="left" style="height: 1000px;" @tab-click="sideTab" v-model="activeName">
+      <el-tabs
+        tab-position="left"
+        style="height: 1000px;"
+        @tab-click="sideTab"
+        v-model="activeName"
+      >
         <el-tab-pane
           :label="supItem.label"
           :name="supItem.name"
@@ -71,28 +76,28 @@
                 <el-table-column label="操作">
                   <template slot-scope="scope">
                     <el-button
-                      @click="putStore(scope.row.documentNumber)"
+                      @click="putStore(scope.row)"
                       type="primary"
                       v-prevent="2000"
                       size="mini"
                       v-if="childItem.label == '待入库'"
                     >入库</el-button>
                     <el-button
-                      @click="outStore(scope.row.documentNumber)"
+                      @click="outStore(scope.row)"
                       type="primary"
                       v-prevent="2000"
                       size="mini"
                       v-if="childItem.label == '待出库'"
                     >出库</el-button>
                     <el-button
-                      @click="alreadyPutDetail(scope.row.documentNumber)"
+                      @click="alreadyPutDetail(scope.row)"
                       type="primary"
                       v-prevent="2000"
                       size="mini"
                       v-if="childItem.label == '已入库'"
                     >详情</el-button>
                     <el-button
-                      @click="alreadyOutDetail(scope.row.documentNumber)"
+                      @click="alreadyOutDetail(scope.row)"
                       type="primary"
                       v-prevent="2000"
                       size="mini"
@@ -242,6 +247,7 @@ export default {
         ...param,
         status: this.currentTab.statusCode
       };
+      console.log(this.currentSearchParam);
       let res = await this.$api.getOutPutList({
         data: {
           ...this.requestData,
@@ -311,11 +317,12 @@ export default {
     async getOut() {
       const requestData = JSON.parse(JSON.stringify(this.requestData));
       const param = requestData.param || {};
-      delete requestData.param;
+      //删除param
+      //delete requestData.param;
       let result = await this.$api.outExport({
         data: {
           ...requestData,
-          ...this.currentSearchParam
+          param: this.currentSearchParam
         },
         responseType: "blob"
       });
@@ -335,31 +342,43 @@ export default {
       //console.log("res", result);
     },
     //入库跳转
-    putStore(documentNumber) {
+    putStore(row) {
       this.$router.push({
         path: "putStore",
-        query: { documentNumber }
+        query: { 
+          documentNumber: row.documentNumber,
+          oplType: 2
+           }
       });
     },
     //出库跳转
-    outStore(documentNumber) {
+    outStore(row) {
       this.$router.push({
         path: "outStore",
-        query: { documentNumber }
+        query: { 
+          documentNumber: row.documentNumber,
+          oplType: 2
+        }
       });
     },
     //  入库详情
-    alreadyPutDetail(documentNumber) {
+    alreadyPutDetail(row) {
       this.$router.push({
         path: "alreadyPutDetail",
-        query: { documentNumber }
+        query:{ 
+          documentNumber: row.documentNumber,
+          oplType: 1
+        }
       });
     },
     //出库详情
-    alreadyOutDetail(documentNumber) {
+    alreadyOutDetail(row) {
       this.$router.push({
         path: "alreadyOutDetail",
-        query: { documentNumber }
+        query: { 
+          documentNumber: row.documentNumber,
+          oplType: 1
+        }
       });
     }
   }

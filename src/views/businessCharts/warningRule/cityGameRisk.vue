@@ -53,6 +53,7 @@
 
 <script>
 import city from "@/libs/map/city.json";
+import mixin from '@/utils/mixin'
 export default {
   data() {
     return {
@@ -164,7 +165,8 @@ export default {
       const self = this;
       let data = JSON.parse(JSON.stringify(options));
       const res = await self.$api.getGameRiskList({
-        data
+        data,
+        baseURL:'http://10.7.0.90:8080/api'
       });
       if (res && res.code == 0) {
         self.tableData = res.data.records;
@@ -191,10 +193,10 @@ export default {
         }
       });
       if (res && res.code == 0) {
-        // this.$message({
-        //   type: "success",
-        //   message: "删除成功!"
-        // });
+        this.$message({
+          type: "success",
+          message: "删除成功!"
+        })
         this.getGameRiskList(this.listQuery)
       } else {
         // this.$message({
@@ -332,10 +334,15 @@ export default {
           id: row.businessKey
         }
       })
+    },
+    deleteResource(){
+        this.tableData.splice(index,1)
+        
     }
   },
   mounted() {
     // this.showcity();
+    console.log(mixin)
   },
   created() {
     this.getGameRiskList(this.listQuery);

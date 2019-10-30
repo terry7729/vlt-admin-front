@@ -25,13 +25,24 @@ export default {
   //获取基本信息类型管理列表
   getGoosType: (options = {}) => ajax.post('/goodsType/pageList', options),
   // 获取下拉选择框物品名称-型号树
-  getModelTrees: (options = {}) => ajax.get('/goodsModel/ModelTree', options),
+  getModelTrees: (options = {}) => ajax.get('/goodsModel/goodsNameTree', options),
   // 获取类型管理查看详情
   getDetail: (options = {}) => ajax.get('/goodsType/details', options),
   //类型管理状态修改
   statusUpdate: (options = {}) => ajax.post('/goodsType/statusUpdate', options),
   //类型管理类型新增
   typeCreate: (options = {}) => ajax.post('/goodsType/create', options),
+  //类型管理-图片上传
+  uploadGoodsType: (options = {}) => ajax.upload('/goodsType/imgFileUpload', options),
+  // 类型管理修改
+  modification: (options = {}) => ajax.post('/goodsType/update', options),
+  // 获取型号管理列表
+  getModelList: (options = {}) => ajax.post('/goodsModel/pageList', options),
+  // 型号管理状态修改
+  ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
+  // 型号管理新增
+  modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
+  
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
@@ -63,6 +74,8 @@ export default {
   cardGenerationDetail: (options = {}) => ajax.post('/bettingCardGeneration/detail', options),
   // 投注卡生成列表分页查询
   cardGenerationList: (options = {}) => ajax.post('/bettingCardGeneration/list', options),
+  // 根据投注卡生成ID查询投注卡信息列表
+  bettingCardList: (options = {}) => ajax.post('/bettingCardGeneration/bettingCardList', options),
 
   // 投注卡信息列表分页查询
   bettingCardInfoList: (options = {}) => ajax.post('/bettingCardInfo/list', options),
@@ -70,6 +83,8 @@ export default {
   bettingCardInfoDetail: (options = {}) => ajax.post('/bettingCardInfo/detail', options),
   // 投注卡信息注销
   deleteBettingCardInfo: (options = {}) => ajax.post('/bettingCardInfo/delete', options),
+  // 投注卡信息导出Excel 
+  bettingCardExportExcel: (options = {}) => ajax.post('/bettingCardGeneration/exportExcel', options),
 
   // 投注卡管理
   getBettingRulesList: (options = {}) => ajax.post('/bettingCardRechargeRules/list', options),
@@ -99,9 +114,11 @@ export default {
   // 导出年度发展计划列表信息 
   exportDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportDevelopPlanList', options),
   // 导出年度发展计划汇总省级列表信息
-  exportProvinceDevelopPlanList : (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
+  exportProvinceDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportProvinceDevelopPlanList', options),
   // 导出年度发展计划汇总市级列表信息
   exportCityDevelopPlanList: (options = {}) => ajax.post('/developPlan/exportCityDevelopPlanList', options),
+
+  // 查询当前登录用户的机构信息
 
   // 查询年度开展计划汇总市级列表
   getCityPlanList: (options = {}) => ajax.post('/developPlan/queryCityDevelopPlanList', options),
@@ -144,7 +161,7 @@ export default {
   getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
   // 编辑变更计划
   editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
-  
+
 
   // 新建渠道
   createChannel: (options = {}) => ajax.post('/create/save', options),
@@ -158,7 +175,7 @@ export default {
   uploadChannelFiles: (options = {}) => ajax.upload('/fileUpload/upload', options),
   // 渠道列表导出
   exportChannelExcel: (options = {}) => ajax.post('/channel/exportExcel', options),
-  
+
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称
   getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
@@ -177,7 +194,9 @@ export default {
   //保存资金权限信息  
   addFundRight: (options = {}) => ajax.put('/fund/addFundRight', options),
   //游戏销售权限
-  queryGameRight: (options = {}) => ajax.post('/sale/queryGameRight', options),
+  queryGameRight: (options = {}) => ajax.post('/sales/queryGameRight', options),
+  //游戏销售权限更改
+  updateGameRight: (options = {}) => ajax.post('/sales/update', options),
 
 
   //资源发放

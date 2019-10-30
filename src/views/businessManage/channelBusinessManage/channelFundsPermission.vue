@@ -71,9 +71,8 @@ export default {
       let data = {
         ...this.form
       };
-      let res = await this.$api.addFundRight({ data });
+      let res = await this.$api.addFundRight({ message: "提交成功", data });
       if (res.code === 0) {
-        alert(res.data.msg);
         this.$router.push({ path: "channelDeal" });
       }
     },

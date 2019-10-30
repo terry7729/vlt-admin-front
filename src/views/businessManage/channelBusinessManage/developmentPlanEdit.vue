@@ -55,6 +55,7 @@ export default {
           prop: "insId",
           value: [],
           options: [],
+          disabled: true,
           setProps: {
             label: "text",
             value: "id",
@@ -147,8 +148,9 @@ export default {
         {
           type: "cascader",
           prop: "insId",
-          value: "61",
+          value: "61", // 此处需要获取到用户的信息返回的机构 填写到value中
           title: "所属机构",
+          disabled: true,
           options: [
             {
               value: "1",
@@ -213,7 +215,7 @@ export default {
         { title: "计划说明", type: "textarea", prop: "planDesc", value: "" }
       ],
       params: {
-        insLevel: "2"
+        insLevel: 2
       },
       rules: {
         test: [
@@ -264,7 +266,7 @@ export default {
       if (routerQuery && routerQuery.id) {
         const data = {
           id: routerQuery.id,
-          insLevel: routerQuery.insLevel
+          insLevel: parseInt(routerQuery.insLevel)
         };
         this.getDevelopPlanInfo(data);
       }
@@ -280,13 +282,13 @@ export default {
           // 根据返回 返回的数据判断是否是省级所属机构， 然后根据回填数据
           let dataList = this.isPrivice ? this.formData : this.formDataCity;
           let dataObj = res.data;
-          console.log(dataObj)
+          // console.log(dataObj)
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceNewSellingHall/g, 'newSellingHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceSellingMachine/g, 'sellingMachine'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationHall/g, 'cooperationHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationMachine/g, 'cooperationMachine'))
 
- dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityNewSellingHall/g, 'newSellingHall'))
+          dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityNewSellingHall/g, 'newSellingHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/citySellingMachine/g, 'sellingMachine'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityCooperationHall/g, 'cooperationHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/cityCooperationMachine/g, 'cooperationMachine'))
@@ -308,10 +310,8 @@ export default {
     getProvinceCityPlan(data) {
       const self = this;
       (async data => {
-        console.log(2222);
         let res = await self.$api.getProvinceCityPlan({ data });
         if (res && res.code == 0) {
-          // console.log("res", res.data);
           // self.$set(self.formData[1], 'options', res.data)
           // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
@@ -327,11 +327,8 @@ export default {
       const data = {};
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
-        console.log('ssss', res);
         if (res && res.code == 0) {
-          console.log("res", res.data);
           self.$set(self.formData[1], "options", res.data);
-          // self.formData[1].options = res.data;
           self.cascaderOptions = res.data;
         } else {
           // self.$message.warning(res.msg)
@@ -343,7 +340,6 @@ export default {
       const self = this;
       this.params.id = this.$route.query.id;
       const data = this.params;
-      // console.log(data);
       (async data => {
         let res = await self.$api.editDevelopPlan({ data });
         if (res && res.code == 0) {
@@ -357,21 +353,17 @@ export default {
       })(data);
     },
     changeForm(val) {
-      // console.log('派发出来的参数', val)
       this.params = Object.assign(this.params, val);
       // console.log('派发出来的参数',this.params);
       if (this.params.planDate) {
         this.params.planDate = moment(this.params.planDate).format("YYYY");
       }
-
-      // const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
-      // console.log(instArr)
     },
     submit() {
       const self = this;
       // console.log("提交的参数", this.params);
       self.$refs.baseForm.validate(val => {
-        console.log(val);
+        // console.log(val);
         self.editDevelopPlan();
       });
     },

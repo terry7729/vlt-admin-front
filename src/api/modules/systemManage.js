@@ -38,7 +38,7 @@ export default {
   //区域树查询
   FindRegionTreeRoots: (options = {}) => ajax.post('/region/findRegionTreeRoots', options),
   //部门树查询
-  FindDeptTreeRoots: (options = {}) => ajax.post(`/dept/findDeptTreeRoots`, options),
+  FindDeptTreeRoots: (options = {}) => ajax.post('/dept/findDeptTreeRoots', options),
 
 
 
@@ -72,7 +72,7 @@ export default {
   //用户删除
   delByIds:(options = {}) => ajax.delete('/vlt/user/delByIds',options),
   //用户编缉
-  userEdit:(options = {}) => ajax.post('/vlt /user/edit',options),
+  userEdit:(options = {}) => ajax.post('/vlt/user/edit',options),
 
 
 
