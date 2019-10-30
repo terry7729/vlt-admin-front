@@ -103,7 +103,7 @@ export default {
         storage.remove('token');
         storage.remove('userInfo');
         this.$router.push({
-          path:'/login'
+          path: '/login'
         })
         return;
       }

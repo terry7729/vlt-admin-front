@@ -53,7 +53,7 @@ export default {
           console.log('无数据');
         }
       } else {
-        _this.$message.warning(res.msg);
+        _this.$message.warning(result.msg);
       }
       // equipmentRecord
     }

@@ -3,14 +3,14 @@
     <panel title="游戏规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="gameData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="gameData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeRuleForm"></base-form>
         </div>
       </div>
     </panel>
     <panel title="投注规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="betData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="betData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeBetForm"></base-form>
         </div>
       </div>
     </panel>
@@ -19,24 +19,53 @@
         :model="eachBetForm"
         :rules="rules"
         class="eachBet-form">
-        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`${item.title}${index+1}`">
-          <el-input v-model="eachBetForm[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
-          <el-button v-if="index!==0" type="text" class="delete" @click="deleteBetMoney(index)">删除</el-button>
+        <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`单次加注金额${index+1}`">
+          <el-input v-model="item.minAddBets" placeholder="请输入单次加注金额"></el-input> 
+          <el-button v-if="index!==0" type="text" class="delete-text" @click="deleteBetMoney(index)">删除</el-button>
         </el-form-item>
       </el-form>
       <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
     </panel>
+    <panel title="奖等设置" :show="true" style="margin-bottom:15px">
+      <div class="table-wrap">
+        <el-table :data="tableData" border class="table">
+          <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
+          <el-table-column label="兑奖名称" min-width="160px">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.exchangeName" placeholder="请输入兑奖名称"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="最大兑奖金额" min-width="160px">
+            <template slot-scope="scope">
+              <el-input v-model="scope.row.exchangeMoney" placeholder="请输入最大兑奖金额"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="兑奖说明" min-width="200px">
+            <template slot-scope="scope">
+              <el-input type="textarea"
+                :rows="2" v-model="scope.row.exchangeDesc" placeholder="请输入兑奖说明"></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="80px">
+            <template slot-scope="scope">
+              <i class="el-icon-delete delete" @click="deleteGoods(scope.$index)"></i>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-button class="addGoods" @click="addGoods" icon="el-icon-plus">新增奖等设置</el-button>
+      </div>
+    </panel>
     <panel title="资金规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="fundsData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="fundsData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeFundsForm"></base-form>
         </div>
       </div>
     </panel>
     <panel title="风控规则" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-double">
         <div class="vlt-edit-wrap">
-          <base-form :formData="riskData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeForm"></base-form>
+          <base-form :formData="riskData" labelWidth="90px" ref="baseForm" :rules="rules" direction="top" @change="changeRiskForm"></base-form>
         </div>
       </div>
     </panel>
@@ -108,12 +137,49 @@ export default {
       eachBetForm: {},
       gameForm: {},
       rules: {},
-      params: {}
+      params: {},
+      tableData: [
+        {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
+      ],
+      ruleParams: {}, // 游戏规则参数
+      betParams: {}, // 投注规则参数
+      fundsParams: {}, // 资金规则参数
+      riskParams: {}, // 风控规则参数
+      publishParams: {}, // 信息发布规则参数
+      awardSetParams: [], // 奖等设置参数
     }
   },
-  components: {
+  watch: {
+    tableData: {
+      handler(newValue, oldValue) {
+        // this.$emit("change", this.form)
+        console.log('监听table的数据变化', newValue)
+        // 计算价格
+        let res = JSON.parse(JSON.stringify(newValue));
+        let params = []
+        res.forEach((item)=>{
+          // 删除不需要的参数
+          delete item.options
+          item.exchangeMoney = Number(item.exchangeMoney)
+          // 保留你需要的参数
+          // let param = (({goodsId, searl, max, min, price, money, remark}) =>({goodsId, searl, max, min, price, money, remark}))(item);
+          params.push(item)
+        })
+        this.awardSetParams = params;
+        console.log('params', params)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
   },
   methods: {
+    deleteGoods(index) {
+      this.tableData.splice(index, 1);
+    },
+    addGoods() {
+      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''};
+      this.tableData.push(obj)
+    },
     getStoreList(row) {
       const self = this;
       const data = {
@@ -135,19 +201,69 @@ export default {
       console.log('删除', this.deviceData)
     },
     addBetMoney() {
-      let cloneData = JSON.parse(JSON.stringify(this.eachBetData[0]))
-      cloneData.prop = `${cloneData.eachAdd}${this.eachBetData.length}`
-      this.$set(this.eachBetData, this.eachBetData.length, cloneData);
+      let obj = {minAddBets:''}
+      this.eachBetData.push(obj);
     },
-    changeForm(val) {
-      Object.assign(this.params, val)
-      console.log('派发出来的参数', this.params)
+    // 游戏规则参数
+    changeRuleForm(val) {
+      this.ruleParams = val;
+      for(let key in this.ruleParams){
+        if(key!='ruleDesc') {
+          this.ruleParams[key] = Number(this.ruleParams[key])
+        }
+      }
+    },
+    // 投注规则参数
+    changeBetForm(val) {
+      this.betParams = val;
+      for(let key in this.betParams){
+        this.betParams[key] = Number(this.betParams[key])
+      }
+    },
+    // 资金规则参数
+    changeFundsForm(val) {
+      this.fundsParams = val;
+      for(let key in this.fundsParams){
+        this.fundsParams[key] = Number(this.fundsParams[key])
+      }
+    },
+    // 风控规则参数
+    changeRiskForm(val) {
+      this.riskParams = val;
+      for(let key in this.riskParams){
+        this.riskParams[key] = Number(this.riskParams[key])
+      }
+    },
+    // 信息发布规则
+    changePublishForm(val) {
+      this.publishParams = val;
     },
     prev() {
       this.$emit('prev', this.params)
     },
     next() {
-      this.$emit('next', this.params)
+      console.log('eachbet', this.eachBetData)
+      let array = []
+      this.eachBetData.forEach(item=>{
+        array.push(item.minAddBets)
+      })
+      let str = array.join(',')
+      console.log('str', str)
+      this.betParams.minAddBets = str;
+      // 把返奖率 调节基金参数 调换位置
+      this.fundsParams.reFundRate = this.ruleParams.reFundRate 
+      this.fundsParams.returnPrizeRate = this.ruleParams.returnPrizeRate
+      delete this.ruleParams.reFundRate 
+      delete this.ruleParams.returnPrizeRate
+      let data = {
+        gameRuleVo: this.ruleParams,
+        gameBettingRuleVo: this.betParams,
+        gameFundRuleVo: this.fundsParams,
+        gameRiskRuleVo: this.riskParams,
+        // publishParams: this.publishParams,
+        gameExchangeSetVoList: this.awardSetParams
+      }
+      this.$emit('next', data)
     }
   },
 }

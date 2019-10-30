@@ -6,6 +6,7 @@
       :key="index" :icon="`el-icon-${item.icon}`"
       @click="select(item)"
       :type="item.type"
+      :disabled="item.disabled"
     >
       {{item.name}}
     </el-button>

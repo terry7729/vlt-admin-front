@@ -70,7 +70,7 @@ export default {
   //用户状态
   userStatus:(options = {}) => ajax.post('/vlt/user/status',options),
   //用户删除
-  delByIds:(options = {}) => ajax.delete('/vlt/user/delByIds',options),
+  delByIds:(options = {}) => ajax.post('/vlt/user/delByIds',options),
   //用户编缉
   userEdit:(options = {}) => ajax.post('/vlt/user/edit',options),
 
