@@ -14,6 +14,10 @@ export default  {
     state.routerTags.forEach(item => {
       if (item.routerName === data.routerName) {
         isRepeat = true;
+        // 路由参数更新
+        if (JSON.stringify(item.query) !== JSON.stringify(data.query)) {
+          item.query = data.query;
+        }
       }
     })
     if (!isRepeat) {

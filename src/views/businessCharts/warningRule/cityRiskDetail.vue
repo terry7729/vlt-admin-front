@@ -2,6 +2,7 @@
   <div class="vlt-card plan-check">
     <panel title="城市风险指标详情" :show="true">
       <base-info :infoList="planList"></base-info>
+       <p ><el-button type="primary" @click.native="goEdit"  size="mini">修改</el-button></p>
     </panel>
   </div>
 </template>
@@ -123,20 +124,21 @@ export default {
           value: "",
           prop: "informCentralManIdSerious"
         },
-        {
-          title: "重大通知中央管理员",
+       
+          {
+          title: "重大通知市级管理员",
           value: "",
-          prop: "informCentralManIdMajor"
+          prop: "informCityManIdMajor"
         },
         {
           title: "重大通知省级管理员",
           value: "",
           prop: "informProvinceManIdMajor"
         },
-        {
-          title: "重大通知市级管理员",
+       {
+          title: "重大通知中央管理员",
           value: "",
-          prop: "informCityManIdMajor"
+          prop: "informCentralManIdMajor"
         },
         { title: "普通通知方式", value: "", prop: "informWayOrdinary" },
         { title: "严重通知方式", value: "", prop: "informWaySerious" },
@@ -219,6 +221,14 @@ export default {
       }
 
       return InformType;
+    },
+      goEdit(){
+      this.$router.push({
+        name:'cityRiskEdit',
+        query:{
+          id:this.$route.query.id
+        }
+      })
     }
   },
   mounted() {
@@ -230,5 +240,10 @@ export default {
 <style lang="less" scoped>
 /deep/ .base-info .info-list .title{
   min-width: unset;
+}
+p{
+  margin-right: 150px;
+  margin-bottom: 10px;
+  text-align: right;
 }
 </style>

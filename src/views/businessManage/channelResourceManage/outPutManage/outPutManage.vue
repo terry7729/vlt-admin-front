@@ -2,7 +2,12 @@
   <div class="vlt-card">
     <div class="tabs-content">
       <h3>出入库管理</h3>
-      <el-tabs tab-position="left" style="height: 1000px;" @tab-click="sideTab" v-model="activeName">
+      <el-tabs
+        tab-position="left"
+        style="height: 1000px;"
+        @tab-click="sideTab"
+        v-model="activeName"
+      >
         <el-tab-pane
           :label="supItem.label"
           :name="supItem.name"
@@ -242,6 +247,7 @@ export default {
         ...param,
         status: this.currentTab.statusCode
       };
+      console.log(this.currentSearchParam);
       let res = await this.$api.getOutPutList({
         data: {
           ...this.requestData,
@@ -311,11 +317,12 @@ export default {
     async getOut() {
       const requestData = JSON.parse(JSON.stringify(this.requestData));
       const param = requestData.param || {};
-      delete requestData.param;
+      //删除param
+      //delete requestData.param;
       let result = await this.$api.outExport({
         data: {
           ...requestData,
-          ...this.currentSearchParam
+          param: this.currentSearchParam
         },
         responseType: "blob"
       });

@@ -38,6 +38,7 @@
                   <el-button
                     type="text"
                     size="mini"
+                    v-if="data.type != 4"
                     @click="() => addMenuMagnage(data)">
                     新增
                   </el-button>
@@ -337,17 +338,18 @@ export default {
         // console.log(this.parent)
         this.AddInsInfoParms.created = "添加子节点";
         let addfrom = JSON.parse(JSON.stringify(this.AddInsInfoParms));
-        if (addfrom.isShow === true) {
+        if (addfrom.isShow ) {
           addfrom.isShow = 0;
         } else {
           addfrom.isShow = 1;
         }
-        if (addfrom.isSensitivity === false) {
-          addfrom.isSensitivity = 1;
-        } else {
+        if (addfrom.isSensitivity) {
           addfrom.isSensitivity = 0;
+        } else {
+          addfrom.isSensitivity = 1;
         }
-        if (this.moduleType != 4) {
+        
+      
             let data = {
               parentId: this.parent.id,
               sysCode: "VLT_BMS",
@@ -363,14 +365,7 @@ export default {
               this.$refs.baseForm.resetForm();
             }
             
-        } else {
-          this.$alert("按钮类型不能进行此操作！", "温馨提示！", {
-            confirmButtonText: "确定",
-            callback: action => {
-              close();
-            }
-          });
-        }
+     
  
     },
 async submitModifine(val) {
@@ -445,25 +440,23 @@ async submitModifine(val) {
         this.init();
       }  
     },
-    remove(){
-
-    },
-    selectBtn(val) {
-      //顶部按钮点击事件
-      if (val.name === "添加顶部菜单") {
-        this.dialogFormVisible2 = true;
-      }
-      if (val.name === "批量删除") {
-        this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+    remove(node,data){
+      console.log(node,data)
+     
+              this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         })
           .then(async () => {
-            let arr = this.$refs.tree.getCheckedNodes();
-            let data = arr.map(item => {
-              return { moduleId: item.id };
+             let arr = this.$refs.tree.getCheckedNodes();
+           
+             let moduleId = []
+            let  array = arr.map(item => {
+                 return moduleId.push(item.id)
             });
+             let data = {  }
+             data.delModuleList = moduleId
             let reslt = await this.$api.DeleteModule({ data });//批量删除
             console.log('批量删除',reslt)
             if (reslt.code === 0) {
@@ -481,6 +474,14 @@ async submitModifine(val) {
               message: "已取消删除"
             });
           });
+
+    },
+    selectBtn(val) {
+      //顶部按钮点击事件
+      if (val.name === "添加顶部菜单") {
+        this.dialogFormVisible2 = true;
+      }
+      if (val.name === "批量删除") {
       }
       //触发弹框
     },
@@ -496,21 +497,24 @@ async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
       console.log(val)
       this.parent = val;
       this.nowNodeObject = val;
-      let res = await this.$api.QueryModuleDetail(val.id);//菜单详情
+      let res = await this.$api.QueryModuleDetail({data:val.id});//菜单详情
       console.log('菜单详情信息',res)
       this.slelectifo = val.text;
       if(res.code === 0){
-      //   if (res.data.isSensitivity === 0) {
-      //   res.data.isSensitivity = true;
-      // } else {
-      //   res.data.isSensitivity = false;
-      // }
-      // if (res.data.isShow === 0) {
-      //   res.data.isShow = true;
-      // } else {
-      //   res.data.isShow = false;
-      // }
-      let n = Object.keys(res.data);
+        let data = JSON.parse(JSON.stringify(res.data))
+
+        if (data.isSensitivity === 0) {
+              data.isSensitivity = 1;
+            } else {
+              data.isSensitivity = 0;
+            }
+            if (data.isShow === 0) {
+              data.isShow = 1;
+            } else {
+              data.isShow = 0;
+            }
+      let n = Object.keys(data);
+      // console.log(n)
       this.moduleType = res.data.moduleType;
       let arr = this.rightFrom;
       for (var i = 0; i < arr.length; i++) {
@@ -532,7 +536,7 @@ async getnowNodeifo(val, s) {//获取当前点击节点信息及详情
                   break;
               }
             }else{
-              arr[i].value = res.data[n[j]];
+              arr[i].value =data[n[j]];
             }
             
           }

@@ -230,6 +230,7 @@ export default [
     path: 'businessOperation/screenWatch/accountList/accountListDetail',
     name: 'accountListDetail',
     meta: {
+      parentName: "accountList",
       title: '渠道账户列表详情',
     },
     component: accountListDetail
@@ -238,6 +239,7 @@ export default [
     path: 'businessOperation/screenWatch/accountList/haveListDetail',
     name: 'haveListDetail',
     meta: {
+      parentName: "accountList",
       title: '拥有渠道列表详情',
     },
     component: haveListDetail
@@ -246,6 +248,7 @@ export default [
     path: 'businessOperation/screenWatch/accountList/haveListDetailTwo',
     name: 'haveListDetailTwo',
     meta: {
+      parentName: "accountList",
       title: '拥有渠道列表详情单详情',
     },
     component: haveListDetailTwo
@@ -268,6 +271,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/bankadd',
     name: 'bankadd',
     meta: {
+      parentName: "accountMoneyManage",
       title: '银行新增',
     },
     component: bankadd
@@ -276,6 +280,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/bankrevise',
     name: 'bankrevise',
     meta: {
+      parentName: "accountMoneyManage",
       title: '银行修改',
     },
     component: bankrevise
@@ -285,6 +290,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/bankbalance',
     name: 'bankbalance',
     meta: {
+      parentName: "accountMoneyManage",
       title: '银行余额',
     },
     component: bankbalance
@@ -293,6 +299,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/bankdetail',
     name: 'bankdetail',
     meta: {
+      parentName: "accountMoneyManage",
       title: '银行明细',
     },
     component: bankdetail
@@ -303,6 +310,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/externaladd',
     name: 'externaladd',
     meta: {
+      parentName: "accountMoneyManage",
       title: '第三方支付新增',
     },
     component: externaladd
@@ -311,6 +319,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/externalrevise',
     name: 'externalrevise',
     meta: {
+      parentName: "accountMoneyManage",
       title: '第三方支付修改',
     },
     component: externalrevise
@@ -319,6 +328,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/externalbalance',
     name: 'externalbalance',
     meta: {
+      parentName: "accountMoneyManage",
       title: '第三方支付余额',
     },
     component: externalbalance
@@ -327,6 +337,7 @@ export default [
     path: 'businessOperation/screenWatch/accountMoneyManage/externaldetail',
     name: 'externaldetail',
     meta: {
+      parentName: "accountMoneyManage",
       title: '第三方支付明细',
     },
     component: externaldetail
@@ -344,6 +355,7 @@ export default [
     path: 'businessOperation/PermissionMaintain/roleManageAdd',
     name: 'roleManageAdd',
     meta: {
+      parentName: "roleManage",
       title: '角色管理新增',
     },
     component: roleManageAdd
@@ -353,6 +365,7 @@ export default [
     path: 'businessOperation/PermissionMaintain/roleManageExamine',
     name: 'roleManageExamine',
     meta: {
+      parentName: "roleManage",
       title: '角色管理查看',
     },
     component: roleManageExamine
@@ -370,6 +383,7 @@ export default [
     path: 'businessOperation/PermissionMaintain/operationAccountAdd',
     name: 'operationAccountAdd',
     meta: {
+      parentName: "operationAccountManage",
       title: '账户管理新增',
     },
     component: operationAccountAdd
@@ -378,6 +392,7 @@ export default [
     path: 'businessOperation/PermissionMaintain/operationAccountExamine',
     name: 'operationAccountExamine',
     meta: {
+      parentName: "operationAccountManage",
       title: '账户管理查看',
     },
     component: operationAccountExamine
@@ -395,6 +410,7 @@ export default [
     path: 'businessOperation/LotteryManagement/lotteryTicketDetail',
     name: 'lotteryTicketDetail',
     meta: {
+      parentName: "lotteryTicket",
       title: '彩票兑奖详情',
     },
     component: lotteryTicketDetail
@@ -403,6 +419,7 @@ export default [
     path: 'businessOperation/LotteryManagement/lotteryTicketPrint',
     name: 'lotteryTicketPrint',
     meta: {
+      parentName: "lotteryTicket",
       title: '彩票兑奖打印',
     },
     component: lotteryTicketPrint
@@ -411,6 +428,7 @@ export default [
     path: 'businessOperation/LotteryManagement/lotteryTicketReprint',
     name: 'lotteryTicketReprint',
     meta: {
+      parentName: "lotteryTicket",
       title: '彩票兑奖补打',
     },
     component: lotteryTicketReprint
@@ -428,6 +446,7 @@ export default [
     path: 'businessOperation/LotteryManagement/ticketOfficeManage',
     name: 'ticketOfficeManage',
     meta: {
+      parentName: "expirySetting",
       title: '中奖处管理',
     },
     component: ticketOfficeManage
@@ -436,6 +455,7 @@ export default [
     path: 'businessOperation/LotteryManagement/winningCheck',
     name: 'winningCheck',
     meta: {
+      parentName: "expirySetting",
       title: '中奖查询',
     },
     component: winningCheck
@@ -460,6 +480,7 @@ export default [
     path: 'businessOperation/MemberManagement/MemberEquityManagementAdd',
     name: 'MemberEquityManagementAdd',
     meta: {
+      parentName: "MemberEquityManagement",
       title: '会员权益管理新增',
     },
     component: MemberEquityManagementAdd
@@ -468,6 +489,7 @@ export default [
     path: 'businessOperation/MemberManagement/MemberEquityManagementDetail',
     name: 'MemberEquityManagementDetail',
     meta: {
+      parentName: "MemberEquityManagement",
       title: '会员权益管理详情',
     },
     component: MemberEquityManagementDetail
@@ -485,6 +507,7 @@ export default [
     path: 'businessOperation/MemberManagement/MemberIntegralManagementAdd',
     name: 'MemberIntegralManagementAdd',
     meta: {
+      parentName: "MemberIntegralManagement",
       title: '会员积分管理新建',
     },
     component: MemberIntegralManagementAdd
@@ -493,6 +516,7 @@ export default [
     path: 'businessOperation/MemberManagement/MemberIntegralManagementDetail',
     name: 'MemberIntegralManagementDetail',
     meta: {
+      parentName: "MemberIntegralManagement",
       title: '会员积分管理详情',
     },
     component: MemberIntegralManagementDetail

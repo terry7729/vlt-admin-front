@@ -4,7 +4,7 @@
       <search-Bar :options="option"></search-Bar>
     </div>
     <div class="addlist">
-      <el-button type="primary" icon="el-icon-plus" @click="compile()">新建表单</el-button>
+      <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </div>
     <div class="tipsline">
       <tips-line>共搜索到8项数据</tips-line>
@@ -31,75 +31,73 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>  
-    <div class="pagintion">
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="100"
-        layout="total, sizes, prev, pager, next, jumper,slot"
-        :total="400"
-      >
-        <span style="color:#606266;font-weight: 400;">第 1 / 80 页</span>
-      </el-pagination>
+      <table-paging
+        :total="total"
+        :currentPage="currentPage"
+        :pageSize="pageSize"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></table-paging>
     </div>
   </div>
 </template>
 
 <script>
-import storage from '@/utils/storage'
+import storage from "@/utils/storage";
 export default {
   data() {
     return {
-      currentPage4: 4,
+      total: 0,
+      pageSize: 10,
+      currentPage: 1,
       tableData: [
         {
           id: 1,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         },
         {
           id: 2,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         },
         {
           id: 3,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         },
         {
           id: 4,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         },
         {
           id: 5,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         },
         {
           id: 6,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         },
         {
           id: 7,
           formname: "视频游戏A发行申请流程表单",
           creatdate: "2019-10-12 10:0:0",
-          note: "视频游戏A发行申请的表单",
+          note: "视频游戏A发行申请的表单"
         }
       ],
-
+      controlOptions: [
+        //按钮组
+        { name: "新建流程", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
+      ],
       option: [
         {
           title: "表单名称",
@@ -129,16 +127,29 @@ export default {
       ]
     };
   },
-  created () {
+  created() {
     this.initFormData();
   },
   methods: {
-    initFormData () {
-      let pc = storage.get('previewConfig');
+    initFormData() {
+      let pc = storage.get("previewConfig");
       if (!pc) {
-        let initConfig = {col:2,row:4,list:[{index:0}, {index: 1},{index:2},{index:3},{index:4},{index:5},{index:6},{index:7}]}
-        storage.set('previewConfig', JSON.stringify(initConfig));
-      } 
+        let initConfig = {
+          col: 2,
+          row: 4,
+          list: [
+            { index: 0 },
+            { index: 1 },
+            { index: 2 },
+            { index: 3 },
+            { index: 4 },
+            { index: 5 },
+            { index: 6 },
+            { index: 7 }
+          ]
+        };
+        storage.set("previewConfig", JSON.stringify(initConfig));
+      }
     },
     toggleSelection(rows) {
       if (rows) {
@@ -149,7 +160,7 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
-    add () {
+    add() {
       this.$router.push("formManage/formCompile");
     },
     handleSelectionChange(val) {
@@ -163,14 +174,13 @@ export default {
     },
     compile(id) {
       this.$router.push({
-        path:"formManage/formCompile",
-        query:{id}
+        path: "formManage/formCompile",
+        query: { id }
       });
-      
     }
   }
 };
 </script>
 
-<style lang="less" >
+<style lang="less" scoped>
 </style>
