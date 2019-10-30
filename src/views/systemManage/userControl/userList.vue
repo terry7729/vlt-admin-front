@@ -215,20 +215,21 @@ async init(val){
         page:val||1,
         pageSize:this.pageSize
       }
-      if(this.searchStatus != "搜索"){
-        console.log('我是默认',data)
-         let n = await  this.$api.getUserAll({data})
-          console.log(n)
-          this.userList = n.data.records
-          this.total = n.data.total;
-          console.log('我是默认',n)
-      }else{
-        console.log('我是搜索',data)
-         let reslt =await this.$api.userPage({data})
-            console.log('我是搜索',reslt)
-            this.userList = reslt.data.records
-            this.total = reslt.data.total;
-      }
+      // if(this.searchStatus != "搜索"){
+        // console.log('我是默认',data)
+         let reslt = await  this.$api.userPage({data})
+          console.log(reslt)
+          this.userList = reslt.data.records
+          this.total = reslt.data.total;
+          console.log('我是默认',reslt)
+      // }
+      // else{
+      //   console.log('我是搜索',data)
+      //    let reslt =await this.$api.userPage({data})
+      //       console.log('我是搜索',reslt)
+      //       this.userList = reslt.data.records
+      //       this.total = reslt.data.total;
+      // }
      
       // this.pageSize = n.data.pages
       },
@@ -287,7 +288,7 @@ async init(val){
         //搜索事件
         console.log(val);
            this.searchFrom = val;
-          this.searchStatus = "搜索"
+          // this.searchStatus = "搜索"
             this.init()
       },
       pagingControl(){

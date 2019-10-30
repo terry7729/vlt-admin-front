@@ -46,7 +46,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagintion" v-if="total">
+      <div class="pagintion" >
         <table-paging
           :current-page="page"
           :page-size="10"
@@ -183,33 +183,35 @@ async init(val){ //初始化页面数据
 
     },
 async pagingControl(val){ //分页控制
-    let data = {
+      const self = this;
+        let data = {
           ...this.searchFrom,
           page:val||1,
           pageSize:this.pageSize
         }
-      if(this.searchStatus != "搜索"){
-        console.log('我是默认',data)
+      // if(this.searchStatus != "搜索"){
+        // console.log('我是默认',data)
           let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
         console.log("获取当前分页信息",reslt)
            if (reslt.code === 0) {
           let arr = reslt.data.records;
-          this.total = reslt.data.total//查询到的信息总数量
-          this.page = reslt.data.page  //当前返回页
+          self.total = reslt.data.total//查询到的信息总数量
+          self.page = reslt.data.current 
+           //当前返回页
           let Arr = JSON.parse(JSON.stringify(arr))
-          this.dataProcessing(Arr);//处理数据
+          self.dataProcessing(Arr);//处理数据
           }
-      }else{
-        console.log('我是搜索',data)
-          let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
-        console.log('角色查询接口',reslt);  
-        if (reslt.code === 0) {
-        let arr = reslt.data.records;
-        this.total = reslt.data.total;
-        let Arr = JSON.parse(JSON.stringify(arr))
-        this.dataProcessing(Arr);//处理数据
-      }
-      }
+      // }else{
+      //   console.log('我是搜索',data)
+      //     let reslt = await this.$api.QueryRoleInfoPage({ data });//角色查询接口
+      //   console.log('角色查询接口',reslt);  
+      //   if (reslt.code === 0) {
+      //   let arr = reslt.data.records;
+      //   this.total = reslt.data.total;
+      //   let Arr = JSON.parse(JSON.stringify(arr))
+      //   this.dataProcessing(Arr);//处理数据
+      // }
+      // }
      },
     handelifo(val) {//路由跳转到角色详情
       this.$router.push({ name: "roleifometion", query: { id: val.roleId } });
@@ -289,9 +291,11 @@ async pagingControl(val){ //分页控制
 async search(val) {//搜索事件
       console.log(val)
         this.searchFrom = val;
+        // this.currentPage4 = 1;
         this.searchStatus = "搜索"
-        this.init()
-     
+        this.page = 1;
+        this.pagingControl(this.page)
+        console.log(this.page)
     },
     dataProcessing(arr) {//数据处理
         arr.forEach(item => {      
