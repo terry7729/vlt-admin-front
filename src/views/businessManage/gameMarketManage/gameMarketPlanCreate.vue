@@ -71,9 +71,6 @@ export default {
       console.log('files', files.file.size/1024)
       // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -81,7 +78,6 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.fileIds = res.data.fileId;
     },
     createMarketPlan(data) {
       const self = this;
@@ -114,7 +110,6 @@ export default {
     submit() {
       console.log('提交的参数', this.param)
       let data = this.param;
-      data.fileIds = String(this.fileIds);
       data.gameRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameBettingRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameFundRuleVo.gameId = data.gameListPlanVo.gameId;
