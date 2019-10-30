@@ -51,6 +51,12 @@
   flex: 33.3%;
   text-align: center;
 }
+.centerWatch main > .left .one .salesNumber > div section > p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
 .centerWatch main > .left .one .salesNumber > div section > p:first-child {
   margin: 10px 10px 10px;
 }
