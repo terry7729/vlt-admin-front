@@ -23,7 +23,7 @@
             label-width="90px" 
             ref="form"
             class="device-form">
-            <el-form-item  label="身份证照正面">
+            <el-form-item  label="证件照片">
               <el-upload
                 class="avatar-uploader"
                 action=""
@@ -36,7 +36,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
-            <el-form-item  label="身份证照背面">
+            <!-- <el-form-item  label="身份证照背面">
               <el-upload
                 class="avatar-uploader"
                 action=""
@@ -48,7 +48,7 @@
                 <img v-if="imageUrl" :src="imageUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-            </el-form-item>
+            </el-form-item> -->
           </el-form>
         </div>
       </div>
@@ -258,17 +258,14 @@
 <script>
 import mixin from '@/utils/mixin';
 import moment from 'moment'
+
 const typeData = [
   {label:'设备',value:1},
   {label:'配件',value:2},
   {label:'耗材',value:3},
   {label:'设施',value:4},
 ];
-const modelData = [
-  {label:'型号一',value:'7'},
-  {label:'型号二',value:'8'},
-  {label:'型号三',value:'9'},
-];
+
 export default {
   name: "channelList",
   // mixins: [mixin],
@@ -371,9 +368,6 @@ export default {
     async uploadFileImg(files) {
       let formData = new FormData();
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 9);
       const res = await this.$api.uploadChannelFiles({
         data: formData,
         onUploadProgress(evt) {
@@ -381,7 +375,6 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId.push(res.data.fileId);
       let imgUrl = res.data.filePath;
     },
     // 附件上传
@@ -637,7 +630,6 @@ export default {
       delete channelData.runField
       delete channelData.address
       const {provinceName, cityName, townName, channelAddress} = this.channelData;
-      let fileIds = this.imgId.concat(this.otherId).join(',')
       let data = {
         channelData: {
           ...this.channelData,

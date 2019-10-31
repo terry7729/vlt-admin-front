@@ -92,7 +92,7 @@ export default {
           all: false,
           id: 0,
           insId: "",
-          insLevel: '1',
+          insLevel: 1,
           planDate: "2019"
         }
       },
@@ -168,7 +168,7 @@ export default {
           param: {
             all: false,
             insId: "60",
-            insLevel: "1",
+            insLevel: 1,
             planDate: '2019'
           }
         }
@@ -179,7 +179,7 @@ export default {
           param: {
             all: true,
             insId: "60",
-            insLevel: "1" ,
+            insLevel: 1,
             planDate: '2019'
           }
         }

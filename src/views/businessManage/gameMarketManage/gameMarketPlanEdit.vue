@@ -81,6 +81,18 @@ export default {
     // this.getInsData()
   },
   methods: {
+    // 编辑计划详情
+    editMarketPlan(data) {
+      const self = this;
+      (async (data)=>{
+        let res = await self.$api.editMarketPlan({data})
+				if(res && res.code == 0) {
+          self.$message.success('保存成功')
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     // 获取计划详情
     getMarketPlanDetail() {
       const self = this;
@@ -100,39 +112,20 @@ export default {
         }
       })(data)
     },
-    // 返回机构完整数组
-    getInsArray(id, obj) {
-      let array = [];
-      array.push(obj.id)
-      if(id&&id!=obj.id) {
-        obj.children.forEach((item)=>{
-          if(item.id == id) {
-            array[1] = item.id
-            return array
-          }else{
-            item.children&&item.children.forEach((list)=>{
-              if(list.id==id) {
-                array[1] = item.id
-                array[2] = list.id
-                return array
-              }else{
-                list.children&&list.children.forEach((el)=>{
-                  if(el.id==id) {
-                    array[1] = item.id
-                    array[2] = list.id
-                    array[3] = el.id
-                    return array
-                  }
-                })
-              }
-            })
+    // 返回完整数组
+    getInsArray(id, key, data, keyBack) { // 传入id和key是对应  keyBack是返回想要的key
+      const self = this;
+      for (var i in data) {
+        if (data[i][key] == id) {
+          return [data[i][keyBack]];
+        }
+        if (data[i].children) {
+          let ro = self.getInsArray(id, key, data[i].children, keyBack);
+          if (ro !== undefined) {
+            return ro.concat(data[i][keyBack]);
           }
-        })
+        }
       }
-      this.insArray.push(array);
-      console.log('getInsArray',array)
-      console.log('getInsArrays',this.insArray)
-      return array
     },
     // 获取机构数据
     getInsData() {
@@ -147,7 +140,9 @@ export default {
           // self.formData[1].options = res.data;
           // self.cascaderOptions = res.data;
           self.insId&&self.insId.forEach((item)=>{
-            self.getInsArray(item, res.data[0]) // 传入id 和对象
+            let arr = self.getInsArray(item,'id', res.data, 'id') // 传入id 和对象
+            arr.reverse();
+            this.insArray.push(arr)
           })
         } else {
           // self.$message.warning(res.msg)
@@ -166,9 +161,9 @@ export default {
       console.log('files', files.file.size/1024)
       // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 9);
+      // formData.append('refId', 1);
+      // formData.append('flag', true);
+      // formData.append('busType', 9);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -193,8 +188,22 @@ export default {
       const self = this;
       console.log('部分数据', param)
       console.log('总共的参数', this.planData)
-      Object.assign(this.planData.gameListPlanVo, param)
-      
+      if(param.listPlanTime) {
+        Object.assign(this.planData.gameListPlanVo, param)
+      }else{
+        Object.assign(this.planData.gameRuleVo, param.gameRuleVo)
+        Object.assign(this.planData.gameBettingRuleVo, param.gameBettingRuleVo)
+        Object.assign(this.planData.gameFundRuleVo, param.gameFundRuleVo)
+        Object.assign(this.planData.gameRiskRuleVo, param.gameRiskRuleVo)
+        // Object.assign(this.planData.publishParams, param.publishParams)
+        Object.assign(this.planData.gameExchangeSetVoList, param.gameExchangeSetVoList)
+      }
+      this.planData.gameRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      this.planData.gameBettingRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      this.planData.gameFundRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      this.planData.gameRiskRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      this.planData.gameExchangeSetVoList.listPlanId = this.planData.gameListPlanVo.id;
+      self.editMarketPlan(this.planData)
     },
     cancel() {
       console.log('取消')

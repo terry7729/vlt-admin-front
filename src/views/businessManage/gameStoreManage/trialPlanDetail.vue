@@ -147,6 +147,9 @@ export default {
         }
       })(data)
     },
+    handleSelectionChange () {
+      
+    },
   },
 }
 </script>

@@ -143,7 +143,7 @@ export default {
     getStoreList(row) {
       const self = this;
       const data = {
-        orderId: row.orderId
+        id: row.orderId
       };
       (async (data)=>{
 				let res = await self.$api.getStoreList({data})

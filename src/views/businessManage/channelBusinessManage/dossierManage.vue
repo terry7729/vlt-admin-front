@@ -37,12 +37,16 @@ export default {
       ],
       tableData: [
         {gameId:'标题',gameName: 'a',cycleType: '李明',gameTypeName:'2019-09-12 09：00：00',status:'计划中'}
-      ]
+      ],
     }
   },
-  components: {
+  created() {
+   
   },
   methods: {
+    search() {
+
+    },
     getStoreList(row) {
       const self = this;
       const data = {

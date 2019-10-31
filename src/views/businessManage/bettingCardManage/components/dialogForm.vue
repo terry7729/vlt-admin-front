@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title :visible.sync="show" width="50%" :before-close="close" class="dialog-form-list">
+  <el-dialog :title="diaTitle" :visible.sync="show" width="50%" :before-close="close" class="dialog-form-list">
     <div class="vlt-edit-single">
       <h2 class="title" v-if="diaTitle">{{diaTitle}}</h2>
       <div class="vlt-edit-wrap">

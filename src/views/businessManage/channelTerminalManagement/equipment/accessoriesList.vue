@@ -52,24 +52,16 @@ export default {
       // 搜索组件配置
       searchOptions: [
         {
-          type: "select",
-          prop: "spraresName",
+          type: "input",
+          prop: "deviceName",
           value: "",
           title: "配件名称：",
-          placeholder: "请选择",
-          options: [
-            {label: "机器猫",value: '机器猫'},
-            {label: "投注机",value: '投注机'}
-          ]
+          placeholder: "请输入配件名称"
         },
-        {type: "select",prop: "spraresType",value: "",title: "配件型号：",placeholder: "请选择",options: [
-            {label: "123",value: '123'},
-            {label: "ED456",value: 'ED456'}
-          ]
-        },
-        {type: "input",prop: "spraresCode",value: "",title: "配件编码：",placeholder: "请输入"},
+        {type: "input",prop: "deviceModel",value: "",title: "配件型号：",placeholder: "请输入配件型号"},
+        {type: "input",prop: "deviceCode",value: "",title: "配件编码：",placeholder: "请输入"},
         {type: "input",prop: "nameX",value: "",title: "所属仓库：",placeholder: "请输入"},
-        {type: "select",prop: "spraresStatus",value: "",title: "配件状态：",placeholder: "请选择",
+        {type: "select",prop: "status",value: "",title: "配件状态：",placeholder: "请选择",
           options: [
             {label: "正常",value: 1},
             {label: "已损坏",value: 2},
@@ -79,24 +71,22 @@ export default {
       ],
       tableKey: [
         {label: "序号",value: "id",width: "80"},
-        {label: "配件名称",value: "spraresName",width: ""},
-        {label: "配件型号",value: "spraresType",width: "100"},
-        {label: "配件编码",value: "spraresCode",width: ""},
-        {label: "仓库类型",value: "typeX",width: "80"},
+        {label: "配件名称",value: "deviceName",width: ""},
+        {label: "配件型号",value: "deviceModel",width: "100"},
+        {label: "配件编码",value: "deviceCode",width: ""},
+        {label: "仓库类型",value: "typeName",width: "80"},
         {label: "所属仓库",value: "nameX",width: ""},
-        {label: "使用状态",value: "usageStatus",width: ""},
-        {label: "配件状态",value: "spraresStatus",width: ""}
+        {label: "使用状态",value: "useStatusName",width: ""},
+        {label: "配件状态",value: "statusName",width: ""}
       ],
+
       tableData: {},
       options: {
-        nameX: "",
-        page: 0,
-        pageSize: 0,
-        param: {},
-        spraresCode: "",
-        spraresName: "",
-        spraresStatus: 0,
-        spraresType: ""
+        page: 1,
+        pageSize: 10,
+        param: {
+          deviceType: 2
+        }
       },
       params: {}
     };
@@ -109,7 +99,7 @@ export default {
     async initList(options) {
       console.log("this.options", options);
       let data = JSON.parse(JSON.stringify(options));
-      let result = await this.$api.accessoriesListPage({ data });
+      let result = await this.$api.equipmentListPage({ data });
       console.log("data", result);
       if (result.code === 0) {
         this.tableData = result.data;

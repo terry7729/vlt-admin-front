@@ -43,7 +43,10 @@ const roleifometion = () =>import('@/views/systemManage/roleManagement/rolueifo'
 const organizationChild = () => import('@/views/systemManage/organization/organization')
 //菜单管理
 
+// const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
+//测试用
 const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
+
 //系统日志
 const systemOperationLog = () => import('@/views/systemManage/systemLog/systemLog')
 //系统开关
@@ -188,6 +191,7 @@ export default [
     path: 'systemManage/userList/userDestails',
     name: 'userDestails',
     meta: {
+      parentName:"userList",
       title: '用户信息',
     },
     component: userDestails,
