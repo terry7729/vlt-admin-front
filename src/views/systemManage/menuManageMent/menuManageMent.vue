@@ -355,6 +355,9 @@ export default {
     clearForm() {
       this.form.forEach(item => {
         item.value = '';
+        if (item.prop === 'isShow') {
+          item.value = 1;
+        }
       })
       this.$refs.baseForm.resetForm();
     },
@@ -368,7 +371,6 @@ export default {
           this.menuType = 2;
           break;
         case 2:
-        case 3:
           this.menuType = 3;
           break;
       }
