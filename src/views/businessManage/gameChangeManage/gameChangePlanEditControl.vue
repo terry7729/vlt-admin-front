@@ -291,7 +291,6 @@ export default {
       let str = array.join(',')
       console.log('str', str)
       this.betParams.minAddBets = str;
-      debugger;
       // 把返奖率 调节基金参数 调换位置
       this.fundsParams.reFundRate = this.ruleParams.reFundRate 
       this.fundsParams.returnPrizeRate = this.ruleParams.returnPrizeRate

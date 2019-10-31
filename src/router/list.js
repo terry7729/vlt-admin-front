@@ -3,6 +3,8 @@ const login = () => import('@/views/login/login')
 const entry = () => import('@/views/entry/entry')
 const locking = () => import('@/views/locking/locking')
 const componentDemo = () => import('@/views/componentDemo/')
+const formDemo = () => import('@/views/componentDemo/formDemo')
+
 import children from './modules/entry'
 
 export default [
@@ -36,5 +38,10 @@ export default [
     path: '/componentDemo',
     name: 'componentDemo',
     component: componentDemo
+  },
+  {
+    path: '/formDemo',
+    name: 'formDemo',
+    component: formDemo
   }
 ]
