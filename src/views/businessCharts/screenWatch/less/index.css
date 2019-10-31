@@ -4,7 +4,6 @@
   display: flex;
   padding: 20px;
 }
-.centerWatch main overflow-x：hidden,
 .centerWatch main .title {
   height: 40px;
   color: #fff;
@@ -50,12 +49,12 @@
   font-size: 14px;
   flex: 33.3%;
   text-align: center;
+  cursor: pointer;
 }
 .centerWatch main > .left .one .salesNumber > div section > p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: inline-block;
 }
 .centerWatch main > .left .one .salesNumber > div section > p:first-child {
   margin: 10px 10px 10px;
@@ -134,9 +133,38 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  /* 滚动槽 */
+  /* 滚动条滑块 */
+}
+.centerWatch main > .right .salesRanking::-webkit-scrollbar {
+  width: 5px;
+  background-color: #16619e;
+}
+.centerWatch main > .right .salesRanking::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+.centerWatch main > .right .salesRanking::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: black;
 }
 .centerWatch main > .right .salesRanking .tableData {
   flex: 90%;
+  /* 设置滚动条的样式 */
+  /* 滚动槽 */
+  /* 滚动条滑块 */
+}
+.centerWatch main > .right .salesRanking .tableData ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #16619e;
+}
+.centerWatch main > .right .salesRanking .tableData ::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+.centerWatch main > .right .salesRanking .tableData ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: black;
 }
 .centerWatch main > .right .marketShares {
   margin-top: 20px;

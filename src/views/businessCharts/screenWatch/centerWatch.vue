@@ -9,9 +9,9 @@
             <div class="topSales" id="topSales"></div>
             <div class="salesNumber">
               <div>
-                <section>
+                <section class="setTask" @click='open'>
                   <p>今年任务</p>
-                  <p>224242</p>
+                  <p>{{taskNum}}</p>
                 </section>
                 <section>
                   <p>今年销售量</p>
@@ -63,9 +63,9 @@
                 >
                 <el-table-column align="center" prop="date" label="大厅编号" fit></el-table-column>
                 <el-table-column align="center" prop="name" label="所属省份" fit></el-table-column>
-                <el-table-column align="center" prop="name" label="销售金额" fit sortable></el-table-column>
-                <el-table-column align="center" prop="name" label="中奖金额" fit sortable></el-table-column>
-                <el-table-column align="center" prop="name" label="兑奖金额" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="销售金额" width='100' fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="中奖金额" width='100' fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="兑奖金额" width='100' fit sortable></el-table-column>
                 <el-table-column align="center" prop="name" label="状态" fit></el-table-column>
               </el-table>
             </div>
@@ -428,6 +428,7 @@ export default {
           value: 14000
         }
       ],
+      taskNum:0,
       allCity: [],
       map: {},
       cityOpt: [],
@@ -449,6 +450,47 @@ export default {
           date: "232323",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        ,
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
         },
         {
           date: "232323",
@@ -594,11 +636,11 @@ export default {
           axisPointer: {
             type: "cross",
             label: {
-              backgroundColor: "#6a7985"
+              backgroundColor: "gold"
             }
           }
         },
-        color: ["rgba(31,156,197,0.3)", "rgba(231,126,99.3)", "rgba(242,209,7,.7)"],
+        // color: ["#1f9cc5", "#e77e63", "#f2d107"],
         legend: {
           textStyle: {
             fontSize: 12, //字体大小
@@ -669,7 +711,7 @@ export default {
             type: "line",
             // stack: "总量",
             areaStyle: {
-              // color:'#fff'
+              // color:'rgba(31,156,197,0.3)'
             },
             data: [520, 582, 591, 634, 590, 630, 610]
           },
@@ -677,14 +719,18 @@ export default {
             name: "今年新增",
             type: "line",
             // stack: "总量",
-            areaStyle: {},
+            areaStyle: {
+              // color:'rgba(242,209,7,.7)'
+            },
             data: [150, 132,101, 154, 190, 130, 110]
           },
             {
             name: "游戏总机",
             type: "line",
             // stack: "总量",
-            areaStyle: {},
+            areaStyle: {
+              // color:'rgba(231,126,99.3)'
+            },
             data: [620, 652, 701, 734, 790, 730, 710]
           },
         ]
@@ -979,29 +1025,29 @@ export default {
             //   return res;
             // }
             formatter: function(params) {
-              return params.name + "：" + params.data["value"] + "%";
+              return params.name + "：" + params.data["value"] ;
             }
           },
           // backgroundColor: "#02142c",
-          visualMap: {
-            type: "continuous",
-            orient: "horizontal",
-            itemWidth: 10,
-            itemHeight: 80,
-            text: ["高", "低"],
-            showLabel: true,
-            seriesIndex: [0],
-            min: 1000,
-            max: 20000,
-            inRange: {
-              color: ["#02142c", "#FFFD64", "#FF5000"]
-            },
-            textStyle: {
-              color: "#7B93A7"
-            },
-            bottom: 30,
-            left: "left"
-          },
+          // visualMap: {
+          //   type: "continuous",
+          //   orient: "horizontal",
+          //   itemWidth: 10,
+          //   itemHeight: 80,
+          //   text: ["高", "低"],
+          //   showLabel: true,
+          //   seriesIndex: [0],
+          //   min: 1000,
+          //   max: 20000,
+          //   inRange: {
+          //     color: ["#02142c", "#FFFD64", "#FF5000"]
+          //   },
+          //   textStyle: {
+          //     color: "#7B93A7"
+          //   },
+          //   bottom: 30,
+          //   left: "left"
+          // },
 
           geo: {
             map: "china",
@@ -1295,7 +1341,23 @@ export default {
         ]
       };
       this.map.setOption(option);
-    }
+    },
+     open() {
+        this.$prompt('请输入要设置的今年任务数量', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /(^[1-9]\d*$)/,
+          inputErrorMessage: '格式不正确'
+        }).then(({ value }) => {
+          this.$message({
+            type: 'success',
+            message: '设置成功'
+          });
+          this.taskNum=value
+        }).catch(() => {
+              
+        });
+      }
   },
   beforeDestroy() {
     //释放资源  清空图例数据，释放内存.
