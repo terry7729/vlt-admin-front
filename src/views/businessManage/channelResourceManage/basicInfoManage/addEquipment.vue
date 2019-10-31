@@ -294,9 +294,9 @@ export default {
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       },
-      imgId: [],
-      imageUrl: "",
-      params: {}
+      imageUrl: '',
+      imgUrl:[],
+      params: {},
     };
   },
   created() {},
@@ -311,30 +311,30 @@ export default {
         onUploadProgress(evt) {
           console.log("上传进度事件:", evt);
         }
-      });
-      console.log("uploadFile", res);
-      this.imgId.push(res.data.fileId);
-      let imgUrl = res.data.filePath;
-      console.log(this.imgId);
+      })
+      console.log('uploadFile', res);
+      this.imgUrl.push(res.data.filePath);
+      console.log(this.imgUrl)
     },
     changeOption() {
       console.log(this.goodsType);
     },
     submit(formName) {
-      this.$refs["baseForm1"].validate(async valid => {
-        if (valid === "true") {
-          let data = this.params;
-          if (data.goodsType == 3 || data.goodsType == 4) {
-            data.imgInfo = this.imgId.join(",");
-          }
-          let res = await this.$api.typeCreate({ data });
-          console.log(res);
-          if (res || res.code == 0) {
-            this.$message({
-              message: "新增成功",
-              type: "success"
-            });
-            this.$router.push({ path: "basicInfoManage" });
+      const self = this
+      this.$refs['baseForm1'].validate(async valid=>{
+        if(valid === 'true') {
+          let data = self.params;
+          if(data.goodsType==3||data.goodsType==4) {
+            data.files = self.imgUrl.join(',');
+          };
+          let res = await self.$api.typeCreate({data})
+          console.log(res)
+          if(res || res.code == 0){
+            self.$message({
+              message:'新增成功',
+              type:'success'
+            })
+            self.$router.push({path: 'basicInfoManage'})
           }
         }
       });
@@ -361,7 +361,6 @@ export default {
         console.log("param", this.params);
       }
     },
-
     handleRemove(file) {
       console.log(file);
     },

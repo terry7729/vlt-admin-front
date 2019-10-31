@@ -301,7 +301,15 @@ export default {
           initiator: "小明"
         }
       ],
-      formatJackpotType: ['无奖池', '单奖池', '多奖池']
+      formatObj: {
+        formatGameStatus:['存储', '试玩', '上市', '变更', '退市'],
+        formatGameType: ['概率型','奖组型'],
+        formatPoolRate:['无奖池','单奖池', '多奖池'],
+        formatPlanStatus: ['审批中', '审批拒绝','待生效','已生效'],
+        formatConPattern: ['测试账户', '试玩积分'],
+        formatIndulgeSwitch: ['启用','禁用'],
+        formatMaktGameStatus:  ['审批中','审批拒绝', '待上市', '已上市']
+      }
     };
   },
   created() {
@@ -321,7 +329,7 @@ export default {
           if (res.data.gameInfoVo != null) {
             this.eachList (this.baseInfo, res.data.gameInfoVo);
             this.eachList(this.developerInfo, res.data.developerInfo);
-            this.eachList(this.editionInfo, res.data.tSoftwareInfo);
+            this.eachList(this.editionInfo, res.data.softwareInfo);
             this.appendixInfo = res.data.fileList
           } else {
             self.$message.warning(res.data.msg);
@@ -356,9 +364,16 @@ export default {
     handleCurrentChange(val) {},
     eachList (arr, obj) {
        arr.forEach(item => {
-          item.value = obj[item.prop]
+          item.value = obj[item.prop];
           if (item.prop == 'jackpotType') {
-            item.value = this.formatJackpotType[obj[item.prop]]
+            console.log(this.formatObj.formatPoolRate, obj[item.prop]);
+            item.value = this.formatObj.formatPoolRate[parseInt(obj[item.prop]) - 1]
+          }
+          if (item.prop == 'gameType') {
+            item.value = this.formatObj.formatGameType[parseInt(obj[item.prop]) - 1]
+          }
+          if (item.prop == 'gameStatus') {
+            item.value = this.formatObj.formatMaktGameStatus[parseInt(obj[item.prop]) - 1]
           }
         })
     }

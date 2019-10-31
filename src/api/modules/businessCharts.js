@@ -17,6 +17,8 @@ export default {
   getAreaDeal: (options = {}) => ajax.post('/monitor/deal/area', options),
   // 游戏交易数据列表
   getGameDeal: (options = {}) => ajax.post('/monitor/deal/game', options),
+  //导出中央交易数据
+  dealExport: (options = {}) => ajax.post('/export/deal/central', options),
   // 销售厅账户监控列表
   getHallAccount: (options = {}) => ajax.post('/monitor/hall/account', options),
   // 销售厅设备统计数据监控列表

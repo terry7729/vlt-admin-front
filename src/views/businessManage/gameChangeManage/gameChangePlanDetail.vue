@@ -189,9 +189,7 @@ export default {
   },
   created () {
     const queryData  = this.$route.query;
-    if (queryData.id && queryData.gameId && queryData.listPlanId) {
-      this.getChangePlanDetail(queryData);
-    }
+    this.getChangePlanDetail(queryData);
   },
   methods: {
     getChangePlanDetail(data) {
@@ -201,7 +199,7 @@ export default {
 				if(res && res.code == 0) {
           this.responseData = res.data;
           // console.log(res);
-          this.eachList(this.planData,this.responseData.changePlanVo);
+          this.eachList(this.planData,this.responseData.gameChangePlanVo);
           this.eachList(this.gameData,this.responseData.gameInfoVo);
           this.eachList(this.developerData,this.responseData.developerInfo);
           this.eachList(this.versionData,this.responseData.softwareInfo);

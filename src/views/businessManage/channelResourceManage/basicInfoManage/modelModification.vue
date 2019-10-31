@@ -223,6 +223,7 @@ export default {
         });
         self.changeDeviceId(item.goodsId, index);
       });
+      console.log(result.data.goodsModelVo.modelAvailablesList);
       console.log("this.initArr", this.initArr);
       this.options.forEach(item => {
         item.value = result.data.goodsModelVo[item.prop];
@@ -312,7 +313,7 @@ export default {
       this.type = val;
     },
     change(val) {
-      console.log(val);
+      // console.log(val);
       if (val === 3) {
         this.falg = true;
         this.formParms.nameOption = "";

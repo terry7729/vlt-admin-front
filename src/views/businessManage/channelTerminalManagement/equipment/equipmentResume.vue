@@ -45,8 +45,10 @@ export default {
       const _this = this;
       let result = await _this.$api.equipmentRecord({ data });
       if (result.code == 0 ) {
-        if ( result.data.length > 0 && result.data[0]!= null) {;
-          this.timeLiness =  result.data.map(item => {
+        if ( result.data.length > 0) {
+          this.timeLiness = result.data.filter(item => {
+            return item !=null;
+          }).map(item => {
             item.oplType = _this.formatoplType[parseInt(item.oplType) - 1];
             return item;
           })

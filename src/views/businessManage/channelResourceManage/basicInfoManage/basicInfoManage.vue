@@ -32,7 +32,7 @@
                 ></el-switch>
               </template>
             </el-table-column>
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="120">
               <template slot-scope="scope">
                 <el-button
                   @click="typeCheck(scope.row.id,scope.row.goodsType)"
@@ -41,7 +41,7 @@
                   size="mini"
                 >查看</el-button>
                 <el-button
-                  @click="typeAmend(scope.row)"
+                  @click="typeAmend(scope.row.id,scope.row.goodsType)"
                   type="primary"
                   v-prevent="2000"
                   size="mini"
@@ -73,7 +73,6 @@ export default {
   name: "basicInfoManage",
   data() {
     return {
-      form: {},
       typeTotalCount: 0,
       typeCurrentPage: 1,
       pageSize: 10,
@@ -107,13 +106,11 @@ export default {
           options: [{ label: "开", value: 1 }, { label: "关", value: 2 }]
         }
       ],
-
       controlOptions: [{ name: "新增", type: "primary", icon: "plus" }],
       //类型管理列表
       typeData: [],
-
+      //物品名称列表
       goodsNameData: [],
-
       rules2: {
         goodsCategory: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
@@ -149,11 +146,6 @@ export default {
           url:
             "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
         }
-        // {
-        //   name: "food2.jpeg",
-        //   url:
-        //     "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        // }
       ],
       // 类型管理参数
       requestData1: {
@@ -167,17 +159,7 @@ export default {
       }
     };
   },
-  components: {
-    modelManage
-  },
-  computed: {
-    // 这里定义上传文件时携带的参数，即表单数据
-    upData: function() {
-      return {
-        body: this.form
-      };
-    }
-  },
+
   created() {
     this.getTypeList(this.requestData1);
     this.getSelectOption();
@@ -199,6 +181,60 @@ export default {
           message: "状态修改成功",
           type: "success"
         });
+      }
+    },
+    //获取类型管理物品名称
+    async getSelectOption(data) {
+      const self = this;
+      let res = await this.$api.getModelTrees({ data });
+      console.log("物品名称", res);
+      if (res && res.code == 0) {
+        let array = [];
+        res.data.forEach(item => {
+          let obj = {};
+          obj.label = item.goodsName;
+          obj.value = item.id;
+          array.push(obj);
+          self.$set(self.typeInfoOptions[1], "options", array);
+        });
+      }
+    },
+    //搜索
+    search(data) {
+      console.log(data);
+      this.currentPage = 1;
+      this.requestData1.param = data;
+      this.getTypeList(this.requestData1);
+    },
+    //新增事件
+    addEquipment() {
+      this.$router.push({ name: "addEquipment" });
+    },
+    //修改
+    typeAmend(id, goodsType) {
+      this.$router.push({
+        path: "modification",
+        query: {
+          id,
+          goodsType
+        }
+      });
+    },
+    //设备查看
+    typeCheck(id, goodsType) {
+      console.log(goodsType);
+      switch (goodsType) {
+        case 1:
+          this.$router.push({
+            path: "equipmentCheck",
+            query: { id }
+          });
+          break;
+        case 4:
+          this.$router.push({
+            path: "facilityCheck",
+            query: { id }
+          });
       }
     },
 

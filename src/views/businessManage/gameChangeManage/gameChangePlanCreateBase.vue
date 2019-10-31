@@ -66,7 +66,7 @@ export default {
         {title: '变更计划名称', type: 'input',  prop: 'changePlanName', value: '', placeholder: '请输入变更计划名称'},
         {title: '生效时间', type: 'datetime',  prop: 'gameChangePlanTime', value: ''},
         {title: '计划简介', type: 'textarea',  prop: 'changePlanDesc', value: '', placeholder: '请输入变更计划简介'},
-        {title: '上市计划', type: 'select-item',  prop: 'listPlanId', value: '', options:[], placeholder: '请选择上市计划'},
+        {title: '变更游戏', type: 'select',  prop: 'gameId', value: '', options:[], placeholder: '请选择变更游戏'},
       ],
       channelData: [
         {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: []},
@@ -76,24 +76,23 @@ export default {
     }
   },
   created() {
-    this.getAllPlanList()
+    this.getAllGameList()
   },
   methods: {
-    // 获取所有上市计划列表
-    getAllPlanList() {
+    // 获取所有游戏列表
+    getAllGameList() {
       const self = this;
       const data = {};
       (async (data)=>{
-				let res = await self.$api.getAllPlanList({data})
+				let res = await self.$api.getAllGameList({data})
 				if(res && res.code == 0) {
           console.log('res', res.data)
           let gameData = res.data;
           let array = []
           gameData.forEach(item => {
             let obj = {};
-            obj.label = item.gameListName;
+            obj.label = item.gameName;
             obj.value = item.id;
-            obj.gameId = item.gameId
             array.push(obj)
           });
           self.$set(self.baseData[3], 'options', array)

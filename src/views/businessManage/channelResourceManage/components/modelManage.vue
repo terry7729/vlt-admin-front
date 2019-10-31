@@ -28,10 +28,10 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="120">
         <template slot-scope="scope">
           <el-button
-            @click="modelCheck(scope.row.id)"
+            @click="modelCheck(scope.row.id,scope.row.modelType)"
             type="primary"
             v-prevent="2000"
             size="mini"

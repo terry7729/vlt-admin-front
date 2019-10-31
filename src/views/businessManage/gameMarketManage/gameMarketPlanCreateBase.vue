@@ -70,7 +70,6 @@ export default {
     this.getAllGameList()
   },
   methods: {
-    
     // 获取所有游戏列表
     getAllGameList() {
       const self = this;

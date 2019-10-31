@@ -198,11 +198,11 @@ export default {
         // Object.assign(this.planData.publishParams, param.publishParams)
         Object.assign(this.planData.gameExchangeSetVoList, param.gameExchangeSetVoList)
       }
-      this.planData.gameRuleVo.listPlanId = this.planData.gameListPlanVo.id;
-      this.planData.gameBettingRuleVo.listPlanId = this.planData.gameListPlanVo.id;
-      this.planData.gameFundRuleVo.listPlanId = this.planData.gameListPlanVo.id;
-      this.planData.gameRiskRuleVo.listPlanId = this.planData.gameListPlanVo.id;
-      this.planData.gameExchangeSetVoList.listPlanId = this.planData.gameListPlanVo.id;
+      // this.planData.gameRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      // this.planData.gameBettingRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      // this.planData.gameFundRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      // this.planData.gameRiskRuleVo.listPlanId = this.planData.gameListPlanVo.id;
+      // this.planData.gameExchangeSetVoList.listPlanId = this.planData.gameListPlanVo.id;
       self.editMarketPlan(this.planData)
     },
     cancel() {
