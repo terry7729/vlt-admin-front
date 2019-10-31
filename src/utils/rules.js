@@ -2,8 +2,8 @@
 export default {
   // 为空
   checkEmpty: (rule, value, callback) => {
-    const _value = (value + '').trim();
-    if (!_value) {
+    // const _value = (value + '').trim();
+    if (!value) {
       return callback(new Error(rule.message));
     }
     callback();
@@ -23,6 +23,18 @@ export default {
     numberVal: (rule, value, callback) => {
       const _value = (value + '').trim()
       const test = (/(^[1-9]\d*$)/.test(_value)) ? true : false
+      if (_value && !test) {
+        return callback(new Error('值必须为正整数'));
+      }
+      callback();
+    },
+    // 数字必填的
+    checkEmptyNumber: (rule, value, callback) => {
+      const _value = (value + '').trim()
+      const test = (/(^[1-9]\d*$)/.test(_value)) ? true : false
+      if (!_value) {
+        return callback(new Error(rule.message));
+      }
       if (_value && !test) {
         return callback(new Error('值必须为正整数'));
       }

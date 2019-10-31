@@ -142,16 +142,22 @@
         <panel title="活动规则" :show="false">
           <div class="active-rule">
             <el-form :model="createRuleForm">
-              <el-form-item v-for="item in createRuleForm" :key="item.index" class="rule-item">
+              <el-form-item v-for="(item,index) in createRuleData" :key="index" class="rule-item">
                 <el-select v-model="item.value" placeholder="充值">
-                  <el-option v-for="option in item.options" :key="option.index" :value="option"></el-option>
+                  <el-option v-for="(option,index) in item.options" :key="index" :value="option"></el-option>
                 </el-select>
                 <el-input v-model="item.target" placeholder="输入目标金额"></el-input>
                 <span>赠送:&nbsp;</span>
                 <el-input v-model="item.give" placeholder="输入赠送金额"></el-input>
+                <el-button
+                  v-if="index!==0"
+                  type="text"
+                  class="deleteRule"
+                  @click="deleteRule(index)"
+                >删除</el-button>
               </el-form-item>
             </el-form>
-            <el-button class="add-rule" icon="el-icon-plus">新增规则</el-button>
+            <el-button class="add-rule" icon="el-icon-plus" @click="addRule">新增规则</el-button>
           </div>
         </panel>
 
@@ -352,6 +358,7 @@
 
 <script>
 import moment from "moment";
+const typeData = ["充值", "消费", "完成任务"];
 export default {
   name: "",
   data() {
@@ -425,26 +432,15 @@ export default {
       ],
       recharCheck: "",
       payCheck: "",
-      createRuleForm: {
-        rule1: {
+      createRuleForm: {},
+      createRuleData: [
+        {
           target: "",
           give: "",
           value: "",
-          options: ["充值", "消费", "完成任务"]
-        },
-        rule2: {
-          target: "",
-          give: "",
-          value: "",
-          options: ["充值", "消费", "完成任务"]
-        },
-        rule3: {
-          target: "",
-          give: "",
-          value: "",
-          options: ["充值", "消费", "完成任务"]
+          options: typeData
         }
-      },
+      ],
       fundsintoDialog: false,
       fundsData: [
         {
@@ -588,6 +584,18 @@ export default {
   },
 
   methods: {
+    addRule() {
+      let obj = {
+        target: "",
+        give: "",
+        value: "",
+        options: typeData
+      };
+      this.$set(this.createRuleData, this.createRuleData.length, obj);
+    },
+    deleteRule(index) {
+      this.createRuleData.splice(index, 1);
+    },
     cancel() {
       this.$router.push({ path: "planManage" });
     },
@@ -658,9 +666,7 @@ export default {
   created() {},
   mounted() {},
   components: {},
-  updated() {
-  
-  }
+  updated() {}
 };
 </script>
 

@@ -45,7 +45,7 @@ const organizationChild = () => import('@/views/systemManage/organization/organi
 
 // const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
 //测试用
-const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMentCopy')
+const menuManageMent = () => import('@/views/systemManage/menuManageMent/menuManageMent')
 
 //系统日志
 const systemOperationLog = () => import('@/views/systemManage/systemLog/systemLog')
