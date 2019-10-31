@@ -3,7 +3,7 @@
     :model="form"
     :rules="rules"
     class="base-form">
-    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
+    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}" v-if="!item.destroy">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`" :class="item.class"></el-input> 
       <!-- 输入框 密码 -->
@@ -14,7 +14,9 @@
       <el-select v-if="item.type=='select'" :filterable='item.filterable' :disabled="item.disabled"  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items.value">
+          :value="items.value"
+          :disabled="items.disabled"
+          >
         </el-option>
       </el-select>
       <!-- 支持单选 -->
@@ -28,7 +30,9 @@
       <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items.value">
+          :value="items.value"
+          :disabled="items.disabled"
+          >
         </el-option>
       </el-select>
       <!-- 开关 -->
@@ -346,9 +350,9 @@ export default {
       this.switchText = val ? '开启' : '关闭'
     },
     changeSelect(val) {
-      console.log(val)
+      // console.log(val)
       this.form[val.prop] = this.selectParam[val.prop];
-      console.log(this.selectParam)
+      // console.log(this.selectParam)
     },
     init(data) {
       const self = this;

@@ -111,8 +111,8 @@ export default {
       userListOptions:[],
       userDeptOptions:[],
       selectOptions:[
-        {label:'有效',value:1},
-        {label:'无效',value:0}
+        {label:'启用',value:0},
+        {label:'冻结',value:1}
       ],
       setProps:{
         value:'id',

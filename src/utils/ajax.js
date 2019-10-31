@@ -29,6 +29,7 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api'
 }
 /**
  * @description http请求
@@ -90,9 +91,7 @@ const request = (method, url, options, extend) => {
               res = await axios[method](url, data);
               break;
             case "delete":
-              res = await axios[method](url, {
-                params: data
-              });
+              res = await axios[method](url, data);
               break;
             default:
               res = await axios[method](url, data, responseType);
