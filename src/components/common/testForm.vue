@@ -178,9 +178,24 @@ export default {
         value: 'value',
         children: 'children',
       },
-      form: {},
       radioValue: '',
       switchText: '开启',
+      form: {},
+    }
+  },
+  watch: {
+    options:{
+      handler(newValue,oldValue) {
+        console.log('表单变化', newValue)
+        // this.$refs.form.validate();
+        newValue&&newValue.forEach((item) => {
+          this.form[item.prop] = item.value;
+          console.log('form',this.form)
+        })
+        
+        // return newValue;
+      },
+      deep: true,
     }
   },
   created() {
@@ -221,16 +236,16 @@ export default {
     },
     validate(callback) {
       this.$emit('change', this.options)
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          console.log('校验通过')
-          // this.$emit('asset')
-          callback('true')
-        }else{
-          console.log('校验不通过')
-          callback('false');
-        }
-      })
+      // this.$refs.form.validate((valid) => {
+      //   if (valid) {
+      //     console.log('校验通过')
+      //     // this.$emit('asset')
+      //     callback('true')
+      //   }else{
+      //     console.log('校验不通过')
+      //     callback('false');
+      //   }
+      // })
     },
     changeSelect(val) {
       this.$emit('change', this.options)
