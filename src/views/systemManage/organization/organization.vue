@@ -18,6 +18,7 @@
               :default-expand-all="false"
               ref="attrList"
               :expand-on-click-node="true"
+              
             >
               <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}</span>
@@ -354,9 +355,30 @@ export default {
       this.OrganizationAdd[0].value = data.text;
       this.OrganizationAdd[1].value = data.code;
     },
-
+    getId(date){//获取当前点击节点所有子节点Id
+      const self = this
+        let arr = [],arr2=[]
+        arr.push(date.id)
+        if(date.children){
+          date.children.forEach(item=>{
+            arr.push(item.id)
+            if(item.children){
+              item.children.forEach(i=>{
+                arr2.push(i.id)
+                self.getId(i)
+              })
+                  
+            }
+          })
+        }
+        return arr.concat(arr2)
+    },
     async remove(node, date) {
       //机构状态冻结
+      const self = this
+      console.log(date)
+      console.log(this.getId(date))
+
       this.$confirm(date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -364,7 +386,7 @@ export default {
         }).then(async () => {
           console.log(node, date);
           let data = {
-          insId: date.id,
+          insIdList: self.getId(date),
           status: Number(!date.status)
           };
           let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
@@ -630,6 +652,7 @@ export default {
         }
       }
     }
+    
   },
   watch: {
     val: {
@@ -648,7 +671,7 @@ export default {
 @import "./less/index.less";
 .organiDialog {
   width: 600px;
-  border-radius: 20px;
+  border-radius: 10px;
   .el-dialog__header {
     padding: 0;
   }

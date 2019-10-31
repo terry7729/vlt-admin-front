@@ -135,8 +135,7 @@ export default {
       params: {
         softwareInfoVo: '',
         developerInfoVo: '',
-        gameInfoVo: '',
-        filePath: ''
+        gameInfoVo: {},
       }
     }
   },
@@ -230,7 +229,7 @@ export default {
     },
     submit(){
       const self = this;
-      this.params.filePath = this.gameBagId.concat(this.imgId,this.gameOtherId).join(',');
+      this.params.gameInfoVo.filePath = this.gameBagId.concat(this.imgId,this.gameOtherId).join(',');
       console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)

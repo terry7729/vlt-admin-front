@@ -5,8 +5,7 @@
       @search="search"
       :options="searchOptions"
       :total="tableData.total"
-      labelWidth="86px"
-    >
+      labelWidth="86px">
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table
@@ -15,10 +14,9 @@
       :data="tableData.records"
       tooltip-effect="dark"
       style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+      @selection-change="handleSelectionChange">
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="changePlanCode" label="变更计划编号"></el-table-column>
+      <el-table-column prop="id" label="变更计划ID"></el-table-column>
       <el-table-column prop="changePlanName" label="变更计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
       <el-table-column prop="gameSaleArea" label="销售区域"></el-table-column>
@@ -35,7 +33,7 @@
             v-prevent="2000"
             @click.native="detail(scope.row)"
           >查看</el-button>
-          <el-button size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
+          <el-button size="mini" v-prevent="2000" @click.native="edit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -67,33 +65,20 @@ export default {
         limit: 10
       },
       searchOptions: [
-        { title: "游戏ID", type: "input", prop: "gameId", value: "" },
+        { title: "计划编号", type: "input", prop: "changePlanCode", value: ""},
+        { title: "计划名称", type: "input", prop: "changePlanName", value: "" },
         { title: "游戏名称", type: "input", prop: "gameName", value: "" },
         {
-          title: "游戏类型",
+          title: "计划状态",
           type: "select",
-          prop: "gameType",
+          prop: "changePlanStatus",
           value: "",
-          options: [{ label: "概率型", value: 1 }, { label: "奖组型", value: 2 }]
+          options: [{ label: "审批中", value: 1 }, { label: "审批拒绝", value: 2 }, { label: "待生效", value: 3 }, { label: "已生效", value: 4 }]
         },
         {
-          title: "游戏状态",
-          type: "select",
-          prop: "gameStatus",
-          value: "",
-          options: [{ label: "存储", value: 1 }, { label: "试玩", value: 2 },{ label: "上市", value: 3 },{ label: "变更", value: 4 },{ label: "退市", value: 5 }]
-        },
-        {
-          title: "奖池类型",
-          type: "select",
-          prop: "jackpotType",
-          value: "",
-          options: [{ label: "无奖池", value: 1 }, { label: "单奖池", value: 2 }, { label: "多奖池", value: 3 }]
-        },
-        {
-          title: "上市时间",
+          title: "计划时间",
           type: "datepicker-range",
-          prop: "gameListTime",
+          prop: "changePlanTime",
           value: "",
           options: ["start", "end"]
         }
@@ -113,9 +98,9 @@ export default {
         let res = await self.$api.getChangePlanList({ data });
         if (res && res.code == 0) {
           console.log("游戏变更计划", res);
-          if (res.data && res.data.records.length > 0) {
+          if (res.data) {
             this.tableData = res.data;
-          }
+          } 
         } else {
           self.$message.warning(res.msg);
         }
@@ -147,29 +132,29 @@ export default {
     selectBtn() {
       this.$router.push({ path: "./gameChangePlanCreate" });
     },
-    edit(id) {
+    edit(val) {
       this.$router.push({
         path: "./gameChangePlanEdit",
-        query: { id }
+        query: {id: val.id,gameId: val.gameId,listPlanId: val.listPlanId}
       });
     },
     search(form) {
-      // console.log("search", form);
-      if (form.gameListTime) {
-       let formatTime =  form.gameListTime.map(item => {
-          item = moment(item).format('YYYY-MM-DD');
-          // console.log(item);
+      if (form.changePlanTime) {
+       let formatTime =  form.changePlanTime.map(item => {
+          item = moment(item).format('YYYY-MM-DD'); // 转成字符串
           return item;
         })
-      form.gameListTime = formatTime;
+        form.startTime = formatTime[0]
+        form.endTime = formatTime[1]
       }
-
+      delete form.changePlanTime;
+      console.log('form',form);
       this.requestOptions = {
         page: 0,
         pageSize: 0,
         ...form
       };
-      console.log(this.requestOptions);
+      console.log('this.requestOptions',  this.requestOptions);
       this.getChangePlanList(this.requestOptions );
     },
     handleSizeChange(val) {

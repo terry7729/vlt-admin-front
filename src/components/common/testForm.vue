@@ -3,43 +3,39 @@
     :model="form"
     :rules="rules"
     class="base-form">
-    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}" v-if="!item.destroy">
+    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
-      <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`" :class="item.class"></el-input> 
+      <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`" :class="item.class"></el-input> 
       <!-- 输入框 密码 -->
-      <el-input v-if="item.type=='password'" :prefix-icon="`el-icon-${item.icon}`" show-password v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='password'" :prefix-icon="`el-icon-${item.icon}`" show-password v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 输入框 带icon-->
-      <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
+      <el-input v-if="item.type=='input-icon'" :prefix-icon="`el-icon-${item.icon}`" v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input> 
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select'" :filterable='item.filterable' :disabled="item.disabled"  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
+      <el-select v-if="item.type=='select'" :filterable='item.filterable' :disabled="item.disabled"  v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items.value"
-          :disabled="items.disabled"
-          >
+          :value="items.value">
         </el-option>
       </el-select>
       <!-- 支持单选 -->
-      <el-select v-if="item.type=='select-item'" :filterable='item.filterable' :disabled="item.disabled"  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
+      <el-select v-if="item.type=='select-item'" :filterable='item.filterable' :disabled="item.disabled"  v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
           :value="items">
         </el-option>
       </el-select>
       <!-- 支持多选 -->
-      <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
+      <el-select v-if="item.type=='select-multiple'" multiple v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
           @click.native="changeSelect(items)"
-          :value="items.value"
-          :disabled="items.disabled"
-          >
+          :value="items.value">
         </el-option>
       </el-select>
       <!-- 开关 -->
       <el-switch
         v-if="item.type=='switch'"
-        v-model="form[item.prop]"
-        :active-text="form[item.prop]?'开启':'关闭'"
+        v-model="item.value"
+        :active-text="item.value?'开启':'关闭'"
         :inactive-value="0"
         :active-value="1"
         active-color="#409EFF"
@@ -48,13 +44,13 @@
       <!-- 单个日期选择// dateType设置时间类型 年 月 日 --> 
       <!-- <el-date-picker size="small" type="year"
         v-if="item.type=='dateyear'"
-        v-model="form[item.prop]"
+        v-model="item.value"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker> -->
       <!-- 单个日期选择// dateType设置时间类型 年 月 日 --> 
       <el-date-picker size="small" 
         v-if="item.type=='datepicker'"
-        v-model="form[item.prop]"
+        v-model="item.value"
         :type="item.dateType"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
@@ -69,7 +65,7 @@
       <!-- 单个时间选择 -->
       <el-date-picker size="small" type="datetime"
         v-if="item.type=='datetime'"
-        v-model="form[item.prop]"
+        v-model="item.value"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
       <!-- 两个时间选择 -->
@@ -81,17 +77,17 @@
         end-placeholder="结束时间">
       </el-date-picker>
       <!-- 支持文本域 -->
-      <el-input v-if="item.type=='textarea'" v-model="form[item.prop]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
+      <el-input v-if="item.type=='textarea'" v-model="item.value" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
       <!-- 级联选择 返回id-->
       <el-cascader  v-if="item.type=='cascader'" size="small" 
-        v-model="form[item.prop]" 
+        v-model="item.value" 
         :value="item.value" 
         :options="item.options" 
         :props="item.setProps"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :disabled="item.disabled"></el-cascader>
       <!-- 级联选择 返回对象-->
       <el-cascader  v-if="item.type=='cascader-object'" size="small" 
-        v-model="form[item.prop]" 
+        v-model="item.value" 
         :value="item" 
         :options="item.options" 
         :props="item.setProps"
@@ -99,7 +95,7 @@
       <!-- 级联选择（多选） -->
       <el-cascader
         v-if="item.type=='cascader-multiple'"
-        v-model="form[item.prop]"
+        v-model="item.value"
         :options="item.options"
         :props="item.setProps"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"
@@ -113,24 +109,24 @@
         :label="list.value">{{list.label}}</el-radio>
       </el-radio-group>
       <!-- 上下排列的单选 带输入框 -->
-      <div v-if="item.type=='radio-textarea'">
-        <el-radio v-model="form[item.props[0]]" :label="item.options[0].value">{{item.options[0].label}}</el-radio>
+      <!-- <div v-if="item.type=='radio-textarea'">
+        <el-radio v-model="item.value[0]]" :label="item.options[0].value">{{item.options[0].label}}</el-radio>
         <div class="flex-wrap">
-          <el-radio v-model="form[item.props[0]]" :label="item.options[1].value">{{item.options[1].label}}</el-radio>
-          <el-input v-model="form[item.props[1]]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-input>
+          <el-radio v-model="item.value[0]]" :label="item.options[1].value">{{item.options[1].label}}</el-radio>
+          <el-input v-model="item.value[1]]" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`"></el-input>
         </div>
-      </div>
+      </div> -->
       <!-- 地址栏 -->
       <div v-if="item.type=='address'">
         <el-cascader size="small" v-model="citySelect" :props='cascaderProps' @change="changeCity" :options="cityData" placeholder="请选择省、市、区"></el-cascader>
-        <el-input v-model="form[item.prop]" placeholder="填写详细地址"></el-input> 
+        <el-input v-model="item.value" placeholder="填写详细地址"></el-input> 
       </div>
       <!-- 最大值最小值 -->
-      <el-input v-if="item.type=='minMax'" v-model="form[item.options[0]]" @blur="checkNumber" type="text" placeholder="输入最小值"></el-input>
+      <!-- <el-input v-if="item.type=='minMax'" v-model="item.valuens[0]]" @blur="checkNumber" type="text" placeholder="输入最小值"></el-input>
       <span v-if="item.type=='minMax'" class="siding-flag">至</span>
-      <el-input v-if="item.type=='minMax'" v-model="form[item.options[1]]" @blur="checkNumber" type="text" placeholder="输入最大值"></el-input>
+      <el-input v-if="item.type=='minMax'" v-model="item.valuens[1]]" @blur="checkNumber" type="text" placeholder="输入最大值"></el-input> -->
       <!-- 多选checkbox -->
-      <el-checkbox-group v-if="item.type=='checkbox'" @change="changeCheckbox" v-model="form[item.prop]">
+      <el-checkbox-group v-if="item.type=='checkbox'" @change="changeCheckbox" v-model="item.value">
         <el-checkbox 
           v-for="(list, index) in item.options"
           :key="index"
@@ -138,33 +134,6 @@
           {{list.label}}
         </el-checkbox>
       </el-checkbox-group>
-      <!-- 图片上传 -->
-      <el-upload
-        v-if="item.type=='upload'"
-        class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :show-file-list="false"
-        :on-success="success"
-        :before-upload="beforeUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-      <!-- 多个图片上传 -->
-      <div v-if="item.type=='upload-drag'">
-      <el-upload
-        class="upload-demo"
-        drag
-        multiple
-        action=""
-        :limit="10"
-        :show-file-list="true"
-        :on-remove="handleRemove"
-        :http-request="uploadFile">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
-      </el-upload>
-      </div>
     </el-form-item>
     
   </el-form> 
@@ -176,12 +145,16 @@ import cityData from '@/libs/map/area.json'
 
 export default {
   name: "",
+  model: {
+    prop: 'form',
+    //这个事件名可以随意写，它实际上是规定了子组件要更新父组件值需要注册的方法
+    event: 'ababab'
+  },
   props: {
+    value: {},
     formData: {
       type: Array,
-      default() {
-        return []
-      },
+      default: [],
     },
     rules: {
       type: Object,
@@ -218,41 +191,41 @@ export default {
     }
   },
   watch: {
-    form: {
-      handler(newValue, oldValue) {
-        let param = JSON.parse(JSON.stringify(newValue))
-        // console.log('newValue', newValue)
-        for(let key in this.cascaderParams) {
-          if(param[key]&&param[key].length > 0) {
-            for(let i=0;i<param[key].length;i++) {
-              param[key][i] = param[key][i][param[key][i].length-1]
-            }
-          }
-        }
-        for(let key in this.cascaderParam) {
-          if(param[key]&&param[key].length > 0) {
-            param[key] = param[key][param[key].length-1]
-          }
-        }
-        // console.log('param', param)
+    // form: {
+    //   handler(newValue, oldValue) {
+    //     let param = JSON.parse(JSON.stringify(newValue))
+    //     // console.log('newValue', newValue)
+    //     for(let key in this.cascaderParams) {
+    //       if(param[key]&&param[key].length > 0) {
+    //         for(let i=0;i<param[key].length;i++) {
+    //           param[key][i] = param[key][i][param[key][i].length-1]
+    //         }
+    //       }
+    //     }
+    //     for(let key in this.cascaderParam) {
+    //       if(param[key]&&param[key].length > 0) {
+    //         param[key] = param[key][param[key].length-1]
+    //       }
+    //     }
+    //     // console.log('param', param)
        
-          this.$emit("change", param)
+    //     // this.$emit("input", param)
         
-      },
-      // 深度监听 监听对象，数组的变化
-      deep: true
-    },
+    //   },
+    //   // 深度监听 监听对象，数组的变化
+    //   deep: true
+    // },
     formData: {
       handler(newValue, oldValue) {
         // this.form = {};
-        this.init(newValue)
+        // this.init(newValue)
       },
       // 深度监听 监听对象，数组的变化
       deep: true
     },
   },
   created() {
-    this.init(this.formData)
+    // this.init(this.formData)
   },
   components: {
   },
@@ -336,6 +309,7 @@ export default {
       this.$refs.form.resetFields();
     },
     validate(callback) {
+      
       this.$refs.form.validate((valid) => {
         if (valid) {
           console.log('校验通过')
@@ -352,9 +326,9 @@ export default {
       this.switchText = val ? '开启' : '关闭'
     },
     changeSelect(val) {
-      // console.log(val)
+      console.log(val)
       this.form[val.prop] = this.selectParam[val.prop];
-      // console.log(this.selectParam)
+      console.log(this.selectParam)
     },
     init(data) {
       const self = this;

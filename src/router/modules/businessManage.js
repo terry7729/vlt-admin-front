@@ -688,6 +688,14 @@ export default [
     children: []
   },
   {
+    path: 'businessManage/dossierManage',
+    name: 'dossierManage',
+    meta: {
+      title: '档案管理',
+    },
+    component: dossierManage
+  },
+  {
     path: 'businessManage/channelResourceManage/inventoryManage',
     name: 'inventoryManage',
     meta: {
