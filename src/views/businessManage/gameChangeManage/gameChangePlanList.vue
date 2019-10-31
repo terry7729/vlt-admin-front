@@ -67,33 +67,20 @@ export default {
         limit: 10
       },
       searchOptions: [
-        { title: "游戏ID", type: "input", prop: "gameId", value: "" },
+        { title: "计划编号", type: "input", prop: "changePlanCode", value: ""},
+        { title: "计划名称", type: "input", prop: "changePlanName", value: "" },
         { title: "游戏名称", type: "input", prop: "gameName", value: "" },
         {
-          title: "游戏类型",
+          title: "计划状态",
           type: "select",
-          prop: "gameType",
+          prop: "changePlanStatus",
           value: "",
-          options: [{ label: "概率型", value: 1 }, { label: "奖组型", value: 2 }]
+          options: [{ label: "审批中", value: 1 }, { label: "审批拒绝", value: 2 }, { label: "待生效", value: 3 }, { label: "已生效", value: 4 }]
         },
         {
-          title: "游戏状态",
-          type: "select",
-          prop: "gameStatus",
-          value: "",
-          options: [{ label: "存储", value: 1 }, { label: "试玩", value: 2 },{ label: "上市", value: 3 },{ label: "变更", value: 4 },{ label: "退市", value: 5 }]
-        },
-        {
-          title: "奖池类型",
-          type: "select",
-          prop: "jackpotType",
-          value: "",
-          options: [{ label: "无奖池", value: 1 }, { label: "单奖池", value: 2 }, { label: "多奖池", value: 3 }]
-        },
-        {
-          title: "上市时间",
+          title: "计划时间",
           type: "datepicker-range",
-          prop: "gameListTime",
+          prop: "changePlanTime",
           value: "",
           options: ["start", "end"]
         }
@@ -113,9 +100,9 @@ export default {
         let res = await self.$api.getChangePlanList({ data });
         if (res && res.code == 0) {
           console.log("游戏变更计划", res);
-          if (res.data && res.data.records.length > 0) {
+          if (res.data) {
             this.tableData = res.data;
-          }
+          } 
         } else {
           self.$message.warning(res.msg);
         }
@@ -154,22 +141,22 @@ export default {
       });
     },
     search(form) {
-      // console.log("search", form);
-      if (form.gameListTime) {
-       let formatTime =  form.gameListTime.map(item => {
-          item = moment(item).format('YYYY-MM-DD');
-          // console.log(item);
+      if (form.changePlanTime) {
+       let formatTime =  form.changePlanTime.map(item => {
+          item = moment(item).format('YYYY-MM-DD'); // 转成字符串
           return item;
         })
-      form.gameListTime = formatTime;
+        form.startTime = formatTime[0]
+        form.endTime = formatTime[1]
       }
-
+      delete form.changePlanTime;
+      console.log('form',form);
       this.requestOptions = {
         page: 0,
         pageSize: 0,
         ...form
       };
-      console.log(this.requestOptions);
+      console.log('this.requestOptions',  this.requestOptions);
       this.getChangePlanList(this.requestOptions );
     },
     handleSizeChange(val) {
