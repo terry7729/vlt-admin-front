@@ -30,12 +30,12 @@
               :rowName="scope.row.name"
               :option="{
                 enable:{
-                  apiName:'enable',
+                  apiName:'status',
                   label:'启用', 
                   value:0
                 },
                disable:{
-                  apiName:'disable',
+                  apiName:'status',
                   label:'冻结',
                   value:1
                },
@@ -45,7 +45,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="edit(scope.row.id)">编辑</el-button>
+            <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -135,6 +135,29 @@ export default {
     translateTime(val) {
       return moment(val).format("YYYY-MM-DD HH:mm:ss");
     },
+    async exportExcel() {
+      const res = await this.$api.exportDictDataList({
+        data:{
+          page: 1,
+          pageSize: 10,
+          all: true,
+        },
+        responseType: "blob"
+      });
+      var blob = new Blob([res], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "数据字典信息.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      console.log(res);
+    },
     async getAll(data) {
       // const that = this;
 
@@ -190,14 +213,26 @@ export default {
       if (val.name == "新建流程") {
         this.dialogFormVisible = true;
         this.flag = true;
+      }else{
+        this.exportExcel();
       }
     },
-    edit(val) {
-      //编辑
-      // console.log(321,val)
+    async edit(val) {
+      //编辑     
+       console.log("编辑",val)
       this.dialogFormVisible = true;
-      // this.newcreate = 0;
       this.flag = false;
+      this.val = val ;
+      let arr = Object.keys(val)
+      let formData  = this.formData
+      console.log(formData)
+      formData.forEach(item=>{
+        arr.forEach(i=>{
+          if(item.prop === i){
+            item.value = val[i]
+          }
+        })
+      })
     },
     //表单change事件
     changeForm(val) {
