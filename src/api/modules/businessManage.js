@@ -42,6 +42,8 @@ export default {
   ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
   // 型号管理新增
   modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
+  // 型号管理查看
+  modelCheck: (options = {}) => ajax.post('/goodsModel/details', options),
   
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),

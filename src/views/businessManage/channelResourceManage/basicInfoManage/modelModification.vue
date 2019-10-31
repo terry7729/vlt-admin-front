@@ -119,7 +119,7 @@ return {
     // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备名称',type:'select',prop:'goodsName',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'设备型号',type:'input',prop:'deviceModel', value:''},
-    {title:'设备单价',type:'select',prop:'unitPrice',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'设备单价',type:'input',prop:'unitPrice',value:''},
     {title:'供应商',type:'select',prop:'providerId',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'预警上限',type:'input',prop:'upperLimit', value:''},
     {title:'预警下限',type:'input',prop:'lowerLimit', value:''},
@@ -129,7 +129,7 @@ return {
   mountingsData:[
     {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
     {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
-    {title:'配件单价',type:'select',prop:'fittingsPrice',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'配件单价',type:'input',prop:'fittingsPrice',value:''},
     {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
   ],
   rules2: {

@@ -150,8 +150,6 @@
             </el-dialog> -->
           </el-form-item>
         </el-form>
-        
-        
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -173,7 +171,7 @@ export default {
       disabled: false,
       id: self.$route.query.id,          //页面id
       imgUrlList: self.$route.query.id,
-      imgId: [],
+      imgUrl:[],
       imageUrl: '',
       params: {},
       options: [
@@ -184,7 +182,7 @@ export default {
       ],
       goodsType: Number(self.$route.query.goodsType),
       equipmentData: [
-        {title: '设备类型',type: 'select',prop:'deviceType', disabled:true, value: self.$route.query.deviceType, 
+        {title: '设备类型',type: 'select',prop:'deviceType', disabled: false, value: self.$route.query.deviceType, 
         options: 
         [
           {label: '终端机', value: 1},
@@ -310,19 +308,18 @@ export default {
       const self = this;
       this.$refs['baseForm'].validate(async valid=>{
         if(valid === 'true') {
-          let data = this.params;
+          let data = self.params;
           if(data.goodsType==3||data.goodsType==4) {
-            data.imgInfo = self.imgId.join(',');
-          }        
-          let res = await this.$api.modification({data:id})
-          console.log(res)
-          console.log(this.params)
+            data.files = self.imgUrl.join(',');
+          }      
+          let res = await self.$api.modification({data})
+          console.log(self.params)
           if(res || res.code == 0){
-            this.$message({
+            self.$message({
               message:'修改成功',
               type:'success'
             })
-            this.$router.push({path: 'basicInfoManage'})
+            self.$router.push({path: 'basicInfoManage'})
           }
         }
       })
@@ -369,8 +366,7 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      self.imgId.push(res.data.fileId)
-      let imgUrl = res.data.filePath;
+      this.imgUrl.push(res.data.filePath);
       console.log(this.imgId)
     },
 

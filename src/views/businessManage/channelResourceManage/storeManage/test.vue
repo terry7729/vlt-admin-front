@@ -3,31 +3,7 @@
     <div class="vlt-edit-single">
       <h2 class="title">基本信息</h2>
       <div class="vlt-edit-wrap">
-        <base-form
-          :formData="formData"
-          labelWidth="140px"
-          ref="baseForm"
-          :rules="rules2"
-          direction="right"
-          @change="changeForm"
-        ></base-form>
-        <el-form label-position="right" label-width="140px" ref="form" class="soft-form">
-          <el-form-item label="仓库类型">
-            <el-input disabled v-model="typeName"></el-input>
-          </el-form-item>
-          <el-form-item label="仓库管理员">
-            <el-cascader :options="options" change-on-select="true" v-model="selectedOption" 
-            :show-all-levels="false" @change="handleChange"></el-cascader>
-          </el-form-item>
-        </el-form>
-        <base-form
-          :formData="formData2"
-          labelWidth="140px"
-          ref="baseForm"
-          :rules="rules2"
-          direction="right"
-          @change="changeForm2"
-        ></base-form>
+        
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>

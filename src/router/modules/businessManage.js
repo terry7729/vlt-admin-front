@@ -128,8 +128,10 @@ const mountingsCheck = () => import('@/views/businessManage/channelResourceManag
 
 
 
-//型号管理查看
-const modelCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelCheck')
+//型号管理设备查看
+const modelEquipmentCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelEquipmentCheck')
+//型号管理配件查看
+const modelPreCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelPreCheck')
 //类型管理新增
 const modelAdd = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelAdd')
 // 型号管理修改
@@ -143,7 +145,7 @@ const outStore = () => import('@/views/businessManage/channelResourceManage/outP
 //已出库详情
 const alreadyOutDetail = () => import('@/views/businessManage/channelResourceManage/outPutManage/alreadyOutDetail')
 //仓库管理新增仓库
-const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/addStore')
+const addStore = () => import('@/views/businessManage/channelResourceManage/storeManage/test')
 const detail = () => import('@/views/businessManage/channelResourceManage/storeManage/detail')
 
 
@@ -920,13 +922,23 @@ export default [
     component: mountingsCheck
   },
   {
-    path: 'businessManage/channelResourceManage/modelCheck',
-    name: 'modelCheck',
+    path: 'businessManage/channelResourceManage/modelEquipmentCheck',
+    name: 'modelEquipmentCheck',
     meta: {
       parentName:'basicInfoManage',
-      title: '基本信息型号管理查看',
+      title: '基本信息型号管理设备查看',
     },
-    component: modelCheck
+    component: modelEquipmentCheck
+  },
+  
+  {
+    path: 'businessManage/channelResourceManage/modelPreCheck',
+    name: 'modelPreCheck',
+    meta: {
+      parentName:'basicInfoManage',
+      title: '基本信息型号管理配件查看',
+    },
+    component: modelPreCheck
   },
   {
     path: 'businessManage/channelResourceManage/modelAdd',

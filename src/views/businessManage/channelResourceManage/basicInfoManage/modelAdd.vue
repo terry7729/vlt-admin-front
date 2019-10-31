@@ -179,7 +179,7 @@ return {
     beforeRemove(file, fileList) {
 ;
     },
-    // 图标上传
+    // 图片上传
     async uploadFileImg(files) {
       let formData = new FormData();
       formData.append('file', files.file);
@@ -222,19 +222,11 @@ return {
           }
         }
       })
-    // this.$refs[form].validate(async valid => {
-    //     if (valid) {
-    //     // 表单验证通过后使用组件自带的方法触发上传事件
-    //       this.$refs.upload.submit()
-    //     } else {
-    //       return false;
-    //     }
-    //   });
     },
     cancel(){
-     this.$router.back()
-   },
- },
+    this.$router.back()
+  },
+},
 }
 </script>
 

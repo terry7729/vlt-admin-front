@@ -169,8 +169,6 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
-
-     
       options: [
         { value: 1, label: "设备" },
         { value: 2, label: "配件" },
@@ -284,8 +282,8 @@ export default {
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       },
-      imgId: [],
       imageUrl: '',
+      imgUrl:[],
       params: {},
     };
   },
@@ -308,28 +306,29 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId.push(res.data.fileId)
-      let imgUrl = res.data.filePath;
-      console.log(this.imgId)
+      this.imgUrl.push(res.data.filePath);
+      console.log(this.imgUrl)
     },
     changeOption() {
       console.log(this.goodsType);
     },
-     submit(formName) {
+    submit(formName) {
+      const self = this
       this.$refs['baseForm1'].validate(async valid=>{
         if(valid === 'true') {
-          let data = this.params;
+          let data = self.params;
           if(data.goodsType==3||data.goodsType==4) {
-            data.imgInfo = this.imgId.join(',');
-          }
-          let res = await this.$api.typeCreate({data})
+            // debugger
+            data.files = self.imgUrl.join(',');
+          };
+          let res = await self.$api.typeCreate({data})
           console.log(res)
           if(res || res.code == 0){
-            this.$message({
+            self.$message({
               message:'新增成功',
               type:'success'
             })
-            this.$router.push({path: 'basicInfoManage'})
+            self.$router.push({path: 'basicInfoManage'})
           }
         }
       })
@@ -359,7 +358,6 @@ export default {
         console.log('param', this.params)
       }
     },
-
     handleRemove(file) {
       console.log(file);
     },
