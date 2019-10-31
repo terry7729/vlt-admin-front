@@ -87,7 +87,7 @@ export default {
   
   data() {
     return {
-      menuType: 1,
+      menuType: 0,
       isEdit: false,
       menuData: [],
       controlOptions: [
