@@ -9,7 +9,7 @@
       <base-info @next="next"></base-info>
     </div>
     <div v-show="active==1">
-      <game-set @next="next" @prev="prev"></game-set>
+      <game-set @next="next" @prev="prev" :planData="planData"></game-set>
     </div>
     <div class="vlt-edit-single appendix" v-show="active==2">
       <div class="vlt-edit-wrap">
@@ -62,6 +62,7 @@ export default {
       rules: {},
       param: {},
       fileIds: '',
+      planData: {},
     }
   },
   methods: {
@@ -100,9 +101,30 @@ export default {
     next(val) {
       console.log('当前参数', val)
       this.param = Object.assign(this.param, val)
-      
+      if(this.param.gameListPlanVo) {
+        this.getMarketPlanDetail(this.param.gameListPlanVo.gameId);
+      }
       // this.$refs.main.scrollTop = 0;
       if (this.active++ > 3) this.active = 0;
+    },
+    // 获取计划详情
+    getMarketPlanDetail(gameId) {
+      const self = this;
+      const data = {
+        id: 0,
+        gameId
+      };
+      (async (data)=>{
+        let res = await self.$api.getMarketPlanDetail({data})
+				if(res && res.code == 0) {
+          // self.$message.success('注销成功')
+          this.planData = res.data;
+          // this.insId = res.data.gameListPlanVo.gameSaleArea.split(',');
+          // self.getInsData();
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
     },
     changeForm() {
 
