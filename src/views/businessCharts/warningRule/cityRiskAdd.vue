@@ -143,18 +143,14 @@
           <p class="tips">
             <span>*</span>数值达到对应风险指标值即为触发
           </p>
-          <div class="btn">
-            <el-button type="primary" v-prevent="1000" @click="onSubmit">立即创建</el-button>
-            <el-button>取消</el-button>
-          </div>
+         
         </el-form-item>
       </el-form>
-    </div>
-    <div>
+       <div>
       <el-table
         :data="informData"
         border
-        style="width: 80%"
+
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >
@@ -372,6 +368,12 @@
         </el-table-column>
       </el-table>
     </div>
+     <div class="btn">
+            <el-button type="primary" v-prevent="1000" @click="onSubmit">立即创建</el-button>
+            <el-button>取消</el-button>
+          </div>
+    </div>
+   
   </div>
 </template>
 

@@ -3,6 +3,7 @@ export default {
   // 为空
   checkEmpty: (rule, value, callback) => {
     // const _value = (value + '').trim();
+    // debugger;
     if (!value) {
       return callback(new Error(rule.message));
     }
