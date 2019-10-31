@@ -151,6 +151,7 @@ export default {
   createMarketPlan: (options = {}) => ajax.post('/gameListPlan/insertGameListPlan', options),
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
+
   // 编辑上市计划
   editMarketPlan: (options = {}) => ajax.post('/gameListPlan/updateGameListPlan', options),
   
@@ -200,7 +201,7 @@ export default {
   //游戏销售权限
   queryGameRight: (options = {}) => ajax.post('/sales/queryGameRight', options),
   //游戏销售权限更改
-  updateGameRight: (options = {}) => ajax.post('/sales/update', options),
+  updateGameRight: (options = {}) => ajax.put('/sales/update', options),
 
 
   //资源发放

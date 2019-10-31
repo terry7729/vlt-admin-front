@@ -181,43 +181,43 @@ export default {
     changeForm2(val) {
         // this.params2 = val;
         // this.formall[1]=this.params2
-        Object.assign(this.params2, val);
-      
+        Object.assign(this.params2, val); 
     },
     changeForm3(val) {
         //  this.params3 = val;
         // this.formall[2]=this.params3
-        Object.assign(this.params3, val);
-        
+        Object.assign(this.params3, val);   
     },
     changeForm4(val) {
         //  this.params4 = val;
         // this.formall[3]=this.params4
-        Object.assign(this.params4, val);
-        
+        Object.assign(this.params4, val); 
     },
     async submit() {
       // this.formall.list1=this.form1
       // this.formall.list2=this.form2
       // this.formall.list3=this.form3
       // this.formall.list4=this.form4
-      console.log(123,this.params1)
+      let params1=this.params1
+      console.log(123,params1)
+      
       let form1={
         key:0,
-        val:this.params1
+        val:JSON.stringify(this.params1)
       }
+      
       console.log(999,form1)
       let form2={
         key:1,
-        val:this.params2
+        val:JSON.stringify(this.params2)
       }
       let form3={
         key:2,
-        val:this.params3
+        val:JSON.stringify(this.params3)
       }
       let form4={
         key:3,
-        val:this.params4
+        val:JSON.stringify(this.params1)
       }
       this.formall.sysConfigVoList.push(form1,form2,form3,form4)
       // this.formall.sysConfigVoList.push(form2)
