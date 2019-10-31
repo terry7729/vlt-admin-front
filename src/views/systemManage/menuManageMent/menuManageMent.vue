@@ -100,7 +100,7 @@ export default {
         '1': [
           { type: "input", title: "名称", prop: "moduleName", value: "" },
           { type: "input", title: "路由名称", prop: "moduleCode", value: "" },
-          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "switch", prop: "isShow", value: 1, title: "是否启用" },
           { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
         ],
         '2': [
@@ -111,10 +111,10 @@ export default {
           {
             type: "switch",
             prop: "isSensitivity",
-            value: false,
+            value: 0,
             title: "是否敏感操作"
           },
-          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "switch", prop: "isShow", value: 1, title: "是否启用" },
           { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
         ],
         '3': [
@@ -131,10 +131,10 @@ export default {
           {
             type: "switch",
             prop: "isSensitivity",
-            value: false,
+            value: 0,
             title: "是否敏感操作"
           },
-          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "switch", prop: "isShow", value: 1, title: "是否启用" },
           { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
         ],
         '4': [
@@ -143,10 +143,10 @@ export default {
           {
             type: "switch",
             prop: "isSensitivity",
-            value: false,
+            value: 0,
             title: "是否敏感操作"
           },
-          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "switch", prop: "isShow", value: 1, title: "是否启用" },
           { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
         ]
       },
@@ -207,8 +207,11 @@ export default {
     };
   },
   watch: {
-    menuData() {
+    menuData(menuData) {
       this.setCtrlBtnStatus()
+      if (!menuData.length) {
+        this.menuType = 1;
+      }
     },
     menuType(val) {
       this.form = this.config[val];
@@ -294,8 +297,7 @@ export default {
         this.$set(this.controlOptions[0], 'disabled', false);
       }
     },
-    // type 1: 根节点 2: 子系统 3: 菜单 4: 按钮
-    submit(type) {
+    submit() {
       this.$refs.baseForm.validate(async val => {
         if (val === 'true') {
           const data = {
@@ -309,7 +311,7 @@ export default {
             apiName = 'UpdateModule';
             message = '编辑成功'
           }
-          if (type !== 1) {
+          if (this.menuType !== 1) {
             data.parentId = this.currentMenu.id;
           }
           const res = await this.$api[apiName]({
@@ -318,6 +320,16 @@ export default {
           });
           if (res && res.code == 0) {
             // 无请求更新tree
+            // 新增/编辑根节点
+            if (this.menuType === 1) {
+              if (this.isEdit) {
+                this.$set(this.menuData[0], 'text', data.moduleName);
+              } else {
+                this.menuData = [res.data];
+              }
+              return;
+            }
+            // 新增/编辑子系统、菜单、按钮
             if (this.isEdit) {
               this.$set(this.currentMenu, 'text', data.moduleName);
             } else {
