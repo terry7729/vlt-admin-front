@@ -34,7 +34,7 @@ const userDestails = () => import('@/views/systemManage/userControl/userDetails'
 //用户编缉
 const userInformed = () =>import('@/views/systemManage/userControl/userInformed')
 //角色管理
-const roleList = () => import('@/views/systemManage/roleManagement/roleList copy')
+const roleList = () => import('@/views/systemManage/roleManagement/roleList')
 //角色编缉
 // const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
 //角色详情

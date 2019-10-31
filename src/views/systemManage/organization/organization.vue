@@ -523,12 +523,12 @@ export default {
       } else if (this.addOrChange === "添加机构") {
         this.OrganizationParams.created = "添加机构";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
-        data.status = Number(data.status);
+        // data.status = Number(data.status);
         data.parentId = this.insparentId.id;
         if(this.insparentId.status === 1){
           data.status = 1
         }else{
-          data.status = Number(data.status);
+          data.status = Number(!data.status);
         }
         console.log(this.val.status);
         let reslt = await this.$api.AddInsInfo({ data }); //添加机构
