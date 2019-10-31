@@ -255,7 +255,7 @@ async pagingControl(val){ //分页控制
       let arr = Object.keys(val)
       console.log(reslt)
       if(reslt.code === 0){
-        if(reslt.data.moduleIds != null && reslt.data.moduleIds.length>0){
+        if(reslt.data.moduleIds && reslt.data.moduleIds.length>0){
           alert(1)
            reslt.data.moduleIds.forEach(item=>{
           
@@ -292,7 +292,7 @@ async search(val) {//搜索事件
       console.log(val)
       const self = this;
       let list ={};
-      if(val.createTime !=""){
+      if(val.createTime  && val.createTime.length>0){
         console.log(val.createTime)
         list.startTime=moment(Date.parse(val.createTime[0])).format("YYYY-MM-DD")
         list.endTime = moment(Date.parse(val.createTime[1])).format("YYYY-MM-DD")

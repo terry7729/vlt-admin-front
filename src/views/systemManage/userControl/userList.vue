@@ -84,9 +84,9 @@
               <el-radio :label="0">登陆密码</el-radio>
             </el-radio-group>
           </el-form-item>
-           <el-form-item label="请输入管理员密码" label-width="130px">
+           <!-- <el-form-item label="请输入管理员密码" label-width="130px">
             <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
-          </el-form-item> 
+          </el-form-item>  -->
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -104,7 +104,7 @@ export default {
     return {
       restpaswordfrom: {
         pwdStatus: 0,
-        password:''
+        // password:''
       },
       //测试数据
       total:0,
@@ -293,21 +293,32 @@ async init(val){
         this.restParam = val;
         console.log(val)
       },
-     async dialogFormVisibleEnter() {  
+      dialogFormVisibleEnter() {  
       
           //操作密码重置
-          console.log(this.restpaswordfrom)
-          let data = {
-            ...this.restpaswordfrom,
-          }
-          data.userId = this.restParam.userId
-    
-          let reslt =await this.$api.restPassWord({data})
+          this.$alert('您确认要重置密码?', '标题名称', {
+          confirmButtonText: '确定',
+          callback:async action => {
+               this.dialogFormVisible = false;
+                 console.log(this.restpaswordfrom)
+                  let data = {
+                    ...this.restpaswordfrom,
+                  }
+                  data.userId = this.restParam.userId
+            
+                  let reslt =await this.$api.restPassWord({data})
 
-          console.log(reslt)
+                  console.log(reslt)
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+        
 
       
-        this.dialogFormVisible = false;
+       
       }
   },
    watch: {
