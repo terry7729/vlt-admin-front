@@ -9,17 +9,17 @@
             <div class="topSales" id="topSales"></div>
             <div class="salesNumber">
               <div>
-                <section>
+                <section class="setTask" @click='open'>
                   <p>今年任务</p>
-                  <p>232424242</p>
+                  <p>{{taskNum}}</p>
                 </section>
                 <section>
                   <p>今年销售量</p>
-                  <p>232424242</p>
+                  <p>278242</p>
                 </section>
                 <section>
                   <p>7月销售量</p>
-                  <p>232424242</p>
+                  <p>92242</p>
                 </section>
               </div>
             </div>
@@ -63,9 +63,9 @@
                 >
                 <el-table-column align="center" prop="date" label="大厅编号" fit></el-table-column>
                 <el-table-column align="center" prop="name" label="所属省份" fit></el-table-column>
-                <el-table-column align="center" prop="name" label="销售金额" fit sortable></el-table-column>
-                <el-table-column align="center" prop="name" label="中奖金额" fit sortable></el-table-column>
-                <el-table-column align="center" prop="name" label="兑奖金额" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="销售金额" width='100' fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="中奖金额" width='100' fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="兑奖金额" width='100' fit sortable></el-table-column>
                 <el-table-column align="center" prop="name" label="状态" fit></el-table-column>
               </el-table>
             </div>
@@ -124,25 +124,25 @@ export default {
         [
           {
             name: "黑龙江",
-            value: 33
+            value: 3
           }
         ],
         [
           {
             name: "内蒙古",
-            value: 12222
+            value: 5.3
           }
         ],
         [
           {
             name: "吉林",
-            value: 0
+            value: 6.3
           }
         ],
         [
           {
             name: "辽宁",
-            value: 0
+            value: 7.3
           }
         ],
         [
@@ -290,6 +290,145 @@ export default {
           }
         ]
       ],
+      datas: [
+        {
+          name: "江苏省",
+          value: 2000
+        },
+        {
+          name: "北京市",
+          value: 4000
+        },
+        {
+          name: "上海市",
+          value: 6000
+        },
+        {
+          name: "重庆市",
+          value: 10000
+        },
+        {
+          name: "河北省",
+          value: 12000
+        },
+        {
+          name: "河南省",
+          value: 13000
+        },
+        {
+          name: "云南省",
+          value: 1300
+        },
+        {
+          name: "辽宁省",
+          value: 19000
+        },
+        {
+          name: "黑龙江省",
+          value: 19000
+        },
+        {
+          name: "湖南省",
+          value: 19000
+        },
+        {
+          name: "安徽省",
+          value: 14000
+        },
+        {
+          name: "山东省",
+          value: 18000
+        },
+        {
+          name: "新疆维吾尔自治区",
+          value: 14000
+        },
+        {
+          name: "江苏省",
+          value: 18000
+        },
+        {
+          name: "浙江省",
+          value: 18000
+        },
+        {
+          name: "江西省",
+          value: 14000
+        },
+        {
+          name: "湖北省",
+          value: 14000
+        },
+        {
+          name: "广西壮族自治区",
+          value: 14000
+        },
+        {
+          name: "甘肃省",
+          value: 14000
+        },
+        {
+          name: "山西省",
+          value: 14000
+        },
+        {
+          name: "内蒙古自治区",
+          value: 14000
+        },
+        {
+          name: "陕西省",
+          value: 14000
+        },
+        {
+          name: "吉林省",
+          value: 1300
+        },
+        {
+          name: "福建省",
+          value: 13000.8
+        },
+        {
+          name: "贵州省",
+          value: 13000
+        },
+        {
+          name: "广东省",
+          value: 20000
+        },
+        {
+          name: "青海省",
+          value: 7000
+        },
+        {
+          name: "西藏自治区",
+          value: 4000
+        },
+        {
+          name: "四川省",
+          value: 7000
+        },
+        {
+          name: "宁夏回族自治区",
+          value: 5000
+        },
+        {
+          name: "海南省",
+          value: 12000
+        },
+        {
+          name: "台湾省",
+          value: 10000
+        },
+        {
+          name: "香港",
+          value: 14000
+        },
+        {
+          name: "澳门",
+          value: 14000
+        }
+      ],
+      taskNum:0,
       allCity: [],
       map: {},
       cityOpt: [],
@@ -311,6 +450,47 @@ export default {
           date: "232323",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        ,
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "232323",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
         },
         {
           date: "232323",
@@ -367,11 +547,13 @@ export default {
           {
             // name: "业务指标",
             type: "gauge",
+            // radius: "20%", 
             detail: { formatter: "{value}%" },
             data: [{ value: 50, name: "ddd" }],
             axisLine: {
               show: true,
               lineStyle: {
+                width: 10, 
                 color: [
                   [
                     1,
@@ -393,19 +575,25 @@ export default {
                 ]
               }
             },
+            splitLine:{
+              length:15
+            },
             title: {
               // 仪表盘标题。
               show: false, // 是否显示标题,默认 true。
-              offsetCenter: [0, "20%"], //相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+              offsetCenter: [0, "30%"], //相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
               color: "#33d27a", // 文字的颜色,默认 #333。
               fontSize: 15 // 文字的字体大小,默认 15。
+            },
+            axisTick:{
+              length:8
             },
             detail: {
               // 仪表盘详情，用于显示数据。
               show: true, // 是否显示详情,默认 true。
-              offsetCenter: [0, "50%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+              offsetCenter: ['0', "70%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
               color: "#fff", // 文字的颜色,默认 auto。
-              fontSize: 20, // 文字的字体大小,默认 15。
+              fontSize: 24, // 文字的字体大小,默认 15。
               formatter: "{value}%" // 格式化函数或者字符串
             },
             axisLabel: {
@@ -413,9 +601,10 @@ export default {
               show: true, // 是否显示标签,默认 true。
               distance: 5, // 标签与刻度线的距离,默认 5。
               color: "#fff", // 文字的颜色,默认 #fff。
-              fontSize: 12, // 文字的字体大小,默认 5。
+              fontSize: 16, // 文字的字体大小,默认 5。
               formatter: "{value}" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式。 示例:// 使用字符串模板，模板变量为刻度默认标签 {value},如:formatter: '{value} kg'; // 使用函数模板，函数参数分别为刻度数值,如formatter: function (value) {return value + 'km/h';}
-            }
+            },
+            
           }
         ],
         legend: {
@@ -447,11 +636,11 @@ export default {
           axisPointer: {
             type: "cross",
             label: {
-              backgroundColor: "#6a7985"
+              backgroundColor: "gold"
             }
           }
         },
-        color: ["#1f9cc5", "#e77e63", "#f2d107"],
+        // color: ["#1f9cc5", "#e77e63", "#f2d107"],
         legend: {
           textStyle: {
             fontSize: 12, //字体大小
@@ -516,27 +705,34 @@ export default {
           }
         ],
         series: [
-          {
-            name: "游戏总机",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [220, 132, 101, 134, 90, 230, 210]
-          },
+        
           {
             name: "在线",
             type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [220, 182, 191, 234, 290, 330, 310]
+            // stack: "总量",
+            areaStyle: {
+              // color:'rgba(31,156,197,0.3)'
+            },
+            data: [520, 582, 591, 634, 590, 630, 610]
           },
           {
             name: "今年新增",
             type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [250, 232, 201, 154, 190, 330, 410]
-          }
+            // stack: "总量",
+            areaStyle: {
+              // color:'rgba(242,209,7,.7)'
+            },
+            data: [150, 132,101, 154, 190, 130, 110]
+          },
+            {
+            name: "游戏总机",
+            type: "line",
+            // stack: "总量",
+            areaStyle: {
+              // color:'rgba(231,126,99.3)'
+            },
+            data: [620, 652, 701, 734, 790, 730, 710]
+          },
         ]
       };
 
@@ -804,42 +1000,55 @@ export default {
       });
     },
     getMapOpt(series, place) {
+      console.log(series);
       if (!place) {
         var option = {
           tooltip: {
-            trigger: "item",
-            backgroundColor: "rgba(166, 200, 76, 0.82)",
-            borderColor: "#FFFFCC",
-            showDelay: 0,
-            hideDelay: 0,
-            enterable: true,
-            transitionDuration: 0,
-            extraCssText: "z-index:100",
-            formatter: function(params, ticket, callback) {
-              //根据业务自己拓展要显示的内容
-              var res = "";
-              var name = params.name;
-              var value = params.value[params.seriesIndex + 1];
-              res =
-                "<span style='color:#fff;'>" +
-                name +
-                "</span><br/>数据：" +
-                value;
-              return res;
+            // trigger: "item",
+            // backgroundColor: "rgba(166, 200, 76, 0.82)",
+            // borderColor: "#FFFFCC",
+            // showDelay: 0,
+            // hideDelay: 0,
+            // enterable: true,
+            // transitionDuration: 0,
+            // extraCssText: "z-index:100",
+            // formatter: function(params, ticket, callback) {
+            //   //根据业务自己拓展要显示的内容
+            //   var res = "";
+            //   var name = params.name;
+            //   var value = params.value[params.seriesIndex + 1];
+            //   res =
+            //     "<span style='color:#fff;'>" +
+            //     name +
+            //     "</span><br/>数据：" +
+            //     value;
+            //   return res;
+            // }
+            formatter: function(params) {
+              return params.name + "：" + params.data["value"] ;
             }
           },
-          backgroundColor: "#02142c",
+          // backgroundColor: "#02142c",
           // visualMap: {
-          //   //图例值控制
-          //   min: 0,
-          //   max: 1,
-          //   calculable: true,
-          //   show: true,
-          //   color: ["#f44336", "#fc9700", "#ffde00", "#ffde00", "#00eaff"],
+          //   type: "continuous",
+          //   orient: "horizontal",
+          //   itemWidth: 10,
+          //   itemHeight: 80,
+          //   text: ["高", "低"],
+          //   showLabel: true,
+          //   seriesIndex: [0],
+          //   min: 1000,
+          //   max: 20000,
+          //   inRange: {
+          //     color: ["#02142c", "#FFFD64", "#FF5000"]
+          //   },
           //   textStyle: {
-          //     color: "#fff"
-          //   }
+          //     color: "#7B93A7"
+          //   },
+          //   bottom: 30,
+          //   left: "left"
           // },
+
           geo: {
             map: "china",
             zoom: 1.2,
@@ -856,7 +1065,7 @@ export default {
                 borderWidth: 1
               },
               emphasis: {
-                color: "rgba(37, 43, 61, .5)" //悬浮背景
+                // color: "rgba(37, 43, 61, .5)" //悬浮背景
               }
             },
             top: "30%"
@@ -893,7 +1102,7 @@ export default {
                 borderColor: "#32b1d4"
               },
               emphasis: {
-                areaColor: "gold"
+                areaColor: "#fff"
               }
             },
             top: "30%"
@@ -932,6 +1141,16 @@ export default {
       [["北京市", this.chinaDatas]].forEach((item, i) => {
         var res = this.convertData(item[1]);
         series.push(
+          {
+            name: "mapSer",
+            type: "map",
+            roam: false,
+            geoIndex: 0,
+            label: {
+              show: false
+            },
+            data: this.datas
+          },
           {
             type: "lines",
             zlevel: 2,
@@ -1036,7 +1255,7 @@ export default {
         );
       });
       let option = this.getMapOpt(series);
-      this.map.hideLoading();
+      // this.map.hideLoading();
       this.map.setOption(option, true);
       if (option && typeof option === "object") {
         this.map.setOption(option, true);
@@ -1074,7 +1293,71 @@ export default {
       }
       console.log(res);
       return res;
-    }
+    },
+    initMap2() {
+      var dom = document.getElementById("left_map");
+      this.map = echarts.init(dom);
+      // this.map.showLoading()
+
+      var option = {
+        visualMap: {
+          type: "continuous",
+          orient: "horizontal",
+          itemWidth: 10,
+          itemHeight: 80,
+          text: ["高", "低"],
+          showLabel: true,
+          seriesIndex: [0],
+          min: 0,
+          max: 2,
+          inRange: {
+            color: ["#6FCF6A", "#FFFD64", "#FF5000"]
+          },
+          textStyle: {
+            color: "#7B93A7"
+          },
+          bottom: 30,
+          left: "left"
+        },
+
+        geo: {
+          // roam: true,
+          map: "china",
+          left: "left",
+          right: "0",
+          top: "20%"
+        },
+        series: [
+          {
+            name: "mapSer",
+            type: "map",
+            roam: false,
+            geoIndex: 0,
+            label: {
+              show: false
+            },
+            data: this.datas
+          }
+        ]
+      };
+      this.map.setOption(option);
+    },
+     open() {
+        this.$prompt('请输入要设置的今年任务数量', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /(^[1-9]\d*$)/,
+          inputErrorMessage: '格式不正确'
+        }).then(({ value }) => {
+          this.$message({
+            type: 'success',
+            message: '设置成功'
+          });
+          this.taskNum=value
+        }).catch(() => {
+              
+        });
+      }
   },
   beforeDestroy() {
     //释放资源  清空图例数据，释放内存.
@@ -1085,6 +1368,6 @@ export default {
 
 
 <style lang="less" scoped>
-@import './less/index.less';
+@import "./less/index.less";
 </style>
 
