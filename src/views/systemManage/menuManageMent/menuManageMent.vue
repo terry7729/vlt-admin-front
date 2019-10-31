@@ -415,6 +415,8 @@ export default {
             this.$refs.tree.remove(item);
           })
         }
+      }).catch(() => {
+        console.log('已取消删除')
       })
     },
     // 操作
