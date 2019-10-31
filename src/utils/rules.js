@@ -2,8 +2,8 @@
 export default {
   // 为空
   checkEmpty: (rule, value, callback) => {
-    const _value = (value + '').trim();
-    if (!_value) {
+    // const _value = (value + '').trim();
+    if (!value) {
       return callback(new Error(rule.message));
     }
     callback();

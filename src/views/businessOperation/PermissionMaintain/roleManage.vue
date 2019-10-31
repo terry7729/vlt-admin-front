@@ -316,7 +316,10 @@ export default {
       let name = Object.keys(this.row);
 
       let msg = this.roleManageWriteData;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5be49774c473fb0dd0ba5efe30fa70bb54b921b0
       for (var i = 0; i < msg.length; i++) {
         for (var j = 0; j < name.length; j++) {
           if (msg[i].prop === name[j]) {

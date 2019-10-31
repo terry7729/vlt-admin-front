@@ -19,6 +19,13 @@
           >
         </el-option>
       </el-select>
+      <!-- 支持单选 -->
+      <el-select v-if="item.type=='select-item'" :filterable='item.filterable' :disabled="item.disabled"  v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :class="item.class">
+        <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
+          @click.native="changeSelect(items)"
+          :value="items">
+        </el-option>
+      </el-select>
       <!-- 支持多选 -->
       <el-select v-if="item.type=='select-multiple'" multiple v-model="form[item.prop]" :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
         <el-option v-for="(items,index) in item.options" :key="index" :label="items.label"
@@ -172,7 +179,9 @@ export default {
   props: {
     formData: {
       type: Array,
-      default: [],
+      default() {
+        return []
+      },
     },
     rules: {
       type: Object,
