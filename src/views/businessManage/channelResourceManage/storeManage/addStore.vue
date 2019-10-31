@@ -3,31 +3,8 @@
     <div class="vlt-edit-single">
       <h2 class="title">基本信息</h2>
       <div class="vlt-edit-wrap">
-        <base-form
-          :formData="formData"
-          labelWidth="140px"
-          ref="baseForm"
-          :rules="rules2"
-          direction="right"
-          @change="changeForm"
-        ></base-form>
-        <el-form label-position="right" label-width="140px" ref="form" class="soft-form">
-          <el-form-item label="仓库类型">
-            <el-input disabled v-model="typeName"></el-input>
-          </el-form-item>
-          <el-form-item label="仓库管理员">
-            <el-cascader :options="options" change-on-select="true" v-model="selectedOption" 
-            :show-all-levels="false" @change="handleChange"></el-cascader>
-          </el-form-item>
-        </el-form>
-        <base-form
-          :formData="formData2"
-          labelWidth="140px"
-          ref="baseForm"
-          :rules="rules2"
-          direction="right"
-          @change="changeForm2"
-        ></base-form>
+        <test-form  :options="formData" ref="baseForm" labelWidth="140px" :rules="rules" direction="right" @change="changeForm">
+        </test-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -43,18 +20,9 @@ export default {
   name: "addStore",
   data() {
     return {
-      options:[
-        {label:'部门1',value:1,children:[{label:'部门1-1',value:1.1,children:[{label:'部门1-1-1',value:8},{label:'小花',value:545}]},{label:'人员1',value:6}]},
-        {label: '人员1',value:9},
-        {label: '人员2',value:8},
-        {label: '人员3',value:7},
-        {label:'部门2',value:17,children:[{label:'部门2-1',value:1.1},{label:'人员1',value:66 }]},
-
-      ],
       selectedOption: '',
-      params: {},
       insData: [], //  所属机构数据
-      formData: [
+      options: [
         { title: "仓库名称", type: "input", prop: "nameX", value: "" },
         {
           title: "所属机构",
@@ -69,14 +37,11 @@ export default {
             // multiple: true, // 多选
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
-        }
-      ],
-      formData2: [
-        // { title: "仓库管理员", type: "select", prop: "adminId", options: [] },
+        },
         {
-          title: "仓库管理员",
+          title: "所属部门",
           type: "cascader",
-          prop: "adminId",
+          prop: "departmentId",
           value: "",
           options: [],
           setProps: {
@@ -87,9 +52,22 @@ export default {
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
         },
+        {title:'仓库类型',type:'select',prop:'typeX',value:'',disabled:true,options:[
+          {label:'中彩仓库',value:1},
+          {label:'省中心仓库',value:2},
+          {label:'地市仓库',value:3}
+        ]},
+        {
+          title: "仓库管理员",
+          type: "select",
+          prop: "adminId",
+          value: "",
+          options: [],
+        },
         { title: "备注", type: "textarea", prop: "remark", value: "" }
       ],
-      rules2: {
+      formData: [],
+      rules: {
         nameX: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
@@ -103,18 +81,48 @@ export default {
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       },
-      typeX: "",      //仓库类型
-      typeName: "",
-      param: "",
-      param2: "",
+      departmentData: [],
+      form: "",
+      departmentArray: [],
     };
   },
   components: {},
   created() {
+    let form = {
+      nameX:'',
+      organId: '',
+      departmentId: '',
+      adminId:'',
+      typeX:'',
+      remark:'',
+    }
+    this.formData = this.$formMethods.toggle(this.options, form) // 切换菜单
     this.getInsData();
-    // this.getAdminList()
   },
   methods: {
+    changeForm(val) {
+      let res = this.$formMethods.get(val)
+      console.log("派发出来的参数", res);
+      this.form = res;
+      if (res.organId) {
+        this.getAdminList(res.organId);
+        let insArray = this.$formMethods.getInsArray(res.organId, "id", this.insData, "type");
+        this.$formMethods.set(val, 'typeX', 'value', insArray[0]+1)
+      }
+      if (res.departmentId) {
+        // debugger 
+        const data = JSON.parse(JSON.stringify(this.departmentData))
+        this.getInsArray(res.departmentId, 'id', data, "list");
+        let array = []
+        this.departmentArray.forEach(item => {
+          let obj = {}
+          obj.label = item.userName;
+          obj.value = item.userId;
+          array.push(obj)
+        });
+        this.$formMethods.set(this.options, 'adminId', 'options', array)
+      }
+    },
     // 获取所属机构列表
     getInsData() {
       const data = {};
@@ -122,7 +130,8 @@ export default {
         let res = await this.$api.getInsList({ data });
         console.log(res)
         if (res && res.code == 0) {
-          this.$set(this.formData[1], "options", res.data);
+          // this.$set(this.formData[1], "options", res.data);
+          this.$formMethods.set(this.options, 'organId', 'options', res.data);
           this.insData = res.data;
         } else {
           self.$message.warning(res.msg)
@@ -134,39 +143,21 @@ export default {
       (async data => {
         let res = await this.$api.getAdminList({ data });
         console.log('部门与管理员',res)
-        let ins = res.data
-          let array = [];
-          // res.data.forEach(item => {
-          //   let obj = {};
-          //   obj.label = item.userName;
-          //   obj.value = item.userId;
-          //   array.push(obj);
-          // });
-          let arr = []
-          for(let i = 0 ; i< ins.length ; i++){
-            let person = ins[i].list
-            for(let j = 0; j<person.length;j++) {
-              let obj = {}
-              obj.label = person[j].userName
-              obj.value = person[j].userId
-              arr.push(obj)
-            }
-          }
-          console.log(arr)
-          this.$set(this.formData2[0], "options", res.data);
+        this.departmentData = res.data;
+        this.$formMethods.set(this.options, "departmentId", 'options', res.data);
       })(data);
     },
-    handleChange(){
-
-    },
-
+    // 提交
     submit() {
-      let data = {
-        typeX: this.typeX
-      };
-      Object.assign(data, this.param, this.param2);
-      this.createWare(data);
+      this.$refs.baseForm.validate(val=>{
+        if(val) {
+          delete this.form.departmentId;
+          let data = this.form;
+          this.createWare(data);
+        }
+      })
     },
+    // 创建仓库
     createWare(data) {
       (async data => {
         let res = await this.$api.createWare({ data });
@@ -179,28 +170,8 @@ export default {
     cancel() {
       this.$router.back();
     },
-    changeForm2(val) {
-      this.param2 = val;
-    },
-    changeForm(val) {
-      let type = {
-        0: "中彩仓库",
-        1: "省中心仓库",
-        2: "地市仓库"
-      };
-      this.param = val;
-      console.log("派发出来的参数", this.params);
-      if (typeof val.organId == "number") {
-        this.getAdminList(val.organId);
-      }
-      let array = [];
-      let typeValue = "";
-      let insArray = this.getInsArray(val.organId, "id", this.insData, "type");
-      console.log("insArray", insArray);
-      this.typeX = typeValue;
-      this.typeName = insArray && type[insArray[0]];
-      // console.log(this.typeName);
-    },
+
+    
     //数据级联
     getInsArray(id, key, data, keyBack) {
       // 传入id和key是一样胡  keyBack返回key
@@ -208,13 +179,15 @@ export default {
       for (var i in data) {
         if (data[i][key] == id) {
           // return [data[i][key]]; //用于传id 返回id数组
-          return [data[i][keyBack]]; //用于传id 返回code数组
+          this.departmentArray = data[i][keyBack]
+          return false; //用于传id 返回code数组
         }
         if (data[i].children) {
-          let ro = self.getInsArray(id, key, data[i].children, keyBack);
-          if (ro !== undefined) {
-            return ro.concat(data[i][keyBack]);
-          }
+          self.getInsArray(id, key, data[i].children, keyBack);
+          // let ro = self.getInsArray(id, key, data[i].children, keyBack);
+          // if (ro !== undefined) {
+          //   return ro.concat(data[i][keyBack]);
+          // }
         }
       }
     }

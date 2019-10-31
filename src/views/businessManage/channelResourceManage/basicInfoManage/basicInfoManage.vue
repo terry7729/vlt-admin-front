@@ -21,7 +21,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button @click="typeCheck(scope.row.id,scope.row.goodsType)" type="primary" v-prevent="2000" size="mini">查看</el-button>
-              <el-button @click="typeAmend(scope.row)" type="primary" v-prevent="2000" size="mini">修改</el-button>
+              <el-button @click="typeAmend(scope.row.id,scope.row.goodsType)" type="primary" v-prevent="2000" size="mini">修改</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -186,10 +186,13 @@ methods: {
     this.$router.push({name:'addEquipment'})
   },
   //修改
-  typeAmend(row){
+  typeAmend(id,goodsType){
     this.$router.push({
       path:'modification',
-      query:{...row}
+      query:{
+        id,
+        goodsType
+      }
     })
   },
   //设备查看

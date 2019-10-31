@@ -169,8 +169,7 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
-      id: self.$route.query.id,          //页面id
-      imgUrlList: self.$route.query.id,
+      id: self.$route.query.id,          //跳转页面id
       imgUrl:[],
       imageUrl: '',
       params: {},
@@ -182,7 +181,7 @@ export default {
       ],
       goodsType: Number(self.$route.query.goodsType),
       equipmentData: [
-        {title: '设备类型',type: 'select',prop:'deviceType', disabled: false, value: self.$route.query.deviceType, 
+        {title: '设备类型',type: 'select',prop:'deviceType', disabled: false, value: '', 
         options: 
         [
           {label: '终端机', value: 1},
@@ -280,7 +279,7 @@ export default {
     };
   },
   components: {},
- async created(data) {
+async created(data) {
     // 编辑回填
     let id = this.$route.query.id
     let reslt =await this.$api.getDetail({data:id})
@@ -300,8 +299,6 @@ export default {
         }
       })
     })
-
-
   },
   methods: {
     submit() {
@@ -367,14 +364,11 @@ export default {
       })
       console.log('uploadFile', res);
       this.imgUrl.push(res.data.filePath);
-      console.log(this.imgId)
     },
 
     handleRemove(file) {
       console.log(file);
     },
-
-
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;

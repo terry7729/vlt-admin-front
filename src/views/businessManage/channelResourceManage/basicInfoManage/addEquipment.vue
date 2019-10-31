@@ -294,15 +294,9 @@ export default {
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ]
       },
-<<<<<<< HEAD
       imageUrl: '',
       imgUrl:[],
       params: {},
-=======
-      imgId: [],
-      imageUrl: "",
-      params: {}
->>>>>>> adb02bfef4cddc65d01d2ad167ad2aa87b4d14ab
     };
   },
   created() {},
@@ -317,30 +311,20 @@ export default {
         onUploadProgress(evt) {
           console.log("上传进度事件:", evt);
         }
-<<<<<<< HEAD
       })
       console.log('uploadFile', res);
       this.imgUrl.push(res.data.filePath);
       console.log(this.imgUrl)
-=======
-      });
-      console.log("uploadFile", res);
-      this.imgId.push(res.data.fileId);
-      let imgUrl = res.data.filePath;
-      console.log(this.imgId);
->>>>>>> adb02bfef4cddc65d01d2ad167ad2aa87b4d14ab
     },
     changeOption() {
       console.log(this.goodsType);
     },
     submit(formName) {
-<<<<<<< HEAD
       const self = this
       this.$refs['baseForm1'].validate(async valid=>{
         if(valid === 'true') {
           let data = self.params;
           if(data.goodsType==3||data.goodsType==4) {
-            // debugger
             data.files = self.imgUrl.join(',');
           };
           let res = await self.$api.typeCreate({data})
@@ -351,22 +335,6 @@ export default {
               type:'success'
             })
             self.$router.push({path: 'basicInfoManage'})
-=======
-      this.$refs["baseForm1"].validate(async valid => {
-        if (valid === "true") {
-          let data = this.params;
-          if (data.goodsType == 3 || data.goodsType == 4) {
-            data.imgInfo = this.imgId.join(",");
-          }
-          let res = await this.$api.typeCreate({ data });
-          console.log(res);
-          if (res || res.code == 0) {
-            this.$message({
-              message: "新增成功",
-              type: "success"
-            });
-            this.$router.push({ path: "basicInfoManage" });
->>>>>>> adb02bfef4cddc65d01d2ad167ad2aa87b4d14ab
           }
         }
       });
