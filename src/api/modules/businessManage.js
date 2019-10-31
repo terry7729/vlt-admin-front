@@ -157,10 +157,14 @@ export default {
   
   // 查询变更计划列表
   getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 查询上市计划列表-下拉框
+  getAllPlanList: (options = {}) => ajax.post('/gameListPlan/queryAllGameListPlan', options),
   // 变更计划详情
   getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
   // 编辑变更计划
   editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+  // 新增变更计划
+  createChangePlan: (options = {}) => ajax.post('/gameChangePlan/insertGameChangePlan', options),
 
 
   // 新建渠道

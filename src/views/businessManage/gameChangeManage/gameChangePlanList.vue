@@ -5,8 +5,7 @@
       @search="search"
       :options="searchOptions"
       :total="tableData.total"
-      labelWidth="86px"
-    >
+      labelWidth="86px">
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table
@@ -15,10 +14,9 @@
       :data="tableData.records"
       tooltip-effect="dark"
       style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+      @selection-change="handleSelectionChange">
       <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="changePlanCode" label="变更计划编号"></el-table-column>
+      <el-table-column prop="id" label="变更计划ID"></el-table-column>
       <el-table-column prop="changePlanName" label="变更计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
       <el-table-column prop="gameSaleArea" label="销售区域"></el-table-column>
@@ -35,7 +33,7 @@
             v-prevent="2000"
             @click.native="detail(scope.row)"
           >查看</el-button>
-          <el-button size="mini" v-prevent="2000" @click.native="edit(scope.row.id)">编辑</el-button>
+          <el-button size="mini" v-prevent="2000" @click.native="edit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -147,10 +145,10 @@ export default {
     selectBtn() {
       this.$router.push({ path: "./gameChangePlanCreate" });
     },
-    edit(id) {
+    edit(val) {
       this.$router.push({
         path: "./gameChangePlanEdit",
-        query: { id }
+        query: {id: val.id,gameId: val.gameId,listPlanId: val.listPlanId}
       });
     },
     search(form) {

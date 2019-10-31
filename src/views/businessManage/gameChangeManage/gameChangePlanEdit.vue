@@ -1,19 +1,39 @@
 <template>
  <div class="vlt-card">
     <el-tabs v-model="activeName"  @tab-click="handleClick">
-      <el-tab-pane label="基础信息" name="1">
-        <base-info @next="next"></base-info>
+      <el-tab-pane label="基础信息" name="0">
+        <base-info @submit="submit" :planData="planData"></base-info>
       </el-tab-pane>
-      <el-tab-pane label="游戏配置" name="2">
-        <game-set @next="next" @prev="prev"></game-set>
+      <el-tab-pane label="游戏配置" name="1">
+        <game-set @submit="submit" :planData="planData"></game-set>
       </el-tab-pane>
-      <el-tab-pane label="上传附件" name="4">
+      <el-tab-pane label="上传附件" name="2">
         <div class="vlt-edit-single appendix">
           <div class="vlt-edit-wrap">
-            <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form>
+            <el-form label-position="right" 
+              label-width="90px" 
+              ref="form"
+              class="soft-form">
+              <el-form-item label="上传附件">
+                <el-upload
+                  class="upload-demo"
+                  drag
+                  multiple
+                  action=""
+                  :limit="10"
+                  :show-file-list="true"
+                  :on-remove="handleRemove"
+                  :http-request="uploadFileOther">
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                  <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                </el-upload>
+              </el-form-item>
+            </el-form>
+            <!-- <base-form :formData="appendixData" ref="baseForm" :rules="rules" direction="right" @change="changeForm"></base-form> -->
             <el-row class="vlt-edit-btn">
               <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
-              <el-button size="medium" @click="prev" class="cancel">取 消</el-button>
+              <el-button size="medium" @click="cancel" class="cancel">取 消</el-button>
             </el-row>
           </div>
         </div>
@@ -38,7 +58,7 @@ export default {
     appendixData: [
       {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
     ],
-    activeName: '1',
+    activeName: 0,
     rules: {
         name: [
           { required: true, validator: rules.checkEmpty, trigger: 'blur' }
@@ -51,59 +71,100 @@ export default {
         ]
       },
     params: {},
+    planData: {},
   }
   },
   created() {
-    
+    this.getChangePlanDetail()
   },
   methods: {
-    getStoreList(row) {
+    editChangePlan(data) {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.editChangePlan({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          self.$message.success('保存成功')
+          //
 				} else {
           // self.$message.warning(res.msg)
         }
       })(data)
     },
-    // 新增提示框
-        // openConfirm() {
-        //   this.$confirm(`确认新增渠道 "${this.form.channelName}"，新增渠道后请设置游戏信息！`, '提示', {
-        //     confirmButtonText: '确定',
-        //     cancelButtonText: '取消',
-        //     type: 'warning'
-        //   }).then(() => {
-        //     this.save();
-        //   }).catch(() => {
-        //     // 取消         
-        // });
-        next(){
-          this.active ++
-        },
-        back(){
-          this.active --
-        },
-        changeForm(val) {
-          Object.assign(this.params, val)
-          console.log('派发出来的参数', this.params)
-        },
-        //保存
-        submit(formName){
-          const self = this;
-          this.$refs.baseForm1.validate((val)=>{
-            console.log(val)
-          });
-        },
-        cancel() {
-        console.log('取消')
-      },
+    // 获取计划详情
+    getChangePlanDetail() {
+      const self = this;
+      // const data = {
+      //   id: this.$route.query.id,
+      //   gameId: this.$route.query.gameId,
+      //   listPlanId: this.$route.query.listPlanId
+      // };
+      const data = this.$route.query;
+      (async (data)=>{
+        let res = await self.$api.getChangePlanDetail({data})
+				if(res && res.code == 0) {
+          // self.$message.success('注销成功')
+          this.planData = res.data;
+          // this.insId = res.data.gameListPlanVo.gameSaleArea.split(',');
+          // self.getInsData();
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    // 附件上传
+    async uploadFileOther(files) {
+      let formData = new FormData();
+      console.log('files', files.file.size/1024)
+      // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
+      formData.append('file', files.file);
+      // formData.append('refId', 1);
+      // formData.append('flag', true);
+      // formData.append('busType', 9);
+      const res = await this.$api.testUpload({
+        data: formData,
+        onUploadProgress(evt) {
+          console.log('上传进度事件:', evt)
+        }
+      })
+      console.log('uploadFile', res);
+      this.gameOtherId = res.data.fileId;
+    },
+    next(){
+      this.active ++
+    },
+    back(){
+      this.active --
+    },
+    cancel() {
+
+    },
+    handleClick() {
+
+    },
+    handleRemove() {
+
+    },
+    changeForm(val) {
+      Object.assign(this.params, val)
+      console.log('派发出来的参数', this.params)
+    },
+    //保存
+    submit(param){
+      const self = this;
+      console.log('部分数据', param)
+      console.log('总共的参数', this.planData)
+      if(param.gameChangePlanVo) {
+        Object.assign(this.planData.gameChangePlanVo, param.gameChangePlanVo)
+      }else{
+        Object.assign(this.planData.gameRuleVo, param.gameRuleVo)
+        Object.assign(this.planData.gameBettingRuleVo, param.gameBettingRuleVo)
+        Object.assign(this.planData.gameFundRuleVo, param.gameFundRuleVo)
+        Object.assign(this.planData.gameRiskRuleVo, param.gameRiskRuleVo)
+        // Object.assign(this.planData.publishParams, param.publishParams)
+        Object.assign(this.planData.gameExchangeSetVoList, param.gameExchangeSetVoList)
+      }
+      self.editChangePlan(this.planData)
+    },
   },
 }
 </script>
