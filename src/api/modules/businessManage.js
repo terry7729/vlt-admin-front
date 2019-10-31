@@ -42,7 +42,7 @@ export default {
   // 型号管理状态修改
   ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
   // 型号管理新增
-  modelCreate: (options = {}) => ajax.post('/goodsModel/create', options),
+  modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
   //获取型号管理详情
   modelDetail: (options = {}) => ajax.post('/goodsModel/details', options),
   //型号管理修改
@@ -108,6 +108,8 @@ export default {
   editDevelopPlan: (options = {}) => ajax.post('/developPlan/updateDevelopPlanInfo', options),
   // 查询年度开展计划列表
   getDevelopPlanList: (options = {}) => ajax.post('/developPlan/queryDevelopPlanList', options),
+  // 查询当前用户的机构信息
+  getUserInsInfoList: (options = {}) => ajax.post('/developPlan/queryUserInsInfoList', options),
   // 查询年度开展计划详情
   getDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划汇总省级列表

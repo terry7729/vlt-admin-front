@@ -23,9 +23,9 @@
         <el-table-column prop="userName" label="姓名"></el-table-column>
         <el-table-column prop="mobile" label="手机号码"></el-table-column>
          <el-table-column prop="email" label="邮箱"></el-table-column>
-        <el-table-column prop="latelyFrequency" label="最近登陆次数" width="100"></el-table-column>
-        <el-table-column prop="latelyTime" label="最近登录时间" width="100"></el-table-column>
-        <el-table-column prop="latelyIP" label="最近登陆IP" width="90"></el-table-column>
+        <el-table-column prop="loginCount" label="最近登陆次数" width="100"></el-table-column>
+        <el-table-column prop="loginTime" label="最近登录时间" width="100"></el-table-column>
+        <el-table-column prop="loginIp" label="最近登陆IP" width="90"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="用户状态" align="center" width="200">
           <template slot-scope="scope">
@@ -78,15 +78,15 @@
     <div class="dialog">
       <el-dialog title="重置密码" :visible.sync="dialogFormVisible" width="500px"  custom-class="userDialog">
         <el-form :model="restpaswordfrom">
-          <el-form-item label="请选择你的操作" label-width="120px">
+          <el-form-item label="请选择你的操作" label-width="130px">
             <el-radio-group v-model="restpaswordfrom.pwdStatus">
               <el-radio :label="1">操作密码</el-radio>
               <el-radio :label="0">登陆密码</el-radio>
             </el-radio-group>
           </el-form-item>
-           <el-form-item :label="restpaswordfrom.radio===0?'请输入操作密码':'请输入登陆密码'" label-width="120px">
+           <!-- <el-form-item label="请输入管理员密码" label-width="130px">
             <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
-          </el-form-item> 
+          </el-form-item>  -->
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -104,7 +104,7 @@ export default {
     return {
       restpaswordfrom: {
         pwdStatus: 0,
-      password:''
+        // password:''
       },
       //测试数据
       total:0,
@@ -218,7 +218,14 @@ async init(val){
      
          let reslt = await  this.$api.userPage({data})
           console.log(reslt)
-          this.userList = reslt.data.records
+         let arr =  reslt.data.records.map(item=>{
+             let userLoginLogVo = item.userLoginLogVo
+              return {...userLoginLogVo,
+                      ...item
+                      }
+           })
+           console.log(arr)
+          this.userList = arr
           this.page = reslt.data.current
           this.total = reslt.data.total;
           console.log('我是默认',reslt)
@@ -286,21 +293,32 @@ async init(val){
         this.restParam = val;
         console.log(val)
       },
-     async dialogFormVisibleEnter() {  
+      dialogFormVisibleEnter() {  
       
           //操作密码重置
-          console.log(this.restpaswordfrom)
-          let data = {
-            ...this.restpaswordfrom,
-          }
-          data.userId = this.restParam.userId
-    
-          let reslt =await this.$api.restPassWord({data})
+          this.$alert('您确认要重置密码?', '标题名称', {
+          confirmButtonText: '确定',
+          callback:async action => {
+               this.dialogFormVisible = false;
+                 console.log(this.restpaswordfrom)
+                  let data = {
+                    ...this.restpaswordfrom,
+                  }
+                  data.userId = this.restParam.userId
+            
+                  let reslt =await this.$api.restPassWord({data})
 
-          console.log(reslt)
+                  console.log(reslt)
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+        
 
       
-        this.dialogFormVisible = false;
+       
       }
   },
    watch: {

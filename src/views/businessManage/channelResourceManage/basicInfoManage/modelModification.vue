@@ -159,86 +159,47 @@
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
 export default {
-  name: "modelModification",
-  data() {
-    return {
-      type: 0,
-      fitting: "",
-      //selectValue: $route.query.modelType,
-      modelAvailablesList: [
-        {
-          //可用机型选择框
-          id: 0,
-          deviceId: "",
-          modelId: "",
-          nameOptions: [{ label: "", value: "" }, { label: "", value: "" }],
-          modelOptions: {
-            options: [{ label: "", value: "" }, { label: "", value: "" }]
-          }
-        }
-      ],
-      falg: false,
-      typeList: "",
-      selectValue: this.$route.query.modelType,
-      value: "",
-      options: [{ value: 1, label: "设备" }, { value: 2, label: "配件" }],
-      //可用机型选择框
-      // nameOptions: [{ label: "", value: "1" }, { label: "", value: "2" }],
-      // modelOptions: [{ label: "", value: "3" }, { label: "", value: "4" }],
-      params: "",
-      form1: {},
-      form2: {},
-      formParms: {
-        nameOption: "",
-        typeOption: 1
-      },
-      dialogImageUrl: "",
-      dialogVisible: false,
-      typeOption: [
-        { label: "终端机", value: 1 },
-        { label: "柜员机", value: 2 },
-        { label: "其他", value: 3 }
-      ],
-      nameOption: [],
-
-      equipmentData: [
-        { title: "设备型号", type: "input", prop: "deviceModel", value: "" },
-        { title: "设备单价", type: "input", prop: "unitPrice", value: "" },
-        {
-          title: "供应商",
-          type: "select",
-          prop: "providerId",
-          value: "",
-          options: [{ label: "1", value: "0" }, { label: "2", value: "1" }]
-        },
-        { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
-        { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
-        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: "" },
-        { title: "备注", type: "textarea", prop: "remark", value: "" }
-      ],
-      mountingsData: [
-        {
-          title: "配件名称",
-          type: "select",
-          prop: "fittingsName",
-          value: "",
-          options: []
-        },
-        { title: "配件型号", type: "input", prop: "deviceModel", value: "" },
-        { title: "配件单价", type: "input", prop: "unitPrice", value: "" },
-        {
-          title: "供应商",
-          type: "select",
-          prop: "providerId",
-          value: "",
-          options: [{ label: "1", value: "0" }, { label: "2", value: "1" }]
-        },
-        { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
-        { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
-        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: "" },
-        { title: "备注", type: "textarea", prop: "remark", value: "" }
-      ],
-      rules2: {
+name: "modelModification",
+data() {
+return {
+  selectValue:1,
+  value:'',
+  options:[
+    {value:1,label:'设备'},
+    {value:2,label:'配件'}
+  ],
+   //可用机型选择框
+  nameOptions:[
+    {label:'',value:'1'},
+    {label:'',value:'2'},
+  ],
+  modelOptions:[
+    {label:'',value:'3'},
+    {label:'',value:'4'},
+  ],
+  params:'',
+  form1:{},
+  form2:{},
+  dialogImageUrl: '',
+  dialogVisible: false,
+  equipmentData:[
+    // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'设备名称',type:'select',prop:'goodsName',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'设备型号',type:'input',prop:'deviceModel', value:''},
+    {title:'设备单价',type:'input',prop:'unitPrice',value:''},
+    {title:'供应商',type:'select',prop:'providerId',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'预警上限',type:'input',prop:'upperLimit', value:''},
+    {title:'预警下限',type:'input',prop:'lowerLimit', value:''},
+    {title:'厂家信息',type:'input',prop:'manufactorInfo', value:''},
+    {title:'备注',type:'textarea',prop:'remark',value:''},
+  ],
+  mountingsData:[
+    {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
+    {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
+    {title:'配件单价',type:'input',prop:'fittingsPrice',value:''},
+    {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
+  ],
+  rules2: {
         equipmentName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
@@ -280,28 +241,29 @@ export default {
   async created() {
     //获取详情数据 回显
     let id = this.$route.query.id;
-    // console.log(id);
     let result = await this.$api.modelDetail({ data: id });
     this.files = result.data.goodsModelVo.files;
 
     this.status = result.data.goodsModelVo.status;
 
     this.formParms.nameOption = result.data.goodsModelVo.id;
-    //let obj = Object.keys(result.data.goodsModelVo);
-    //let info = this.equipmentData;
+
     this.equipmentData.forEach(item => {
       item.value = result.data.goodsModelVo[item.prop];
     });
+
     if (this.selectValue === "配件") {
       let id = this.$route.query.id;
       let result = await this.$api.modelDetail({ data: id });
       this.goodsId = result.data.goodsModelVo.goodsId;
+
       result.data.goodsModelVo.modelAvailablesList.forEach(item => {
         this.initArr.push({
           id: item.id,
           modelId: item.modelId
         });
       });
+      console.log(result.data.goodsModelVo.modelAvailablesList);
       console.log("this.initArr", this.initArr);
       this.mountingsData.forEach(item => {
         item.value = result.data.goodsModelVo[item.prop];
@@ -440,7 +402,7 @@ export default {
       this.type = val;
     },
     change(val) {
-      console.log(val);
+      // console.log(val);
       if (val === 3) {
         this.falg = true;
         this.formParms.nameOption = "";
@@ -456,7 +418,7 @@ export default {
       }
     },
     changeForm(val) {
-      console.log(val);
+      // console.log(val);
       this.list = val;
       this.fitting = val;
       // if (val.goodsTypes === 0) {

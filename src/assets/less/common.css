@@ -343,6 +343,12 @@
 .tabs-content .el-switch .el-switch__label {
   width: 50px !important;
 }
+.active-plan .el-form-item__content .el-textarea {
+  width: 400px;
+}
+.active-plan .el-form-item__content .el-input {
+  width: 400px;
+}
 .create-active .step-bar .el-step__title {
   font-size: 14px;
   font-weight: 400;
