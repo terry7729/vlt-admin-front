@@ -15,7 +15,6 @@
         :data="tableData"
         border
         ref="multipleTable"
-        style="width: 30%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
         @selection-change="selectChange"
@@ -26,7 +25,7 @@
     </div>
     <div class="vlt-card showbox" v-show="showeditBox">
       <el-form label-position="top" label-width="80px" ref="form" :model="form">
-        <el-form-item class="lalala">
+        <el-form-item>
           <div v-for="item in type" class="editfrom">
             <el-form-item>
               <span slot="label">{{item.type}}</span>
@@ -71,211 +70,224 @@
             </p>
           </el-form-item>
         </div>
-        <el-form-item>
-          <div class="btn">
-            <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
-            <el-button>取消</el-button>
-          </div>
-        </el-form-item>
+        <el-form-item></el-form-item>
       </el-form>
-    </div>
-    <div>
-      <el-table
-        :data="tableData1"
-        border
-        style="width: 80%"
-        :header-cell-style="{background:'rgba(240,240,240,.5)'}"
-        :cell-style="{align:'center'}"
-      >
-        <el-table-column align="center" prop="warningLevel" label="告警等级" min-width="5%"></el-table-column>
-        <el-table-column align="center" prop="type" label="通知方式" min-width="20%">
-          <template slot-scope="scope">
-            <div v-if="scope.row.warningLevel==='普通'">
-              <el-checkbox-group v-model="checkList" @change="changesOrdinary" class="checkInfor">
-                <el-checkbox label="站内" border size="medium" v-model="form.informWayOrdinary"></el-checkbox>
+      <div>
+        <el-table
+          :data="tableData1"
+          border
+          :header-cell-style="{background:'rgba(240,240,240,.5)'}"
+          :cell-style="{align:'center'}"
+        >
+          <el-table-column align="center" prop="warningLevel" label="告警等级" min-width="5%"></el-table-column>
+          <el-table-column align="center" prop="type" label="通知方式" min-width="20%">
+            <template slot-scope="scope">
+              <div v-if="scope.row.warningLevel==='普通'">
+                <el-checkbox-group v-model="checkList" @change="changesOrdinary" class="checkInfor">
+                  <el-checkbox label="站内" border size="medium" v-model="form.informWayOrdinary"></el-checkbox>
 
-                <el-checkbox label="邮件" border size="medium"></el-checkbox>
-                <el-checkbox label="短信" border size="medium"></el-checkbox>
-              </el-checkbox-group>
-            </div>
-            <div v-if="scope.row.warningLevel==='严重'">
-              <el-checkbox-group class="checkInfor" v-model="checkList1" @change="changesSerious">
-                <el-checkbox label="站内" border size="medium"></el-checkbox>
+                  <el-checkbox label="邮件" border size="medium"></el-checkbox>
+                  <el-checkbox label="短信" border size="medium"></el-checkbox>
+                </el-checkbox-group>
+              </div>
+              <div v-if="scope.row.warningLevel==='严重'">
+                <el-checkbox-group class="checkInfor" v-model="checkList1" @change="changesSerious">
+                  <el-checkbox label="站内" border size="medium"></el-checkbox>
 
-                <el-checkbox label="邮件" border size="medium"></el-checkbox>
-                <el-checkbox label="短信" border size="medium"></el-checkbox>
-              </el-checkbox-group>
-            </div>
-            <div v-if="scope.row.warningLevel==='重大'">
-              <el-checkbox-group class="checkInfor" v-model="checkList2" @change="changesMajor">
-                <el-checkbox label="站内" border size="medium"></el-checkbox>
+                  <el-checkbox label="邮件" border size="medium"></el-checkbox>
+                  <el-checkbox label="短信" border size="medium"></el-checkbox>
+                </el-checkbox-group>
+              </div>
+              <div v-if="scope.row.warningLevel==='重大'">
+                <el-checkbox-group class="checkInfor" v-model="checkList2" @change="changesMajor">
+                  <el-checkbox label="站内" border size="medium"></el-checkbox>
 
-                <el-checkbox label="邮件" border size="medium"></el-checkbox>
-                <el-checkbox label="短信" border size="medium"></el-checkbox>
-              </el-checkbox-group>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" prop="type" label="通知对象" min-width="45%">
-          <template slot-scope="scope">
-            <div v-if="scope.row.warningLevel==='普通'" class="checkInfor">
-              <el-checkbox size="medium" v-model="checked1" @change="cityPropleOrdinary">市</el-checkbox>
-              <el-select
+                  <el-checkbox label="邮件" border size="medium"></el-checkbox>
+                  <el-checkbox label="短信" border size="medium"></el-checkbox>
+                </el-checkbox-group>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="type" label="通知对象" min-width="45%">
+            <template slot-scope="scope">
+              <div v-if="scope.row.warningLevel==='普通'" class="checkInfor">
+                <el-checkbox size="medium" v-model="checked1" @change="cityPropleOrdinary">市</el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyCityObjOfOrdinary1"
+                  v-model="informPeopleCityOrdinary"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options3"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-checkbox
+                  label="省"
+                  v-model="checked2"
+                  @change="proPropleOrdinary"
+                  size="medium"
+                >省</el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyProObjOfOrdinary1"
+                  v-model="informPeopleProOrdinary"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options4"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-checkbox
+                  label="中央"
+                  @change="centerPropleOrdinary"
+                  v-model="checked3"
+                  size="medium"
+                >中央</el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyCenterObjOfOrdinary1"
+                  v-model="informPeopleCenterOrdinary"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options5"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
+              <div v-if="scope.row.warningLevel==='严重'" class="checkInfor">
+                <el-checkbox
+                  label="市"
+                  v-model="checked4"
+                  @change="cityPropleSerious"
+                  size="medium"
+                >市</el-checkbox>
+                <el-select
+                  size="mini"
+                  v-model="informPeopleCitySerious"
+                  :disabled="optionsNotifyCityObjOfSerious"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options6"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-checkbox label="省" size="medium" v-model="checked5" @change="proPropleSerious"></el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyProObjOfSerious"
+                  v-model="informPeopleProSerious"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options7"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-checkbox
+                  label="中央"
+                  size="medium"
+                  v-model="checked6"
+                  @change="centerPropleSerious"
+                ></el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyCenterObjOfSerious"
+                  v-model="informPeopleCenterSerious"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options8"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
+              <div v-if="scope.row.warningLevel==='重大'" class="checkInfor">
+                <el-checkbox label="市" v-model="checked7" @change="cityPropleMajor" size="medium"></el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyCityObjOfMajor"
+                  v-model="informPeopleCityMajor"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options9"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-checkbox label="省" v-model="checked8" @change="porPropleMajor" size="medium"></el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyProObjOfMajor"
+                  v-model="informPeopleProMajor"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options10"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+                <el-checkbox
+                  label="中央"
+                  v-model="checked9"
+                  @change="centerPropleMajor"
+                  size="medium"
+                ></el-checkbox>
+                <el-select
+                  size="mini"
+                  :disabled="optionsNotifyCenterObjOfMajor"
+                  v-model="informPeopleCenterMajor"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in options11"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="warningPl" label="告警频率" min-width="10%">
+            <template slot-scope="scope">
+              <el-input-number
+                v-model="scope.row.warningPl"
+                controls-position="right"
+                @change="handleChange"
+                :min="1"
+                :max="100"
+                :step="10"
                 size="mini"
-                :disabled="optionsNotifyCityObjOfOrdinary1"
-                v-model="informPeopleCityOrdinary"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options3"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-checkbox label="省" v-model="checked2" @change="proPropleOrdinary" size="medium">省</el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyProObjOfOrdinary1"
-                v-model="informPeopleProOrdinary"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options4"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-checkbox
-                label="中央"
-                @change="centerPropleOrdinary"
-                v-model="checked3"
-                size="medium"
-              >中央</el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyCenterObjOfOrdinary1"
-                v-model="informPeopleCenterOrdinary"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options5"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div v-if="scope.row.warningLevel==='严重'" class="checkInfor">
-              <el-checkbox label="市" v-model="checked4" @change="cityPropleSerious" size="medium">市</el-checkbox>
-              <el-select
-                size="mini"
-                v-model="informPeopleCitySerious"
-                :disabled="optionsNotifyCityObjOfSerious"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options6"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-checkbox label="省" size="medium" v-model="checked5" @change="proPropleSerious"></el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyProObjOfSerious"
-                v-model="informPeopleProSerious"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options7"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-checkbox
-                label="中央"
-                size="medium"
-                v-model="checked6"
-                @change="centerPropleSerious"
-              ></el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyCenterObjOfSerious"
-                v-model="informPeopleCenterSerious"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options8"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-            <div v-if="scope.row.warningLevel==='重大'" class="checkInfor">
-              <el-checkbox label="市" v-model="checked7" @change="cityPropleMajor" size="medium"></el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyCityObjOfMajor"
-                v-model="informPeopleCityMajor"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options9"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-checkbox label="省" v-model="checked8" @change="porPropleMajor" size="medium"></el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyProObjOfMajor"
-                v-model="informPeopleProMajor"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options10"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-              <el-checkbox label="中央" v-model="checked9" @change="centerPropleMajor" size="medium"></el-checkbox>
-              <el-select
-                size="mini"
-                :disabled="optionsNotifyCenterObjOfMajor"
-                v-model="informPeopleCenterMajor"
-                placeholder="请选择"
-              >
-                <el-option
-                  v-for="item in options11"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" prop="warningPl" label="告警频率" min-width="10%">
-          <template slot-scope="scope">
-            <el-input-number
-              v-model="scope.row.warningPl"
-              controls-position="right"
-              @change="handleChange"
-              :min="1"
-              :max="100"
-              :step="10"
-              size="mini"
-            ></el-input-number>
-          </template>
-        </el-table-column>
-      </el-table>
+              ></el-input-number>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="btn">
+        <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
+        <el-button>取消</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -531,9 +543,12 @@ export default {
           message: "修改成功",
           type: "success"
         });
-         this.$router.push({name:'pondRiskDetail',query:{
-            id:this.$route.query.id
-        }})
+        this.$router.push({
+          name: "pondRiskDetail",
+          query: {
+            id: this.$route.query.id
+          }
+        });
       } else {
         this.$message.error("修改失败");
       }

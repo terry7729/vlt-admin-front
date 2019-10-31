@@ -172,6 +172,7 @@ export default {
         let reslt = await this.$api.userEdit({ data });
         console.log("编缉用户信息", reslt);
         if (reslt.code === 0) {
+          this.$router.push({ name: "userList" });
           this.params = {};
         }
       }

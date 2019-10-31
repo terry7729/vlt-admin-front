@@ -70,6 +70,8 @@
           <el-cascader
             size="small"
             v-model="form[formItem.prop]"
+            :value="formItem.value"
+            :props="formItem.setProps"
             :options="formItem.options"
             :placeholder="`请选择${formItem.title}`"
           >
