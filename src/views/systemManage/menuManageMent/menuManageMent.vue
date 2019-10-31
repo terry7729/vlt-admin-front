@@ -67,7 +67,6 @@
               ref="baseForm"
               :rules="rules"
               direction="right"
-              @change="formChange"
               labelWidth="110px"
             ></base-form>
             <el-row class="vlt-edit-btn">
@@ -349,13 +348,9 @@ export default {
     checkChange() {
       this.setCtrlBtnStatus();
     },
-    formChange(form) {
-
-    },
     menuTypeFormChange(form) {
       this.menuType = form.moduleType;
     },
-    
     // 清空表单数据
     clearForm() {
       this.form.forEach(item => {
@@ -418,10 +413,11 @@ export default {
     },
     // 操作
     operation(val) {
-      this.menuType = val.id
       if (val.id === -1) {
         this.remove();
+        return;
       }
+      this.menuType = val.id
     }
 
   }
