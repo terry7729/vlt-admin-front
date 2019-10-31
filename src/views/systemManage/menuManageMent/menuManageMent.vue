@@ -392,11 +392,16 @@ export default {
         type: "warning"
       })
       .then(async () => {
+        let moduleIdList, nodes;
         if (data) {
+          moduleIdList = [data.id];
+          nodes = [node];
           this.$refs.tree.setChecked(data, true, true);
+        } else {
+          moduleIdList = this.$refs.tree.getCheckedKeys();
+          nodes = this.$refs.tree.getCheckedNodes();
         }
-        const moduleIdList = this.$refs.tree.getCheckedKeys();
-        const nodes = this.$refs.tree.getCheckedNodes();
+        
         let res = await this.$api.DeleteModule({
           message: '删除成功',
           data: {
@@ -407,7 +412,6 @@ export default {
           nodes.forEach(item => {
             this.$refs.tree.remove(item);
           })
-          
         }
       })
     },
@@ -419,7 +423,6 @@ export default {
       }
       this.menuType = val.id
     }
-
   }
 }
 </script>
