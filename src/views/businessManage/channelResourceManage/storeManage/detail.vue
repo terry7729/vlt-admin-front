@@ -15,9 +15,9 @@ export default {
  data() {
  return {
     infoList: [
-      { title: "仓库名称", value: "", prop: "nameX" },
-      { title: "所属机构", value: "", prop: "organName" },
-      { title: "仓库类型", value: "", prop: "typeX" },
+      { title: "仓库名称", value: "", prop: "warName" },
+      { title: "所属机构", value: "", prop: "insName" },
+      { title: "仓库类型", value: "", prop: "warType" },
       { title: "仓库管理员", value: "", prop: "adminName" },
       { title: "备注", value: "", prop: "remark" }
     ]
@@ -49,8 +49,8 @@ export default {
     if(res && res.code == 0){
       this.infoList.forEach(item =>{
         item.value = res.data[item.prop] || '';
-        if (item.prop == 'typeX'){
-          item.value = this.getStoreType(res.data.typeX)
+        if (item.prop == 'warType'){
+          item.value = this.getStoreType(res.data.warType)
         }
       })
     }

@@ -82,25 +82,33 @@ export default {
   add: (options = {}) => ajax.post('/dictData/add/', options),
   //编辑接口
   edit: (options = {}) => ajax.post('/dictData/edit', options),
-  //数据字典启用接口
-  enable: (options = {}) => ajax.post('/dictData/enable/{id}', options),
-  //数据字典禁用接口
-  disable: (options = {}) => ajax.post('/dictData/disable/{id}', options),
+  //编辑通过id获取数据接口
+  findById: (options = {}) => ajax.get('/dictData/findById/{id}', options),
+  // //数据字典启用接口
+  // enable: (options = {}) => ajax.post('/dictData/enable/{id}', options),
+  // //数据字典禁用接口
+  // disable: (options = {}) => ajax.post('/dictData/disable/{id}', options),
+  //状态接口
+  status: (options = {}) => ajax.post('/dictData/status', options),
   //获取全部数据
   getAll: (options = {}) => ajax.post('/dictData/getAll', options),
   //通过keyCode查询
   find: (options = {}) => ajax.get('/dictData/find/{keyCode}', options),
   //数据字典条件搜索
   getByCondition: (options = {}) => ajax.post('/dictData/getByCondition', options),
+  //数据字典导出接口
+  exportDictDataList: (options = {}) => ajax.post('/dictData/exportDictDataList', options),
 
 
   //系统设置
   //系统参数设置
-  config: (options = {}) => ajax.post('/sysConfig/config/set', options),
-  //系统短信参数设置
-  sms: (options = {}) => ajax.post('/sysConfig/sms/set', options),
-  //系统邮件参数设置
-  email: (options = {}) => ajax.post('/sysConfig/email/set', options),
+  configSet: (options = {}) => ajax.post('/sysConfig/config/set', options),
+  //参看参数设置接口
+  configCat: (options = {}) => ajax.post('/sysConfig/config/cat', options),
+  // //系统短信参数设置
+  // sms: (options = {}) => ajax.post('/sysConfig/sms/set', options),
+  // //系统邮件参数设置
+  // email: (options = {}) => ajax.post('/sysConfig/email/set', options),
 
   //假日参数
   //假日分页接口

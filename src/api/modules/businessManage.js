@@ -42,7 +42,7 @@ export default {
   // 型号管理状态修改
   ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
   // 型号管理新增
-  modelCreate: (options = {}) => ajax.post('/goodsModel/create', options),
+  modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
   //获取型号管理详情
   modelDetail: (options = {}) => ajax.post('/goodsModel/details', options),
   //型号管理修改
