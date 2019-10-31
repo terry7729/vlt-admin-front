@@ -248,7 +248,7 @@ export default {
         this.form = this.config[1];
         return;
       }
-      this.currentMenuId = this.menuData[0].id;
+      this.currentMenu = this.menuData[0];
       this.menuType = 2;
       this.form = this.config[2];
     })()
@@ -305,36 +305,38 @@ export default {
           let apiName = 'SaveModule';
           let message = '新增成功'
           if (this.isEdit) {
-            data.moduleId = this.currentMenuId;
+            data.moduleId = this.currentMenu.id;
             apiName = 'UpdateModule';
             message = '编辑成功'
           }
           if (type !== 1) {
-            data.parentId = this.currentMenuId;
+            data.parentId = this.currentMenu.id;
           }
           const res = await this.$api[apiName]({
             message,
             data
           });
           if (res && res.code == 0) {
-            setTimeout(() => {
-              this.getMenuList();
-            }, 1500)
+            // 无请求更新tree
+            if (this.isEdit) {
+              this.$set(this.currentMenu, 'text', data.moduleName);
+            } else {
+              this.$refs.tree.updateKeyChildren(data.parentId, [res.data])
+            }
+            return;
           }
         }
       });
     },
     cancel() {
-      if (this.currentMenuId) {
-        this.getMenuDetail(this.currentMenuId);
+      if (this.currentMenu) {
+        this.getMenuDetail(this.currentMenu.id);
       }
       this.$refs.baseForm.resetForm();
     },
-
     checkChange() {
       this.setCtrlBtnStatus();
     },
-
     formChange(form) {
 
     },
@@ -352,7 +354,7 @@ export default {
     // 新增
     async add(node, data) {
       this.isEdit = false;
-      this.currentMenuId = data.id;
+      this.currentMenu = data;
       this.menuType = data.type;
       switch (data.type) {
         case 1:
@@ -370,11 +372,12 @@ export default {
     async edit(node, data) {
       this.getMenuDetail(data.id);
       this.isEdit = true;
-      this.currentMenuId = data.id;
+      this.currentMenu = data;
       this.menuType = data.type;
       this.$set(this.menuTypeForm[0], 'disabled', true)
     },
     
+    // 移除
     remove(node, data) {
       this.$confirm("此操作将永久删除该节点, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -385,7 +388,8 @@ export default {
         if (data) {
           this.$refs.tree.setChecked(data, true, true);
         }
-        let moduleIdList = this.$refs.tree.getCheckedKeys();
+        const moduleIdList = this.$refs.tree.getCheckedKeys();
+        const nodes = this.$refs.tree.getCheckedNodes();
         let res = await this.$api.DeleteModule({
           message: '删除成功',
           data: {
@@ -393,9 +397,10 @@ export default {
           }
         });
         if (res && res.code == 0) {
-          setTimeout(() => {
-            this.getMenuList();
-          }, 1500)
+          nodes.forEach(item => {
+            this.$refs.tree.remove(item);
+          })
+          
         }
       })
     },
@@ -407,9 +412,7 @@ export default {
       }
     }
 
-  },
-  components: {},
-  
+  }
 }
 </script>
 
