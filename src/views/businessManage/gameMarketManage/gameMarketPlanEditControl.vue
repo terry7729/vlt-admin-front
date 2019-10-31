@@ -95,7 +95,7 @@ export default {
       gameData: [
         {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: 1},{label: '试玩积分',value: 2}]},
         {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
-        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
+        {title: '销售状态', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '开售',value: 1},{label: '停售',value: 2}]},
         {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
         {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
         {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
@@ -155,8 +155,9 @@ export default {
       riskParams: {}, // 风控规则参数
       publishParams: {}, // 信息发布规则参数
       awardSetParams: [], // 奖等设置参数
+      awardSetId: '', // 奖等参数的id
       tableData: [
-        {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
+        {exchangeName:'',exchangeMoney:'',exchangeDesc:'',id:''}
       ],
     }
   },
@@ -185,6 +186,7 @@ export default {
         res&&res.forEach((item)=>{
           // 删除不需要的参数
           delete item.options
+          item.id = this.awardSetId;
           item.exchangeMoney = Number(item.exchangeMoney)
           // 保留你需要的参数
           // let param = (({goodsId, searl, max, min, price, money, remark}) =>({goodsId, searl, max, min, price, money, remark}))(item);
@@ -227,6 +229,7 @@ export default {
       this.riskData.forEach((item)=>{
         // item.value = val.gameRiskRuleVo[item.props]
         this.tableData = val.gameExchangeSetVoList;
+        this.awardSetId = val.gameExchangeSetVoList[0].id || ''
       })
       let array = val.gameBettingRuleVo&&val.gameBettingRuleVo.minAddBets.split(',');
       this.eachBetData = []
@@ -324,7 +327,7 @@ export default {
       this.tableData.splice(index, 1);
     },
     addGoods() {
-      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''};
+      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:'',id:''};
       this.tableData.push(obj)
     },
   },

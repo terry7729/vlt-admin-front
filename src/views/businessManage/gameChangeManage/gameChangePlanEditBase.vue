@@ -48,7 +48,7 @@
         </el-form-item> -->
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="next">提交并保存</el-button>
-          <el-button size="medium" @click="back" class="cancel">取 消</el-button>
+          <el-button size="medium" @click="cancel" class="cancel">取 消</el-button>
         </el-row>
       </el-form>
       </div>
@@ -56,286 +56,26 @@
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 
 export default {
   name: "",
+  props: {
+    planData: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
       baseData: [
-        {title: '变更计划名称', type: 'input',  prop: 'name', value: '', placeholder: '请输入试玩计划名称'},
-        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['start', 'end']},
-        {title: '计划简介', type: 'textarea',  prop: 'desc', value: '', placeholder: '请输入试玩计划简介'},
-        {title: '变更游戏', type: 'select',  prop: 'developersName', value: '', options:[{label: '网易',value: '0'},{label: '腾讯',value: '1'},{label: '盛大',value: '2'}]},
+        {title: '变更计划名称', type: 'input',  prop: 'changePlanName', value: '',},
+        {title: '生效时间', type: 'datetime',  prop: 'gameChangePlanTime', value: '', },
+        {title: '计划简介', type: 'textarea',  prop: 'changePlanDesc', value: '', placeholder: '请输入变更计划简介'},
+        {title: '变更计划', type: 'select',  prop: 'listPlanId', value: '', options:[]},
       ],
       channelData: [
-        {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: [
-            {
-              value: "zhinan",
-              label: "指南",
-              children: [
-                {
-                  value: "shejiyuanze",
-                  label: "设计原则",
-                  children: [
-                    {
-                      value: "yizhi",
-                      label: "一致"
-                    },
-                    {
-                      value: "fankui",
-                      label: "反馈"
-                    },
-                    {
-                      value: "xiaolv",
-                      label: "效率"
-                    },
-                    {
-                      value: "kekong",
-                      label: "可控"
-                    }
-                  ]
-                },
-                {
-                  value: "daohang",
-                  label: "导航",
-                  children: [
-                    {
-                      value: "cexiangdaohang",
-                      label: "侧向导航"
-                    },
-                    {
-                      value: "dingbudaohang",
-                      label: "顶部导航"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "zujian",
-              label: "组件",
-              children: [
-                {
-                  value: "basic",
-                  label: "Basic",
-                  children: [
-                    {
-                      value: "layout",
-                      label: "Layout 布局"
-                    },
-                    {
-                      value: "color",
-                      label: "Color 色彩"
-                    },
-                    {
-                      value: "typography",
-                      label: "Typography 字体"
-                    },
-                    {
-                      value: "icon",
-                      label: "Icon 图标"
-                    },
-                    {
-                      value: "button",
-                      label: "Button 按钮"
-                    }
-                  ]
-                },
-                {
-                  value: "form",
-                  label: "Form",
-                  children: [
-                    {
-                      value: "radio",
-                      label: "Radio 单选框"
-                    },
-                    {
-                      value: "checkbox",
-                      label: "Checkbox 多选框"
-                    },
-                    {
-                      value: "input",
-                      label: "Input 输入框"
-                    },
-                    {
-                      value: "input-number",
-                      label: "InputNumber 计数器"
-                    },
-                    {
-                      value: "select",
-                      label: "Select 选择器"
-                    },
-                    {
-                      value: "cascader",
-                      label: "Cascader 级联选择器"
-                    },
-                    {
-                      value: "switch",
-                      label: "Switch 开关"
-                    },
-                    {
-                      value: "slider",
-                      label: "Slider 滑块"
-                    },
-                    {
-                      value: "time-picker",
-                      label: "TimePicker 时间选择器"
-                    },
-                    {
-                      value: "date-picker",
-                      label: "DatePicker 日期选择器"
-                    },
-                    {
-                      value: "datetime-picker",
-                      label: "DateTimePicker 日期时间选择器"
-                    },
-                    {
-                      value: "upload",
-                      label: "Upload 上传"
-                    },
-                    {
-                      value: "rate",
-                      label: "Rate 评分"
-                    },
-                    {
-                      value: "form",
-                      label: "Form 表单"
-                    }
-                  ]
-                },
-                {
-                  value: "data",
-                  label: "Data",
-                  children: [
-                    {
-                      value: "table",
-                      label: "Table 表格"
-                    },
-                    {
-                      value: "tag",
-                      label: "Tag 标签"
-                    },
-                    {
-                      value: "progress",
-                      label: "Progress 进度条"
-                    },
-                    {
-                      value: "tree",
-                      label: "Tree 树形控件"
-                    },
-                    {
-                      value: "pagination",
-                      label: "Pagination 分页"
-                    },
-                    {
-                      value: "badge",
-                      label: "Badge 标记"
-                    }
-                  ]
-                },
-                {
-                  value: "notice",
-                  label: "Notice",
-                  children: [
-                    {
-                      value: "alert",
-                      label: "Alert 警告"
-                    },
-                    {
-                      value: "loading",
-                      label: "Loading 加载"
-                    },
-                    {
-                      value: "message",
-                      label: "Message 消息提示"
-                    },
-                    {
-                      value: "message-box",
-                      label: "MessageBox 弹框"
-                    },
-                    {
-                      value: "notification",
-                      label: "Notification 通知"
-                    }
-                  ]
-                },
-                {
-                  value: "navigation",
-                  label: "Navigation",
-                  children: [
-                    {
-                      value: "menu",
-                      label: "NavMenu 导航菜单"
-                    },
-                    {
-                      value: "tabs",
-                      label: "Tabs 标签页"
-                    },
-                    {
-                      value: "breadcrumb",
-                      label: "Breadcrumb 面包屑"
-                    },
-                    {
-                      value: "dropdown",
-                      label: "Dropdown 下拉菜单"
-                    },
-                    {
-                      value: "steps",
-                      label: "Steps 步骤条"
-                    }
-                  ]
-                },
-                {
-                  value: "others",
-                  label: "Others",
-                  children: [
-                    {
-                      value: "dialog",
-                      label: "Dialog 对话框"
-                    },
-                    {
-                      value: "tooltip",
-                      label: "Tooltip 文字提示"
-                    },
-                    {
-                      value: "popover",
-                      label: "Popover 弹出框"
-                    },
-                    {
-                      value: "card",
-                      label: "Card 卡片"
-                    },
-                    {
-                      value: "carousel",
-                      label: "Carousel 走马灯"
-                    },
-                    {
-                      value: "collapse",
-                      label: "Collapse 折叠面板"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              value: "ziyuan",
-              label: "资源",
-              children: [
-                {
-                  value: "axure",
-                  label: "Axure Components"
-                },
-                {
-                  value: "sketch",
-                  label: "Sketch Templates"
-                },
-                {
-                  value: "jiaohu",
-                  label: "组件交互文档"
-                }
-              ]
-            }
-          ]},
+        {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: []},
       ],
       rules: {},
       radio: 1,
@@ -344,28 +84,67 @@ export default {
       textarea: '',
     }
   },
+  watch: {
+    planData: {
+      handler(newValue, oldValue) {
+        // this.form = {};
+        this.init(newValue)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
+  },
+  created() {
+    this.getAllPlanList()
+  },
   methods: {
-    getStoreList(row) {
+    // 获取所有上市计划列表
+    getAllPlanList() {
       const self = this;
-      const data = {
-        orderId: row.orderId
-      };
+      const data = {};
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+				let res = await self.$api.getAllPlanList({data})
 				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
+          console.log('res', res.data)
+          let gameData = res.data;
+          let array = []
+          gameData.forEach(item => {
+            let obj = {};
+            obj.label = item.gameListName;
+            obj.value = item.id;
+            obj.gameId = item.gameId
+            array.push(obj)
+          });
+          self.$set(self.baseData[3], 'options', array)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
 				} else {
           // self.$message.warning(res.msg)
         }
       })(data)
     },
-    changeForm() {
-
+    init(val) {
+      this.baseData.forEach((item)=>{
+        item.value = val.gameChangePlanVo&&val.gameChangePlanVo[item.prop];
+        if(item.prop=='gameChangePlanTime') {
+          item.value = val.gameChangePlanVo&&val.gameChangePlanVo.changePlanTime;
+        }
+      })
+    },
+    changeForm(val) {
+      console.log('参数', val)
+      this.param = val;
     },
     next(val) {
-      this.$emit('next', val)
+      this.param.gameChangePlanTime = moment(this.param.gameChangePlanTime).format("YYYY-MM-DD HH:mm:ss")
+      // this.param.gameSaleArea = this.param.gameSaleArea.join(',');
+      let data = {
+        gameChangePlanVo: this.param
+      }
+      this.$emit('submit', data)
+    },
+    cancel() {
+      
     }
   },
 }
@@ -377,7 +156,7 @@ export default {
     margin: 0 30px;
   }
   .vlt-edit-btn{
-    text-align: right;
+    text-align: left;
     margin: 60px 30px 20px;
   }
   .flex-wrap{

@@ -343,7 +343,8 @@ export default {
         }
       })(data);
     },
-        // 返回完整数组
+    
+    // 返回完整数组
     getInsArray(id, key, data, keyBack) { // 传入id和key是对应  keyBack是返回想要的key
       const self = this;
       for (var i in data) {

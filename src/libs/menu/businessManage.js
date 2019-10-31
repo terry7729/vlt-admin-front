@@ -67,14 +67,14 @@ export default [{
       childResources: [
         {
           icon: "el-icon-menu",
-          name: "游戏上市计划",
-          url: 'gameMarketPlanList',
+          name: "上市游戏列表",
+          url: 'gameMarketList',
           childResources: [],
         },
         {
           icon: "el-icon-menu",
-          name: "上市游戏列表",
-          url: 'gameMarketList',
+          name: "游戏上市计划",
+          url: 'gameMarketPlanList',
           childResources: [],
         },
         {

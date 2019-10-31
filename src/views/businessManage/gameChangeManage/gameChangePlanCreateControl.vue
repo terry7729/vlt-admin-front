@@ -83,14 +83,20 @@
 
 export default {
   name: "",
+  props: {
+    planData: {
+      type: Object,
+      default: {}
+    },
+  },
   data() {
     return {
       gameData: [
-        {title: '游戏状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '试玩',value: '1'},{label: '上市',value: '2'}]}, //未找到
-        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: '1'},{label: '试玩积分',value: '2'}]},
-        {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]}, //未找到
-        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: '1'},{label: '禁用',value: '2'}]},
-        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: '0'},{label: '禁用',value: '1'}]},
+        // {title: '销售状态', type: 'select',  prop: 'gameStatus', value: '', options:[{label: '开售',value: 1},{label: '停售',value: 2}]}, //未找到
+        {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: 1},{label: '试玩积分',value: 2}]},
+        // {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: 0},{label: '单奖池',value: 1},{label: '多奖池',value: 2}]}, //未找到
+        {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
+        {title: '销售状态', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '开售',value: 1},{label: '停售',value: 2}]},
         {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
         {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
         {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
@@ -100,15 +106,17 @@ export default {
         {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: ''},
         {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: ''},
         {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: ''},
+        {title: '', type: '', prop: 'id', value: ''}
       ],
       betData: [
         {title: '单注最小金额', type: 'input',  prop: 'minAmount', value: ''},
         {title: '最小投注数', type: 'input',  prop: 'minBets', value: ''},
         {title: '单注最大金额', type: 'input',  prop: 'maxAmount', value: ''},
         {title: '最大投注数', type: 'input',  prop: 'maxBets', value: ''},
+        {title: '', type: '', prop: 'id', value: ''}
       ],
       eachBetData: [
-        {minAddBetsOne: ''},
+        {minAddBets: ''},
       ],
       fundsData: [
         {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: ''},
@@ -121,6 +129,7 @@ export default {
         {title: '市福彩公益金占比', type: 'input',  prop: 'cityWelfareRate', value: ''},
         {title: '销售厅发行费占比', type: 'input',  prop: 'marketPublishRate', value: ''},
         {title: '销售厅公益金占比', type: 'input',  prop: 'marketWelfareRate', value: ''},
+        {title: '', type: '', prop: 'id', value: ''}
       ],
       riskData: [
         {title: '最低中奖金额', type: 'input',  prop: 'minBonus', value: ''},
@@ -133,6 +142,7 @@ export default {
         {title: '最高销量', type: 'input',  prop: 'maxSale', value: ''},
         {title: '最低开机率', type: 'input',  prop: 'minStartRate', value: ''},
         {title: '最低在线数量', type: 'input',  prop: 'minOnlineNum', value: ''},
+        {title: '', type: '', prop: 'id', value: ''}
       ],
       eachBetForm: {},
       gameForm: {},
@@ -171,30 +181,56 @@ export default {
       // 深度监听 监听对象，数组的变化
       deep: true
     },
+    planData: {
+      handler(newValue, oldValue) {
+        // this.form = {};
+        this.init(newValue)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
   },
   methods: {
+    init(val) {
+      if(!val) return;
+      // 游戏规则
+      this.gameData.forEach((item)=>{
+        if(item.prop=='reFundRate'||item.prop=='returnPrizeRate') {
+          item.value = val.gameFundRuleVo&&val.gameFundRuleVo[item.prop]
+        }else{
+          item.value = val.gameRuleVo&&val.gameRuleVo[item.prop]
+        }
+      })
+      // 投注规则
+      this.betData.forEach((item)=>{
+        item.value = val.gameBettingRuleVo&&val.gameBettingRuleVo[item.prop]
+      })
+      // 资金规则
+      this.fundsData.forEach((item)=>{
+        item.value = val.gameFundRuleVo&&val.gameFundRuleVo[item.prop]
+      })
+      // 风控规则
+      this.riskData.forEach((item)=>{
+        item.value = val.gameRiskRuleVo&&val.gameRiskRuleVo[item.prop]
+      })
+      // 奖等规则
+      this.riskData.forEach((item)=>{
+        // item.value = val.gameRiskRuleVo[item.props]
+        this.tableData = val.gameExchangeSetVoList;
+      })
+      let array = val.gameBettingRuleVo.minAddBets&&val.gameBettingRuleVo.minAddBets.split(',');
+      this.eachBetData = []
+      array&&array.forEach((item)=>{
+        let obj = {minAddBets: item};
+        this.eachBetData.push(obj)
+      })
+    },
     deleteGoods(index) {
       this.tableData.splice(index, 1);
     },
     addGoods() {
       let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''};
       this.tableData.push(obj)
-    },
-    getStoreList(row) {
-      const self = this;
-      const data = {
-        orderId: row.orderId
-      };
-      (async (data)=>{
-				let res = await self.$api.getStoreList({data})
-				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
     },
     deleteBetMoney(index) {
       this.eachBetData.splice(index, 1)
@@ -291,5 +327,8 @@ export default {
   .wrap{
     max-width: 900px;
     margin: 0 auto;
+  }
+  .delete-text{
+    margin-left: 20px;
   }
 </style>
