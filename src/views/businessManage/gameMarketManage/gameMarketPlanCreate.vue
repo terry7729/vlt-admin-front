@@ -5,13 +5,13 @@
       <el-step title="游戏配置" icon="el-icon-setting"></el-step>
       <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
     </el-steps>
-    <div class="vlt-edit-single" v-show="active==1">
+    <div class="vlt-edit-single" v-show="active==0">
       <base-info @next="next"></base-info>
     </div>
-    <div v-show="active==2">
+    <div v-show="active==1">
       <game-set @next="next" @prev="prev"></game-set>
     </div>
-    <div class="vlt-edit-single appendix" v-show="active==3">
+    <div class="vlt-edit-single appendix" v-show="active==2">
       <div class="vlt-edit-wrap">
         <el-form label-position="right" 
           label-width="90px" 
@@ -58,7 +58,7 @@ export default {
       appendixData: [
         {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
       ],
-      active: 1,
+      active: 0,
       rules: {},
       param: {},
       fileIds: '',

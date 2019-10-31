@@ -10,6 +10,7 @@ import commonComponents from './components/common/' // 通用组件引入
 import echarts from 'echarts'
 import Print from "@/utils/print";
 import storage from '@/utils/storage'
+import formMethods from '@/utils/formMethods'
 
 
 
@@ -32,7 +33,8 @@ Vue.directive('prevent', {
 
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts;
-Vue.prototype.$api = api
+Vue.prototype.$api = api;
+Vue.prototype.$formMethods = formMethods;
 Vue.prototype.eventBus = new Vue();
 
 
