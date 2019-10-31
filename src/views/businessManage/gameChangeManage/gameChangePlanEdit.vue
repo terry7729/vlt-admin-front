@@ -155,6 +155,7 @@ export default {
       console.log('总共的参数', this.planData)
       if(param.gameChangePlanVo) {
         Object.assign(this.planData.gameChangePlanVo, param.gameChangePlanVo)
+        this.planData.gameChangePlanVo.id = this.$route.query.id;
       }else{
         Object.assign(this.planData.gameRuleVo, param.gameRuleVo)
         Object.assign(this.planData.gameBettingRuleVo, param.gameBettingRuleVo)

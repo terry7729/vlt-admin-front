@@ -90,6 +90,12 @@
 
 export default {
   name: "",
+  props:{
+    planData: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
       gameData: [
@@ -163,6 +169,14 @@ export default {
     }
   },
   watch: {
+    planData: {
+      handler(newValue, oldValue) {
+        // this.form = {};
+        this.init(newValue)
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    },
     tableData: {
       handler(newValue, oldValue) {
         // this.$emit("change", this.form)
@@ -186,6 +200,41 @@ export default {
     },
   },
   methods: {
+    init(val) {
+      if(!val) return;
+      // 游戏规则
+      this.gameData.forEach((item)=>{
+        if(item.prop=='reFundRate'||item.prop=='returnPrizeRate') {
+          item.value = val.gameFundRuleVo&&val.gameFundRuleVo[item.prop]
+        }else{
+          item.value = val.gameRuleVo&&val.gameRuleVo[item.prop]
+        }
+      })
+      // 投注规则
+      this.betData.forEach((item)=>{
+        item.value = val.gameBettingRuleVo&&val.gameBettingRuleVo[item.prop]
+      })
+      // 资金规则
+      this.fundsData.forEach((item)=>{
+        item.value = val.gameFundRuleVo&&val.gameFundRuleVo[item.prop]
+      })
+      // 风控规则
+      this.riskData.forEach((item)=>{
+        item.value = val.gameRiskRuleVo&&val.gameRiskRuleVo[item.prop]
+      })
+      // 奖等规则
+      this.riskData.forEach((item)=>{
+        // item.value = val.gameRiskRuleVo[item.props]
+        this.tableData = val.gameExchangeSetVoList;
+        this.awardSetId = val.gameExchangeSetVoList[0].id || ''
+      })
+      let array = val.gameBettingRuleVo&&val.gameBettingRuleVo.minAddBets.split(',');
+      this.eachBetData = []
+      array.forEach((item)=>{
+        let obj = {minAddBets: item};
+        this.eachBetData.push(obj)
+      })
+    },
     deleteGoods(index) {
       this.tableData.splice(index, 1);
     },

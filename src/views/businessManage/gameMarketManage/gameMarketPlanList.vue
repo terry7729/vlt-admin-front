@@ -15,20 +15,23 @@
       style="width: 100%"
       @selection-change="handleSelectionChange">
       <!-- <el-table-column ty-pe="selection" width="55" fixed="left"></el-table-column> -->
-      <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="id" label="上市计划ID" ></el-table-column>
-      <el-table-column prop="gameListName" label="上市计划名称"></el-table-column>
-      <el-table-column prop="gameName" label="游戏名称"></el-table-column>
-      <el-table-column prop="gameSaleArea" label="销售范围"></el-table-column>
-      <el-table-column label="计划状态">
+      <el-table-column label="序号" fixed type="index" width="55"></el-table-column>
+      <el-table-column prop="id" label="上市计划ID" min-width="90px"></el-table-column>
+      <el-table-column prop="gameListName" label="上市计划名称" min-width="160px"></el-table-column>
+      <el-table-column prop="gameName" label="游戏名称" min-width="120px"></el-table-column>
+      <el-table-column label="销售范围" min-width="160px">
+        <template slot-scope="scope">
+          {{getInsArray(scope.row.gameSaleArea)}}
+        </template>
+      </el-table-column>
+      <el-table-column label="计划状态" min-width="120px">
         <template slot-scope="scope">
           {{translateStatus(scope.row.gameListStatus)}}
         </template>
       </el-table-column>
-      <el-table-column prop="gameListTime" label="上市时间"></el-table-column>
-      <el-table-column prop="gameListTime" label="销售状态 "></el-table-column>
-      <el-table-column prop="createBy" label="发起人"></el-table-column>
-      <el-table-column prop="createTime" label="发起时间" width="90"></el-table-column>
+      <el-table-column prop="gameListTime" label="销售状态" min-width="120px"></el-table-column>
+      <el-table-column prop="createBy" label="发起人" min-width="120px"></el-table-column>
+      <el-table-column prop="createTime" label="发起时间" min-width="140px"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row)">查看</el-button>
@@ -93,9 +96,8 @@ export default {
 
       ],
       currentPage: 1,
-      config: {
-
-      },
+      config: {},
+      insData: [],
     }
   },
   created() {
@@ -104,8 +106,37 @@ export default {
       pageSize: 10
     };
     this.getMarketPlanList(data)
+    this.getInsData();
   },
   methods: {
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.QueryInsTree({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          this.insData = res.data;
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
+    getInsArray(val) {
+      let arr = val.split(',');
+      let textArray = [];
+      arr.forEach((item)=>{
+        let array = this.$formMethods.getInsArray(item, 'id', this.insData, 'text')
+        // let str = array&&array.reverse().join('/')
+        let str = array&&array[0];
+        console.log(str)
+        textArray.push(str)
+      })
+      return textArray.join('；')
+    },
     translateStatus(val) {
       let options = {
         1: '审批中',
