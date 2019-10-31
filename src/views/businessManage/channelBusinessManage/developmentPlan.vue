@@ -38,7 +38,8 @@ export default {
         orderId: row.orderId
       };
       (async (data)=>{
-				let res = await self.$api.getStoreList({data})
+        let res = await self.$api.getStoreList({data})
+        console.log('return data',data);
 				if(res && res.code == 0) {
           self.$message.success('注销成功')
           row.orderStatus = 6;

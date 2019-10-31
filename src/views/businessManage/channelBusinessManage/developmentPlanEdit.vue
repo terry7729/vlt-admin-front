@@ -227,15 +227,17 @@ export default {
         all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
       },
       cascaderOptions: [],
-      isPrivice: false
+      isPrivice: false,
+      insId: '',
     };
   },
   created() {
     // 用户所在机构
+    let data = {};
     if (this.isPrivice) {
       // 省级用户 调省查市接口
       // 市级数据 不能输入
-      let data = {
+      data = {
         insId: "60",
         planDate: "2019"
       };
@@ -251,7 +253,7 @@ export default {
         }
       });
     } else {
-      let data = {
+      data = {
         insId: "61",
         planDate: "2019"
       };
@@ -259,6 +261,7 @@ export default {
       // 只需要市级数据  省级不用
       // this.getProvinceCityPlan(data)
     }
+    this.insId = data.insId;
     // 获取所属机构数据
     this.getInsData();
     this.$nextTick(() => {
@@ -330,10 +333,30 @@ export default {
         if (res && res.code == 0) {
           self.$set(self.formData[1], "options", res.data);
           self.cascaderOptions = res.data;
+          console.log('获取机构数据', self.cascaderOptions);
+
+          let arr = self.getInsArray(self.insId,'id', res.data, 'id') // 传入id 和对象
+          console.log('arrs', arr.reverse());
+          // self.insArray.push(arr);
         } else {
           // self.$message.warning(res.msg)
         }
       })(data);
+    },
+        // 返回完整数组
+    getInsArray(id, key, data, keyBack) { // 传入id和key是对应  keyBack是返回想要的key
+      const self = this;
+      for (var i in data) {
+        if (data[i][key] == id) {
+          return [data[i][keyBack]];
+        }
+        if (data[i].children) {
+          let ro = self.getInsArray(id, key, data[i].children, keyBack);
+          if (ro !== undefined) {
+            return ro.concat(data[i][keyBack]);
+          }
+        }
+      }
     },
     // 修改发展计划
     editDevelopPlan() {

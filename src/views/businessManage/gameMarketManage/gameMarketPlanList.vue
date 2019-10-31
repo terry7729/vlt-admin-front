@@ -28,7 +28,7 @@
       <el-table-column prop="gameListTime" label="上市时间"></el-table-column>
       <el-table-column prop="gameListTime" label="销售状态 "></el-table-column>
       <el-table-column prop="createBy" label="发起人"></el-table-column>
-      <el-table-column prop="createTime" label="发起时间"></el-table-column>
+      <el-table-column prop="createTime" label="发起时间" width="90"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" v-prevent="2000" @click.native="detail(scope.row)">查看</el-button>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'gameMarketPlanList',
   data() {
@@ -126,6 +127,11 @@ export default {
             current: res.data.current
           }
           self.tableData = res.data.records;
+            if (self.tableData.length > 0) {
+              self.tableData.forEach(item => {
+                item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')
+              })
+            }
 				} else {
           // self.$message.warning(res.msg)
         }

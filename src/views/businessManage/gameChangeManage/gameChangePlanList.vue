@@ -22,12 +22,12 @@
       <el-table-column prop="changePlanName" label="变更计划名称"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称"></el-table-column>
       <el-table-column prop="gameSaleArea" label="销售区域"></el-table-column>
-      <el-table-column prop="changePlanStatus" label="计划状态">
+      <el-table-column prop="changePlanStatus" label="计划状态" width="80">
         <template slot-scope="scope">{{translateChangeStatus(scope.row.changePlanStatus)}}</template>
       </el-table-column>
       <el-table-column prop="createBy" label="创建人"></el-table-column>
-      <el-table-column prop="createTime" label="创建时间"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column prop="createTime" label="创建时间" width="160"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="120">
         <template slot-scope="scope">
           <el-button
             type="primary"
@@ -101,7 +101,12 @@ export default {
         if (res && res.code == 0) {
           console.log("游戏变更计划", res);
           if (res.data) {
-            this.tableData = res.data;
+            self.tableData = res.data;
+            if (self.tableData.records.length > 0) {
+              self.tableData.records.forEach(item => {
+                item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')
+              })
+            }
           } 
         } else {
           self.$message.warning(res.msg);
