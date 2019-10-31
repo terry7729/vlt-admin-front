@@ -36,6 +36,13 @@ export default {
   uploadGoodsType: (options = {}) => ajax.upload('/goodsType/imgFileUpload', options),
   // 类型管理修改
   modification: (options = {}) => ajax.post('/goodsType/update', options),
+  // 获取型号管理列表
+  getModelList: (options = {}) => ajax.post('/goodsModel/pageList', options),
+  // 型号管理状态修改
+  ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
+  // 型号管理新增
+  modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
+  
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
   //出入库详情
@@ -145,12 +152,20 @@ export default {
   // 上市计划详情
   getMarketPlanDetail: (options = {}) => ajax.post('/gameListPlan/queryListPlanById', options),
 
+  // 编辑上市计划
+  editMarketPlan: (options = {}) => ajax.post('/gameListPlan/updateGameListPlan', options),
+  
+  
   // 查询变更计划列表
   getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
+  // 查询上市计划列表-下拉框
+  getAllPlanList: (options = {}) => ajax.post('/gameListPlan/queryAllGameListPlan', options),
   // 变更计划详情
   getChangePlanDetail: (options = {}) => ajax.post('/gameChangePlan/queryGameChangePlanById', options),
   // 编辑变更计划
   editChangePlan: (options = {}) => ajax.post('/gameChangePlan/updateGameChangePlan', options),
+  // 新增变更计划
+  createChangePlan: (options = {}) => ajax.post('/gameChangePlan/insertGameChangePlan', options),
 
 
   // 新建渠道

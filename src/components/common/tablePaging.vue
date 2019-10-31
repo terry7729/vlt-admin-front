@@ -45,7 +45,10 @@
     watch: {
       total(val) {
         this.TOTAL = val;
-      }
+      },
+      currentPage(val) {
+        this.CURRENTPAGE = val;
+      },
     },
     methods: {
       handleSizeChange(size) {

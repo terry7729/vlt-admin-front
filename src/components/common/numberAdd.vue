@@ -47,7 +47,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 .number-grow-warp {
   transform: translateZ(0);
 }
@@ -55,5 +55,8 @@ export default {
   font-weight: bold;
   font-size: 36px;
   padding-bottom: 10px;
+    @media (max-width: 1400px ) {
+      font-size: 32px;
+    }
 }
 </style>

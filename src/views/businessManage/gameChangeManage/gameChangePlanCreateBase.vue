@@ -56,6 +56,7 @@
 </template>
 
 <script type="text/javascript">
+import moment from 'moment'
 
 export default {
   name: "",
@@ -63,35 +64,36 @@ export default {
     return {
       baseData: [
         {title: '变更计划名称', type: 'input',  prop: 'changePlanName', value: '', placeholder: '请输入变更计划名称'},
-        {title: '生效时间', type: 'datetime-range',  prop: '', value: '', options:['changePlanTime', 'changePlanTime']},
+        {title: '生效时间', type: 'datetime',  prop: 'gameChangePlanTime', value: ''},
         {title: '计划简介', type: 'textarea',  prop: 'changePlanDesc', value: '', placeholder: '请输入变更计划简介'},
-        {title: '变更游戏', type: 'select',  prop: 'gameId', value: '', options:[{label: '网易',value: 1},{label: '腾讯',value: 2},{label: '盛大',value: 3}]},
+        {title: '上市计划', type: 'select-item',  prop: 'listPlanId', value: '', options:[], placeholder: '请选择上市计划'},
       ],
       channelData: [
         {title: '试玩区域', type: 'cascader-multiple',  prop: '', value: '', options: []},
       ],
       rules: {},
-      radio: 1,
-      options: [{label:'男', value:'1'},{label:'女',value:'2'}],
-      checkList: [],
-      textarea: '',
+      param: {},
     }
   },
+  created() {
+    this.getAllPlanList()
+  },
   methods: {
-    // 获取所有游戏列表
-    getAllGameList() {
+    // 获取所有上市计划列表
+    getAllPlanList() {
       const self = this;
       const data = {};
       (async (data)=>{
-				let res = await self.$api.getAllGameList({data})
+				let res = await self.$api.getAllPlanList({data})
 				if(res && res.code == 0) {
           console.log('res', res.data)
           let gameData = res.data;
           let array = []
           gameData.forEach(item => {
             let obj = {};
-            obj.label = item.gameName;
+            obj.label = item.gameListName;
             obj.value = item.id;
+            obj.gameId = item.gameId
             array.push(obj)
           });
           self.$set(self.baseData[3], 'options', array)
@@ -102,27 +104,20 @@ export default {
         }
       })(data)
     },
-    getStoreList(row) {
-      const self = this;
-      const data = {
-        orderId: row.orderId
-      };
-      (async (data)=>{
-				let res = await self.$api.getStoreList({data})
-				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
+    changeForm(val) {
+      console.log('参数', val)
+      this.param = val;
     },
-    changeForm() {
+    back() {
 
     },
     next(val) {
-      this.$emit('next', val)
+      this.param.gameChangePlanTime = moment(this.param.gameChangePlanTime).format("YYYY-MM-DD HH:mm:ss")
+      // this.param.gameSaleArea = this.param.gameSaleArea.join(',');
+      let data = {
+        gameChangePlanVo: this.param
+      }
+      this.$emit('next', data)
     }
   },
 }

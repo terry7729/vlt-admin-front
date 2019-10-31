@@ -18,6 +18,7 @@
               :default-expand-all="false"
               ref="attrList"
               :expand-on-click-node="true"
+              
             >
               <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}</span>
@@ -38,7 +39,7 @@
       </el-aside>
 
       <el-main style="padding:0 40px;border-left:1px solid #ccc;margin-left:20px;">
-        <div class="organi-right" style="margin-left:100px;">
+        <div class="organi-right" style="margin-left:30px;">
           <div class="Lotteryinfo">
             <section class="comp-item">
               <panel-edit title="机构信息" @edit="changeOrganizationIfo" :show="true">
@@ -354,9 +355,30 @@ export default {
       this.OrganizationAdd[0].value = data.text;
       this.OrganizationAdd[1].value = data.code;
     },
-
+    getId(date){//获取当前点击节点所有子节点Id
+      const self = this
+        let arr = [],arr2=[]
+        arr.push(date.id)
+        if(date.children){
+          date.children.forEach(item=>{
+            arr.push(item.id)
+            if(item.children){
+              item.children.forEach(i=>{
+                arr2.push(i.id)
+                self.getId(i)
+              })
+                  
+            }
+          })
+        }
+        return arr.concat(arr2)
+    },
     async remove(node, date) {
       //机构状态冻结
+      const self = this
+      console.log(date)
+      console.log(this.getId(date))
+
       this.$confirm(date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -364,7 +386,7 @@ export default {
         }).then(async () => {
           console.log(node, date);
           let data = {
-          insId: date.id,
+          insIdList: self.getId(date),
           status: Number(!date.status)
           };
           let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
@@ -391,7 +413,7 @@ export default {
       this.AgencyInformation.forEach(item=>{
         item.value = ''
       })
-      this.val = {}
+     
     },
     DepartmentChangeForm(val) {
       //部门表单对象
@@ -419,7 +441,7 @@ export default {
         callback: action => {
           close();
           this.slelectifo = '';
-          this.val= {}
+          // this.val= {}
         }
       });
     },
@@ -517,6 +539,9 @@ export default {
       console.log(this.slelectifo)
       if (val.name === "添加部门") {
         //添加部门
+        this.AddDepartment.forEach(item=>{
+          item.value = ''
+        })
         if (this.slelectifo != "") {
           this.addOrChange = "添加部门";
           this.dialogFormVisible = true;
@@ -531,6 +556,9 @@ export default {
       }
       if (val.name === "刷新") {
         this.init();
+        // this.val ={}
+        this.tableList = []
+        // this.subsidiaryOrgan(0)
         this.hadnelClose()
       }
     },
@@ -539,7 +567,7 @@ export default {
       //更改机构信息
         console.log(this.val)
       if (Object.keys(this.val).length === 0) {
-        this.open("请选择要添加部门的机构");
+        this.open("请选择要编缉的机构");
       } else if (this.val.status != 1) {
         console.log(this.val);
         this.dialogFormVisible2 = true;
@@ -558,7 +586,17 @@ export default {
       changeDepartment.forEach(item=>{
         arr.forEach(i=>{
           if(item.prop === i){
-            item.value = val[i]
+            console.log(i)
+            if(item.prop === 'status'){
+              if(val[i]){
+                item.value = 1
+              }else{
+                item.value = 0
+              }
+            }else{
+              item.value = val[i]
+            }
+            
           }
         })
       })
@@ -614,6 +652,7 @@ export default {
         }
       }
     }
+    
   },
   watch: {
     val: {
@@ -632,7 +671,7 @@ export default {
 @import "./less/index.less";
 .organiDialog {
   width: 600px;
-  border-radius: 20px;
+  border-radius: 10px;
   .el-dialog__header {
     padding: 0;
   }

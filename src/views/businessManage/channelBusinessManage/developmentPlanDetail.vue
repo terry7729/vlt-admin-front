@@ -50,7 +50,7 @@ export default {
     if (routerQuery && routerQuery.id) {
       const data = {
         id: routerQuery.id,
-        insLevel: routerQuery.insLevel
+        insLevel: parseInt(routerQuery.insLevel)
       };
       this.getDevelopPlanInfo(data);
     }

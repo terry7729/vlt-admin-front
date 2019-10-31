@@ -5,10 +5,10 @@
       <base-info :infoList="infoList"></base-info>
       <div class="base-info">
         <span class="picture">图片:</span>
+        <el-image class="image" v-for="(item,index) in urlList" :key="index" style="width: 100px; height: 100px" :src="item.url" fit="contain"></el-image>
+        <!-- <el-image class="image" style="width: 100px; height: 100px" :src="url" fit="contain"></el-image>
         <el-image class="image" style="width: 100px; height: 100px" :src="url" fit="contain"></el-image>
-        <el-image class="image" style="width: 100px; height: 100px" :src="url" fit="contain"></el-image>
-        <el-image class="image" style="width: 100px; height: 100px" :src="url" fit="contain"></el-image>
-        <el-image class="image" style="width: 100px; height: 100px" :src="url" fit="contain"></el-image>
+        <el-image class="image" style="width: 100px; height: 100px" :src="url" fit="contain"></el-image> -->
       </div>
    </panel-static>
  </div>
@@ -19,7 +19,11 @@ export default {
 name: "consumableCheck",
 data() {
 return {
-  url: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+  urlList: [
+    {url:'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'},
+    {url:'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'},
+
+    ],
   infoList:[
     {title:'耗材名称',value:'',prop:'goodsName'},
     {title:'耗材编号',value:'',prop:'code'},
@@ -41,7 +45,7 @@ created(){
 methods: {
   async getDetail(){
     const data = this.$route.query.id
-    console.log(data.id)
+    console.log(data)
     let res = await this.$api.getDetail({data})
     console.log(res)
     if(res && res.code == 0){

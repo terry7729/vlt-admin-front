@@ -5,13 +5,13 @@
       <el-step title="游戏配置" icon="el-icon-setting"></el-step>
       <el-step title="上传附件" icon="el-icon-paperclip"></el-step>
     </el-steps>
-    <div class="vlt-edit-single" v-show="active==1">
+    <div class="vlt-edit-single" v-show="active==0">
       <base-info @next="next"></base-info>
     </div>
-    <div v-show="active==2">
+    <div v-show="active==1">
       <game-set @next="next" @prev="prev"></game-set>
     </div>
-    <div class="vlt-edit-single appendix" v-show="active==3">
+    <div class="vlt-edit-single appendix" v-show="active==2">
       <div class="vlt-edit-wrap">
         <el-form label-position="right" 
           label-width="90px" 
@@ -58,7 +58,7 @@ export default {
       appendixData: [
         {title: '其他附件', type: 'upload-drag',  prop: 'appendix', value: ''},
       ],
-      active: 1,
+      active: 0,
       rules: {},
       param: {},
       fileIds: '',
@@ -71,9 +71,6 @@ export default {
       console.log('files', files.file.size/1024)
       // this.softData[3].value = `${(files.file.size/1024).toFixed()}`
       formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
@@ -81,7 +78,6 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.fileIds = res.data.fileId;
     },
     createMarketPlan(data) {
       const self = this;
@@ -114,7 +110,6 @@ export default {
     submit() {
       console.log('提交的参数', this.param)
       let data = this.param;
-      data.fileIds = String(this.fileIds);
       data.gameRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameBettingRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameFundRuleVo.gameId = data.gameListPlanVo.gameId;

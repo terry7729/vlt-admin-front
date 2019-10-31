@@ -31,6 +31,7 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import windowScreen from '@/utils/windowScreen'
 
 export default {
   name: 'pageTags',
@@ -74,18 +75,18 @@ export default {
       this.tagScroller = document.querySelector('.tags-scroller');
       this.scrollX();
       // 窗口变化计算边界响应
-      // let flag = true;
+      // let flag = true, 
+      //     winWidth = windowScreen.getWidth();
       // const tagList = document.querySelector('.tags-list'), 
       //       tagMargin = 4;
       // window.addEventListener('resize', () => {
       //   if (flag) {
       //     flag = false;
       //     setTimeout(() => {
-      //       const boundaryDif = this.tagScroller.offsetWidth - tagList.offsetWidth - this.translateX;
-      //       if (tagList.offsetWidth > this.tagScroller.offsetWidth) {
-      //         this.translateX += boundaryDif - tagMargin;
-      //       }
+      //       const dw = windowScreen.getWidth() - winWidth;
+      //       this.translateX += dw;
       //       flag = true;
+      //       winWidth = windowScreen.getWidth();
       //     }, 500)
       //   }
       // })

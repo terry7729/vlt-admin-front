@@ -20,7 +20,7 @@
         :rules="rules"
         class="eachBet-form">
         <el-form-item v-for="(item,index) in eachBetData" :key="index" :label="`单次加注金额${index+1}`">
-          <el-input v-model="item.minAddBetsOne" placeholder="请输入单次加注金额"></el-input> 
+          <el-input v-model="item.minAddBets" placeholder="请输入单次加注金额"></el-input> 
           <el-button v-if="index!==0" type="text" class="delete-text" @click="deleteBetMoney(index)">删除</el-button>
         </el-form-item>
       </el-form>
@@ -70,7 +70,7 @@
       </div>
     </panel>
     <panel title="自定义设置" :show="true" style="margin-bottom:15px">
-      <el-button class="add-btn" @click="addBetMoney" icon="el-icon-plus">新 增</el-button>
+      <el-button class="add-btn" @click="addCustomSet" icon="el-icon-plus">新 增</el-button>
     </panel>
     <panel title="信息发布设置" :show="true" style="margin-bottom:15px">
       <div class="vlt-edit-single">
@@ -97,14 +97,14 @@ export default {
         {title: '消费模式', type: 'select',  prop: 'conPattern', value: '', options:[{label: '账户金额',value: 1},{label: '试玩积分',value: 2}]},
         // {title: '游戏奖池', type: 'select',  prop: 'status', value: '', options:[{label: '无奖池',value: '0'},{label: '单奖池',value: '1'},{label: '多奖池',value: '2'}]}, //未找到
         {title: '兑奖权限', type: 'select',  prop: 'prizeAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 2}]},
-        {title: '销售权限', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '启用',value: 1},{label: '禁用',value: 1}]},
+        {title: '销售状态', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '开售',value: 1},{label: '停售',value: 2}]},
         {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
         {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
         {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
         {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: ''},
         {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: '',placeholder: '按百分比转换，示例12'},
-        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: {label: '启用',value: 1}, options:[{label: '启用',value: 1},{label: '禁止',value: 2}]},
-        {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: '游戏规则'},
+        {title: '防沉迷', type: 'select',  prop: 'indulgeSwitch', value: '', options:[{label: '启用',value: 1},{label: '禁止',value: 2}]},
+        {title: '游戏规则介绍', type: 'textarea',  prop: 'ruleDesc', value: ''},
         {title: '单次时长', type: 'input',  prop: 'dayLimitTime', value: ''},
         {title: '单日限额', type: 'input',prop: 'dayLimitPrize', value: ''},
       ],
@@ -115,7 +115,7 @@ export default {
         {title: '最大投注数', type: 'input',  prop: 'maxBets', value: ''},
       ],
       eachBetData: [
-        {minAddBetsOne: ''},
+        {minAddBets: ''},
       ],
       fundsData: [
         {title: '总发行经费占比', type: 'input',  prop: 'totalPublishRate', value: ''},
@@ -190,32 +190,19 @@ export default {
       this.tableData.splice(index, 1);
     },
     addGoods() {
-      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
-      this.$set(this.tableData, this.tableData.length, obj);
-    },
-    getStoreList(row) {
-      const self = this;
-      const data = {
-        orderId: row.orderId
-      };
-      (async (data)=>{
-				let res = await self.$api.getStoreList({data})
-				if(res && res.code == 0) {
-          self.$message.success('注销成功')
-          row.orderStatus = 6;
-          self.getLotteryList(self.param)
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
+      let obj = {exchangeName:'',exchangeMoney:'',exchangeDesc:''};
+      this.tableData.push(obj)
     },
     deleteBetMoney(index) {
       this.eachBetData.splice(index, 1)
       console.log('删除', this.deviceData)
     },
     addBetMoney() {
-      let obj = {minAddBetsOne:''}
+      let obj = {minAddBets:''}
       this.eachBetData.push(obj);
+    },
+    addCustomSet() {
+
     },
     // 游戏规则参数
     changeRuleForm(val) {
@@ -258,11 +245,16 @@ export default {
       console.log('eachbet', this.eachBetData)
       let array = []
       this.eachBetData.forEach(item=>{
-        array.push(item.minAddBetsOne)
+        array.push(item.minAddBets)
       })
       let str = array.join(',')
       console.log('str', str)
-      this.ruleParams.minAddBetsOne = str;
+      this.betParams.minAddBets = str;
+      // 把返奖率 调节基金参数 调换位置
+      this.fundsParams.reFundRate = this.ruleParams.reFundRate 
+      this.fundsParams.returnPrizeRate = this.ruleParams.returnPrizeRate
+      delete this.ruleParams.reFundRate 
+      delete this.ruleParams.returnPrizeRate
       let data = {
         gameRuleVo: this.ruleParams,
         gameBettingRuleVo: this.betParams,
@@ -308,7 +300,7 @@ export default {
 .addGoods{
   width: 100%;
   max-width: 490px;
-  margin: 10px 0 30px 20px;
+  margin: 20px 0 30px 10px;
 }
 .delete{
   font-size: 22px;

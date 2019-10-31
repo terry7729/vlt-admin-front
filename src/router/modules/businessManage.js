@@ -132,6 +132,8 @@ const mountingsCheck = () => import('@/views/businessManage/channelResourceManag
 const modelCheck = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelCheck')
 //类型管理新增
 const modelAdd = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelAdd')
+// 型号管理修改
+const modelModification = () => import('@/views/businessManage/channelResourceManage/basicInfoManage/modelModification')
 //入库
 const putStore = () => import('@/views/businessManage/channelResourceManage/outPutManage/putStore')
 //入库详情
@@ -686,6 +688,14 @@ export default [
     children: []
   },
   {
+    path: 'businessManage/dossierManage',
+    name: 'dossierManage',
+    meta: {
+      title: '档案管理',
+    },
+    component: dossierManage
+  },
+  {
     path: 'businessManage/channelResourceManage/inventoryManage',
     name: 'inventoryManage',
     meta: {
@@ -936,6 +946,16 @@ export default [
     component: modelAdd
   },
   {
+    path: 'businessManage/channelResourceManage/modelModification',
+    name: 'modelModification',
+    meta: {
+      parentName:'basicInfoManage',
+      title: '基本信息型号管理修改',
+    },
+    component: modelModification
+  },
+  
+  {
     path: 'businessManage/channelTerminal/serviceAnalysis',
     name: 'serviceAnalysis',
     meta: {
@@ -953,6 +973,7 @@ export default [
     path: 'businessManage/channelTerminal/repairOrderDetails',
     name: 'repairOrderDetails',
     meta: {
+      parentName: 'maintenance',
       title: '维修工单详情',
     },
     component: repairOrderDetails
@@ -960,6 +981,7 @@ export default [
     path: 'businessManage/channelTerminal/reportStatistics',
     name: 'reportStatistics',
     meta: {
+      parentName: 'reportStatistics',
       title: '报表统计',
     },
     component: reportStatistics
@@ -968,6 +990,7 @@ export default [
     path: 'businessManage/channelTerminal/equipment',
     name: 'equipment',
     meta: {
+      parentName: 'equipment',
       title: '设备管理',
     },
     component: equipment
@@ -1043,6 +1066,7 @@ export default [
     path: 'businessManage/channelTerminal/addFaultType',
     name: 'addFaultType',
     meta: {
+      parentName: 'configurationManagement',
       title: '新增故障类型 ',
     },
     component: addFaultType,
@@ -1067,6 +1091,7 @@ export default [
     path: 'businessManage/fundSettlement/fundParameterDetail',
     name: 'fundParameterDetail',
     meta: {
+      parentName: 'fundParameter',
       title: '资金参数管理详情',
     },
     component: fundParameterDetail
@@ -1075,6 +1100,7 @@ export default [
     path: 'businessManage/fundSettlement/fundParameterEdit',
     name: 'fundParameterEdit',
     meta: {
+      parentName: 'fundParameter',
       title: '资金参数管理编辑',
     },
     component: fundParameterEdit
@@ -1083,6 +1109,7 @@ export default [
     path: 'businessManage/fundSettlement/globalParameterEdit',
     name: 'globalParameterEdit',
     meta: {
+      parentName: 'fundParameter',
       title: '全局参数管理编辑',
     },
     component: globalParameterEdit
@@ -1091,6 +1118,7 @@ export default [
     path: 'businessManage/fundSettlement/newfundParameter',
     name: 'newfundParameter',
     meta: {
+      parentName: 'fundParameter',
       title: '新增全局参数管理',
     },
     component: newfundParameter
@@ -1100,6 +1128,7 @@ export default [
     path: 'businessManage/fundSettlement/globalParameter',
     name: 'globalParameter',
     meta: {
+      parentName: 'fundParameter',
       title: '资金参数全局参数',
     },
     component: globalParameter

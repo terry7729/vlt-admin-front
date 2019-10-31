@@ -16,8 +16,8 @@
             <ul class="info-list">
               <li class="info-item" v-for="(item, index) in appendixInfo" :key="index">
                 <!-- {{item}} -->
-              <span class="title">{{`${item.fileName}.${item.fileType}`}}：</span>
-              <el-link :href="item.filePath" @click="downLoad(item)" type="primary" target="_blank">下载</el-link>
+              <span class="title">{{`${item.split('\\')[item.split('\\').length-1]}`}}：</span>
+              <el-link @click="downLoad(item)" type="primary" target="_blank">下载</el-link>
                 <!-- <el-button
                   type="text"
                   class="text"
@@ -187,9 +187,7 @@ export default {
         { title: "软件描述", value: "", prop: "softwareDesc" },
         { title: "新版特性", value: "", prop: "newFeatures" }
       ],
-      appendixInfo: [
-        
-      ],
+      appendixInfo: [],
       //试玩列表
       demoList: [
         {
@@ -202,46 +200,6 @@ export default {
           initiator: "小明",
           initiateTime: "2019-8-8 05:12:12"
         },
-        {
-          demoProgram: "SW001",
-          demoPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          demoProgram: "SW001",
-          demoPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          demoProgram: "SW001",
-          demoPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          demoProgram: "SW001",
-          demoPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        }
       ],
       //上市列表
       IPOList: [
@@ -255,66 +213,6 @@ export default {
           initiator: "小明",
           initiateTime: "2019-8-8 05:12:12"
         },
-        {
-          IPOProgram: "SW001",
-          IPOPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          IPOProgram: "SW001",
-          IPOPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          IPOProgram: "SW001",
-          IPOPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          IPOProgram: "SW001",
-          IPOPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          IPOProgram: "SW001",
-          IPOPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        },
-        {
-          IPOProgram: "SW001",
-          IPOPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明",
-          initiateTime: "2019-8-8 05:12:12"
-        }
       ],
       // 退市列表
       delistList: [
@@ -327,51 +225,6 @@ export default {
           endTime: "2019-10-2 09:55:12",
           initiator: "小明"
         },
-        {
-          delistProgram: "SW001",
-          delistPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明"
-        },
-        {
-          delistProgram: "SW001",
-          delistPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明"
-        },
-        {
-          delistProgram: "SW001",
-          delistPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明"
-        },
-        {
-          delistProgram: "SW001",
-          delistPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明"
-        },
-        {
-          delistProgram: "SW001",
-          delistPlanName: "试玩1-连环夺宝",
-          gameVersions: "1.0.1",
-          area: "广东",
-          startTime: "2019-9-9 09:21:12",
-          endTime: "2019-10-2 09:55:12",
-          initiator: "小明"
-        }
       ]
     };
   },
@@ -379,37 +232,61 @@ export default {
     this.getGameStoreInfo();
   },
   methods: {
-    downLoad(val) {
-      let fileName = `${item.fileName}.${item.fileType}`
-      let data = {
-        fileName,
-      };
-      (async data => {
-        let res = await self.$api.downGameLoad({ data });
-        if (res && res.code == 0) {
-          console.log(res)
-        } else {
-          self.$message.warning(res.msg)
-        }
-      })(data);
+    // 导出列表
+    async downLoad(val) {
+      let formData = new FormData();
+      formData.append('filePath', val);
+      const res = await this.$api.downGameLoad({
+        data: formData,
+        responseType: "blob"
+      });
+      var blob = new Blob([res], {
+        type: "application/msword;application/vnd.openxmlformats-officedocument.wordprocessingml.document;image/jpeg;image/png;application/x-rar-compressed;application/vnd.ms-excel;application/zip;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", val.split('\\')[val.split('\\').length-1]);
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      console.log(res);
     },
+    // downLoad(val) {
+    //   const self = this;
+    //   let formData = new FormData();
+    //   formData.append('filePath', val);
+    //   // let data = {
+    //   //   filePath: val,
+    //   // };
+    //   (async () => {
+    //     let res = await self.$api.downGameLoad({ data: formData });
+    //     if (res && res.code == 0) {
+    //       console.log(res)
+    //     } else {
+    //       self.$message.warning(res.msg)
+    //     }
+    //   })();
+    // },
     getGameStoreInfo() {
       const self = this;
-      const data = {
-        id: this.$route.query.gameId
+      let options = {
+        id: self.$route.query.gameId
       };
       (async data => {
-        let res = await self.$api.getGameStoreInfo({ data });
+        let res = await self.$api.getGameStoreInfo({data});
         if (res && res.code == 0) {
           self.eachList(self.baseInfo,  res.data.gameInfoVo)
           self.eachList(self.developerInfo,  res.data.developerInfo)
           self.eachList(self.editionInfo,  res.data.softwareInfo)
-          this.appendixInfo = res.data.fileList;
+          this.appendixInfo = res.data.gameInfoVo.filePath&&res.data.gameInfoVo.filePath.split(',');
           self.eachList(self.appendixInfo,  res.data.fileList)
         } else {
           self.$message.warning(res.msg)
         }
-      })(data);
+      })(options);
     },
     handleClick(tab, event) {
       console.log(tab, event);
@@ -420,7 +297,7 @@ export default {
     handleCurrentChange(val) {
     },
     eachList(arr, obj) {
-      arr.forEach(item => {
+      obj&&arr.forEach(item => {
         item.value = obj[item.prop];
         if (item.prop == 'gameType') {
           item.value = this.translateGameType(obj[item.prop])
