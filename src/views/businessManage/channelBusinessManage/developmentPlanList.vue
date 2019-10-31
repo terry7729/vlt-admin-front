@@ -48,6 +48,11 @@ import { async } from "q";
 
 export default {
   name: "",
+  props: {
+    insData: {
+      type: Object
+    }
+  },
   data() {
     return {
       searchOptions: [],
@@ -64,13 +69,18 @@ export default {
         page: 1,
         pageSize: 10,
         param: {
-          insId: "60",
-          insLevel: 1 // 1为省级 2为市级 类型为数字
+          insId: this.insData.insIdArr[0][0],
+          insLevel: this.insData.insLevel // 1为省级 2为市级 类型为数字
         }
+      },
+      insDatas: {
+        insId: this.insData.insIdArr[0][0],
+        insLevel: this.insData.insLevel // 1为省级 2为市级 类型为数字
       }
     };
   },
   created() {
+    console.log('this.requestData', this.insDatas);
     let data = this.requestData;
     // 用户所在机构
     if (true) {
@@ -108,7 +118,9 @@ export default {
       if (val.name == "新建发展计划") {
         this.$router.push({
           name: "developmentPlanCreate",
-          query: { id: 123 }
+          query: {
+            ...this.insDatas
+          }
         });
       } else if (val.name == "导出当页数据") {
         this.exportExcel("now");
@@ -127,8 +139,7 @@ export default {
           pageSize: this.getDatas.size,
           param: {
             all: false,
-            insId: "60",
-            insLevel: 1
+            ...this.insDatas
           }
         };
       } else if (val == "all") {
@@ -138,8 +149,7 @@ export default {
           pageSize: 0,
           param: {
             all: true,
-            insId: "60",
-            insLevel: 1
+            ...this.insDatas
           }
         };
       }
@@ -168,7 +178,7 @@ export default {
         name: name,
         query: {
           id: row.id,
-          insLevel: 2 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
+          insLevel: this.insDatas.insLevel // 此数据是省市属的参数 需要根据用户获取， 目前是定值
         }
       });
     },
@@ -177,7 +187,7 @@ export default {
         name: name,
         query: {
           id: row.id,
-          insLevel: 2 // 此数据是省市属的参数 需要根据用户获取， 目前是定值
+          insLevel: this.insDatas.insLevel // 此数据是省市属的参数 需要根据用户获取， 目前是定值
         }
       });
     },

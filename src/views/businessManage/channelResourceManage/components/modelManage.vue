@@ -14,7 +14,7 @@
         </el-switch>
       </template>
     </el-table-column>
-    <el-table-column label="操作">
+    <el-table-column label="操作"  width="120">
       <template slot-scope="scope">
         <el-button @click="modelCheck(scope.row.id)" type="primary" v-prevent="2000" size="mini">查看</el-button>
         <el-button @click="modelAmend(scope.row)" type="primary" v-prevent="2000" size="mini">修改</el-button>
