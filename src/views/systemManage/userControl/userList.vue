@@ -78,13 +78,13 @@
     <div class="dialog">
       <el-dialog title="重置密码" :visible.sync="dialogFormVisible" width="500px"  custom-class="userDialog">
         <el-form :model="restpaswordfrom">
-          <el-form-item label="请选择你的操作" label-width="120px">
+          <el-form-item label="请选择你的操作" label-width="130px">
             <el-radio-group v-model="restpaswordfrom.pwdStatus">
               <el-radio :label="1">操作密码</el-radio>
               <el-radio :label="0">登陆密码</el-radio>
             </el-radio-group>
           </el-form-item>
-           <el-form-item :label="restpaswordfrom.radio===0?'请输入操作密码':'请输入登陆密码'" label-width="120px">
+           <el-form-item label="请输入管理员密码" label-width="130px">
             <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
           </el-form-item> 
         </el-form>
@@ -104,7 +104,7 @@ export default {
     return {
       restpaswordfrom: {
         pwdStatus: 0,
-      password:''
+        password:''
       },
       //测试数据
       total:0,

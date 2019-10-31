@@ -112,7 +112,7 @@ export default {
             value: "id",
             children: "children",
             multiple: true,
-            checkStrictly: true
+            // checkStrictly: true
           },
           value: [],
           placeholder: "请选择",
@@ -138,7 +138,7 @@ export default {
             value: "id",
             children: "children",
             multiple: true,
-            checkStrictly: true
+            // checkStrictly: true
           },
           value: [],
           placeholder: "请选择",
@@ -173,7 +173,7 @@ export default {
   components: {},
   methods: {
 async init(val){ //初始化页面数据
-    let res = await this.$api.QueryModuleTree({});
+    let res = await this.$api.QueryModuleTree()
         if(res.code === 0){
         this.addFrom[4].options = res.data;
         this.updataFrom[2].options = res.data;
