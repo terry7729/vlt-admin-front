@@ -32,7 +32,6 @@
       <el-table
         :data="tableData"
         border
-        style="width: 70%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
         @selection-change="selectChange"
@@ -108,11 +107,10 @@
       <el-table
         :data="tableData1"
         border
-        style="width: 80%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >
-        <el-table-column align="center" prop="warningLevel" label="告警等级" min-width="5%"></el-table-column>
+        <el-table-column align="center" prop="warningLevel" label="告警等级" min-width="10%"></el-table-column>
         <el-table-column align="center" prop="type" label="通知方式" min-width="20%">
           <template slot-scope="scope">
             <div v-if="scope.row.warningLevel==='普通'">

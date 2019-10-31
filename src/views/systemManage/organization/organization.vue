@@ -23,13 +23,13 @@
               <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}</span>
                 <span class="freeze">
-                  <el-button type="text" size="mini" @click="() => append(node, data)">新增</el-button>
+                  <el-button type="text" size="mini" @click.stop="() => append(node, data)">新增</el-button>
                   <el-button
                     type="text"
                     size="mini"
-                    @click="() => remove(node, data)"
+                    @click.stop="() => remove(node, data)"
                     v-if="(data.id != 1)"
-                  >{{data.status !=0 ? '冻结' : '解除'}}</el-button>
+                  >{{data.status === 0 ? '冻结' : '解除'}}</el-button>
                 </span>
               </span>
             </el-tree>
@@ -317,7 +317,8 @@ export default {
       val: {}, //当前点击的节点data
       //
       parentId: -1,
-      departmenIfo: {}
+      departmenIfo: {},
+      insparentId:0,
     };
   },
   mounted() {},
@@ -351,6 +352,7 @@ export default {
       //机构新增
       console.log(node, data);
       this.addOrChange = "添加机构";
+      this.insparentId = data
       this.dialogFormVisible2 = true;
       this.OrganizationAdd[0].value = data.text;
       this.OrganizationAdd[1].value = data.code;
@@ -448,7 +450,7 @@ export default {
     async subsidiaryOrgan(num) {
       //部门分页控制
       let data = {
-        insId: this.val.id,
+        param:{insId: this.val.id},
         pageSize: this.pageSize,
         page: num || 1
       };
@@ -521,9 +523,14 @@ export default {
       } else if (this.addOrChange === "添加机构") {
         this.OrganizationParams.created = "添加机构";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
-        data.status = Number(data.status);
-        data.parentId = this.val.id;
-        console.log(data);
+        // data.status = Number(data.status);
+        data.parentId = this.insparentId.id;
+        if(this.insparentId.status === 1){
+          data.status = 1
+        }else{
+          data.status = Number(!data.status);
+        }
+        console.log(this.val.status);
         let reslt = await this.$api.AddInsInfo({ data }); //添加机构
         if (reslt.code === 0) {
           this.$refs.OrganizationBaseForm.resetForm();
@@ -568,7 +575,7 @@ export default {
         console.log(this.val)
       if (Object.keys(this.val).length === 0) {
         this.open("请选择要编缉的机构");
-      } else if (this.val.status != 1) {
+      } else if (this.val.status != 0) {
         console.log(this.val);
         this.dialogFormVisible2 = true;
         this.addOrChange = "更改机构信息";
@@ -618,10 +625,10 @@ export default {
             ) {
               return { [key]: moment(val).format("YYYY-MM-DD HH:mm:ss") };
             } else if (key === "status") {
-              if (val === 1) {
+              if (val === 0) {
                 return { [key]: "启用" };
               } else {
-                return { [key]: "失效" };
+                return { [key]: "冻结" };
               }
             } else {
               return { [key]: val };

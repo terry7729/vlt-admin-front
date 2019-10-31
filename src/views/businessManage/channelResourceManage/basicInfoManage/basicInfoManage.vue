@@ -21,7 +21,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button @click="typeCheck(scope.row.id,scope.row.goodsType)" type="primary" v-prevent="2000" size="mini">查看</el-button>
-              <el-button @click="typeAmend(scope.row)" type="primary" v-prevent="2000" size="mini">修改</el-button>
+              <el-button @click="typeAmend(scope.row.id,scope.row.goodsType)" type="primary" v-prevent="2000" size="mini">修改</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -44,7 +44,6 @@ export default {
 name: "basicInfoManage",
 data() {
 return {
-  form:{},
   typeTotalCount:0,
   typeCurrentPage:1,
   pageSize: 10,
@@ -56,38 +55,35 @@ return {
     {title:'物品名称',type:'select',prop:'goodsId',value:'',options:[]},
     {title:'物品状态',type:'select',prop:'status',value:'',options:[{label:'开',value:1},{label:'关',value:2}]},
   ],
-  
   controlOptions:[{ name: "新增", type: "primary", icon: "plus" }],
   //类型管理列表
   typeData:[],
- 
+  //物品名称列表
   goodsNameData:[],
-
-  
   rules2: {
-        goodsCategory: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        equipmentName: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        equipmentUnit: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        isStandard: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        isRecycle: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        remark: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        equipmentPrice: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        upperLimit: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        lowerLimit: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
+    goodsCategory: [
+      { required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    equipmentName: [
+      { required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    equipmentUnit: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    isStandard: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    isRecycle: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    remark: [{ required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    equipmentPrice: [
+      { required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    upperLimit: [
+      { required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
+    lowerLimit: [
+      { required: true, validator: rules.checkEmpty, trigger: "blur" }
+    ],
   },
   fileList: [
       {
@@ -118,12 +114,6 @@ return {
   modelManage
  },
  computed:{
-   // 这里定义上传文件时携带的参数，即表单数据
-    upData: function() {
-      return {
-        body: this.form
-      }
-    }
 },
 created(){
   this.getTypeList(this.requestData1)
@@ -196,10 +186,13 @@ methods: {
     this.$router.push({name:'addEquipment'})
   },
   //修改
-  typeAmend(row){
+  typeAmend(id,goodsType){
     this.$router.push({
       path:'modification',
-      query:{...row}
+      query:{
+        id,
+        goodsType
+      }
     })
   },
   //设备查看
