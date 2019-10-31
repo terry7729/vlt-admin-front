@@ -9,7 +9,7 @@
     <panel title="游戏开发商" :show="true">
       <base-info :infoList="developerData"></base-info>
     </panel>
-    <panel title="版本信息" :show="responseData.softwareInfo!=null">
+    <panel title="版本信息" :show="true">
       <base-info :infoList="versionData"></base-info>
     </panel>
     <!-- <panel title="附件信息" :show="true">
@@ -105,13 +105,13 @@ export default {
         {title:'联系地址',value:'',prop:'address'}
       ],
       versionData: [
-        {title:'软件名称',value:'',prop:'gameName'},
-        {title:'软件版本',value:'',prop:'gameVersion'},
-        {title:'版本号',value:'',prop:'gameID'},
-        {title:'软件大小',value:'',prop:'gameSize'},
-        {title:'新版特性',value:'',prop:'gameNew'},
-        {title:'软件描述',value:'',prop:'gameID'},
-        {title:'版本记录',value:'',prop:'gameID'}
+        {title:'软件名称',value:'',prop:'versionName'},
+        {title:'软件版本',value:'',prop:'versionName'},
+        {title:'版本号',value:'',prop:'versionNumber'},
+        {title:'软件大小',value:'',prop:'softwareSize'},
+        {title:'新版特性',value:'',prop:'newFeatures'},
+        {title:'软件描述',value:'',prop:'softwareDesc'},
+        // {title:'版本记录',value:'',prop:'gameID'}
       ],
       appendixInfo: [],
       ruleData:[

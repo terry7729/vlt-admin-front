@@ -162,7 +162,8 @@ export default {
       page:1,
       pageSize:10,
       searchStatus:'',
-      searchFrom:{}
+      searchFrom:{},
+      isData:[]
     };
   },
   computed: {},
@@ -175,6 +176,7 @@ export default {
 async init(val){ //初始化页面数据
     let res = await this.$api.QueryModuleTree()
         if(res.code === 0){
+        this.isData = res.data
         this.addFrom[4].options = res.data;
         this.updataFrom[2].options = res.data;
         }
@@ -255,20 +257,30 @@ async pagingControl(val){ //分页控制
     timeCycle(val){  
       return  moment(val).format("YYYY-MM-DD HH:mm:ss")
     } ,
-    handelskip(val) {
+   async handelskip(val) {
       this.dialogFormVisible = true;
       this.currentStatus = "编缉";
+      let reslt =  await this.$api.QueryRoleInfoDetail({data:val.roleId})//查询角色详情
       this.val = val ;
       let arr = Object.keys(val)
       let upDataFrom  = this.updataFrom
-      console.log(val.roleType)
-      upDataFrom.forEach(item=>{
-        arr.forEach(i=>{
-          if(item.prop === i){
-            item.value = val[i]
+      console.log(reslt)
+      if(reslt.code === 0){
+        upDataFrom.forEach(item=>{
+          item.value = val[item.prop]
+          if(item.prop === "moduleIds"){
+            item.value = reslt.data.moduleIds
+            reslt.data.moduleIds.forEach(item=>{
+              let arr  = this.getInsArray(item,'id',this.isData,'id')
+              console.log(arr)
+              return
+            })
+            
+  
           }
         })
-      })
+      }
+      
   
     },
     selectBtn(val) {//新增删除事件
@@ -353,8 +365,45 @@ async search(val) {//搜索事件
       this.dialogFormVisible = false;
     },
     changeForm(val) {
-       Object.assign(this.parms, val);
-    }
+      const self = this
+      console.log('表单change事件',val)
+      if(val.moduleIds.length>0){
+          let arr2='' 
+        val.moduleIds.forEach(item=>{
+         let arr = this.getInsArray(item,'id',this.isData,'id')
+            arr2+=arr.join(',')+','          
+        })
+        console.log(arr2)
+       let  arr3 =Array.from(new Set(arr2.split(',')))
+       arr3.forEach((item,index)=>{
+         if(item === ''){
+           arr3.splice(index,1)
+         }
+       })  
+      let arr4 =  arr3.map(item=>{
+          return parseInt(item)
+        })
+        self.$set(this.parms,'moduleIds',[...arr4])
+      }else{
+         Object.assign(this.parms, val);
+      }
+      
+    },
+     getInsArray(id, key, data, keyBack) { // 传入id和key是一样胡  keyBack返回key
+        const self = this;
+        for (var i in data) {
+          if (data[i][key] == id) {
+            // return [data[i][key]]; //用于传id 返回id数组
+              return [data[i][keyBack]]; //用于传id 返回code数组
+          }
+          if (data[i].children) {
+          let ro = self.getInsArray(id, key, data[i].children, keyBack);
+            if (ro !== undefined) {
+            return ro.concat(data[i][keyBack]);
+            }
+          }
+        }
+      },
   },
 
 };
@@ -365,7 +414,7 @@ async search(val) {//搜索事件
 @import "./less/index.less";
 
 .roleDialog {
-  border-radius: 20px;
+  border-radius: 10px;
   .el-dialog__header {
     padding: 0;
   }
