@@ -179,7 +179,9 @@ export default {
   props: {
     formData: {
       type: Array,
-      default: [],
+      default() {
+        return []
+      },
     },
     rules: {
       type: Object,

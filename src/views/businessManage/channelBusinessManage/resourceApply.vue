@@ -232,15 +232,14 @@ export default {
         preReceivDate: time,
         remark: "",
         resourceApplyDirect: 1,
-        resourceApplyTitle: "333",
+        resourceApplyTitle: self.form.resourceApplyTitle,
         resourceWareStatus: 0,
         totalMoney: totalMoney,
         warehouseGoodsInfoList: self.tableData
       };
 
-      let res = await this.$api.channelResApply({ data });
+      let res = await this.$api.channelResApply({ message: "提交成功", data });
       if (res && res.code === 0) {
-        alert("提交成功");
         this.$router.push({ path: "channelDeal" });
       }
     },

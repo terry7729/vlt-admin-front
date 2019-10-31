@@ -3,7 +3,7 @@
     :model="form"
     :rules="rules"
     class="base-form">
-    <el-form-item v-for="(item,index) in formData" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
+    <el-form-item v-for="(item,index) in options" :key="index" :label="item.title" :prop="item.prop" :class="{'siding':item.type=='minMax'}">
       <!-- 输入框 -->
       <el-input v-if="item.type=='input'" :disabled="item.disabled?item.disabled:false" v-model="item.value" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`" :class="item.class"></el-input> 
       <!-- 输入框 密码 -->
@@ -35,6 +35,7 @@
       <el-switch
         v-if="item.type=='switch'"
         v-model="item.value"
+        @change="changeSelect"
         :active-text="item.value?'开启':'关闭'"
         :inactive-value="0"
         :active-value="1"
@@ -51,14 +52,15 @@
       <el-date-picker size="small" 
         v-if="item.type=='datepicker'"
         v-model="item.value"
+        @change="changeSelect"
         :type="item.dateType"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
       <!-- 起止日期选择 -->
       <el-date-picker size="small" type="daterange"
         v-if="item.type=='datepicker-range'"
-        v-model="dateParam[item.prop]"
-        @change="changeDate(item)"
+        v-model="item.value"
+        @change="changeSelect"
         start-placeholder="开始日期"
         end-placeholder="结束日期">
       </el-date-picker>
@@ -66,13 +68,14 @@
       <el-date-picker size="small" type="datetime"
         v-if="item.type=='datetime'"
         v-model="item.value"
+        @change="changeSelect"
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`">
       </el-date-picker>
       <!-- 两个时间选择 -->
       <el-date-picker size="small" type="datetimerange"
         v-if="item.type=='datetime-range'"
-        v-model="timeParam[item.prop]"
-         @change="changeTime(item)"
+        v-model="item.value"
+        @change="changeSelect"
         start-placeholder="开始时间"
         end-placeholder="结束时间">
       </el-date-picker>
@@ -80,6 +83,7 @@
       <el-input v-if="item.type=='textarea'" v-model="item.value" type="textarea" :autosize="{ minRows: 2, maxRows: 4}" :placeholder="item.placeholder?`${item.placeholder}`:`请输入${item.title}`"></el-input>
       <!-- 级联选择 返回id-->
       <el-cascader  v-if="item.type=='cascader'" size="small" 
+        @change="changeSelect"
         v-model="item.value" 
         :value="item.value" 
         :options="item.options" 
@@ -87,6 +91,7 @@
         :placeholder="item.placeholder?`${item.placeholder}`:`请选择${item.title}`" :disabled="item.disabled"></el-cascader>
       <!-- 级联选择 返回对象-->
       <el-cascader  v-if="item.type=='cascader-object'" size="small" 
+        @change="changeSelect"
         v-model="item.value" 
         :value="item" 
         :options="item.options" 
@@ -95,6 +100,7 @@
       <!-- 级联选择（多选） -->
       <el-cascader
         v-if="item.type=='cascader-multiple'"
+        @change="changeSelect"
         v-model="item.value"
         :options="item.options"
         :props="item.setProps"
@@ -102,7 +108,7 @@
         clearable>
       </el-cascader>
       <!-- 单选 -->
-      <el-radio-group v-if="item.type=='radio'" @change="changeRadio(item)" v-model="radioParam[item.prop]">
+      <el-radio-group v-if="item.type=='radio'" @change="changeSelect" v-model="item.value">
         <el-radio 
         v-for="(list,index) in item.options"
         :key="index"
@@ -126,7 +132,7 @@
       <span v-if="item.type=='minMax'" class="siding-flag">至</span>
       <el-input v-if="item.type=='minMax'" v-model="item.valuens[1]]" @blur="checkNumber" type="text" placeholder="输入最大值"></el-input> -->
       <!-- 多选checkbox -->
-      <el-checkbox-group v-if="item.type=='checkbox'" @change="changeCheckbox" v-model="item.value">
+      <el-checkbox-group v-if="item.type=='checkbox'" @change="changeSelect" v-model="item.value">
         <el-checkbox 
           v-for="(list, index) in item.options"
           :key="index"
@@ -134,8 +140,8 @@
           {{list.label}}
         </el-checkbox>
       </el-checkbox-group>
+      <slot v-if="item.type=='slot'" :name="item.slotName"></slot>
     </el-form-item>
-    
   </el-form> 
 </template>
 
@@ -145,14 +151,8 @@ import cityData from '@/libs/map/area.json'
 
 export default {
   name: "",
-  model: {
-    prop: 'form',
-    //这个事件名可以随意写，它实际上是规定了子组件要更新父组件值需要注册的方法
-    event: 'ababab'
-  },
   props: {
-    value: {},
-    formData: {
+    options: {
       type: Array,
       default: [],
     },
@@ -180,79 +180,13 @@ export default {
       },
       form: {},
       radioValue: '',
-      radioParam: {}, // 用于保存radio的参数
       switchText: '开启',
-      dateParam: {}, // 用于保存起止日期的参数
-      timeParam: {}, // 用于保存起止时间的参数
-      selectParam: {}, // 用于保存起止时间的参数
-      cascaderParams: {},  // 用于保存级联选择器（多选）的参数
-      cascaderParam: {},  // 用于保存级联选择器（单选）的参数
-      imageUrl: '',
     }
-  },
-  watch: {
-    // form: {
-    //   handler(newValue, oldValue) {
-    //     let param = JSON.parse(JSON.stringify(newValue))
-    //     // console.log('newValue', newValue)
-    //     for(let key in this.cascaderParams) {
-    //       if(param[key]&&param[key].length > 0) {
-    //         for(let i=0;i<param[key].length;i++) {
-    //           param[key][i] = param[key][i][param[key][i].length-1]
-    //         }
-    //       }
-    //     }
-    //     for(let key in this.cascaderParam) {
-    //       if(param[key]&&param[key].length > 0) {
-    //         param[key] = param[key][param[key].length-1]
-    //       }
-    //     }
-    //     // console.log('param', param)
-       
-    //     // this.$emit("input", param)
-        
-    //   },
-    //   // 深度监听 监听对象，数组的变化
-    //   deep: true
-    // },
-    formData: {
-      handler(newValue, oldValue) {
-        // this.form = {};
-        // this.init(newValue)
-      },
-      // 深度监听 监听对象，数组的变化
-      deep: true
-    },
   },
   created() {
     // this.init(this.formData)
   },
-  components: {
-  },
   methods: {
-    handleRemove() {
-
-    },
-    async uploadFile(files) {
-      let formData = new FormData();
-      console.log('files', files.file.size/1024)
-      this.softData[3].value = `${(files.file.size/1024).toFixed(1)} KB`
-      formData.append('file', files.file);
-      formData.append('refId', 1);
-      formData.append('flag', true);
-      formData.append('busType', 1);
-      const res = await this.$api.testUpload({
-        data: formData,
-        onUploadProgress(evt) {
-          console.log('上传进度事件:', evt)
-        }
-      })
-      console.log('uploadFile', res);
-      // this.gameBagId = res.data.fileId;
-    },
-    changeCheckbox(val) {
-      console.log(val);
-    },
     checkNumber(val, flag) {
       if(this.form[val] < 0) {
         this.$message.warning(`${flag}须大于0`);
@@ -260,29 +194,6 @@ export default {
     },
     success(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return isJPG && isLt2M;
-    },
-    changeDate(val) {
-      this.form[val.options[0]] = moment(this.dateParam[val.prop][0]).format("YYYY-MM-DD")
-      this.form[val.options[1]] = moment(this.dateParam[val.prop][1]).format("YYYY-MM-DD")
-    },
-    changeTime(val) {
-      this.form[val.options[0]] = moment(this.timeParam[val.prop][0]).format("YYYY-MM-DD HH:mm:ss")
-      this.form[val.options[1]] = moment(this.timeParam[val.prop][1]).format("YYYY-MM-DD HH:mm:ss")
-    },
-    changeRadio(val) {
-      this.form[val.prop] = this.radioParam[val.prop];
     },
     changeCity(val) {
       const self = this;
@@ -309,7 +220,7 @@ export default {
       this.$refs.form.resetFields();
     },
     validate(callback) {
-      
+      this.$emit('change', this.options)
       this.$refs.form.validate((valid) => {
         if (valid) {
           console.log('校验通过')
@@ -321,108 +232,9 @@ export default {
         }
       })
     },
-    changeSwitch(val) {
-      // debugger;
-      this.switchText = val ? '开启' : '关闭'
-    },
     changeSelect(val) {
-      console.log(val)
-      this.form[val.prop] = this.selectParam[val.prop];
-      console.log(this.selectParam)
+      this.$emit('change', this.options)
     },
-    init(data) {
-      const self = this;
-      data&&data.forEach((item)=>{
-        if(item.type=='datepicker-range' || item.type=='datetime-range') {
-          if(item.value!='') { // 数据回填
-            self.timeParam[item.prop] = item.value;
-            self.dateParam[item.prop] = item.value;
-          } else {
-            self.$set(self.form, item.options[0], '')
-            self.$set(self.form, item.options[1], '')
-            // self.timeParam[item.type] = item.options; // 用于获取起止时间的字段名称
-            console.log('时间参数', self.timeParam)
-          }
-        }else if(item.type=='switch') {
-          if(item.value!='') { // 数据回填
-            self.changeSwitch(item.value)
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, 0)
-          }
-        }else if(item.type=='radio') {
-          if(item.value !='') { // 数据回填
-            self.$set(self.radioParam, item.prop , item.value);
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, '')
-            self.$set(self.radioParam, item.prop, '')
-          }
-        }else if(item.type=='address') {
-          if(item.value !='') { // 数据回填
-            self.citySelect = item.value;
-            self.$set(self.form, 'address', item.address)
-          } else {
-            self.$set(self.form, 'provinceId', '')
-            self.$set(self.form, 'provinceName', '')
-            self.$set(self.form, 'cityId', '')
-            self.$set(self.form, 'cityName', '')
-            self.$set(self.form, 'townId', '')
-            self.$set(self.form, 'townName', '')
-            self.$set(self.form, 'address', '')
-          }
-        }else if(item.type=='select') {
-          if(item.value !='') { // 数据回填
-            self.$set(self.selectParam, item.prop , item.value);
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, '')
-            self.$set(self.selectParam, item.prop, '')
-          }
-        } else if(item.type=='checkbox') {
-          if(item.value !='') { // 数据回填
-            self.$set(self.selectParam, item.prop , item.value);
-          }else{
-            self.$set(self.form, item.prop, [])
-          }
-        }else if(item.type=='radio-textarea'){
-          if(item.value !='') { // 数据回填
-            self.$set(self.form, item.props[0], item.value[0])
-            self.$set(self.form, item.props[1], item.value[1])
-          }else{
-            self.$set(self.form, item.props[0], '')
-            self.$set(self.form, item.props[1], '')
-          }
-        }else if(item.type=='cascader-multiple'){
-          if(item.value !='') { // 数据回填
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, [])
-          }
-          self.$set(self.cascaderParams, item.prop , '');
-        }else if(item.type=='cascader'){
-          if(item.value !='') { // 数据回填
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, [])
-          }
-          self.$set(self.cascaderParam, item.prop , '');
-        }else if(item.type=='cascader-object'){
-          if(item.value !='') { // 数据回填
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, [])
-          }
-          // self.$set(self.cascaderParam, item.prop , '');
-        }else{
-          if(item.value !='') { // 数据回填
-            self.$set(self.form, item.prop, item.value)
-          }else{
-            self.$set(self.form, item.prop, '')
-          }
-        }
-      })
-    }
   },
 }
 </script>

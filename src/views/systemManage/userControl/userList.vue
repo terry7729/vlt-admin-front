@@ -23,9 +23,9 @@
         <el-table-column prop="userName" label="姓名"></el-table-column>
         <el-table-column prop="mobile" label="手机号码"></el-table-column>
          <el-table-column prop="email" label="邮箱"></el-table-column>
-        <el-table-column prop="latelyFrequency" label="最近登陆次数" width="100"></el-table-column>
-        <el-table-column prop="latelyTime" label="最近登录时间" width="100"></el-table-column>
-        <el-table-column prop="latelyIP" label="最近登陆IP" width="90"></el-table-column>
+        <el-table-column prop="loginCount" label="最近登陆次数" width="100"></el-table-column>
+        <el-table-column prop="loginTime" label="最近登录时间" width="100"></el-table-column>
+        <el-table-column prop="loginIp" label="最近登陆IP" width="90"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="用户状态" align="center" width="200">
           <template slot-scope="scope">
@@ -218,7 +218,14 @@ async init(val){
      
          let reslt = await  this.$api.userPage({data})
           console.log(reslt)
-          this.userList = reslt.data.records
+         let arr =  reslt.data.records.map(item=>{
+             let userLoginLogVo = item.userLoginLogVo
+              return {...userLoginLogVo,
+                      ...item
+                      }
+           })
+           console.log(arr)
+          this.userList = arr
           this.page = reslt.data.current
           this.total = reslt.data.total;
           console.log('我是默认',reslt)
