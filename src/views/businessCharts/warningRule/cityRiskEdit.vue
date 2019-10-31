@@ -155,7 +155,6 @@
       <el-table
         :data="tableData1"
         border
-        style="width: 80%"
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
       >

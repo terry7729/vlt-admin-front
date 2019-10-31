@@ -66,7 +66,7 @@ methods: {
       2:'否'
     }
     console.log(data)
-    let res = await self.$api.modelCheck({data})
+    let res = await self.$api.modelDetail({data})
     console.log(res)
     if(res && res.code == 0){
       self.imgUrlList.push(res.data.goodsModelVo.files)

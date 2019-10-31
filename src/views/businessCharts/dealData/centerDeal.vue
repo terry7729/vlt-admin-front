@@ -1,7 +1,7 @@
 <template>
   <div class="vlt-card">
     <section class="comp-item">
-      <control-bar :options="controlOptions" position="right"></control-bar>
+      <control-bar :options="controlOptions" @select='selectBtn' position="right"></control-bar>
     </section>
 
     <div class="tab-container">
@@ -112,6 +112,38 @@ export default {
         self.tableData = res.data.dataList;
         self.totalCount = res.data.totalRecord;
       }
+    },
+   selectBtn(val) {
+      if (val.name === "导出") {
+        this.exportExcel();
+      }
+    },
+    async exportExcel() {
+      const res = await this.$api.dealExport({
+        data: {
+          page: 1,
+          pageSize: 10,
+          all: false,
+          status: 1,
+          documentNumber: "",
+          documentToppic: "",
+          exportType:1
+        },
+        responseType: "blob"
+      });
+      var blob = new Blob([res], {
+        type: "application/vnd.ms-excel;charset=utf-8"
+      });
+      var url = window.URL.createObjectURL(blob);
+      var aLink = document.createElement("a");
+      aLink.style.display = "none";
+      aLink.href = url;
+      aLink.setAttribute("download", "中央交易数据.xls");
+      document.body.appendChild(aLink);
+      aLink.click();
+      document.body.removeChild(aLink); //下载完成移除元素
+      window.URL.revokeObjectURL(url); //释放掉blob对象
+      console.log(res);
     },
     pageSizeChange(pageSize) {    
       this.listQuery.limit = pageSize;

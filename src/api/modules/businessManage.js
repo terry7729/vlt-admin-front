@@ -28,6 +28,7 @@ export default {
   getModelTrees: (options = {}) => ajax.get('/goodsModel/goodsNameTree', options),
   // 获取类型管理查看详情
   getDetail: (options = {}) => ajax.get('/goodsType/details', options),
+
   //类型管理状态修改
   statusUpdate: (options = {}) => ajax.post('/goodsType/statusUpdate', options),
   //类型管理类型新增
@@ -42,11 +43,13 @@ export default {
   ModelstatusUpdate: (options = {}) => ajax.post('/goodsModel/statusUpdate', options),
   // 型号管理新增
   modelCreate:(options = {}) => ajax.post('/goodsModel/create', options),
-  // 型号管理查看
-  modelCheck: (options = {}) => ajax.post('/goodsModel/details', options),
-  
+  //获取型号管理详情
+  modelDetail: (options = {}) => ajax.post('/goodsModel/details', options),
+  //型号管理修改
+  modelWrite: (options = {}) => ajax.post('/goodsModel/update', options),
   //出入库管理列表获取
   getOutPutList: (options = {}) => ajax.post('/warehouseRecording/page', options),
+
   //出入库详情
   getOutPutDetail: (options = {}) => ajax.post('/warehouseRecording/detail', options),
   //出入库
@@ -156,8 +159,8 @@ export default {
 
   // 编辑上市计划
   editMarketPlan: (options = {}) => ajax.post('/gameListPlan/updateGameListPlan', options),
-  
-  
+
+
   // 查询变更计划列表
   getChangePlanList: (options = {}) => ajax.post('/gameChangePlan/queryChangePlanPage', options),
   // 查询上市计划列表-下拉框

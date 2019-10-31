@@ -80,8 +80,12 @@
             @change="changeForm"
           ></base-form>
           <span class="goods-cate">可用机型</span>
-          <el-form-item class="typeSelect" v-for="(ele, index) in modelAvailablesList" :key="index" >
-            <el-select v-model="ele.deviceId" placeholder="请选择设备名称" @change="changeDeviceId(ele.deviceId, index)">
+          <el-form-item class="typeSelect" v-for="(ele, index) in modelAvailablesList" :key="index">
+            <el-select
+              v-model="ele.deviceId"
+              placeholder="请选择设备名称"
+              @change="changeDeviceId(ele.deviceId, index)"
+            >
               <el-option
                 v-for="(item,index) in ele.nameOptions"
                 :key="index"
@@ -100,7 +104,10 @@
             <i class="el-icon-close" @click="clearDevice(index)" v-if="index > 0"></i>
           </el-form-item>
           <el-form-item>
-            <p class="add-btn" @click="addMochine"><i class="el-icon-plus"></i> <span>新增设备</span></p>
+            <p class="add-btn" @click="addMochine">
+              <i class="el-icon-plus"></i>
+              <span>新增设备</span>
+            </p>
           </el-form-item>
           <el-form-item label="上传图片" class="upLoadImg">
             <el-upload
@@ -140,10 +147,10 @@ export default {
         {
           //可用机型选择框
           id: 0,
-          deviceId: '',
-          modelId: '',
+          deviceId: "",
+          modelId: "",
           nameOptions: [{ label: "", value: "" }, { label: "", value: "" }],
-          modelOptions:{
+          modelOptions: {
             options: [{ label: "", value: "" }, { label: "", value: "" }]
           }
         }
@@ -199,9 +206,7 @@ export default {
         equipmentName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        goodsId: [
-           { required: true, trigger: "blur" }
-        ],
+        goodsId: [{ required: true, trigger: "blur" }],
         upperLimit: [
           { required: true, validator: rules.checkEmptyNumber, trigger: "blur" }
         ],
@@ -212,7 +217,7 @@ export default {
           { required: false, validator: rules.numberVal, trigger: "blur" }
         ],
         deviceModel: [
-           { required: true, validator: rules.checkEmpty, trigger: "blur" }
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
         unitPrice: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
@@ -231,14 +236,14 @@ export default {
       imageUrl: "",
       imgUrl: [],
       deviceDatas: {
-        options:[]
-      },
+        options: []
+      }
     };
   },
   components: {},
   computed: {},
   created() {
-    this.changeOption()
+    this.changeOption();
   },
   methods: {
     changeForm(val) {
@@ -248,15 +253,15 @@ export default {
     getModelTrees(type) {
       const _this = this;
       (async type => {
-        let data  = {};
-        if (type == '') {
-          data = ''
+        let data = {};
+        if (type == "") {
+          data = "";
         } else {
           data = {
             goodsType: type
-          } 
+          };
         }
-        
+
         let res = await _this.$api.getModelTrees({ data });
         if (res && res.code == 0) {
           let options = [];
@@ -273,7 +278,7 @@ export default {
             if (type == 1) {
               _this.$set(_this.equipmentData[0], "options", options);
               _this.deviceDatas = res.data.filter(item => {
-                return item.modelInfoVoList.length > 0
+                return item.modelInfoVoList.length > 0;
               });
               // console.log('00000', _this.deviceDatas);
               _this.modelAvailablesList[0].nameOptions = options;
@@ -306,18 +311,26 @@ export default {
           let option = [];
           if (item.modelInfoVoList.length > 0) {
             for (let i = 0; i < item.modelInfoVoList.length; i++) {
-              option.push ({
+              option.push({
                 label: item.modelInfoVoList[i].deviceModel,
                 value: item.modelInfoVoList[i].modelId
-              }) 
+              });
             }
-            this.$set(this.modelAvailablesList[index].modelOptions, 'options', option)
+            this.$set(
+              this.modelAvailablesList[index].modelOptions,
+              "options",
+              option
+            );
           } else {
-            this.modelAvailablesList[index].modelId = '';
-            this.$set(this.modelAvailablesList[index].modelOptions, 'options', [])
+            this.modelAvailablesList[index].modelId = "";
+            this.$set(
+              this.modelAvailablesList[index].modelOptions,
+              "options",
+              []
+            );
           }
         }
-      })
+      });
       // console.log('this.modelOptions', this.modelAvailablesList.modelOptions[index]);
     },
     handlePictureCardPreview(file) {},
@@ -354,16 +367,15 @@ export default {
     },
     //提交保存
     submit(form) {
-      let modelAvailablesList =[];
+      let modelAvailablesList = [];
       if (this.selectValue == 1) {
-        
       } else if (this.selectValue == 2) {
         console.log(this.modelAvailablesList);
-         this.modelAvailablesList.forEach(item => {
+        this.modelAvailablesList.forEach(item => {
           modelAvailablesList.push({
             modelId: item.modelId
           });
-        })
+        });
         console.log(modelAvailablesList);
       }
 
@@ -383,7 +395,6 @@ export default {
             });
             this.$router.push({ path: "basicInfoManage" });
           } else {
-
           }
         }
       });
@@ -397,31 +408,33 @@ export default {
       //     }
       //   });
     },
-    clearDevice (index) {
-       if (this.modelAvailablesList.length < 2) {
+    clearDevice(index) {
+      if (this.modelAvailablesList.length < 2) {
         return;
-      } 
+      }
       this.modelAvailablesList.splice(index, 1);
     },
-    addMochine () {
+    addMochine() {
       if (this.modelAvailablesList.length > 0) {
         let option = [];
         for (let i = 0; i < this.deviceDatas.length; i++) {
-            option.push({
-                label: this.deviceDatas[i].goodsName,
-                value: this.deviceDatas[i].id
-            })
+          option.push({
+            label: this.deviceDatas[i].goodsName,
+            value: this.deviceDatas[i].id
+          });
         }
         const param = {
-            id: this.modelAvailablesList[this.modelAvailablesList.length - 1].id + 1,
-            deviceId: '',
-            modelId: '',
-            nameOptions: option,
-            modelOptions:{
-              options: []
-            }
-        }
-        this.modelAvailablesList.push(param)
+          id:
+            this.modelAvailablesList[this.modelAvailablesList.length - 1].id +
+            1,
+          deviceId: "",
+          modelId: "",
+          nameOptions: option,
+          modelOptions: {
+            options: []
+          }
+        };
+        this.modelAvailablesList.push(param);
         // console.log('add', this.modelAvailablesList, this.modelAvailablesList[this.modelAvailablesList.length - 1].id);
       }
     },
@@ -455,10 +468,10 @@ export default {
     position: relative;
     margin-left: 52px;
     margin-top: -16px;
-    .el-select {    
+    .el-select {
       width: 190px !important;
       display: inline-block;
-      &:first-child{
+      &:first-child {
         margin-right: 20px;
       }
     }

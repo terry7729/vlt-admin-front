@@ -31,6 +31,7 @@ switch (process.env.VUE_APP_MODE) {
     axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.51:8081/bms/api'
 
+    // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
 }
 /**
  * @description http请求
@@ -42,7 +43,7 @@ switch (process.env.VUE_APP_MODE) {
  */
 const request = (method, url, options, extend) => {
   // 覆盖默认api baseURL
-  if (typeof options.baseURL === 'string') {
+  if (typeof options.baseURL === "string") {
     axios.defaults.baseURL = options.baseURL;
   }
   // 基本参数
@@ -114,7 +115,7 @@ const request = (method, url, options, extend) => {
       }
       // 未登录
       if (res.data.code == 100) {
-        location.href = '#/login'
+        location.href = "#/login";
       }
       loading.close();
       return res.data;
