@@ -55,11 +55,19 @@
         <div class="vlt-edit-single">
           <div class="vlt-edit-wrap">
             <base-form
+              :formData="menuTypeForm"
+              ref="menuTypeForm"
+              :rules="rules"
+              direction="right"
+              @change="menuTypeFormChange"
+              labelWidth="110px"
+            ></base-form>
+            <base-form
               :formData="form"
               ref="baseForm"
               :rules="rules"
               direction="right"
-              @change="treeChange"
+              @change="formChange"
               labelWidth="110px"
             ></base-form>
             <el-row class="vlt-edit-btn">
@@ -79,107 +87,175 @@ export default {
   
   data() {
     return {
+      menuType: 1,
       isEdit: false,
       menuData: [],
       controlOptions: [
         //顶部按钮
         { name: "添加根节点", type: "primary", icon: "", id: 1 },
-        { name: "添加子系统", type: "warning", icon: "", id: 2 },
-        { name: "批量删除", type: "", icon: "", id: 3 },
+        { name: "批量删除", type: "", icon: "", id: -1 },
       ],
-      form: [
-        //右侧修改信息表单对象
-        { type: "select", title: "类型", prop: "moduleType", value: '',
-          options: [
-            {
-              value: 1,
-              label: '根节点',
-              disabled: true,
-            },
-            {
-              value: 2,
-              label: '子系统',
-              disabled: true,
-            },
-            {
-              value: 3,
-              label: '菜单'
-            },
-            {
-              value: 4,
-              label: '按钮'
-            }
-          ]
-        },
-        { type: "input", title: "名称", prop: "moduleName", value: "" },
-        { type: "input", title: "子系统编码", prop: "sysCode", value: "", disabled: true},
-        { type: "input", title: "菜单编码", prop: "moduleCode", value: "" },
-        { type: "input", title: "路由英文名", prop: "moduleNameEn", value: "",
-          placeholder: '前端路由名称'
-        },
-        {
-          type: "input",
-          title: "图标类名",  
-          prop: "moduleIcon",
-          value: "",
-          placeholder: 'CSS图标类名'
-        },
-        { type: "input", prop: "sort", value: "", title: "排序值" },
-        {
-          type: "switch",
-          prop: "isSensitivity",
-          value: false,
-          title: "是否敏感操作"
-        },
-        { type: "switch", prop: "isShow", value: true, title: "是否启用" },
-        { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
-      ],
+      // 1: 根节点 2: 子系统 3: 菜单 4: 按钮
+      config: {
+        '1': [
+          { type: "input", title: "名称", prop: "moduleName", value: "" },
+          { type: "input", title: "路由名称", prop: "moduleCode", value: "" },
+          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
+        ],
+        '2': [
+          { type: "input", title: "名称", prop: "moduleName", value: "" },
+          { type: "input", title: "子系统名称", prop: "sysCode", value: "" },
+          { type: "input", title: "路由名称", prop: "moduleCode", value: "" },
+          { type: "input", prop: "sort", value: "", title: "排序值" },
+          {
+            type: "switch",
+            prop: "isSensitivity",
+            value: false,
+            title: "是否敏感操作"
+          },
+          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
+        ],
+        '3': [
+          { type: "input", title: "名称", prop: "moduleName", value: "" },
+          { type: "input", title: "路由名称", prop: "moduleCode", value: "" },
+          {
+            type: "input",
+            title: "图标类名",  
+            prop: "moduleIcon",
+            value: "",
+            placeholder: 'CSS图标类名'
+          },
+          { type: "input", prop: "sort", value: "", title: "排序值" },
+          {
+            type: "switch",
+            prop: "isSensitivity",
+            value: false,
+            title: "是否敏感操作"
+          },
+          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
+        ],
+        '4': [
+          { type: "input", title: "名称", prop: "moduleName", value: "" },
+          { type: "input", title: "按钮名称", prop: "moduleCode", value: "" },
+          {
+            type: "switch",
+            prop: "isSensitivity",
+            value: false,
+            title: "是否敏感操作"
+          },
+          { type: "switch", prop: "isShow", value: true, title: "是否启用" },
+          { type: "textarea", title: "描述", prop: "moduleDesc", value: "" },
+        ]
+      },
+      menuTypeForm: [{ type: "select", title: "类型", prop: "moduleType", value: 1,
+        options: [
+          {
+            value: 1,
+            label: '根节点',
+          },
+          {
+            value: 2,
+            label: '子系统',
+          },
+          {
+            value: 3,
+            label: '菜单',
+          },
+          {
+            value: 4,
+            label: '按钮',
+          }
+        ]
+      },],
+      form: [],
       rules: {
-        //验证对象
-        minMultiple: [
+        moduleType: [
+          {
+            required: true,
+            message: "请选择菜单类型",
+            trigger: 'change'
+          }
+        ],
+        moduleName: [
           {
             required: true,
             message: "请输入名称"
           }
         ],
-        mixBet: [
+        sysCode: [
           {
             required: true,
-            message: "请输入路径"
+            message: "请输入子系统名称"
           }
         ],
-        bet: [
+        moduleCode: [
           {
             required: true,
-            message: "请输入路由英文名"
+            message: "请输入路由名称"
           }
         ],
-        logOff: [
-          {
-            required: true,
-            message: "请选择图标"
-          }
-        ],
-        textarea: [
+        sort: [
           {
             required: true,
             message: "请输入排序值"
           }
-        ]
+        ],
       },
-      
-
     };
   },
   watch: {
     menuData() {
       this.setCtrlBtnStatus()
+    },
+    menuType(val) {
+      this.form = this.config[val];
+      // 设置菜单类型选择项
+      const menuTypeForm = this.menuTypeForm[0];
+      this.$set(menuTypeForm, 'value', val);
+      menuTypeForm.options.forEach(item => {
+        this.$set(item, 'disabled', false);
+      })
+      const options = menuTypeForm.options;
+      switch (val) {
+        case 1:
+          this.$set(options[1], 'disabled', true);
+          this.$set(options[2], 'disabled', true);
+          this.$set(options[3], 'disabled', true);
+          break;
+        case 2:
+          this.$set(options[0], 'disabled', true);
+          this.$set(options[2], 'disabled', true);
+          this.$set(options[3], 'disabled', true);
+          break;
+        case 3:
+          this.$set(options[0], 'disabled', true);
+          this.$set(options[1], 'disabled', true);
+          break;
+        case 4:
+
+          break;
+      }
     }
   },
   created() {
-    this.getMenuList();
+    (async () => {
+      await this.getMenuList();
+      if (!this.menuData.length) {
+        this.menuType = 1;
+        this.form = this.config[1];
+        return;
+      }
+      this.currentMenuId = this.menuData[0].id;
+      this.menuType = 2;
+      this.form = this.config[2];
+    })()
   },
-  mounted() {},
+  mounted() {
+    
+  },
   
   methods: {
     async getMenuList() {
@@ -199,85 +275,106 @@ export default {
         this.form.forEach(item => {
           this.$set(item, 'value', res.data[item.prop])
         })
-        this.$set(this.form[0], 'disabled', true);
+        this.menuTypeForm.forEach(item => {
+          this.$set(item, 'value', res.data[item.prop])
+        })
       }
     },
     // 设置头部按钮状态
     setCtrlBtnStatus() {
-      if (this.menuData.length) {
-        this.$set(this.controlOptions[0], 'disabled', true);
+      if (this.$refs.tree.getCheckedKeys().length) {
+        this.$set(this.controlOptions[1], 'disabled', false);
       } else {
         this.$set(this.controlOptions[1], 'disabled', true);
       }
-      if (this.$refs.tree.getCheckedKeys().length) {
-        this.$set(this.controlOptions[2], 'disabled', false);
+      if (this.menuData.length) {
+        this.$set(this.controlOptions[0], 'disabled', true);
       } else {
-        this.$set(this.controlOptions[2], 'disabled', true);
+        this.$refs.tree.getCheckedKeys().length = 0;
+        this.$set(this.controlOptions[0], 'disabled', false);
       }
     },
-    async submit() {
-      // let reslt = await this.$api.UpdateModule({ data }); //更改节点
-      const data = {
-        ...this.$refs.baseForm.form
-      };
-      let apiName = 'SaveModule';
-      let message = '新增成功'
-      if (!this.isEdit) {
-        
-      } else {
-        data.moduleId = this.currentMenuId;
-        console.log(data.parentId)
-        apiName = 'UpdateModule';
-        message = '编辑成功'
-      }
-      const res = await this.$api[apiName]({
-        message,
-        data
+    // type 1: 根节点 2: 子系统 3: 菜单 4: 按钮
+    submit(type) {
+      this.$refs.baseForm.validate(async val => {
+        if (val === 'true') {
+          const data = {
+            ...this.$refs.baseForm.form,
+            moduleType: this.menuType
+          };
+          let apiName = 'SaveModule';
+          let message = '新增成功'
+          if (this.isEdit) {
+            data.moduleId = this.currentMenuId;
+            apiName = 'UpdateModule';
+            message = '编辑成功'
+          }
+          if (type !== 1) {
+            data.parentId = this.currentMenuId;
+          }
+          const res = await this.$api[apiName]({
+            message,
+            data
+          });
+          if (res && res.code == 0) {
+            setTimeout(() => {
+              this.getMenuList();
+            }, 1500)
+          }
+        }
       });
-      if (res && res.code == 0) {
-        this.getMenuList();
-      }
     },
     cancel() {
-      this.getMenuDetail(this.currentMenuId);
+      if (this.currentMenuId) {
+        this.getMenuDetail(this.currentMenuId);
+      }
+      this.$refs.baseForm.resetForm();
     },
 
     checkChange() {
-      console.log('getCheckedKeys', this.$refs.tree.getCheckedKeys())
       this.setCtrlBtnStatus();
     },
 
-    treeChange(val) {
-      //更改节点信息change事件
-      console.log("更改节点信息change事件", val);
+    formChange(form) {
+
+    },
+    menuTypeFormChange(form) {
+      this.menuType = form.moduleType;
+    },
+    
+    // 清空表单数据
+    clearForm() {
+      this.form.forEach(item => {
+        item.value = '';
+      })
+      this.$refs.baseForm.resetForm();
     },
     // 新增
     async add(node, data) {
       this.isEdit = false;
       this.currentMenuId = data.id;
+      this.menuType = data.type;
+      switch (data.type) {
+        case 1:
+          this.menuType = 2;
+          break;
+        case 2:
+        case 3:
+          this.menuType = 3;
+          break;
+      }
+      this.clearForm();
+      this.$set(this.menuTypeForm[0], 'disabled', false)
     },
     // 编辑
     async edit(node, data) {
       this.getMenuDetail(data.id);
       this.isEdit = true;
       this.currentMenuId = data.id;
-      switch (data.type) {
-        // 根节点
-        case 1:
-          
-          break;
-        // 子系统
-        case 2:
-          this.$set(this.controlOptions[2], 'value', 2);
-          break;
-        // 菜单
-        case 3:
-          break;
-        // 按钮
-        case 4:
-          break;
-      }
+      this.menuType = data.type;
+      this.$set(this.menuTypeForm[0], 'disabled', true)
     },
+    
     remove(node, data) {
       this.$confirm("此操作将永久删除该节点, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -295,29 +392,18 @@ export default {
             moduleIdList
           }
         });
-        if (res && res.code === 0) {
-          this.getMenuList()
+        if (res && res.code == 0) {
+          setTimeout(() => {
+            this.getMenuList();
+          }, 1500)
         }
       })
     },
     // 操作
     operation(val) {
-      switch (val.id) {
-        // 添加根节点
-        case 1:
-          this.$set(this.form[0], 'disabled', true);
-          this.$set(this.form[0], 'value', 1);
-          this.$set(this.form[2], 'destroy', true);
-          break;
-        // 添加子系统
-        case 2:
-          this.$set(this.form[0], 'disabled', true);
-          this.$set(this.form[0], 'value', 2);
-          break;
-        // 批量删除
-        case 3:
-          this.remove();
-          break;
+      this.menuType = val.id
+      if (val.id === -1) {
+        this.remove();
       }
     }
 

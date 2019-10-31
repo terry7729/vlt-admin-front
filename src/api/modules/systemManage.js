@@ -8,7 +8,7 @@ export default {
   // 例
   //菜单管理页面
   //菜单树查询
-  QueryModuleTree: (options = {}) => ajax.post('/module/queryModuleTree/VLT_BMS', options),
+  QueryModuleTree: (options = {}) => ajax.post('/module/queryModuleTree', options),
   //菜单详情
   QueryModuleDetail: (options = {}) => ajax.post('/module/queryModuleDetail', options),
   //新增菜单
