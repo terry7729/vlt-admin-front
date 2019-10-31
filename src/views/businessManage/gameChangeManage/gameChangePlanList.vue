@@ -15,16 +15,16 @@
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange">
-      <el-table-column label="序号" type="index" width="55"></el-table-column>
-      <el-table-column prop="id" label="变更计划ID"></el-table-column>
-      <el-table-column prop="changePlanName" label="变更计划名称"></el-table-column>
-      <el-table-column prop="gameName" label="游戏名称"></el-table-column>
-      <el-table-column prop="gameSaleArea" label="销售区域"></el-table-column>
-      <el-table-column prop="changePlanStatus" label="计划状态">
+      <el-table-column label="序号" fixed type="index" width="55"></el-table-column>
+      <el-table-column prop="id" label="变更计划ID" min-width="90px"></el-table-column>
+      <el-table-column prop="changePlanName" label="变更计划名称" min-width="160px"></el-table-column>
+      <el-table-column prop="gameName" label="游戏名称" min-width="120px"></el-table-column>
+      <el-table-column prop="gameSaleArea" label="销售区域" min-width="160px"></el-table-column>
+      <el-table-column prop="changePlanStatus" label="计划状态" min-width="120px">
         <template slot-scope="scope">{{translateChangeStatus(scope.row.changePlanStatus)}}</template>
       </el-table-column>
-      <el-table-column prop="createBy" label="创建人"></el-table-column>
-      <el-table-column prop="createTime" label="创建时间"></el-table-column>
+      <el-table-column prop="createBy" label="创建人" min-width="120px"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" min-width="160px"></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
           <el-button

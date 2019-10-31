@@ -100,12 +100,12 @@ export default {
       this.param = Object.assign(this.param, val)
       if (this.active++ > 3) this.active = 0;
       if(val.gameChangePlanVo) {
-        this.listPlanId = val.gameChangePlanVo.listPlanId.value
-        this.gameId = val.gameChangePlanVo.listPlanId.gameId
-        this.param.gameChangePlanVo.gameId = val.gameChangePlanVo.listPlanId.gameId
+        // this.listPlanId = val.gameChangePlanVo.listPlanId.value
+        this.gameId = val.gameChangePlanVo.gameId
+        // this.param.gameChangePlanVo.gameId = val.gameChangePlanVo..gameId
         const data = {
-          id: val.gameChangePlanVo.listPlanId.value,
-          gameId: val.gameChangePlanVo.listPlanId.gameId
+          id: 0,
+          gameId: val.gameChangePlanVo.gameId
         };
         this.getMarketPlanDetail(data)
       }

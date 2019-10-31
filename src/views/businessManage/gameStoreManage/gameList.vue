@@ -17,7 +17,7 @@
       style="width: 100%"
       @selection-change="handleSelectionChange">
       <el-table-column label="序号" type="index" fixed width="55"></el-table-column>
-      <el-table-column prop="gameId" label="游戏ID" min-width="100px"></el-table-column>
+      <el-table-column prop="gameId" label="游戏ID" min-width="80px"></el-table-column>
       <el-table-column prop="gameName" label="游戏名称" min-width="120px"></el-table-column>
       <el-table-column label="游戏类型" min-width="100px">
         <template slot-scope="scope">{{translateGameType(scope.row.gameType)}}</template>
@@ -39,7 +39,7 @@
       <el-table-column label="最近更新时间" min-width="160px">
         <template slot-scope="scope">{{translateTime(scope.row.updateTime)}}</template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="150">
+      <el-table-column fixed="right" label="操作" min-width="150px">
         <template slot-scope="scope">
           <el-button
             type="primary"
