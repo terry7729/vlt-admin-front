@@ -21,6 +21,8 @@ export default {
   //组织架构
   //机构树菜单
   QueryInsTree: (options = {}) => ajax.post('/ins/queryInsTree', options),
+  //机构树菜单--用户新增
+  queryUserAndInsTree:(options = {}) => ajax.post('/ins/queryUserAndInsTree', options),
   //查询机构详情
   QueryInsInfo: (options = {}) => ajax.post('/ins/queryInsInfo', options),
   //添加机构
@@ -63,16 +65,19 @@ export default {
   userPage: (options = {}) => ajax.post('/vlt/user/query/page', options),
   //用户详情
   getUserDestils: (options = {}) => ajax.get("/vlt/user/query", options),
+
+  //上传接口
+  uploadFile: (options = {}) => ajax.post("/user/uploading", options),
   //密码重置
   restPassWord: (options = {}) => ajax.post("/vlt/user/resetPass", options),
   //所有用户信息
   getUserAll: (options = {}) => ajax.post('/vlt/user/getAllUser', options),
   //用户状态
-  userStatus:(options = {}) => ajax.post('/vlt/user/status',options),
+  userStatus: (options = {}) => ajax.post('/vlt/user/status', options),
   //用户删除
-  delByIds:(options = {}) => ajax.post('/vlt/user/delByIds',options),
+  delByIds: (options = {}) => ajax.post('/vlt/user/delByIds', options),
   //用户编缉
-  userEdit:(options = {}) => ajax.post('/vlt/user/edit',options),
+  userEdit: (options = {}) => ajax.post('/vlt/user/edit', options),
 
 
 
