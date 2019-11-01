@@ -312,26 +312,24 @@ export default {
       const self = this;
       const data = this.params;
       console.log("请求的数据", data);
-      (async data => {
-        let res = await self.$api.createDevelopPlan({ data });
-        if (res && res.code == 0) {
-          self.$message.success("提交成功");
-          setTimeout(() => {
-            self.$router.push({ name: "developmentPlan" });
-          }, 500);
-        } else {
-          // self.$message.warning(res.msg)
-        }
-      })(data);
+      // (async data => {
+      //   let res = await self.$api.createDevelopPlan({ data });
+      //   if (res && res.code == 0) {
+      //     self.$message.success("提交成功");
+      //     setTimeout(() => {
+      //       self.$router.push({ name: "developmentPlan" });
+      //     }, 500);
+      //   } else {
+      //     // self.$message.warning(res.msg)
+      //   }
+      // })(data);
     },
     changeForm(val) {
-      // console.log('派发出来的参数', val)
       this.params = Object.assign(this.params, val);
       // console.log('派发出来的参数',this.params);
       if (this.params.planDate) {
         this.params.planDate = moment(this.params.planDate).format("YYYY");
       }
-
       // const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
       // console.log(instArr)
     },
