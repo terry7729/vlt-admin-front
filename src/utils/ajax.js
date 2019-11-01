@@ -7,8 +7,7 @@ import {
   Loading
 } from "element-ui";
 axios.defaults.timeout = 60000;
-axios.defaults.headers.common["Content-Type"] =
-  "application/json;charset=UTF-8";
+axios.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
 
 switch (process.env.VUE_APP_MODE) {
   // 生产环境

@@ -1,152 +1,60 @@
 <template>
-  <!-- 型号管理修改页面 -->
+  <!-- 型号管理配件修改页面 -->
   <div class="vlt-card modelAdd-page">
     <div class="vlt-edit-single">
       <div class="vlt-edit-wrap">
-        <span class="goods-cate">物品类别</span>
-        <el-form class="goods">
-          <el-form-item>
-            <el-select
-              v-model="selectValue"
-              placeholder="请选择"
-              @change="changeOption"
-              :disabled="true"
-            >
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <div v-if="this.selectValue === '设备'">
-          <span class="goods-cate">设备类型</span>
-          <el-form class="goods">
-            <el-form-item>
-              <el-select
-                v-model="formParms.typeOption"
-                placeholder="请选择"
-                @change="changeTypeOption"
-              >
-                <el-option
-                  v-for="item in typeOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div v-if="this.selectValue === '设备'">
-          <span class="goods-cate">设备名称</span>
-          <el-form class="goods">
-            <el-form-item>
-              <el-select
-                placeholder="请选择"
-                v-model="formParms.nameOption"
-                @change="changeOption"
-                :disabled="falg?false:true"
-              >
-                <el-option
-                  v-for="item in nameOption"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-        </div>
-        <el-form
-          v-if="this.selectValue === '设备'"
-          label-position="right"
-          label-width="90px"
-          :model="form1"
-          ref="form1"
+        <test-form
+          :options="formData"
+          ref="baseForm"
+          labelWidth="140px"
+          :rules="rules"
+          direction="right"
+          @change="changeForm"
         >
-          <base-form
-            :formData="equipmentData"
-            labelWidth="140px"
-            ref="baseForm"
-            :rules="rules2"
-            direction="right"
-            @change="changeForm"
-          ></base-form>
-          <el-form-item label="上传图片" class="upLoadImg">
-            <el-upload
-              class="gameIcon-uploader"
-              action
-              :limit="3"
-              accept=".png, .jpg, .jpeg"
-              :show-file-list="false"
-              :on-remove="handleRemove"
-              :http-request="uploadFileImg"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="gameIcon" />
-              <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
-            </el-upload>
-          </el-form-item>
-        </el-form>
-        <el-form v-else label-position="right" label-width="90px" :model="form2" ref="form2">
-          <base-form
-            :formData="mountingsData"
-            labelWidth="140px"
-            ref="baseForm"
-            :rules="rules2"
-            direction="right"
-            @change="changeForm"
-          ></base-form>
-
-          <span class="goods-cate">可用机型</span>
-          <el-form-item class="typeSelect" v-for="(ele, index) in modelAvailablesList" :key="index">
-            <el-select
-              v-model="ele.deviceId"
-              placeholder="请选择设备名称"
-              @change="changeDeviceId(ele.deviceId, index)"
-            >
-              <el-option
-                v-for="(item,index) in ele.nameOptions"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <el-select v-model="ele.modelId" placeholder="请选择设备型号">
-              <el-option
-                v-for="(item,index) in ele.modelOptions.options"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-            <i class="el-icon-close" @click="clearDevice(index)" v-if="index > 0"></i>
-          </el-form-item>
-          <el-form-item>
+          <div slot="device">
+            <div class="typeSelect" v-for="(ele, index) in modelAvailablesList" :key="index">
+              <el-select
+                v-model="ele.goodsId"
+                placeholder="请选择设备名称"
+                @change="changeDeviceId(ele.goodsId, index)"
+              >
+                <el-option
+                  v-for="(item,index) in nameOptions"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+              <el-select v-model="ele.modelId" placeholder="请选择设备型号">
+                <el-option
+                  v-for="(item,index) in ele.modelOptions"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+              <i class="el-icon-close" @click="clearDevice(index)" v-if="index > 0"></i>
+            </div>
             <p class="add-btn" @click="addMochine">
               <i class="el-icon-plus"></i>
               <span>新增设备</span>
             </p>
-          </el-form-item>
-          <el-form-item label="上传图片" class="upLoadImg">
-            <el-upload
-              class="gameIcon-uploader"
-              action
-              :limit="3"
-              accept=".png, .jpg, .jpeg"
-              :show-file-list="false"
-              :on-remove="handleRemove"
-              :http-request="uploadFileImg"
-            >
-              <img v-if="imageUrl" :src="imageUrl" class="gameIcon" />
-              <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
-              <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
-            </el-upload>
-          </el-form-item>
-        </el-form>
+          </div>
+          <el-upload
+            slot="upload"
+            class="gameIcon-uploader"
+            action
+            :limit="3"
+            accept=".png, .jpg, .jpeg"
+            :show-file-list="false"
+            :on-remove="handleRemove"
+            :http-request="uploadFileImg"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="gameIcon" />
+            <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png/jpeg文件，且不超过500kb</div>
+          </el-upload>
+        </test-form>
         <el-row class="vlt-edit-btn">
           <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -158,60 +66,84 @@
 
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
+
 export default {
-name: "modelModification",
-data() {
-return {
-  selectValue:1,
-  value:'',
-  options:[
-    {value:1,label:'设备'},
-    {value:2,label:'配件'}
-  ],
-   //可用机型选择框
-  nameOptions:[
-    {label:'',value:'1'},
-    {label:'',value:'2'},
-  ],
-  modelOptions:[
-    {label:'',value:'3'},
-    {label:'',value:'4'},
-  ],
-  params:'',
-  form1:{},
-  form2:{},
-  dialogImageUrl: '',
-  dialogVisible: false,
-  equipmentData:[
-    // {title:'物品类别',type:'select',prop:'goodsCategory',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'设备名称',type:'select',prop:'goodsName',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'设备型号',type:'input',prop:'deviceModel', value:''},
-    {title:'设备单价',type:'input',prop:'unitPrice',value:''},
-    {title:'供应商',type:'select',prop:'providerId',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'预警上限',type:'input',prop:'upperLimit', value:''},
-    {title:'预警下限',type:'input',prop:'lowerLimit', value:''},
-    {title:'厂家信息',type:'input',prop:'manufactorInfo', value:''},
-    {title:'备注',type:'textarea',prop:'remark',value:''},
-  ],
-  mountingsData:[
-    {title:'配件名称',type:'select',prop:'fittingsName',options:[{label:'',value:''},{label:'',value:''}]},
-    {title:'配件型号',type:'input',prop:'fittingsModel',value:''},
-    {title:'配件单价',type:'input',prop:'fittingsPrice',value:''},
-    {title:'供应商',type:'select',prop:'supplier',options:[{label:'',value:''},{label:'',value:''}]},
-  ],
-  rules2: {
-        equipmentName: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        equipmentPrice: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        upperLimit: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        lowerLimit: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ]
+  name: "modelModification",
+  data() {
+    return {
+      formData: [],
+      type: 0,
+      fitting: "",
+      //selectValue: $route.query.modelType,
+      modelAvailablesList: [],
+      nameOptions: [],
+      falg: false,
+      typeList: "",
+      selectValue: this.$route.query.modelType,
+      value: "",
+      options: [{ value: 1, label: "设备" }, { value: 2, label: "配件" }],
+      //可用机型选择框
+      // nameOptions: [{ label: "", value: "1" }, { label: "", value: "2" }],
+      // modelOptions: [{ label: "", value: "3" }, { label: "", value: "4" }],
+      params: "",
+      formParms: {
+        nameOption: "",
+        typeOption: 1
+      },
+      typeOption: [
+        { label: "终端机", value: 1 },
+        { label: "柜员机", value: 2 },
+        { label: "其他", value: 3 }
+      ],
+      nameOption: [],
+      options: [
+        {
+          title: "物品类别",
+          type: "select",
+          prop: "goodsType",
+          value: 2,
+          disabled: true,
+          options: [{ label: "设备", value: 1 }, { label: "配件", value: 2 }]
+        },
+        {
+          title: "配件名称",
+          type: "select",
+          prop: "goodsId",
+          value: "",
+          options: []
+        },
+        { title: "配件型号", type: "input", prop: "deviceModel", value: "" },
+        { title: "配件单价", type: "input", prop: "unitPrice", value: "" },
+        {
+          title: "供应商",
+          type: "select",
+          prop: "providerId",
+          value: "",
+          options: [
+            { label: "供应商1", value: 1 },
+            { label: "供应商2", value: 2 }
+          ]
+        },
+        { title: "可用机型", type: "slot", prop: "slot", slotName: "device" },
+        { title: "预警上限", type: "input", prop: "upperLimit", value: "" },
+        { title: "预警下限", type: "input", prop: "lowerLimit", value: "" },
+        { title: "厂家信息", type: "input", prop: "manufactorInfo", value: "" },
+        { title: "上传图片", type: "slot", prop: "slot", slotName: "upload" },
+        { title: "备注", type: "textarea", prop: "remark", value: "" }
+      ],
+      rules: {
+        // equipmentName: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ],
+        // equipmentPrice: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ],
+        // upperLimit: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ],
+        // lowerLimit: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ]
       },
       fileList: [
         {
@@ -233,82 +165,73 @@ return {
       goodsId: "",
       files: "",
       status: "",
-      initArr: []
+      initArr: [],
+      useDeviceData: [],
+      param: {},
+      deviceParam: {}
     };
   },
-  components: {},
-  computed: {},
+  watch: {
+    modelAvailablesList: {
+      handler(newValue, oldValue) {
+        let res = JSON.parse(JSON.stringify(newValue));
+        let params = [];
+        res.forEach(item => {
+          // 保留你需要的参数
+          if (item.id) {
+            let param = (({ modelId, id }) => ({
+              modelId,
+              id
+            }))(item);
+            params.push(param);
+          } else {
+            let param = (({ modelId }) => ({
+              modelId
+            }))(item);
+            params.push(param);
+          }
+        });
+        this.deviceParam = params;
+        console.log("params", params);
+      },
+      // 深度监听 监听对象，数组的变化
+      deep: true
+    }
+  },
   async created() {
     //获取详情数据 回显
-    let id = this.$route.query.id;
-    let result = await this.$api.modelDetail({ data: id });
-    this.files = result.data.goodsModelVo.files;
-
-    this.status = result.data.goodsModelVo.status;
-
-    this.formParms.nameOption = result.data.goodsModelVo.id;
-
-    this.equipmentData.forEach(item => {
-      item.value = result.data.goodsModelVo[item.prop];
-    });
-
-    if (this.selectValue === "配件") {
+    this.formData = this.options;
+    // this.goodsNameList();
+    this.getModelTrees(2);
+    this.getModelTrees(1);
+  },
+  methods: {
+    init() {},
+    //获取配件的详情
+    async modelDetail() {
+      const self = this;
       let id = this.$route.query.id;
       let result = await this.$api.modelDetail({ data: id });
       this.goodsId = result.data.goodsModelVo.goodsId;
-
-      result.data.goodsModelVo.modelAvailablesList.forEach(item => {
-        this.initArr.push({
+      result.data.goodsModelVo.modelAvailablesList.forEach((item, index) => {
+        this.modelAvailablesList.push({
           id: item.id,
-          modelId: item.modelId
+          goodsId: item.goodsId,
+          modelId: item.modelId,
+          nameOptions: this.nameOptions,
+          modelOptions: []
         });
+        self.changeDeviceId(item.goodsId, index);
       });
       console.log(result.data.goodsModelVo.modelAvailablesList);
       console.log("this.initArr", this.initArr);
-      this.mountingsData.forEach(item => {
+      this.options.forEach(item => {
         item.value = result.data.goodsModelVo[item.prop];
+        if (item.prop == "goodsType") {
+          item.value = result.data.goodsType;
+        }
       });
-    }
-    //获取设备名称数据
-    this.goodsType = result.data.goodsType;
-    this.goodsNameList();
-    this.fittingNameList();
-    this.getModelTrees();
-  },
-  methods: {
-    //获取机型数据
-    async getModelTrees() {
-      if (this.goodsType === 2) {
-        let data = {
-          goodsType: 1
-        };
-        let res = await this.$api.getModelTrees({ data });
-        let options = [];
-        res.data.forEach(item => {
-          if (item.modelInfoVoList.length > 0) {
-            options.push({
-              label: item.goodsName,
-              value: item.id
-            });
-          }
-        });
-        this.modelAvailablesList[0].nameOptions = options;
-
-        options.forEach(item => {
-          this.modelAvailablesList[0].nameOptions.value = item.value;
-        });
-
-        this.modelAvailablesList[0].nameOptions.value = this.goodsId;
-        // console.log(
-        //   "------",
-        //   this.modelAvailablesList[0].nameOptions,
-        //   this.goodsId
-        // );
-        this.deviceDatas = res.data.filter(item => {
-          return item.modelInfoVoList.length > 0;
-        });
-        // console.log(res);
-      }
+      this.status = result.data.status;
     },
 
     // changeOption() {
@@ -325,7 +248,8 @@ return {
 
     //可选机型change事件
     changeDeviceId(id, index) {
-      this.deviceDatas.forEach(item => {
+      const self = this;
+      this.useDeviceData.forEach(item => {
         if (item.id == id) {
           let option = [];
           if (item.modelInfoVoList.length > 0) {
@@ -335,23 +259,21 @@ return {
                 value: item.modelInfoVoList[i].modelId
               });
             }
-            this.$set(
-              this.modelAvailablesList[index].modelOptions,
-              "options",
-              option
-            );
-            this.modelAvailablesList[index].modelId =
-              item.modelInfoVoList[0].modelId;
-            this.modelAvailablesList[index].modelOptions.options[0].label =
-              item.modelInfoVoList[0].deviceModel;
+            // debugger;
+            // this.modelOptions = option;
+            self.$set(self.modelAvailablesList[index], "modelOptions", option);
+            // this.modelAvailablesList[index].modelId =
+            //   item.modelInfoVoList[0].modelId;
+            // this.modelAvailablesList[index].modelOptions.options[0].label =
+            //   item.modelInfoVoList[0].deviceModel;
 
-            console.log(
-              "modelOptions",
-              this.modelAvailablesList[index].modelOptions.options[0].value,
-              item.modelInfoVoList[0].deviceModel,
-              item.modelInfoVoList
-            );
-            this.modelAvailablesList[index].modelOptions.options[0].value = "";
+            // console.log(
+            //   "modelOptions",
+            //   this.modelAvailablesList[index].modelOptions.options[0].value,
+            //   item.modelInfoVoList[0].deviceModel,
+            //   item.modelInfoVoList
+            // );
+            // this.modelAvailablesList[index].modelOptions.options[0].value = "";
           } else {
             this.modelAvailablesList[index].modelId = "";
             this.$set(
@@ -363,39 +285,28 @@ return {
         }
       });
     },
-    async goodsNameList() {
-      let data = { goodsType: this.goodsType };
+    // 获取物品名称列表
+    async getModelTrees(goodsType) {
+      let data = { goodsType };
       let res = await this.$api.getModelTrees({ data });
-      let info = res.data;
-      info.forEach(item => {
-        // console.log(item);
-      });
-      // console.log(res);
-      this.goodsId = res.data.id;
-      let hi = res.data;
-      let arr = hi.map(item => {
-        return { label: item.goodsName, value: item.id };
-      });
-      this.nameOption = arr;
-
-      this.change(1);
-    },
-    async fittingNameList() {
-      let data = { goodsType: this.goodsType };
-      let res = await this.$api.getModelTrees({ data });
-      let hi = res.data;
-      // console.log(hi);
-      let arr = hi.map(item => {
-        return { label: item.goodsName, value: item.id };
-      });
-      // console.log("rrr", arr);
-      this.mountingsData[0].options = arr;
-      let obj = arr.forEach(item => {
-        this.mountingsData[0].value = item.value;
-      });
-      // this.mountingsData[0].value = arr;
-      // console.log(this.mountingsData[0].value);
-      this.change(1);
+      if (goodsType == 1) {
+        this.useDeviceData = res.data;
+        let arr = res.data.map(item => {
+          return { label: item.goodsName, value: item.id };
+        });
+        // 用于可用机型的下拉框
+        this.nameOptions = arr;
+        // this.$set(this.modelAvailablesList[0], "nameOptions", arr);
+        this.modelDetail(); // 初始化
+      } else {
+        // 用于配件名称的下拉框
+        let deviceData = res.data;
+        // console.log(hi);
+        let arr = deviceData.map(item => {
+          return { label: item.goodsName, value: item.id };
+        });
+        this.$formMethods.set(this.options, "goodsId", "options", arr);
+      }
     },
     changeTypeOption(val) {
       this.change(val);
@@ -418,9 +329,7 @@ return {
       }
     },
     changeForm(val) {
-      // console.log(val);
-      this.list = val;
-      this.fitting = val;
+      this.param = this.$formMethods.get(val);
       // if (val.goodsTypes === 0) {
       //   this.$set(this.equipmentData[1], "disabled", true);
       // } else if (val.goodsTypes === 1) {
@@ -450,108 +359,48 @@ return {
         }
       });
       console.log("uploadFile", res);
+      this.files = res.data.filePath;
       this.imgUrl = res.data.filePath;
     },
     // 上传文件超出个数
     handleExceed(files, fileList) {},
     //提交保存
     async submit() {
-      if (this.selectValue === "设备") {
-        let info = this.list;
-        let id = this.$route.query.id;
-        console.log(id);
-        let type = {
-          deviceType: this.type
-        };
-        let data = {
-          ...info,
-          ...type,
-          id,
-          goodsId: this.formParms.nameOption,
-          files: this.files,
-          status: this.status
-        };
-        console.log(data);
-        let res = await this.$api.modelWrite({ message: "设备修改成功", data });
-        this.$router.push({ basicInfoManage });
-        console.log(res);
-      } else {
-        let modelAvailablesList = [];
-        console.log("----", this.initArr);
-        this.modelAvailablesList.forEach((item, index) => {
-          if (index == 0) {
-            // if (this.initId == item.modelId) {
-            //   modelAvailablesList.push({
-            //     id: this.initId
-            //   });
-            // } else {
-            //   modelAvailablesList.push({
-            //     id: this.initId,
-            //     modelId: item.modelId
-            //   });
-            // }
-          } else {
-            // modelAvailablesList.push({
-            //   modelId: item.modelId
-            // });
-          }
-        });
-
-        let data = this.fitting;
-        data.goodsId = this.formParms.nameOption;
+      this.$refs.baseForm.validate(res => {
+        let data = this.param;
+        data.id = this.$route.query.id;
         data.files = this.files;
         data.status = this.status;
-        data.modelAvailablesList = modelAvailablesList;
+        delete data.slot;
+        data.modelAvailablesList = this.deviceParam;
+        console.log(data);
+        this.modelWrite(data);
+      });
+    },
 
-        console.log(data, modelAvailablesList);
-      }
-      // this.$refs["baseForm"].validate(async valid => {
-      //   if (valid === "true") {
-      //     let data = this.params;
-      //     data.files = this.imgUrl.join(",");
-      //     let res = await this.$api.modelCreate({ data });
-      //     console.log(res);
-      //     if (res || res.code == 0) {
-      //       this.$message({
-      //         message: "新增成功",
-      //         type: "success"
-      //       });
-      //       this.$router.push({ path: "basicInfoManage" });
-      //     }
-      //   }
-      // });
-      // this.$refs[form].validate(async valid => {
-      //     if (valid) {
-      //     // 表单验证通过后使用组件自带的方法触发上传事件
-      //       this.$refs.upload.submit()
-      //     } else {
-      //       return false;
-      //     }
-      //   });
+    // 修改配件
+    async modelWrite(data) {
+      const self = this;
+      let result = await this.$api.modelWrite({ message: "修改成功", data });
+      this.$router.push("basicInfoManage");
+      console.log("result", result);
     },
-    cancel() {
-      this.$router.back();
-    },
+
     //新增机型点击事件
     addMochine() {
       if (this.modelAvailablesList.length > 0) {
-        let option = [];
-        for (let i = 0; i < this.deviceDatas.length; i++) {
-          option.push({
-            label: this.deviceDatas[i].goodsName,
-            value: this.deviceDatas[i].id
-          });
-        }
+        // let option = [];
+        // for (let i = 0; i < this.deviceDatas.length; i++) {
+        //   option.push({
+        //     label: this.deviceDatas[i].goodsName,
+        //     value: this.deviceDatas[i].id
+        //   });
+        // }
         const param = {
-          id:
-            this.modelAvailablesList[this.modelAvailablesList.length - 1].id +
-            1,
-          deviceId: "",
+          id: "",
           modelId: "",
-          nameOptions: option,
-          modelOptions: {
-            options: []
-          }
+          nameOptions: this.nameOptions,
+          modelOptions: []
         };
         this.modelAvailablesList.push(param);
         // console.log('add', this.modelAvailablesList, this.modelAvailablesList[this.modelAvailablesList.length - 1].id);
@@ -564,6 +413,7 @@ return {
       }
       this.modelAvailablesList.splice(index, 1);
     },
+    //取消
     cancel() {
       this.$router.back();
     }
@@ -590,15 +440,21 @@ return {
     margin-top: 20px;
   }
   .typeSelect {
-    margin-left: 52px;
-    margin-top: -16px;
+    display: flex;
+    align-items: center;
+  }
+  .el-icon-close {
+    position: absolute;
+    top: 15px;
+    right: -20px;
+    color: #333;
   }
   .add-btn {
     border: 1px dashed #ccc;
     text-align: center;
     height: 36px;
     line-height: 36px;
-    margin-left: 50px;
+    margin-top: 20px;
     width: 400px;
     cursor: pointer;
   }
