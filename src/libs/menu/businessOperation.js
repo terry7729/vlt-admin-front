@@ -1,277 +1,277 @@
 // 业务运营-左侧导航数据
 
 export default [{
-  childResources: [{
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "渠道账户列表",
-          url: 'accountList'
+  children: [{
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "渠道账户列表",
+          code: 'accountList'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "资金账户管理",
-          url: 'accountMoneyManage'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "资金账户管理",
+          code: 'accountMoneyManage'
         }
       ],
-      icon: "icon-chanpinfahang1",
-      name: "渠道账户",
-      url: 'screenWatch'
+      iconCls: "icon-chanpinfahang1",
+      text: "渠道账户",
+      code: 'screenWatch'
     },
 
     {
-      childResources: [{
-          icon: "el-icon-menu",
-          name: "角色管理",
-          url: 'roleManage'
+      children: [{
+          iconCls: "el-icon-menu",
+          text: "角色管理",
+          code: 'roleManage'
         },
         {
-          icon: "el-icon-menu",
-          name: "账户管理",
-          url: 'operationAccountManage'
+          iconCls: "el-icon-menu",
+          text: "账户管理",
+          code: 'operationAccountManage'
         }
       ],
-      icon: "icon-houtaiweihu",
-      name: "渠道角色权限维护",
-      url: 'PermissionMaintain'
+      iconCls: "icon-houtaiweihu",
+      text: "渠道角色权限维护",
+      code: 'PermissionMaintain'
     },
 
     {
-      childResources: [{
-          icon: "el-icon-menu",
-          name: "彩票兑奖",
-          url: 'lotteryTicket'
+      children: [{
+          iconCls: "el-icon-menu",
+          text: "彩票兑奖",
+          code: 'lotteryTicket'
         },
         {
-          icon: "el-icon-menu",
-          name: "兑奖设置",
-          url: 'expirySetting'
+          iconCls: "el-icon-menu",
+          text: "兑奖设置",
+          code: 'expirySetting'
         },
         {
-          icon: "el-icon-menu",
-          name: "兑奖处管理",
-          url: 'ticketOfficeManage'
+          iconCls: "el-icon-menu",
+          text: "兑奖处管理",
+          code: 'ticketOfficeManage'
         },
         {
-          icon: "el-icon-menu",
-          name: "中奖查询",
-          url: 'winningCheck'
+          iconCls: "el-icon-menu",
+          text: "中奖查询",
+          code: 'winningCheck'
         }
       ],
-      icon: "icon-daiduijiang",
-      name: "彩票兑奖管理",
-      url: 'LotteryManagement'
+      iconCls: "icon-daiduijiang",
+      text: "彩票兑奖管理",
+      code: 'LotteryManagement'
     },
 
     {
-      childResources: [{
-          icon: "el-icon-menu",
-          name: "会员等级管理",
-          url: 'MemberGradeManagement'
+      children: [{
+          iconCls: "el-icon-menu",
+          text: "会员等级管理",
+          code: 'MemberGradeManagement'
         },
         {
-          icon: "el-icon-menu",
-          name: "会员权益管理",
-          url: 'MemberEquityManagement'
+          iconCls: "el-icon-menu",
+          text: "会员权益管理",
+          code: 'MemberEquityManagement'
         },
         {
-          icon: "el-icon-menu",
-          name: "会员积分管理",
-          url: 'MemberIntegralManagement'
+          iconCls: "el-icon-menu",
+          text: "会员积分管理",
+          code: 'MemberIntegralManagement'
         },
       ],
-      icon: "icon-huiyuanguanli",
-      name: "会员管理",
-      url: 'MemberManagement'
+      iconCls: "icon-huiyuanguanli",
+      text: "会员管理",
+      code: 'MemberManagement'
     },
 
     // {
-    //   childResources: [{
-    //       icon: "el-icon-menu",
-    //       name: "资金日结算报表",
-    //       url: 'financialStatementDaySettle'
+    //   children: [{
+    //       iconCls: "el-icon-menu",
+    //       text: "资金日结算报表",
+    //       code: 'financialStatementDaySettle'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金日分配报表",
-    //       url: 'financialStatementDayAllocation'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金日分配报表",
+    //       code: 'financialStatementDayAllocation'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金日流向报表",
-    //       url: 'financialStatementDayFlow'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金日流向报表",
+    //       code: 'financialStatementDayFlow'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金月结算报表",
-    //       url: 'financialStatementMonthSettle'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金月结算报表",
+    //       code: 'financialStatementMonthSettle'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金月分配报表",
-    //       url: 'financialStatementMonthAllocation'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金月分配报表",
+    //       code: 'financialStatementMonthAllocation'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金月流向报表",
-    //       url: 'financialStatementMonthFlow'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金月流向报表",
+    //       code: 'financialStatementMonthFlow'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金年结算报表",
-    //       url: 'financialStatementYearSettle'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金年结算报表",
+    //       code: 'financialStatementYearSettle'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金年分配报表",
-    //       url: 'financialStatementYearAllocation'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金年分配报表",
+    //       code: 'financialStatementYearAllocation'
     //     },
     //     {
-    //       icon: "el-icon-menu",
-    //       name: "资金年流向报表",
-    //       url: 'financialStatementYearFlow'
+    //       iconCls: "el-icon-menu",
+    //       text: "资金年流向报表",
+    //       code: 'financialStatementYearFlow'
     //     },
     //   ],
-    //   icon: "icon-caiwubaobiao",
-    //   name: "财务报表",
-    //   url: 'financialStatement'
+    //   iconCls: "icon-caiwubaobiao",
+    //   text: "财务报表",
+    //   code: 'financialStatement'
     // },
 
 
     {
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "活动计划模板",
-          url: 'planTemplate'
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "活动计划模板",
+          code: 'planTemplate'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "活动计划管理",
-          url: 'planManage'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "活动计划管理",
+          code: 'planManage'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "活动执行管理",
-          url: 'executionManage'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "活动执行管理",
+          code: 'executionManage'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "活动效果评估",
-          url: 'activityResult'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "活动效果评估",
+          code: 'activityResult'
         }
       ],
-      icon: "icon-yingxiaotuiguang",
-      name: "品牌与营销推广",
-      url: ''
+      iconCls: "icon-yingxiaotuiguang",
+      text: "品牌与营销推广",
+      code: ''
     },
     {
-      childResources: [{
-        childResources: [],
-        icon: "el-icon-menu",
-        name: "客户账户列表",
-        url: 'customerAccount'
+      children: [{
+        children: [],
+        iconCls: "el-icon-menu",
+        text: "客户账户列表",
+        code: 'customerAccount'
       }],
-      icon: "icon-zhanghu1",
-      name: "客户账户",
-      url: 'customerAccount'
+      iconCls: "icon-zhanghu1",
+      text: "客户账户",
+      code: 'customerAccount'
     },
     {
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "充值记录",
-          url: 'rechargeRecord'
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "充值记录",
+          code: 'rechargeRecord'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "投注记录",
-          url: 'BettingRecord'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "投注记录",
+          code: 'BettingRecord'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "兑奖记录",
-          url: 'cashRecord'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "兑奖记录",
+          code: 'cashRecord'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "提现记录",
-          url: 'withdrawalRecords'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "提现记录",
+          code: 'withdrawalRecords'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "积分记录",
-          url: 'integralRecord'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "积分记录",
+          code: 'integralRecord'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "资金流水",
-          url: 'fundsStatement'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "资金流水",
+          code: 'fundsStatement'
         }
       ],
-      icon: "icon-gongsizhanghujilu",
-      name: "账户记录",
-      url: ''
+      iconCls: "icon-gongsizhanghujilu",
+      text: "账户记录",
+      code: ''
     },
 
     //责任彩票
     {
-      childResources: [{
-        childResources: [],
-        icon: "el-icon-menu",
-        name: "责任彩票列表",
-        url: 'dutyLottery'
+      children: [{
+        children: [],
+        iconCls: "el-icon-menu",
+        text: "责任彩票列表",
+        code: 'dutyLottery'
       }],
-      icon: "icon-zeren",
-      name: "责任彩票",
-      url: ''
+      iconCls: "icon-zeren",
+      text: "责任彩票",
+      code: ''
     },
 
     //公告信息发布
     {
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "素材管理",
-          url: 'materialManage'
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "素材管理",
+          code: 'materialManage'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "公告信息发布",
-          url: 'bulletinList'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "公告信息发布",
+          code: 'bulletinList'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "公告模板",
-          url: 'bulletinTemplate'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "公告模板",
+          code: 'bulletinTemplate'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "消息推送",
-          url: 'infoPush'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "消息推送",
+          code: 'infoPush'
         }
       ],
-      icon: "icon-xinxifabu-OA",
-      name: "公告信息发布",
-      url: 'bulletinList'
+      iconCls: "icon-xinxifabu-OA",
+      text: "公告信息发布",
+      code: 'bulletinList'
     },
 
 
   ],
-  icon: "el-icon-menu",
-  name: "业务运营",
-  url: 'businessOperation' // 前端路由名称
+  iconCls: "el-icon-menu",
+  text: "业务运营",
+  code: 'businessOperation' // 前端路由名称
 
 }, ]
