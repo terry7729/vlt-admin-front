@@ -375,13 +375,15 @@ export default {
         }
         return arr.concat(arr2)
     },
+
     async remove(node, date) {
       //机构状态冻结
       const self = this
       console.log(date)
       console.log(this.getId(date))
+    
 
-      this.$confirm(date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
+      this.$confirm(!date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -395,15 +397,16 @@ export default {
             console.log(reslt);
           if (reslt.code === 0) {
               this.init();
+             
               this.$message({
                 type: 'success',
-                message: '冻结成功!'
+                message: !date.status?'冻结成功!':'启用成功'
               });
           } 
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: data.status?'冻结失败':'解冻失败'
+            message: !date.status?'冻结失败':'解冻失败'
           });          
         });
 

@@ -211,7 +211,7 @@ export default {
   methods: {
 async init(val){
       let data  = {  
-       ...this.searchFrom,
+       param:{...this.searchFrom,},
         page:val||1,
         pageSize:this.pageSize,
       }

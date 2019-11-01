@@ -85,6 +85,7 @@
       <el-cascader  v-if="item.type=='cascader'" size="small" 
         @change="changeSelect"
         v-model="item.value" 
+        :ref="item.ref"
         :value="item.value" 
         :options="item.options" 
         :props="item.setProps"
@@ -101,6 +102,7 @@
       <el-cascader
         v-if="item.type=='cascader-multiple'"
         @change="changeSelect"
+         :ref="item.ref"
         v-model="item.value"
         :options="item.options"
         :props="item.setProps"
@@ -188,10 +190,10 @@ export default {
       handler(newValue,oldValue) {
         console.log('表单变化', newValue)
         // this.$refs.form.validate();
-        newValue&&newValue.forEach((item) => {
-          this.form[item.prop] = item.value;
-          console.log('form',this.form)
-        })
+        // newValue&&newValue.forEach((item) => {
+        //   this.form[item.prop] = item.value;
+        //   console.log('form',this.form)
+        // })
         
         // return newValue;
       },
