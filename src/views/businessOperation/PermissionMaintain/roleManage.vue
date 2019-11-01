@@ -232,7 +232,7 @@ export default {
       sycords: "",
       searchData: {
         page: 0,
-        pageSize: 0
+        pageSize: this.pageSize
       },
       //表单定义为空
       form: "",
@@ -293,7 +293,9 @@ export default {
       let search = this.searchData;
       delete param.roleManageCreateDate;
       let data = { ...search, param };
+      console.log(data);
       let result = await this.$api.getRole({ data });
+      console.log(result);
       if (result.code === 0) {
         this.roleManagetableData = result.data.records;
       }
@@ -341,7 +343,7 @@ export default {
 
     // 表单change事件
     changeForm(form) {
-      //this.form = form;
+      this.form = form;
       console.log(form);
     },
     // 权限表单change事件
@@ -361,15 +363,17 @@ export default {
     },
     //编辑表单弹框保存
     async HandelSave() {
-      console.log(this.row.id);
+      //console.log(this.row.id);
       let id = this.row.id;
       let info = JSON.parse(JSON.stringify(this.form));
-      //console.log(info);
+      console.log(info);
       let data = { ...info, id };
-      // console.log(data);
+
       data.sysCode = data.sysCode.join(",");
+      console.log(data.sysCode);
       //console.log(data);
       let response = await this.$api.roleAmend({ data });
+      console.log(response);
       if (response.code === 0) {
         console.log(response);
         this.init();

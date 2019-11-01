@@ -381,6 +381,7 @@ export default {
     // 修改配件
     async modelWrite(data) {
       const self = this;
+
       let result = await this.$api.modelWrite({ message: "修改成功", data });
       this.$router.push("basicInfoManage");
       console.log("result", result);

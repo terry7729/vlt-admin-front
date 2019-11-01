@@ -159,7 +159,7 @@ export default {
       this.$router.push({ name: "modelAdd" });
     },
     modelCheck(id) {
-      this.$router.push({ name: "modelCheck", query: { id } });
+      this.$router.push({ name: "modelEquipmentCheck", query: { id } });
     },
     modelAmend(row) {
       console.log(row);
@@ -173,7 +173,7 @@ export default {
       } else {
         // 设备
         this.$router.push({
-          path: "facillityAlter",
+          name: "facillityAlter",
           query: { ...row }
         });
       }
