@@ -15,7 +15,9 @@
       <el-table :data="roleManagetableData" border style="width: 100%; margin-top: 10px">
         <el-table-column prop="roleManageId" label="序号" type="index"></el-table-column>
         <el-table-column prop="roleName" label="用户角色"></el-table-column>
-        <el-table-column prop="roleTypes" label="角色权限"></el-table-column>
+        <el-table-column label="角色权限">
+          <template slot-scope="scope">{{scope.row.roleTypes.join('，')}}</template>
+        </el-table-column>
         <el-table-column prop="remark" label="描述"></el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
@@ -232,7 +234,7 @@ export default {
       sycords: "",
       searchData: {
         page: 0,
-        pageSize: 0
+        pageSize: this.pageSize
       },
       //表单定义为空
       form: "",
@@ -262,15 +264,19 @@ export default {
         }
       };
       let result = await this.$api.getRole({ data });
+      // result.data.records.roleTypes = result.data.records.roleTypes.join(",");
       console.log(result);
+      if (result.code === 0 && result) {
+        let arr = result.data.records;
+        this.num = result.data.total;
+        // this.roleManageoptions[0].options = arr.roleType;
+        this.roleManagetableData = arr;
+      }
       //console.log(result);
-      let arr = result.data.records;
-      this.num = result.data.total;
-      // this.roleManageoptions[0].options = arr.roleType;
-      this.roleManagetableData = arr;
+
       //初始搜索用户角色数据
       let searchResult = await this.$api.accountRole();
-      if (searchResult.code === 0) {
+      if (searchResult.code === 0 && searchResult) {
         this.roleManageoptions[0].options = searchResult.data;
       }
       //console.log(searchResult);
@@ -293,8 +299,10 @@ export default {
       let search = this.searchData;
       delete param.roleManageCreateDate;
       let data = { ...search, param };
+      console.log(data);
       let result = await this.$api.getRole({ data });
-      if (result.code === 0) {
+      console.log(result);
+      if (result.code === 0 && result) {
         this.roleManagetableData = result.data.records;
       }
     },
@@ -341,7 +349,7 @@ export default {
 
     // 表单change事件
     changeForm(form) {
-      //this.form = form;
+      this.form = form;
       console.log(form);
     },
     // 权限表单change事件
@@ -361,16 +369,18 @@ export default {
     },
     //编辑表单弹框保存
     async HandelSave() {
-      console.log(this.row.id);
+      //console.log(this.row.id);
       let id = this.row.id;
       let info = JSON.parse(JSON.stringify(this.form));
-      //console.log(info);
+      console.log(info);
       let data = { ...info, id };
-      // console.log(data);
+
       data.sysCode = data.sysCode.join(",");
+      console.log(data.sysCode);
       //console.log(data);
       let response = await this.$api.roleAmend({ data });
-      if (response.code === 0) {
+      console.log(response);
+      if (response.code === 0 && response) {
         console.log(response);
         this.init();
         // this.$refs.baseForm.resetForm();
@@ -387,7 +397,7 @@ export default {
       let data = { ...info, id };
       data.sysCode = data.sysCode.join(",");
       let res = await this.$api.roleAmend({ data });
-      if (res.code === 0) {
+      if (res.code === 0 && res) {
         this.init();
       }
 

@@ -1,166 +1,172 @@
 // 业务监控-左侧导航数据
 //no message
 export default [{
-  icon: "el-icon-menu",
-  name: "业务监控",
-  url: '', // 前端路由名称
-  childResources: [{
-      icon: "icon-dapingjiankong",
-      name: "大屏监控",
-      url: 'screenWatch',
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "中心监控",
-          url: 'centerWatch'
+  iconCls: "el-icon-menu",
+  text: "业务监控",
+  code: '', // 前端路由名称
+  children: [{
+      iconCls: "icon-dapingjiankong",
+      text: "大屏监控",
+      code: 'screenWatch',
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "中心监控",
+          code: 'centerWatch'
         },
        
       ],
 
     },
     {
-      icon: "icon-shujujiankong1",
-      name: "交易数据监控",
-      url: 'dealData',
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "中央交易数据",
-          url: 'centerDeal'
+      iconCls: "icon-shujujiankong1",
+      text: "交易数据监控",
+      code: 'dealData',
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "中央交易数据",
+          code: 'centerDeal'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "省级交易数据",
-          url: 'provinceDeal'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "省级交易数据",
+          code: 'provinceDeal'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "市级交易数据",
-          url: 'cityDeal'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "市级交易数据",
+          code: 'cityDeal'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "区域交易数据",
-          url: 'areaDeal'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "区域交易数据",
+          code: 'areaDeal'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "游戏交易数据",
-          url: 'gameDeal'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "游戏交易数据",
+          code: 'gameDeal'
         }
       ],
 
     }, {
-      icon: "icon-zhanghu2",
-      name: "销售厅账户监控",
-      url: 'accountWatch',
-      childResources: [
+      iconCls: "icon-zhanghu2",
+      text: "销售厅账户监控",
+      code: 'accountWatch',
+      children: [
 
       ],
 
     }, {
-      icon: "icon-shebeijiankong",
-      name: "销售厅设备监控",
-      url: 'equipmentWatch',
-      childResources: [
+      iconCls: "icon-shebeijiankong",
+      text: "销售厅设备监控",
+      code: 'equipmentWatch',
+      children: [
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "设备数据监控",
-          url: 'equipmentDataWatch'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "设备数据监控",
+          code: 'equipmentDataWatch'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "设备硬件监控",
-          url: 'equipmentHardwareWatch'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "设备硬件监控",
+          code: 'equipmentHardwareWatch'
         }
       ],
 
     }, 
     {
-      icon: "icon-gaojingshijian",
-      name: "告警管理",
-      url: 'warningManager',
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "告警监控",
-          url: 'warningWatch'
+      iconCls: "icon-gaojingshijian",
+      text: "告警管理",
+      code: 'warningManager',
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "告警监控",
+          code: 'warningWatch'
         },
         {
-          childResources: [
+          children: [
             {
-              childResources: [],
-              icon: "el-icon-menu",
-              name: "奖池风险指标",
-              url: 'pondRisk'
+              children: [],
+              iconCls: "el-icon-menu",
+              text: "奖池风险指标",
+              code: 'pondRisk'
             },
             {
-              childResources: [],
-              icon: "el-icon-menu",
-              name: "城市风险指标",
-              url: 'cityRisk'
+              children: [],
+              iconCls: "el-icon-menu",
+              text: "城市风险指标",
+              code: 'cityRisk'
             },
             {
-              childResources: [],
-              icon: "el-icon-menu",
-              name: "城市游戏风险指标",
-              url: 'cityGameRisk'
+              children: [],
+              iconCls: "el-icon-menu",
+              text: "城市游戏风险指标",
+              code: 'cityGameRisk'
             },
             // {
-            //   childResources: [],
-            //   icon: "el-icon-menu",
-            //   name: "告警通知",
-            //   url: 'warningNotice'
+            //   children: [],
+            //   iconCls: "el-icon-menu",
+            //   text: "告警通知",
+            //   code: 'warningNotice'
             // },
             {
-              childResources: [],
-              icon: "el-icon-menu",
-              name: "用户风险指标",
-              url: 'userRisk'
+              children: [],
+              iconCls: "el-icon-menu",
+              text: "用户风险指标",
+              code: 'userRisk'
             }
           ],
-          icon: "el-icon-menu",
-          name: "告警规则",
-          url: 'provinceWatch'
+          iconCls: "el-icon-menu",
+          text: "告警规则",
+          code: 'provinceWatch'
         
         }
       ],
 
     },{
-      icon: "icon-caidanguanli1",
-      name: "报表管理",
-      url: 'reportManage',
-      childResources: [
+      iconCls: "icon-caidanguanli1",
+      text: "报表管理",
+      code: 'reportManage',
+      children: [
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "告警报告",
-          url: 'warningReport'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "告警报告",
+          code: 'warningReport'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "组件",
-          url: 'componentDemo'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "组件",
+          code: 'componentDemo'
         },
         // {
-        //   childResources: [],
-        //   icon: "el-icon-menu",
-        //   name: "demo1",
-        //   url: 'demo1'
+        //   children: [],
+        //   iconCls: "el-icon-menu",
+        //   text: "demo1",
+        //   code: 'demo1'
         // },
         // {
-        //   childResources: [],
-        //   icon: "el-icon-menu",
-        //   name: "echarts",
-        //   url: 'echarts'
+        //   children: [],
+        //   iconCls: "el-icon-menu",
+        //   text: "echarts",
+        //   code: 'echarts'
         // },
+        // {
+        //   children: [],
+        //   icon: "el-icon-menu",
+        //   name: "组件",
+        //   url: 'componentDemo'
+        // },  
       ],
 
     },

@@ -12,9 +12,29 @@ export default {
   name: "cityRiskDetail",
   data() {
     return {
+       options1: [
+        {
+          provinceId: "1",
+          provinceName: "广东"
+        },
+        {
+          provinceId: "2",
+          provinceName: "广西"
+        }
+      ],
+      options2: [
+        {
+          cityId: "3",
+          cityName: "深圳"
+        },
+        {
+          provinceId: "4",
+          cityName: "广州"
+        }
+      ],
       planList: [
-        { title: "省", value: "", prop: "provinceName" },
-        { title: "市", value: "", prop: "cityName" },
+        { title: "省", value: "", prop: "provinceId" },
+        { title: "市", value: "", prop: "cityId" },
         { title: "状态", value: "", prop: "collectStatus" },
         {
           title: "最高销量-普通级别",
@@ -91,50 +111,53 @@ export default {
           value: "",
           prop: "minimumHallSaleMoneyMajor"
         },
-        { title: "普通告警频次", value: "", prop: "alarmFrequencyOrdinary" },
-        { title: "普通告警频次", value: "", prop: "alarmFrequencySerious" },
-        { title: "重大告警频次", value: "", prop: "alarmFrequencyMajor" },
+        { title: "普通告警次数", value: "", prop: "informTotalCountOrdinary" },
+        { title: "严重告警次数", value: "", prop: "informTotalCountSerious" },
+        { title: "重大告警次数", value: "", prop: "informTotalCountMajor" },
         {
           title: "普通通知市级管理员",
           value: "",
           prop: "informCityManIdOrdinary"
+        },{
+          title: "严重通知市级管理员",
+          value: "",
+          prop: "informCityManIdSerious"
+        },   {
+          title: "重大通知市级管理员",
+          value: "",
+          prop: "informCityManIdMajor"
         },
+
         {
           title: "普通通知省级管理员",
           value: "",
           prop: "informProvinceManIdOrdinary"
+        },
+          {
+          title: "严重通知省级管理员",
+          value: "",
+          prop: "informProvinceManIdSerious"
+        },
+         {
+          title: "重大通知省级管理员",
+          value: "",
+          prop: "informProvinceManIdMajor"
         },
         {
           title: "普通通知中央管理员",
           value: "",
           prop: "informCentralManIdOrdinary"
         },
-        {
-          title: "严重通知市级管理员",
-          value: "",
-          prop: "informCityManIdSerious"
-        },
-        {
-          title: "严重通知省级管理员",
-          value: "",
-          prop: "informProvinceManIdSerious"
-        },
+        
+      
         {
           title: "严重通知中央管理员",
           value: "",
           prop: "informCentralManIdSerious"
         },
        
-          {
-          title: "重大通知市级管理员",
-          value: "",
-          prop: "informCityManIdMajor"
-        },
-        {
-          title: "重大通知省级管理员",
-          value: "",
-          prop: "informProvinceManIdMajor"
-        },
+       
+       
        {
           title: "重大通知中央管理员",
           value: "",
@@ -159,7 +182,8 @@ export default {
       const res = await self.$api.getCityRiskDetail({
         data: {
           businessKey: id
-        }
+        },
+        baseURL:'http://10.6.0.203:8086/api'
       });
       if (res && res.code == 0) {
         for (var item in res.data) {
@@ -176,6 +200,29 @@ export default {
                 this.planList[i].value = this.getInformationType(item,
                   res.data[item]
                 );
+              }
+
+               if(item==='cityId'){ 
+                var  cityName          
+                console.log(1)   
+                this.options2.forEach(v=>{
+                  console.log(v.cityId,res.data[item])               
+                    if(v.cityId==res.data[item]){
+                      console.log(1)                        
+                      cityName=v.cityName           
+                    }
+                }),
+                this.planList[i].value=cityName
+              }
+         
+              if(item==='provinceId'){ 
+                var  provinceName             
+                this.options1.forEach(v=>{               
+                    if(v.provinceId==res.data[item]){                       
+                      provinceName=v.provinceName           
+                    }
+                }),
+                this.planList[i].value=provinceName
               }
               break;
             }

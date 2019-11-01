@@ -54,15 +54,14 @@ export default {
           prop: "insId",
           value: "",
           title: "所属机构",
-          placeholder: "请选择",
-          options: [{ label: "中福彩", value: "1" }],
           setProps: {
             label: "text",
             value: "id",
             children: "children",
             // multiple: true, // 多选
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
-          }
+          },
+          options: []
         },
         {
           type: "select",
@@ -85,9 +84,8 @@ export default {
       cascaderOptions: []
     };
   },
-  components: {},
-  created () {
-    this.getInsData();
+  created() {
+    this.getInsData()
   },
   methods: {
     getInsData() {
@@ -139,7 +137,23 @@ export default {
     onSubmit() {
       console.log("formData", this.params);
       this.close();
-    }
+    },
+    // 获取机构列表
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.QueryInsTree({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          self.$set(self.formDatas[0], 'options', res.data)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
   }
 };
 </script>

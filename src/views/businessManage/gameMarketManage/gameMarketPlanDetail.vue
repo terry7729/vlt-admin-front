@@ -37,6 +37,16 @@
     <panel title="投注规则" :show="true">
       <base-info :infoList="betData"></base-info>
     </panel>
+    <panel title="奖等设置" :show="true" style="margin-bottom:15px">
+      <div class="table-wrap">
+        <el-table :data="tableData" border class="table">
+          <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
+          <el-table-column label="兑奖名称" prop="exchangeName" min-width="160px"></el-table-column>
+          <el-table-column label="最大兑奖金额" prop="exchangeMoney" min-width="160px"></el-table-column>
+          <el-table-column label="兑奖说明" prop="exchangeDesc" min-width="200px"></el-table-column>
+        </el-table>
+      </div>
+    </panel>
     <panel title="资金规则" :show="true">
       <base-info :infoList="fundsData"></base-info>
     </panel>
@@ -163,6 +173,7 @@ export default {
         { title: "最低在线数量", value: "", prop: "minOnlineNum" },
         { title: "最高销量", value: "", prop: "maxSale" }
       ],
+      tableData: [],
       formatGameStatus:['存储', '试玩', '上市', '变更', '退市'],
       formatGameType: ['概率型','奖组型'],
       formatPoolRate:['无奖池','单奖池', '多奖池'],
@@ -190,18 +201,19 @@ export default {
         gameId: routerQuery.gameId,
         id: routerQuery.id
       };
-      this.getGameStoreInfo(data);
+      this.getMarketPlanDetail(data);
     }
     this.getInsData();
   },
   methods: {
-    getGameStoreInfo(data) {
+    getMarketPlanDetail(data) {
       const self = this;
       (async data => {
         let res = await self.$api.getMarketPlanDetail({ data });
         // console.log(res);
         if (res && res.code == 0) {
           if (res.data.gameInfoVo != null) {
+            self.tableData = res.data.gameExchangeSetVoList;
             self.eachList(self.planData, res.data.gameListPlanVo);
             self.eachList(self.gameData, res.data.gameInfoVo);
             self.eachList(self.developerInfo, res.data.developerInfo);
@@ -285,5 +297,8 @@ export default {
 
 .panel {
   margin-bottom: 20px;
+}
+.table-wrap{
+  padding: 10px 15px;
 }
 </style>

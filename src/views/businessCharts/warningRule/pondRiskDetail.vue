@@ -2,8 +2,9 @@
   <div class="vlt-card plan-check">
     <panel title="奖池风险指标详情" :show="true">
       <base-info :infoList="planList"></base-info>
-      <p ><el-button type="primary" @click.native="goEdit"  size="mini">修改</el-button></p>
-      
+      <p>
+        <el-button type="primary" @click.native="goEdit" size="mini">修改</el-button>
+      </p>
     </panel>
   </div>
 </template>
@@ -13,8 +14,18 @@ export default {
   name: "pondRiskDetail",
   data() {
     return {
+       options: [
+        {
+          gameId: 1,
+          gameName: "幸运卡片"
+        },
+        {
+          gameId: 2,
+          gameName: "侏罗寻宝"
+        }
+      ],
       planList: [
-        { title: "游戏", value: "", prop: "planState" },
+        { title: "游戏", value: "", prop: "gameId" },
         { title: "采集间隔(次/分钟)", value: "", prop: "collectFrequency" },
         { title: "状态", value: "", prop: "collectStatus" },
         {
@@ -47,19 +58,41 @@ export default {
           value: "",
           prop: "minJackpotMoneyMajor"
         },
-        { title: "普通告警频次", value: "", prop: "alarmFrequencyOrdinary" },
-        { title: "普通告警频次", value: "", prop: "alarmFrequencySerious" },
-        { title: "重大告警频次", value: "", prop: "alarmFrequencyMajor" },
+        { title: "普通告警次数", value: "", prop: "informTotalCountOrdinary" },
+        { title: "严重告警次数", value: "", prop: "informTotalCountSerious" },
+        { title: "重大告警次数", value: "", prop: "informTotalCountMajor" },
 
         {
           title: "普通通知市级管理员",
           value: "",
           prop: "informCityManIdOrdinary"
         },
+
+        {
+          title: "严重通知市级管理员",
+          value: "",
+          prop: "informCityManIdSerious"
+        },
+        {
+          title: "重大通知市级管理员",
+          value: "",
+          prop: "informCityManIdMajor"
+        },
+
         {
           title: "普通通知省级管理员",
           value: "",
           prop: "informProvinceManIdOrdinary"
+        },
+        {
+          title: "严重通知省级管理员",
+          value: "",
+          prop: "informProvinceManIdSerious"
+        },
+        {
+          title: "重大通知省级管理员",
+          value: "",
+          prop: "informProvinceManIdMajor"
         },
 
         {
@@ -69,30 +102,11 @@ export default {
         },
 
         {
-          title: "严重通知市级管理员",
-          value: "",
-          prop: "informCityManIdSerious"
-        },
-        {
-          title: "严重通知省级管理员",
-          value: "",
-          prop: "informProvinceManIdSerious"
-        },
-        {
           title: "严重通知中央管理员",
           value: "",
           prop: "informCentralManIdSerious"
         },
-        {
-          title: "重大通知市级管理员",
-          value: "",
-          prop: "informCityManIdMajor"
-        },
-        {
-          title: "重大通知省级管理员",
-          value: "",
-          prop: "informProvinceManIdMajor"
-        },
+
         {
           title: "重大通知中央管理员",
           value: "",
@@ -115,7 +129,8 @@ export default {
       const res = await self.$api.getPondRiskDetail({
         data: {
           businessKey: id
-        }
+        },
+        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         for (var item in res.data) {
@@ -133,6 +148,15 @@ export default {
                   item,
                   res.data[item]
                 );
+              }
+              if(item==='gameId'){ 
+                var  gameName             
+                this.options.forEach(v=>{                  
+                    if(v.gameId==res.data[item]){                                        
+                      gameName=v.gameName           
+                    }
+                }),
+                this.planList[i].value=gameName
               }
               break;
             }
@@ -179,13 +203,13 @@ export default {
 
       return InformType;
     },
-    goEdit(){
+    goEdit() {
       this.$router.push({
-        name:'pondRiskEdit',
-        query:{
-          id:this.$route.query.id
+        name: "pondRiskEdit",
+        query: {
+          id: this.$route.query.id
         }
-      })
+      });
     }
   },
   mounted() {
@@ -198,7 +222,7 @@ export default {
 /deep/ .base-info .info-list .title {
   min-width: unset;
 }
-p{
+p {
   margin-right: 150px;
   margin-bottom: 10px;
   text-align: right;

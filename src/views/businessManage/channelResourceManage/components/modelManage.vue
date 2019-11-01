@@ -148,19 +148,38 @@ export default {
         });
       }
     },
-
+    // 型号搜索
     modelSearch(data) {
       console.log("searchdata", data);
       this.currentPage = 1;
       this.requestData.param = data;
       this.getModelList(this.requestData);
     },
+    // 型号新增
     modelAdd() {
       this.$router.push({ name: "modelAdd" });
     },
-    modelCheck(id) {
-      this.$router.push({ name: "modelCheck", query: { id } });
+    // 型号查看
+    modelCheck(id, modelType) {
+      switch (modelType) {
+        case "设备":
+          this.$router.push({
+            path: "modelEquipmentCheck",
+            query: {
+              id
+            }
+          });
+          break;
+        case "配件":
+          this.$router.push({
+            path: "modelPreCheck",
+            query: {
+              id
+            }
+          });
+      }
     },
+    //型号修改
     modelAmend(row) {
       console.log(row);
 
@@ -168,12 +187,12 @@ export default {
         // 配件
         this.$router.push({
           path: "modelModification",
-          query: { ...row }
+          query: { id: row.id }
         });
       } else {
         // 设备
         this.$router.push({
-          path: "facillityAlter",
+          name: "facillityAlter",
           query: { ...row }
         });
       }

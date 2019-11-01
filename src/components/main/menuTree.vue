@@ -1,18 +1,18 @@
 <template>
   <li>
     <template v-for="item in menuData">
-      <el-menu-item :index="item.url" :key="item.id" v-if="!item.childResources || !item.childResources.length" @click="to(item.url)"
+      <el-menu-item :index="item.code" :key="item.id" v-if="!item.children || !item.children.length" @click="to(item.code)"
         :class="item.className"
       >
-        <i :class="[item.icon && 'iconfont', item.icon]"></i>
-        <span slot="title">{{item.name}}</span>
+        <i :class="[item.iconCls && 'iconfont', item.iconCls]"></i>
+        <span slot="title">{{item.text}}</span>
       </el-menu-item>
-      <el-submenu :index="item.name" v-else :key="item.id" :class="item.className">
+      <el-submenu :index="item.code" v-else :key="item.id" :class="item.className">
         <div class="submenu-title" slot="title">
-          <i :class="[item.icon && 'iconfont', item.icon]"></i>
-          <span class="title">{{item.name}}</span>
+          <i :class="[item.iconCls && 'iconfont', item.iconCls]"></i>
+          <span class="title">{{item.text}}</span>
         </div>
-        <menu-tree :menuData="item.childResources"></menu-tree>
+        <menu-tree :menuData="item.children"></menu-tree>
       </el-submenu>
     </template>
   </li>

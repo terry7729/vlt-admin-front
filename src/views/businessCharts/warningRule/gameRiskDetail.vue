@@ -14,10 +14,40 @@ export default {
   name: "warningWatchDetail",
   data() {
     return {
+      options: [
+        {
+          gameId: "1",
+          gameName: "魂斗罗"
+        },
+        {
+          gameId: "2",
+          gameName: "狼和兔子"
+        }
+      ],
+      options1: [
+        {
+          provinceId: "1",
+          provinceName: "广东"
+        },
+        {
+          provinceId: "2",
+          provinceName: "广西"
+        }
+      ],
+      options2: [
+        {
+          cityId: "3",
+          cityName: "深圳"
+        },
+        {
+          cityId: "4",
+          cityName: "广州"
+        }
+      ],
       planList: [
-        { title: "省", value: "", prop: "provinceName" },
-        { title: "市", value: "", prop: "gameName" },
-        { title: "游戏", value: "", prop: "planState" },
+        { title: "省", value: "", prop: "provinceId" },
+        { title: "市", value: "", prop: "cityId" },
+        { title: "游戏", value: "", prop: "gameId" },
         { title: "最高返奖率", value: "", prop: "highestReturnRateOrdinary" },
         {
           title: "最高返奖率-严重级别",
@@ -40,9 +70,9 @@ export default {
           value: "",
           prop: "minimumReturnRateMajor"
         },
-        { title: "普通告警频次", value: "", prop: "alarmFrequencyOrdinary" },
-        { title: "普通告警频次", value: "", prop: "alarmFrequencySerious" },
-        { title: "重大告警频次", value: "", prop: "alarmFrequencyMajor" },
+        { title: "普通告警次数", value: "", prop: "informTotalCountOrdinary" },
+        { title: "严重告警次数", value: "", prop: "informTotalCountSerious" },
+        { title: "重大告警次数", value: "", prop: "informTotalCountMajor" },
 
         {
           title: "普通通知市级管理员",
@@ -50,29 +80,9 @@ export default {
           prop: "informCityManIdOrdinary"
         },
         {
-          title: "普通通知省级管理员",
-          value: "",
-          prop: "informProvinceManIdOrdinary"
-        },
-        {
-          title: "普通通知中央管理员",
-          value: "",
-          prop: "informCentralManIdOrdinary"
-        },
-        {
           title: "严重通知市级管理员",
           value: "",
           prop: "informCityManIdSerious"
-        },
-        {
-          title: "严重通知省级管理员",
-          value: "",
-          prop: "informProvinceManIdSerious"
-        },
-        {
-          title: "严重通知中央管理员",
-          value: "",
-          prop: "informCentralManIdSerious"
         },
         {
           title: "重大通知市级管理员",
@@ -80,10 +90,32 @@ export default {
           prop: "informCityManIdMajor"
         },
         {
+          title: "普通通知省级管理员",
+          value: "",
+          prop: "informProvinceManIdOrdinary"
+        },
+        {
+          title: "严重通知省级管理员",
+          value: "",
+          prop: "informProvinceManIdSerious"
+        },
+        {
           title: "重大通知省级管理员",
           value: "",
           prop: "informProvinceManIdMajor"
         },
+        {
+          title: "普通通知中央管理员",
+          value: "",
+          prop: "informCentralManIdOrdinary"
+        },
+
+        {
+          title: "严重通知中央管理员",
+          value: "",
+          prop: "informCentralManIdSerious"
+        },
+
         {
           title: "重大通知中央管理员",
           value: "",
@@ -106,7 +138,8 @@ export default {
       const res = await self.$api.getGameRiskDetail({
         data: {
           businessKey: id
-        }
+        },
+        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         for (var item in res.data) {
@@ -123,6 +156,33 @@ export default {
                   item,
                   res.data[item]
                 );
+              }
+              if(item==='cityId'){ 
+                var  cityName             
+                this.options2.forEach(v=>{               
+                    if(v.cityId==res.data[item]){                       
+                      cityName=v.cityName           
+                    }
+                }),
+                this.planList[i].value=cityName
+              }
+              if(item==='gameId'){ 
+                var  gameName             
+                this.options.forEach(v=>{                  
+                    if(v.gameId==res.data[item]){                                        
+                      gameName=v.gameName           
+                    }
+                }),
+                this.planList[i].value=gameName
+              }
+              if(item==='provinceId'){ 
+                var  provinceName             
+                this.options1.forEach(v=>{               
+                    if(v.provinceId==res.data[item]){                       
+                      provinceName=v.provinceName           
+                    }
+                }),
+                this.planList[i].value=provinceName
               }
               break;
             }

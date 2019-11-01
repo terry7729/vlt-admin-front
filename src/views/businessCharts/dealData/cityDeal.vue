@@ -17,8 +17,8 @@
           </template>
         </el-table-column>
         <el-table-column align="center" prop="hallName" label="销售厅"></el-table-column>
-        <el-table-column align="center" prop="province" label="省份"></el-table-column>
-        <el-table-column align="center" prop="city" label="城市"></el-table-column>
+        <el-table-column align="center" prop="provinceName" label="省份"></el-table-column>
+        <el-table-column align="center" prop="cityName" label="城市"></el-table-column>
         <el-table-column align="center" prop="saleAmount" label="销售额"></el-table-column>
         <el-table-column align="center" prop="winningAmount" label="中奖金额"></el-table-column>
         <el-table-column align="center" prop="smallAwardAmount" label="小奖中奖"></el-table-column>
@@ -84,7 +84,7 @@ export default {
           pageNum: self.listQuery.page,
           pageSize: self.listQuery.limit,                 
         },
-        baseURL:'http://10.7.0.90:8080/api'
+        baseURL:'http://10.6.0.203:8086/api'
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
