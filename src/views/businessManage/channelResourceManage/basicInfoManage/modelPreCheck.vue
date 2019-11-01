@@ -9,7 +9,7 @@
     <div class="base-info">
       <span class="picture">图片:</span>
       <el-image class="image" style="width: 100px; height: 100px" v-for="(item,index) in imgUrlList" :key="index"
-       :src="item.url" fit="contain"></el-image>
+      :src="item.url" fit="contain"></el-image>
     </div>
   </panel-static>
   <panel-static title="可用机型信息" style="margin-bottom:20px">
