@@ -281,25 +281,28 @@ export default {
       };
       let result = await this.$api.getAccount({ data: data });
       console.log(result);
-      //let arr = result.data.records;
-      let arr = result.data.records;
-      arr.forEach(ele => {
-        if (ele.accountStatus === 1) {
-          ele.accountStatus = "启用中";
-        } else if (ele.accountStatus === 2) {
-          ele.accountStatus = "禁用";
-        } else {
-          ele.accountStatus = "注销";
-        }
-      });
-      if (result.code === 0) {
+      if (result.code === 0 && result) {
+        //let arr = result.data.records;
+        let arr = result.data.records;
+        arr.forEach(ele => {
+          if (ele.accountStatus === 1) {
+            ele.accountStatus = "启用中";
+          } else if (ele.accountStatus === 2) {
+            ele.accountStatus = "禁用";
+          } else {
+            ele.accountStatus = "注销";
+          }
+        });
+
         this.operationManageTableData = result.data.records;
         this.num = result.data.total;
-        //   // console.log(result);
-        // }
-        // 获取用户角色列表
-        let resul = await this.$api.accountRole();
-        //console.log(resul);
+      }
+      //   // console.log(result);
+      // }
+      // 获取用户角色列表
+      let resul = await this.$api.accountRole();
+      //console.log(resul);
+      if (resul.code === 0 && resul) {
         this.operationManageoptions[4].options = resul.data;
       }
     },
@@ -320,7 +323,10 @@ export default {
 
       let result = await this.$api.getAccount({ data: data });
       console.log(result);
-      this.operationManageTableData = result.data.records;
+      if (result.code === 0 && result) {
+        this.operationManageTableData = result.data.records;
+      }
+
       //console.log(result);
       // if (result.code == 0) {
       // }

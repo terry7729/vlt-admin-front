@@ -176,6 +176,7 @@
       <el-cascader
         v-if="item.type=='cascader-multiple'"
         @change="changeSelect"
+         :ref="item.ref"
         v-model="item.value"
         :options="item.options"
         :props="item.setProps"

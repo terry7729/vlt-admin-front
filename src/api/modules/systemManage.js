@@ -21,6 +21,8 @@ export default {
   //组织架构
   //机构树菜单
   QueryInsTree: (options = {}) => ajax.post('/ins/queryInsTree', options),
+  //机构树菜单--用户新增
+  queryUserAndInsTree:(options = {}) => ajax.post('/ins/queryUserAndInsTree', options),
   //查询机构详情
   QueryInsInfo: (options = {}) => ajax.post('/ins/queryInsInfo', options),
   //添加机构
@@ -63,23 +65,32 @@ export default {
   userPage: (options = {}) => ajax.post('/vlt/user/query/page', options),
   //用户详情
   getUserDestils: (options = {}) => ajax.get("/vlt/user/query", options),
+
+  //上传接口
+  uploadFile: (options = {}) => ajax.post("/user/uploading", options),
   //密码重置
   restPassWord: (options = {}) => ajax.post("/vlt/user/resetPass", options),
   //所有用户信息
   getUserAll: (options = {}) => ajax.post('/vlt/user/getAllUser', options),
   //用户状态
-  userStatus:(options = {}) => ajax.post('/vlt/user/status',options),
+  userStatus: (options = {}) => ajax.post('/vlt/user/status', options),
   //用户删除
-  delByIds:(options = {}) => ajax.post('/vlt/user/delByIds',options),
+  delByIds: (options = {}) => ajax.post('/vlt/user/delByIds', options),
   //用户编缉
-  userEdit:(options = {}) => ajax.post('/vlt/user/edit',options),
+  userEdit: (options = {}) => ajax.post('/vlt/user/edit', options),
 
 
 
 
   //数据字典
   //字典数据保存接口
-  add: (options = {}) => ajax.post('/dictData/add/', options),
+  add: (options = {}) => ajax.post('/dictData/add', options),
+   //获取全部数据
+   dictDataPage: (options = {}) => ajax.post('/dictData/page', options),
+   //数据字典导出接口
+  exportDictDataList: (options = {}) => ajax.post('/dictData/export', options),
+   //状态接口
+   status: (options = {}) => ajax.post('/dictData/status', options),
   //编辑接口
   edit: (options = {}) => ajax.post('/dictData/edit', options),
   //编辑通过id获取数据接口
@@ -88,16 +99,13 @@ export default {
   // enable: (options = {}) => ajax.post('/dictData/enable/{id}', options),
   // //数据字典禁用接口
   // disable: (options = {}) => ajax.post('/dictData/disable/{id}', options),
-  //状态接口
-  status: (options = {}) => ajax.post('/dictData/status', options),
-  //获取全部数据
-  getAll: (options = {}) => ajax.post('/dictData/getAll', options),
+ 
+ 
   //通过keyCode查询
   find: (options = {}) => ajax.get('/dictData/find/{keyCode}', options),
   //数据字典条件搜索
   getByCondition: (options = {}) => ajax.post('/dictData/getByCondition', options),
-  //数据字典导出接口
-  exportDictDataList: (options = {}) => ajax.post('/dictData/exportDictDataList', options),
+  
 
 
   //系统设置

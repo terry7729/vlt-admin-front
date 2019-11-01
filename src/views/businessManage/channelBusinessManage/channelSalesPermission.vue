@@ -138,19 +138,19 @@ export default {
       if (res && res.code === 0) {
         this.tableData = res.data;
         for (let item of this.tableData) {
-          item.throwRight = item.throwRight === 0 ? false : true;
-          item.cashRight = item.cashRight === 0 ? false : true;
+          // item.throwRight = item.throwRight === 0 ? false : true;
+          // item.cashRight = item.cashRight === 0 ? false : true;
 
-          // if (item.throwRight === 0) {
-          //   item.throwRight = false;
-          // } else {
-          //   item.throwRight = true;
-          // }
-          // if (item.cashRight === 0) {
-          //   item.cashRight = false;
-          // } else {
-          //   item.cashRight = true;
-          // }
+          if (item.throwRight === 0) {
+            item.throwRight = false;
+          } else {
+            item.throwRight = true;
+          }
+          if (item.cashRight === 0) {
+            item.cashRight = false;
+          } else {
+            item.cashRight = true;
+          }
         }
       }
       console.log(this.tableData);
