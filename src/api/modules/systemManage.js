@@ -79,7 +79,13 @@ export default {
 
   //数据字典
   //字典数据保存接口
-  add: (options = {}) => ajax.post('/dictData/add/', options),
+  add: (options = {}) => ajax.post('/dictData/add', options),
+   //获取全部数据
+   dictDataPage: (options = {}) => ajax.post('/dictData/page', options),
+   //数据字典导出接口
+  exportDictDataList: (options = {}) => ajax.post('/dictData/export', options),
+   //状态接口
+   status: (options = {}) => ajax.post('/dictData/status', options),
   //编辑接口
   edit: (options = {}) => ajax.post('/dictData/edit', options),
   //编辑通过id获取数据接口
@@ -88,16 +94,13 @@ export default {
   // enable: (options = {}) => ajax.post('/dictData/enable/{id}', options),
   // //数据字典禁用接口
   // disable: (options = {}) => ajax.post('/dictData/disable/{id}', options),
-  //状态接口
-  status: (options = {}) => ajax.post('/dictData/status', options),
-  //获取全部数据
-  getAll: (options = {}) => ajax.post('/dictData/getAll', options),
+ 
+ 
   //通过keyCode查询
   find: (options = {}) => ajax.get('/dictData/find/{keyCode}', options),
   //数据字典条件搜索
   getByCondition: (options = {}) => ajax.post('/dictData/getByCondition', options),
-  //数据字典导出接口
-  exportDictDataList: (options = {}) => ajax.post('/dictData/exportDictDataList', options),
+  
 
 
   //系统设置
