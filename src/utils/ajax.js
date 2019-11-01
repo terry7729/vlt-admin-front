@@ -7,8 +7,7 @@ import {
   Loading
 } from "element-ui";
 axios.defaults.timeout = 60000;
-axios.defaults.headers.common["Content-Type"] =
-  "application/json;charset=UTF-8";
+axios.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
 
 switch (process.env.VUE_APP_MODE) {
   // 生产环境
@@ -25,12 +24,22 @@ switch (process.env.VUE_APP_MODE) {
     break;
   default:
     // 本地server环境 
-    axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.88:8081/bms/api/vlt'
+    // axios.defaults.baseURL = 'http://10.7.0.88:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.103:8081/bms/api'
     // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.187:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.87:8081/bms/api'
+    //axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api' 
+    //axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api' 
+    //axios.defaults.baseURL = 'http://10.7.0.190:8080/bms/api' 
+    // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
+
 }
 /**
  * @description http请求

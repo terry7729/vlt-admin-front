@@ -166,6 +166,9 @@ export default {
     this.getTypeList(this.requestData1);
     this.getSelectOption();
   },
+  components:{
+    modelManage
+  },
   methods: {
     //类型管理
     //状态修改
@@ -237,6 +240,19 @@ export default {
             path: "facilityCheck",
             query: { id }
           });
+          break;
+        case 3:
+          this.$router.push({
+            path: "consumableCheck",
+            query: { id }
+          });
+          break;
+        case 2:
+          this.$router.push({
+            path: "mountingsCheck",
+            query: { id }
+          });
+          break;
       }
     },
 
@@ -284,17 +300,6 @@ export default {
     //新增事件
     addEquipment() {
       this.$router.push({ name: "addEquipment" });
-    },
-    //修改
-    typeAmend(row) {
-      console.log(row);
-      // if (row.goodsType === 1) {
-      //   console.log(11);
-      // }
-      this.$router.push({
-        path: "modification",
-        query: { ...row }
-      });
     },
     //设备查看
     typeCheck(id, goodsType) {
