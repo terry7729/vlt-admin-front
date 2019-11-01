@@ -17,7 +17,7 @@
             <div style="text-align:center;">{{scope.$index+1}}</div>
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="province" label="省份">
+        <el-table-column align="center" prop="provinceName" label="省份">
           <!-- <template slot-scope="scope">
               <span>{{scope.row.province}}</span>
           </template>-->

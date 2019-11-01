@@ -60,7 +60,7 @@
               v-model="form.collectFrequency"
               controls-position="right"
               @change="handleChange"
-              :min="1"
+              :min="10"
               :max="100"
               :step="10"
               size="medium"
@@ -269,13 +269,13 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="warningPl" label="告警频率" min-width="10%">
+          <el-table-column align="center" prop="warningPl" label="告警次数" min-width="10%">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.warningPl"
                 controls-position="right"
                 @change="handleChange"
-                :min="1"
+                :min="10"
                 :max="100"
                 :step="10"
                 size="mini"
@@ -459,9 +459,9 @@ export default {
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
       form: {
-        alarmFrequencyMajor: "", //重大告警频次
-        alarmFrequencyOrdinary: "", //普通告警频次
-        alarmFrequencySerious: "", //严重告警频次
+        informTotalCountMajor: "", //重大告警频次
+        informTotalCountOrdinary: "", //普通告警频次
+        informTotalCountSerious: "", //严重告警频次
         collectFrequency: "", //采集间隔(单位：分钟) 传入15，表示15分钟匹配一次
         collectStatus: 0, //0生效 1停止
         gameId: "",
@@ -506,9 +506,9 @@ export default {
     async pondRiskUpdate() {
       const res = await this.$api.pondRiskUpdate({
         data: {
-          alarmFrequencyMajor: this.tableData1[2].warningPl,
-          alarmFrequencyOrdinary: this.tableData1[1].warningPl,
-          alarmFrequencySerious: this.tableData1[0].warningPl,
+          informTotalCountMajor: this.tableData1[2].warningPl,
+          informTotalCountOrdinary: this.tableData1[1].warningPl,
+          informTotalCountSerious: this.tableData1[0].warningPl,
           gameId: this.gameValue,
           gameName: this.gameValue,
           collectFrequency: this.form.collectFrequency,
@@ -536,7 +536,8 @@ export default {
           minJackpotMoneyOrdinary: this.form.minJackpotMoneyOrdinary,
           minJackpotMoneySerious: this.form.minJackpotMoneySerious,
           businessKey: this.$route.query.id
-        }
+        },
+        baseURL:'http://10.7.0.90:8080/api'
       });
       if (res && res.code == 0) {
         this.$message({
@@ -688,16 +689,17 @@ export default {
       const res = await self.$api.getPondRiskDetail({
         data: {
           businessKey: id
-        }
+        },
+        baseURL:'http://10.7.0.90:8080/api'
       });
       if (res && res.code == 0) {
         this.form = res.data;
         this.gameValue = res.data.gameId;
         this.proviceValue = res.data.provinceId;
         this.cityValue = res.data.cityId;
-        this.tableData1[2].warningPl = this.form.alarmFrequencyMajor;
-        this.tableData1[1].warningPl = this.form.alarmFrequencySerious;
-        this.tableData1[0].warningPl = this.form.alarmFrequencyOrdinary;
+        this.tableData1[2].warningPl = this.form.informTotalCountMajor;
+        this.tableData1[1].warningPl = this.form.informTotalCountSerious;
+        this.tableData1[0].warningPl = this.form.informTotalCountOrdinary;
         this.checkList2 = this.showInformType(this.form.informWayMajor);
         this.checkList1 = this.showInformType(this.form.informWaySerious);
         this.checkList = this.showInformType(this.form.informWayOrdinary);

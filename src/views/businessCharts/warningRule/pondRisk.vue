@@ -11,7 +11,7 @@
         <control-bar slot="extend-bar" @select="select" :options="controlOptions" position="right"></control-bar>
       </search-bar>
     </section>
-    <div class>
+    <div>
       <el-table
         :data="tableData"
         border

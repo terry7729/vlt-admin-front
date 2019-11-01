@@ -246,12 +246,20 @@ export default {
    numberCheck: (rule, value, callback) => {
     const _value = (value + '').trim()
     const test = (/(^[1-9]\d*$)/.test(_value)) ? true : false
-    // if (!_value) {
-    //   return callback(new Error('值不能为空'));
-    // }
-    if (!test && _value) {
-      return callback(new Error('值必须为数字'));
+    if (!test && value) {
+      return callback(new Error('值必须为正整数'));
     }
     callback();
   },
+
+  // 小数或数字
+  checkPointOrPercent: (rule, value, callback) => {
+    const _value = (value + '').trim()   
+    const test = (/(^\d+[.]*\d*%?$)/.test(_value)) ? true : false
+      if (!test&& value) {
+        return callback(new Error('值必须为百分比数字或小数'));
+      }    
+        
+    callback();
+  }
 }
