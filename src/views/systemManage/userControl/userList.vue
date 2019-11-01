@@ -13,7 +13,12 @@
       </search-bar>
     </div>
     <div class="role-table">
-      <el-table :data="userList" border style="width: 100%; margin-top: 10px;"  @selection-change="handleSelectionChange">
+      <el-table
+        :data="userList"
+        border
+        style="width: 100%; margin-top: 10px;"
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column type="index" prop="id" label="序号"></el-table-column>
         <el-table-column prop="account" label="账号"></el-table-column>
@@ -22,7 +27,7 @@
         <el-table-column prop="roleName" label="用户角色"></el-table-column>
         <el-table-column prop="userName" label="姓名"></el-table-column>
         <el-table-column prop="mobile" label="手机号码"></el-table-column>
-         <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="loginCount" label="最近登陆次数" width="100"></el-table-column>
         <el-table-column prop="loginTime" label="最近登录时间" width="100"></el-table-column>
         <el-table-column prop="loginIp" label="最近登陆IP" width="90"></el-table-column>
@@ -56,7 +61,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="id" label="操作" width="200px">
-          <template  slot-scope="scope">
+          <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handelides(scope.row)">查看</el-button>
             <el-button type="success" size="mini" @click="handelifo(scope.$index,scope.row)">编缉</el-button>
             <el-button type="success" size="mini" @click="resetPassWord(scope.row)">重置密码</el-button>
@@ -76,7 +81,12 @@
 
     <!-- 更改密码弹框-->
     <div class="dialog">
-      <el-dialog title="重置密码" :visible.sync="dialogFormVisible" width="500px"  custom-class="userDialog">
+      <el-dialog
+        title="重置密码"
+        :visible.sync="dialogFormVisible"
+        width="500px"
+        custom-class="userDialog"
+      >
         <el-form :model="restpaswordfrom">
           <el-form-item label="请选择你的操作" label-width="130px">
             <el-radio-group v-model="restpaswordfrom.pwdStatus">
@@ -84,9 +94,9 @@
               <el-radio :label="0">登陆密码</el-radio>
             </el-radio-group>
           </el-form-item>
-           <el-form-item label="请输入管理员密码" label-width="130px">
+          <el-form-item label="请输入管理员密码" label-width="130px">
             <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
-          </el-form-item> 
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -104,16 +114,16 @@ export default {
     return {
       restpaswordfrom: {
         pwdStatus: 0,
-        password:''
+        password: ""
       },
       //测试数据
-      total:0,
-      page:1,
-      pageSize:10,
+      total: 0,
+      page: 1,
+      pageSize: 10,
       //
       dialogFormVisible: false,
       currentPage4: 1,
-      userList:[],
+      userList: [],
       multipleSelection: [],
       controlOptions: [
         //按钮组
@@ -192,125 +202,120 @@ export default {
           placeholder: ["开始时间", "结束时间"]
         }
       ],
-      searchFrom:{},
-      searchStatus:'',
-      userId:[],
-      restParam:{}
-
+      searchFrom: {},
+      searchStatus: "",
+      userId: [],
+      restParam: {}
     };
   },
   computed: {},
-   created() {
-
-      this.init()
-  
+  created() {
+    this.init();
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
-async init(val){
-      let data  = {  
-       ...this.searchFrom,
-        page:val||1,
-        pageSize:this.pageSize,
-      }
-     
-         let reslt = await  this.$api.userPage({data})
-          console.log(reslt)
-         let arr =  reslt.data.records.map(item=>{
-             let userLoginLogVo = item.userLoginLogVo
-              return {...userLoginLogVo,
-                      ...item
-                      }
-           })
-           console.log(arr)
-          this.userList = arr
-          this.page = reslt.data.current
-          this.total = reslt.data.total;
-          console.log('我是默认',reslt)
- 
-      },
-      pageSizeChange(val) {
-        //每页显示条数
-          this.pageSize = val;
-          this.init()
-      },
-      handleSelectionChange(val){
-        // this.userId.push(val.userId)
-       let arr = val.map(item => {
-           return item.userId
+    async init(val) {
+      console.log("param",this.searchFrom);
+      let data = {
+        page: val || 1,
+        pageSize: this.pageSize,
+        param: {
+          ...this.searchFrom
+        }
+      };
+
+      let reslt = await this.$api.userPage({ data });
+      console.log("reslt", reslt);
+      let arr = reslt.data.records.map(item => {
+        let userLoginLogVo = item.userLoginLogVo;
+        return { ...userLoginLogVo, ...item };
+      });
+      console.log("arr", arr);
+      this.userList = arr;
+      this.page = reslt.data.current;
+      this.total = reslt.data.total;
+      console.log("我是默认", reslt);
+    },
+    pageSizeChange(val) {
+      //每页显示条数
+      this.pageSize = val;
+      this.init();
+    },
+    handleSelectionChange(val) {
+      // this.userId.push(val.userId)
+      let arr = val.map(item => {
+        return item.userId;
+      });
+      console.log(arr);
+      this.userId = [...arr];
+    },
+    pageCurrentChange(val) {
+      //当前显示页数
+      this.currentPage4 = val;
+      this.init(val);
+    },
+    handelifo(val, obj) {
+      // console.log(val,obj)
+      // return
+      this.$router.push({
+        name: "userInformed",
+        query: { title: "编缉用户信息", ifo: obj }
+      });
+    },
+
+    handelides(val) {
+      console.log(val);
+
+      this.$router.push({ name: "userDestails", query: { id: val.userId } });
+    },
+    selectBtn(val) {
+      //新增删除事件
+      if (val.name === "新建用户") {
+        this.$router.push({
+          name: "userInformed",
+          query: { title: "新建用户信息" }
         });
-        console.log(arr)
-        this.userId = [...arr]
-      },
-      pageCurrentChange(val) {
-        //当前显示页数
-        this.currentPage4 = val;
-        this.init(val)
-      
-      },
-      handelifo(val,obj) {
-        // console.log(val,obj)
-        // return
-        this.$router.push({name:"userInformed",query:{title:"编缉用户信息",ifo:obj}});
-      },
-
-      handelides(val) {
-        console.log(val)
-  
-        this.$router.push({name:"userDestails",query:{id:val.userId}});
-      },
-      selectBtn(val) {
-        //新增删除事件
-        if(val.name==='新建用户'){
-          this.$router.push({name:"userInformed",query:{title:"新建用户信息"}});
-        }
-        if(val.name === "批量删除"){         
-            (async ()=>{
-              let data = {
-            }
-            data.idList = [...this.userId]
-            data = JSON.parse(JSON.stringify(data))
-            console.log('data',data)
-              let reslt = await this.$api.delByIds({data})//批量删除
-               console.log(reslt)         
-            })()
-        }
-      },
-     async search(val) {
-        //搜索事件
-        console.log(val);
-           this.searchFrom = val;
-          // this.searchStatus = "搜索"
-            this.init()
-      },
-      pagingControl(){
-
-      },
-      resetPassWord(val){
-        this.dialogFormVisible = true;
-        this.restParam = val;
-        console.log(val)
-      },
-     async dialogFormVisibleEnter() {  
-      
-          //操作密码重置
-          console.log(this.restpaswordfrom)
-          let data = {
-            ...this.restpaswordfrom,
-          }
-          data.userId = this.restParam.userId
-    
-          let reslt =await this.$api.restPassWord({data})
-
-          console.log(reslt)
-
-      
-        this.dialogFormVisible = false;
       }
+      if (val.name === "批量删除") {
+        (async () => {
+          let data = {};
+          data.idList = [...this.userId];
+          data = JSON.parse(JSON.stringify(data));
+          console.log("data", data);
+          let reslt = await this.$api.delByIds({ data }); //批量删除
+          console.log(reslt);
+        })();
+      }
+    },
+    async search(val) {
+      //搜索事件
+      console.log(val);
+      this.searchFrom = val;
+      // this.searchStatus = "搜索"
+      this.init();
+    },
+    pagingControl() {},
+    resetPassWord(val) {
+      this.dialogFormVisible = true;
+      this.restParam = val;
+      console.log(val);
+    },
+    async dialogFormVisibleEnter() {
+      //操作密码重置
+      console.log(this.restpaswordfrom);
+      let data = {
+        ...this.restpaswordfrom
+      };
+      data.userId = this.restParam.userId;
+
+      let reslt = await this.$api.restPassWord({ data });
+
+      console.log(reslt);
+
+      this.dialogFormVisible = false;
+    }
   },
-   watch: {
+  watch: {
     // pageSize: {
     //   handler: function(newValue, oldVale) {
     //        if(newValue != oldVale){
@@ -326,7 +331,7 @@ async init(val){
 
 <style lang="less">
 @import "./less/index.less";
-.userDialog{
+.userDialog {
   border-radius: 20px;
 }
 </style>
