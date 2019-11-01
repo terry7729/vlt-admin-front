@@ -56,21 +56,6 @@
         ></table-paging>
       </div>
     </div>
-    <div class="role-dialog">
-      <el-dialog :visible.sync="dialogFormVisible" width="600px" custom-class="roleDialog" >
-        <!-- <roleifometion></roleifometion> -->
-        <div class="vlt-edit-single">
-          <h2 class="title">角色信息</h2>
-          <div class="vlt-edit-wrap">
-          <test-form  :options="formData" ref="baseForm" labelWidth="90px" :rules="rules" direction="right" @change="chagenFrom">
-
-          </test-form>
-            <el-button type="primary" v-prevent="1000" size="medium" @click="testSubmit" style="margin-left:30px;">提交并保存</el-button>
-             <el-button  v-prevent="1000" size="medium" @click="testCancel">取消</el-button>
-          </div>
-        </div>
-      </el-dialog>
-    </div>
   </div>
 </template>
 
@@ -80,16 +65,6 @@ export default {
   name: "roleList",
   data() {
     return {
-      rules: {},
-     
-      baseData:[
-        {title:'用户角色',type:'input',prop:'roleName',value:''},
-        {title:'角色类型',type:'select',prop:'roleType',options:[ { label: "管理员", value: 1 },{ label: "子管理员", value: 2 },{ label: "普通角色", value: 3 }]},
-        {title:'角色状态',type:'switch',prop:'status',value:1},
-        {title:'角色编码',type:'input',prop:'roleCode'},
-        {title:'角色权限',type:'cascader',prop:'moduleIds',value:[],options:[],setProps:{ label: "text",value: "id",children: "children",multiple: true,}},
-        {title:'描述',type:'textarea',prop:'roleDesc'},
-      ],
       controlOptions: [//按钮组
         { name: "新建角色", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
       ],
@@ -99,61 +74,27 @@ export default {
         {title: "角色状态", value: "", prop: "status",type: "select",options: [{value: 0,label: "无效"},{value: 1,label: "有效" }],placeholder: "请输入" || ["请输入1", "请输入2"] },
         {type: "datetime-range",prop: "createTime", value: "",title: "创建时间",placeholder: ["开始时间", "结束时间"]}
       ],
-      dialogFormVisible: false,//弹框控制
       currentPage4: 0,//当前显示分页
       tableData: [],
       //新建按钮点击
-      // parms: {},//表单对象
-      currentStatus: "",//当前操作状态
       total:0,
       val:{},
       page:1,
       pageSize:10,
       searchStatus:'',
       searchFrom:{},
-      isData:[],
       formData:[],
     };
   },
   computed: {},
   created() {
+    console.log(this)
       this.init()
   },
   mounted() {},
   components: {},
   methods: {
-    chagenFrom(val){
-      console.log(val)
-    },
-   async testSubmit(val){
-     if(this.currentStatus === "新建角色"){
-        let data = this.$formMethods.get( this.formData);
-        data.sysCode= "VLT_BMS"
-        data.status = Number(data.status)
-        console.log('保存角色信息表单对象',data);
-        let reslt = await this.$api.SaveRoleInfo({ data });//保存角色信息
-        console.log('保存角色信息',reslt);
-        if(reslt.code === 0){
-          this.dialogFormVisible = false
-             this.formData.forEach(item=>{
-            this.$formMethods.set(this.formData,item.prop,'value','')
-            })
-        }
-     }else if(this.currentStatus === '编缉'){
-       let data = this.$formMethods.get( this.formData);
-        data.roleId = this.val.roleId
-        let reslt = await this.$api.UpdateRoleInfo({data})//修改角色信息
-        console.log('修改角色信息',reslt)
-        if(reslt.code === 0){
-           this.dialogFormVisible = false;
-           this.formData.forEach(item=>{
-          this.$formMethods.set(this.formData,item.prop,'value','')
-            })
-        }
-     }
 
-         
-    },
 async init(val){ //初始化页面数据
     let res = await this.$api.QueryModuleTree()
         if(res.code === 0){
@@ -171,7 +112,6 @@ async pagingControl(val){ //分页控制
           page:val||1,
           pageSize:this.pageSize
         }
- 
           let reslt = await this.$api.QueryRoleInfoPage({data });//获取当前分页信息，不传值为总信息   
         console.log("获取当前分页信息",reslt)
            if (reslt.code === 0) {
@@ -238,54 +178,12 @@ async pagingControl(val){ //分页控制
       return  moment(val).format("YYYY-MM-DD HH:mm:ss")
     } ,
    async handelskip(val) {
-     const self = this;
-      this.dialogFormVisible = true;
-      this.currentStatus = "编缉";
-      let  form = {
-        roleName:'',
-        roleType:'',
-        moduleIds:'',
-        roleDesc:''
-      };
-      this.formData = this.$formMethods.toggle(this.baseData, form)
-      let reslt =  await this.$api.QueryRoleInfoDetail({data:val.roleId})//查询角色详情
-      let arrs= []
-  
-      this.val = val ;
-      let arr = Object.keys(val)
-      console.log(reslt)
-      if(reslt.code === 0){
-        if(reslt.data.moduleIds && reslt.data.moduleIds.length>0){
-          alert(1)
-           reslt.data.moduleIds.forEach(item=>{
-          
-            arrs.push(self.getInsArray(item,'id',self.isData,'id'))
-            
-            console.log(self.getInsArray(item,'id',self.isData,'id'))
-        console.log(arrs,'我是arr')
-        })
-        }
-        console.log(arrs,'我是arr')
-        this.formData.forEach(item=>{
-          this.$formMethods.set(this.formData,item.prop,'value',reslt.data[item.prop])
-        })
-      }
-      
+     this.$router.push({name:"roleOfEditorial", query: { id: val.roleId } })  
   
     },
     selectBtn(val) {//新增删除事件
       if (val.name === "新建角色") {
-        this.currentStatus = "新建角色";
-        this.dialogFormVisible = true;
-         let  form = {
-        roleName:'',
-        roleType:'',
-        status:'',
-        roleCode:'',
-        moduleIds:'',
-        roleDesc:''
-      };
-      this.formData = this.$formMethods.toggle(this.baseData, form)
+        this.$router.push({name:"roleOfEditorial"})
       }
     },
 async search(val) {//搜索事件
@@ -304,7 +202,6 @@ async search(val) {//搜索事件
           list.createBy = val.createBy
           list.status = val.status
       }   
-      console.log(list) 
         self.searchFrom = {
           ...list
           };
@@ -337,37 +234,7 @@ async search(val) {//搜索事件
       this.tableData = obj;
     },
     //弹框事件
-    testCancel() {
-      this.dialogFormVisible = false;
-         this.formData.forEach(item=>{
-          this.$formMethods.set(this.formData,item.prop,'value','')
-            })
-    },
-    // changeForm(val) {
-    //   const self = this
-    //   console.log('表单change事件',val)
-    //   if(val.moduleIds.length>0){
-    //       let arr2='' 
-    //     val.moduleIds.forEach(item=>{
-    //      let arr = this.getInsArray(item,'id',this.isData,'id')
-    //         arr2+=arr.join(',')+','          
-    //     })
-    //     console.log(arr2)
-    //    let  arr3 =Array.from(new Set(arr2.split(',')))
-    //    arr3.forEach((item,index)=>{
-    //      if(item === ''){
-    //        arr3.splice(index,1)
-    //      }
-    //    })  
-    //   let arr4 =  arr3.map(item=>{
-    //       return parseInt(item)
-    //     })
-    //     self.$set(this.parms,'moduleIds',[...arr4])
-    //   }else{
-    //      Object.assign(this.parms, val);
-    //   }
-      
-    // },
+
      getInsArray(id, key, data, keyBack) { // 传入id和key是一样胡  keyBack返回key
         const self = this;
         for (var i in data) {

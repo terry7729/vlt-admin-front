@@ -380,22 +380,19 @@ export default {
       }
       return arr.concat(arr2);
     },
+
     async remove(node, date) {
       //机构状态冻结
-      const self = this;
-      console.log(date);
-      console.log(this.getId(date));
+      const self = this
+      console.log(date)
+      console.log(this.getId(date))
+    
 
-      this.$confirm(
-        date.status ? "此操作将冻结该机构, 是否继续?" : "您确认要解冻此机构？",
-        "提示",
-        {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }
-      )
-        .then(async () => {
+      this.$confirm(!date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
           console.log(node, date);
           let data = {
             insIdList: self.getId(date),
@@ -404,18 +401,18 @@ export default {
           let reslt = await this.$api.UpdateInsInfoStatus({ data }); //更新机构状态
           console.log(reslt);
           if (reslt.code === 0) {
-            this.init();
-            this.$message({
-              type: "success",
-              message: "冻结成功!"
-            });
-          }
-        })
-        .catch(() => {
+              this.init();
+             
+              this.$message({
+                type: 'success',
+                message: !date.status?'冻结成功!':'启用成功'
+              });
+          } 
+        }).catch(() => {
           this.$message({
-            type: "info",
-            message: data.status ? "冻结失败" : "解冻失败"
-          });
+            type: 'info',
+            message: !date.status?'冻结失败':'解冻失败'
+          });          
         });
     },
     hadnelClose() {
