@@ -58,6 +58,7 @@ export default {
     async getDetail() {
       let id = this.$route.query.id;
       let result = await this.$api.accountDetail({ data: id });
+
       console.log(result);
       if (result.data.accountStatus === 1) {
         result.data.accountStatus = "启用中";
