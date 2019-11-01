@@ -89,6 +89,7 @@ export default {
       menuType: 0,
       isEdit: false,
       menuData: [],
+      expandedKeys: [],
       controlOptions: [
         //顶部按钮
         { name: "添加根节点", type: "primary", icon: "", id: 1 },
