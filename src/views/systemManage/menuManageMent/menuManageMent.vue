@@ -15,7 +15,7 @@
               show-checkbox
               node-key="id"
               @check-change="checkChange"
-              :default-expanded-keys="[1, 2]"
+              :default-expanded-keys="expandedKeys"
               :expand-on-click-node="true"
               :props="{
                 children: 'children',
@@ -253,6 +253,11 @@ export default {
       this.currentMenu = this.menuData[0];
       this.menuType = 2;
       this.form = this.config[2];
+      // 设置默认展开
+      this.expandedKeys = [this.menuData[0].id];
+      if (this.currentMenu.children && this.currentMenu.children.length) {
+        this.expandedKeys.push(this.currentMenu.children[0].id)
+      }
     })()
   },
   mounted() {
