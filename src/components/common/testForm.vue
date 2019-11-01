@@ -1,4 +1,17 @@
 <template>
+<<<<<<< HEAD
+  <el-form :label-position="direction" :label-width="labelWidth" ref="form"
+    :model="form.options"
+    :rules="rules"
+    class="base-form">
+    <el-form-item 
+      v-for="(item,index) in options" 
+      :key="index" 
+      :label="item.title" 
+      :prop="item.prop" 
+      :class="{'siding':item.type=='minMax'}"
+      :rules="{required: true, message: '域名不能为空', trigger: 'blur'}">
+=======
   <el-form
     :label-position="direction"
     :label-width="labelWidth"
@@ -14,6 +27,7 @@
       :prop="item.prop"
       :class="{'siding':item.type=='minMax'}"
     >
+>>>>>>> 9813fc1c91fa6ea8fff5884baab52a51c7a83516
       <!-- 输入框 -->
       <el-input
         v-if="item.type=='input'"
@@ -266,17 +280,20 @@ export default {
       form: {}
     };
   },
+  created() {
+    this.form.options = this.options;
+  },
   watch: {
     options: {
       handler(newValue, oldValue) {
         console.log("表单变化", newValue);
         // this.$refs.form.validate();
-        newValue &&
-          newValue.forEach(item => {
-            this.form[item.prop] = item.value;
-            console.log("form", this.form);
-          });
-
+        newValue&&newValue.forEach((item) => {
+          // this.form[item.prop] = item.value;
+          // this.$set(this.form, item.prop, item.value);
+          console.log('form',this.form)
+        })
+        
         // return newValue;
       },
       deep: true

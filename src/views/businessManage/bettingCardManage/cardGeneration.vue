@@ -364,7 +364,7 @@ export default {
           type: "warning"
         })
         .then(() => {
-          let result = _this.deleteBetting(row.bettingCardId);
+          let result = _this.deleteBetting({data: row.bettingCardId});
           result.then(resp => {
             console.log(resp);
             if (resp.code == 0) {
