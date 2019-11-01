@@ -73,9 +73,17 @@ function getInsArray(id, key, data, keyBack) { // 传入id和key是对应  key
   }
 }
 
+// 设置options的值
+function setOptions(data, form) {
+  data&&data.forEach((item)=>{
+    item.value = form[item.prop];
+  })
+  return data;
+}
 export default {
   get,
   set,
   toggle,
-  getInsArray
+  getInsArray,
+  setOptions
 }

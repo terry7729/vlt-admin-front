@@ -31,6 +31,16 @@
     <panel title="投注规则" :show="true">
       <base-info :infoList="betData"></base-info>
     </panel>
+    <panel title="奖等设置" :show="true" style="margin-bottom:15px">
+      <div class="table-wrap">
+        <el-table :data="tableData" border class="table">
+          <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
+          <el-table-column label="兑奖名称" prop="exchangeName" min-width="160px"></el-table-column>
+          <el-table-column label="最大兑奖金额" prop="exchangeMoney" min-width="160px"></el-table-column>
+          <el-table-column label="兑奖说明" prop="exchangeDesc" min-width="200px"></el-table-column>
+        </el-table>
+      </div>
+    </panel>
     <panel title="资金规则" :show="true">
       <base-info :infoList="fundsData"></base-info>
     </panel>
@@ -173,9 +183,7 @@ export default {
       customData:[
         {title:'奖级设置',value:'',prop:'serveAddress'}
       ],
-      tableData: [
-        {id: 'a',name:'b',type:'c',pond: 'd',time:'2019-09-12 09:00:00'}
-      ],
+      tableData: [],
       formatObj: {
         formatGameStatus:['存储', '试玩', '上市', '变更', '退市'],
         formatGameType: ['概率型','奖组型'],
@@ -198,6 +206,7 @@ export default {
         let res = await self.$api.getChangePlanDetail({data})
 				if(res && res.code == 0) {
           this.responseData = res.data;
+          this.tableData = this.responseData.gameExchangeSetVoList;
           // console.log(res);
           this.eachList(this.planData,this.responseData.gameChangePlanVo);
           this.eachList(this.gameData,this.responseData.gameInfoVo);
@@ -275,5 +284,7 @@ export default {
 .panel{
     margin-bottom: 20px;
 }
-
+.table-wrap{
+  padding: 10px 15px;
+}
 </style>

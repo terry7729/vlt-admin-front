@@ -185,10 +185,12 @@ export default {
   uploadChannelFiles: (options = {}) => ajax.upload('/fileUpload/upload', options),
   // 渠道列表导出
   exportChannelExcel: (options = {}) => ajax.post('/channel/exportExcel', options),
+  // 查询经理角色
+  getManagerRole: (options = {}) => ajax.post('/tChannelRoleInfo/findManager', options),
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),
   // 根据资源类型获取资源名称
-  getModelTree: (options = {}) => ajax.get('/goodsModel/goodsModel/queryModelTree', options),
+  getModelTree: (options = {}) => ajax.get('/goodsModel/queryModelTree', options),
 
 
   getChannelTerminalMenu: (options = {}) => ajax.post('/getChannelTerminalMenu', options),

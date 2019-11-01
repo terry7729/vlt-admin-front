@@ -32,7 +32,7 @@
           <el-table-column label="序号" fixed  type="index" width="60px"></el-table-column>
           <el-table-column label="兑奖名称" min-width="160px">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.exchangeName" placeholder="请输入兑奖名称"></el-input>
+              <el-input v-model="scope.row.exchangeName" disabled placeholder="请输入兑奖名称"></el-input>
             </template>
           </el-table-column>
           <el-table-column label="最大兑奖金额" min-width="160px">
@@ -46,13 +46,13 @@
                 :rows="2" v-model="scope.row.exchangeDesc" placeholder="请输入兑奖说明"></el-input>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="80px">
+          <!-- <el-table-column fixed="right" label="操作" width="80px">
             <template slot-scope="scope">
               <i class="el-icon-delete delete" @click="deleteGoods(scope.$index)"></i>
             </template>
-          </el-table-column>
+          </el-table-column> -->
         </el-table>
-        <el-button class="addGoods" @click="addGoods" icon="el-icon-plus">新增奖等设置</el-button>
+        <!-- <el-button class="addGoods" @click="addGoods" icon="el-icon-plus">新增奖等设置</el-button> -->
       </div>
     </panel>
     <panel title="资金规则" :show="true" style="margin-bottom:15px">
@@ -149,7 +149,9 @@ export default {
       rules: {},
       params: {},
       tableData: [
-        {exchangeName:'',exchangeMoney:'',exchangeDesc:''}
+        {exchangeCode: 1, exchangeName:'自动兑奖',exchangeMoney:'',exchangeDesc:''},
+        {exchangeCode: 2, exchangeName:'柜台兑奖',exchangeMoney:'',exchangeDesc:''},
+        {exchangeCode: 3, exchangeName:'兑奖处兑奖',exchangeMoney:'',exchangeDesc:''}
       ],
       ruleParams: {}, // 游戏规则参数
       betParams: {}, // 投注规则参数
@@ -216,7 +218,14 @@ export default {
       // 奖等规则
       this.riskData.forEach((item)=>{
         // item.value = val.gameRiskRuleVo[item.props]
-        this.tableData = val.gameExchangeSetVoList;
+        // this.tableData = val.gameExchangeSetVoList;
+        if(val.gameExchangeSetVoList.length>0) {
+          this.tableData = val.gameExchangeSetVoList;
+          // this.tableData.forEach((item)=>{
+          //   item.id = item.id
+          // })
+          // this.awardSetId = val.gameExchangeSetVoList[0].id || ''
+        }
       })
       let array = val.gameBettingRuleVo.minAddBets&&val.gameBettingRuleVo.minAddBets.split(',');
       this.eachBetData = []

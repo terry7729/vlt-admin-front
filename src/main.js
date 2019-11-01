@@ -35,6 +35,7 @@ Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$api = api;
 Vue.prototype.$formMethods = formMethods;
+Vue.prototype.$storage = storage;
 Vue.prototype.eventBus = new Vue();
 
 
