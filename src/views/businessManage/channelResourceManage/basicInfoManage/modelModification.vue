@@ -74,7 +74,6 @@ export default {
       formData: [],
       type: 0,
       fitting: "",
-      //selectValue: $route.query.modelType,
       modelAvailablesList: [],
       nameOptions: [],
       falg: false,
@@ -82,9 +81,6 @@ export default {
       selectValue: this.$route.query.modelType,
       value: "",
       options: [{ value: 1, label: "设备" }, { value: 2, label: "配件" }],
-      //可用机型选择框
-      // nameOptions: [{ label: "", value: "1" }, { label: "", value: "2" }],
-      // modelOptions: [{ label: "", value: "3" }, { label: "", value: "4" }],
       params: "",
       formParms: {
         nameOption: "",
@@ -381,6 +377,7 @@ export default {
     // 修改配件
     async modelWrite(data) {
       const self = this;
+
       let result = await this.$api.modelWrite({ message: "修改成功", data });
       this.$router.push("basicInfoManage");
       console.log("result", result);

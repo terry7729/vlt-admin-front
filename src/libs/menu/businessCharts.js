@@ -161,6 +161,12 @@ export default [{
         //   text: "echarts",
         //   code: 'echarts'
         // },
+        // {
+        //   children: [],
+        //   icon: "el-icon-menu",
+        //   name: "组件",
+        //   url: 'componentDemo'
+        // },  
       ],
 
     },

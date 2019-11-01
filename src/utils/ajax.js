@@ -24,7 +24,8 @@ switch (process.env.VUE_APP_MODE) {
     break;
   default:
     // 本地server环境 
-    axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
+    axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
+
 }
 /**
  * @description http请求

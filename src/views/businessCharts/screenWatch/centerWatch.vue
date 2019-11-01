@@ -9,7 +9,7 @@
             <div class="topSales" id="topSales"></div>
             <div class="salesNumber">
               <div>
-                <section class="setTask" @click='open'>
+                <section class="setTask" @click="open">
                   <p>今年任务</p>
                   <p>{{taskNum}}</p>
                 </section>
@@ -63,9 +63,9 @@
                 >
                 <el-table-column align="center" prop="date" label="大厅编号" fit></el-table-column>
                 <el-table-column align="center" prop="name" label="所属省份" fit></el-table-column>
-                <el-table-column align="center" prop="name" label="销售金额" width='100' fit sortable></el-table-column>
-                <el-table-column align="center" prop="name" label="中奖金额" width='100' fit sortable></el-table-column>
-                <el-table-column align="center" prop="name" label="兑奖金额" width='100' fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="销售金额" width="100" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="中奖金额" width="100" fit sortable></el-table-column>
+                <el-table-column align="center" prop="name" label="兑奖金额" width="100" fit sortable></el-table-column>
                 <el-table-column align="center" prop="name" label="状态" fit></el-table-column>
               </el-table>
             </div>
@@ -428,7 +428,7 @@ export default {
           value: 14000
         }
       ],
-      taskNum:0,
+      taskNum: 0,
       allCity: [],
       map: {},
       cityOpt: [],
@@ -547,13 +547,13 @@ export default {
           {
             // name: "业务指标",
             type: "gauge",
-            // radius: "20%", 
+            // radius: "20%",
             detail: { formatter: "{value}%" },
             data: [{ value: 50, name: "ddd" }],
             axisLine: {
               show: true,
               lineStyle: {
-                width: 10, 
+                width: 10,
                 color: [
                   [
                     1,
@@ -575,8 +575,8 @@ export default {
                 ]
               }
             },
-            splitLine:{
-              length:15
+            splitLine: {
+              length: 15
             },
             title: {
               // 仪表盘标题。
@@ -585,13 +585,13 @@ export default {
               color: "#33d27a", // 文字的颜色,默认 #333。
               fontSize: 15 // 文字的字体大小,默认 15。
             },
-            axisTick:{
-              length:8
+            axisTick: {
+              length: 8
             },
             detail: {
               // 仪表盘详情，用于显示数据。
               show: true, // 是否显示详情,默认 true。
-              offsetCenter: ['0', "70%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+              offsetCenter: ["0", "70%"], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
               color: "#fff", // 文字的颜色,默认 auto。
               fontSize: 24, // 文字的字体大小,默认 15。
               formatter: "{value}%" // 格式化函数或者字符串
@@ -603,8 +603,7 @@ export default {
               color: "#fff", // 文字的颜色,默认 #fff。
               fontSize: 16, // 文字的字体大小,默认 5。
               formatter: "{value}" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式。 示例:// 使用字符串模板，模板变量为刻度默认标签 {value},如:formatter: '{value} kg'; // 使用函数模板，函数参数分别为刻度数值,如formatter: function (value) {return value + 'km/h';}
-            },
-            
+            }
           }
         ],
         legend: {
@@ -627,112 +626,188 @@ export default {
     machineMap() {
       let this_ = this;
       let myChart = echarts.init(document.getElementById("bottomMachine"));
+      var fontColor = "#30eee9";
       let option = {
-        // title: {
-        //   text: "堆叠区域图"
-        // },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross",
-            label: {
-              backgroundColor: "gold"
-            }
-          }
-        },
-        // color: ["#1f9cc5", "#e77e63", "#f2d107"],
-        legend: {
-          textStyle: {
-            fontSize: 12, //字体大小
-            color: "#ffffff" //字体颜色
-          },
-          right: "0",
-          top: "0",
-          data: ["游戏总机", "今年新增", "在线"]
-        },
-        // toolbox: {
-        //   feature: {
-        //     saveAsImage: {}
-        //   }
-        // },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: "0%",
+          right: "5%",
+          top: "20%",
+          bottom: "0%",
           containLabel: true
+        },
+        tooltip: {
+          show: true,
+          trigger: "item"
+        },
+        legend: {
+          show: true,
+    
+          top: "5%",
+          y: "15",
+          right:'0',
+          icon: "stack",
+          itemWidth: 10,
+          itemHeight: 10,
+          textStyle: {
+            color: "#1bb4f6"
+          },
+          data: [ "游戏总机", "在线",  "今年新增"]
         },
         xAxis: [
           {
             type: "category",
             boundaryGap: false,
-            data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月"],
             axisLabel: {
-              textStyle: {
-                color: "#25b098"
+              color: fontColor
+            },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#397cbc"
               }
             },
-            /*改变x轴颜色*/
-            axisLine: {
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              show: false,
               lineStyle: {
-                color: "#333",
-                width: 1 //这里是为了突出显示加上的
+                color: "#195384"
               }
-            }
+            },
+            data: [
+              "1月",
+              "2月",
+              "3月",
+              "4月",
+              "5月",
+              "6月",
+              "7月",
+           
+            ]
           }
         ],
         yAxis: [
           {
+            type: "value",
             name: "游戏机数量(个)",
+            min: 0,
+            max: 1000,
+            axisLabel: {
+              formatter: "{value}",
+              textStyle: {
+                color: "#2ad1d2"
+              }
+            },
             axisLine: {
               lineStyle: {
-                color: "#0e4866",
-                width: 1 //这里是为了突出显示加上的
+                color: "#27b4c2"
               }
             },
-            axisLabel: {
-              textStyle: {
-                color: "#fff"
-              }
+            axisTick: {
+              show: false
             },
-            type: "value",
             splitLine: {
-              //网格线
+              show: true,
               lineStyle: {
-                type: "dashed" //设置网格线类型 dotted：虚线   solid:实线
-              },
-              show: true //隐藏或显示
+                color: "#11366e"
+              }
             }
-          }
+          },
+         
         ],
         series: [
-        
+         
+          {
+            name: "游戏总机",
+            type: "line",
+            symbol: "circle",
+            symbolSize: 8,
+
+            itemStyle: {
+              normal: {
+                color: "#00d4c7",
+                lineStyle: {
+                  color: "#00d4c7",
+                  width: 1
+                },
+                areaStyle: {
+                  //color: '#94C9EC'
+                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                    {
+                      offset: 0,
+                      color: "rgba(7,44,90,0.3)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(0,212,199,0.9)"
+                    }
+                  ])
+                }
+              }
+            },
+            data: [620, 682, 691, 710, 730, 770, 770]
+          },
           {
             name: "在线",
             type: "line",
-            // stack: "总量",
-            areaStyle: {
-              // color:'rgba(31,156,197,0.3)'
+            symbol: "circle",
+            symbolSize: 8,
+            itemStyle: {
+              normal: {
+                color: "#aecb56",
+                lineStyle: {
+                  color: "#aecb56",
+                  width: 1
+                },
+                areaStyle: {
+                  //color: '#94C9EC'
+                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                    {
+                      offset: 0,
+                      color: "rgba(7,44,90,0.3)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(114,144,89,0.9)"
+                    }
+                  ])
+                }
+              }
             },
-            data: [520, 582, 591, 634, 590, 630, 610]
+            data: [550, 632, 601, 654, 690, 580, 610]
           },
+      
           {
             name: "今年新增",
             type: "line",
-            // stack: "总量",
-            areaStyle: {
-              // color:'rgba(242,209,7,.7)'
+            symbol: "circle",
+            symbolSize: 8,
+            itemStyle: {
+              normal: {
+                color: "#6FE81A",
+                lineStyle: {
+                  color: "#6FE81A",
+                  width: 1
+                },
+                areaStyle: {
+                  //color: '#94C9EC'
+                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                    {
+                      offset: 0,
+                      color: "rgba(7,44,90,0.3)"
+                    },
+                    {
+                      offset: 1,
+                      color: "rgba(0,212,199,0.9)"
+                    }
+                  ])
+                }
+              }
             },
-            data: [150, 132,101, 154, 190, 130, 110]
+            data: [150, 232, 201, 154, 190, 180, 210]
           },
-            {
-            name: "游戏总机",
-            type: "line",
-            // stack: "总量",
-            areaStyle: {
-              // color:'rgba(231,126,99.3)'
-            },
-            data: [620, 652, 701, 734, 790, 730, 710]
-          },
+       
         ]
       };
 
@@ -742,246 +817,158 @@ export default {
         myChart.resize();
       });
     },
-    //游戏市场份额散点图
+    //游戏市场份额
     sharesMap() {
       let this_ = this;
       let myChart = echarts.init(document.getElementById("sharesMap"));
-      // app.title = "单轴散点图";
-
-      var hours = [
-        "北京",
-        "天津",
-        "河北",
-        "湖南",
-        "湖北",
-        "广东",
-        "四川",
-        "重庆",
-        "江西",
-        "江苏",
-        "上海"
-      ];
-      var days = [
-        "Saturday",
-        "Friday",
-        "Thursday",
-        "Wednesday",
-        "Tuesday",
-        "Monday",
-        "Sunday"
-      ];
-
-      var data = [
-        [0, 0, 5],
-        [0, 1, 1],
-        [0, 2, 0],
-        [0, 3, 0],
-        [0, 4, 0],
-        [0, 5, 0],
-        [0, 6, 0],
-        [0, 7, 0],
-        [0, 8, 0],
-        [0, 9, 0],
-        [0, 10, 0],
-        [0, 11, 2],
-        [0, 12, 4],
-        [0, 13, 1],
-        [0, 14, 1],
-        [0, 15, 3],
-        [0, 16, 4],
-        [0, 17, 6],
-        [0, 18, 4],
-        [0, 19, 4],
-        [0, 20, 3],
-        [0, 21, 3],
-        [0, 22, 2],
-        [0, 23, 5],
-        [1, 0, 7],
-        [1, 1, 0],
-        [1, 2, 0],
-        [1, 3, 0],
-        [1, 4, 0],
-        [1, 5, 0],
-        [1, 6, 0],
-        [1, 7, 0],
-        [1, 8, 0],
-        [1, 9, 0],
-        [1, 10, 5],
-        [1, 11, 2],
-        [1, 12, 2],
-        [1, 13, 6],
-        [1, 14, 9],
-        [1, 15, 11],
-        [1, 16, 6],
-        [1, 17, 7],
-        [1, 18, 8],
-        [1, 19, 12],
-        [1, 20, 5],
-        [1, 21, 5],
-        [1, 22, 7],
-        [1, 23, 2],
-        [2, 0, 1],
-        [2, 1, 1],
-        [2, 2, 0],
-        [2, 3, 0],
-        [2, 4, 0],
-        [2, 5, 0],
-        [2, 6, 0],
-        [2, 7, 0],
-        [2, 8, 0],
-        [2, 9, 0],
-        [2, 10, 3],
-        [2, 11, 2],
-        [2, 12, 1],
-        [2, 13, 9],
-        [2, 14, 8],
-        [2, 15, 10],
-        [2, 16, 6],
-        [2, 17, 5],
-        [2, 18, 5],
-        [2, 19, 5],
-        [2, 20, 7],
-        [2, 21, 4],
-        [2, 22, 2],
-        [2, 23, 4],
-        [3, 0, 7],
-        [3, 1, 3],
-        [3, 2, 0],
-        [3, 3, 0],
-        [3, 4, 0],
-        [3, 5, 0],
-        [3, 6, 0],
-        [3, 7, 0],
-        [3, 8, 1],
-        [3, 9, 0],
-        [3, 10, 5],
-        [3, 11, 4],
-        [3, 12, 7],
-        [3, 13, 14],
-        [3, 14, 13],
-        [3, 15, 12],
-        [3, 16, 9],
-        [3, 17, 5],
-        [3, 18, 5],
-        [3, 19, 10],
-        [3, 20, 6],
-        [3, 21, 4],
-        [3, 22, 4],
-        [3, 23, 1],
-        [4, 0, 1],
-        [4, 1, 3],
-        [4, 2, 0],
-        [4, 3, 0],
-        [4, 4, 0],
-        [4, 5, 1],
-        [4, 6, 0],
-        [4, 7, 0],
-        [4, 8, 0],
-        [4, 9, 2],
-        [4, 10, 4],
-        [4, 11, 4],
-        [4, 12, 2],
-        [4, 13, 4],
-        [4, 14, 4],
-        [4, 15, 14],
-        [4, 16, 12],
-        [4, 17, 1],
-        [4, 18, 8],
-        [4, 19, 5],
-        [4, 20, 3],
-        [4, 21, 7],
-        [4, 22, 3],
-        [4, 23, 0],
-        [5, 0, 2],
-        [5, 1, 1],
-        [5, 2, 0],
-        [5, 3, 3],
-        [5, 4, 0],
-        [5, 5, 0],
-        [5, 6, 0],
-        [5, 7, 0],
-        [5, 8, 2],
-        [5, 9, 0],
-        [5, 10, 4],
-        [5, 11, 1],
-        [5, 12, 5],
-        [5, 13, 10],
-        [5, 14, 5],
-        [5, 15, 7],
-        [5, 16, 11],
-        [5, 17, 6],
-        [5, 18, 0],
-        [5, 19, 5],
-        [5, 20, 3],
-        [5, 21, 4],
-        [5, 22, 2],
-        [5, 23, 0],
-        [6, 0, 1],
-        [6, 1, 0],
-        [6, 2, 0],
-        [6, 3, 0],
-        [6, 4, 0],
-        [6, 5, 0],
-        [6, 6, 0],
-        [6, 7, 0],
-        [6, 8, 0],
-        [6, 9, 0],
-        [6, 10, 1],
-        [6, 11, 0],
-        [6, 12, 2],
-        [6, 13, 1],
-        [6, 14, 3],
-        [6, 15, 4],
-        [6, 16, 0],
-        [6, 17, 0],
-        [6, 18, 0],
-        [6, 19, 0],
-        [6, 20, 1],
-        [6, 21, 2],
-        [6, 22, 2],
-        [6, 23, 6]
-      ];
-
       let option = {
         tooltip: {
-          position: "top"
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+          }
         },
-        title: [],
-        singleAxis: [],
-        series: []
-      };
-
-      echarts.util.each(days, function(day, idx) {
-        option.title.push({
-          textBaseline: "middle",
-          top: ((idx + 0.5) * 100) / 7 + "%",
-          text: day
-        });
-        option.singleAxis.push({
-          left: 150,
-          type: "category",
-          boundaryGap: false,
-          data: hours,
-          top: (idx * 100) / 7 + 5 + "%",
-          height: 100 / 7 - 10 + "%",
+        legend: {
+          data: ["幸运卡片", "侏罗寻宝", "玛雅消除", "美味挑战"],
+          textStyle: {
+            fontSize: 12, //字体大小
+            color: "#ffffff" //字体颜色
+          },
+          right:'0',
+          top:'5%'
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: {
+          type: "value",
           axisLabel: {
-            interval: 2
+            textStyle: {
+              color: "#25b098"
+            }
+          },
+          /*改变x轴颜色*/
+          axisLine: {
+            lineStyle: {
+              color: "#333",
+              // width: 1 //这里是为了突出显示加上的
+            }
+          },
+           splitLine: {
+              show: true,
+              lineStyle: {
+                color: "#11366e"
+              }
+            }
+        },
+        yAxis: {
+          type: "category",
+          data: ["广东", "北京", "上海", "浙江", "福建", "台湾", "天津"],
+          axisLine: {
+            lineStyle: {
+              color: "#0e4866",
+              width: 1 //这里是为了突出显示加上的
+            }
+          },
+          axisLabel: {
+            textStyle: {
+              color: "#fff"
+            }
+          },
+          
+        },
+        series: [
+          {
+            name: "幸运卡片",
+            type: "bar",
+            stack: "总量",
+            barWidth: 15,
+            itemStyle: {
+              normal: {
+                color: "#06d3cd",
+                barBorderRadius: [20, 20, 20, 20]
+              }
+            },
+            label: {
+              normal: {
+                show: true,
+                position: "insideRight"
+              }
+            },
+            z: 10,
+            data: [320, 302, 301, 334, 390, 330, 320]
+          },
+          {
+            name: "侏罗寻宝",
+            type: "bar",
+            stack: "总量",
+            itemStyle: {
+              normal: {
+                color: "#34da62",
+                shadowBlur: [0, 0, 0, 10],
+                shadowColor: "#34da62",
+                barBorderRadius: [20, 20, 20, 20],
+                shadowOffsetX: -20
+              }
+            },
+            label: {
+              normal: {
+                show: true,
+                position: "insideRight"
+              }
+            },
+            z: 6,
+            data: [320, 132, 301, 434, 390, 230, 510]
+          },
+          {
+            name: "美味挑战",
+            type: "bar",
+            stack: "总量",
+            itemStyle: {
+              normal: {
+                color: "#ebe806",
+                shadowBlur: [0, 0, 0, 10],
+                shadowColor: "#ebe806",
+                barBorderRadius: [20, 20, 20, 20],
+                shadowOffsetX: -20
+              }
+            },
+            label: {
+              normal: {
+                show: true,
+                position: "insideRight"
+              }
+            },
+            z: 5,
+            data: [220, 132, 201, 134, 190, 230, 210]
+          },
+          {
+            name: "玛雅消除",
+            type: "bar",
+            stack: "总量",
+            itemStyle: {
+              normal: {
+                barBorderRadius: [20, 20, 20, 20],
+                color: "#ff5624",
+                shadowBlur: [0, 0, 0, 10],
+                shadowColor: "#ff5624",
+                shadowOffsetX: -20
+              }
+            },
+            label: {
+              normal: {
+                show: true,
+                position: "insideRight"
+              }
+            },
+            data: [220, 182, 191, 234, 290, 330, 310]
           }
-        });
-        option.series.push({
-          singleAxisIndex: idx,
-          coordinateSystem: "singleAxis",
-          type: "scatter",
-          data: [],
-          symbolSize: function(dataItem) {
-            return dataItem[1] * 4;
-          }
-        });
-      });
-
-      echarts.util.each(data, function(dataItem) {
-        option.series[dataItem[0]].data.push([dataItem[1], dataItem[2]]);
-      });
+        ]
+      };
       myChart.setOption(option);
       //建议加上以下这一行代码，不加的效果图如下（当浏览器窗口缩小的时候）。超过了div的界限（红色边框）
       window.addEventListener("resize", function() {
@@ -1025,7 +1012,7 @@ export default {
             //   return res;
             // }
             formatter: function(params) {
-              return params.name + "：" + params.data["value"] ;
+              return params.name + "：" + params.data["value"];
             }
           },
           // backgroundColor: "#02142c",
@@ -1342,22 +1329,22 @@ export default {
       };
       this.map.setOption(option);
     },
-     open() {
-        this.$prompt('请输入要设置的今年任务数量', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          inputPattern: /(^[1-9]\d*$)/,
-          inputErrorMessage: '格式不正确'
-        }).then(({ value }) => {
+    open() {
+      this.$prompt("请输入要设置的今年任务数量", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /(^[1-9]\d*$)/,
+        inputErrorMessage: "格式不正确"
+      })
+        .then(({ value }) => {
           this.$message({
-            type: 'success',
-            message: '设置成功'
+            type: "success",
+            message: "设置成功"
           });
-          this.taskNum=value
-        }).catch(() => {
-              
-        });
-      }
+          this.taskNum = value;
+        })
+        .catch(() => {});
+    }
   },
   beforeDestroy() {
     //释放资源  清空图例数据，释放内存.
