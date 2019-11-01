@@ -55,7 +55,14 @@ export default {
           value: "",
           title: "所属机构",
           placeholder: "请选择",
-          options: [{ label: "中福彩", value: "1" }]
+          options: [{ label: "中福彩", value: "1" }],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
         },
         {
           type: "select",
@@ -74,11 +81,33 @@ export default {
         insId: [{ required: true, trigger: "blur" }],
         bettingCardType: [{ required: true, trigger: "blur" }],
         cardMakingQuantity: [{ required: false, validator: rules.numberVal, trigger: "blur" }]
-      }
+      },
+      cascaderOptions: []
     };
   },
   components: {},
+  created () {
+    this.getInsData();
+  },
   methods: {
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        if (res && res.code == 0) {
+          self.$set(self.formDatas[0], "options", res.data);
+          self.cascaderOptions = res.data;
+          console.log('获取机构数据', self.cascaderOptions, res.data);
+
+          // let arr = self.getInsArray(self.insId,'id', res.data, 'id') // 传入id 和对象
+          // console.log('arrs', arr.reverse());
+          // self.insArray.push(arr);
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     changeForm(val) {
       Object.assign(this.params, val);
     },
@@ -95,6 +124,7 @@ export default {
       console.log("提交的数据", data);
       // data.status = data.status ? 1 : 2;
       let result = await _this.$api.createCardGeneration({ data });
+          console.log('ressss',result);
       if (result.code == 0) {
         _this.showLoading = false;
         _this.$message({

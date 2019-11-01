@@ -87,7 +87,7 @@ export default {
 <style lang="less" scoped>
 .row-bg {
   justify-content: space-between;
-  margin: 0 -10px !important;
+  margin: 0 -10px;
  
   .el-col {
     background-color: rgba(255, 255, 255, 1);
@@ -95,7 +95,10 @@ export default {
     &.el-col-4 {
       width: 20%;
       margin: auto 10px;
-      padding: 20px 20px !important;
+      padding: 15px 20px;
+      @media (max-width:1400px) {
+        padding: 10px 20px;
+      }
       & > div {
           width: 100%;
           cursor: pointer;
@@ -137,6 +140,9 @@ export default {
       .overview-info {
         flex: 1;
         margin-left: 20px;
+        @media (max-width: 1400px) {
+          margin-left: 15px;
+        }
         * {
           display: block;
         }

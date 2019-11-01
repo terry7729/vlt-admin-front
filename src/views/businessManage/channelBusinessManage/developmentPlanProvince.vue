@@ -54,23 +54,21 @@ export default {
   data() {
     return {
       searchOptions: [
-         {title: '计划年份', type: 'datepicker', prop: 'planDate', dateType:'year', value: ''},
+         {title: '计划年份', type: 'year', prop: 'planDate', dateType:'year', value: ''},
         {
           type: "cascader",
           prop: "insId",
           value: "61",
           title: "所属机构",
-          options: [
-            {
-              value: "1",
-              label: "中福彩",
-              children: [
-                {
-                  value: "60",
-                  label: "湖南"
-                }
-              ]
-            }]},
+          options: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
+          },
       ],
       controlOptions: [
          {name: '导出当页数据', type: 'primary', icon: 's-promotion'}, 
@@ -111,6 +109,7 @@ export default {
     this.options.param.planDate = fullYear;
     // 搜索里面只查询两级 中心到省级机构
     this.getProvincePlanList(this.options);
+    this.getInsData();
   },
   methods: {
     search(form) {
@@ -118,9 +117,8 @@ export default {
        if(form.planDate) {
         form.planDate = moment(form.planDate).format("YYYY")
       }
-  
       this.options.param = Object.assign(this.options.param, form);
-      this.options.param.insId = '60';
+      this.options.param.insId = form.insId[form.insId.length - 1];
       //  console.log(this.options);
       this.getProvincePlanList(this.options);
     },
@@ -148,6 +146,21 @@ export default {
           } else {
             self.tableData = []
           }
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
+
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        if (res && res.code == 0) {
+          let newData = res.data;
+          self.$set(self.searchOptions[1], "options", newData);
         } else {
           // self.$message.warning(res.msg)
         }
