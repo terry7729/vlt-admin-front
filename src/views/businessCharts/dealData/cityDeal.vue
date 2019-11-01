@@ -84,7 +84,7 @@ export default {
           pageNum: self.listQuery.page,
           pageSize: self.listQuery.limit,                 
         },
-        baseURL:'http://10.6.0.108:8080/api'
+        baseURL:'http://10.6.0.203:8086/api'
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;
