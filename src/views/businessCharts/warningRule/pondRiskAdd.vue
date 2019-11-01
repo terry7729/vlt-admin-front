@@ -59,7 +59,7 @@
               v-model="form.collectFrequency"
               controls-position="right"
               @change="handleChange"
-              :min="1"
+              :min="10"
               :max="100"
               :step="10"
               size="medium"
@@ -287,13 +287,13 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="center" prop="warningPl" label="告警频率" min-width="10%">
+          <el-table-column align="center" prop="warningPl" label="告警次数" min-width="10%">
             <template slot-scope="scope">
               <el-input-number
                 v-model="scope.row.warningPl"
                 controls-position="right"
                 @change="handleChange"
-                :min="1"
+                :min="10"
                 :max="100"
                 :step="10"
                 size="mini"
@@ -311,6 +311,7 @@
 </template>
 
 <script>
+import inform from "@/utils/inform.js";
 import rules from "@/utils/rules.js";
 export default {
   data() {
@@ -340,11 +341,11 @@ export default {
       options: [
         {
           value: 1,
-          label: "1"
+          label: "幸运卡片"
         },
         {
           value: 2,
-          label: "2"
+          label: "侏罗寻宝"
         }
       ],
       options3: [
@@ -477,9 +478,9 @@ export default {
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
       form: {
-        alarmFrequencyMajor: "", //重大告警频次
-        alarmFrequencyOrdinary: "", //普通告警频次
-        alarmFrequencySerious: "", //严重告警频次
+        informTotalCountMajor: "", //重大告警频次
+        informTotalCountOrdinary: "", //普通告警频次
+        informTotalCountSerious: "", //严重告警频次
         collectFrequency: "", //采集间隔(单位：分钟) 传入15，表示15分钟匹配一次
         collectStatus: 0, //0生效 1停止
         gameId: "",
@@ -524,9 +525,9 @@ export default {
     async pondRiskInsert() {
       const res = await this.$api.pondRiskInsert({
         data: {
-          alarmFrequencyMajor: this.tableData1[2].warningPl,
-          alarmFrequencyOrdinary: this.tableData1[1].warningPl,
-          alarmFrequencySerious: this.tableData1[0].warningPl,
+          informTotalCountMajor: this.tableData1[2].warningPl,
+          informTotalCountOrdinary: this.tableData1[1].warningPl,
+          informTotalCountSerious: this.tableData1[0].warningPl,
           gameId: this.gameValue,
           gameName: this.gameValue,
           collectFrequency: this.form.collectFrequency,
@@ -553,7 +554,8 @@ export default {
           informWayMajor: this.form.informWayMajor,
           informWayOrdinary: this.form.informWayOrdinary,
           informWaySerious: this.form.informWaySerious
-        }
+        },
+        baseURL:'http://10.6.0.108:8080/api'
       });
       if (res && res.code == 0) {
         // this.$message({
@@ -594,29 +596,7 @@ export default {
       this.getInformIdByCheckValue(this.checkList2, "informWayMajor");
     },
     getInformIdByCheckValue(arrList, name) {
-      if (arrList) {
-        if (arrList.length == 1) {
-          if (arrList.includes("站内")) {
-            this.form[name] = 1;
-          } else if (arrList.includes("邮件")) {
-            this.form[name] = 2;
-          } else {
-            this.form[name] = 3;
-          }
-        } else if (arrList.length == 2) {
-          if (arrList.includes("站内") && arrList.includes("邮件")) {
-            this.form[name] = 4;
-          } else if (arrList.includes("短信") && arrList.includes("邮件")) {
-            this.form[name] = 6;
-          } else {
-            this.form[name] = 5;
-          }
-        } else if (arrList.length == 3) {
-          this.form[name] = 7;
-        } else {
-          this.form[name] = "";
-        }
-      }
+     this.form[name]= inform.getInformIdByCheckValue(arrList)
     },
     //勾选普通市级通知对象
     cityPropleOrdinary() {

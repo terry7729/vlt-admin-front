@@ -108,6 +108,8 @@ export default {
   editDevelopPlan: (options = {}) => ajax.post('/developPlan/updateDevelopPlanInfo', options),
   // 查询年度开展计划列表
   getDevelopPlanList: (options = {}) => ajax.post('/developPlan/queryDevelopPlanList', options),
+  // 查询当前用户的机构信息
+  getUserInsInfoList: (options = {}) => ajax.post('/developPlan/queryUserInsInfoList', options),
   // 查询年度开展计划详情
   getDevelopPlanInfo: (options = {}) => ajax.post('/developPlan/queryDevelopPlanInfo', options),
   // 查询年度开展计划汇总省级列表

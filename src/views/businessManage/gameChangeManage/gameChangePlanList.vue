@@ -99,7 +99,12 @@ export default {
         if (res && res.code == 0) {
           console.log("游戏变更计划", res);
           if (res.data) {
-            this.tableData = res.data;
+            self.tableData = res.data;
+            if (self.tableData.records.length > 0) {
+              self.tableData.records.forEach(item => {
+                item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')
+              })
+            }
           } 
         } else {
           self.$message.warning(res.msg);

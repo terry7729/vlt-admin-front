@@ -7,8 +7,8 @@
     </div>
     <div class="el_table">
       <el-table :data="tableData" ref="multipleTable" border>
-        <el-table-column type="index" label="序号" width="100"></el-table-column>
-        <el-table-column prop="keyName" label="数据字典名称"></el-table-column>
+        <el-table-column type="index" label="序号" ></el-table-column>
+        <el-table-column prop="name" label="数据字典名称"></el-table-column>
         <el-table-column prop="key" label="数据字典键"></el-table-column>
         <el-table-column prop="value" label="字典数据值"></el-table-column>
         <el-table-column prop="description" label="数据字典描述"></el-table-column>
@@ -20,13 +20,13 @@
         <el-table-column label="更新时间 ">
           <template slot-scope="scope">{{translateTime(scope.row.updateTime)}}</template>
         </el-table-column>
-        <el-table-column prop="status" label="数据字典状态">
+        <el-table-column prop="isAllowDelete" label="数据字典状态" width="120">
           <template slot-scope="scope">
             <tableRowStatus
               :scope="scope"
               :tableData="tableData"
               idField="id"
-              statusField="status"
+              statusField="isAllowDelete"
               :rowName="scope.row.name"
               :option="{
                 enable:{
@@ -102,7 +102,7 @@ export default {
       option: [
         {
           title: "字典名称",
-          prop: "keyName",
+          prop: "name",
           type: "input",
           value: "",
           placeholder: "请输入" || ["请输入1", "请输入2"]
@@ -113,10 +113,10 @@ export default {
       pageSize: 10,
       currentPage: 0,
       formData: [
-        { title: "字典名称", type: "input", prop: "keyName", value: "" },
-        { title: "数据字典键", type: "input", prop: "key", value: "" },
+        { title: "字典名称", type: "input", prop: "name", value: "" },
+        { title: "数据字典键", type: "input", prop: "key", value: "" ,disabled:false},
         { title: "字典数据值", type: "input", prop: "value", value: "" },
-        { title: "状态", type: "switch", prop: "status", value: "1" },
+        { title: "状态", type: "switch", prop: "isAllowDelete", value: "1" },
         { title: "详情描述", type: "textarea", prop: "description", value: "" }
       ],
       data: {
@@ -129,7 +129,7 @@ export default {
   components: {},
   created() {
     let data = this.data;
-    this.getAll(data);
+    this.dictDataPage(data);
   },
   methods: {
     translateTime(val) {
@@ -140,7 +140,7 @@ export default {
         data:{
           page: 1,
           pageSize: 10,
-          all: true,
+          param:{},
         },
         responseType: "blob"
       });
@@ -158,24 +158,25 @@ export default {
       window.URL.revokeObjectURL(url); //释放掉blob对象
       console.log(res);
     },
-    async getAll(data) {
+    async dictDataPage(data) {
       // const that = this;
 
-      let res = await this.$api.getAll({ data });
+      let res = await this.$api.dictDataPage({ data });
       console.log("全部数据", res);
       if (res && res.code == 0) {
         this.tableData = res.data.records;
         this.total = res.data.total;
-        this.pageSize = res.data.pageSize;
+        this.pageSize = res.data.pageSize;  
       } else {
       }
     },
+
     // handleSelectionChange(val) {
     //   this.multipleSelection = val;
     // },
     handleSizeChange(val) {
       console.log(999, val);
-      this.getAll({
+      this.dictDataPage({
         pageSize: val,
         param: {}
       });
@@ -183,26 +184,30 @@ export default {
     },
     handleCurrentChange(val) {
       console.log(6666, val);
-      this.getAll({
+      this.dictDataPage({
         page: val || 1,
         pageSize: this.data.pageSize,
-        param: {}
-      });
+        param: {},
+      })
       this.currentPage = val;
     },
 
     async search(val) {
       //搜索接口
       // let obj=this.search.param
-      //console.log(val)
-      let data = {
+      console.log('搜索', val)
+       let data = {
         param: val
       };
       //  let data1={...obj,param}
-      let result = await this.$api.getByCondition( {message:"搜索成功" , data });
+      if(val.keyName!==""){
+
+      let result = await this.$api.dictDataPage( {message:"搜索成功",data });
       console.log(result);
-      this.tableData = result.data.records;
-      this.total = result.data.total;
+      this.tableData = result.data.records;   
+      this.total = result.data.total;}else{
+
+      }
     },
 
     selectBtn(val) {
@@ -222,11 +227,12 @@ export default {
        console.log("编辑",val)
       this.dialogFormVisible = true;
       this.flag = false;
-      this.val = val ;
+      this.val = val;
       let arr = Object.keys(val)
       let formData  = this.formData
+      formData[1].disabled=true
       console.log(formData)
-      formData.forEach(item=>{
+      formData.forEach(item=>{  
         arr.forEach(i=>{
           if(item.prop === i){
             item.value = val[i]
@@ -239,7 +245,7 @@ export default {
       this.param = val;
       // console.log(1111,this.param);
     },
-    async submit(val) {
+    async submit(val) {    //新增和编辑
       // this.$refs.baseForm.validate(val => {
       if (this.param.status != 0) {
         this.param.status = 0;
@@ -247,7 +253,7 @@ export default {
         this.param.status = 1;
       }
       console.log(2222, data);
-      let data = { ...this.param };
+      let data = { ...this.param ,};
       if (this.flag) {
         //let formData = this.$refs.baseForm.form;
         let result = await this.$api.add({ data });
@@ -255,6 +261,7 @@ export default {
         console.log(666, result);
         this.dialogFormVisible = false;
       } else {
+        data.id=this.val.id
         let result = await this.$api.edit({ data });
         // this.$refs.baseForm.resetForm();
         console.log(777, result);

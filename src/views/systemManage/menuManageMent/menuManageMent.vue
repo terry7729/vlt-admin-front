@@ -15,7 +15,7 @@
               show-checkbox
               node-key="id"
               @check-change="checkChange"
-              :default-expanded-keys="[1, 2]"
+              :default-expanded-keys="expandedKeys"
               :expand-on-click-node="true"
               :props="{
                 children: 'children',
@@ -89,6 +89,7 @@ export default {
       menuType: 0,
       isEdit: false,
       menuData: [],
+      expandedKeys: [],
       controlOptions: [
         //顶部按钮
         { name: "添加根节点", type: "primary", icon: "", id: 1 },
@@ -253,6 +254,11 @@ export default {
       this.currentMenu = this.menuData[0];
       this.menuType = 2;
       this.form = this.config[2];
+      // 设置默认展开
+      this.expandedKeys = [this.menuData[0].id];
+      if (this.currentMenu.children && this.currentMenu.children.length) {
+        this.expandedKeys.push(this.currentMenu.children[0].id)
+      }
     })()
   },
   mounted() {
@@ -332,7 +338,7 @@ export default {
             if (this.isEdit) {
               this.$set(this.currentMenu, 'text', data.moduleName);
             } else {
-              this.$refs.tree.updateKeyChildren(data.parentId, [res.data])
+              this.$refs.tree.append(res.data, data.parentId)
             }
             return;
           }
@@ -415,6 +421,8 @@ export default {
             this.$refs.tree.remove(item);
           })
         }
+      }).catch(() => {
+        console.log('已取消删除')
       })
     },
     // 操作

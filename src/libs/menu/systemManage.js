@@ -1,166 +1,166 @@
 // 系统管理-左侧导航数据
 
 export default [{
-  childResources: [{
-      icon: "icon-xitongshezhi",
-      name: "系统设置",
-      url: 'settings',
-      childResources: [{
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "基本设置",
-          url: 'baseSetting'
+  children: [{
+      iconCls: "icon-xitongshezhi",
+      text: "系统设置",
+      code: 'settings',
+      children: [{
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "基本设置",
+          code: 'baseSetting'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "邮件设置",
-          url: 'emailSetting'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "邮件设置",
+          code: 'emailSetting'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "参数设置",
-          url: 'paramSetting'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "参数设置",
+          code: 'paramSetting'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "短信设置",
-          url: 'noteSetting'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "短信设置",
+          code: 'noteSetting'
         },
       ],
     },
     {
-      icon: "icon-shujuzidian",
-      name: "数据字典",
-      url: 'dataDictionary',
-      childResources: [{
-        childResources: [],
-        icon: "el-icon-menu",
-        name: "数据字典",
-        url: 'dataDictionary'
+      iconCls: "icon-shujuzidian",
+      text: "数据字典",
+      code: 'dataDictionary',
+      children: [{
+        children: [],
+        iconCls: "el-icon-menu",
+        text: "数据字典",
+        code: 'dataDictionary'
       }]
     },
     {
-      icon: "icon-chanpindaohang_yewuliucheng",
-      name: "业务流程",
-      url: 'businessProcess',
-      childResources: [
+      iconCls: "icon-chanpindaohang_yewuliucheng",
+      text: "业务流程",
+      code: 'businessProcess',
+      children: [
 
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "表单管理",
-          url: 'formManage'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "表单管理",
+          code: 'formManage'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "流程设置",
-          url: 'processSet'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "流程设置",
+          code: 'processSet'
         },
         {
-          childResources: [],
-          icon: "el-icon-menu",
-          name: "流程分类",
-          url: 'processClassify'
+          children: [],
+          iconCls: "el-icon-menu",
+          text: "流程分类",
+          code: 'processClassify'
         },
       ],
     },
     {
-      icon: "icon-zuzhijiagou",
-      name: "组织架构",
-      url: 'organization',
-      childResources: [{
-        icon: "",
-        name: "组织架构",
-        url: 'organizationChild',
+      iconCls: "icon-zuzhijiagou",
+      text: "组织架构",
+      code: 'organization',
+      children: [{
+        iconCls: "",
+        text: "组织架构",
+        code: 'organizationChild',
       }]
     },
     {
-      icon: 'icon-yonghuguanli',
-      name: '用户管理',
-      url: 'userContorl',
-      childResources: [{
-        icon: '',
-        name: '用户列表',
-        url: 'userList',
+      iconCls: 'icon-yonghuguanli',
+      text: '用户管理',
+      code: 'userContorl',
+      children: [{
+        iconCls: '',
+        text: '用户列表',
+        code: 'userList',
       }, {
-        icon: '',
-        name: '用户设置',
-        url: 'userSetting',
+        iconCls: '',
+        text: '用户设置',
+        code: 'userSetting',
       }]
     },
     {
-      icon: 'icon-hezuohuoban1',
-      name: '角色管理',
-      url: 'roleManagement',
-      childResources: [{
-        icon: '',
-        name: '角色列表',
-        url: 'roleList'
+      iconCls: 'icon-hezuohuoban1',
+      text: '角色管理',
+      code: 'roleManagement',
+      children: [{
+        iconCls: '',
+        text: '角色列表',
+        code: 'roleList'
       }]
     },
     {
-      icon: 'icon-caidanguanli',
-      name: '菜单管理',
-      url: 'menuManagement',
-      childResources: [{
-        icon: '',
-        name: '菜单管理',
-        url: 'menuManageMent'
+      iconCls: 'icon-caidanguanli',
+      text: '菜单管理',
+      code: 'menuManagement',
+      children: [{
+        iconCls: '',
+        text: '菜单管理',
+        code: 'menuManageMent'
       }]
     },
     {
-      icon: 'icon-xitongrizhi',
-      name: '系统日志',
-      url: 'systemLog',
-      childResources: [{
-        icon: '',
-        name: '系统操作日志',
-        url: 'systemOperationLog'
+      iconCls: 'icon-xitongrizhi',
+      text: '系统日志',
+      code: 'systemLog',
+      children: [{
+        iconCls: '',
+        text: '系统操作日志',
+        code: 'systemOperationLog'
       }]
     },
     {
-      icon: 'icon-xitongkaiguan',
-      name: '系统开关',
-      url: 'systemSwitch',
-      childResources: [{
-        icon: '',
-        name: '系统开关',
-        url: 'systemSwitch'
+      iconCls: 'icon-xitongkaiguan',
+      text: '系统开关',
+      code: 'systemSwitch',
+      children: [{
+        iconCls: '',
+        text: '系统开关',
+        code: 'systemSwitch'
       }]
     },
     {
-      icon: 'icon-rili',
-      name: '假日参数管理',
-      url: 'holidayParametersManagement',
-      childResources: [{
-        icon: '',
-        name: '假日参数管理',
-        url: 'holidayParametersManagement'
+      iconCls: 'icon-rili',
+      text: '假日参数管理',
+      code: 'holidayParametersManagement',
+      children: [{
+        iconCls: '',
+        text: '假日参数管理',
+        code: 'holidayParametersManagement'
       }]
     },
     {
-      icon: 'icon-zhongduanguanli',
-      name: '终端事件管理',
-      url: 'TerminalEventManagement',
-      childResources: [{
-        icon: '',
-        name: '终端事件控制',
-        url: 'TerminalEventControl'
+      iconCls: 'icon-zhongduanguanli',
+      text: '终端事件管理',
+      code: 'TerminalEventManagement',
+      children: [{
+        iconCls: '',
+        text: '终端事件控制',
+        code: 'TerminalEventControl'
       },
       {
-        icon: '',
-        name: '终端事件日志',
-        url: 'TerminalEventLog'
+        iconCls: '',
+        text: '终端事件日志',
+        code: 'TerminalEventLog'
       }]
     }
   ],
   },
   {
-  icon: "el-icon-menu",
-  name: "系统管理",
-  url: '' // 前端路由名称
+  iconCls: "el-icon-menu",
+  text: "系统管理",
+  code: '' // 前端路由名称
 }]
