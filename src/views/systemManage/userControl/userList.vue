@@ -94,9 +94,9 @@
               <el-radio :label="0">登陆密码</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="请输入管理员密码" label-width="130px">
+          <!-- <el-form-item label="请输入管理员密码" label-width="130px">
             <el-input placeholder="请输入密码" v-model="restpaswordfrom.password" show-password></el-input>
-          </el-form-item>
+          </el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -113,8 +113,8 @@ export default {
   data() {
     return {
       restpaswordfrom: {
-        pwdStatus: 0,
-        password: ""
+        pwdStatus: 0
+        // password:''
       },
       //测试数据
       total: 0,
@@ -215,7 +215,7 @@ export default {
   mounted() {},
   methods: {
     async init(val) {
-      console.log("param",this.searchFrom);
+      console.log("param", this.searchFrom);
       let data = {
         page: val || 1,
         pageSize: this.pageSize,
@@ -287,34 +287,62 @@ export default {
         })();
       }
     },
-    async search(val) {
-      //搜索事件
-      console.log(val);
-      this.searchFrom = val;
-      // this.searchStatus = "搜索"
-      this.init();
-    },
-    pagingControl() {},
     resetPassWord(val) {
       this.dialogFormVisible = true;
       this.restParam = val;
       console.log(val);
     },
-    async dialogFormVisibleEnter() {
+    dialogFormVisibleEnter() {
       //操作密码重置
-      console.log(this.restpaswordfrom);
-      let data = {
-        ...this.restpaswordfrom
-      };
-      data.userId = this.restParam.userId;
+      this.$alert("您确认要重置密码?", "标题名称", {
+        confirmButtonText: "确定",
+        callback: async action => {
+          this.dialogFormVisible = false;
+          console.log(this.restpaswordfrom);
+          let data = {
+            ...this.restpaswordfrom
+          };
+          data.userId = this.restParam.userId;
 
-      let reslt = await this.$api.restPassWord({ data });
+          let reslt = await this.$api.restPassWord({ data });
 
-      console.log(reslt);
-
-      this.dialogFormVisible = false;
+          console.log(reslt);
+          this.$message({
+            type: "info",
+            message: `action: ${action}`
+          });
+        }
+      });
     }
   },
+  async search(val) {
+    //搜索事件
+    console.log(val);
+    this.searchFrom = val;
+    // this.searchStatus = "搜索"
+    this.init();
+  },
+  pagingControl() {},
+  resetPassWord(val) {
+    this.dialogFormVisible = true;
+    this.restParam = val;
+    console.log(val);
+  },
+  async dialogFormVisibleEnter() {
+    //操作密码重置
+    console.log(this.restpaswordfrom);
+    let data = {
+      ...this.restpaswordfrom
+    };
+    data.userId = this.restParam.userId;
+
+    let reslt = await this.$api.restPassWord({ data });
+
+    console.log(reslt);
+
+    this.dialogFormVisible = false;
+  },
+
   watch: {
     // pageSize: {
     //   handler: function(newValue, oldVale) {

@@ -156,7 +156,7 @@ export default {
           ...this.form
         }
         data.userId = "";
-        let reslt = await this.$api.userRegist({Message:'请求成功', data });
+        let reslt = await this.$api.userRegist({Message:'新建成功', data });
         console.log(reslt);
         if (reslt.code === 0) {
           this.params = {};
@@ -169,7 +169,7 @@ export default {
         }
         data.userId = this.$route.query.ifo.userId;
         console.log(data);
-        let reslt = await this.$api.userEdit({ data });
+        let reslt = await this.$api.userEdit({Message:'编缉成功', data });
         console.log("编缉用户信息", reslt);
         if (reslt.code === 0) {
           this.$router.push({ name: "userList" });

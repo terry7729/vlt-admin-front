@@ -2,7 +2,7 @@
   <!-- 型号管理新增页面 -->
   <div class="vlt-card modelAdd-page">
     <div class="vlt-edit-single">
-      <h2 class="title">新增类号管理</h2>
+      <h2 class="title">新增型号管理</h2>
       <div class="vlt-edit-wrap">
         <span class="goods-cate">物品类别</span>
         <el-form class="goods">
@@ -261,7 +261,6 @@ export default {
             goodsType: type
           };
         }
-
         let res = await _this.$api.getModelTrees({ data });
         if (res && res.code == 0) {
           let options = [];
@@ -378,7 +377,6 @@ export default {
         });
         console.log(modelAvailablesList);
       }
-
       this.$refs["baseForm"].validate(async valid => {
         if (valid === "true") {
           let data = this.params;
@@ -398,15 +396,6 @@ export default {
           }
         }
       });
-
-      // this.$refs[form].validate(async valid => {
-      //     if (valid) {
-      //     // 表单验证通过后使用组件自带的方法触发上传事件
-      //       this.$refs.upload.submit()
-      //     } else {
-      //       return false;
-      //     }
-      //   });
     },
     clearDevice(index) {
       if (this.modelAvailablesList.length < 2) {

@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     async initList(options) {
-      console.log("this.options", options);
+      // console.log("this.options", options);
       let data = JSON.parse(JSON.stringify(options));
       let result = await this.$api.equipmentListPage({ data });
       console.log("data", result);
@@ -112,9 +112,17 @@ export default {
     },
 
     search(form) {
-      console.log("search", form);
-      Object.assign(this.params,this.options, form)
-      this.initList(this.params);
+      // console.log("search", form);
+      this.options = {
+        page: 1,
+        pageSize: 10,
+        param: {
+          deviceType: 2,
+          ...form
+        }
+      }
+      // Object.assign(this.params,this.options, form)
+      this.initList(this.options);
     },
     handleClick(row) {
       this.$router.push({

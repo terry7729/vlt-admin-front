@@ -101,11 +101,11 @@ export default {
           placeholder: "请选择",
           options: [
             {
-              label: "选项1",
+              label: "概率型",
               value: 1
             },
             {
-              label: "选项2",
+              label: "奖组型",
               value: 2
             }
           ]
@@ -118,12 +118,20 @@ export default {
           placeholder: "请选择",
           options: [
             {
-              label: "选项1",
+              label: "审批中",
               value: 1
             },
             {
-              label: "选项2",
+              label: "审批拒绝",
               value: 2
+            },
+            {
+              label: "待上市",
+              value: 3
+            },
+            {
+              label: "已上市",
+              value: 4
             }
           ]
         },
@@ -134,7 +142,7 @@ export default {
           title: "奖池类型",
           placeholder: "请选择",
           options: [{ label: "选项1", value: 1 }, { label: "选项2", value: 2 }]
-        },
+        }
         // {
         //   type: "datepicker-range",
         //   prop: "date2",
@@ -145,7 +153,15 @@ export default {
       ],
       currentPage: 1,
       tableDataList: {},
-      options: {}
+      options: {},
+      formatObj: {
+        formatGameStatus:['存储', '试玩', '上市', '变更', '退市'],
+        formatGameType: ['概率型','奖组型'],
+        formatPoolRate:['无奖池','单奖池', '多奖池'],
+        formatPlanStatus: ['审批中', '审批拒绝','待生效','已生效'],
+        formatConPattern: ['测试账户', '试玩积分'],
+        formatIndulgeSwitch: ['启用','禁用']
+      },
     };
   },
   methods: {
@@ -156,7 +172,16 @@ export default {
         let res = await self.$api.queryGameListPlanPage({ data });
         console.log(res);
         if (res && res.code == 0) {
-          this.tableDataList = res.data;
+          self.tableDataList = res.data;
+          self.tableDataList.records = self.tableDataList.records.map( item => {
+            if (item.gameStatus) {
+              item.gameStatus = self.formatObj.formatGameStatus[parseInt(item.gameStatus) - 1]
+            }
+            if (item.gameType) {
+              item.gameType = self.formatObj.formatGameType[parseInt(item.gameType) - 1];
+            }
+            return item 
+          })
         } else {
           self.$message.warning(res.msg);
         }
@@ -179,7 +204,7 @@ export default {
       console.log(row);
       this.$router.push({
         path: "./gameMarketDetail",
-        query: { 
+        query: {
           id: row.developerId,
           gameId: row.gameId
         }
@@ -193,6 +218,12 @@ export default {
     },
     search(form) {
       console.log("search", form);
+      this.options = {
+        page: 1,
+        pageSize: 10,
+        ...form
+      };
+      this.queryGameListPlanPage(this.options)
     },
     handleSizeChange(val) {
       this.options.pageSize = val;

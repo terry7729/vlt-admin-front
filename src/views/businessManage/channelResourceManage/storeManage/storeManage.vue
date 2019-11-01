@@ -1,13 +1,13 @@
 <template>
- <div class="vlt-card">
-   <div class="content-block">
-     <search-bar class="search-bar-demo" @search="search" :options="searchOptions" :total="totalCount" labelWidth="80px"></search-bar>
-     <control-bar slot="extend-bar" @select="addBtn" :options="controlOptions" position="left"></control-bar>
-     <el-table :data="tableData" border>
+<div class="vlt-card">
+  <div class="content-block">
+    <search-bar class="search-bar-demo" @search="search" :options="searchOptions" :total="totalCount" labelWidth="80px"></search-bar>
+    <control-bar slot="extend-bar" @select="addBtn" :options="controlOptions" position="left"></control-bar>
+    <el-table :data="tableData" border>
         <el-table-column fixed label="序号" type="index" width="90px"></el-table-column>
-        <el-table-column label="仓库名称" prop="nameX" min-width="120px"></el-table-column>
-        <el-table-column label="所属机构" prop="organName"></el-table-column>
-        <el-table-column label="仓库类型" prop="typeX"></el-table-column>
+        <el-table-column label="仓库名称" prop="warName" min-width="120px"></el-table-column>
+        <el-table-column label="所属机构" prop="insName"></el-table-column>
+        <el-table-column label="仓库类型" prop="warType"></el-table-column>
         <el-table-column label="仓库管理员" prop="adminName"></el-table-column>
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
@@ -24,8 +24,8 @@
         @handleCurrentChange="handleCurrentChange"
       >
       </table-paging>
-   </div>
- </div>
+  </div>
+</div>
 </template>
 
 <script type="text/javascript">
@@ -41,14 +41,14 @@ return {
   dialogAddFormVisible:false,
   dialogFormVisible: false,
   searchOptions:[
-    {title:'仓库名称',type:'input',prop:'nameX',value:''},
-    {title:'仓库类型',type:'select',prop:'typeX',value:'',options:[{label:'中彩仓库',value:1},{label:'省中心仓库',value:2},
+    {title:'仓库名称',type:'input',prop:'warName',value:''},
+    {title:'仓库类型',type:'select',prop:'warType',value:'',options:[{label:'中彩仓库',value:1},{label:'省中心仓库',value:2},
     {label:'地市仓库',value:3},{label:'销售大厅',value:4}]},
     {title:'仓库管理员',type:'input',prop:'adminName',value:''},
     {
       title: "所属机构",
       type: "cascader",
-      prop: "organId",
+      prop: "insId",
       value: "",
       options: [],
       setProps: {
@@ -66,10 +66,10 @@ return {
       page: 1,
       pageSize: 10,//每页显示数据调试
       param: {
-        "nameX": "",
-        "typeX": "",
+        "warName": "",
+        "warType": "",
         "adminName": '',
-        "organId":  ''
+        "insId":  ''
       }
   },
   //  basicInfo:[
@@ -114,7 +114,7 @@ methods: {
       })(data);
     },
   search(data) {
-    data.organId = data.organId&&data.organId.reverse()[0]
+    data.insId = data.insId&&data.insId.reverse()[0]
     this.currentPage = 1
     this.requestData.param = data
     this.getStoreList(this.requestData)
@@ -159,9 +159,8 @@ methods: {
       if (res && res.code == 0){
         this.tableData = res.data.records
         this.tableData.forEach((item)=>{
-          item.typeX = obj[item.typeX]
+          item.warType = obj[item.warType]
         })
-        // console.log(this.tableData)
         this.totalCount = res.data.total
       }
     })(data)
