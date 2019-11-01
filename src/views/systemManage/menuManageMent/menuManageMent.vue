@@ -332,7 +332,7 @@ export default {
             if (this.isEdit) {
               this.$set(this.currentMenu, 'text', data.moduleName);
             } else {
-              this.$refs.tree.updateKeyChildren(data.parentId, [res.data])
+              this.$refs.tree.append(res.data, data.parentId)
             }
             return;
           }
