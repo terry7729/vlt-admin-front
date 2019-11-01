@@ -650,10 +650,7 @@ export default {
         console.log("抛出异常为：", err);
       }
     },
-    getCheckifo(...res) {
-      //复选框选中状态变化事件递给 data 属性的数组中该节点所对应的对象、节点本身是否被选中、节点的子树中是否有被选中的节点
-    },
-    //
+
     addValue(val, data) {
       //value数值回填
       for (var i = 0; i < val.length; i++) {
