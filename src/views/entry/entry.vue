@@ -106,10 +106,10 @@ export default {
         menuId
       })
       // 跳转到子模块首页
-      const list = menuList[menuId].content[0].childResources;
-      let name = list[0].url;
-      if (list[0].childResources && list[0].childResources.length) {
-        name = list[0].childResources[0].url
+      const list = menuList[menuId].content[0].children;
+      let name = list[0].code;
+      if (list[0].children && list[0].children.length) {
+        name = list[0].children[0].code
       }
       this.$router.push({
         name
