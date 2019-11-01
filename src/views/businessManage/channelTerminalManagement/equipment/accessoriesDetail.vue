@@ -16,14 +16,15 @@ export default {
     return {
       params: {},
       infoList: [
-        { title: "配件名称", value: "", prop: "spraresName" },
-        { title: "配件型号", value: "", prop: "spraresType" },
-        { title: "配件编码", value: "", prop: "spraresCode" },
+        { title: "配件名称", value: "", prop: "deviceName" },
+        { title: "配件型号", value: "", prop: "deviceModel" },
+        { title: "配件编码", value: "", prop: "deviceCode" },
         { title: "存放位置", value: "", prop: "nameX" },
-        { title: "使用状态", value: "", prop: "usageStatusName" },
-        { title: "配件状态", value: "", prop: "spraresStatusName" },
+        { title: "使用状态", value: "", prop: "useStatusName" },
+        { title: "配件状态", value: "", prop: "statusName" },
         { title: "入库时间", value: "", prop: "warehouseEntryTime" }
       ]
+
     };
   },
   created() {
@@ -39,7 +40,7 @@ export default {
       let data = {
         id: id
       };
-      let result = await this.$api.accessoriesInfoDetail({ data });
+      let result = await this.$api.equipmentInfoDetail({ data });
       console.log(result);
       if (result.code === 0) {
         this.infoList.forEach(item => {

@@ -16,6 +16,8 @@
 
 <script type="text/javascript">
 import rules from "@/utils/rules.js";
+import schema from 'async-validator';
+
 export default {
   name: "addStore",
   data() {
@@ -23,11 +25,11 @@ export default {
       selectedOption: '',
       insData: [], //  所属机构数据
       options: [
-        { title: "仓库名称", type: "input", prop: "nameX", value: "" },
+        { title: "仓库名称", type: "input", prop: "warName", value: "" },
         {
           title: "所属机构",
           type: "cascader",
-          prop: "organId",
+          prop: "insId",
           value: "",
           options: [],
           setProps: {
@@ -52,7 +54,7 @@ export default {
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
         },
-        {title:'仓库类型',type:'select',prop:'typeX',value:'',disabled:true,options:[
+        {title:'仓库类型',type:'select',prop:'warType',value:'',disabled:true,options:[
           {label:'中彩仓库',value:1},
           {label:'省中心仓库',value:2},
           {label:'地市仓库',value:3}
@@ -68,32 +70,32 @@ export default {
       ],
       formData: [],
       rules: {
-        nameX: [
+        warName: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        organId: [
+        insId: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
         adminId: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        remark: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ]
+        // remark: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ]
       },
       departmentData: [],
-      form: "",
+      form: {},
       departmentArray: [],
     };
   },
   components: {},
   created() {
     let form = {
-      nameX:'',
-      organId: '',
+      warName:'',
+      insId: '',
       departmentId: '',
       adminId:'',
-      typeX:'',
+      warType:'',
       remark:'',
     }
     this.formData = this.$formMethods.toggle(this.options, form) // 切换菜单
@@ -104,10 +106,10 @@ export default {
       let res = this.$formMethods.get(val)
       console.log("派发出来的参数", res);
       this.form = res;
-      if (res.organId) {
-        this.getAdminList(res.organId);
-        let insArray = this.$formMethods.getInsArray(res.organId, "id", this.insData, "type");
-        this.$formMethods.set(val, 'typeX', 'value', insArray[0]+1)
+      if (res.insId) {
+        this.getAdminList(res.insId);
+        let insArray = this.$formMethods.getInsArray(res.insId, "id", this.insData, "type");
+        this.$formMethods.set(val, 'warType', 'value', insArray[0]+1)
       }
       if (res.departmentId) {
         // debugger 
@@ -131,7 +133,7 @@ export default {
         console.log(res)
         if (res && res.code == 0) {
           // this.$set(this.formData[1], "options", res.data);
-          this.$formMethods.set(this.options, 'organId', 'options', res.data);
+          this.$formMethods.set(this.options, 'insId', 'options', res.data);
           this.insData = res.data;
         } else {
           self.$message.warning(res.msg)
@@ -149,13 +151,32 @@ export default {
     },
     // 提交
     submit() {
-      this.$refs.baseForm.validate(val=>{
-        if(val) {
-          delete this.form.departmentId;
-          let data = this.form;
-          this.createWare(data);
+            
+      var descriptor = {
+        remark(rule, value, callback, source, options) {
+          var errors = [];
+          if(!/^[a-z0-9]+$/.test(value)) {
+            // debugger
+            errors.push(new Error('校验失败'));
+          }
+          return errors;
         }
-      })
+      }
+      var validator = new schema(descriptor);
+      validator.validate({remark: "Firstname"}, (errors, fields) => {
+        // debugger
+        if(errors) {
+          return handleErrors(errors, fields);
+        }
+        // validation passed
+      });
+      // this.$refs.baseForm.validate(val=>{
+      //   if(val) {
+      //     delete this.form.departmentId;
+      //     let data = this.form;
+      //     this.createWare(data);
+      //   }
+      // })
     },
     // 创建仓库
     createWare(data) {

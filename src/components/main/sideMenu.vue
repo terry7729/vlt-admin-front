@@ -73,7 +73,7 @@ export default {
       // if (res && res.code == 0) {
         // console.log('menu-data', res[self.entry.menuId].content[0].childResources);
         let n = 0;
-        self.menuList = menuList[self.entry.menuId].content[0].childResources;
+        self.menuList = menuList[self.entry.menuId].content[0].children;
         // 菜单过滤
         (function filter(treeData) {
           for (let i = 0, len = treeData.length; i < len; i++) {
@@ -81,14 +81,14 @@ export default {
             if (n === 0) {
               treeData.map(item => {item.className = 'top-menu-item'});
             }
-            let children = treeData[i].childResources || [];
+            let children = treeData[i].children || [];
             if (!children && children.length == 0) {
               return;
             }
             n++;
             // 删除图标(最上级以下全部清除)
             if (n > 0) {
-              children.map(item => {delete item.icon});
+              children.map(item => {delete item.iconCls});
             }
             // 过滤按钮、已冻结菜单
             // treeData[i].childResources = children.filter(item => {

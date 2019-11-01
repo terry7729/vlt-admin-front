@@ -36,7 +36,7 @@ const userInformed = () =>import('@/views/systemManage/userControl/userInformed'
 //角色管理
 const roleList = () => import('@/views/systemManage/roleManagement/roleList')
 //角色编缉
-// const roleDestails = () =>import('@/views/systemManage/roleManagement/roledestails')
+const roleOfEditorial = () =>import('@/views/systemManage/roleManagement/roleOfEditorial')
 //角色详情
 const roleifometion = () =>import('@/views/systemManage/roleManagement/rolueifo')
 //组织架构
@@ -215,6 +215,15 @@ export default [
     },
     component: roleList,
     props:true
+},
+{
+  path: 'systemManage/roleList/roleOfEditorial',
+  name: 'roleOfEditorial',
+  meta: {
+    parentName:"roleList",
+    title: '角色编缉',
+  },
+  component: roleOfEditorial
 },
 {
   path: 'systemManage/roleList/roleifometion',
