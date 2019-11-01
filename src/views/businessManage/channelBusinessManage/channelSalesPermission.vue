@@ -193,7 +193,8 @@ export default {
         }
       });
       if (res && res.code === 0) {
-        this.tableData = [];
+        // this.tableData = [];
+        console.log(res);
       }
     },
     cancel() {

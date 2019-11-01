@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'gameMarketPlanList',
   data() {
@@ -157,6 +158,11 @@ export default {
             current: res.data.current
           }
           self.tableData = res.data.records;
+            if (self.tableData.length > 0) {
+              self.tableData.forEach(item => {
+                item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')
+              })
+            }
 				} else {
           // self.$message.warning(res.msg)
         }

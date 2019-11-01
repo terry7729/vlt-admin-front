@@ -166,7 +166,7 @@ export default {
       let data = JSON.parse(JSON.stringify(options));
       const res = await self.$api.getGameRiskList({
         data,
-        baseURL:'http://10.7.0.90:8080/api'
+        baseURL:'http://10.6.0.108:8080/api'
       });
       if (res && res.code == 0) {
         self.tableData = res.data.records;
