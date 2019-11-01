@@ -14,8 +14,8 @@
       <el-table-column label="新建销售厅" prop="cityNewSellingHall" min-width="140px"></el-table-column>
       <el-table-column label="销售厅投注机" prop="citySellingMachine" min-width="140px"></el-table-column>
       <!-- 如果查询的是市属数据，那就隐藏下边两调省属数据 -->
-      <el-table-column label="省属合作厅" prop="provinceCooperationHall" min-width="140px"></el-table-column>
-      <el-table-column label="省属合作厅投注机" prop="provinceSellingMachine" min-width="140px"></el-table-column>
+      <el-table-column label="省属合作厅" prop="provinceCooperationHall" min-width="140px" v-if="insDatas.insLevel!=2"></el-table-column>
+      <el-table-column label="省属合作厅投注机" prop="provinceSellingMachine" min-width="140px" v-if="insDatas.insLevel!=2"></el-table-column>
       <!--  -->
       <el-table-column label="市属合作厅" prop="cityCooperationHall" min-width="140px"></el-table-column>
       <el-table-column label="市属合作厅投注机" prop="citySellingMachine" min-width="140px"></el-table-column>
@@ -69,13 +69,13 @@ export default {
         page: 1,
         pageSize: 10,
         param: {
-          insId: this.insData.insIdArr[0][0],
-          insLevel: this.insData.insLevel // 1为省级 2为市级 类型为数字
+          insId: this.insData.insId,
+          insLevel: this.insData.type // 1为省级 2为市级 类型为数字
         }
       },
       insDatas: {
-        insId: this.insData.insIdArr[0][0],
-        insLevel: this.insData.insLevel // 1为省级 2为市级 类型为数字
+        insId: this.insData.insId,
+        insLevel: this.insData.type // 1为省级 2为市级 类型为数字
       }
     };
   },

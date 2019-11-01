@@ -56,11 +56,18 @@ export default {
       },
       data2: [
         {
-          type: "select",
+          type: "cascader",
           title: "所属机构：",
           prop: "insId",
-          value: "1",
-          options: [{ label: "中福彩", value: "1" }]
+          value: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          },
+          options: []
         },
         {
           type: "select",
@@ -126,7 +133,9 @@ export default {
       }
     };
   },
-  components: {},
+  created() {
+    this.getInsData()
+  },
   methods: {
     async submit() {
       const _this = this;
@@ -145,7 +154,22 @@ export default {
         }, 1000);
       }
     },
-
+    // 获取机构列表
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async (data)=>{
+				let res = await self.$api.QueryInsTree({data})
+				if(res && res.code == 0) {
+          console.log('res', res.data)
+          self.$set(self.data2[0], 'options', res.data)
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+				} else {
+          // self.$message.warning(res.msg)
+        }
+      })(data)
+    },
     cancel() {
       this.$router.back();
     },
