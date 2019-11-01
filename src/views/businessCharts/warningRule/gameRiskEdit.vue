@@ -111,7 +111,7 @@
           <el-table-column align="center" prop="type" label="通知方式" min-width="20%">
             <template slot-scope="scope">
               <div v-if="scope.row.warningLevel==='普通'">
-                <el-checkbox-group v-model="checkList" @change="changesOrdinary" class="checkInfor">
+                <el-checkbox-group v-model="checkListOrdinary" @change="changesOrdinary" class="checkInfor">
                   <el-checkbox label="站内" border size="medium" v-model="form.informWayOrdinary"></el-checkbox>
 
                   <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -119,7 +119,7 @@
                 </el-checkbox-group>
               </div>
               <div v-if="scope.row.warningLevel==='严重'">
-                <el-checkbox-group class="checkInfor" v-model="checkList1" @change="changesSerious">
+                <el-checkbox-group class="checkInfor" v-model="checkListSeriours" @change="changesSerious">
                   <el-checkbox label="站内" border size="medium"></el-checkbox>
 
                   <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -127,7 +127,7 @@
                 </el-checkbox-group>
               </div>
               <div v-if="scope.row.warningLevel==='重大'">
-                <el-checkbox-group class="checkInfor" v-model="checkList2" @change="changesMajor">
+                <el-checkbox-group class="checkInfor" v-model="checkListMajor" @change="changesMajor">
                   <el-checkbox label="站内" border size="medium"></el-checkbox>
 
                   <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -341,7 +341,7 @@
 
 <script>
 import rules from "@/utils/rules.js";
-import inform from "@/utils/inform.js";
+import informs from "@/utils/inform.js";
 export default {
   data() {
     return {
@@ -361,9 +361,9 @@ export default {
           warningPl: 18
         }
       ],
-      checkList: ["站内"],
-      checkList1: ["站内", "短信"],
-      checkList2: ["站内", "短信", "邮件"],
+      checkListOrdinary: ["站内"],
+      checkListSeriours: ["站内", "短信"],
+      checkListMajor: ["站内", "短信", "邮件"],
 
       num: 10,
       value1: "",
@@ -569,18 +569,18 @@ export default {
   methods: {
     //普通通知方式
     changesOrdinary(val) {
-      this.getInformIdByCheckValue(this.checkList, "informWayOrdinary");
+      this.getInformIdByCheckValue(this.checkListOrdinary, "informWayOrdinary");
     },
     //严重通知方式
     changesSerious(val) {
-      this.getInformIdByCheckValue(this.checkList1, "informWaySerious");
+      this.getInformIdByCheckValue(this.checkListSeriours, "informWaySerious");
     },
     //重大通知方式
     changesMajor(val) {
-      this.getInformIdByCheckValue(this.checkList2, "informWayMajor");
+      this.getInformIdByCheckValue(this.checkListMajor, "informWayMajor");
     },
     getInformIdByCheckValue(arrList, name) {
-      this.form[name] = inform.getInformIdByCheckValue(arrList);
+      this.form[name] = informs.getInformIdByCheckValue(arrList);
     },
     //勾选普通市级通知对象
     cityPropleOrdinary() {
@@ -717,7 +717,7 @@ export default {
           minimumReturnRateSerious: this.form.minimumReturnRateSerious,
           businessKey: this.$route.query.id
         },
-        baseURL: "http://10.7.0.90:8080/api"
+        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         this.$message({
@@ -753,7 +753,7 @@ export default {
         data: {
           businessKey: id
         },
-        baseURL: "http://10.7.0.90:8080/api"
+        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         this.form = res.data;
@@ -763,9 +763,9 @@ export default {
         this.tableData1[2].warningPl = this.form.informTotalCountMajor;
         this.tableData1[1].warningPl = this.form.informTotalCountSerious;
         this.tableData1[0].warningPl = this.form.informTotalCountOrdinary;
-        this.checkList2 = this.showInformType(this.form.informWayMajor);
-        this.checkList1 = this.showInformType(this.form.informWaySerious);
-        this.checkList = this.showInformType(this.form.informWayOrdinary);
+        this.checkListMajor = informs.showInformType(this.form.informWayMajor);
+        this.checkListSeriours = informs.showInformType(this.form.informWaySerious);
+        this.checkListOrdinary = informs.showInformType(this.form.informWayOrdinary);
         this.informPeopleCityOrdinary = this.form.informCityManIdOrdinary;
         this.informPeopleProOrdinary = this.form.informProvinceManIdOrdinary;
         this.informPeopleCenterOrdinary = this.form.informCentralManIdOrdinary;
@@ -779,33 +779,6 @@ export default {
         this.informPeopleCenterMajor = this.form.informCentralManIdMajor;
       }
     },
-    showInformType(type) {
-      var list;
-      switch (type) {
-        case 1:
-          list = ["站内"];
-          break;
-        case 2:
-          list = ["邮件"];
-          break;
-        case 3:
-          list = ["短信"];
-          break;
-        case 4:
-          list = ["站内", "邮件"];
-          break;
-        case 5:
-          list = ["站内", "短信"];
-          break;
-        case 6:
-          list = ["邮件", "短信"];
-          break;
-        case 7:
-          list = ["站内", "邮件", "短信"];
-          break;
-      }
-      return list;
-    }
   },
   created() {
     //默认全选
