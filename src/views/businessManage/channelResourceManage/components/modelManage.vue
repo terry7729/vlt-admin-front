@@ -160,23 +160,23 @@ export default {
       this.$router.push({ name: "modelAdd" });
     },
     // 型号查看
-    modelCheck(id,modelType) {
-      switch (modelType){
-        case '设备' :
+    modelCheck(id, modelType) {
+      switch (modelType) {
+        case "设备":
           this.$router.push({
-            path: 'modelEquipmentCheck',
-            query: {
-              id,
-            }
-          })
-        break
-        case '配件' :
-          this.$router.push({
-            path: 'modelPreCheck',
+            path: "modelEquipmentCheck",
             query: {
               id
             }
-          })
+          });
+          break;
+        case "配件":
+          this.$router.push({
+            path: "modelPreCheck",
+            query: {
+              id
+            }
+          });
       }
     },
     //型号修改
@@ -192,8 +192,8 @@ export default {
       } else {
         // 设备
         this.$router.push({
-          path: "facillityAlter",
-          query: { id: row.id }
+          name: "facillityAlter",
+          query: { ...row }
         });
       }
     },

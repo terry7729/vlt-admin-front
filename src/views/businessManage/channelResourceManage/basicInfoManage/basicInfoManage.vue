@@ -159,7 +159,9 @@ export default {
       }
     };
   },
-
+  components: {
+    modelManage
+  },
   created() {
     this.getTypeList(this.requestData1);
     this.getSelectOption();

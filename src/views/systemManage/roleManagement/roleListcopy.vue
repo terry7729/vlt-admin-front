@@ -87,6 +87,8 @@ export default {
   name: "roleList",
   data() {
     return {
+      cs: [],
+      tree: [],
       rules: {},
       controlOptions: [//按钮组
         { name: "新建角色", type: "primary", icon: "plus" } // type为按钮的五种颜色， icon为具体的图标
@@ -179,6 +181,9 @@ async init(val){ //初始化页面数据
         this.isData = res.data
         this.addFrom[4].options = res.data;
         this.updataFrom[2].options = res.data;
+        this.tree = res.data;
+        // this.$set(this.updataFrom[2], 'value', [254])
+        
         }
     console.log('菜单树查询',res)
     this.pagingControl()
@@ -187,7 +192,7 @@ async init(val){ //初始化页面数据
 async pagingControl(val){ //分页控制
       const self = this;
         let data = {
-          ...this.searchFrom,
+          param:{...this.searchFrom},
           page:val||1,
           pageSize:this.pageSize
         }
@@ -259,6 +264,12 @@ async pagingControl(val){ //分页控制
       return  moment(val).format("YYYY-MM-DD HH:mm:ss")
     } ,
    async handelskip(val) {
+     this.$router.push({name:"roleOfEditorial", query: { id: val.roleId } })
+     return
+     const self = this;
+    this.$nextTick(() => {
+          this.cs.push(254)
+        })
       this.dialogFormVisible = true;
       this.currentStatus = "编缉";
       let reslt =  await this.$api.QueryRoleInfoDetail({data:val.roleId})//查询角色详情
@@ -267,19 +278,29 @@ async pagingControl(val){ //分页控制
       let upDataFrom  = this.updataFrom
       let array = []
       console.log(reslt)
+      debugger;
+      let ids = reslt.data.moduleIds;
+      ids.forEach((item)=>{
+        let arrs = self.$formMethods.getInsArray(item, 'id',  self.isData, 'id')
+        console.log('arr',arrs)
+      })
+
       if(reslt.code === 0){
         upDataFrom.forEach(item=>{
-          item.value = val[item.prop]
+          item.value = reslt.data[item.prop]
         
         })
+        this.$set(this.updataFrom[2], 'moduleIds', [254])
+        // updataFrom[2].moduleIds = [254] // 254,246,245
       }
       
   
     },
     selectBtn(val) {//新增删除事件
       if (val.name === "新建角色") {
+        this.$router.push({name:"roleOfEditorial"})
         this.currentStatus = "新建角色";
-        this.dialogFormVisible = true;
+        // this.dialogFormVisible = true;
       }
     },
      search(val) {//搜索事件
@@ -362,7 +383,7 @@ async pagingControl(val){ //分页控制
     changeForm(val) {
       const self = this
       console.log('表单change事件',val)
-      if(val.moduleIds.length>0){
+      if(val.moduleIds.length<0){
           let arr2='' 
         val.moduleIds.forEach(item=>{
          let arr = this.getInsArray(item,'id',this.isData,'id')

@@ -107,8 +107,9 @@ export default {
     //初始获取渠道权限列表数据
     let result = await this.$api.channelLimit();
     console.log(result);
-
-    this.roleManageAddData[1].options = result.data;
+    if (result.code === 0 && result) {
+      this.roleManageAddData[1].options = result.data;
+    }
   },
 
   methods: {
@@ -123,7 +124,9 @@ export default {
     async roleManageAddSubmit() {
       let data = this.param;
       let resul = await this.$api.roleAdd({ data });
-      this.$router.push("roleManage");   
+      if (resul.code === 0 && resul) {
+        this.$router.push("roleManage");
+      }
     },
     //表单取消
     roleManageAddCancel() {

@@ -33,7 +33,7 @@
                   :value="item.value"
                 ></el-option>
               </el-select>
-              <i class="el-icon-close" @click="clearDevice(index)" v-if="index > 0"></i>
+              <!-- <i class="el-icon-close" @click="clearDevice(index)" v-if="index > 0"></i> -->
             </div>
             <p class="add-btn" @click="addMochine">
               <i class="el-icon-plus"></i>
@@ -377,9 +377,12 @@ export default {
     // 修改配件
     async modelWrite(data) {
       const self = this;
+
       let result = await this.$api.modelWrite({ message: "修改成功", data });
-      this.$router.push("basicInfoManage");
-      console.log("result", result);
+      if (result.code === 0 && result) {
+        this.$router.push("basicInfoManage");
+        console.log("result", result);
+      }
     },
 
     //新增机型点击事件
@@ -403,12 +406,12 @@ export default {
       }
     },
     //删除新增机型数据
-    clearDevice(index) {
-      if (this.modelAvailablesList.length < 2) {
-        return;
-      }
-      this.modelAvailablesList.splice(index, 1);
-    },
+    // clearDevice(index) {
+    //   if (this.modelAvailablesList.length < 2) {
+    //     return;
+    //   }
+    //   this.modelAvailablesList.splice(index, 1);
+    // },
     //取消
     cancel() {
       this.$router.back();
