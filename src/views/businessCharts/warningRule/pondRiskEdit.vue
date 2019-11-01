@@ -537,7 +537,7 @@ export default {
           minJackpotMoneySerious: this.form.minJackpotMoneySerious,
           businessKey: this.$route.query.id
         },
-        baseURL:'http://10.7.0.90:8080/api'
+        baseURL:'http://10.6.0.108:8080/api'
       });
       if (res && res.code == 0) {
         this.$message({
@@ -690,7 +690,7 @@ export default {
         data: {
           businessKey: id
         },
-        baseURL:'http://10.7.0.90:8080/api'
+        baseURL:'http://10.6.0.108:8080/api'
       });
       if (res && res.code == 0) {
         this.form = res.data;
