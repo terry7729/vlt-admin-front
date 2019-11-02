@@ -70,15 +70,15 @@ export default {
       ],
       formData: [],
       rules: {
-        warName: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        insId: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
-        adminId: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
-        ],
+        // warName: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ],
+        // insId: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ],
+        // adminId: [
+        //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        // ],
         // remark: [
         //   { required: true, validator: rules.checkEmpty, trigger: "blur" }
         // ]
@@ -152,31 +152,31 @@ export default {
     // 提交
     submit() {
             
-      var descriptor = {
-        remark(rule, value, callback, source, options) {
-          var errors = [];
-          if(!/^[a-z0-9]+$/.test(value)) {
-            // debugger
-            errors.push(new Error('校验失败'));
-          }
-          return errors;
-        }
-      }
-      var validator = new schema(descriptor);
-      validator.validate({remark: "Firstname"}, (errors, fields) => {
-        // debugger
-        if(errors) {
-          return handleErrors(errors, fields);
-        }
-        // validation passed
-      });
-      // this.$refs.baseForm.validate(val=>{
-      //   if(val) {
-      //     delete this.form.departmentId;
-      //     let data = this.form;
-      //     this.createWare(data);
+      // var descriptor = {
+      //   remark(rule, value, callback, source, options) {
+      //     var errors = [];
+      //     if(!/^[a-z0-9]+$/.test(value)) {
+      //       // debugger
+      //       errors.push(new Error('校验失败'));
+      //     }
+      //     return errors;
       //   }
-      // })
+      // }
+      // var validator = new schema(descriptor);
+      // validator.validate({remark: "Firstname"}, (errors, fields) => {
+      //   debugger
+      //   if(errors) {
+      //     return handleErrors(errors, fields);
+      //   }
+      //   // validation passed
+      // });
+      this.$refs.baseForm.validate(val=>{
+        if(val) {
+          delete this.form.departmentId;
+          let data = this.form;
+          this.createWare(data);
+        }
+      })
     },
     // 创建仓库
     createWare(data) {
