@@ -87,19 +87,27 @@ export default {
   name: 'entry',
   data() {
     return {
-      title: '视频彩票运营管理平台'
+      title: '视频彩票运营管理平台',
+      menuData: [],
     }
   },
   computed: {
 
   },
   created() {
-
+    this.getMenuList();
   },
   mounted() {
     
   },
   methods: {
+    // 获取菜单列表
+    async getMenuList() {
+      let res = await this.$api.QueryModuleTree();//菜单树查询
+      if(res && res.code === 0){
+        this.menuData = res.data;
+      }
+    },
     toHome(title, menuId) {
       this.setEntry({
         title,

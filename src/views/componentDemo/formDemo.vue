@@ -36,24 +36,28 @@
 
 <script type="text/javascript">
 // import formMethods from '@/utils/formMethods'
+import TestForms from '@/components/common/testForms'
 import rules from '@/utils/rules.js';
 
 export default {
+  components: {
+    TestForms
+  },
   data() {
     return {
       rules: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: 'blur' }
-        ],
-        status: [
-          { required: true, validator: rules.checkEmpty, trigger: 'blur' }
-        ],
-        all: [
-          { required: true, validator: rules.checkEmail, trigger: 'blur' }
-        ],
-        uploadA: [
-          { required: true, validator: rules.checkEmail, trigger: 'blur' }
-        ]
+        // test: [
+        //   { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        // ],
+        // status: [
+        //   { required: true, validator: rules.checkEmpty, trigger: 'blur' }
+        // ],
+        // all: [
+        //   { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        // ],
+        // uploadA: [
+        //   { required: true, validator: rules.checkEmail, trigger: 'blur' }
+        // ]
       },
       baseData: [
         {title: '上市游戏', type: 'select',  prop: 'a', value: 1, options:[{label:'苹果',value:1},{label:'香蕉',value:2}]},
@@ -166,6 +170,10 @@ export default {
           this.$formMethods.set(val, 'e', 'disabled', false)
         }
       }
+    },
+    changeForms(form) {
+      this.formData = this.$formMethods.setOptions(this.formData, form); // 设置表单的值
+      // debugger;
     },
     // 获取机构数据
     getInsData() {

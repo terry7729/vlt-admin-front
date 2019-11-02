@@ -1,4 +1,3 @@
-// 表单验证规则 for ElementUI
 export default {
   //通知方式改变
   getInformIdByCheckValue(arrList) {
@@ -37,6 +36,35 @@ export default {
     }
     return percent;
   },
+  //根据数值选中对应通知方式
+  showInformType(type) {  
+    var list=[];
+    switch (type) {
+      case 1:
+        list = ["站内"];
+        break;
+      case 2:
+        list = ["邮件"];
+        break;
+      case 3:
+        list = ["短信"];
+        break;
+      case 4:
+        list = ["站内", "邮件"];
+        break;
+      case 5:
+        list = ["站内", "短信"];
+        break;
+      case 6:
+        list = ["邮件", "短信"];
+        break;
+      case 7:
+        list = ["站内", "邮件", "短信"];
+        break;
+    }
+    return list;
+  }
+  
 
   // //小数转换成百分比数字
   // conventToPoint(percent) {

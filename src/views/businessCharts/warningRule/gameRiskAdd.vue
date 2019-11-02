@@ -95,7 +95,7 @@
           <el-table-column align="center" prop="type" label="通知方式" min-width="20%">
             <template slot-scope="scope">
               <div v-if="scope.row.warningLevel==='普通'">
-                <el-checkbox-group v-model="checkList" @change="changesOrdinary" class="checkInfor">
+                <el-checkbox-group v-model="checkListOrdinary" @change="changesOrdinary" class="checkInfor">
                   <el-checkbox label="站内" border size="medium" v-model="form.informWayOrdinary"></el-checkbox>
 
                   <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -103,7 +103,7 @@
                 </el-checkbox-group>
               </div>
               <div v-if="scope.row.warningLevel==='严重'">
-                <el-checkbox-group class="checkInfor" v-model="checkList1" @change="changesSerious">
+                <el-checkbox-group class="checkInfor" v-model="checkListSeriours" @change="changesSerious">
                   <el-checkbox label="站内" border size="medium"></el-checkbox>
 
                   <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -111,7 +111,7 @@
                 </el-checkbox-group>
               </div>
               <div v-if="scope.row.warningLevel==='重大'">
-                <el-checkbox-group class="checkInfor" v-model="checkList2" @change="changesMajor">
+                <el-checkbox-group class="checkInfor" v-model="checkListMajor" @change="changesMajor">
                   <el-checkbox label="站内" border size="medium"></el-checkbox>
 
                   <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -347,9 +347,9 @@ export default {
           warningPl: 18
         }
       ],
-      checkList: ["站内"],
-      checkList1: ["站内", "短信"],
-      checkList2: ["站内", "短信", "邮件"],
+      checkListOrdinary: ["站内"],
+      checkListSeriours: ["站内", "短信"],
+      checkListMajor: ["站内", "短信", "邮件"],
 
       num: 10,
       value1: "",
@@ -542,7 +542,7 @@ export default {
         provinceName: "" //省级名称
       },
       rules: {
-        minimumReturnRateOrdinary: [
+        minimumOperatingRateOrdinary: [
           { validator: rules.checkPointOrPercent, trigger: "blur" }
         ],
         minimumReturnRateSerious: [
@@ -564,98 +564,21 @@ export default {
     };
   },
   methods: {
-    //普通通知方式
+    //通知方式改变
+    getInformIdByCheckValue(arrList, name) {
+      this.form[name] = informs.getInformIdByCheckValue(arrList);
+    },
+      //普通通知方式
     changesOrdinary(val) {
-      if (this.checkList.length) {
-        var listLength = this.checkList.length;
-        if (listLength == 1) {
-          if (this.checkList[0] == "站内") {
-            this.form.informWayOrdinary = 1;
-          } else if (this.checkList[0] == "邮件") {
-            this.form.informWayOrdinary = 2;
-          } else {
-            this.form.informWayOrdinary = 3;
-          }
-        } else if (listLength == 2) {
-          if (
-            (this.checkList[0] == "站内" && this.checkList[1] == "邮件") ||
-            (this.checkList[1] == "站内" && this.checkList[0] == "邮件")
-          ) {
-            this.form.informWayOrdinary = 4;
-          } else if (
-            (this.checkList[0] == "短信") & (this.checkList[1] == "邮件") ||
-            (this.checkList[1] == "短信") & (this.checkList[0] == "邮件")
-          ) {
-            this.form.informWayOrdinary = 6;
-          } else {
-            this.form.informWayOrdinary = 5;
-          }
-        } else {
-          this.form.informWayOrdinary = 7;
-        }
-      }
+      this.getInformIdByCheckValue(this.checkListOrdinary, "informWayOrdinary");
     },
     //严重通知方式
     changesSerious(val) {
-      if (this.checkList1.length) {
-        var listLength = this.checkList1.length;
-        if (listLength == 1) {
-          if (this.checkList1[0] == "站内") {
-            this.form.informWaySerious = 1;
-          } else if (this.checkList1[0] == "邮件") {
-            this.form.informWaySerious = 2;
-          } else {
-            this.form.informWaySerious = 3;
-          }
-        } else if (listLength == 2) {
-          if (
-            (this.checkList1[0] == "站内" && this.checkList1[1] == "邮件") ||
-            (this.checkList1[1] == "站内" && this.checkList1[0] == "邮件")
-          ) {
-            this.form.informWaySerious = 4;
-          } else if (
-            (this.checkList1[0] == "短信") & (this.checkList1[1] == "邮件") ||
-            (this.checkList1[1] == "短信") & (this.checkList1[0] == "邮件")
-          ) {
-            this.form.informWaySerious = 6;
-          } else {
-            this.form.informWaySerious = 5;
-          }
-        } else {
-          this.form.informWaySerious = 7;
-        }
-      }
+      this.getInformIdByCheckValue(this.checkListSeriours, "informWaySerious");
     },
     //重大通知方式
     changesMajor(val) {
-      if (this.checkList2.length) {
-        var listLength = this.checkList2.length;
-        if (listLength == 1) {
-          if (this.checkList2[0] == "站内") {
-            this.form.informWayMajor = 1;
-          } else if (this.checkList2[0] == "邮件") {
-            this.form.informWayMajor = 2;
-          } else {
-            this.form.informWayMajor = 3;
-          }
-        } else if (listLength == 2) {
-          if (
-            (this.checkList2[0] == "站内" && this.checkList2[1] == "邮件") ||
-            (this.checkList2[1] == "站内" && this.checkList2[0] == "邮件")
-          ) {
-            this.form.informWayMajor = 4;
-          } else if (
-            (this.checkList2[0] == "短信") & (this.checkList2[1] == "邮件") ||
-            (this.checkList2[1] == "短信") & (this.checkList2[0] == "邮件")
-          ) {
-            this.form.informWayMajor = 6;
-          } else {
-            this.form.informWayMajor = 5;
-          }
-        } else {
-          this.form.informWaySerious = 7;
-        }
-      }
+      this.getInformIdByCheckValue(this.checkListMajor, "informWayMajor");
     },
     //勾选普通市级通知对象
     cityPropleOrdinary() {
@@ -802,7 +725,7 @@ export default {
           informWayOrdinary: this.form.informWayOrdinary,
           informWaySerious: this.form.informWaySerious
         },
-        baseURL: "http://10.7.0.90:8080/api"
+        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         this.$message({

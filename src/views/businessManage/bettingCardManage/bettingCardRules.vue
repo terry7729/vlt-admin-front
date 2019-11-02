@@ -144,7 +144,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let result = this.deleteBettingRule(row.id);
+          let result = this.deleteBettingRule({data:row.id});
           result.then(resp => {
             if (resp.code == 0) {
               this.$message({

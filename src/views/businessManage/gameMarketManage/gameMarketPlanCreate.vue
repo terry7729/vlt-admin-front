@@ -137,7 +137,9 @@ export default {
       data.gameFundRuleVo.gameId = data.gameListPlanVo.gameId;
       data.gameRiskRuleVo.gameId = data.gameListPlanVo.gameId;
       // publishParams: this.publishParams,
-      // data.gameExchangeSetVoList.gameId= data.gameListPlanVo.gameId;
+      data.gameExchangeSetVoList.forEach(item => {
+        item.gameId= data.gameListPlanVo.gameId;
+      }); 
       
       this.createMarketPlan(data)
     },

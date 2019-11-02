@@ -120,7 +120,7 @@ export default {
       currentPage: 1,
       params: {
         pageSize: 10,
-        size: 1
+        page: 1
       },
       oprie: {
         total: 0,
@@ -130,8 +130,8 @@ export default {
     };
   },
   created() {
-    let data = {};
-    this.getGameStoreList(data);
+    // let data = {};
+    this.getGameStoreList(this.params);
   },
   methods: {
     // 导出列表
@@ -231,15 +231,19 @@ export default {
       //   }
 
       // console.log('search', data)
-      this.params.size = 1;
+      this.params.page = 1;
       this.params.pageSize = 10;
       this.params.param = form;
       this.getGameStoreList(this.params);
     },
     changeSize(val) {
+      this.params.pageSize = val;
       console.log(`每页 ${val} 条`);
+      this.getGameStoreList(this.params);
     },
     changeCurrent(val) {
+      this.params.page = val;
+      this.getGameStoreList(this.params);
       console.log(`当前页: ${val}`);
     }
   }
