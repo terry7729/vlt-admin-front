@@ -107,12 +107,8 @@ const request = (method, url, options, extend) => {
       if (res.data && res.data.code != 0) {
         res.data.msg && Message.error(res.data.msg);
       } else {
-        if (options.message) {
-          if (typeof options.message === "string") {
-            Message.success(options.message);
-          } else {
-            Message.success(res.data.msg);
-          }
+        if (typeof options.message === "string") {
+          Message.success(options.message);
         }
       }
       // 未登录

@@ -181,9 +181,11 @@ export default {
     // 创建仓库
     createWare(data) {
       (async data => {
-        let res = await this.$api.createWare({ data });
+        let res = await this.$api.createWare({ 
+          message: '新增成功',
+          data 
+        });
         if (res && res.code == 0) {
-          this.$message.success("新建成功");
           this.$router.push({ path: "storeManage" });
         }
       })(data);
