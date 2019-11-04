@@ -17,7 +17,6 @@
         <el-table-column prop="phone" label="手机号"></el-table-column>
         <el-table-column prop="roleName" label="角色名称"></el-table-column>
         <el-table-column prop="channelIdentity" label="身份证号"></el-table-column>
-
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="账户状态" prop="accountStatus"></el-table-column>
         <el-table-column label="操作">
@@ -323,6 +322,16 @@ export default {
 
       let result = await this.$api.getAccount({ data: data });
       console.log(result);
+      let arr = result.data.records;
+      arr.forEach(e => {
+        if (e.accountStatus === 1) {
+          e.accountStatus = "启用中";
+        } else if (e.accountStatus === 2) {
+          e.accountStatus = "禁用";
+        } else {
+          e.accountStatus = "注销";
+        }
+      });
       if (result.code === 0 && result) {
         this.operationManageTableData = result.data.records;
       }
