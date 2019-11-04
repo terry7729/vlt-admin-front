@@ -37,6 +37,8 @@ const roleManageAdd = () => import('@/views/businessOperation/PermissionMaintain
 const roleManageExamine = () => import('@/views/businessOperation/PermissionMaintain/roleManageExamine')
 //账户管理
 const operationAccountManage = () => import('@/views/businessOperation/PermissionMaintain/operationAccountManage')
+//表单测试
+const test = () => import('@/views/businessOperation/PermissionMaintain/test')
 //账户管理新增
 const operationAccountAdd = () => import('@/views/businessOperation/PermissionMaintain/operationAccountAdd')
 //账户管理查看
@@ -396,6 +398,15 @@ export default [
       title: '账户管理查看',
     },
     component: operationAccountExamine
+  },
+  {
+    path: 'businessOperation/PermissionMaintain/test',
+    name: 'test',
+    meta: {
+      parentName: "operationAccountManage",
+      title: '表单测试',
+    },
+    component: test
   },
 
   {

@@ -26,7 +26,8 @@ export default {
 
   },
   created() {
-
+    // this.loginOut();
+    storage.set('locked', true);
   },
   mounted() {
 
@@ -35,6 +36,13 @@ export default {
     showMessage(msg) {
       this.$message.closeAll();
       this.$message.error(msg);
+    },
+    async loginOut() {
+      const self = this;
+      const res = await self.$api.getLogOut();
+      if (res && res.code == 0) {
+        
+      }
     },
     async submit() {
       if (!this.password.trim()) {

@@ -153,8 +153,7 @@ export default {
   methods: {
     async getCityRiskList(options) {
       let res = await this.$api.getCityRiskList({
-        data:options,
-        baseURL:'http://10.6.0.203:8086/api'
+        data:options,        
       });
       if (res && res.code == 0) {
         this.tableData = res.data.records;
