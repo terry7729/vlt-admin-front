@@ -564,7 +564,7 @@ export default {
       ],
       gameValue: "",
       cityValue: "",
-      proviceValue: "",
+      proviceValue: "",//
       informPeopleCityOrdinary: "",
       informPeopleProOrdinary: "",
       informPeopleCenterOrdinary: "",
