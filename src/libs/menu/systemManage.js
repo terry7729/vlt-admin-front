@@ -1,6 +1,9 @@
 // 系统管理-左侧导航数据
 
-export default [{
+export default {
+  iconCls: "el-icon-menu",
+  text: "系统管理",
+  code: '' ,// 前端路由名称
   children: [{
       iconCls: "icon-xitongshezhi",
       text: "系统设置",
@@ -157,10 +160,5 @@ export default [{
         code: 'TerminalEventLog'
       }]
     }
-  ],
-  },
-  {
-  iconCls: "el-icon-menu",
-  text: "系统管理",
-  code: '' // 前端路由名称
-}]
+  ]
+}

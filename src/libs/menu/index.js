@@ -10,22 +10,13 @@ export default {
       @id: 1=>业务管理，2=>业务运营，3=>业务监控 4=>系统管理
     */
   // 业务管理系统
-  '1': {
-    "content": businessManage
-  },
-
+  '1': businessManage,
   // 业务运营系统
-  '2': {
-    "content": businessOperation
-  },
+  '2': businessOperation,
   // 业务监控系统
-  '3': {
-    "content": businessCharts
-  },
+  '3': businessCharts,
   // 系统管理系统
-  '4': {
-    "content": systemManage
-  },
+  '4': systemManage,
   
   // 大数据分析系统
 

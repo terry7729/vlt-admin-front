@@ -18,7 +18,7 @@ export default {
   // 登出
   getLogOut: (options = {}) => ajax.post('/logout', options),
   // 获取入口对应菜单
-  getUserAndModule: (options = {}) => ajax.post('/queryUserAndModule', options),
+  getUserAndModule: (options = {}) => ajax.post('/module/queryUserAndModule', options),
   // 上传范例
   testUpload: (options = {}) => ajax.upload('/game/uploading', options),
   // 覆盖默认api请求地址范例

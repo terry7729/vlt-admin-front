@@ -62,12 +62,12 @@ export default {
       },
       form: [
         {
-          title: "请选择你的操作",
+          title: "修改类型",
           type: "radio",
           prop: "type",
           value: "1",
           options: [
-            { label: "操作密码", value: "0" },
+            // { label: "操作密码", value: "0" },
             { label: "登录密码", value: "1" }
           ]
         },

@@ -65,15 +65,13 @@ export default {
     // 获取菜单列表
     async getList() {
       const self = this;
-      // const res = await self.$api.getMenu({
-      //   data: {
-      //     source: storage.get('source')
-      //   }
+      // const res = await self.$api.getUserAndModule({
+      //   data: self.entry.extendAttach
       // });
       // if (res && res.code == 0) {
-        // console.log('menu-data', res[self.entry.menuId].content[0].childResources);
         let n = 0;
-        self.menuList = menuList[self.entry.menuId].content[0].children;
+        self.menuList = menuList[self.entry.extendAttach].children; // 本地菜单资源
+        // self.menuList = res.data[0].children;
         // 菜单过滤
         (function filter(treeData) {
           for (let i = 0, len = treeData.length; i < len; i++) {
@@ -91,14 +89,15 @@ export default {
               children.map(item => {delete item.iconCls});
             }
             // 过滤按钮、已冻结菜单
-            // treeData[i].childResources = children.filter(item => {
-            //   if (item.type === 0 && item.status === 0) {
+            // treeData[i].children = children.filter(item => {
+            //   if (item.type !== 4 && item.status === 1) {
             //     return true;
             //   }
             // });
             filter(children);
           }
         })(self.menuList);
+      // }
     },
     // 路由权限控制
     // routerAuthorize() {
@@ -106,7 +105,7 @@ export default {
     //   let isFind = false;
     //   (function find(treeData) {
     //     for (let i = 0; i < treeData.length; i++) {
-    //       let children = treeData[i].childResources || [];
+    //       let children = treeData[i].children || [];
     //       if (!children && children.length == 0) {
     //         return;
     //       }
@@ -120,8 +119,8 @@ export default {
     //   // 未找到匹配的路由跳转到默认路由
     //   if (!isFind) {
     //     let name = self.menuList[0].url;
-    //     if (self.menuList[0].childResources && self.menuList[0].childResources.length) {
-    //       name = self.menuList[0].childResources[0].url
+    //     if (self.menuList[0].children && self.menuList[0].children.length) {
+    //       name = self.menuList[0].children[0].url
     //     }
     //     self.$router.push({
     //       name
@@ -277,6 +276,7 @@ export default {
         background-color: #fff;
         width: 36px;
         height: 36px;
+        line-height: 36px;
         border-radius: 50%;
         display: inline-block;
         vertical-align: middle;
@@ -284,8 +284,6 @@ export default {
       .iconfont{
         color: #E60012;
         font-size: 28px;
-        line-height: 36px;
-        vertical-align: top;
       }
     }
 
