@@ -186,31 +186,22 @@ export default {
       let val2=JSON.parse(res.data[1].value)
       let val3=JSON.parse(res.data[2].value)
       let val4=JSON.parse(res.data[3].value)
-      console.log(321,val4)
-      
-      this.message[0].value=val1.sendReminder
-      this.message[1].value=val1.warnWay
-      this.message[2].value=val1.pastWarn
-      this.payWay[0].value=val2.realBuckle
-      this.payWay[1].value=val2.norealBuckle
-      this.finance[0].value=val3.autoTransfer
-      this.finance[1].value=val3.transferDate
-      this.finance[2].value=val3.transferTime
-      this.tax[0].value=val4.companyName
-      this.tax[1].value=val4.dutyParagraph
-      this.tax[2].value=val4.taxRate
-      // this.damessageReminding.forEach((item)=>{
-      //       // item.value = damessageReminding.prop
-      //       // item.value=val1.sendReminder
-      //       arr1.forEach(i=>{
-      //     if(item.prop === i){
-      //       item.value= val1.i 
-      //     } 
-      //     
-      //   })
-      // })
-      
-          
+      console.log(321,val1)
+      this.message.forEach(item=>{
+        item.value = val1[item.prop]
+      })
+      // this.message[0].value=val1.sendReminder
+      // this.message[1].value=val1.warnWay
+      // this.message[2].value=val1.pastWarn
+      this.payWay.forEach(item=>{
+        item.value = val2[item.prop]
+      })
+      this.finance.forEach(item=>{
+        item.value = val3[item.prop]
+      })
+      this.tax.forEach(item=>{
+        item.value = val4[item.prop]
+      })     
     },
     changeForm1(val) {
       // this.params1 = val;
@@ -273,7 +264,7 @@ export default {
       // console.log(val);
       // let data = JSON.parse(JSON.stringify(this.formall));
       // let data= {...this.formall}
-      let reslt = await this.$api.configSet({ data });
+      let reslt = await this.$api.configSet({message: "设置成功",data });
       // let val=JSON.parse(data.sysConfigVoList.value)
       // console.log(321,val)
     //  storage.set('pastWarn',JSON.parse(data.sysConfigVoList[0].value).pastWarn)

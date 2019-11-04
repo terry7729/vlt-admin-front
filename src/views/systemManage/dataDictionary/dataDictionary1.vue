@@ -22,25 +22,30 @@
         </el-table-column>
         <el-table-column prop="isAllowDelete" label="数据字典状态" width="120">
           <template slot-scope="scope">
-            <el-switch
-              v-model="tableData[scope.$index].isAllowDelete"
-              active-color="#13ce66"
-              @change="switchChange(scope.row)"
-              active-text="启用"
-              inactive-text="禁用"
-              :inactive-value="1"
-              :active-value="0"
-            ></el-switch>
+            <tableRowStatus
+              :scope="scope"
+              :tableData="tableData"
+              idField="id"
+              statusField="isAllowDelete"
+              :rowName="scope.row.name"
+              :option="{
+                enable:{
+                  apiName:'status',
+                  label:'启用', 
+                  value:0
+                },
+               disable:{
+                  apiName:'status',
+                  label:'冻结',
+                  value:1
+               },
+              }"
+            ></tableRowStatus>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              @click="edit(scope.row)"
-              :disabled="tableData[scope.$index].isAllowDelete?false:true"
-            >编辑</el-button>
+            <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,18 +64,44 @@
         <div class="vlt-edit-single">
           <h2 class="title">基本信息</h2>
           <div class="vlt-edit-wrap">
-            <base-form
-              :formData="formData"
-              labelWidth="90px"
-              ref="baseForm"
+            <el-form
+              :model="ruleForm"
               :rules="rules"
-              direction="right"
-              @change="changeForm"
-            ></base-form>
-            <el-row class="vlt-edit-btn">
-              <el-button type="primary" v-prevent="1000" size="medium" @click="submit">提交并保存</el-button>
+              ref="ruleForm"
+              label-width="100px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="数据字典名称" prop="name">
+                <el-input v-model="ruleForm.name"></el-input>
+              </el-form-item>
+              <el-form-item label="数据字典键" prop="key">
+                <el-input v-model="ruleForm.key"></el-input>
+              </el-form-item>
+              <el-form-item label="字典数据值" prop="value">
+                <el-input v-model="ruleForm.value"></el-input>
+              </el-form-item>
+              <el-form-item label="数据字典状态" prop="isAllowDelete">
+                <el-switch
+                  v-model="ruleForm.isAllowDelete"
+                  :active-text="ruleForm.isAllowDelete?'开启':'关闭'"
+                  :inactive-value="0"
+                  :active-value="1"
+                  active-color="#409EFF"
+                  inactive-color
+                ></el-switch>
+              </el-form-item>
+              <el-form-item label="数据字典描述" prop="description">
+                <el-input type="textarea" v-model="ruleForm.description"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="submit">提交并保存</el-button>
+                <el-button @click="cancel">取消</el-button>
+              </el-form-item>
+            </el-form>
+            <!-- <el-row class="vlt-edit-btn">
+              <el-button type="primary" v-prevent="1000" size="me dium" @click="submit">提交并保存</el-button>
               <el-button size="medium" @click="cancel">取消</el-button>
-            </el-row>
+            </el-row>-->
           </div>
         </div>
       </el-dialog>
@@ -90,7 +121,7 @@ export default {
 
       controlOptions: [
         //按钮组
-        { name: "新建字典", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
+        { name: "新建流程", type: "primary", icon: "plus" }, // type为按钮的五种颜色， icon为具体的图标
         { name: "导出", type: "success", icon: "download" },
         { name: "打印", type: "primary", icon: "printer" }
       ],
@@ -107,19 +138,26 @@ export default {
       total: 0,
       pageSize: 10,
       currentPage: 0,
-      formData: [
-        { title: "字典名称", type: "input", prop: "name", value: "" },
-        {
-          title: "数据字典键",
-          type: "input",
-          prop: "key",
-          value: "",
-          disabled: false
-        },
-        { title: "字典数据值", type: "input", prop: "value", value: "" },
-        { title: "状态", type: "switch", prop: "isAllowDelete", value: "1" },
-        { title: "详情描述", type: "textarea", prop: "description", value: "" }  
-      ],
+      ruleForm: {
+        name: "",
+        key: "",
+        value: "",
+        isAllowDelete: 1,
+        description: ""
+      },
+      // formData: [
+      //   { title: "字典名称", type: "input", prop: "name", value: "" },
+      //   {
+      //     title: "数据字典键",
+      //     type: "input",
+      //     prop: "key",
+      //     value: "",
+      //     disabled: false
+      //   },
+      //   { title: "字典数据值", type: "input", prop: "value", value: "" },
+      //   { title: "状态", type: "switch", prop: "isAllowDelete", value: "1" },
+      //   { title: "详情描述", type: "textarea", prop: "description", value: "" }
+      // ],
       data: {
         page: 0,
         pageSize: 10,
@@ -137,7 +175,6 @@ export default {
       return moment(val).format("YYYY-MM-DD HH:mm:ss");
     },
     async exportExcel() {
-      //导出
       const res = await this.$api.exportDictDataList({
         data: {
           page: 1,
@@ -172,45 +209,7 @@ export default {
       } else {
       }
     },
-    async switchChange(val) {
-      console.log("val",val)
-      let ifo;
-      if (!val.isAllowDelete) {
-        ifo = "此操作会启动此数据字典，请确认是否启动此字典？";
-      } else {
-        ifo = "此操作会禁用此数据字典，认确认是否要禁用此数据字典？";
-      }
-      this.$confirm(ifo, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(async () => {
-          let data = {
-            id: val.id,
-            isAllowDelete:val.isAllowDelete,
-          };
-          console.log(data);
-          let reslt = await this.$api.status({ data });
-          console.log("更改角色状态", reslt);
-          if (reslt.code === 0) {
-            let data1 = this.data;
-            this.dictDataPage(data1);
-            this.$message({
-              type: "success",
-              message: "状态更改成功!"
-            });
-          }
-        })
-        .catch(() => {
-          let data1 = this.data;
-            this.dictDataPage(data1);
-          this.$message({
-            type: "info",
-            message: "更改状态失败"
-          });
-        });
-    },
+
     // handleSelectionChange(val) {
     //   this.multipleSelection = val;
     // },
@@ -257,7 +256,7 @@ export default {
       // this.$router.push({
       //   path: "dataDictionary/dataDictionaryEdit",
       // });
-      if (val.name == "新建字典") {
+      if (val.name == "新建流程") {
         this.dialogFormVisible = true;
         this.flag = true;
       } else {
@@ -271,31 +270,36 @@ export default {
       this.flag = false;
       this.val = val;
       let arr = Object.keys(val);
-      let formData = this.formData;
-      formData[1].disabled = true;
-      console.log(formData);
-      formData.forEach(item => {
+      
+      let ruleForm = this.ruleForm;
+      
+      // ruleForm[1].disabled = true;
+      console.log(11, ruleForm);
+      console.log(11, arr);
+      arr1.forEach(item => {
         arr.forEach(i => {
-          if (item.prop === i) {
+          if (item === i) {
             item.value = val[i];
           }
         });
       });
     },
     //表单change事件
-    changeForm(val) {
-      this.param = val;
+    // changeForm(val) {
+    //   this.param = val;
       // console.log(1111,this.param);
-    },
-    async submit(val) {
+    // },
+    async submit() {
+      console.log("提交" ,this.ruleForm)
+      this.param = this.ruleForm;
       //新增和编辑
       // this.$refs.baseForm.validate(val => {
-      if (this.param.isAllowDelete != 0) {
-        this.param.isAllowDelete = 0;
+      if (this.param.status != 0) {
+        this.param.status = 0;
       } else {
-        this.param.isAllowDelete = 1;
+        this.param.status = 1;
       }
-      // console.log(2222, data);
+      console.log(2222, data);
       let data = { ...this.param };
       if (this.flag) {
         //let formData = this.$refs.baseForm.form;

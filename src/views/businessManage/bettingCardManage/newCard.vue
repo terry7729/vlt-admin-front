@@ -16,9 +16,9 @@
             type="primary"
             v-prevent="1000"
             size="medium"
-            @click="submit"
+            @click="submit('baseForm')"
             :loading="showLoading"
-          >生成并导出</el-button>
+          >新建</el-button>
           <el-button size="medium" @click="close">取 消</el-button>
         </el-row>
       </div>
@@ -65,7 +65,7 @@ export default {
         },
         {
           type: "select",
-          title: "投注卡类型：",
+          title: "投注卡类型",
           prop: "bettingCardType",
           options: [
             { label: "普通卡", value: 1 },
@@ -73,19 +73,28 @@ export default {
             { label: "试玩卡", value: 3 }
           ]
         },
-        { type: "input", title: "发卡数量：", prop: "cardMakingQuantity", value: '' },
+        {
+          type: "input",
+          title: "发卡数量",
+          prop: "cardMakingQuantity",
+          value: ""
+        },
         { type: "textarea", title: "备注", prop: "remark" }
       ],
       rule: {
-        insId: [{ required: true, trigger: "blur" }],
-        bettingCardType: [{ required: true, trigger: "blur" }],
-        cardMakingQuantity: [{ required: false, validator: rules.numberVal, trigger: "blur" }]
+        insId: [{ required: true, message: "请选择所属机构", trigger: "change" }],
+        bettingCardType: [
+          { required: true, message: "请选择投注卡类型", trigger: "change" }
+        ],
+        cardMakingQuantity: [
+          { required: false, validator: rules.numberVal, trigger: "blur" }
+        ]
       },
       cascaderOptions: []
     };
   },
   created() {
-    this.getInsData()
+    this.getInsData();
   },
   methods: {
     getInsData() {
@@ -94,9 +103,17 @@ export default {
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
         if (res && res.code == 0) {
-          self.$set(self.formDatas[0], "options", res.data);
+          let insList = res.data;
+          insList.forEach(element => {
+            element.children.forEach(item => {
+              item.children && item.children.forEach(i => {
+                delete i.children
+              }) 
+            })
+          });
+          self.$set(self.formDatas[0], "options", insList);
           self.cascaderOptions = res.data;
-          console.log('获取机构数据', self.cascaderOptions, res.data);
+          // console.log("获取机构数据", self.cascaderOptions, res.data);
 
           // let arr = self.getInsArray(self.insId,'id', res.data, 'id') // 传入id 和对象
           // console.log('arrs', arr.reverse());
@@ -115,45 +132,37 @@ export default {
     close() {
       this.$router.back();
     },
-    async submit() {
-      const _this = this;
-      _this.showLoading = true;
-      let data = _this.params;
-      console.log("提交的数据", data);
-      // data.status = data.status ? 1 : 2;
-      let result = await _this.$api.createCardGeneration({ data });
-          console.log('ressss',result);
-      if (result.code == 0) {
-        _this.showLoading = false;
-        _this.$message({
-          message: result.msg,
-          type: "success"
-        });
-        setTimeout(() => {
-          _this.$router.back();
-        }, 1000);
-      }
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid === 'true') {
+          (async ()=> {
+            const _this = this;
+            _this.showLoading = true;
+            _this.params.cardMakingQuantity = _this.params.cardMakingQuantity != '' ? _this.params.cardMakingQuantity : 0
+            console.log(_this.params);
+            let data = _this.params;
+            // console.log("提交的数据", data);
+            // data.status = data.status ? 1 : 2;
+            let result = await _this.$api.createCardGeneration({ data });
+            // console.log("ressss", result);
+            if (result.code == 0) {
+              _this.showLoading = false;
+              _this.$message({
+                message: result.msg,
+                type: "success"
+              });
+              setTimeout(() => {
+                _this.$router.back();
+              }, 1000);
+            }
+          })()
+        }
+      })
     },
     onSubmit() {
       console.log("formData", this.params);
       this.close();
-    },
-    // 获取机构列表
-    getInsData() {
-      const self = this;
-      const data = {};
-      (async (data)=>{
-				let res = await self.$api.QueryInsTree({data})
-				if(res && res.code == 0) {
-          console.log('res', res.data)
-          self.$set(self.formDatas[0], 'options', res.data)
-          // self.formData[1].options = res.data;
-          // self.cascaderOptions = res.data;
-				} else {
-          // self.$message.warning(res.msg)
-        }
-      })(data)
-    },
+    }
   }
 };
 </script>

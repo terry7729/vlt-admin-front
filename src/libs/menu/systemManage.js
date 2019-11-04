@@ -8,30 +8,31 @@ export default {
       iconCls: "icon-xitongshezhi",
       text: "系统设置",
       code: 'settings',
-      children: [{
-          children: [],
-          iconCls: "el-icon-menu",
-          text: "基本设置",
-          code: 'baseSetting'
-        },
-        {
-          children: [],
-          iconCls: "el-icon-menu",
-          text: "邮件设置",
-          code: 'emailSetting'
-        },
+      children: [
+        // {
+        //   children: [],
+        //   iconCls: "el-icon-menu",
+        //   text: "基本设置",
+        //   code: 'baseSetting'
+        // },
+        // {
+        //   children: [],
+        //   iconCls: "el-icon-menu",
+        //   text: "邮件设置",
+        //   code: 'emailSetting'
+        // },
         {
           children: [],
           iconCls: "el-icon-menu",
           text: "参数设置",
           code: 'paramSetting'
         },
-        {
-          children: [],
-          iconCls: "el-icon-menu",
-          text: "短信设置",
-          code: 'noteSetting'
-        },
+        // {
+        //   children: [],
+        //   iconCls: "el-icon-menu",
+        //   text: "短信设置",
+        //   code: 'noteSetting'
+        // },
       ],
     },
     {

@@ -22,25 +22,22 @@ export default {
   },
   // 输入框必须填数字
   numberVal: (rule, value, callback) => {
-    console.log(value);
-    const _value = (value + ' ').trim()
+    const _value = value
     const test = (/(^[1-9]\d*$)/.test(_value)) ? true : false
-    if (_value == undefined) {
-      return callback(new Error(undefined));
-    }else if (_value != undefined && !test) {
-      return callback(new Error('值必须为正整数'));
+    if (_value && !Number(test)) {
+      return callback(new Error('请输入正确非负整数'));
     }
     callback();
   },
   // 数字必填的
   checkEmptyNumber: (rule, value, callback) => {
-    const _value = (value + '').trim()
+    const _value = value
     const test = (/(^[1-9]\d*$)/.test(_value)) ? true : false
     if (!_value) {
       return callback(new Error(rule.message));
     }
     if (_value && !test) {
-      return callback(new Error('值必须为正整数'));
+      return callback(new Error('请输入数字'));
     }
     callback();
   },

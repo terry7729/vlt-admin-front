@@ -17,15 +17,16 @@
         @selection-change="handleSelectionChange"
         class="table-box"
       >
-        <el-table-column type="selection" width="55"></el-table-column>
+        <!-- <el-table-column type="selection" width="55"></el-table-column> -->
         <el-table-column
           v-for="(item,key) in tableKey"
           :key="key"
           :prop="item.value"
           :label="item.label"
           :width="item.width"
+          :type="item.type"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作" width="180">
+        <el-table-column fixed="right" label="操作" width="120">
           <template slot-scope="scope">
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">查看</el-button>
             <!-- <el-button v-if="scope.row.status === '待激活'" type="primary" size="mini" @click="activation(scope.row)">激活</el-button> -->
@@ -55,10 +56,17 @@ export default {
         { title: "投注卡编号：", type: "input", prop: "cardNumber", value: "" },
         {
           title: "所属机构：",
-          type: "select",
+          type: "cascader",
           prop: "insId",
           value: "",
-          options: [{ label: "中福彩", value: "1" }]
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          },
+          options: []
         },
         {
           title: "投注卡类型：",
@@ -73,7 +81,7 @@ export default {
         }
       ],
       tableKey: [
-        { label: "序号", value: "id", width: "80" },
+        { label: "序号", value: "id", type:'index', width: "80" },
         { label: "编号", value: "cardNumber", width: "" },
         { label: "投注卡类型", value: "bettingCardType", width: "100" },
         { label: "所属机构", value: "insName", width: "" },
@@ -91,12 +99,13 @@ export default {
   components: {},
   created() {
     this.initList(this.options);
+    this.getInsData();
   },
   methods: {
     async initList(options) {
       let data = JSON.parse(JSON.stringify(options));
       let result = await this.$api.bettingCardInfoList({ data });
-      console.log("data", result);
+      // console.log("data", result);
       if (result.code == 0) {
         this.tableData = result.data;
         this.tableData.records = result.data.records.map(item => {
@@ -106,12 +115,34 @@ export default {
         });
       }
     },
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        if (res && res.code == 0) {
+          // console.log("res", res.data);
+          let insList = res.data;
+          insList.forEach(element => {
+            element.children.forEach(item => {
+              item.children && item.children.forEach(i => {
+                delete i.children
+              }) 
+            })
+          });
+          self.$set(self.searchOptions[1], "options", insList);
+          this.insDatas = res.data
+          console.log('insDatas', this.insDatas);
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     search(form) {
-      // console.log("search", form);
       this.options.param = {
         bettingCardType: form.bettingCardType,
         cardNumber: form.cardNumber,
-        insId: form.insId
+        insId: (form.insId && Array.isArray(form.insId) ?  Number(form.insId[form.insId.length - 1]) : '')
       };
       this.initList(this.options);
     },
