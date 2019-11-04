@@ -49,6 +49,7 @@
 
 <script type="text/javascript">
 import dialogForm from "@/views/businessManage/bettingCardManage/components/dialogForm";
+import { isArray } from 'util';
 export default {
   name: "cardGeneration",
   data() {
@@ -298,7 +299,13 @@ export default {
       })(data);
     },
     search(form) {
-      this.options.param = form
+      if(isArray(form.insId)) {
+        form.insId = form.insId[form.insId.length - 1]
+      }
+      // console.log(form);
+      this.options.param = {
+        ...form
+      }
       this.initList(this.options);
       // console.log("search", form);
     },
