@@ -95,7 +95,10 @@ export default {
       value: "",
       page: {
         page: 1,
-        pageSize: 10
+        pageSize: 10,
+        param:{
+          holidayType:1
+        }
       },
 
       controlOptions: [
