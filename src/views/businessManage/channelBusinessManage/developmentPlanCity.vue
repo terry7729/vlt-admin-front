@@ -141,6 +141,7 @@ export default {
       const data = {};
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
+        console.log(333);
         if (res && res.code == 0) {
           let newData = res.data;
           self.$set(self.searchOptions[1], "options", newData);

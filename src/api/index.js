@@ -13,12 +13,12 @@ export default {
    *@param {json} options: {} || {data: json}
    */
   /* 请务必注释每个接口所属名称 */
-  // 获取左侧导航
-  getMenu: (options = {}) => ajax.post('/menu', options),
   // 登录
   getLogin: (options = {}) => ajax.post('/login', options),
   // 登出
   getLogOut: (options = {}) => ajax.post('/logout', options),
+  // 获取入口对应菜单
+  getUserAndModule: (options = {}) => ajax.post('/queryUserAndModule', options),
   // 上传范例
   testUpload: (options = {}) => ajax.upload('/game/uploading', options),
   // 覆盖默认api请求地址范例

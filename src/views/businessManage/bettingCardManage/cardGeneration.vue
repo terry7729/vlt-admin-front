@@ -58,10 +58,16 @@ export default {
         { title: "批次：", type: "input", prop: "batch", value: "" },
         {
           title: "所属机构：",
-          type: "select",
+          type: "cascader",
           prop: "insId",
           value: "",
-          options: [{ label: "中福彩", value: "1" }]
+          options: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
         },
         {
           title: "投注卡类型：",
@@ -235,8 +241,8 @@ export default {
         pageSize: 10,
         param: {
           batch: '',
-          bettingCardType: '',
-          insId: ''
+          bettingCardType: 0,
+          insId: 0
         }
       },
       outData: {}
@@ -244,6 +250,7 @@ export default {
   },
   created() {
     this.initList(this.options);
+    this.getInsData();
   },
   methods: {
     async initList(options) {
@@ -273,6 +280,22 @@ export default {
       this.$router.push({
         name: "newCard"
       });
+    },
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        console.log(res);
+        if (res && res.code == 0) {
+          let newData = res.data;
+          console.log('info', newData, self.searchOptions[1]);
+          self.$set(self.searchOptions[1], "options", newData);
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
     },
     search(form) {
       this.options.param = form
