@@ -135,7 +135,6 @@ export default {
       if(val != null && val.length>0){
         for(var i = 0 ; i<val.length ; i++){
           n += (val[i][name]+',')
-        
         }
       }
        return n

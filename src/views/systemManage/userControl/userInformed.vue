@@ -14,10 +14,10 @@
             <el-input type="text" v-model="form.userName"></el-input>
           </el-form-item>
           <el-form-item label="手机号码" prop="mobile">
-            <el-input type="text" v-model="form.mobile"></el-input>
+            <el-input type="number" v-model="form.mobile"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input type="text" v-model="form.email"></el-input>
+            <el-input type="email" v-model="form.email"></el-input>
           </el-form-item>
           <el-form-item label="用户状态" prop="userStatus">
             <el-select placeholder="请选择" v-model="form.userStatus">
@@ -159,7 +159,7 @@ export default {
         };
         data.userId = "";
         console.log(data);
-        let reslt = await this.$api.userRegist({ Message: "新建成功", data });
+        let reslt = await this.$api.userRegist({ message: "新建成功", data });
         console.log(reslt);
         if (reslt.code === 0) {
           this.params = {};
@@ -172,7 +172,7 @@ export default {
         };
         data.userId = this.$route.query.ifo.userId;
         console.log(data);
-        let reslt = await this.$api.userEdit({ Message: "编缉成功", data });
+        let reslt = await this.$api.userEdit({ message: "编缉成功", data });
         console.log("编缉用户信息", reslt);
         if (reslt.code === 0) {
           this.$router.push({ name: "userList" });
@@ -185,12 +185,6 @@ export default {
     },
 
     async getdepment(val) {
-      //  console.log('当前Id',val)
-      // let code = this.getInsArray(val,'id',this.insData, 'code')
-      //    console.log(code)
-      //   if(code){
-      //     this.form.insCode = code[0]
-      //   }
       let reslt = await this.$api.FindDeptTreeRoots({ data: val });
       if (reslt.code === 0) {
         this.userDeptOptions = reslt.data;

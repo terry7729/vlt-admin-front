@@ -108,10 +108,12 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: "userList",
   data() {
     return {
+       innerVisible:false,
       restpaswordfrom: {
         pwdStatus: 0
         // password:''
@@ -133,35 +135,32 @@ export default {
       option: [
         //搜索框组
         {
-          title: "姓名",
-          prop: "userName",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
+         title: "姓名",
+         prop: "userName",
+         type: "input",
+         value: "",
+         placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
-          title: "账号",
-          prop: "account",
-          type: "input",
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
+         title: "账号",
+         prop: "account",
+         type: "input",
+         value: "",
+         placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
-          title: "所属机构",
-          prop: "insInfoList",
-          type: "select",
-          options: [
-            {
-              value: "beijing",
-              label: "北京"
-            },
-            {
-              value: "shanghai",
-              label: "上海"
-            }
-          ],
-          value: "",
-          placeholder: "请输入" || ["请输入1", "请输入2"]
+         title: "所属机构",
+         prop: "insInfoList",
+         type: "cascader",
+         setProps: {
+            value: "id",
+            label: "text",
+            checkStrictly: true,
+            children: "children"
+         },
+         options: [],
+         value: "",
+         placeholder: "请输入" || ["请输入1", "请输入2"]
         },
         {
           title: "用户角色",
@@ -183,12 +182,12 @@ export default {
           type: "select",
           options: [
             {
-              value: "beijing",
-              label: "北京"
+              value: 0,
+              label: "启用"
             },
             {
-              value: "shanghai",
-              label: "上海"
+              value: 1,
+              label: "冻结"
             }
           ],
           value: "",
@@ -210,7 +209,14 @@ export default {
   },
   computed: {},
   created() {
-    this.init();
+   const self = this;
+   (async ()=>{
+      let reslt =await this.$api.QueryInsTree()
+      if(reslt.code === 0){
+         this.option[2].options = reslt.data
+      }
+   })()
+   this.init();
   },
   mounted() {},
   methods: {
@@ -225,56 +231,44 @@ export default {
       };
 
       let reslt = await this.$api.userPage({ data });
-      console.log("reslt", reslt);
-      let arr = reslt.data.records.map(item => {
-        let userLoginLogVo = item.userLoginLogVo;
-        return { ...userLoginLogVo, ...item };
-      });
-      console.log("arr", arr);
-      this.userList = arr;
-      this.page = reslt.data.current;
-      this.total = reslt.data.total;
-      console.log("我是默认", reslt);
+      if(reslt.code === 0){
+         console.log("reslt", reslt);
+         let arr = reslt.data.records.map(item => {
+         let userLoginLogVo = item.userLoginLogVo;
+         return { ...userLoginLogVo, ...item };
+         });
+         console.log("arr", arr);
+         this.userList = arr;
+         this.page = reslt.data.current;
+         this.total = reslt.data.total;
+         console.log("我是默认", reslt);
+      }
     },
-    pageSizeChange(val) {
-      //每页显示条数
+    pageSizeChange(val) {//每页显示条数
       this.pageSize = val;
       this.init();
     },
     handleSelectionChange(val) {
-      // this.userId.push(val.userId)
       let arr = val.map(item => {
         return item.userId;
       });
-      console.log(arr);
       this.userId = [...arr];
     },
-    pageCurrentChange(val) {
-      //当前显示页数
+    pageCurrentChange(val) {//当前显示页数
       this.currentPage4 = val;
       this.init(val);
     },
-    handelifo(val, obj) {
-      // console.log(val,obj)
-      // return
-      this.$router.push({
-        name: "userInformed",
-        query: { title: "编缉用户信息", ifo: obj }
-      });
+    handelifo(val, obj) {  
+      this.$router.push({ name: "userInformed", query: { title: "编缉用户信息", ifo: obj }});
     },
-
     handelides(val) {
       console.log(val);
-
       this.$router.push({ name: "userDestails", query: { id: val.userId } });
     },
     selectBtn(val) {
       //新增删除事件
       if (val.name === "新建用户") {
-        this.$router.push({
-          name: "userInformed",
-          query: { title: "新建用户信息" }
-        });
+        this.$router.push({ name: "userInformed", query: { title: "新建用户信息" } });
       }
       if (val.name === "批量删除") {
         (async () => {
@@ -290,57 +284,52 @@ export default {
     resetPassWord(val) {
       this.dialogFormVisible = true;
       this.restParam = val;
-      console.log(val);
     },
-    dialogFormVisibleEnter() {
-      //操作密码重置
-      this.$alert("您确认要重置密码?", "标题名称", {
+    dialogFormVisibleEnter() {//操作密码重置
+      this.$alert(this.restpaswordfrom.pwdStatus?"您确认要重置操作密码?":"您确认要重置登陆密码", "标题名称", {
         confirmButtonText: "确定",
         callback: async action => {
           this.dialogFormVisible = false;
-          console.log(this.restpaswordfrom);
           let data = {
             ...this.restpaswordfrom
           };
           data.userId = this.restParam.userId;
-
           let reslt = await this.$api.restPassWord({ data });
-
-          console.log(reslt);
-          this.$message({
-            type: "info",
-            message: `action: ${action}`
-          });
+          if(reslt.code === 0){
+            this.$message({
+               type: "success",
+               message: '重置成功'
+            });
+          }
         }
       });
-    }
-  },
-  async search(val) {
-    //搜索事件
-    console.log(val);
-    this.searchFrom = val;
-    // this.searchStatus = "搜索"
-    this.init();
-  },
-  pagingControl() {},
-  resetPassWord(val) {
-    this.dialogFormVisible = true;
-    this.restParam = val;
-    console.log(val);
-  },
-  async dialogFormVisibleEnter() {
-    //操作密码重置
-    console.log(this.restpaswordfrom);
-    let data = {
-      ...this.restpaswordfrom
-    };
-    data.userId = this.restParam.userId;
-
-    let reslt = await this.$api.restPassWord({ data });
-
-    console.log(reslt);
-
-    this.dialogFormVisible = false;
+    },
+    search(val) { //搜索事件
+      console.log(val);
+      let list = {};
+      if(val.createTime  && val.createTime.length>0){
+       let startTime=moment(Date.parse(val.createTime[0])).format("YYYY-MM-DD")
+       let endTime = moment(Date.parse(val.createTime[1])).format("YYYY-MM-DD")
+         list = {
+            ...val,
+            startTime,
+            endTime
+         }
+      }else{
+        list = {
+           ...val
+        }
+      }   
+      delete list.createTime
+      this.searchFrom = {...list};
+      this.init();
+    },
+    pagingControl() {},
+    resetPassWord(val) {
+      this.dialogFormVisible = true;
+      this.restParam = val;
+      console.log(val);
+    },
   },
 
   watch: {

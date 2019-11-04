@@ -6,6 +6,7 @@
         <el-form ref="form" label-position="top">
           <el-container>
             <el-aside>
+              <div style="font-size:12px;">权限管理</div>
               <el-tree
                 :data="dataTree"
                 show-checkbox
@@ -85,7 +86,10 @@ export default {
 
     (async () => {
       let res = await this.$api.QueryModuleTree();
-      self.dataTree = res.data;
+      console.log(res,'角色新增')
+      if(res.code === 0){
+              self.dataTree = res.data;
+      }
     })();
     this.id = this.$route.query.id;
     if (this.id) {
@@ -143,7 +147,10 @@ export default {
             data
           }); //修改角色信息
           if (reslt.code === 0) {
-            self.$router.push({ name: "roleList" });
+              console.log(this.$route.query.pages)
+            // return/
+              self.$router.push({ name: "roleList" });
+            // self.$route.query.fn(this.$route.query.pages)
           }
           console.log(reslt, "编缉");
         })();

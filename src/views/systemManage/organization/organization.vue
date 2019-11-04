@@ -3,7 +3,7 @@
     <el-container>
       <el-aside class="organi-left" style="width:330px;">
         <div class="organi-btn">
-          <control-bar :options="controlOptions" @select="selectBtn"></control-bar>
+          <control-bar :options="(len>0) ? controlOptions :controlOptionstwo" @select="selectBtn"></control-bar>
         </div>
         <el-col :span="18">
           <div class="organi-tree">
@@ -13,7 +13,6 @@
               show-checkbox
               node-key="id"
               @node-click="getnowNodeifo"
-              @check-change="getCheckifo"
               :default-expanded-keys="[1,2]"
               :default-expand-all="false"
               ref="attrList"
@@ -182,7 +181,12 @@ export default {
       },
       controlOptions: [
         //顶部按钮
-        { name: "添加部门", type: "primary", icon: "plus", id: 2 },
+        { name: "添加部门", type: "primary", icon: "plus",disabled:false, id: 2 },
+        { name: "刷新", type: "", icon: "refresh-right", id: 3 }
+      ],
+       controlOptionstwo: [
+        //顶部按钮
+        { name: "添加部门", type: "primary", icon: "plus",disabled:true, id: 2 },
         { name: "刷新", type: "", icon: "refresh-right", id: 3 }
       ],
       AddDepartment: [
@@ -322,7 +326,8 @@ export default {
       //
       parentId: -1,
       departmenIfo: {},
-      insparentId: 0
+      insparentId: 0,
+      len:0
     };
   },
   mounted() {},
@@ -333,6 +338,7 @@ export default {
       console.log("机构树菜单", reslt);
       if (reslt.code === 0) {
         this.nodeTreeData = reslt.data;
+        this.len = reslt.data.length
       }
       let res = await this.$api.FindRegionTreeRoots(); //区域树查询
       console.log("区域树查询", res);
@@ -477,6 +483,8 @@ export default {
       if (this.addOrChange === "更改部门信息") {
         // this.DepartmenParams.created = "更改部门信息";
         let data = JSON.parse(JSON.stringify(this.DepartmenParams));
+        console.log(this.departmenIfo)
+        // return
         data.departmentId = this.departmenIfo.departmentId;
 
         let reslt = await this.$api.UpdateDeptInfo({ data }); //更新部门信息

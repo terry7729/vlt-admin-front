@@ -83,26 +83,26 @@ export default {
       pageSize:10,
       searchStatus:'',
       searchFrom:{},
-      formData:[],
+      falg:-1
     };
   },
   computed: {},
   created() {
-    console.log(this)
+    // console.log(this)
+
       this.init()
+   
+   
+    
+//  this.pagingControl(2)
   },
   mounted() {},
   components: {},
   methods: {
 
 async init(val){ //初始化页面数据
-    let res = await this.$api.QueryModuleTree()
-        if(res.code === 0){
-        this.isData = res.data
-        this.$formMethods.set(this.baseData, 'moduleIds', 'options', res.data);
-        }
-    console.log('菜单树查询',res)
-    this.pagingControl()
+   
+      this.pagingControl(val)
 
     },
 async pagingControl(val){ //分页控制
@@ -165,12 +165,10 @@ async pagingControl(val){ //分页控制
           });
     },
    async pageSizeChange(val) {//每页显示条数
-      // console.log(val);
       this.pageSize = val;
       this.pagingControl()
     },
     pageCurrentChange(val) { //当前显示页数
-      // console.log(val);
       this.currentPage4 = val;
       this.pagingControl(val)
     },
@@ -186,54 +184,50 @@ async pagingControl(val){ //分页控制
         this.$router.push({name:"roleOfEditorial"})
       }
     },
-async search(val) {//搜索事件
+ search(val) {//搜索事件
       console.log(val)
       const self = this;
       let list ={};
       if(val.createTime  && val.createTime.length>0){
         console.log(val.createTime)
-        list.startTime=moment(Date.parse(val.createTime[0])).format("YYYY-MM-DD")
-        list.endTime = moment(Date.parse(val.createTime[1])).format("YYYY-MM-DD")
-        list.roleName = val.roleName
-        list.createBy = val.createBy
-        list.status = val.status
+        let startTime=moment(Date.parse(val.createTime[0])).format("YYYY-MM-DD")
+        let endTime = moment(Date.parse(val.createTime[1])).format("YYYY-MM-DD")
+        list = {
+          ...val,
+          startTime,
+          endTime
+        }
       }else{
-          list.roleName = val.roleName
-          list.createBy = val.createBy
-          list.status = val.status
+        list = {
+          ...val
+        }
       }   
-        self.searchFrom = {
-          ...list
-          };
-        self.searchStatus = "搜索"
-        self.pagingControl()
+      delete list.createTime
+      self.searchFrom = {
+        ...list
+        };
+      self.searchStatus = "搜索"
+      self.pagingControl()
 
     },
     dataProcessing(arr) {//数据处理
+    const self = this;
         arr.forEach(item => {      
               item.status = !!item.status;
         });
-      let obj = arr.map(item => {
-        if (item.roleType === 1) {
-          return {
-            ...item,
-            roleType: "管理员"
-          };
-        } else if (item.roleType === 2) {
-          return {
-            ...item,
-            roleType: "子管理员"
-          };
-        } else {
-          return {
-            ...item,
-            roleType: "普通角色"
-          };
-        }
+     arr.forEach(item => {
+        item.roleType = self.typeChange(item.roleType)
       });
-      this.tableData = obj;
+      this.tableData = arr;
     },
-    //弹框事件
+    typeChange(val){
+      let option = {
+        1:'管理员',
+        2:'子管理员',
+        3:'普通角色'
+      }
+      return option[val]
+    },
 
      getInsArray(id, key, data, keyBack) { // 传入id和key是一样胡  keyBack返回key
         const self = this;
