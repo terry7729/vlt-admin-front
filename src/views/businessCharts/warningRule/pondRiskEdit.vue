@@ -86,7 +86,7 @@ import rules from "@/utils/rules.js";
 import informs from "@/utils/inform.js";
 import informTable from "@/views/businessCharts/warningRule/informTable.vue";
 export default {
-  name: "",
+  name: "pondRiskEdit",
   components: { informTable },
   data() {
     return {
@@ -141,6 +141,13 @@ export default {
     async pondRiskUpdate(propsData) {
       const res = await this.$api.pondRiskUpdate({
         data: {
+          businessKey: this.$route.query.id,
+          minJackpotMoneyMajor: this.form.minJackpotMoneyMajor,
+          minJackpotMoneyOrdinary: this.form.minJackpotMoneyOrdinary,
+          minJackpotMoneySerious: this.form.minJackpotMoneySerious,
+           maxJackpotMoneyMajor: this.form.maxJackpotMoneyMajor,
+          maxJackpotMoneyOrdinary: this.form.maxJackpotMoneyOrdinary,
+          maxJackpotMoneySerious: this.form.maxJackpotMoneySerious,
            informTotalCountMajor: propsData.informData[2].warningPl,
           informTotalCountOrdinary: propsData.informData[1].warningPl,
           informTotalCountSerious: propsData.informData[0].warningPl,
@@ -148,10 +155,7 @@ export default {
           gameName: this.form.gameId,
           collectFrequency: this.form.collectFrequency,
           collectStatus: this.form.collectStatus,
-          maxJackpotMoneyMajor: this.form.maxJackpotMoneyMajor,
-          maxJackpotMoneyOrdinary: this.form.maxJackpotMoneyOrdinary,
-          maxJackpotMoneySerious: this.form.maxJackpotMoneySerious,
-
+         
           informCentralManIdMajor: propsData.informCentralManIdMajor,
           informProvinceManIdMajor: propsData.informProvinceManIdMajor,
           informCityManIdMajor: propsData.informCityManIdMajor,
@@ -167,10 +171,7 @@ export default {
           informWayMajor: propsData.informWayMajor,
           informWayOrdinary: propsData.informWayOrdinary,
           informWaySerious: propsData.informWaySerious,
-          minJackpotMoneyMajor: this.form.minJackpotMoneyMajor,
-          minJackpotMoneyOrdinary: this.form.minJackpotMoneyOrdinary,
-          minJackpotMoneySerious: this.form.minJackpotMoneySerious,
-          businessKey: this.$route.query.id
+          
         }
       });
       if (res && res.code == 0) {

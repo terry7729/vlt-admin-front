@@ -70,8 +70,8 @@
           </el-form-item>
         </div>
       </el-form>
-      <informTable :form="form" ref='table'></informTable>
-       <div class="btn">
+      <informTable :form="form" ref="table"></informTable>
+      <div class="btn">
         <el-button type="primary" v-prevent="1000" @click="onSubmit">立即创建</el-button>
         <el-button>取消</el-button>
       </div>
@@ -105,23 +105,20 @@ export default {
       type: null,
       showeditBox: false,
       tableData: [{ type: "最高奖池金额" }, { type: "最低奖池金额" }],
-      controlOptions: [
-        { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
-      ],
-      form: {    
+      form: {
         collectFrequency: "", //采集间隔(单位：分钟) 传入15，表示15分钟匹配一次
         collectStatus: 0, //0生效 1停止
         gameId: "",
         gameName: "",
         maxJackpotMoneyMajor: "", //最高奖池金额-重大级别
         maxJackpotMoneyOrdinary: "", //最高奖池金额-普通级别
-        maxJackpotMoneySerious: "", //最高奖池金额-严重级别  
+        maxJackpotMoneySerious: "", //最高奖池金额-严重级别
         maxJackpotMoneyMajor: "", //最高奖池金额-重大级别
         maxJackpotMoneyOrdinary: "", //最高奖池金额-普通级别
         maxJackpotMoneySerious: "", //最高奖池金额-严重级别
         minJackpotMoneyMajor: "", //最低奖池金额-重大级别
         minJackpotMoneyOrdinary: "", //最低奖池金额-普通级别
-        minJackpotMoneySerious: "" //最低奖池金额-严重级别    
+        minJackpotMoneySerious: "" //最低奖池金额-严重级别
       },
       rules2: {
         test: [
@@ -142,14 +139,11 @@ export default {
     },
     //提交
     onSubmit() {
-      this.pondRiskInsert(this.$refs.table.dataInform)
+      this.pondRiskInsert(this.$refs.table.dataInform);
     },
     async pondRiskInsert(propsData) {
       const res = await this.$api.pondRiskInsert({
         data: {
-          informTotalCountMajor: propsData.informData[2].warningPl,
-          informTotalCountOrdinary: propsData.informData[1].warningPl,
-          informTotalCountSerious: propsData.informData[0].warningPl,
           gameId: this.gameValue,
           gameName: this.gameValue,
           collectFrequency: this.form.collectFrequency,
@@ -172,11 +166,13 @@ export default {
           informCityManIdSerious: propsData.informCityManIdSerious,
           informCentralManIdSerious: propsData.informCentralManIdSerious,
           informProvinceManIdSerious: propsData.informProvinceManIdSerious,
-
+          informTotalCountMajor: propsData.informData[2].warningPl,
+          informTotalCountOrdinary: propsData.informData[1].warningPl,
+          informTotalCountSerious: propsData.informData[0].warningPl,
           informWayMajor: propsData.informWayMajor,
           informWayOrdinary: propsData.informWayOrdinary,
           informWaySerious: propsData.informWaySerious
-        },
+        }
       });
       if (res && res.code == 0) {
         // this.$message({
@@ -203,7 +199,7 @@ export default {
           this.showeditBox = false;
         }
       }
-    },  
+    }
   }
 };
 </script>
