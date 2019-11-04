@@ -58,7 +58,7 @@ export default {
         {
           type: "cascader",
           prop: "insId",
-          value: "61",
+          value: "",
           title: "所属机构",
           options: [],
           setProps: {
@@ -68,7 +68,7 @@ export default {
             // multiple: true, // 多选
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
-          },
+        },
       ],
       controlOptions: [
          {name: '导出当页数据', type: 'primary', icon: 's-promotion'}, 
@@ -160,6 +160,11 @@ export default {
         let res = await self.$api.QueryInsTree({ data });
         if (res && res.code == 0) {
           let newData = res.data;
+          newData&&newData.forEach(ele => {
+            ele.children && ele.children.forEach(el => {
+              delete el.children
+            })
+          });;
           self.$set(self.searchOptions[1], "options", newData);
         } else {
           // self.$message.warning(res.msg)
@@ -168,8 +173,7 @@ export default {
     },
     // 导出年度发展计划 省级信息
 
-// exportProvinceDevelopPlanList
-  // 导出年度发展计划信息
+    // 导出年度发展计划信息
     async exportExcel(val) {
         // console.log(val);
       if (val == 'now') {

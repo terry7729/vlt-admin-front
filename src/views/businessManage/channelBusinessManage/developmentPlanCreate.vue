@@ -148,15 +148,6 @@ export default {
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
         },
-        // 作为省市层级筛选， 后边等数据好了 删除
-        // {title: '省市层级', type: 'select', prop: 'insLevel', value: [], options: [{
-        //   label: 1,
-        //   value: 1
-        // },{
-        //   label: 2,
-        //   value: 2
-        // }
-        // ],},
         {
           title: "市属新建销售厅数量",
           type: "input",

@@ -23,21 +23,11 @@
               <el-form-item label="用户角色" prop="roleName">
                 <el-input type="input" v-model="formParam.roleName"></el-input>
               </el-form-item>
-              <el-form-item label="角色类型" prop="roleType">
-                <el-select placeholder="请选择" v-model="formParam.roleType">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
               <el-form-item label="角色状态" prop="status" v-if="!id">
                 <el-switch v-model="formParam.status" active-color="#13ce66"></el-switch>
               </el-form-item>
-              <el-form-item label="角色编码" prop="roleCode" v-if="!id">
-                <el-input type="input" v-model="formParam.roleCode"></el-input>
+              <el-form-item label="角色编码" prop="roleCode">
+                <el-input type="input" v-model="formParam.roleCode" :disabled="id?true:false"></el-input>
               </el-form-item>
               <el-form-item label="描述" prop="roleDesc">
                 <el-input type="textarea" v-model="formParam.roleDesc"></el-input>
@@ -66,11 +56,6 @@ export default {
         status: 1,
         moduleIds: []
       },
-      options: [
-        { label: "管理员", value: 1 },
-        { label: "子管理员", value: 2 },
-        { label: "普通角色", value: 3 }
-      ],
       dataTree: [],
       setProps: {
         label: "text",
@@ -98,9 +83,9 @@ export default {
         for (let key in self.formParam) {
           if (key !== "moduleIds") {
             self.formParam[key] = reslt.data[key];
+            
           }
         }
-
         const checkedIds = reslt.data["moduleIds"];
         const result = [];
         // 递归遍历渲染树选中项
@@ -128,8 +113,6 @@ export default {
   methods: {
     submit() {
       const self = this;
-      console.log(this.currentCode);
-
       if (this.id) {
         (async () => {
           self.currentCode = [];
@@ -147,10 +130,7 @@ export default {
             data
           }); //修改角色信息
           if (reslt.code === 0) {
-              console.log(this.$route.query.pages)
-            // return/
               self.$router.push({ name: "roleList" });
-            // self.$route.query.fn(this.$route.query.pages)
           }
           console.log(reslt, "编缉");
         })();

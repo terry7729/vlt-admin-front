@@ -58,7 +58,7 @@ export default {
           prop:'roleInfoList'
         },
         {
-          title: "最近登陆次数",
+          title: "最近登录次数",
           value: "",
           prop:'loginCount'
         },
@@ -73,12 +73,12 @@ export default {
           prop:'updateTime'
         },
         {
-          title: "最近登陆时间",
+          title: "最近登录时间",
           value: "",
           prop:'loginTime'
         },
         {
-          title: "最近登陆IP",
+          title: "最近登录IP",
           value: "",      
           prop:'loginIp'
        }

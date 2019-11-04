@@ -71,8 +71,7 @@
                       <el-switch
                         v-model="scope.row.status"
                         active-color="#13ce66"
-                        inactive-color="#ff4949"
-                        disabled
+                        @change="switchChange(scope.row)"
                       ></el-switch>
                     </template>
                   </el-table-column>
@@ -311,19 +310,15 @@ export default {
       tableList: [], //部门信息展示列表
       pageSize: 10, //每页显示条数
       page: 1, //当前页数
-      // current: 1,
       total: 0,
       slelectifo: "", //当前选中机构名称
-      //
       dialogFormVisible2: false, //弹框二控制
       dialogFormVisible: false, //弹框一控制
       DepartmenParams: {}, //部门信息表单对象,
       OrganizationParams: {}, //机构信息表单
       addOrChange: null,
-      //
       nodeTreeData: [], //树形结构数据
       val: {}, //当前点击的节点data
-      //
       parentId: -1,
       departmenIfo: {},
       insparentId: 0,
@@ -336,7 +331,7 @@ export default {
     async init() {
       let reslt = await this.$api.QueryInsTree(); //机构树菜单
       console.log("机构树菜单", reslt);
-      if (reslt.code === 0) {
+      if (reslt.code === 0 && reslt.data != null) {
         this.nodeTreeData = reslt.data;
         this.len = reslt.data.length
       }
@@ -367,6 +362,43 @@ export default {
       this.OrganizationAdd[0].value = data.text;
       this.OrganizationAdd[1].value = data.code;
     },
+    switchChange(val){
+      console.log(val)
+             let ifo;
+        if(!val.status){
+          ifo = "此操作会冻结此部门，请确认是否冻结此部门？"
+        }else{
+          ifo = "此操作会解冻结此部门，认确认是否要解冻结此部门？"
+        }
+         this.$confirm(ifo, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(async () => {
+                 let data = {
+                    status:Number(val.status),
+                    departmentId:val.departmentId
+                  }
+                  console.log(data)
+                  let reslt = await this.$api.UpdateDeptInfo({data})
+                  console.log('更改角色状态',reslt)
+                  if(reslt.code === 0){
+                      this.subsidiaryOrgan()
+                       this.$message({
+                        type: "success",
+                        message: val.status?"部门解冻成功!":"部门冻结成功"
+                      });
+                  }
+          })
+          .catch(() => {
+            this.subsidiaryOrgan()
+            this.$message({
+              type: "info",
+              message: "取消更改"
+            });
+          });
+    },
     getId(date) {
       //获取当前点击节点所有子节点Id
       const self = this;
@@ -394,7 +426,7 @@ export default {
       console.log(this.getId(date))
     
 
-      this.$confirm(!date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
+      this.$confirm(date.status?'此操作将冻结该机构, 是否继续?':'您确认要解冻此机构？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -408,16 +440,16 @@ export default {
           console.log(reslt);
           if (reslt.code === 0) {
               this.init();
-             
               this.$message({
                 type: 'success',
-                message: !date.status?'冻结成功!':'启用成功'
+                message: date.status?'冻结成功!':'启用成功'
               });
           } 
         }).catch(() => {
+          this.subsidiaryOrgan();
           this.$message({
             type: 'info',
-            message: !date.status?'冻结失败':'解冻失败'
+            message: date.status?'取消冻结':'取消解冻'
           });          
         });
     },
@@ -453,7 +485,6 @@ export default {
         callback: action => {
           close();
           this.slelectifo = "";
-          // this.val= {}
         }
       });
     },
@@ -522,7 +553,6 @@ export default {
     },
     async OrganizationSubmit() {
       if (this.addOrChange === "更改机构信息") {
-        // this.OrganizationParams.created = "更改机构信息";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
         data.insId = this.val.id;
         data.parentId = this.parentId;
@@ -535,9 +565,7 @@ export default {
           this.init();
         }
       } else if (this.addOrChange === "添加机构") {
-        // this.OrganizationParams.created = "添加机构";
         let data = JSON.parse(JSON.stringify(this.OrganizationParams));
-        // data.status = Number(data.status);
         data.parentId = this.insparentId.id;
         if (this.insparentId.status === 1) {
           data.status = 1;

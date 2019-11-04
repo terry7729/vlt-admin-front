@@ -19,13 +19,13 @@
         <el-table-column prop="createBy" label="创建人"></el-table-column>
         <el-table-column prop="createTime" label="创建时间" >
           <template slot-scope="scope">
-          {{timeCycle(tableData[scope.$index].createTime)}}
+          {{tableData[scope.$index].createTime ? timeCycle(tableData[scope.$index].createTime):''}}
         </template></el-table-column>
-        <el-table-column prop="roleType" label="角色类型"></el-table-column>
+        <!-- <el-table-column prop="roleType" label="角色类型"></el-table-column> -->
         <el-table-column prop="updateBy" label="修改人"></el-table-column>
         <el-table-column prop="updateTime" label="修改时间">
           <template slot-scope="scope">
-            {{timeCycle(tableData[scope.$index].updateTime)}}
+            {{tableData[scope.$index].updateTime ? timeCycle(tableData[scope.$index].updateTime):''}}
           </template>
           </el-table-column>
         <el-table-column label="角色状态" prop="status" >
@@ -88,24 +88,15 @@ export default {
   },
   computed: {},
   created() {
-    // console.log(this)
-
       this.init()
-   
-   
-    
-//  this.pagingControl(2)
   },
   mounted() {},
   components: {},
   methods: {
-
-async init(val){ //初始化页面数据
-   
+  async init(val){ //初始化页面数据
       this.pagingControl(val)
-
     },
-async pagingControl(val){ //分页控制
+  async pagingControl(val){ //分页控制
       const self = this;
         let data = {
           param:{...this.searchFrom},
@@ -117,12 +108,10 @@ async pagingControl(val){ //分页控制
            if (reslt.code === 0) {
           let arr = reslt.data.records;
           self.total = reslt.data.total//查询到的信息总数量
-          self.page = reslt.data.current 
-           //当前返回页
+          self.page = reslt.data.current  //当前返回页
           let Arr = JSON.parse(JSON.stringify(arr))
           self.dataProcessing(Arr);//处理数据
           }
-
      },
     handelifo(val) {//路由跳转到角色详情
       this.$router.push({ name: "roleifometion", query: { id: val.roleId } });
@@ -140,7 +129,6 @@ async pagingControl(val){ //分页控制
           type: "warning"
         })
           .then(async () => {
-
                  let data = {
                     status:Number(val.status),
                     roleId:val.roleId
@@ -215,20 +203,8 @@ async pagingControl(val){ //分页控制
         arr.forEach(item => {      
               item.status = !!item.status;
         });
-     arr.forEach(item => {
-        item.roleType = self.typeChange(item.roleType)
-      });
-      this.tableData = arr;
+        this.tableData = arr;
     },
-    typeChange(val){
-      let option = {
-        1:'管理员',
-        2:'子管理员',
-        3:'普通角色'
-      }
-      return option[val]
-    },
-
      getInsArray(id, key, data, keyBack) { // 传入id和key是一样胡  keyBack返回key
         const self = this;
         for (var i in data) {

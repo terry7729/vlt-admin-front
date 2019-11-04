@@ -38,9 +38,6 @@
               clearable
             ></el-cascader>
           </el-form-item>
-          <!-- <el-form-item label="所属机构编号" prop="insCode" >
-              <el-input type="text" v-model="form.insCode" :disabled="true"></el-input>
-          </el-form-item>-->
           <el-form-item label="所属部门" prop="userDeptList">
             <el-cascader
               v-model="form.userDeptList"
@@ -51,7 +48,7 @@
           </el-form-item>
 
           <el-form-item label="用户账号" prop="account">
-            <el-input type="text" v-model="form.account"></el-input>
+            <el-input type="text" v-model="form.account" disabled></el-input>
           </el-form-item>
           <el-form-item label="用户角色" prop="userRoleList">
             <el-select v-model="form.userRoleList" multiple placeholder="请选择角色">
@@ -90,7 +87,7 @@ export default {
         });
       });
     }
-    let reslt = await this.$api.queryUserAndInsTree(); //机构树查询
+    let reslt = await this.$api.QueryUserAndInsTree(); //机构树查询
     console.log("用户页机构树查询", reslt);
     if (reslt.code === 0) {
       this.options = reslt.data;
@@ -173,8 +170,10 @@ export default {
         data.userId = this.$route.query.ifo.userId;
         console.log(data);
         let reslt = await this.$api.userEdit({ message: "编缉成功", data });
+        debugger
         console.log("编缉用户信息", reslt);
         if (reslt.code === 0) {
+          return
           this.$router.push({ name: "userList" });
           this.params = {};
         }

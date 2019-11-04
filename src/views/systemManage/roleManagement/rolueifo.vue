@@ -22,21 +22,19 @@ export default {
         this.isData = res.data
       }
     if(reslt.code === 0){
-    // let arr  = Object.keys(reslt.data)
-    // let len = this.infoList
-    this.infoList.forEach(item => {
-        item.value = reslt.data[item.prop]
-        if(item.prop === "createTime" || item.prop === "updateTime"){
-          item.value = moment(reslt.data[item.prop]).format("YYYY-MM-DD HH:mm:ss")
-        }else if(item.prop === 'status'){
-          item.value = self.statusChange(reslt.data[item.prop])
-        }else if(item.prop === 'roleType'){
-          item.value = self.typeChange(reslt.data[item.prop])
-        }else if(item.prop === 'moduleIds'){
-          let arr = JSON.parse(JSON.stringify(reslt.data[item.prop]))
-          item.value = self.getModuleIds(arr)
-        }
-    });
+      this.infoList.forEach(item => {
+          item.value = reslt.data[item.prop]
+          if((item.prop === "createTime" && reslt.data[item.prop] !=null )|| (item.prop === "updateTime" && reslt.data[item.prop] !=null)){
+            item.value = moment(reslt.data[item.prop]).format("YYYY-MM-DD HH:mm:ss")
+          }else if(item.prop === 'status'){
+            item.value = self.statusChange(reslt.data[item.prop])
+          }else if(item.prop === 'moduleIds'){
+            if(this.isData != null){
+              let arr = JSON.parse(JSON.stringify(reslt.data[item.prop]))
+              item.value = self.getModuleIds(arr) ?self.getModuleIds(arr) :''
+            }
+          }
+      });
 
     }
    
@@ -50,7 +48,6 @@ export default {
         { title: "角色权限", value: "", prop: "moduleIds" },
         { title: "创建人", value: "", prop: "createBy" },
         { title: "角色状态", value: "", prop: "status" },
-        { title: "角色类型", value: "", prop: "roleType" },
         { title: "更新人", value: "", prop: "updateBy" },
         { title: "创建时间", value: "", prop: "createTime" },
         { title: "更新时间", value: "", prop: "updateTime" },
@@ -62,22 +59,13 @@ export default {
   methods: {
     statusChange(val){
       let options = {
-        0:'启用',
-        1:'冻结'
-      }
-      return options[val]
-    },
-    typeChange(val){
-      let options ={
-        1:'管理员',
-        2:'子管理员',
-        3:'普通角色'
+        1:'启用',
+        0:'冻结'
       }
       return options[val]
     },
     getModuleIds(val){
       const self = this;
-      let a=''
       console.log(val)
       let arr =  val.map(item=>{
       console.log( self.getInsArray(item,'id',self.isData,'text'))
