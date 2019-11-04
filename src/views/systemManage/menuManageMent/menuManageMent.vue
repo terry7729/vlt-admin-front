@@ -267,10 +267,9 @@ export default {
   
   methods: {
     async getMenuList() {
-      //节点树请求
-      let res = await this.$api.QueryModuleTree();//菜单树查询
+      let res = await this.$api.QueryModuleTree();
       if(res && res.code === 0){
-        this.menuData = res.data;
+        this.menuData = res.data || [];
         this.setCtrlBtnStatus();
       }
     },
@@ -404,12 +403,22 @@ export default {
         if (data) {
           moduleIdList = [data.id];
           nodes = [node];
-          this.$refs.tree.setChecked(data, true, true);
+          // 获取子节点id
+          (function find(_data) {
+            const children = _data.children || [];
+            if (children.length) {
+              children.forEach((item, i) => {
+                moduleIdList.push(children[i].id)
+                find(children[i]);
+              })
+            } else {
+              return false;
+            }
+          })(data)
         } else {
           moduleIdList = this.$refs.tree.getCheckedKeys();
           nodes = this.$refs.tree.getCheckedNodes();
         }
-        
         let res = await this.$api.DeleteModule({
           message: '删除成功',
           data: {

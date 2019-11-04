@@ -25,7 +25,6 @@ export default {
     this.eventBus.$off('lock');
     this.eventBus.$on('lock', val => {
       this.locked = true;
-      storage.set('locked', true);
       setTimeout(() => {
         this.width = '200px';
         this.height = '200px';
@@ -41,7 +40,7 @@ export default {
     
   },
   methods: {
-
+    
   },
   
 }

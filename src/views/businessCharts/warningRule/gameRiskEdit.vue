@@ -717,7 +717,6 @@ export default {
           minimumReturnRateSerious: this.form.minimumReturnRateSerious,
           businessKey: this.$route.query.id
         },
-        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         this.$message({
