@@ -22,7 +22,7 @@ export default {
   //机构树菜单
   QueryInsTree: (options = {}) => ajax.post('/ins/queryInsTree', options),
   //机构树菜单--用户新增
-  queryUserAndInsTree:(options = {}) => ajax.post('/ins/queryUserAndInsTree', options),
+  QueryUserAndInsTree:(options = {}) => ajax.post('/ins/queryUserAndInsTree', options),
   //查询机构详情
   QueryInsInfo: (options = {}) => ajax.post('/ins/queryInsInfo', options),
   //添加机构

@@ -25,8 +25,9 @@
           :prop="item.value"
           :label="item.label"
           :width="item.width"
+          :type="item.type"
         ></el-table-column>
-        <el-table-column fixed="right" label="操作" width="250">
+        <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
             <!-- <el-button type="primary" size="mini" @click="edit(scope.row)">编辑</el-button> -->
             <el-button type="primary" size="mini" @click="handleClick(scope.row)">明细</el-button>
@@ -35,20 +36,21 @@
           </template>
         </el-table-column>
       </el-table>
+      <table-paging
+        position="right"
+        :total="tableData.total"
+        :currentPage="tableData.current"
+        :pageSize="tableData.size"
+        @handleSizeChange="handleSizeChange"
+        @handleCurrentChange="handleCurrentChange"
+      ></table-paging>
     </el-row>
-    <table-paging
-      position="right"
-      :total="tableData.total"
-      :currentPage="tableData.current"
-      :pageSize="tableData.size"
-      @handleSizeChange="handleSizeChange"
-      @handleCurrentChange="handleCurrentChange"
-    ></table-paging>
   </div>
 </template>
 
 <script type="text/javascript">
 import dialogForm from "@/views/businessManage/bettingCardManage/components/dialogForm";
+import { isArray } from "util";
 export default {
   name: "cardGeneration",
   data() {
@@ -58,10 +60,16 @@ export default {
         { title: "批次：", type: "input", prop: "batch", value: "" },
         {
           title: "所属机构：",
-          type: "select",
+          type: "cascader",
           prop: "insId",
           value: "",
-          options: [{ label: "中福彩", value: "1" }]
+          options: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
         },
         {
           title: "投注卡类型：",
@@ -214,17 +222,17 @@ export default {
         ]
       },
       tableKey: [
-        { label: "序号", value: "bettingCardId", width: "80" },
-        { label: "批次", value: "batch", width: "" },
-        { label: "投注卡类型", value: "bettingCardType", width: "100" },
-        { label: "所属机构", value: "insName", width: "" },
+        { label: "序号", value: "bettingCardId", type: "index", width: "80" },
+        { label: "批次", value: "batch", width: "250" },
+        { label: "投注卡类型", value: "bettingCardType", width: "130" },
+        { label: "所属机构", value: "insName", width: "120" },
         { label: "发卡数量", value: "cardMakingQuantity", width: "80" },
         { label: "备注", value: "remark", width: "" }
       ],
       tableData: {
         records: [],
-        total: 4,
-        size: 15,
+        total: 0,
+        size: 10,
         current: 1,
         orders: [],
         searchCount: true,
@@ -234,9 +242,9 @@ export default {
         page: 1,
         pageSize: 10,
         param: {
-          batch: '',
-          bettingCardType: '',
-          insId: ''
+          batch: "",
+          bettingCardType: 0,
+          insId: 0
         }
       },
       outData: {}
@@ -244,6 +252,7 @@ export default {
   },
   created() {
     this.initList(this.options);
+    this.getInsData();
   },
   methods: {
     async initList(options) {
@@ -260,10 +269,10 @@ export default {
           return item;
         });
       } else {
-          _this.$message({
-            type: "error",
-            message: result.msg
-          });
+        _this.$message({
+          type: "error",
+          message: result.msg
+        });
       }
     },
     changeSelect(val) {
@@ -274,8 +283,37 @@ export default {
         name: "newCard"
       });
     },
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        console.log(res);
+        if (res && res.code == 0) {
+          let newData = res.data;
+          newData.forEach(element => {
+            element.children.forEach(item => {
+              item.children && item.children.forEach(i => {
+                delete i.children
+              }) 
+            })
+          });
+          console.log("info", newData, self.searchOptions[1]);
+          self.$set(self.searchOptions[1], "options", newData);
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     search(form) {
-      this.options.param = form
+      if (isArray(form.insId)) {
+        form.insId = form.insId[form.insId.length - 1];
+      }
+      // console.log(form);
+      this.options.param = {
+        ...form
+      };
       this.initList(this.options);
       // console.log("search", form);
     },
@@ -327,19 +365,19 @@ export default {
     },
 
     async exportExcel(row) {
-        this.outData = {
-          page: 0,
-          pageSize: 0,
-          param: {
-            all: true,
-            batch: "",
-            bettingCardId: row.bettingCardId
-          }
+      this.outData = {
+        page: 0,
+        pageSize: 0,
+        param: {
+          all: true,
+          batch: "",
+          bettingCardId: row.bettingCardId
         }
+      };
       const data = JSON.parse(JSON.stringify(this.outData));
       let result = await this.$api.bettingCardExportExcel({
         data,
-        responseType: 'blob'
+        responseType: "blob"
       });
       var blob = new Blob([result], {
         type: "application/vnd.ms-excel;charset=utf-8"
@@ -348,7 +386,7 @@ export default {
       var aLink = document.createElement("a");
       aLink.style.display = "none";
       aLink.href = url;
-      aLink.setAttribute("download", "年度发展计划列表.xls");
+      aLink.setAttribute("download", "投注卡生成信息.xls");
       document.body.appendChild(aLink);
       aLink.click();
       document.body.removeChild(aLink); //下载完成移除元素
@@ -364,7 +402,7 @@ export default {
           type: "warning"
         })
         .then(() => {
-          let result = _this.deleteBetting(row.bettingCardId);
+          let result = _this.deleteBetting({ data: row.bettingCardId });
           result.then(resp => {
             console.log(resp);
             if (resp.code == 0) {

@@ -129,8 +129,7 @@ export default {
     async getPondRiskList(options) {
       const self = this;
       const res = await self.$api.getPondRiskList({
-        data: options,
-        baseURL:'http://10.6.0.108:8080/api'
+        data: options,        
       });
       if (res && res.code == 0) {
         self.tableData = res.data.records;

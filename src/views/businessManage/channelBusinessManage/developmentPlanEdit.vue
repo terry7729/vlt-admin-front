@@ -50,19 +50,11 @@ export default {
           value: ""
         },
         {
-          title: "所属机构",
-          type: "cascader",
+          type: "input",
           prop: "insId",
-          value: [],
-          options: [],
+          title: "所属机构",
+          value: '',
           disabled: true,
-          setProps: {
-            label: "text",
-            value: "id",
-            children: "children",
-            // multiple: true, // 多选
-            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
-          }
         },
         // 作为省市层级筛选， 后边等数据好了 删除
         {
@@ -145,47 +137,27 @@ export default {
           dateType: "year",
           value: "",
         },
+        // {
+        //   type: "cascader",
+        //   prop: "insId",
+        //   value: '', // 此处需要获取到用户的信息返回的机构 填写到value中
+        //   title: "所属机构",
+        //   disabled: true,
+        //   label: '',
+        //   options: [],
+        //   setProps: {
+        //     label: "text",
+        //     value: "id",
+        //     children: "children",
+        //     checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+        //   }
+        // },
         {
-          type: "cascader",
+          type: "input",
           prop: "insId",
-          value: "61", // 此处需要获取到用户的信息返回的机构 填写到value中
           title: "所属机构",
+          value: '',
           disabled: true,
-          options: [
-            {
-              value: "1",
-              label: "中福彩",
-              children: [
-                {
-                  value: "60",
-                  label: "湖南",
-                  children: [
-                    {
-                      value: "61",
-                      label: "长沙市"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        // 作为省市层级筛选， 后边等数据好了 删除
-        {
-          title: "省市层级",
-          type: "select",
-          prop: "insLevel",
-          value: [],
-          options: [
-            {
-              label: 1,
-              value: 1
-            },
-            {
-              label: 2,
-              value: 2
-            }
-          ]
         },
         {
           title: "市属新建销售厅数量",
@@ -228,19 +200,25 @@ export default {
       },
       cascaderOptions: [],
       isPrivice: false,
-      insId: '',
+      ins: {
+        insId: '',
+        insName: ''
+      },
     };
   },
   created() {
+    if (this.$route.query.insLevel) {
+      this.params.insLevel = this.$route.query.insLevel
+    }
     // 用户所在机构
     let data = {};
     if (this.isPrivice) {
       // 省级用户 调省查市接口
       // 市级数据 不能输入
-      data = {
-        insId: "60",
-        planDate: "2019"
-      };
+      // data = {
+      //   insId: "60",
+      //   planDate: "2019"
+      // };
       this.getProvinceCityPlan(data);
       this.formData.forEach(item => {
         if (
@@ -253,15 +231,15 @@ export default {
         }
       });
     } else {
-      data = {
-        insId: "61",
-        planDate: "2019"
-      };
+      // data = {
+      //   insId: "61",
+      //   planDate: "2019"
+      // };
       this.showPro = false;
       // 只需要市级数据  省级不用
       // this.getProvinceCityPlan(data)
     }
-    this.insId = data.insId;
+    this.ins.insId = data.insId;
     // 获取所属机构数据
     this.getInsData();
     this.$nextTick(() => {
@@ -285,7 +263,9 @@ export default {
           // 根据返回 返回的数据判断是否是省级所属机构， 然后根据回填数据
           let dataList = this.isPrivice ? this.formData : this.formDataCity;
           let dataObj = res.data;
-          // console.log(dataObj)
+          console.log('datassssss', dataObj)
+          this.ins.insId = dataObj.insId;
+          this.ins.insName = dataObj.insName;
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceNewSellingHall/g, 'newSellingHall'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceSellingMachine/g, 'sellingMachine'))
           dataObj = JSON.parse(JSON.stringify(dataObj).replace(/provinceCooperationHall/g, 'cooperationHall'))
@@ -331,19 +311,27 @@ export default {
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
         if (res && res.code == 0) {
-          self.$set(self.formData[1], "options", res.data);
-          self.cascaderOptions = res.data;
-          console.log('获取机构数据', self.cascaderOptions);
 
-          let arr = self.getInsArray(self.insId,'id', res.data, 'id') // 传入id 和对象
-          console.log('arrs', arr.reverse());
-          // self.insArray.push(arr);
+          self.cascaderOptions = res.data;
+          console.log(self.insId, res.data);
+          // let arr = self.getInsArray(self.ins.insId,'id', res.data, 'id') // 传入id 和对象
+
+          if (this.params.insLevel == 1) {
+            // self.$set(self.formData[1], "options", res.data);
+            self.$set(self.formDataCity[1], "value", this.ins.insName);
+          } else {
+            // self.$set(self.formDataCity[1], "options", res.data);
+            // console.log('arr', arr);
+            console.log(this.ins.insName);
+            self.$set(self.formDataCity[1], "value", this.ins.insName);
+          }
+
         } else {
           // self.$message.warning(res.msg)
         }
       })(data);
     },
-    
+
     // 返回完整数组
     getInsArray(id, key, data, keyBack) { // 传入id和key是对应  keyBack是返回想要的key
       const self = this;
@@ -363,6 +351,7 @@ export default {
     editDevelopPlan() {
       const self = this;
       this.params.id = this.$route.query.id;
+      this.params.insId = this.ins.insId;
       const data = this.params;
       (async data => {
         let res = await self.$api.editDevelopPlan({ data });

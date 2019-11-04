@@ -9,18 +9,20 @@ import {
 axios.defaults.timeout = 60000;
 axios.defaults.headers.common["Content-Type"] = "application/json;charset=UTF-8";
 
+let baseURL; // 缓存默认api地址
+
 switch (process.env.VUE_APP_MODE) {
   // 生产环境
   case "production":
-    axios.defaults.baseURL = "//192.168.0.1/prod/api";
+    baseURL = axios.defaults.baseURL = "//192.168.0.1/prod/api";
     break;
     // 开发环境
   case "development":
-    axios.defaults.baseURL = "//192.168.0.1/dev/api";
+    baseURL = axios.defaults.baseURL = "//192.168.0.1/dev/api";
     break;
     // 测试环境
   case "testing":
-    axios.defaults.baseURL = "//10.6.0.103:8080/bms/api";
+    baseURL = axios.defaults.baseURL = "//10.6.0.203:8081/bms/api";
     break;
   default:
     // axios.defaults.baseURL = 'http://10.7.0.167:8081/bms/api'
@@ -34,7 +36,17 @@ switch (process.env.VUE_APP_MODE) {
     // axios.defaults.baseURL = 'http://10.6.0.203:8081/bms/api'
     axios.defaults.baseURL = 'http://10.7.0.149:8081/bms/api'
     
+    // axios.defaults.baseURL = '//10.6.0.203:8081/bms/api'
+    // axios.defaults.baseURL = '//10.7.0.190:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.88:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.190:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.103:8081/bms/api'
+    // axios.defaults.baseURL = 'http://10.7.0.89:8081/bms/api'
 
+
+    baseURL = axios.defaults.baseURL = 'http://10.7.0.91:8081/bms/api'
 }
 /**
  * @description http请求
@@ -48,6 +60,8 @@ const request = (method, url, options, extend) => {
   // 覆盖默认api baseURL
   if (typeof options.baseURL === "string") {
     axios.defaults.baseURL = options.baseURL;
+  } else {
+    axios.defaults.baseURL = baseURL;
   }
   // 基本参数
   if (storage.get("token")) {
@@ -104,16 +118,13 @@ const request = (method, url, options, extend) => {
         }
       }
       // message提示
-      Message.closeAll();
       if (res.data && res.data.code != 0) {
+        Message.closeAll();
         res.data.msg && Message.error(res.data.msg);
       } else {
-        if (options.message) {
-          if (typeof options.message === "string") {
-            Message.success(options.message);
-          } else {
-            Message.success(res.data.msg);
-          }
+        if (typeof options.message === "string") {
+          Message.closeAll();
+          Message.success(options.message);
         }
       }
       // 未登录

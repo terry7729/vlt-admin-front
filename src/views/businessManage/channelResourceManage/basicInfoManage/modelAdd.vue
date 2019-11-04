@@ -266,36 +266,45 @@ export default {
           let options = [];
           if (res.data) {
             res.data.forEach(item => {
-              if (item.modelInfoVoList.length > 0) {
-                options.push({
-                  label: item.goodsName,
-                  value: item.id
-                });
-              }
+              // if (item.modelInfoVoList.length > 0) {
+              options.push({
+                label: item.goodsName,
+                value: item.id
+              });
+              // }
             });
 
             if (type == 1) {
               _this.$set(_this.equipmentData[0], "options", options);
-              _this.deviceDatas = res.data.filter(item => {
-                return item.modelInfoVoList.length > 0;
-              });
-              // console.log('00000', _this.deviceDatas);
-              _this.modelAvailablesList[0].nameOptions = options;
+              _this.setAddOptions(res.data);
             } else if (type == 2) {
               _this.$set(_this.mountingsData[0], "options", options);
             }
           } else {
             _this.$message.warning("没有获取到型号");
           }
-          // console.log('下拉框', _this.equipmentData[0], options);
         } else {
           // self.$message.warning(res.msg);
         }
         // console.log("返回的数据", res);
       })(type);
     },
+    setAddOptions(data) { // 设置配件选项下 可用机型的下拉
+      this.deviceDatas = data.filter(item => {
+        return item.modelInfoVoList.length > 0;
+      });
+      let deviceDatasOptions = [];
+      this.deviceDatas.forEach(item => {
+        deviceDatasOptions.push({
+          label: item.goodsName,
+          value: item.id
+        });
+      });
+      // console.log("00000", this.deviceDatas);
+      this.modelAvailablesList[0].nameOptions = deviceDatasOptions;
+    },
     changeOption() {
-      console.log("this.selectValue", this.selectValue);
+      // console.log("this.selectValue", this.selectValue);
       if (this.selectValue == 1) {
         this.getModelTrees(1);
       } else if (this.selectValue == 2) {
@@ -320,6 +329,7 @@ export default {
               "options",
               option
             );
+            this.modelAvailablesList[index].modelId = "";
           } else {
             this.modelAvailablesList[index].modelId = "";
             this.$set(

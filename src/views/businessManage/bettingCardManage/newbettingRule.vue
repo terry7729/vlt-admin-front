@@ -19,7 +19,7 @@
             type="primary"
             v-prevent="1000"
             size="medium"
-            @click="submit"
+            @click="submit('baseForm')"
             :loading="showLoading"
           >提交并保存</el-button>
           <el-button size="medium" @click="cancel">取消</el-button>
@@ -56,11 +56,18 @@ export default {
       },
       data2: [
         {
-          type: "select",
-          title: "所属机构：",
+          type: "cascader",
+          title: "所属机构",
           prop: "insId",
-          value: "1",
-          options: [{ label: "中福彩", value: "1" }]
+          value: "",
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          },
+          options: []
         },
         {
           type: "select",
@@ -92,7 +99,7 @@ export default {
 
       rules2: {
         insId: [
-          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+           { required: true, message: '请选择所属机构', trigger: 'change' }
         ],
         circle: [
           { required: false, validator: rules.numberVal, trigger: "blur" }
@@ -107,6 +114,7 @@ export default {
           { required: false, validator: rules.numberVal, trigger: "blur" }
         ]
       },
+      insDatas: [],
       form: {
         channelId: "1", //渠道id
         channelName: "张三", //渠道名称
@@ -126,26 +134,68 @@ export default {
       }
     };
   },
-  components: {},
+  created() {
+    this.getInsData();
+  },
   methods: {
-    async submit() {
-      const _this = this;
-      _this.showLoading = true;
-      let data = _this.params;
-      data.status = data.status ? 1 : 2;
-      let result = await _this.$api.createBettingRulesList({ data });
-      if (result.code == 0) {
-        _this.showLoading = false;
-        _this.$message({
-          message: result.msg,
-          type: "success"
-        });
-        setTimeout(() => {
-          _this.$router.back();
-        }, 1000);
-      }
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid === 'true') {
+          (async () => {
+            const _this = this;
+            _this.showLoading = true;
+            // _this.params.insId;
+          //  let insType =  _this.$formMethods.getInsArray(_this.params.insId, 'id', this.insDatas, 'type')[0];
+          //   console.log(insType);
+            let data = _this.params;
+            data.status = data.status ? 1 : 2;
+
+             _this.showLoading = false;
+            let result = await _this.$api.createBettingRulesList({ data });
+            if (result.code == 0) {
+              _this.showLoading = false;
+              _this.$message({
+                message: result.msg,
+                type: "success"
+              });
+              setTimeout(() => {
+                _this.$router.back();
+              }, 1000);
+            } else {
+              _this.showLoading = false;
+            }
+          })();
+        } else {
+          return false;
+        }
+      });
     },
 
+    // 获取机构列表
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.queryUserAndInsTree({ data });
+        if (res && res.code == 0) {
+          console.log("res", res.data);
+          let insList = res.data;
+          insList.forEach(element => {
+            element.children.forEach(item => {
+              item.children && item.children.forEach(i => {
+                delete i.children
+              }) 
+            })
+          });
+          self.$set(self.data2[0], "options", insList);
+          self.insDatas = res.data;
+          // self.formData[1].options = res.data;
+          // self.cascaderOptions = res.data;
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     cancel() {
       this.$router.back();
     },

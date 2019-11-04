@@ -209,10 +209,11 @@
               :value="list.value">
             </el-option>
           </el-select>
-          <el-select v-model="item.modelId" v-if="item.optionsModel.length>0" @change="selectResourceModel" placeholder="请选择设备型号" class="device-item">
+          <el-select v-model="item.modelId" v-if="item.optionsModel.length>0" placeholder="请选择设备型号" class="device-item">
             <el-option
               v-for="(list, index) in item.optionsModel"
               :key="index"
+              @click.native="selectResourceModel(index)"
               :label="list.deviceModel"
               :value="list.modelId">
             </el-option>
@@ -338,6 +339,7 @@ export default {
       imageUrl: '',
       otherId:[],
       imgId: [],
+      fileIds: '',
     };
   },
   watch: {
@@ -361,7 +363,7 @@ export default {
   created() {
     this.getInsData()
     this.getChannelGameList()
-    this.getAccountRole()
+    this.getManagerRole()
   },
   methods: {
     // 图标上传
@@ -423,23 +425,30 @@ export default {
       this.$set(this.resourceData[this.resourceIndex], 'optionsModel', this.resourceDatas[index].modelInfoVoList)
   
     },
-    selectResourceModel(val) {
+    selectResourceModel(index) {
       // 重置后面输入框的数据 清空
       this.$set(this.resourceData[0], 'num', '');
+      let unitPrice = this.resourceData[this.resourceIndex].optionsModel[index].unitPrice;
+      this.$set(this.resourceData[this.resourceIndex], 'unitPrice', unitPrice);
       // console.log('设备型号', val)
     },
     // 角色名称
-    getAccountRole() {
+    getManagerRole() {
       const self = this;
       const data = {};
       (async (data)=>{
-				let res = await self.$api.accountRole({data})
+				let res = await self.$api.getManagerRole({data})
 				if(res && res.code == 0) {
           console.log('res', res.data)
-          self.workerData[0][0].options = res.data
+          let arr = [];
+          let obj = {};
+          obj.label = res.data.roleName;
+          obj.value = res.data.id;
+          arr.push(obj)
+          self.workerData[0][0].options = arr
           // self.$set(self.formData[1], 'options', res.data)
           // self.formData[1].options = res.data;
-          self.cascaderOptions = res.data;
+          // self.cascaderOptions = res.data;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -471,7 +480,7 @@ export default {
           // this.nameData = res.data;
           // self.$set(self.formData[1], 'options', res.data)
           // self.formData[1].options = res.data;
-          self.cascaderOptions = res.data;
+          // self.cascaderOptions = res.data;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -492,7 +501,7 @@ export default {
           })
           // self.$set(self.formData[1], 'options', res.data)
           // self.formData[1].options = res.data;
-          self.cascaderOptions = res.data;
+          // self.cascaderOptions = res.data;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -508,7 +517,7 @@ export default {
           console.log('res', res.data)
           self.$set(self.formData[0], 'options', res.data)
           // self.formData[1].options = res.data;
-          self.cascaderOptions = res.data;
+          // self.cascaderOptions = res.data;
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -633,6 +642,7 @@ export default {
       let data = {
         channelData: {
           ...this.channelData,
+          ...this.channelFundData[0],
           channelAddress: provinceName + cityName + townName + channelAddress
         }, // 渠道基本信息参数
         financeData: this.financeData, // 账户资金参数
@@ -640,7 +650,7 @@ export default {
         channelFundData: this.channelFundData[0], // 人员信息参数
         gameRightList: this.gameRightList, // 销售权限参数
         warehouseGoodsData: this.deviceParam, // 发放资源
-        fileIds, // 上传附件
+        // fileIds, // 上传附件
       }
       console.log('提交的参数', data)
       this.$refs.baseForm.validate((val)=>{

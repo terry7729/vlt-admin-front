@@ -14,7 +14,7 @@
 </template>
 
 <script type="text/javascript">
-import terminalSideMenu from "@/components/main/terminalSideMenu";
+import terminalSideMenu from "@/views/businessManage/channelTerminalManagement/components/terminalSideMenu";
 export default {
   name: "channelTerminalManagement",
   data() {

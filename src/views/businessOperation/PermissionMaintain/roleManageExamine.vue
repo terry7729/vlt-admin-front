@@ -31,33 +31,35 @@ export default {
   async created() {
     let id = this.$route.query.id;
     let result = await this.$api.roleDetail({ data: id });
-    result.data.roleTypes = result.data.roleTypes.join(",");
-    console.log(result);
-    if (result.data.status === "1") {
-      result.data.status = "启用中";
-    } else if (result.data.status === "2") {
-      result.data.status = "已冻结";
-    } else {
-      result.data.status = "已注销";
-    }
-    if (result.data.isManager === "1") {
-      result.data.isManager = "是";
-    } else {
-      result.data.isManager = "否";
-    }
-    console.log(result);
-    let arr = Object.keys(result.data);
-    console.log(arr);
-    let ExamineData = this.roleManageExamineData;
-    for (var i = 0; i < ExamineData.length; i++) {
-      for (var j = 0; j < arr.length; j++) {
-        if (ExamineData[i].prop === arr[j]) {
-          ExamineData[i].value = result.data[arr[j]];
+    if (result.code === 0 && result) {
+      result.data.roleTypes = result.data.roleTypes.join(",");
+      console.log(result);
+      if (result.data.status === "1") {
+        result.data.status = "启用中";
+      } else if (result.data.status === "2") {
+        result.data.status = "已冻结";
+      } else {
+        result.data.status = "已注销";
+      }
+      if (result.data.isManager === "1") {
+        result.data.isManager = "是";
+      } else {
+        result.data.isManager = "否";
+      }
+      console.log(result);
+      let arr = Object.keys(result.data);
+      console.log(arr);
+      let ExamineData = this.roleManageExamineData;
+      for (var i = 0; i < ExamineData.length; i++) {
+        for (var j = 0; j < arr.length; j++) {
+          if (ExamineData[i].prop === arr[j]) {
+            ExamineData[i].value = result.data[arr[j]];
+          }
         }
       }
     }
 
-    console.log(result);
+    //console.log(result);
   },
   methods: {}
 };

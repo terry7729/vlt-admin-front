@@ -76,15 +76,6 @@ export default {
       let res = await self.$api.modelDetail({ data });
       console.log(res);
       if (res && res.code == 0) {
-        let imgArr =
-          res.data.goodsModelVo.files && res.data.goodsModelVo.files.split(",");
-        imgArr &&
-          imgArr.forEach(item => {
-            let obj = {};
-            obj.url = item;
-            self.imgUrlList.push(obj);
-          });
-
         let dataList = res.data.goodsModelVo.modelAvailablesList;
         self.tableData = dataList;
         console.log(self.imgUrlList);
@@ -97,6 +88,14 @@ export default {
         self.modelInfoList.forEach(item => {
           item.value = res.data.goodsModelVo[item.prop];
         });
+        let imgArr =
+          res.data.goodsModelVo.files && res.data.goodsModelVo.files.split(",");
+        imgArr &&
+          imgArr.forEach(item => {
+            let obj = {};
+            obj.url = item;
+            self.imgUrlList.push(obj);
+          });
       }
     }
   }

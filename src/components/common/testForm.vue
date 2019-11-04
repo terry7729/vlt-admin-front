@@ -266,17 +266,20 @@ export default {
       form: {}
     };
   },
+  created() {
+    this.form.options = this.options;
+  },
   watch: {
     options: {
       handler(newValue, oldValue) {
         console.log("表单变化", newValue);
         // this.$refs.form.validate();
-        newValue &&
-          newValue.forEach(item => {
-            this.form[item.prop] = item.value;
-            console.log("form", this.form);
-          });
-
+        newValue&&newValue.forEach((item) => {
+          // this.form[item.prop] = item.value;
+          // this.$set(this.form, item.prop, item.value);
+          console.log('form',this.form)
+        })
+        
         // return newValue;
       },
       deep: true

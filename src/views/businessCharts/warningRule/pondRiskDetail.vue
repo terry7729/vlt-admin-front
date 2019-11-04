@@ -59,7 +59,7 @@ export default {
           prop: "minJackpotMoneyMajor"
         },
         { title: "普通告警次数", value: "", prop: "informTotalCountOrdinary" },
-        { title: "普通告警次数", value: "", prop: "informTotalCountSerious" },
+        { title: "严重告警次数", value: "", prop: "informTotalCountSerious" },
         { title: "重大告警次数", value: "", prop: "informTotalCountMajor" },
 
         {
@@ -130,7 +130,6 @@ export default {
         data: {
           businessKey: id
         },
-        baseURL: "http://10.7.0.90:8080/api"
       });
       if (res && res.code == 0) {
         for (var item in res.data) {

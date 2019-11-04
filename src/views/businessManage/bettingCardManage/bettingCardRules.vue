@@ -25,6 +25,7 @@
           :prop="item.value"
           :label="item.label"
           :width="item.width"
+          :type="item.type"
         ></el-table-column>
         <el-table-column fixed="right" label="操作" width="120">
           <template slot-scope="scope">
@@ -43,12 +44,13 @@
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
     ></table-paging>
-    <edit-betting-rule :isShow="showformDia" :oData="rowData" @closeDia="closeDia"></edit-betting-rule>
+    <edit-betting-rule :isShow="showformDia" :insDatas="insDatas" :oData="rowData" @closeDia="closeDia"></edit-betting-rule>
   </div>
 </template>
 
 <script type="text/javascript">
 import editBettingRule from "@/views/businessManage/bettingCardManage/editBettingRule";
+import { isArray } from 'util';
 export default {
   name: "",
   data() {
@@ -57,23 +59,23 @@ export default {
       // 搜索组件配置
       searchOptions: [
         {
-          type: "select",
+          type: "cascader",
           title: "所属机构：",
           prop: "insId",
-          options: [{ label: "中福彩", value: "1" }]
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          },
+          options: []
         }
-        // {
-        //   type: "datetime-range",
-        //   prop: "date4",
-        //   value: "",
-        //   title: "生效日期：",
-        //   placeholder: ["开始时间", "结束时间"]
-        // }
       ],
       controlOptions: [{ name: "新建", type: "primary", icon: "plus" }],
       tableDatas: {
         tableKey: [
-          { label: "序号", value: "id", width: "80" },
+          { label: "序号", value: "id", type:"index", width: "80" },
           { label: "所属机构", value: "insName", width: "" },
           { label: "选择渠道", value: "channelName", width: "200" },
           { label: "周期", value: "circle", width: "" },
@@ -97,17 +99,42 @@ export default {
           insId: 0
         }
       },
-      rowData: {}
+      rowData: {},
+      insDatas:[]
     };
   },
   components: {
     "edit-betting-rule": editBettingRule
   },
   created() {
-    // this.getList(1, 2);
     this.getList(this.options);
+    this.getInsData();
   },
   methods: {
+    // 获取机构列表
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        if (res && res.code == 0) {
+          console.log("res", res.data);
+          let insList = res.data;
+          insList.forEach(element => {
+            element.children.forEach(item => {
+              item.children && item.children.forEach(i => {
+                delete i.children
+              }) 
+            })
+          });
+          self.$set(self.searchOptions[0], "options", insList);
+          this.insDatas = res.data
+          console.log('insDatas', this.insDatas);
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     selectBtn(val) {
       this.$router.push({
         name: "newbettingRule"
@@ -115,7 +142,7 @@ export default {
     },
     search(form) {
       console.log("search", form);
-      this.options.param.insId = Number(form.insId);
+      this.options.param.insId = form.insId && Array.isArray(form.insId) ?  Number(form.insId[form.insId.length - 1]) : '';
       this.getList(this.options);
     },
 
@@ -144,7 +171,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          let result = this.deleteBettingRule(row.id);
+          let result = this.deleteBettingRule({data:row.id});
           result.then(resp => {
             if (resp.code == 0) {
               this.$message({

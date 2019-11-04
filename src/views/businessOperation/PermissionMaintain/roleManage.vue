@@ -15,7 +15,9 @@
       <el-table :data="roleManagetableData" border style="width: 100%; margin-top: 10px">
         <el-table-column prop="roleManageId" label="序号" type="index"></el-table-column>
         <el-table-column prop="roleName" label="用户角色"></el-table-column>
-        <el-table-column prop="roleTypes" label="角色权限"></el-table-column>
+        <el-table-column label="角色权限">
+          <template slot-scope="scope">{{scope.row.roleTypes.join('，')}}</template>
+        </el-table-column>
         <el-table-column prop="remark" label="描述"></el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
@@ -262,15 +264,19 @@ export default {
         }
       };
       let result = await this.$api.getRole({ data });
+      // result.data.records.roleTypes = result.data.records.roleTypes.join(",");
       console.log(result);
+      if (result.code === 0 && result) {
+        let arr = result.data.records;
+        this.num = result.data.total;
+        // this.roleManageoptions[0].options = arr.roleType;
+        this.roleManagetableData = arr;
+      }
       //console.log(result);
-      let arr = result.data.records;
-      this.num = result.data.total;
-      // this.roleManageoptions[0].options = arr.roleType;
-      this.roleManagetableData = arr;
+
       //初始搜索用户角色数据
       let searchResult = await this.$api.accountRole();
-      if (searchResult.code === 0) {
+      if (searchResult.code === 0 && searchResult) {
         this.roleManageoptions[0].options = searchResult.data;
       }
       //console.log(searchResult);
@@ -296,7 +302,7 @@ export default {
       console.log(data);
       let result = await this.$api.getRole({ data });
       console.log(result);
-      if (result.code === 0) {
+      if (result.code === 0 && result) {
         this.roleManagetableData = result.data.records;
       }
     },
@@ -374,7 +380,7 @@ export default {
       //console.log(data);
       let response = await this.$api.roleAmend({ data });
       console.log(response);
-      if (response.code === 0) {
+      if (response.code === 0 && response) {
         console.log(response);
         this.init();
         // this.$refs.baseForm.resetForm();
@@ -391,7 +397,7 @@ export default {
       let data = { ...info, id };
       data.sysCode = data.sysCode.join(",");
       let res = await this.$api.roleAmend({ data });
-      if (res.code === 0) {
+      if (res.code === 0 && res) {
         this.init();
       }
 
