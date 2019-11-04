@@ -97,11 +97,12 @@ const request = (method, url, options, extend) => {
         }
       }
       // message提示
-      Message.closeAll();
       if (res.data && res.data.code != 0) {
+        Message.closeAll();
         res.data.msg && Message.error(res.data.msg);
       } else {
         if (typeof options.message === "string") {
+          Message.closeAll();
           Message.success(options.message);
         }
       }
