@@ -901,8 +901,7 @@ export default {
           timingThird: this.watchingTime3,
           timingFourth: this.watchingTime4,
           businessKey: this.$route.query.id
-        },
-        baseURL:'http://10.6.0.203:8086/api'
+        },        
       });
       if (res && res.code == 0) {
         this.$message({
@@ -931,8 +930,7 @@ export default {
       const res = await self.$api.getCityRiskDetail({
         data: {
           businessKey: id
-        },
-        baseURL:'http://10.6.0.203:8086/api'
+        },        
       });
       if (res && res.code == 0) {
         this.form = res.data;

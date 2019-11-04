@@ -21,7 +21,7 @@
         ></el-option>
       </el-select>
       <el-table
-        :data="tableData"
+        :data="indexTotal"
         border
         :header-cell-style="{background:'rgba(240,240,240,.5)'}"
         :cell-style="{align:'center'}"
@@ -430,32 +430,10 @@ export default {
           warningPl: 10
         }
       ],
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ],
       value: "",
       type: null,
       showeditBox: false,
-      tableData: [
+      indexTotal: [
         { type: "最高销量" },
         { type: "最低销量" },
         { type: "最低在线数量" },
