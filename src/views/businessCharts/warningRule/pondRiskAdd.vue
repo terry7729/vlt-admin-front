@@ -161,17 +161,17 @@ export default {
           minJackpotMoneyOrdinary: this.form.minJackpotMoneyOrdinary,
           minJackpotMoneySerious: this.form.minJackpotMoneySerious,
 
-          informCentralManIdMajor: propsData.informPeopleCenterMajor,
-          informProvinceManIdMajor: propsData.informPeopleProMajor,
-          informCityManIdMajor: propsData.informPeopleCityMajor,
+          informCentralManIdMajor: propsData.informCentralManIdMajor,
+          informProvinceManIdMajor: propsData.informProvinceManIdMajor,
+          informCityManIdMajor: propsData.informCityManIdMajor,
 
-          informCentralManIdOrdinary: propsData.informPeopleCenterOrdinary,
-          informProvinceManIdOrdinary: propsData.informPeopleProOrdinary,
-          informCityManIdOrdinary: propsData.informPeopleCityOrdinary,
+          informCentralManIdOrdinary: propsData.informCentralManIdOrdinary,
+          informProvinceManIdOrdinary: propsData.informProvinceManIdOrdinary,
+          informCityManIdOrdinary: propsData.informCityManIdOrdinary,
 
-          informCityManIdSerious: propsData.informPeopleCitySerious,
-          informCentralManIdSerious: propsData.informPeopleCenterSerious,
-          informProvinceManIdSerious: propsData.informPeopleProSerious,
+          informCityManIdSerious: propsData.informCityManIdSerious,
+          informCentralManIdSerious: propsData.informCentralManIdSerious,
+          informProvinceManIdSerious: propsData.informProvinceManIdSerious,
 
           informWayMajor: propsData.informWayMajor,
           informWayOrdinary: propsData.informWayOrdinary,

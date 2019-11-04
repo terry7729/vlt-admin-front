@@ -935,7 +935,6 @@ export default {
           timingThird: this.watchingTime3,
           timingFourth: this.watchingTime4
         },
-        baseURL: "http://10.6.0.203:8086/api"
       });
       if (res && res.code == 0) {
         // this.$message({

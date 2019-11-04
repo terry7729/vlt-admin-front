@@ -34,7 +34,11 @@
             </el-checkbox-group>
           </div>
           <div v-if="scope.row.warningLevel==='重大'">
-            <el-checkbox-group class="checkInfor" v-model="dataInform.checkListMajor" @change="changesMajor">
+            <el-checkbox-group
+              class="checkInfor"
+              v-model="dataInform.checkListMajor"
+              @change="changesMajor"
+            >
               <el-checkbox label="站内" border size="medium"></el-checkbox>
 
               <el-checkbox label="邮件" border size="medium"></el-checkbox>
@@ -53,8 +57,8 @@
             >市</el-checkbox>
             <el-select
               size="mini"
-              :disabled="dataInform.optionsNotifyCityObjOfOrdinary1"
-              v-model="dataInform.informPeopleCityOrdinary"
+              :disabled="dataInform.optionsNotifyCityObjOfOrdinary"
+              v-model="dataInform.informCityManIdOrdinary"
               placeholder="请选择"
             >
               <el-option
@@ -72,8 +76,8 @@
             >省</el-checkbox>
             <el-select
               size="mini"
-              :disabled="dataInform.optionsNotifyProObjOfOrdinary1"
-              v-model="dataInform.informPeopleProOrdinary"
+              :disabled="dataInform.optionsNotifyProObjOfOrdinary"
+              v-model="dataInform.informProvinceManIdOrdinary"
               placeholder="请选择"
             >
               <el-option
@@ -91,8 +95,8 @@
             >中央</el-checkbox>
             <el-select
               size="mini"
-              :disabled="dataInform.optionsNotifyCenterObjOfOrdinary1"
-              v-model="dataInform.informPeopleCenterOrdinary"
+              :disabled="dataInform.optionsNotifyCenterObjOfOrdinary"
+              v-model="dataInform.informCentralManIdOrdinary"
               placeholder="请选择"
             >
               <el-option
@@ -112,7 +116,7 @@
             >市</el-checkbox>
             <el-select
               size="mini"
-              v-model="dataInform.informPeopleCitySerious"
+              v-model="dataInform.informCityManIdSerious"
               :disabled="dataInform.optionsNotifyCityObjOfSerious"
               placeholder="请选择"
             >
@@ -132,7 +136,7 @@
             <el-select
               size="mini"
               :disabled="dataInform.optionsNotifyProObjOfSerious"
-              v-model="dataInform.informPeopleProSerious"
+              v-model="dataInform.informProvinceManIdSerious"
               placeholder="请选择"
             >
               <el-option
@@ -151,7 +155,7 @@
             <el-select
               size="mini"
               :disabled="dataInform.optionsNotifyCenterObjOfSerious"
-              v-model="dataInform.informPeopleCenterSerious"
+              v-model="dataInform.informCentralManIdSerious"
               placeholder="请选择"
             >
               <el-option
@@ -172,7 +176,7 @@
             <el-select
               size="mini"
               :disabled="dataInform.optionsNotifyCityObjOfMajor"
-              v-model="dataInform.informPeopleCityMajor"
+              v-model="dataInform.informCityManIdMajor"
               placeholder="请选择"
             >
               <el-option
@@ -191,7 +195,7 @@
             <el-select
               size="mini"
               :disabled="dataInform.optionsNotifyProObjOfMajor"
-              v-model="dataInform.informPeopleProMajor"
+              v-model="dataInform.informProvinceManIdMajor"
               placeholder="请选择"
             >
               <el-option
@@ -210,7 +214,7 @@
             <el-select
               size="mini"
               :disabled="dataInform.optionsNotifyCenterObjOfMajor"
-              v-model="dataInform.informPeopleCenterMajor"
+              v-model="dataInform.informCentralManIdMajor"
               placeholder="请选择"
             >
               <el-option
@@ -241,10 +245,10 @@
 </template>
 
 <script>
-import inform from "@/utils/inform.js";
+import informs from "@/utils/inform.js";
 export default {
   name: "informTable",
-  // props: ["informInfo"],
+  props: ["informInfo"],
   data() {
     return {
       options3: [
@@ -344,11 +348,11 @@ export default {
         informData: [
           {
             warningLevel: "普通",
-            warningPl: 10,
+            warningPl: 10
           },
           {
             warningLevel: "严重",
-            warningPl: 13,
+            warningPl: 13
           },
           {
             warningLevel: "重大",
@@ -356,15 +360,17 @@ export default {
           }
         ],
 
-        informPeopleCityOrdinary: "",
-        informPeopleProOrdinary: "",
-        informPeopleCenterOrdinary: "",
-        informPeopleCitySerious: "",
-        informPeopleProSerious: "",
-        informPeopleCenterSerious: "",
-        informPeopleCityMajor: "",
-        informPeopleProMajor: "",
-        informPeopleCenterMajor: "",
+        informCityManIdOrdinary: "",
+        informProvinceManIdOrdinary: "",
+        informCentralManIdOrdinary: "",
+
+        informCityManIdSerious: "",
+        informProvinceManIdSerious: "",
+        informCentralManIdSerious: "",
+
+        informCityManIdMajor: "",
+        informProvinceManIdMajor: "",
+        informCentralManIdMajor: "",
         checkCityOrdinary: true,
         checkProOrdinary: false,
         checkCenterOrdinary: false,
@@ -374,9 +380,9 @@ export default {
         checkCityMajor: true,
         checkProMajor: true,
         checkCenterMajor: true,
-        optionsNotifyCityObjOfOrdinary1: false, //普通市级通知对象
-        optionsNotifyProObjOfOrdinary1: true, //普通省级通知对象
-        optionsNotifyCenterObjOfOrdinary1: true, //普通中央通知对象
+        optionsNotifyCityObjOfOrdinary: false, //普通市级通知对象
+        optionsNotifyProObjOfOrdinary: true, //普通省级通知对象
+        optionsNotifyCenterObjOfOrdinary: true, //普通中央通知对象
         optionsNotifyCityObjOfSerious: false, //严重市级通知对象
         optionsNotifyProObjOfSerious: false, //严重省级通知对象
         optionsNotifyCenterObjOfSerious: true, //严重中央通知对象
@@ -392,27 +398,41 @@ export default {
         informTotalCountMajor: "", //重大告警频次
         informTotalCountOrdinary: "", //普通告警频次
         informTotalCountSerious: "", //严重告警频次
-        maxJackpotMoneyMajor: "", //最高奖池金额-重大级别
-        maxJackpotMoneyOrdinary: "", //最高奖池金额-普通级别
-        maxJackpotMoneySerious: "", //最高奖池金额-严重级别
         informCentralManIdMajor: "", //重大通知中央管理员id
-        informCentralManIdOrdinary: "", //普通通知中央管理员id
+        informsinformCentralManIdOrdinary: "", //普通通知中央管理员id
         informCentralManIdSerious: "", //严重通知中央管理员id
         informCityManIdMajor: "", //重大通知市级管理员id
         informCityManIdOrdinary: "", //普通通知市级管理员id
         informCityManIdSerious: "", //严重通知市级管理员id
         informProvinceManIdMajor: "", // 重大通知省级管理员id
         informProvinceManIdOrdinary: "", //普通通知省级管理员id
-        informProvinceManIdSerious: "", //严重通知省级管理员id
-        
+        informProvinceManIdSerious: "" //严重通知省级管理员id
       }
     };
   },
   methods: {
-    handleChange(row){
-      // if(row.warningLevel=='普通'){
-      //   this.
-      // }
+    handleChange(row) {},
+    //如果
+    init(data) {
+      this.dataInform.checkProOrdinary = true;
+      this.dataInform.checkCenterOrdinary = true;
+      this.dataInform.checkCenterSerious = true;
+      this.dataInform.optionsNotifyProObjOfOrdinary = false; //普通省级通知对象
+      this.dataInform.optionsNotifyCenterObjOfOrdinary = false; //普通中央通知对象
+      this.dataInform.optionsNotifyCenterObjOfSerious = false; //严重中央通知对象
+      Object.assign(this.dataInform, data);
+      this.dataInform.informData[2].warningPl = data.informTotalCountMajor;
+      this.dataInform.informData[1].warningPl = data.informTotalCountSerious;
+      this.dataInform.informData[0].warningPl = data.informTotalCountOrdinary;
+      this.dataInform.checkListMajor = informs.showInformType(
+        data.informWayMajor
+      );
+      this.dataInform.checkListSeriours = informs.showInformType(
+        data.informWaySerious
+      );
+      this.dataInform.checkListOrdinary = informs.showInformType(
+        data.informWayOrdinary
+      );
     },
     onSubmit() {},
     //普通通知方式
@@ -437,33 +457,33 @@ export default {
       );
     },
     getInformIdByCheckValue(arrList, name) {
-      this.dataInform[name] = inform.getInformIdByCheckValue(arrList);
+      this.dataInform[name] = informs.getInformIdByCheckValue(arrList);
     },
     //勾选普通市级通知对象
     cityPropleOrdinary() {
       if (this.dataInform.checkCityOrdinary) {
-        this.dataInform.optionsNotifyCityObjOfOrdinary1 = false;
+        this.dataInform.optionsNotifyCityObjOfOrdinary = false;
       } else {
-        this.dataInform.optionsNotifyCityObjOfOrdinary1 = true;
-        this.dataInform.informPeopleCityOrdinary = "";
+        this.dataInform.optionsNotifyCityObjOfOrdinary = true;
+        this.dataInform.informCityManIdOrdinary = "";
       }
     },
     //勾选普通省级通知对象
     proPropleOrdinary() {
       if (this.dataInform.checkProOrdinary) {
-        this.dataInform.optionsNotifyProObjOfOrdinary1 = false;
+        this.dataInform.optionsNotifyProObjOfOrdinary = false;
       } else {
-        this.dataInform.optionsNotifyProObjOfOrdinary1 = true;
-        this.dataInform.informPeopleProOrdinary = "";
+        this.dataInform.optionsNotifyProObjOfOrdinary = true;
+        this.dataInform.informProvinceManIdOrdinary = "";
       }
     },
     //勾选普通中央通知对象
     centerPropleOrdinary() {
       if (this.dataInform.checkCenterOrdinary) {
-        this.dataInform.optionsNotifyCenterObjOfOrdinary1 = false;
+        this.dataInform.optionsNotifyCenterObjOfOrdinary = false;
       } else {
-        this.dataInform.optionsNotifyCenterObjOfOrdinary1 = true;
-        this.dataInform.informPeopleCenterOrdinary = "";
+        this.dataInform.optionsNotifyCenterObjOfOrdinary = true;
+        this.dataInform.informCentralManIdOrdinary = "";
       }
     },
     //勾选严重城市通知对象
@@ -472,7 +492,7 @@ export default {
         this.dataInform.optionsNotifyCityObjOfSerious = false;
       } else {
         this.dataInform.optionsNotifyCityObjOfSerious = true;
-        this.dataInform.informPeopleCitySerious = "";
+        this.dataInform.informCityManIdSerious = "";
       }
     },
     //勾选严重省级通知对象
@@ -481,7 +501,7 @@ export default {
         this.dataInform.optionsNotifyProObjOfSerious = false;
       } else {
         this.dataInform.optionsNotifyProObjOfSerious = true;
-        this.dataInform.informPeopleProSerious = "";
+        this.dataInform.informProvinceManIdSerious = "";
       }
     },
     //勾选严重中央通知对象
@@ -490,7 +510,7 @@ export default {
         this.dataInform.optionsNotifyCenterObjOfSerious = false;
       } else {
         this.dataInform.optionsNotifyCenterObjOfSerious = true;
-        this.dataInform.informPeopleCenterSerious = "";
+        this.dataInform.informCentralManIdSerious = "";
       }
     },
     //勾选重大市级通知对象
@@ -499,7 +519,7 @@ export default {
         this.dataInform.optionsNotifyCityObjOfMajor = false;
       } else {
         this.dataInform.optionsNotifyCityObjOfMajor = true;
-        this.dataInform.informPeopleCityMajor = "";
+        this.dataInform.informCityManIdMajor = "";
       }
     },
     //勾选重大省级通知对象
@@ -508,7 +528,7 @@ export default {
         this.dataInform.optionsNotifyProObjOfMajor = false;
       } else {
         this.dataInform.optionsNotifyProObjOfMajor = true;
-        this.dataInform.informPeopleProMajor = "";
+        this.dataInform.informProvinceManIdMajor = "";
       }
     },
     //勾选重大中央通知对象
@@ -517,12 +537,21 @@ export default {
         this.dataInform.optionsNotifyCenterObjOfMajor = false;
       } else {
         this.dataInform.optionsNotifyCenterObjOfMajor = true;
-        this.dataInform.informPeopleCenterMajor = "";
+        this.dataInform.informCentralManIdMajor = "";
       }
     }
   },
+  mounted() {
+    // console.log(this.tablesData)
+  },
   watch: {
-  
+    informInfo: {
+      handler(newValue, oldValue) {
+        this.init(newValue);
+      }
+      // 深度监听 监听对象，数组的变化
+      // deep: true
+    }
   }
 };
 </script>
