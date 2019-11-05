@@ -1,6 +1,9 @@
 // 业务运营-左侧导航数据
 
-export default [{
+export default {
+  iconCls: "el-icon-menu",
+  text: "业务运营",
+  code: 'businessOperation', // 前端路由名称
   children: [{
       children: [{
           children: [],
@@ -267,11 +270,5 @@ export default [{
       text: "公告信息发布",
       code: 'bulletinList'
     },
-
-
-  ],
-  iconCls: "el-icon-menu",
-  text: "业务运营",
-  code: 'businessOperation' // 前端路由名称
-
-}, ]
+  ]
+}

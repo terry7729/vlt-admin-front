@@ -196,7 +196,7 @@ export default {
       var aLink = document.createElement("a");
       aLink.style.display = "none";
       aLink.href = url;
-      aLink.setAttribute("download", "年度发展计划列表.xls");
+      aLink.setAttribute("download", "投注卡生成信息.xls");
       document.body.appendChild(aLink);
       aLink.click();
       document.body.removeChild(aLink); //下载完成移除元素

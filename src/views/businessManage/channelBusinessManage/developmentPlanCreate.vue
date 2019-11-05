@@ -8,7 +8,7 @@
           :formData="formData"
           :rules="rules"
           direction="right"
-          labelWidth="140px"
+          labelWidth="150px"
           @change="changeForm"
           v-if="showPro"
         ></base-form>
@@ -18,7 +18,7 @@
           :formData="formDataCity"
           :rules="rules"
           direction="right"
-          labelWidth="140px"
+          labelWidth="150px"
           @change="changeForm"
           v-else
         ></base-form>
@@ -137,7 +137,7 @@ export default {
         {
           type: "cascader",
           prop: "insId",
-          value: "61",
+          value: "",
           title: "所属机构",
           options: [],
           setProps: {
@@ -148,15 +148,6 @@ export default {
             checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
           }
         },
-        // 作为省市层级筛选， 后边等数据好了 删除
-        // {title: '省市层级', type: 'select', prop: 'insLevel', value: [], options: [{
-        //   label: 1,
-        //   value: 1
-        // },{
-        //   label: 2,
-        //   value: 2
-        // }
-        // ],},
         {
           title: "市属新建销售厅数量",
           type: "input",
@@ -188,13 +179,17 @@ export default {
         insLevel: 2
       },
       rules: {
-        test: [
-          { required: true, validator: rules.checkEmail, trigger: "blur" }
-        ],
-        status: [
+        planDate: [
           { required: true, validator: rules.checkEmpty, trigger: "blur" }
         ],
-        all: [{ required: true, validator: rules.checkEmail, trigger: "blur" }]
+        insId: [
+          { required: true, validator: rules.checkEmpty, trigger: "blur" }
+        ],
+        newSellingHall: [{ required: true, validator: rules.checkEmptyNumber, trigger: "blur" }],
+        sellingMachine: [{ required: true, validator: rules.checkEmptyNumber, trigger: "blur" }],
+        cooperationHall: [{ required: true, validator: rules.checkEmptyNumber, trigger: "blur" }],
+        cooperationMachine: [{ required: true, validator: rules.checkEmptyNumber, trigger: "blur" }],
+        developBudget:[{ required: true, validator: rules.checkEmptyNumber, trigger: "blur" }]
       },
       cascaderOptions: [],
       listTree: []
@@ -210,15 +205,17 @@ export default {
       // 市级数据 不能输入
       let data = {
         insId: insData.insId,
-        planDate: "2019"
+        planDate: new Date().getFullYear()
       };
+      this.formData[0].value = '' + new Date().getFullYear()
       this.getProvinceCityPlan(data);
     } else {
       let data = {
         insId: "61",
-        planDate: "2019"
+        planDate: new Date().getFullYear()
       };
       this.showPro = false;
+      this.formData[0].value = '' + new Date().getFullYear()
       // 只需要市级数据  省级不用
       // this.getProvinceCityPlan(data)
     }
@@ -262,7 +259,7 @@ export default {
               }
             });
           } else {
-            console.log('请先添加市级数据')
+            console.log("请先添加市级数据");
           }
         } else {
           self.$message.warning(res.msg);
@@ -276,27 +273,42 @@ export default {
       (async data => {
         let res = await self.$api.QueryInsTree({ data });
         if (res && res.code == 0) {
-          let newData = res.data
-          res.data.forEach(item => {
-           let prov =  item.children.filter (a => {
-               if (a.id == insData.insId ) {
-                 return a;
-               }
-            })
-            item.children = prov;
-          })
-          res.data.forEach(item => {
-            item.children.forEach(ele => {
-              ele.children && ele.children.forEach(el => {
-                delete el.children
-              })
-            })
-          }) 
-
-          // console.log('2222', insData.insId);
+          let newData = res.data;
+          console.log('res.data', res.data);
           if (insData.insLevel == 1) {
-            self.$set(self.formData[1], "options", newData);
+            // 筛选到省级 只显示选择省级的数据
+            // res.data.forEach(item => {
+            //   let prov = item.children.filter(a => {
+            //     if (a.id == insData.insId) {
+            //       return a;
+            //     }
+            //   });
+            //   item.children = prov;
+            // });
+            res.data.forEach(item => {
+                delete item.children
+              // item.children.forEach(ele => {
+              //   delete ele.children
+              //   // ele.children && ele.children.forEach(el => {
+              //   //   delete el.children
+              //   // })
+              // });
+            });
+            self.$set(self.formData[1], "options", res.data);
+            // self.formData[1].value = insData.insId;
           } else {
+            let prov = res.data.filter(a => {
+              if (a.id == insData.insId) {
+                console.log('a', a);
+                return a;
+              }
+            })
+            prov.forEach(item => {
+              delete item.children
+            })
+
+            newData = prov;
+            console.log(insData.insLevel);
             self.$set(self.formDataCity[1], "options", newData);
           }
 
@@ -310,6 +322,7 @@ export default {
     // 新建发展计划
     createDevelopPlan() {
       const self = this;
+      this.params.insLevel = parseInt(this.$route.query.insLevel);
       const data = this.params;
       console.log("请求的数据", data);
       (async data => {
@@ -325,19 +338,18 @@ export default {
       })(data);
     },
     changeForm(val) {
-      // console.log('派发出来的参数', val)
       this.params = Object.assign(this.params, val);
       // console.log('派发出来的参数',this.params);
       if (this.params.planDate) {
         this.params.planDate = moment(this.params.planDate).format("YYYY");
       }
-
       // const instArr = getCascaderCheckedItem(val.insCode, 'id', this.cascaderOptions)
       // console.log(instArr)
     },
     submit() {
       const self = this;
       console.log("提交的参数", this.params);
+      
       self.$refs.baseForm.validate(val => {
         console.log(val);
         self.createDevelopPlan();

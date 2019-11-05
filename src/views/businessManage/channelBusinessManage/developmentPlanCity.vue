@@ -49,29 +49,21 @@ export default {
   data() {
     return {
       searchOptions: [
-        {title: '计划年份', type: 'datepicker', prop: 'planDate', dateType:'year', value: ''},
+         {title: '计划年份', type: 'year', prop: 'planDate', dateType:'year', value: ''},
         {
           type: "cascader",
           prop: "insId",
           value: "61",
           title: "所属机构",
-          options: [
-            {
-              value: "1",
-              label: "中福彩",
-              children: [
-                {
-                  value: "60",
-                  label: "湖南",
-                  children: [
-                    {
-                      value: "61",
-                      label: "长沙市"
-                    }
-                  ]
-                }
-              ]
-            }]},
+          options: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
+          },
       ],
       options: [
         {name: '导出当页数据', type: 'primary', icon: 's-promotion'}, 
@@ -103,6 +95,7 @@ export default {
     this.requestOptions.param.planDate = fullYear;
     
     this.getCityPlanList(this.requestOptions)
+    this.getInsData();
   },
   methods: {
     select(val) {
@@ -118,7 +111,7 @@ export default {
         form.planDate = moment(form.planDate).format("YYYY")
       }
       this.requestOptions.param = Object.assign(this.requestOptions.param, form);
-      this.requestOptions.param.insId = '61';
+      this.requestOptions.param.insId = form.insId[form.insId.length - 1];
        console.log(this.requestOptions);
       this.getCityPlanList(this.requestOptions)
     },
@@ -142,9 +135,22 @@ export default {
         }
       })(data)
     },
+    // 获取机构数据
+    getInsData() {
+      const self = this;
+      const data = {};
+      (async data => {
+        let res = await self.$api.QueryInsTree({ data });
+        console.log(333);
+        if (res && res.code == 0) {
+          let newData = res.data;
+          self.$set(self.searchOptions[1], "options", newData);
+        } else {
+          // self.$message.warning(res.msg)
+        }
+      })(data);
+    },
     //  导出年度发展计划市级信息
-
-// 
 
     async exportExcel(val) {
       if (val == 'now') {

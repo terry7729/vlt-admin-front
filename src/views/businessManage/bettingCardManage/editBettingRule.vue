@@ -3,11 +3,11 @@
   <el-dialog
     :visible.sync="show"
     width="50%"
-    title="修改规则"
+    title=""
     :before-close="close"
     class="dialog-form-list"
   >
-    <div class="vlt-card">
+    <div class="vlt-card-edit">
       <!-- <h2 class="title">新增规则</h2> -->
       <div class="vlt-edit-wrap">
         <el-form label-position="right" label-width="90px" :model="form" ref="form">
@@ -45,6 +45,9 @@ export default {
       type: Object,
       default: 0
     },
+    insDatas: {
+      type: Array
+    },
     isShow: {
       type: Boolean,
       default: false
@@ -56,11 +59,18 @@ export default {
       params: {},
       data2: [
         {
-          type: "select",
-          title: "所属机构：",
+          type: "cascader",
+          title: "所属机构",
           prop: "insId",
-          value: 1,
-          options: [{ label: "中福彩", value: 1 }]
+          value: '',
+          options: [],
+          setProps: {
+            label: "text",
+            value: "id",
+            children: "children",
+            // multiple: true, // 多选
+            checkStrictly: true //设置父子节点取消选中关联，从而达到选择任意一级选项的目的
+          }
         },
         {
           type: "select",
@@ -129,13 +139,16 @@ export default {
         updateBy: "ss", // 更新人
         updateTime: "" // 更新时间
       },
-      show: this.isShow
+      show: this.isShow,
+      insList: this.insDatas
     };
   },
   watch: {
     isShow(value) {
+      console.log('insDatas', this.insList);
       this.show = value;
       this.backfill(this.oData);
+      this.backFillIns(this.oData.insId, this.insList);
     },
     oData: {
       handler(newValue, oldValue) {
@@ -143,19 +156,48 @@ export default {
         this.backfill(newValue);
       },
       deep: true
+    },
+    insDatas: {
+      handler(newVal, oldValue) {
+        this.insList = newVal;
+        this.backFillIns(this.oData.insId, this.insList);
+      },
+      deep: true
     }
   },
   components: {},
+  created () {
+    console.log('过来的值为', this.insList);
+  },
   methods: {
     backfill(newValue) {
       let arr = Object.keys(newValue);
       let aForm = this.data2;
-      console.log("this id", this.oData.id);
       this.params.id =  this.oData.id;
       for (let i = 0; i < aForm.length; i++) {
         for (let j = 0; j < arr.length; j++) {
           if (aForm[i].prop == arr[j]) {
             aForm[i].value = this.oData[arr[j]];
+          }
+        }
+      }
+    },
+    backFillIns (data, list) {
+      console.log(data, list);
+      this.$set(this.data2[0], 'options', list)
+      // this.data2[0].value = data
+    },
+     // 返回完整数组
+    getInsArray(id, key, data, keyBack) { // 传入id和key是对应  keyBack是返回想要的key
+      const self = this;
+      for (var i in data) {
+        if (data[i][key] == id) {
+          return [data[i][keyBack]];
+        }
+        if (data[i].children) {
+          let ro = self.getInsArray(id, key, data[i].children, keyBack);
+          if (ro !== undefined) {
+            return ro.concat(data[i][keyBack]);
           }
         }
       }
@@ -222,6 +264,17 @@ export default {
   }
 
   .el-form-item {
+    .el-cascader {
+      width: 100%;
+      .el-input {
+        width: 100%;
+        .el-input__inner {
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+        }
+      }
+    }
     &:nth-of-type(3),
     &:nth-of-type(4) {
       display: inline-block;

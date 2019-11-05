@@ -125,8 +125,8 @@ export default {
     };
   },
   created() {
-    let data = {};
-    this.getGameStoreList(data);
+    // let data = {};
+    this.getGameStoreList(this.params);
   },
   methods: {
     // 导出列表
@@ -226,11 +226,14 @@ export default {
       this.getGameStoreList(this.params);
     },
     changeSize(val) {
+      this.params.pageSize = val;
       console.log(`每页 ${val} 条`);
       this.params.size = val;
       this.getGameStoreList(this.params);
     },
     changeCurrent(val) {
+      this.params.page = val;
+      this.getGameStoreList(this.params);
       console.log(`当前页: ${val}`);
       this.params.current = val;
       this.getGameStoreList(this.params);

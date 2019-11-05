@@ -34,8 +34,8 @@ export default {
       showPro: false,
       showCity: false,
       insData: {
-        insIdArr: [],
-        insLevel: 0
+        insId: '',
+        type: 0
       }
     };
   },
@@ -50,33 +50,29 @@ export default {
         // 返回的data 有0 时 表示有计划列表的权限 那么计划列表的tab显示，反之隐藏，
         // 同理 有一级的时候 则显示省级的数据，市级亦是如此
         if (res.data) {
-          console.log('res.data...', res.data, isArray(res.data));
-          let arr = Object.keys(res.data);
-          if (arr[0] == 0) { // 如果是 0的话 显示省级
-            console.log(0);
+          this.insData = res.data;
+          console.log('insData ... ',this.insData.type,  this.insData);
+          if (this.insData.type == 0) { // 如果是 0的话 中福彩 显示省级
             _this.active = "2";
             _this.showPro = true;
-            _this.insData.insLevel = 0;
-          } else if (arr[0] == 1) { // 如果是1  显示 总 市
-             console.log(2);
+            _this.insData.type = 0;
+          } else if (this.insData.type == 1) { // 如果是1  省级 显示 总 市
             _this.active = "1";
             _this.showPro = false;
             _this.showAll = true;
             _this.showCity = true;
             // console.log('arr----', res.data[arr[0]]);
-            res.data[arr[0]].forEach(item => {
-              let key = Object.keys(item)
-              _this.insData.insIdArr.push(key)
-            });
-            console.log(_this.insData.insIdArr);
-            _this.insData.insLevel = 1;
-          } else if (arr[0] == 2) { // 如果是2 显示总
-            console.log(1);
+            // res.data[arr[0]].forEach(item => {
+            //   let key = Object.keys(item)
+            //   _this.insData.insId = key
+            // });
+            _this.insData.type = 1;
+          } else if (this.insData.type == 2) { // 如果是2 市级 显示总
             _this.active = "1";
             _this.showPro = false;
             _this.showAll = true;
             _this.showCity = false;
-            _this.insData.insLevel = 2;
+            _this.insData.type = 2;
           }
         }
       })();

@@ -156,8 +156,7 @@ export default {
     async getHallAccount(options) {
       const self = this;
       const res = await self.$api.getHallAccount({
-        data: options,
-        baseURL:'http://10.6.0.203:8086/api'
+        data: options,        
       });
       if (res && res.code == 0) {
         self.tableData = res.data.dataList;

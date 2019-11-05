@@ -13,28 +13,10 @@
     </div>
     <div class="entry-bd">
       <ul class="entry-list">
-        <li @click="toHome('业务管理', 1)">
+        <li @click="toHome(item.name, item.extendAttach)" v-for="(item, index) in entryList" :key="index">
           <dl>
-            <dt class="icon"></dt>
-            <dd>业务管理</dd>
-          </dl>
-        </li>
-        <li @click="toHome('业务运营', 2)">
-          <dl>
-            <dt class="icon"></dt>
-            <dd>业务运营</dd>
-          </dl>
-        </li>
-        <li @click="toHome('业务监控', 3)">
-          <dl>
-            <dt class="icon"></dt>
-            <dd>业务监控</dd>
-          </dl>
-        </li>
-        <li @click="toHome('系统管理', 4)">
-          <dl>
-            <dt class="icon"></dt>
-            <dd>系统管理</dd>
+            <dt class="iconfont" :class="[item.icon]"></dt>
+            <dd>{{item.name}}</dd>
           </dl>
         </li>
       </ul>
@@ -87,30 +69,85 @@ export default {
   name: 'entry',
   data() {
     return {
-      title: '视频彩票运营管理平台'
+      title: '视频彩票运营管理平台',
+      // 静态本地菜单关联配置
+      entryList: [
+        {
+          name: '业务管理',
+          extendAttach: 1,
+          icon: 'icon-yewuguanli'
+        },
+        {
+          name: '业务运营',
+          extendAttach: 2,
+          icon: 'icon-yewuyunying'
+        },
+        {
+          name: '业务监控',
+          extendAttach: 3,
+          icon: 'icon-yewujiankong'
+        },
+        {
+          name: '系统管理',
+          extendAttach: 4,
+          icon: 'icon-xitongguanli'
+        },
+      ],
+      // 动态接口配置
+      // entryList: [],
+      menuData: [],
     }
   },
   computed: {
 
   },
   created() {
-
+    // this.getMenuList();
   },
   mounted() {
     
   },
   methods: {
-    toHome(title, menuId) {
+    async getMenuList() {
+      let res = await this.$api.QueryModuleTree();
+      if(res && res.code === 0){
+        this.menuData = res.data;
+        if (!this.menuData) {
+          return;
+        }
+        this.menuData[0].children.forEach(item => {
+          if (item.extendAttach) {
+            this.entryList.push({
+              name: item.text,
+              extendAttach: item.extendAttach,
+              icon: item.iconCls || 'el-icon-menu'
+            })
+          }
+        })
+
+      }
+    },
+    toHome(title, extendAttach) {
       this.setEntry({
         title,
-        menuId
+        extendAttach
       })
       // 跳转到子模块首页
-      const list = menuList[menuId].content[0].children;
+      // 静态本地菜单资源关联配置
+      const list = menuList[extendAttach].children;
       let name = list[0].code;
       if (list[0].children && list[0].children.length) {
         name = list[0].children[0].code
       }
+      // 动态接口配置
+      // let list;
+      // this.menuData[0].children.forEach(item => {
+      //   if (item.extendAttach === extendAttach) {
+      //     list = item.children[0].children;
+      //   }
+      // })
+      // let name = list[0].code;
+
       this.$router.push({
         name
       })

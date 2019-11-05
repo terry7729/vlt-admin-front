@@ -57,7 +57,7 @@
             <base-form
               :formData="menuTypeForm"
               ref="menuTypeForm"
-              :rules="rules"
+              :rules="{}"
               direction="right"
               @change="menuTypeFormChange"
               labelWidth="110px"
@@ -107,6 +107,13 @@ export default {
           { type: "input", title: "名称", prop: "moduleName", value: "" },
           { type: "input", title: "子系统名称", prop: "sysCode", value: "" },
           { type: "input", title: "路由名称", prop: "moduleCode", value: "" },
+          {
+            type: "input",
+            title: "图标类名",  
+            prop: "moduleIcon",
+            value: "",
+            placeholder: 'CSS图标类名'
+          },
           { type: "input", prop: "sort", value: "", title: "排序值" },
           {
             type: "switch",
@@ -182,25 +189,29 @@ export default {
         moduleName: [
           {
             required: true,
-            message: "请输入名称"
+            message: "请输入名称",
+            trigger: 'blur'
           }
         ],
         sysCode: [
           {
             required: true,
-            message: "请输入子系统名称"
+            message: "请输入子系统名称",
+            trigger: 'blur'
           }
         ],
         moduleCode: [
           {
             required: true,
-            message: "请输入路由名称"
+            message: "请输入路由名称",
+            trigger: 'blur'
           }
         ],
         sort: [
           {
             required: true,
-            message: "请输入排序值"
+            message: "请输入排序值",
+            trigger: 'blur'
           }
         ],
       },
@@ -231,7 +242,6 @@ export default {
         case 2:
           this.$set(options[0], 'disabled', true);
           this.$set(options[2], 'disabled', true);
-          this.$set(options[3], 'disabled', true);
           break;
         case 3:
           this.$set(options[0], 'disabled', true);
@@ -267,10 +277,9 @@ export default {
   
   methods: {
     async getMenuList() {
-      //节点树请求
-      let res = await this.$api.QueryModuleTree();//菜单树查询
+      let res = await this.$api.QueryModuleTree();
       if(res && res.code === 0){
-        this.menuData = res.data;
+        this.menuData = res.data || [];
         this.setCtrlBtnStatus();
       }
     },
@@ -303,10 +312,12 @@ export default {
       }
     },
     submit() {
+      console.log(this.currentMenu.sysCode)
       this.$refs.baseForm.validate(async val => {
         if (val === 'true') {
           const data = {
             ...this.$refs.baseForm.form,
+            sysCode: this.currentMenu.extendAttach,
             moduleType: this.menuType
           };
           let apiName = 'SaveModule';
@@ -389,6 +400,7 @@ export default {
       this.isEdit = true;
       this.currentMenu = data;
       this.menuType = data.type;
+      this.clearForm();
       this.$set(this.menuTypeForm[0], 'disabled', true)
     },
     
@@ -404,12 +416,22 @@ export default {
         if (data) {
           moduleIdList = [data.id];
           nodes = [node];
-          this.$refs.tree.setChecked(data, true, true);
+          // 获取子节点id
+          (function find(_data) {
+            const children = _data.children || [];
+            if (children.length) {
+              children.forEach((item, i) => {
+                moduleIdList.push(children[i].id)
+                find(children[i]);
+              })
+            } else {
+              return false;
+            }
+          })(data)
         } else {
           moduleIdList = this.$refs.tree.getCheckedKeys();
           nodes = this.$refs.tree.getCheckedNodes();
         }
-        
         let res = await this.$api.DeleteModule({
           message: '删除成功',
           data: {

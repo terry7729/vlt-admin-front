@@ -1,6 +1,6 @@
 // 业务管理-左侧导航数据
 
-export default [{
+export default {
   iconCls: "el-icon-menu",
   text: "业务管理",
   code: '', // 前端路由名称
@@ -327,5 +327,5 @@ export default [{
       ]
     }
   ]
-}]
+}
 

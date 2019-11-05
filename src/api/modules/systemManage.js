@@ -22,7 +22,7 @@ export default {
   //机构树菜单
   QueryInsTree: (options = {}) => ajax.post('/ins/queryInsTree', options),
   //机构树菜单--用户新增
-  queryUserAndInsTree:(options = {}) => ajax.post('/ins/queryUserAndInsTree', options),
+  QueryUserAndInsTree:(options = {}) => ajax.post('/ins/queryUserAndInsTree', options),
   //查询机构详情
   QueryInsInfo: (options = {}) => ajax.post('/ins/queryInsInfo', options),
   //添加机构
@@ -94,7 +94,7 @@ export default {
   //编辑接口
   edit: (options = {}) => ajax.post('/dictData/edit', options),
   //编辑通过id获取数据接口
-  findById: (options = {}) => ajax.get('/dictData/findById/{id}', options),
+  // findById: (options = {}) => ajax.get('/dictData/findById/{id}', options),
   // //数据字典启用接口
   // enable: (options = {}) => ajax.post('/dictData/enable/{id}', options),
   // //数据字典禁用接口

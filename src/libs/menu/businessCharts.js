@@ -1,6 +1,6 @@
 // 业务监控-左侧导航数据
 //no message
-export default [{
+export default {
   iconCls: "el-icon-menu",
   text: "业务监控",
   code: '', // 前端路由名称
@@ -170,7 +170,5 @@ export default [{
       ],
 
     },
-
-  ],
-
-}]
+  ]
+}
