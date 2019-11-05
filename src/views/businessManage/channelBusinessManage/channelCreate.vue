@@ -113,7 +113,7 @@
       <el-table :data="tableData" border class="table">
         <el-table-column label="序号" type="index" width="55px"></el-table-column>
         <el-table-column label="游戏名称" prop="gameName"></el-table-column>
-        <el-table-column label="投注权限">
+        <el-table-column label="投注权限" width="130px">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.throwRight"
@@ -124,7 +124,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="兑奖权限">
+        <el-table-column label="兑奖权限" width="130px">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.cashRight"
@@ -135,7 +135,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="开始销售时间" min-width="140px">
+        <el-table-column label="开始销售时间" width="260px">
           <template slot-scope="scope">
             <el-time-picker
               v-model="scope.row.sellBeginTime"
@@ -146,7 +146,7 @@
             </el-time-picker>
           </template>
         </el-table-column>
-        <el-table-column label="结束销售时间" min-width="140px">
+        <el-table-column label="结束销售时间" width="260px">
           <template slot-scope="scope">
             <el-time-picker
               v-model="scope.row.sellEndTime"
@@ -689,7 +689,7 @@ export default {
 }
 .table, 
 .device-form{
-  padding: 16px;
+  padding: 12px 8px;
 }
 .device-item{
   margin-right: 15px;

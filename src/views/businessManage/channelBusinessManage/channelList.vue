@@ -3,21 +3,26 @@
     <search-bar class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="999"
+      :total="params.total"
       labelWidth="80px"
     >
       <control-bar slot="extend-bar" @select="select" :options="controlOptions"></control-bar>
     </search-bar>
     <el-table :data="tableData" border>
-      <el-table-column label="序号"  type="index" width="80px"></el-table-column>
+      <el-table-column label="序号" fixed type="index" width="55px"></el-table-column>
       <el-table-column label="渠道编号" prop="channelNo"></el-table-column>
       <el-table-column label="渠道名称" prop="channelName"></el-table-column>
-      <el-table-column label="渠道类型" prop="channelType"></el-table-column>
+      <el-table-column label="渠道类型" prop="channelType">
+        <template slot-scope="scope">
+          {{scope.row.channelType==0?'自营厅':'合作厅'}}
+        </template>
+      </el-table-column>
       <el-table-column label="所属机构" prop="insName"></el-table-column>
       <el-table-column label="渠道等级" prop="channelLevel"></el-table-column>
-      <el-table-column label="负责人" prop="createBy"></el-table-column>
-      <el-table-column label="创建时间" prop="createDate"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="负责人" prop="accountName"></el-table-column>
+      <el-table-column label="联系电话" prop="phone"></el-table-column>
+      <el-table-column label="创建时间" prop="createTime" min-width="160px"></el-table-column>
+      <el-table-column label="操作" fixed="right">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="detail(scope.row.channelId, 'game-permission')">查看</el-button>
         </template>
@@ -25,9 +30,9 @@
     </el-table>
     <table-paging
       position="right"
-      :total="999"
-      :currentPage="1"
-      :pageSize="10"
+      :total="params.total"
+      :currentPage="params.current "
+      :pageSize="params.size"
       @handleSizeChange="changeSize"
       @handleCurrentChange="changeCurrent">
     </table-paging>
@@ -41,30 +46,21 @@ export default {
     return {
       searchOptions: [
         {title: '渠道编号', type: 'input', prop: 'channelNo', value: '', },
-        {title: '渠道名称', type: 'input', prop: 'channelName', value: '', },
-        { type: 'select', prop: 'selectName', value: '', title: '选择框',
-         
-          options: [
-            {
-              label: '选项1',
-              value: 1
-            },
-            {
-              label: '选项2',
-              value: 2
-            }
-          ]
-        },
-        {title: '计划日期',type: 'datepicker', prop: 'date1', value: ''},
-        {title: '销售日期', type: 'datepicker-range', prop: 'date2', value: ''},
-        {title: '计划时间', type: 'datetime', prop: 'date3', value: ''},
+        {title: '渠道类型', type: 'select', prop: 'channelType', value: '', options: [{label: '自营厅',value: 0},{label: '合作厅',value: 1}]},
+        {title: '渠道等级', type: 'select', prop: 'channelLevel', value: '', options: [{label: '自营厅',value: 0},{label: '合作厅',value: 1}]},
+        {title: '负责人', type: 'input', prop: 'accountName', value: '', },
+        {title: '联系电话', type: 'input', prop: 'phone', value: '', },
         {title: '起止时间', type: 'datetime-range', prop: 'date4', value: ''},
-        {title: '所属机构', type: 'cascader', prop: 'cascader1', value: '', options: []},
       ],
       controlOptions: [
         {name: '导出', type: 'primary', icon: 's-promotion'},   
       ],
-      tableData: []
+      tableData: [],
+      params: {
+        total: 0,
+        size: 10,
+        current: 1
+      }
     }
   },
   created() {
@@ -105,6 +101,9 @@ export default {
 				let res = await self.$api.getChannelList({data})
 				if(res && res.code == 0) {
           console.log(res.data)
+          self.params.total = res.data.total;
+          self.params.size = res.data.size;
+          self.params.current = res.data.current;
           self.tableData = res.data.records;
 				} else {
           // self.$message.warning(res.msg)
@@ -114,9 +113,11 @@ export default {
     detail(channelId) {
       this.$router.push({path:'./channelDetail',query:{channelId}})
     },
-    search(val) {
+    search(param) {
       console.log(val)
-      let data = val;
+      this.params.size = 10;
+      this.params.current = 1;
+      this.params.param = param;
       this.getChannelList(data)
     },
     select(val) {
@@ -125,9 +126,13 @@ export default {
     },
     changeSize(val) {
       console.log(`每页 ${val} 条`);
+      this.params.size = val;
+      this.getChannelList(data)
     },
     changeCurrent(val) {
       console.log(`当前页: ${val}`);
+      this.params.current = val;
+      this.getChannelList(data)
     },
     add() {
       console.log('a')

@@ -26,7 +26,7 @@
               :limit="10"
               :show-file-list="true"
               :on-remove="handleRemove"
-              :http-request="uploadFileOther">
+              :http-request="uploadAppendixFile">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
               <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
      // 附件上传
-    async uploadFileOther(files) {
+    async uploadAppendixFile(files) {
       let formData = new FormData();
       console.log('files', files.file.size/1024)
       // this.softData[3].value = `${(files.file.size/1024).toFixed()}`

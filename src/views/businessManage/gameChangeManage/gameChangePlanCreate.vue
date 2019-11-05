@@ -113,11 +113,11 @@ export default {
     submit() {
       console.log('提交的参数', this.param)
       let data = this.param;
-      data.gameChangePlanVo.listPlanId = this.listPlanId;
-      data.gameRuleVo.listPlanId = this.listPlanId;
-      data.gameBettingRuleVo.listPlanId = this.listPlanId;
-      data.gameFundRuleVo.listPlanId = this.listPlanId;
-      data.gameRiskRuleVo.listPlanId = this.listPlanId;
+      // data.gameChangePlanVo.listPlanId = this.listPlanId;
+      // data.gameRuleVo.listPlanId = this.listPlanId;
+      // data.gameBettingRuleVo.listPlanId = this.listPlanId;
+      // data.gameFundRuleVo.listPlanId = this.listPlanId;
+      // data.gameRiskRuleVo.listPlanId = this.listPlanId;
       data.gameChangePlanVo.gameId = this.gameId;
       data.gameRuleVo.gameId = this.gameId;
       data.gameBettingRuleVo.gameId = this.gameId;

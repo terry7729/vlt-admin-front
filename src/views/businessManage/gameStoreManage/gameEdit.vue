@@ -20,8 +20,9 @@
                 class="upload-demo"
                 action=""
                 :limit="1"
+                :file-list="gameBagPath"
                 :show-file-list="true"
-                :on-remove="handleRemove"
+                :on-remove="gameBagRemove"
                 :http-request="uploadFile">
                 <el-button size="small" type="primary">点击上传</el-button>
               </el-upload>
@@ -33,7 +34,7 @@
                 :limit="1"
                 accept=".png,.jpg,.jpeg"
                 :show-file-list="false"
-                :on-remove="handleRemove"
+                :on-remove="imgRemove"
                 :http-request="uploadFileImg">
                 <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
                 <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
@@ -58,7 +59,7 @@
               action=""
               :limit="10"
               :show-file-list="true"
-              :on-remove="handleRemove"
+              :on-remove="otherRemove"
               :http-request="uploadFileOther">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -130,16 +131,15 @@ export default {
         ]
       },
       params: {
-        fileIds: '',
         gameInfoVo: '',
         developerInfoVo: '',
         softwareInfoVo: '',
       },
       gameId: this.$route.query.gameId,
       imageUrl: '',
-      gameBagId: [], // 游戏包上传id
-      imgId: [], // 图标上传id
-      gameOtherId: [], // 附件上传id
+      gameBagPath: [], // 游戏包上传id
+      imgPath: [], // 图标上传id
+      gameOtherPath: [], // 附件上传id
       fileList: [],
       developerId: '',
       softwareId: '',
@@ -149,9 +149,6 @@ export default {
     this.getGameStoreInfo()
   },
   methods:{
-    handleRemove() {
-
-    },
     // 游戏包上传
     async uploadFile(files) {
       let formData = new FormData();
@@ -168,7 +165,10 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameBagId.push(res.data.fileId);
+      if(res&&res.code==0) {
+        this.$message.success('上传成功')
+        this.gameBagPath.push(res.data.filePath);
+      }
     },
     // 图标上传
     async uploadFileImg(files) {
@@ -184,8 +184,10 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId.push(res.data.fileId);
-      let imgUrl = res.data.filePath;
+      if(res&&res.code==0) {
+        this.imgPath.push(res.data.filePath);
+        this.imageUrl = res.data.filePath;
+      }
     },
     // 附件上传
     async uploadFileOther(files) {
@@ -202,8 +204,31 @@ export default {
           console.log('上传进度事件:', evt)
         }
       })
-      console.log('uploadFile', res);
-      this.gameOtherId.push(res.data.fileId);
+      if(res&&res.code==0) {
+        this.$message.success('上传成功')
+        this.gameOtherPath.push(res.data.filePath);
+      }
+    },
+    gameBagRemove(file) {
+      this.gameBagPath.forEach((item,index)=>{
+        if(item.indexOf(file.name)>-1) {
+          this.gameBagPath.splice(index, 1);
+        }
+      })
+    },
+    imgRemove(file) {
+      this.imgPath.forEach((item,index)=>{
+        if(item.indexOf(file.name)>-1) {
+          this.imgPath.splice(index, 1);
+        }
+      })
+    },
+    otherRemove(file) {
+      this.gameOtherPath.forEach((item,index)=>{
+        if(item.indexOf(file.name)>-1) {
+          this.gameOtherPath.splice(index, 1);
+        }
+      })
     },
     // 获取游戏详情
     getGameStoreInfo() {
@@ -226,7 +251,18 @@ export default {
             item.value = res.data.softwareInfo[item.prop]
             self.softwareId = res.data.softwareInfo.id
           })
-          self.fileList = res.data.fileList
+          let fileArray = res.data.gameInfoVo.filePath.split(',')
+          this.imageUrl = fileArray[1];
+          let array = []
+          fileArray.forEach((item)=>{
+            let obj = {};
+            obj.name = item.split('/')[item.split('/').length-1];
+            obj.url = item;
+            array.push(obj)
+          })
+          this.gameBagPath = array.slice(0,1);
+          this.imgPath = array.slice(1,1);
+          this.gameOtherPath = array.slice(2);
 				} else {
           // self.$message.warning(res.msg)
         }
@@ -259,7 +295,7 @@ export default {
     },
     submit(){
       const self = this;
-      this.params.fileIds = this.gameBagId.concat(this.imgId, this.gameOtherId).join(',');
+      this.params.gameInfoVo.filePath = this.gameBagPath.concat(this.imgPath, this.gameOtherPath).join(',');
       console.log('提交的参数', this.params)
       this.params.gameInfoVo.id = this.gameId;
       this.params.developerInfoVo.id = this.developerId;

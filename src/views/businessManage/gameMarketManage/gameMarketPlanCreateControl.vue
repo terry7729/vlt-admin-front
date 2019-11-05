@@ -106,6 +106,7 @@ export default {
         {title: '销售状态', type: 'select',  prop: 'saleAuthority', value: '', options:[{label: '开售',value: 1},{label: '停售',value: 2}]},
         {title: 'Jackpot比率', type: 'input',  prop: 'jackpotRate', value: ''},
         {title: '返奖比率', type: 'input',  prop: 'returnPrizeRate', value: ''},
+        {title: '货币名称', type: 'input',  prop: 'currencyName', value: ''},
         {title: '调节基金比率', type: 'input',  prop: 'reFundRate', value: ''},
         {title: '奖池比率', type: 'input',  prop: 'rewardPoolRate', value: ''},
         {title: '游戏兑换比例', type: 'input',  prop: 'prizeRate', value: '',placeholder: '按百分比转换，示例12'},
@@ -263,7 +264,7 @@ export default {
     changeRuleForm(val) {
       this.ruleParams = val;
       for(let key in this.ruleParams){
-        if(key!='ruleDesc') {
+        if(key!='ruleDesc'||key!='currencyName') {
           this.ruleParams[key] = Number(this.ruleParams[key])
         }
       }

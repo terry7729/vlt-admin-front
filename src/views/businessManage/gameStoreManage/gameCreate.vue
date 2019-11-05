@@ -26,8 +26,9 @@
               class="upload-demo"
               action=""
               :limit="1"
+              :file-list="gameBagPath"
               :show-file-list="true"
-              :on-remove="handleRemove"
+              :on-remove="gameBagRemove"
               :http-request="uploadFile">
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
@@ -38,8 +39,9 @@
               action=""
               :limit="1"
               accept=".png,.jpg,.jpeg"
+              :file-list="imgPath"
               :show-file-list="false"
-              :on-remove="handleRemove"
+              :on-remove="imgRemove"
               :http-request="uploadFileImg">
               <img v-if="imageUrl" :src="imageUrl" class="gameIcon">
               <i v-else class="el-icon-plus gameIcon-uploader-icon"></i>
@@ -66,9 +68,9 @@
               drag
               multiple
               action=""
-              :limit="10"
+              :limit="5"
               :show-file-list="true"
-              :on-remove="handleRemove"
+              :on-remove="otherRemove"
               :http-request="uploadFileOther">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -128,9 +130,9 @@ export default {
       },
       active: 0,
       fileIds: [],
-      gameBagId: [], // 游戏包上传id
-      imgId: [], // 图标上传id
-      gameOtherId: [], // 附件上传id
+      gameBagPath: [], // 游戏包上传地址
+      imgPath: [], // 图标上传地址
+      gameOtherPath: [], // 附件上传地址
       imageUrl: '',
       params: {
         softwareInfoVo: '',
@@ -153,7 +155,11 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.gameBagId.push(res.data.filePath);
+      if(res&&res.code==0) {
+        this.$message.success('上传成功')
+        console.log(this.gameBagPath)
+        this.gameBagPath.push(res.data.filePath);
+      }
     },
     // 图标上传
     async uploadFileImg(files) {
@@ -166,8 +172,8 @@ export default {
         }
       })
       console.log('uploadFile', res);
-      this.imgId.push(res.data.filePath);
-      let imgUrl = res.data.filePath;
+      this.imgPath.push(res.data.filePath);
+      this.imageUrl = res.data.filePath;
     },
     // 附件上传
     async uploadFileOther(files) {
@@ -178,11 +184,17 @@ export default {
       const res = await this.$api.testUpload({
         data: formData,
         onUploadProgress(evt) {
+          let percent = (evt.loaded / evt.total * 100) | 0 //调用onProgress方法来显示进度条，需要传递个对象 percent为进度值
+           files.onProgress({percent:percent})
           console.log('上传进度事件:', evt)
         }
       })
+      if(res&&res.code==0) {
+        this.$message.success('上传成功')
+        this.gameOtherPath.push(res.data.filePath);
+      }
       console.log('uploadFile', res);
-      this.gameOtherId.push(res.data.filePath);
+      
     },
     createGameStore(data) {
       const self = this;
@@ -198,12 +210,27 @@ export default {
         }
       })(data)
     },
-    beforeAvatarUpload() {},
-    handleAvatarSuccess() {},
-    handleExceed() {},
-    beforeRemove() {},
-    handleRemove() {},
-    handlePreview() {},
+    gameBagRemove(file) {
+      this.gameBagPath.forEach((item,index)=>{
+        if(item.indexOf(file.name)>-1) {
+          this.gameBagPath.splice(index, 1);
+        }
+      })
+    },
+    imgRemove(file) {
+      this.imgPath.forEach((item,index)=>{
+        if(item.indexOf(file.name)>-1) {
+          this.imgPath.splice(index, 1);
+        }
+      })
+    },
+    otherRemove(file) {
+      this.gameOtherPath.forEach((item,index)=>{
+        if(item.indexOf(file.name)>-1) {
+          this.gameOtherPath.splice(index, 1);
+        }
+      })
+    },
     back() {
       this.$router.back()
     },
@@ -229,7 +256,7 @@ export default {
     },
     submit(){
       const self = this;
-      this.params.gameInfoVo.filePath = this.gameBagId.concat(this.imgId,this.gameOtherId).join(',');
+      this.params.gameInfoVo.filePath = this.gameBagPath.concat(this.imgPath,this.gameOtherPath).join(',');
       console.log('提交的参数', this.params)
       this.$refs.baseForm.validate((val)=>{
         console.log(val)

@@ -4,9 +4,12 @@
       <h2 class="title">业务办理</h2>
       <div class="vlt-card-wrap">
         <div class="vlt-card-item"
-          v-for="(item,index) in data" 
+          v-for="(item,index) in channelData" 
           :key="index">
-          <div class="vlt-card-box" @click="select(item)">{{item.title}}</div>
+          <div class="vlt-card-box channel" @click="select(item)">
+            <span class="icon-wrap"><i :class="`iconfont icon-${item.icon}`" ></i></span>
+            <span class="text">{{item.title}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -14,7 +17,10 @@
       <h2 class="title">权限控制</h2>
       <div class="vlt-card-wrap">
         <div class="vlt-card-item" v-for="(item,index) in permissionData" :key="index">
-          <div class="vlt-card-box" @click="select(item)">{{item.title}}</div>
+          <div class="vlt-card-box permission" @click="select(item)">
+            <span class="icon-wrap"><i :class="`iconfont icon-${item.icon}`" ></i></span>
+            <span class="text">{{item.title}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -22,7 +28,10 @@
       <h2 class="title">渠道资源</h2>
       <div class="vlt-card-wrap">
         <div class="vlt-card-item" v-for="(item,index) in  resourceData" :key="index">
-          <div class="vlt-card-box" @click="select(item)">{{item.title}}</div>
+          <div class="vlt-card-box resource" @click="select(item)">
+            <span class="icon-wrap"><i :class="`iconfont icon-${item.icon}`" ></i></span>
+            <span class="text">{{item.title}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -35,26 +44,26 @@ export default {
   name: "",
   data() {
     return {
-      data: [
-        {title: '渠道新建'},
-        {title: '渠道变更'},
-        {title: '渠道迁址及关停'},
-        {title: '渠道过户'},
-        {title: '渠道增机'},
-        {title: '渠道退机'},
-        {title: '渠道移机'},
+      channelData: [
+        {title: '渠道新建', icon:'xinjian'},
+        {title: '渠道变更', icon:'biangeng'},
+        {title: '渠道迁址及关停', icon:'qianzhi'},
+        {title: '渠道过户', icon:'guohu'},
+        {title: '渠道增机', icon:'zenji'},
+        {title: '渠道退机', icon:'tuiji'},
+        {title: '渠道移机', icon:'yiji'},
       ],
       permissionData: [
-        {title: '销售权限'},
-        {title: '费率调整'},
-        {title: '资金权限'},
+        {title: '销售权限', icon:'xiaoshou'},
+        {title: '费率调整', icon:'feilv'},
+        {title: '资金权限', icon:'zijin'},
       ],
       resourceData: [
-        {title: '资源采购'},
-        {title: '资源申请'},
-        {title: '资源发放'},
-        {title: '资源调拨'},
-        {title: '资源报废'},
+        {title: '资源采购', icon:'caigou'},
+        {title: '资源申请', icon:'shenqing'},
+        {title: '资源发放', icon:'fafang'},
+        {title: '资源调拨', icon:'diaobo'},
+        {title: '资源报废', icon:'baofei'},
       ]
     }
   },
@@ -109,7 +118,47 @@ export default {
   border: 1px solid #e8eaec;
   display: flex;
   align-items: center;
+  flex-direction: column; 
   justify-content: center;
   cursor: pointer;
+}
+.icon-wrap{
+  display: block;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.iconfont{
+  font-size: 64px;
+}
+.text{
+  margin-top: 10px;
+}
+.channel{
+  .icon-wrap{
+    border: 1px solid #42C3AF;
+  }
+  .iconfont{
+    color: #42C3AF;
+  }
+}
+.permission{
+  .icon-wrap{
+    border: 1px solid #F6625A;
+  }
+  .iconfont {
+    color: #F6625A;
+  }
+}
+.resource{
+  .icon-wrap{
+    border: 1px solid #FFA63E;
+  }
+  .iconfont{
+    color: #FFA63E;
+  }
 }
 </style>

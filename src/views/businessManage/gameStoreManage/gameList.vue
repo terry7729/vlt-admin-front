@@ -4,7 +4,7 @@
       class="search-bar-demo"
       @search="search"
       :options="searchOptions"
-      :total="oprie.total"
+      :total="params.total"
       labelWidth="86px"
     >
       <control-bar slot="extend-bar" @select="selectBtn" :options="controlOptions"></control-bar>
@@ -53,9 +53,9 @@
     </el-table>
     <table-paging
       position="right"
-      :total="oprie.total"
-      :currentPage="oprie.current "
-      :pageSize="oprie.size"
+      :total="params.total"
+      :currentPage="params.current "
+      :pageSize="params.size"
       @handleSizeChange="changeSize"
       @handleCurrentChange="changeCurrent"
     ></table-paging>
@@ -117,12 +117,7 @@ export default {
           ]
         }
       ],
-      currentPage: 1,
       params: {
-        pageSize: 10,
-        size: 1
-      },
-      oprie: {
         total: 0,
         size: 10,
         current: 1
@@ -187,9 +182,9 @@ export default {
         let res = await self.$api.getGameStoreList({ data });
         console.log(res);
         if (res && res.code == 0) {
-          self.oprie.total = res.data.total;
-          self.oprie.size = res.data.size;
-          self.oprie.current = res.data.current;
+          self.params.total = res.data.total;
+          self.params.size = res.data.size;
+          self.params.current = res.data.current;
           self.tableData = res.data.records;
         } else {
           // self.$message.warning(res.msg)
@@ -225,22 +220,20 @@ export default {
       this.$router.push({ path: "./gameEdit", query: { gameId } });
     },
     search(form) {
-      //   let data = {
-      //     pageSize: 0,
-      //     params: form
-      //   }
-
-      // console.log('search', data)
-      this.params.size = 1;
-      this.params.pageSize = 10;
+      this.params.size = 10;
+      this.params.current = 1;
       this.params.param = form;
       this.getGameStoreList(this.params);
     },
     changeSize(val) {
       console.log(`每页 ${val} 条`);
+      this.params.size = val;
+      this.getGameStoreList(this.params);
     },
     changeCurrent(val) {
       console.log(`当前页: ${val}`);
+      this.params.current = val;
+      this.getGameStoreList(this.params);
     }
   }
 };
