@@ -278,7 +278,7 @@ async pagingControl(val){ //分页控制
       let upDataFrom  = this.updataFrom
       let array = []
       console.log(reslt)
-      debugger;
+      // debugger;
       let ids = reslt.data.moduleIds;
       ids.forEach((item)=>{
         let arrs = self.$formMethods.getInsArray(item, 'id',  self.isData, 'id')
