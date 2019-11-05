@@ -2,7 +2,9 @@
   <div class="vlt-card plan-check">
     <panel title="城市风险指标详情" :show="true">
       <base-info :infoList="planList"></base-info>
-       <p ><el-button type="primary" @click.native="goEdit"  size="mini">修改</el-button></p>
+      <p>
+        <el-button type="primary" @click.native="goEdit" size="mini">修改</el-button>
+      </p>
     </panel>
   </div>
 </template>
@@ -12,7 +14,7 @@ export default {
   name: "cityRiskDetail",
   data() {
     return {
-       options1: [
+      options1: [
         {
           provinceId: "1",
           provinceName: "广东"
@@ -28,7 +30,7 @@ export default {
           cityName: "深圳"
         },
         {
-          provinceId: "4",
+          cityId: "4",
           cityName: "广州"
         }
       ],
@@ -118,11 +120,13 @@ export default {
           title: "普通通知市级管理员",
           value: "",
           prop: "informCityManIdOrdinary"
-        },{
+        },
+        {
           title: "严重通知市级管理员",
           value: "",
           prop: "informCityManIdSerious"
-        },   {
+        },
+        {
           title: "重大通知市级管理员",
           value: "",
           prop: "informCityManIdMajor"
@@ -133,12 +137,12 @@ export default {
           value: "",
           prop: "informProvinceManIdOrdinary"
         },
-          {
+        {
           title: "严重通知省级管理员",
           value: "",
           prop: "informProvinceManIdSerious"
         },
-         {
+        {
           title: "重大通知省级管理员",
           value: "",
           prop: "informProvinceManIdMajor"
@@ -148,17 +152,14 @@ export default {
           value: "",
           prop: "informCentralManIdOrdinary"
         },
-        
-      
+
         {
           title: "严重通知中央管理员",
           value: "",
           prop: "informCentralManIdSerious"
         },
-       
-       
-       
-       {
+
+        {
           title: "重大通知中央管理员",
           value: "",
           prop: "informCentralManIdMajor"
@@ -182,7 +183,7 @@ export default {
       const res = await self.$api.getCityRiskDetail({
         data: {
           businessKey: id
-        },      
+        }
       });
       if (res && res.code == 0) {
         for (var item in res.data) {
@@ -194,34 +195,31 @@ export default {
                 item === "informWayOrdinary" ||
                 item === "informWaySerious" ||
                 item === "informWayMajor" ||
-                item==="collectStatus"
+                item === "collectStatus"
               ) {
-                this.planList[i].value = this.getInformationType(item,
+                this.planList[i].value = this.getInformationType(
+                  item,
                   res.data[item]
                 );
               }
-
-               if(item==='cityId'){ 
-                var  cityName          
-                console.log(1)   
-                this.options2.forEach(v=>{
-                  console.log(v.cityId,res.data[item])               
-                    if(v.cityId==res.data[item]){
-                      console.log(1)                        
-                      cityName=v.cityName           
-                    }
+              if (item === "cityId") {
+                var cityName;
+                this.options2.forEach(v => {
+                  if (v.cityId == res.data[item]) {
+                    cityName = v.cityName;
+                  }
                 }),
-                this.planList[i].value=cityName
+                  (this.planList[i].value = cityName);
               }
-         
-              if(item==='provinceId'){ 
-                var  provinceName             
-                this.options1.forEach(v=>{               
-                    if(v.provinceId==res.data[item]){                       
-                      provinceName=v.provinceName           
-                    }
+
+              if (item === "provinceId") {
+                var provinceName;
+                this.options1.forEach(v => {
+                  if (v.provinceId == res.data[item]) {
+                    provinceName = v.provinceName;
+                  }
                 }),
-                this.planList[i].value=provinceName
+                  (this.planList[i].value = provinceName);
               }
               break;
             }
@@ -268,13 +266,13 @@ export default {
 
       return InformType;
     },
-      goEdit(){
+    goEdit() {
       this.$router.push({
-        name:'cityRiskEdit',
-        query:{
-          id:this.$route.query.id
+        name: "cityRiskEdit",
+        query: {
+          id: this.$route.query.id
         }
-      })
+      });
     }
   },
   mounted() {
@@ -284,10 +282,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/ .base-info .info-list .title{
+/deep/ .base-info .info-list .title {
   min-width: unset;
 }
-p{
+p {
   margin-right: 150px;
   margin-bottom: 10px;
   text-align: right;

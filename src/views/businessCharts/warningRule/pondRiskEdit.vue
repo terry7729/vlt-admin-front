@@ -72,7 +72,7 @@
         </div>
         <el-form-item></el-form-item>
       </el-form>
-      <inform-table :informInfo='tablesData' ref='table'></inform-table>
+      <inform-table :informInfo='form' ref='table'></inform-table>
       <div class="btn">
         <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
         <el-button>取消</el-button>
@@ -89,19 +89,17 @@ export default {
   name: "pondRiskEdit",
   components: { informTable },
   data() {
-    return {
-      tablesData: {       
-      },      
+    return {    
       type: null,
       showeditBox: false,
         options: [
         {
           value: 1,
-          label: "1"
+          label: "幸运卡片"
         },
         {
           value: 2,
-          label: "2"
+          label: "侏罗寻宝"
         }
       ],
       tableData: [{ type: "最高奖池金额" }, { type: "最低奖池金额" }],
@@ -148,14 +146,13 @@ export default {
            maxJackpotMoneyMajor: this.form.maxJackpotMoneyMajor,
           maxJackpotMoneyOrdinary: this.form.maxJackpotMoneyOrdinary,
           maxJackpotMoneySerious: this.form.maxJackpotMoneySerious,
-           informTotalCountMajor: propsData.informData[2].warningPl,
-          informTotalCountOrdinary: propsData.informData[1].warningPl,
-          informTotalCountSerious: propsData.informData[0].warningPl,
           gameId: this.form.gameId,
           gameName: this.form.gameId,
           collectFrequency: this.form.collectFrequency,
           collectStatus: this.form.collectStatus,
-         
+           informTotalCountMajor: propsData.informData[2].warningPl,
+          informTotalCountOrdinary: propsData.informData[1].warningPl,
+          informTotalCountSerious: propsData.informData[0].warningPl,
           informCentralManIdMajor: propsData.informCentralManIdMajor,
           informProvinceManIdMajor: propsData.informProvinceManIdMajor,
           informCityManIdMajor: propsData.informCityManIdMajor,
@@ -211,7 +208,6 @@ export default {
       });
       if (res && res.code == 0) {
         this.form = res.data;
-        this.tablesData=res.data;
       }
     }
   },

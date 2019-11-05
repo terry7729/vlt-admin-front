@@ -3,7 +3,7 @@
     <h3 class="headling">城市风险指标修改</h3>
     <div class="vlt-card select-box">
       <span>省份</span>
-      <el-select v-model="proviceValue" placeholder="请选择">
+      <el-select v-model="form.provinceId" placeholder="请选择">
         <el-option
           v-for="item in options1"
           :key="item.value"
@@ -12,7 +12,7 @@
         ></el-option>
       </el-select>
       <span>城市</span>
-      <el-select v-model="cityValue" placeholder="请选择">
+      <el-select v-model="form.cityId" placeholder="请选择">
         <el-option
           v-for="item in options2"
           :key="item.value"
@@ -146,7 +146,7 @@
           </p>
         </el-form-item>
       </el-form>
-      <inform-table :informInfo="tablesData" ref="table"></inform-table>
+      <inform-table :informInfo="form" ref="table"></inform-table>
       <div class="btn">
         <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
         <el-button @click="goList">取消</el-button>
@@ -164,8 +164,6 @@ export default {
   components: { informTable },
   data() {
     return {
-      tablesData: {},
-
       showHighestSalesMoney: false,
       showMinimumSalesMoney: false,
       showMinimumOnlineCounts: false,
@@ -223,11 +221,6 @@ export default {
           label: "广州"
         }
       ],
-
-      gameValue: "",
-      cityValue: "",
-      proviceValue: "", //
-
       controlOptions: [
         { name: "确认", type: "primary", icon: "" } // type为按钮的五种颜色， icon为具体的图标
       ],
@@ -310,10 +303,9 @@ export default {
   },
   methods: {
     handleChange(value) {
-      console.log(value);
     },
     onSubmit() {
-      this.cityRiskUpdate();
+      this.cityRiskUpdate(this.$refs.table.dataInform);
     },
     goList() {
       this.$router.push({ name: "cityRisk" });
@@ -371,38 +363,17 @@ export default {
       }
     },
     //游戏风险指标修改
-    async cityRiskUpdate() {
+    async cityRiskUpdate(propsData) {
       const self = this;
-      this.form.informTotalCountMajor = this.tableData1[2].warningPl;
-      this.form.informTotalCountSerious = this.tableData1[1].warningPl;
-      this.form.informTotalCountOrdinary = this.tableData1[0].warningPl;
       const res = await self.$api.cityRiskUpdate({
-        data: {
-          informTotalCountMajor: this.form.informTotalCountMajor,
-          informTotalCountOrdinary: this.form.informTotalCountOrdinary,
-          informTotalCountSerious: this.form.informTotalCountSerious,
-          cityId: this.cityValue,
-          cityName: this.cityValue,
-          provinceId: this.proviceValue,
-          provinceName: this.proviceValue,
+        data: {        
+          cityId: this.form.cityId,
+          cityName: this.form.cityId,
+          provinceId: this.form.provinceId,
+          provinceName:  this.form.provinceId,
           // collectFrequency: this.form.collectFrequency,
           collectStatus: this.form.collectStatus,
-          informCentralManIdMajor: this.informPeopleCenterMajor,
-          informProvinceManIdMajor: this.informPeopleProMajor,
-          informCityManIdMajor: this.informPeopleCityMajor,
-
-          informCentralManIdOrdinary: this.informPeopleCenterOrdinary,
-          informProvinceManIdOrdinary: this.informPeopleProOrdinary,
-          informCityManIdOrdinary: this.informPeopleCityOrdinary,
-
-          informCityManIdSerious: this.informPeopleCitySerious,
-          informCentralManIdSerious: this.informPeopleCenterSerious,
-          informProvinceManIdSerious: this.informPeopleProSerious,
-
-          informWayMajor: this.form.informWayMajor,
-          informWayOrdinary: this.form.informWayOrdinary,
-          informWaySerious: this.form.informWaySerious,
-
+         
           highestSalesMoneyMajor: this.form.highestSalesMoneyMajor,
           highestSalesMoneyOrdinary: this.form.highestSalesMoneyOrdinary,
           highestSalesMoneySerious: this.form.highestSalesMoneySerious,
@@ -433,7 +404,26 @@ export default {
           timingSecond: this.form.timingSecond,
           timingThird: this.form.timingThird,
           timingFourth: this.form.timingFourth,
-          businessKey: this.$route.query.id
+          businessKey: this.$route.query.id,
+          informTotalCountMajor: propsData.informData[2].warningPl,
+          informTotalCountOrdinary: propsData.informData[1].warningPl,
+          informTotalCountSerious: propsData.informData[0].warningPl,
+          informCentralManIdMajor: propsData.informCentralManIdMajor,
+          informProvinceManIdMajor: propsData.informProvinceManIdMajor,
+          informCityManIdMajor: propsData.informCityManIdMajor,
+
+          informCentralManIdOrdinary: propsData.informCentralManIdOrdinary,
+          informProvinceManIdOrdinary: propsData.informProvinceManIdOrdinary,
+          informCityManIdOrdinary: propsData.informCityManIdOrdinary,
+
+          informCityManIdSerious: propsData.informCityManIdSerious,
+          informCentralManIdSerious: propsData.informCentralManIdSerious,
+          informProvinceManIdSerious: propsData.informProvinceManIdSerious,
+
+          informWayMajor: propsData.informWayMajor,
+          informWayOrdinary: propsData.informWayOrdinary,
+          informWaySerious: propsData.informWaySerious,
+          
         }
       });
       if (res && res.code == 0) {
@@ -448,7 +438,7 @@ export default {
           }
         });
       } else {
-        this.$message.error("修改失败");
+        // this.$message.error("修改失败");
       }
     },
     changeTime1() {
@@ -467,7 +457,6 @@ export default {
       });
       if (res && res.code == 0) {
         this.form = res.data;
-        this.tablesData=res.data
       }
     }
   },

@@ -100,7 +100,7 @@
         </div>
         <el-form-item></el-form-item>
       </el-form>
-      <inform-table :informInfo='tablesData' ref='table'></inform-table>
+      <inform-table :informInfo='form' ref='table'></inform-table>
       <div class="btn">
         <el-button type="primary" v-prevent="1000" @click="onSubmit">修改</el-button>
         <el-button @click="gotoList">取消</el-button>
@@ -118,8 +118,6 @@ export default {
   components: { informTable },
   data() {
     return {
-      tablesData: {       
-      },   
       options: [
         {
           gameId: 1,
@@ -273,7 +271,6 @@ export default {
       });
       if (res && res.code == 0) {
         this.form = res.data;
-        this.tablesData=res.data;
       }
     },
   },
